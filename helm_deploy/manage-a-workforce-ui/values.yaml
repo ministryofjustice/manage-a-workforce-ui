@@ -56,3 +56,4 @@ generic-service:
 
 generic-prometheus-alerts:
   targetApplication: manage-a-workforce-ui
+  alertSeverity: hmpps-tier

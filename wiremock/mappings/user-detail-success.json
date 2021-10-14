@@ -1,0 +1,28 @@
+{
+  "priority": 2,
+  "request": {
+    "method": "GET",
+    "urlPattern": "(?i)/secure/users/ALLOCATIONS/details"
+  },
+  "response": {
+    "transformers": ["response-template"],
+    "status": 200,
+    "jsonBody": {
+      "userId": 2500077027,
+      "username": "{{request.path.[2]}}",
+      "firstName": "Allocate",
+      "surname": "Doe",
+      "email": "{{request.path.[2]}}@digital.justice.gov.uk",
+      "enabled": true,
+      "roles": [
+        {
+          "name": "TEST_MANAGE_A_WORKFORCE_ALLOCATE_ROLE",
+          "description": "A Allocate Test Role"
+        }
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

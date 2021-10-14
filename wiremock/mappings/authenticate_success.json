@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPattern": "/secure/authenticate",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$[?(@.username =~ /ALLOCATIONS.*/i)]"
+      }
+    ]
+  },
+  "response": {
+    "status": 200
+  }
+}

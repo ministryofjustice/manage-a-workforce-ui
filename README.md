@@ -17,7 +17,7 @@ The app requires:
 
 To start the main services excluding the example typescript template app: 
 
-`docker-compose up --scale=app=0`
+`docker-compose up`
 
 Install dependencies using `npm install`, ensuring you are using >= `Node v14.x`
 

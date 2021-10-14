@@ -23,6 +23,18 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=dev
       - APPLICATION_AUTHENTICATION_UI_ALLOWLIST=0.0.0.0/0
-
+      - DELIUS_ENABLED=true
+      - DELIUS_ENDPOINT_URL=http://wiremock:8099
+  wiremock:
+    image: rodolpheche/wiremock
+    networks:
+      - hmpps
+    container_name: wiremock
+    restart: always
+    ports:
+      - "8099:8099"
+    command: ["--port","8099","--global-response-templating"]
+    volumes: 
+      - $PWD/wiremock:/home/wiremock:rw
 networks:
   hmpps:

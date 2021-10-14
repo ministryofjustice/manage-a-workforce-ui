@@ -31,7 +31,7 @@ export default function createApp(userService: UserService): express.Application
   app.use(setUpStaticResources())
   nunjucksSetup(app, path)
   app.use(setUpAuthentication())
-  app.use(authorisationMiddleware())
+  app.use(authorisationMiddleware(['ROLE_MANAGE_A_WORKFORCE_ALLOCATE']))
 
   app.use('/', indexRoutes(standardRouter(userService)))
 

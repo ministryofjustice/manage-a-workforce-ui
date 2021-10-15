@@ -2,7 +2,7 @@
 generic-service:
   nameOverride: manage-a-workforce-ui
 
-  replicaCount: 4
+  replicaCount: 2
 
   image:
     repository: quay.io/hmpps/manage-a-workforce-ui

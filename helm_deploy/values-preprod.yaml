@@ -1,0 +1,13 @@
+---
+# Per environment values which override defaults in manage-a-workforce-ui/values.yaml
+
+generic-service:
+
+  ingress:
+    host: workforce-management-preprod.hmpps.service.justice.gov.uk
+
+  env:
+    INGRESS_URL: "https://workforce-management-preprod.hmpps.service.justice.gov.uk"
+    HMPPS_AUTH_URL: "https://sign-in-preprod.hmpps.service.justice.gov.uk/auth"
+    TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
+

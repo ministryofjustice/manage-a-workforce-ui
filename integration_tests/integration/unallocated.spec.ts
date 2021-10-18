@@ -21,6 +21,12 @@ context('Unallocated', () => {
     unallocatedPage.headerUserName().should('contain.text', 'J. Smith')
   })
 
+  it('Probation Delivery Unit visible on page', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage.probationDeliveryUnit().should('contain.text', 'Gateshead and South Tyneside')
+  })
+
   it('User can log out', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)

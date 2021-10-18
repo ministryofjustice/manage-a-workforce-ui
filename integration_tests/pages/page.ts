@@ -14,7 +14,7 @@ export default abstract class Page {
     cy.get('h1').contains(this.title)
   }
 
-  headerUserName = (): PageElement => cy.get('[data-qa=header-user-name]')
+  headerUserName = (): PageElement => cy.get('a.moj-header__navigation-link')
 
   checkBetaOnPage(): void {
     cy.get('.govuk-phase-banner .govuk-phase-banner__content__tag').contains('beta')
@@ -23,5 +23,5 @@ export default abstract class Page {
     )
   }
 
-  signOut = (): PageElement => cy.get('[data-qa=signOut]')
+  signOut = (): PageElement => cy.get("[href='/sign-out']")
 }

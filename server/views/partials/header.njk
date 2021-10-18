@@ -1,26 +1,25 @@
-<header class="govuk-header govuk-!-display-none-print" role="banner" data-module="govuk-header" >
-  <div id="header-contents" class="govuk-width-container">
-    <a href="/" class="govuk-header__link govuk-header__link--homepage no-underline  govuk-!-padding-top-1 govuk-!-padding-bottom-1">
-      <div id="site-header-block">
-        <div id="logo">
-          <img src="/assets/images/crest.svg"/>
-        </div>
-        <span id="hmpps-title">
-          HMPPS
-        </span>
-        <span id="main-title">{{applicationName}}</span>
-      </div>
-    </a>
 
-    {% if user %}
-      <div id="user-block" class="govuk-!-padding-top-1 govuk-!-padding-bottom-1">
-        <div id="header-user-name" data-qa="header-user-name">
-          {{ user.displayName | initialiseName }}
-        </div>
-        <div class="govuk-!-padding-right-0">
-          <a data-qa="signOut" href="/sign-out">Sign out</a>
-        </div>
-      </div>
-    {% endif %}
-  </div>
-</header>
+{%- from "moj/components/header/macro.njk" import mojHeader -%}
+
+{{ mojHeader({
+  organisationLabel: {
+    text: 'HMPPS',
+    href: '#'
+  },
+  serviceLabel: {
+    text: 'Manage a workforce',
+    href: '#'
+  },
+  navigation: {
+    label: 'Account navigation',
+    items: [{
+      text: user.displayName | initialiseName,
+      href: '#',
+      active: true
+    }, {
+      text: 'Sign out',
+      href: '/sign-out'
+    }]
+  }
+
+}) }}

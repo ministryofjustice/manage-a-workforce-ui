@@ -5,7 +5,7 @@ Used to display cases to allocate
 
 `docker-compose pull`
 
-`docker-compose up`
+`docker-compose up -d`
 
 `npm start:dev`
 ### Dependencies
@@ -17,7 +17,7 @@ The app requires:
 
 To start the main services excluding the example typescript template app: 
 
-`docker-compose up`
+`docker-compose up -d`
 
 Install dependencies using `npm install`, ensuring you are using >= `Node v14.x`
 

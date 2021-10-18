@@ -1,7 +1,5 @@
-import Page from './page'
-
-export default class AuthSignInPage extends Page {
-  constructor() {
-    super('Sign in')
+export default class AuthSignInPage {
+  checkOnPage(): void {
+    cy.get('h1').contains('Sign in')
   }
 }

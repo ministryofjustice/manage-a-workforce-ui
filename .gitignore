@@ -128,3 +128,4 @@ integration_tests/screenshots/
 */*.iml
 **/Chart.lock
 *.iml
+.DS_Store

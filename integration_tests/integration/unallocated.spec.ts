@@ -28,6 +28,7 @@ context('Unallocated', () => {
   })
 
   it('Primary nav visible on page', () => {
+    cy.task('stubAllocations')
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
     unallocatedPage
@@ -40,10 +41,10 @@ context('Unallocated', () => {
       .and('contain', 'Search')
   })
 
-  it('Notification badge not visible on page when no unallocations ', () => {
+  it('Notification badge visible on page with number of unallocations', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.notificationsBadge().should('not.exist')
+    unallocatedPage.notificationsBadge().should('contain.text', '1')
   })
 
   it('User can log out', () => {

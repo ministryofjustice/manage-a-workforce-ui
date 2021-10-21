@@ -43,7 +43,7 @@ context('Unallocated', () => {
   it('Notification badge not visible on page when no unallocations ', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.notificationsBadge().should('not.be.visible')
+    unallocatedPage.notificationsBadge().should('not.exist')
   })
 
   it('User can log out', () => {

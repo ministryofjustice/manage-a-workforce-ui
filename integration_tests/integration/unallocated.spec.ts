@@ -27,6 +27,19 @@ context('Unallocated', () => {
     unallocatedPage.probationDeliveryUnit().should('contain.text', 'Gateshead and South Tyneside')
   })
 
+  it('Primary nav visible on page', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage
+      .primaryNav()
+      .should('contain', 'Allocations')
+      .and('contain', 'Offender Management')
+      .and('contain', 'OMIC')
+      .and('contain', 'Courts')
+      .and('contain', 'Expiring Reductions')
+      .and('contain', 'Search')
+  })
+
   it('User can log out', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)

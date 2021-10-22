@@ -24,4 +24,17 @@ export default {
       },
     })
   },
+  stubGetNoAllocations: (): SuperAgentRequest => {
+    return stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: [],
+      },
+    })
+  },
 }

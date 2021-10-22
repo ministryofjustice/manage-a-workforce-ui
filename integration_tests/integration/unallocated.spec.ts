@@ -7,6 +7,7 @@ context('Unallocated', () => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
+    cy.task('stubGetAllocations')
   })
 
   it('Unauthenticated user directed to auth', () => {
@@ -28,7 +29,6 @@ context('Unallocated', () => {
   })
 
   it('Primary nav visible on page', () => {
-    cy.task('stubAllocations')
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
     unallocatedPage

@@ -16,6 +16,6 @@ export default (on: (string, Record) => void): void => {
 
     stubTokenVerificationPing: tokenVerification.stubPing,
 
-    stubAllocations: allocations.stubAllocations,
+    stubGetAllocations: allocations.stubGetAllocations,
   })
 }

@@ -19,5 +19,7 @@ export default (on: (string, Record) => void): void => {
     stubGetAllocations: allocations.stubGetAllocations,
 
     stubGetNoAllocations: allocations.stubGetNoAllocations,
+
+    stubOverOneHundredAllocations: allocations.stubOverOneHundredAllocations,
   })
 }

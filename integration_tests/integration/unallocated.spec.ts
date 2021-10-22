@@ -38,6 +38,7 @@ context('Unallocated', () => {
       .and('contain', 'Offender Management')
       .and('contain', 'OMIC')
       .and('contain', 'Courts')
+      .and('contain', 'Expiring Reductions')
       .and('contain', 'Search')
   })
 

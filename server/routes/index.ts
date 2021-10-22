@@ -1,4 +1,4 @@
-import type { RequestHandler, Router, Request, Response } from 'express'
+import type { RequestHandler, Router } from 'express'
 
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import AllocationsController from '../controllers/allocationsController'
@@ -14,10 +14,8 @@ export default function routes(router: Router, services: Services): Router {
   const allocationsController = new AllocationsController(services.allocationsService)
 
   get('/', (req, res, next) => {
-    res.render('pages/index')
+    allocationsController.getAllocations(req, res)
   })
-
-  get('/unallocated', (req: Request, res: Response) => allocationsController.getAllocations(req, res))
 
   return router
 }

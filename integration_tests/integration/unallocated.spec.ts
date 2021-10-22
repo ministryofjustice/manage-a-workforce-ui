@@ -1,6 +1,7 @@
 import UnallocatedPage from '../pages/unallocated'
 import AuthSignInPage from '../pages/authSignIn'
 import Page from '../pages/page'
+import config from '../../server/config'
 
 context('Unallocated', () => {
   beforeEach(() => {
@@ -37,8 +38,20 @@ context('Unallocated', () => {
       .and('contain', 'Offender Management')
       .and('contain', 'OMIC')
       .and('contain', 'Courts')
-      .and('contain', 'Expiring Reductions')
       .and('contain', 'Search')
+  })
+
+  it('Primary nav links to wmt', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage
+      .navLink('offender-management-link')
+      .should('equal', `${config.nav.workloadMeasurement.url}/probation/hmpps/0`)
+    unallocatedPage.navLink('omic-link').should('equal', `${config.nav.workloadMeasurement.url}/omic/hmpps/0`)
+    unallocatedPage
+      .navLink('courts-link')
+      .should('equal', `${config.nav.workloadMeasurement.url}/court-reports/hmpps/0`)
+    unallocatedPage.navLink('search-link').should('equal', `${config.nav.workloadMeasurement.url}/officer-search`)
   })
 
   it('Notification badge visible on page with number of unallocations', () => {

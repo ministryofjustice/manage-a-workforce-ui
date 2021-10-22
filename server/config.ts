@@ -74,5 +74,10 @@ export default {
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
   },
+  nav: {
+    workloadMeasurement: {
+      url: get('WORKLOAD_MEASUREMENT_URL', 'http://localhost:3010', requiredInProduction),
+    },
+  },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
 }

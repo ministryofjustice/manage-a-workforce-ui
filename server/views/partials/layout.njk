@@ -1,49 +1,106 @@
-{% extends "govuk/template.njk" %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+<!DOCTYPE html>
+<html lang="en" class="govuk-template no-js">
+<head>
 
-{% block head %}
-  <!--[if !IE 8]><!-->
-  <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet"/>
-  <!--<![endif]-->
+    {%- from "components/primary-nav/macro.njk" import mawPrimaryNav -%}
 
-  <!--[if lt IE 9]>
-  <link href="/assets/stylesheets/application-ie8.css?{{ version }}" rel="stylesheet"/>
-  <script src="/assets/js/html5shiv-3.7.3.min.js"></script>
-  <![endif]-->
+    {% set mainTitle = "Allocations" %}
 
-  <script src="/assets/js/jquery.min.js"></script> 
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-          integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-          crossorigin="anonymous"></script>
-  <link href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    {% block head %}
+        <meta charset="utf-8"/>
 
-{% endblock %}
+        <title>{{ title }} - {{ mainTitle }}</title>
 
-{% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
+        <!--[if !IE 8]><!-->
+        <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet"/>
+        <!--<![endif]-->
 
+        <!--[if lt IE 9]>
+        <link href="/assets/stylesheets/application-ie8.css?{{ version }}" rel="stylesheet"/>
+        <script src="/assets/js/html5shiv-3.7.3.min.js"></script>
+        <![endif]-->
 
-{% block header %}
-  {% include "./header.njk" %}
-  
-{% endblock %}
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+                crossorigin="anonymous"></script>
+        <link href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 
+    {% endblock %}
+</head>
+<body class="govuk-template__body">
 
-{% block beforeContent %}
-{{ govukPhaseBanner({
-  tag: {
-    text: "beta"
-  },
-  html: 'This is a new service – your <a class="govuk-link" href="https://teams.microsoft.com/l/team/19%3afPYHTv_Z06KQ-wPz3oc2kLLhVKDypOtLeyXOpoXM85w1%40thread.tacv2/conversations?groupId=0f8c1490-bf11-4ba6-a889-6438b082c3f8&tenantId=c6874728-71e6-41fe-a9e1-2e8c36776ad8">feedback</a> will help us to improve it.'
-}) }}
-{% endblock %}
+<script>
+    document.body.classList.add('js-enabled')
+</script>
+
+<a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
 {% block bodyStart %}
+
 {% endblock %}
 
-{% block bodyEnd %}
-  {# Run JavaScript at end of the
-  <body>, to avoid blocking the initial render. #}
-  <script src="/assets/govuk/all.js"></script>
-  <script src="/assets/govukFrontendInit.js"></script>
-  <script src="/assets/moj/all.js"></script>
+{% block header %}
+    {% include "./header.njk" %}
 {% endblock %}
+
+{% block phaseBanner %}
+    <div class="govuk-width-container">
+        {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+        {{ govukPhaseBanner({
+            tag: {
+                text: "beta"
+            },
+            classes: 'maw-no-border',
+            html: 'This is a new service – your <a class="govuk-link" href="https://teams.microsoft.com/l/team/19%3afPYHTv_Z06KQ-wPz3oc2kLLhVKDypOtLeyXOpoXM85w1%40thread.tacv2/conversations?groupId=0f8c1490-bf11-4ba6-a889-6438b082c3f8&tenantId=c6874728-71e6-41fe-a9e1-2e8c36776ad8">feedback</a> will help us to improve it.'
+        }) }}
+    </div>
+{% endblock %}
+
+{% block navigation %}
+    {{ mawPrimaryNav({data: data}) }}
+{% endblock %}
+
+
+<nav class="govuk-width-container" aria-label="Backwards navigation">
+    {% block backlink %}{% endblock %}
+</nav>
+
+<div class="govuk-width-container">
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        {% block content %}{% endblock %}
+    </main>
+</div>
+
+{% block footer %}
+    {%- from "govuk/components/footer/macro.njk" import govukFooter -%}
+    {{ govukFooter({
+        meta: {
+            items: [
+                {
+                    href: "/",
+                    text: "Accessibility statement"
+                },
+                {
+                    href: "/",
+                    text: "Cookies"
+                },
+                {
+                    href: "/",
+                    text: "Privacy"
+                }
+            ]
+        }
+    }) }}
+{% endblock %}
+
+{% block javascripts %}{% endblock %}
+
+{% block bodyEnd %}
+    <script src="/assets/govuk/all.js"></script>
+    <script src="/assets/govukFrontendInit.js"></script>
+    <script src="/assets/moj/all.js"></script>
+{% endblock %}
+
+</body>
+</html>

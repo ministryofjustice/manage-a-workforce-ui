@@ -6,4 +6,8 @@ export default class UnallocatedPage extends Page {
   }
 
   probationDeliveryUnit = (): PageElement => cy.get('.govuk-caption-xl')
+
+  primaryNav = (): PageElement => cy.get('ul.moj-primary-navigation__list').children()
+
+  notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 }

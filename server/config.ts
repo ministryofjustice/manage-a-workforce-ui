@@ -56,6 +56,14 @@ export default {
       apiClientId: get('API_CLIENT_ID', 'manage-a-workforce-ui', requiredInProduction),
       apiClientSecret: get('API_CLIENT_SECRET', 'clientsecret', requiredInProduction),
     },
+    allocationsService: {
+      url: get('ALLOCATIONS_SERVICE_URL', 'http://localhost:8099', requiredInProduction),
+      timeout: {
+        response: 10000,
+        deadline: 10000,
+      },
+      agent: new AgentConfig(),
+    },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
       timeout: {

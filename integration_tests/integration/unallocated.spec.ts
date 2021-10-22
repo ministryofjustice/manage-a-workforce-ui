@@ -7,6 +7,7 @@ context('Unallocated', () => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
+    cy.task('stubGetAllocations')
   })
 
   it('Unauthenticated user directed to auth', () => {
@@ -25,6 +26,25 @@ context('Unallocated', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
     unallocatedPage.probationDeliveryUnit().should('contain.text', 'Gateshead and South Tyneside')
+  })
+
+  it('Primary nav visible on page', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage
+      .primaryNav()
+      .should('contain', 'Allocations')
+      .and('contain', 'Offender Management')
+      .and('contain', 'OMIC')
+      .and('contain', 'Courts')
+      .and('contain', 'Expiring Reductions')
+      .and('contain', 'Search')
+  })
+
+  it('Notification badge visible on page with number of unallocations', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage.notificationsBadge().should('contain.text', '1')
   })
 
   it('User can log out', () => {

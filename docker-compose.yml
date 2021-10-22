@@ -5,7 +5,7 @@ services:
     image: 'bitnami/redis:5.0'
     networks:
       - hmpps
-    container_name: redis 
+    container_name: redis
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
@@ -15,7 +15,7 @@ services:
     image: quay.io/hmpps/hmpps-auth:latest
     networks:
       - hmpps
-    container_name: hmpps-auth 
+    container_name: hmpps-auth
     ports:
       - "9090:8080"
     healthcheck:
@@ -25,6 +25,17 @@ services:
       - APPLICATION_AUTHENTICATION_UI_ALLOWLIST=0.0.0.0/0
       - DELIUS_ENABLED=true
       - DELIUS_ENDPOINT_URL=http://wiremock:8099
+
+  allocations-service:
+    image: quay.io/hmpps/hmpps-allocations
+    container_name: allocations-service
+    ports:
+      - "8091:8080"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/auth/health" ]
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+
   wiremock:
     image: rodolpheche/wiremock
     networks:
@@ -34,7 +45,7 @@ services:
     ports:
       - "8099:8099"
     command: ["--port","8099","--global-response-templating"]
-    volumes: 
+    volumes:
       - $PWD/wiremock:/home/wiremock:rw
 networks:
   hmpps:

@@ -2,6 +2,7 @@ import { resetStubs } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
 import tokenVerification from '../mockApis/tokenVerification'
+import allocations from '../mockApis/allocations'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
@@ -14,5 +15,9 @@ export default (on: (string, Record) => void): void => {
     stubAuthPing: auth.stubPing,
 
     stubTokenVerificationPing: tokenVerification.stubPing,
+
+    stubGetAllocations: allocations.stubGetAllocations,
+
+    stubGetNoAllocations: allocations.stubGetNoAllocations,
   })
 }

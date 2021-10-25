@@ -15,6 +15,8 @@ export default class UnallocatedPage extends Page {
 
   subNavLink = (): PageElement => cy.get('a.moj-sub-navigation__link')
 
+  noCaseParagraph = (): PageElement => cy.get('p.govuk-\\!-margin-bottom-9')
+
   tableHeader = (): PageElement => cy.get('table thead tr').children()
 
   tableCaption = (): PageElement => cy.get('caption.govuk-table__caption')

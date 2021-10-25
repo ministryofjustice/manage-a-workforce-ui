@@ -20,4 +20,10 @@ context('Unallocated', () => {
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
     unallocatedPage.subNavLink().should('have.text', 'Unallocated cases')
   })
+
+  it('Must show no case list information available', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage.noCaseParagraph().should('have.text', 'No case list information available.')
+  })
 })

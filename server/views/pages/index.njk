@@ -55,6 +55,13 @@
         }}
       </div>
     </div>
+    {% if not unallocatedCases %}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <p class="govuk-!-margin-bottom-9">No case list information available.</p>
+        </div>
+      </div>
+    {% endif %}
   </main>
 
 {% endblock %}

@@ -98,6 +98,20 @@ context('Unallocated', () => {
     unallocatedPage.tableCaption().should('have.text', 'Unallocated community cases')
   })
 
+  it('Other Unallocated cases visible on page', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage.otherCasesHeading().should('have.text', 'Other unallocated cases')
+  })
+
+  it('Other Unallocated cases inset visible on page', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage
+      .otherCasesInset()
+      .should('contain.text', 'There may currently be unallocated custody cases on NDelius.')
+  })
+
   it('User can log out', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)

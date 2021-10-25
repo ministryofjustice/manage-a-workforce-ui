@@ -67,6 +67,19 @@ context('Unallocated', () => {
     unallocatedPage.notificationsBadge().should('contain.text', '99+')
   })
 
+  it('Sub nav visible on page', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage.subNav().should('contain', 'Unallocated cases (1)')
+  })
+
+  it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
+    cy.task('stubOverOneHundredAllocations')
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage.subNavLink().should('contain.text', 'Unallocated cases (99+)')
+  })
+
   it('User can log out', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)

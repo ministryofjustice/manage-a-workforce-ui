@@ -1,4 +1,5 @@
 {% extends "../partials/layout.njk" %}
+{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 
 {% set pageTitle = applicationName + " - Home" %}
 
@@ -9,6 +10,18 @@
       <div class="govuk-grid-column-full">
         <span class="govuk-caption-xl">Gateshead and South Tyneside</span>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">South Tyneside</h1>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        {{ mojSubNavigation({
+          label: 'Sub navigation',
+          items: [{
+            text: 'Unallocated cases (' + unallocatedCases + ')' if unallocatedCases else 'Unallocated cases',
+            href: '#',
+            active: true
+          }]
+        }) }}
       </div>
     </div>
   </main>

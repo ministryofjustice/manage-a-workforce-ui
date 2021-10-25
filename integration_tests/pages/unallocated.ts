@@ -9,7 +9,11 @@ export default class UnallocatedPage extends Page {
 
   primaryNav = (): PageElement => cy.get('ul.moj-primary-navigation__list').children()
 
+  subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
+
   navLink = (linkId: string): PageElement => cy.get(`#${linkId}`).invoke('attr', 'href')
+
+  subNavLink = (): PageElement => cy.get('a.moj-sub-navigation__link')
 
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 }

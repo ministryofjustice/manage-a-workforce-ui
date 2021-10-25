@@ -14,4 +14,10 @@ context('Unallocated', () => {
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
     unallocatedPage.notificationsBadge().should('not.exist')
   })
+
+  it('Sub nav link visible on page with no number', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage.subNavLink().should('have.text', 'Unallocated cases')
+  })
 })

@@ -80,6 +80,24 @@ context('Unallocated', () => {
     unallocatedPage.subNavLink().should('contain.text', 'Unallocated cases (99+)')
   })
 
+  it('Table visible on page', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage
+      .tableHeader()
+      .should('contain', 'Name / CRN')
+      .and('contain', 'Tier')
+      .and('contain', 'Sentence date')
+      .and('contain', 'Initial appointment')
+      .and('contain', 'Status')
+      .and('contain', 'Action')
+  })
+  it('Table caption visible on page', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage.tableCaption().should('have.text', 'Unallocated community cases')
+  })
+
   it('User can log out', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)

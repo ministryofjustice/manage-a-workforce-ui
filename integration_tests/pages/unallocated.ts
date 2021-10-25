@@ -15,5 +15,9 @@ export default class UnallocatedPage extends Page {
 
   subNavLink = (): PageElement => cy.get('a.moj-sub-navigation__link')
 
+  tableHeader = (): PageElement => cy.get('table thead tr').children()
+
+  tableCaption = (): PageElement => cy.get('caption.govuk-table__caption')
+
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 }

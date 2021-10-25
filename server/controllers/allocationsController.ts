@@ -5,7 +5,7 @@ export default class AllocationsController {
   constructor(private readonly allocationsService: AllocationsService) {}
 
   async getAllocations(req: Request, res: Response): Promise<void> {
-    const response = await this.allocationsService.getUnallocatedCases()
+    const response = await this.allocationsService.getUnallocatedCases(res.locals.user.token)
     res.render('pages/index', { unallocatedCases: response.length > 99 ? '99+' : response.length })
   }
 }

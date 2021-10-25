@@ -18,9 +18,9 @@ export default class AllocationsService {
     return new RestClient('Allocations Service API Client', this.config, token)
   }
 
-  async getUnallocatedCases(): Promise<Allocation[]> {
+  async getUnallocatedCases(token: string): Promise<Allocation[]> {
     logger.info(`Getting unallocated cases`)
-    return (await this.restClient('token').get({
+    return (await this.restClient(token).get({
       path: `/cases/unallocated`,
       headers: { Accept: 'application/json' },
     })) as Allocation[]

@@ -17,6 +17,7 @@ import setUpHealthChecks from './middleware/setUpHealthChecks'
 import setUpWebRequestParsing from './middleware/setupRequestParsing'
 import authorisationMiddleware from './middleware/authorisationMiddleware'
 import AllocationsService from './services/allocationsService'
+import unauthenticatedRoutes from './routes/unauthenticated'
 
 export default function createApp(
   userService: UserService,
@@ -35,6 +36,7 @@ export default function createApp(
   app.use(setUpStaticResources())
   nunjucksSetup(app, path)
   app.use(setUpAuthentication())
+  app.use(unauthenticatedRoutes())
   app.use(authorisationMiddleware(['ROLE_MANAGE_A_WORKFORCE_ALLOCATE']))
 
   app.use(

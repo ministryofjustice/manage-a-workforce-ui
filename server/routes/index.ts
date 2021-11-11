@@ -17,5 +17,17 @@ export default function routes(router: Router, services: Services): Router {
     allocationsController.getAllocations(req, res)
   })
 
+  get('/accessibility-statement', (req, res) => {
+    res.render('pages/accessibility-statement')
+  })
+
+  get('/privacy-notice', (req, res) => {
+    res.render('pages/privacy-notice')
+  })
+
+  get('/cookie-policy', (req, res) => {
+    res.render('pages/cookie-policy')
+  })
+
   return router
 }

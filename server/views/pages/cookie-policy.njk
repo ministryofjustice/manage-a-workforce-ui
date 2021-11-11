@@ -1,0 +1,23 @@
+{% extends "partials/layout.njk" %}
+
+{% set pageTitle = applicationName + " - Cookie policy" %}
+
+
+{% block navigation %}{% endblock %}
+
+{% block backlink %}
+    {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+    {{ govukBackLink({
+        text: "Back",
+        href: "/"
+    }) }}
+{% endblock %}
+{% block content %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Cookies</h1>
+            <p class="govuk-body">Under construction.</p>
+        </div>
+    </div>
+{% endblock %}

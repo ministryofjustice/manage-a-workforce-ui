@@ -119,4 +119,16 @@ context('Unallocated', () => {
     const authPage = new AuthSignInPage()
     authPage.checkOnPage()
   })
+
+  it('Footer visible on page', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage
+      .footer()
+      .should('contain', 'Accessibility statement')
+      .and('contain', 'Cookies')
+      .and('contain', 'Privacy')
+      .and('contain', 'Open Government Licence v3.0')
+      .and('contain', '© Crown copyright')
+  })
 })

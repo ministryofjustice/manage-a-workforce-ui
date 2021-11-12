@@ -1,15 +1,16 @@
-import express, { Router, Express } from 'express'
+import express, { RequestHandler, Express } from 'express'
 import cookieSession from 'cookie-session'
 import createError from 'http-errors'
 import path from 'path'
 
-import allRoutes from '../index'
 import nunjucksSetup from '../../utils/nunjucksSetup'
 import errorHandler from '../../errorHandler'
 import standardRouter from '../standardRouter'
 import UserService from '../../services/userService'
 import * as auth from '../../authentication/auth'
 import AllocationsService from '../../services/allocationsService'
+import authenticatedRoutes from '../index'
+import unauthenticatedRoutes from '../unauthenticated'
 
 const user = {
   name: 'john smith',
@@ -32,7 +33,7 @@ class MockUserService extends UserService {
   }
 }
 
-function appSetup(route: Router, production: boolean): Express {
+const appSetup = (authenticated: RequestHandler, unauthenticated: RequestHandler, production: boolean): Express => {
   const app = express()
 
   app.set('view engine', 'njk')
@@ -48,19 +49,20 @@ function appSetup(route: Router, production: boolean): Express {
   app.use(cookieSession({ keys: [''] }))
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
-  app.use('/', route)
+  app.use(unauthenticated)
+  app.use(authenticated)
   app.use((req, res, next) => next(createError(404, 'Not found')))
   app.use(errorHandler(production))
 
   return app
 }
 
-export default function appWithAllRoutes({ production = false }: { production?: boolean }): Express {
+// eslint-disable-next-line import/prefer-default-export
+export const appWithAllRoutes = ({ production = false }: { production?: boolean }): Express => {
   auth.default.authenticationMiddleware = () => (req, res, next) => next()
-  return appSetup(
-    allRoutes(standardRouter(new MockUserService()), {
-      allocationsService: {} as AllocationsService,
-    }),
-    production
-  )
+  const authenticated = authenticatedRoutes(standardRouter(new MockUserService()), {
+    allocationsService: {} as AllocationsService,
+  })
+  const unauthenticated = unauthenticatedRoutes()
+  return appSetup(authenticated, unauthenticated, production)
 }

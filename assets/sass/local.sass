@@ -1,5 +1,25 @@
+
 .govuk-main-wrapper
   min-height: 600px
 
 .maw-no-border
   border-bottom: none
+
+
+// Container max width
+.govuk-width-container, .moj-primary-navigation__container, .moj-header__container
+  max-width: 1220px
+  margin: 0 15px
+
+@media (min-width: 40.0625em)
+.govuk-width-container, .moj-primary-navigation__container, .moj-header__container
+  margin: 0 30px
+
+
+@media (min-width: 1020px)
+.govuk-width-container, .moj-primary-navigation__container, .moj-header__container
+  margin: 0 30px
+
+@media (min-width: 1280px)
+.govuk-width-container, .moj-primary-navigation__container, .moj-header__container
+  margin: 0 auto

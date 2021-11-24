@@ -19,8 +19,6 @@ export default class UnallocatedPage extends Page {
 
   tableCaption = (): PageElement => cy.get('caption.govuk-table__caption')
 
-  tableRow = (): PageElement => cy.get('table tbody tr').children()
-
   otherCasesHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
   otherCasesInset = (): PageElement => cy.get('div.govuk-inset-text')

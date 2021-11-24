@@ -1,6 +1,6 @@
 declare namespace Cypress {
   interface Chainable {
-    [x: string]: any
+    getTable()
     /**   * Custom command to signIn. Set failOnStatusCode to false if you expect and non 200 return code
      * @example cy.signIn({ failOnStatusCode: boolean })
      */

@@ -20,6 +20,22 @@ export default {
             initialAppointment: '22 October 2021',
             status: 'Currently managed',
           },
+          {
+            name: 'Sofia Mitchell',
+            crn: 'L786545',
+            tier: 'C1',
+            sentenceDate: '31 October 2021',
+            initialAppointment: '17 November 2021',
+            status: 'Previously managed',
+          },
+          {
+            name: 'John Smith',
+            crn: 'P125643',
+            tier: 'C3',
+            sentenceDate: '23 September 2021',
+            initialAppointment: '15 October 2021',
+            status: 'New to probation',
+          },
         ],
       },
     })

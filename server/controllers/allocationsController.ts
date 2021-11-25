@@ -6,6 +6,9 @@ export default class AllocationsController {
 
   async getAllocations(req: Request, res: Response): Promise<void> {
     const response = await this.allocationsService.getUnallocatedCases(res.locals.user.token)
-    res.render('pages/index', { unallocatedCases: response.length > 99 ? '99+' : response.length })
+    res.render('pages/index', {
+      unallocatedCases: response,
+      casesLength: response.length > 99 ? '99+' : response.length,
+    })
   }
 }

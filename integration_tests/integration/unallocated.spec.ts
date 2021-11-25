@@ -57,7 +57,7 @@ context('Unallocated', () => {
   it('Notification badge visible on page with number of unallocations', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.notificationsBadge().should('contain.text', '1')
+    unallocatedPage.notificationsBadge().should('contain.text', '3')
   })
 
   it('Must show 99+ when unallocationed cases are greater than 99', () => {
@@ -70,7 +70,7 @@ context('Unallocated', () => {
   it('Sub nav visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.subNav().should('contain', 'Unallocated cases (1)')
+    unallocatedPage.subNav().should('contain', 'Unallocated cases (3)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
@@ -80,22 +80,42 @@ context('Unallocated', () => {
     unallocatedPage.subNavLink().should('contain.text', 'Unallocated cases (99+)')
   })
 
-  it('Table visible on page', () => {
-    cy.signIn()
-    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage
-      .tableHeader()
-      .should('contain', 'Name / CRN')
-      .and('contain', 'Tier')
-      .and('contain', 'Sentence date')
-      .and('contain', 'Initial appointment')
-      .and('contain', 'Status')
-      .and('contain', 'Action')
-  })
   it('Table caption visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
     unallocatedPage.tableCaption().should('have.text', 'Unallocated community cases')
+  })
+
+  it('Table visible on page', () => {
+    cy.signIn()
+    cy.get('table')
+      .getTable()
+      .should('deep.equal', [
+        {
+          'Name / CRN': 'Dylan Adam Armstrong',
+          Tier: 'C1',
+          'Sentence date': '17 Oct 2021',
+          'Initial appointment': '22 Oct 2021',
+          Status: 'Currently managed',
+          Action: 'View case',
+        },
+        {
+          'Name / CRN': 'Sofia Mitchell',
+          Tier: 'C1',
+          'Sentence date': '31 Oct 2021',
+          'Initial appointment': '17 Nov 2021',
+          Status: 'Previously managed',
+          Action: 'View case',
+        },
+        {
+          'Name / CRN': 'John Smith',
+          Tier: 'C3',
+          'Sentence date': '23 Sep 2021',
+          'Initial appointment': '15 Oct 2021',
+          Status: 'New to probation',
+          Action: 'View case',
+        },
+      ])
   })
 
   it('Other Unallocated cases visible on page', () => {

@@ -17,8 +17,6 @@ export default class UnallocatedPage extends Page {
 
   noCaseParagraph = (): PageElement => cy.get('p.govuk-\\!-margin-bottom-9')
 
-  tableHeader = (): PageElement => cy.get('table thead tr').children()
-
   tableCaption = (): PageElement => cy.get('caption.govuk-table__caption')
 
   otherCasesHeading = (): PageElement => cy.get('h2.govuk-heading-l')

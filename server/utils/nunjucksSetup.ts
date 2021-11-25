@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import nunjucks from 'nunjucks'
 import express from 'express'
+import dayjs from 'dayjs'
 import * as pathModule from 'path'
 import config from '../config'
 
@@ -45,6 +46,10 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
     }
     const array = fullName.split(' ')
     return `${array[0][0]}. ${array.reverse()[0]}`
+  })
+
+  njkEnv.addFilter('dateFormat', (date: string) => {
+    return dayjs(date).format('D MMM YYYY')
   })
 
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)

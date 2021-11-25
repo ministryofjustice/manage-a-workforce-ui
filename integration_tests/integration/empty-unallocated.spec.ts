@@ -18,7 +18,7 @@ context('Unallocated', () => {
   it('Sub nav link visible on page with no number', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.subNavLink().should('have.text', 'Unallocated cases')
+    unallocatedPage.subNavLink().should('have.text', 'Unallocated community cases')
   })
 
   it('Must show no case list information available', () => {

@@ -70,14 +70,14 @@ context('Unallocated', () => {
   it('Sub nav visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.subNav().should('contain', 'Unallocated cases (3)')
+    unallocatedPage.subNav().should('contain', 'Unallocated community cases (3)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
     cy.task('stubOverOneHundredAllocations')
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.subNavLink().should('contain.text', 'Unallocated cases (99+)')
+    unallocatedPage.subNavLink().should('contain.text', 'Unallocated community cases (99+)')
   })
 
   it('Table caption visible on page', () => {

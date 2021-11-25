@@ -12,8 +12,8 @@
         { text: 'Name / CRN' },
         { text: 'Tier' },
         { text: 'Sentence date' },
-        { text: 'Initial appointment' },
-        { text: 'Status' },
+        { text: 'Induction appointment' },
+        { text: 'Probation status' },
         { text: 'Action' }
     ],
     rows: []
@@ -26,7 +26,7 @@
         { text: item.sentenceDate | dateFormat },
         { text: item.initialAppointment | dateFormat if item.initialAppointment else 'Not booked' },
         { text: item.status },
-        { text: ('<a href="/" class="govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" aria-label="' + a11yTitle + '">' + "View case" + '</a>' ) | safe}
+        { text: ('<a href="/" class="govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" aria-label="Review case">' + "Review case" + '</a>' ) | safe}
     ] -%}
     {{ tableData.rows.push(tableRow) }}
 

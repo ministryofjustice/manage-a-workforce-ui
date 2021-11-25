@@ -25,7 +25,7 @@ export default {
             crn: 'L786545',
             tier: 'C1',
             sentenceDate: '31 October 2021',
-            initialAppointment: '17 November 2021',
+            initialAppointment: null,
             status: 'Previously managed',
           },
           {

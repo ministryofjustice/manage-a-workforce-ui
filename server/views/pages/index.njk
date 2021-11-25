@@ -24,7 +24,7 @@
         { text: item.name },
         { text: item.tier },
         { text: item.sentenceDate | dateFormat },
-        { text: item.initialAppointment | dateFormat },
+        { text: item.initialAppointment | dateFormat if item.initialAppointment else 'Not booked' },
         { text: item.status },
         { text: ('<a href="/" class="govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" aria-label="' + a11yTitle + '">' + "View case" + '</a>' ) | safe}
     ] -%}

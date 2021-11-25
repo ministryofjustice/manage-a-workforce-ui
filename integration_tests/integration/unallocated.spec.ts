@@ -103,7 +103,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Sofia Mitchell',
           Tier: 'C1',
           'Sentence date': '31 Oct 2021',
-          'Initial appointment': '17 Nov 2021',
+          'Initial appointment': 'Not booked',
           Status: 'Previously managed',
           Action: 'View case',
         },

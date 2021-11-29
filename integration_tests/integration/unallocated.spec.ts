@@ -92,7 +92,7 @@ context('Unallocated', () => {
       .getTable()
       .should('deep.equal', [
         {
-          'Name / CRN': 'Dylan Adam Armstrong',
+          'Name / CRN': 'Dylan Adam ArmstrongJ678910',
           Tier: 'C1',
           'Sentence date': '17 Oct 2021',
           'Induction appointment': '22 Oct 2021',
@@ -100,7 +100,7 @@ context('Unallocated', () => {
           Action: 'Review case',
         },
         {
-          'Name / CRN': 'Sofia Mitchell',
+          'Name / CRN': 'Sofia MitchellL786545',
           Tier: 'C1',
           'Sentence date': '31 Oct 2021',
           'Induction appointment': 'Not booked',
@@ -108,7 +108,7 @@ context('Unallocated', () => {
           Action: 'Review case',
         },
         {
-          'Name / CRN': 'John Smith',
+          'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
           'Sentence date': '23 Sep 2021',
           'Induction appointment': '15 Oct 2021',

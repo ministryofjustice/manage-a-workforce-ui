@@ -21,7 +21,7 @@
 
 {% for item in unallocatedCases %}
     {%- set tableRow = [
-        { text: item.name },
+        { text: ('<strong>' + item.name + '</strong><span class="govuk-body-s" style="display: block;">' + item.crn + '</span>') | safe },
         { text: item.tier },
         { text: item.sentenceDate | dateFormat },
         { text: item.initialAppointment | dateFormat if item.initialAppointment else 'Not booked' },

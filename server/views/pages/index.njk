@@ -1,7 +1,7 @@
 {% extends "../partials/layout.njk" %}
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {% from "govuk/components/table/macro.njk" import govukTable %}
-{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set tableData = {
@@ -54,8 +54,9 @@
     {% endif %}
 
             <h2 class="govuk-heading-l">Other unallocated cases</h2>
-            {{ govukInsetText({
-                text: "There may currently be unallocated custody cases on NDelius."
+            {{ govukWarningText({
+               text: "You must also check NDelius for any custody cases that need to be allocated.",
+               iconFallbackText: "Warning"
             }) }}
 
 

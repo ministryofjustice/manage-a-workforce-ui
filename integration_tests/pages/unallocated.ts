@@ -21,8 +21,6 @@ export default class UnallocatedPage extends Page {
 
   otherCasesHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
-  otherCasesInset = (): PageElement => cy.get('div.govuk-inset-text')
-
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 
   footer = (): PageElement => cy.get('.govuk-footer ')
@@ -30,4 +28,8 @@ export default class UnallocatedPage extends Page {
   secondaryText = (): PageElement => cy.get('.maw-secondary')
 
   overdueFlag = (): PageElement => cy.get('.maw-overdue')
+
+  warningIcon = (): PageElement => cy.get('.govuk-warning-text__icon')
+
+  warningText = (): PageElement => cy.get('.govuk-warning-text__text')
 }

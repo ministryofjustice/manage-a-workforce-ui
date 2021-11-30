@@ -74,5 +74,9 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
     }
   })
 
+  njkEnv.addFilter('overdueFlag', (days: string) => {
+    return days === 'Today' || days === 'Tomorrow' || days === 'In 2 days' || days === 'Overdue'
+  })
+
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)
 }

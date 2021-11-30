@@ -21,8 +21,6 @@ export default class UnallocatedPage extends Page {
 
   otherCasesHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
-  otherCasesInset = (): PageElement => cy.get('div.govuk-inset-text')
-
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 
   footer = (): PageElement => cy.get('.govuk-footer ')

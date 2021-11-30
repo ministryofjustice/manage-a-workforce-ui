@@ -104,7 +104,7 @@ context('Unallocated', () => {
           Tier: 'C1',
           'Sentence date': '31 Oct 2021',
           'Induction appointment': 'Not booked',
-          'Probation status': 'Previously managed',
+          'Probation status': 'Previously managed(13 Dec 2019)',
           Action: 'Review case',
         },
         {

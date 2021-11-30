@@ -9,6 +9,7 @@ export interface Allocation {
   sentenceDate: string
   initialAppointment: string
   status: string
+  previousConvictionEndDate: string
 }
 
 export default class AllocationsService {

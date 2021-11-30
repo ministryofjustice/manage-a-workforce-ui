@@ -2,6 +2,7 @@
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{%- from "../components/doubleCell/macro.njk" import doubleCell -%}
 
 {% set cases = unallocatedCases | length  %}
 {% set pageTitle = applicationName + " - Home" %}
@@ -21,11 +22,11 @@
 
 {% for item in unallocatedCases %}
     {%- set tableRow = [
-        { text: ('<strong>' + item.name + '</strong><br /><span class="govuk-body-s">' + item.crn + '</span>') | safe },
+        { text: doubleCell('<strong>' + item.name + '</strong>', item.crn )},
         { text: item.tier },
         { text: item.sentenceDate | dateFormat },
         { text: item.initialAppointment | dateFormat if item.initialAppointment else 'Not booked' },
-        { text: item.status },
+        { text: doubleCell(item.primaryStatus, item.secondaryStatus)},
         { text: ('<a href="/" class="govuk-link--no-visited-state" aria-label="Review case">' + "Review case" + '</a>' ) | safe}
     ] -%}
     {{ tableData.rows.push(tableRow) }}

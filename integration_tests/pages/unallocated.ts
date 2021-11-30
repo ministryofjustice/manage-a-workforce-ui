@@ -26,4 +26,8 @@ export default class UnallocatedPage extends Page {
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 
   footer = (): PageElement => cy.get('.govuk-footer ')
+
+  secondaryText = (): PageElement => cy.get('.maw-secondary')
+
+  overdueFlag = (): PageElement => cy.get('.maw-overdue')
 }

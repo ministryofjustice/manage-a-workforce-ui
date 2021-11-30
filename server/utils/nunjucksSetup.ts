@@ -52,5 +52,33 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
     return dayjs(date).format('D MMM YYYY')
   })
 
+  njkEnv.addFilter('calculateDays', (date: string) => {
+    const appt = dayjs(date).format('D MMM YYYY')
+    const today = dayjs().format('D MMM YYYY')
+
+    const diffInDays = dayjs(appt).diff(today, 'day')
+
+    switch (diffInDays) {
+      case 0:
+        return 'Today'
+      case 1:
+        return 'Tomorrow'
+      case 2:
+        return 'In 2 days'
+      case 3:
+        return 'In 3 days'
+      case 4:
+        return 'In 4 days'
+      case 5:
+        return 'In 5 days'
+      case 6:
+        return 'In 6 days'
+      case 7:
+        return 'In 7 days'
+      default:
+        return 'Overdue'
+    }
+  })
+
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)
 }

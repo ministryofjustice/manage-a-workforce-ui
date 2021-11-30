@@ -20,11 +20,12 @@
 } %}
 
 {% for item in unallocatedCases %}
+    {% set days = item.initialAppointment | calculateDays %}
     {%- set tableRow = [
         { text: ('<strong>' + item.name + '</strong><br /><span class="govuk-body-s">' + item.crn + '</span>') | safe },
         { text: item.tier },
         { text: item.sentenceDate | dateFormat },
-        { text: item.initialAppointment | dateFormat if item.initialAppointment else 'Not booked' },
+        { text: (item.initialAppointment | dateFormat + ('<span class="maw-secondary maw-overdue">' + days + '</span>' if days === 'Today' or days === 'Tomorrow' or days === 'In 2 days' or days === 'Overdue' else '<span class="maw-secondary">' + days + '</span>')) | safe if item.initialAppointment else 'Not booked'},
         { text: item.status },
         { text: ('<a href="/" class="govuk-link--no-visited-state" aria-label="Review case">' + "Review case" + '</a>' ) | safe}
     ] -%}

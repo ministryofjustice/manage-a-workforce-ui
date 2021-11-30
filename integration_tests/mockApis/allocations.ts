@@ -1,4 +1,5 @@
 import { SuperAgentRequest } from 'superagent'
+import dayjs from 'dayjs'
 import { stubFor } from './wiremock'
 
 export default {
@@ -17,7 +18,7 @@ export default {
             crn: 'J678910',
             tier: 'C1',
             sentenceDate: '17 October 2021',
-            initialAppointment: '22 October 2021',
+            initialAppointment: `${dayjs().format('D MMM YYYY')}`,
             status: 'Currently managed',
           },
           {
@@ -35,6 +36,30 @@ export default {
             sentenceDate: '23 September 2021',
             initialAppointment: '15 October 2021',
             status: 'New to probation',
+          },
+          {
+            name: 'Kacey Ray',
+            crn: 'E124321',
+            tier: 'C2',
+            sentenceDate: '23 November 2021',
+            initialAppointment: `${dayjs().add(1, 'day')}`,
+            status: 'New to probation',
+          },
+          {
+            name: 'Andrew Williams',
+            crn: 'P567654',
+            tier: 'C1',
+            sentenceDate: '26 November 2021',
+            initialAppointment: `${dayjs().add(2, 'day')}`,
+            status: 'Previously managed',
+          },
+          {
+            name: 'Sarah Siddall',
+            crn: 'C567654',
+            tier: 'C2',
+            sentenceDate: '26 November 2021',
+            initialAppointment: `${dayjs().add(3, 'day')}`,
+            status: 'Previously managed',
           },
         ],
       },

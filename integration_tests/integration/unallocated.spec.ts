@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import UnallocatedPage from '../pages/unallocated'
 import AuthSignInPage from '../pages/authSignIn'
 import Page from '../pages/page'
@@ -57,7 +58,7 @@ context('Unallocated', () => {
   it('Notification badge visible on page with number of unallocations', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.notificationsBadge().should('contain.text', '3')
+    unallocatedPage.notificationsBadge().should('contain.text', '6')
   })
 
   it('Must show 99+ when unallocationed cases are greater than 99', () => {
@@ -70,7 +71,7 @@ context('Unallocated', () => {
   it('Sub nav visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.subNav().should('contain', 'Unallocated community cases (3)')
+    unallocatedPage.subNav().should('contain', 'Unallocated community cases (6)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
@@ -95,7 +96,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Dylan Adam ArmstrongJ678910',
           Tier: 'C1',
           'Sentence date': '17 Oct 2021',
-          'Induction appointment': '22 Oct 2021',
+          'Induction appointment': `${dayjs().format('D MMM YYYY')}Today`,
           'Probation status': 'Currently managed',
           Action: 'Review case',
         },
@@ -111,8 +112,32 @@ context('Unallocated', () => {
           'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
           'Sentence date': '23 Sep 2021',
-          'Induction appointment': '15 Oct 2021',
+          'Induction appointment': '15 Oct 2021Overdue',
           'Probation status': 'New to probation',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Kacey RayE124321',
+          Tier: 'C2',
+          'Sentence date': '23 Nov 2021',
+          'Induction appointment': `${dayjs().add(1, 'day').format('D MMM YYYY')}Tomorrow`,
+          'Probation status': 'New to probation',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Andrew WilliamsP567654',
+          Tier: 'C1',
+          'Sentence date': '26 Nov 2021',
+          'Induction appointment': `${dayjs().add(2, 'day').format('D MMM YYYY')}In 2 days`,
+          'Probation status': 'Previously managed',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Sarah SiddallC567654',
+          Tier: 'C2',
+          'Sentence date': '26 Nov 2021',
+          'Induction appointment': `${dayjs().add(3, 'day').format('D MMM YYYY')}In 3 days`,
+          'Probation status': 'Previously managed',
           Action: 'Review case',
         },
       ])
@@ -150,5 +175,23 @@ context('Unallocated', () => {
       .and('contain', 'Privacy')
       .and('contain', 'Open Government Licence v3.0')
       .and('contain', '© Crown copyright')
+  })
+
+  it('Secondary text is visible on page', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage
+      .secondaryText()
+      .should('contain', 'Overdue')
+      .and('contain', 'Today')
+      .and('contain', 'Tomorrow')
+      .and('contain', 'In 2 days')
+      .and('contain', 'In 3 days')
+  })
+
+  it('Overdue flag is visible on page', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage.overdueFlag().should('exist')
   })
 })

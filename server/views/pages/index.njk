@@ -4,7 +4,6 @@
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 {%- from "../components/doubleCell/macro.njk" import doubleCell -%}
 
-{% set cases = unallocatedCases | length  %}
 {% set pageTitle = applicationName + " - Home" %}
 {% set tableData = {
     caption: 'Unallocated community cases',
@@ -21,11 +20,12 @@
 } %}
 
 {% for item in unallocatedCases %}
+    {% set days = item.initialAppointment | calculateDays %}
     {%- set tableRow = [
         { text: doubleCell('<strong>' + item.name + '</strong>', item.crn )},
         { text: item.tier },
         { text: item.sentenceDate | dateFormat },
-        { text: item.initialAppointment | dateFormat if item.initialAppointment else 'Not booked' },
+        { text: (item.initialAppointment | dateFormat + ('<span class="maw-secondary maw-overdue">' + days + '</span>' if days | overdueFlag else '<span class="maw-secondary">' + days + '</span>')) | safe if item.initialAppointment else 'Not booked'},
         { text: doubleCell(item.primaryStatus, item.secondaryStatus)},
         { text: ('<a href="/" class="govuk-link--no-visited-state" aria-label="Review case">' + "Review case" + '</a>' ) | safe}
     ] -%}
@@ -41,7 +41,7 @@
         {{ mojSubNavigation({
           label: 'Sub navigation',
           items: [{
-            text: unallocatedCaseSubnavHeading,
+            text: 'Unallocated community cases' +  (' (' + casesLength | getCaseCount + ')' if casesLength) ,
             href: '#',
             active: true
           }]
@@ -50,7 +50,7 @@
 
         {{ govukTable(tableData) }}
 
-    {% if not unallocatedCases | length %}
+    {% if not casesLength %}
           <p class="govuk-!-margin-bottom-9">No case list information available.</p>
     {% endif %}
 

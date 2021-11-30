@@ -52,6 +52,10 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
     return dayjs(date).format('D MMM YYYY')
   })
 
+  njkEnv.addFilter('getCaseCount', (cases: number) => {
+    return cases > 99 ? '99+' : `${cases}`
+  })
+
   njkEnv.addFilter('calculateDays', (date: string) => {
     const appt = dayjs(date).format('D MMM YYYY')
     const today = dayjs().format('D MMM YYYY')

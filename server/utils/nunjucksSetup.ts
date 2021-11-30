@@ -58,23 +58,13 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
 
     const diffInDays = dayjs(appt).diff(today, 'day')
 
-    switch (diffInDays) {
-      case 0:
+    switch (true) {
+      case diffInDays === 0:
         return 'Today'
-      case 1:
+      case diffInDays === 1:
         return 'Tomorrow'
-      case 2:
-        return 'In 2 days'
-      case 3:
-        return 'In 3 days'
-      case 4:
-        return 'In 4 days'
-      case 5:
-        return 'In 5 days'
-      case 6:
-        return 'In 6 days'
-      case 7:
-        return 'In 7 days'
+      case diffInDays >= 2:
+        return `In ${diffInDays} days`
       default:
         return 'Overdue'
     }

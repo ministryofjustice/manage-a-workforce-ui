@@ -30,4 +30,8 @@ export default class UnallocatedPage extends Page {
   secondaryText = (): PageElement => cy.get('.maw-secondary')
 
   overdueFlag = (): PageElement => cy.get('.maw-overdue')
+
+  warningIcon = (): PageElement => cy.get('.govuk-warning-text__icon')
+
+  warningText = (): PageElement => cy.get('.govuk-warning-text__text')
 }

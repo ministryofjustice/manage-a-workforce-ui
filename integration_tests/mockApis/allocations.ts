@@ -18,7 +18,7 @@ export default {
             crn: 'J678910',
             tier: 'C1',
             sentenceDate: '2021-10-17',
-            initialAppointment: '2021-10-22',
+            initialAppointment: `${dayjs().format('YYYY-MM-D')}`,
             status: 'Currently managed',
           },
           {

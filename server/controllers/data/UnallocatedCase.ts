@@ -41,7 +41,7 @@ export default class UnallocatedCase implements IUnallocatedCase {
     this.sentenceDate = sentenceDate
     this.initialAppointment = initialAppointment
     this.primaryStatus = primaryStatus
-    if (primaryStatus === 'Previously managed') {
+    if (primaryStatus === 'Previously managed' && previousConvictionEndDate) {
       this.secondaryStatus = `(${dayjs(previousConvictionEndDate).format(config.dateFormat)})`
     }
   }

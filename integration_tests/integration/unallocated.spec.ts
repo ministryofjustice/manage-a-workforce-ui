@@ -143,13 +143,13 @@ context('Unallocated', () => {
       ])
   })
 
-  it('Other Unallocated cases visible on page', () => {
+  it('Unallocated custody cases visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.otherCasesHeading().should('have.text', 'Other unallocated cases')
+    unallocatedPage.otherCasesHeading().should('have.text', 'Unallocated custody cases')
   })
 
-  it('Other Unallocated cases warning visible on page', () => {
+  it('Unallocated custody cases warning visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
     unallocatedPage.warningIcon().should('exist')

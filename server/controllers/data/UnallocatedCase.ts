@@ -1,17 +1,7 @@
 import dayjs from 'dayjs'
 import config from '../../config'
 
-export interface IUnallocatedCase {
-  name: string
-  crn: string
-  tier: string
-  sentenceDate: string
-  initialAppointment: string
-  primaryStatus: string
-  secondaryStatus: string
-}
-
-export default class UnallocatedCase implements IUnallocatedCase {
+export default class UnallocatedCase {
   name: string
 
   crn: string

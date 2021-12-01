@@ -49,7 +49,7 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
   })
 
   njkEnv.addFilter('dateFormat', (date: string) => {
-    return dayjs(date).format('D MMM YYYY')
+    return dayjs(date).format(config.dateFormat)
   })
 
   njkEnv.addFilter('getCaseCount', (cases: number) => {

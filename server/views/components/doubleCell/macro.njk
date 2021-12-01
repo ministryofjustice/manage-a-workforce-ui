@@ -1,0 +1,6 @@
+{% macro doubleCell(first, second) -%}
+{{ first | safe}}
+{% if second -%}
+<br><span class="govuk-body-s">{{ second }}</span>
+{%- endif %}
+{%- endmacro %}

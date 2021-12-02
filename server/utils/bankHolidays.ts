@@ -15,7 +15,7 @@ const getBankHolidays = async () => {
 
 const applyBankHols = async () => {
   return getBankHolidays().then(data => {
-    const dates = data.data['england-and-wales'].events.map((holiday: any) => holiday.date)
+    const dates = data.data['england-and-wales'].events.map(holiday => holiday.date)
     moment.updateLocale('en', {
       holidays: dates,
       holidayFormat: 'YYYY-MM-DD',

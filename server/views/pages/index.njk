@@ -25,7 +25,7 @@
         { text: doubleCell('<strong>' + item.name + '</strong>', item.crn )},
         { text: item.tier },
         { text: item.sentenceDate | dateFormat },
-        { text: (item.initialAppointment | dateFormat + ('<span class="maw-secondary maw-overdue">' + days + '</span>' if days | overdueFlag else '<span class="maw-secondary">' + days + '</span>')) | safe if item.initialAppointment else 'Not booked'},
+        { text: (item.initialAppointment | dateFormat + ('<span class="maw-secondary maw-overdue">' + days + '</span>' if days | overdueFlag else '<span class="maw-secondary">' + days + '</span>')) | safe if item.initialAppointment else ('Not booked' + '<span class="maw-secondary maw-overdue">' + (item.sentenceDate  | calculateBusinessDays + '</span>')) | safe},
         { text: doubleCell(item.primaryStatus, item.secondaryStatus)},
         { text: ('<a href="/" class="govuk-link--no-visited-state" aria-label="Review case">' + "Review case" + '</a>' ) | safe}
     ] -%}

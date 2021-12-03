@@ -3,15 +3,18 @@ import nunjucks from 'nunjucks'
 import express from 'express'
 import dayjs from 'dayjs'
 import * as pathModule from 'path'
+import moment from 'moment-business-days'
 import config from '../config'
+import applyBankHols from './bankHolidays'
 
 const production = process.env.NODE_ENV === 'production'
 
 export default function nunjucksSetup(app: express.Express, path: pathModule.PlatformPath): void {
   app.set('view engine', 'njk')
-
   app.locals.asset_path = '/assets/'
   app.locals.applicationName = 'Manage A Workforce Ui'
+
+  applyBankHols()
 
   // Cachebusting version string
   if (production) {
@@ -76,6 +79,22 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
 
   njkEnv.addFilter('overdueFlag', (days: string) => {
     return days === 'Today' || days === 'Tomorrow' || days === 'In 2 days' || days === 'Overdue'
+  })
+
+  njkEnv.addFilter('calculateBusinessDays', (sentenceDate: string) => {
+    const addFiveBusinessDays = moment(sentenceDate, 'D MMM YYYY').businessAdd(5, 'days').format('D MMM YYYY')
+    const apptDue = moment(addFiveBusinessDays, 'D MMM YYYY').businessDiff(moment())
+
+    if (apptDue > 5) {
+      return 'Overdue'
+    }
+    if (apptDue === 1) {
+      return 'Overdue tomorrow'
+    }
+    if (apptDue === 0) {
+      return 'Overdue today'
+    }
+    return `Due in ${apptDue} days`
   })
 
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)

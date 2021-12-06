@@ -82,8 +82,8 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
   })
 
   njkEnv.addFilter('calculateBusinessDays', (sentenceDate: string) => {
-    const addFiveBusinessDays = moment(sentenceDate, 'D MMM YYYY').businessAdd(5, 'days').format('D MMM YYYY')
-    const apptDue = moment(addFiveBusinessDays, 'D MMM YYYY').businessDiff(moment())
+    const addFiveBusinessDays = moment(sentenceDate, 'YYYY-MM-DD').businessAdd(5, 'days').format('YYYY-MM-DD')
+    const apptDue = moment(addFiveBusinessDays, 'YYYY-MM-DD').businessDiff(moment())
 
     if (apptDue > 5) {
       return 'Overdue'

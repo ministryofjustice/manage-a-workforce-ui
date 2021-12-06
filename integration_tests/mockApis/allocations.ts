@@ -25,7 +25,7 @@ export default {
             name: 'Sofia Mitchell',
             crn: 'L786545',
             tier: 'C1',
-            sentenceDate: `${dayjs().format('D MMM YYYY')}`,
+            sentenceDate: `${dayjs().format('YYYY-MM-D')}`,
             initialAppointment: null,
             status: 'Previously managed',
             previousConvictionEndDate: '2019-12-13',

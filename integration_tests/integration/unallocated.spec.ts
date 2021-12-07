@@ -58,7 +58,7 @@ context('Unallocated', () => {
   it('Notification badge visible on page with number of unallocations', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.notificationsBadge().should('contain.text', '7')
+    unallocatedPage.notificationsBadge().should('contain.text', '8')
   })
 
   it('Must show 99+ when unallocationed cases are greater than 99', () => {
@@ -71,7 +71,7 @@ context('Unallocated', () => {
   it('Sub nav visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.subNav().should('contain', 'Unallocated community cases (7)')
+    unallocatedPage.subNav().should('contain', 'Unallocated community cases (8)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
@@ -103,7 +103,7 @@ context('Unallocated', () => {
         {
           'Name / CRN': 'Sofia MitchellL786545',
           Tier: 'C1',
-          'Sentence date': `${dayjs().format('D MMM YYYY')}`,
+          'Sentence date': '1 Sep 2021',
           'Induction appointment': 'Not bookedDue in 5 days',
           'Probation status': 'Previously managed(13 Dec 2019)',
           Action: 'Review case',
@@ -143,8 +143,16 @@ context('Unallocated', () => {
         {
           'Name / CRN': 'Mick JonesC234432',
           Tier: 'C1',
-          'Sentence date': '17 Nov 2021',
-          'Induction appointment': 'Not bookedOverdue',
+          'Sentence date': '25 Aug 2021',
+          'Induction appointment': 'Not bookedDue tomorrow',
+          'Probation status': 'Previously managed',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Sarah SmithC254565',
+          Tier: 'C1',
+          'Sentence date': '24 Aug 2021',
+          'Induction appointment': 'Not bookedDue today',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },

@@ -92,7 +92,7 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
       return 'Due tomorrow'
     }
     if (apptDue === 0) {
-      return 'Overdue today'
+      return 'Due today'
     }
     return `Due in ${apptDue} days`
   })

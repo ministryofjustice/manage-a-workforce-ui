@@ -27,7 +27,7 @@ context('Unallocated', () => {
   it('Probation Delivery Unit visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.probationDeliveryUnit().should('contain.text', 'Gateshead and South Tyneside')
+    unallocatedPage.probationDeliveryUnit().should('contain.text', 'North Wales')
   })
 
   it('Primary nav visible on page', () => {

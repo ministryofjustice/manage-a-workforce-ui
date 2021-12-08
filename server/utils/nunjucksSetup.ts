@@ -88,13 +88,10 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
     if (apptDue > 5) {
       return 'Overdue'
     }
-    if (apptDue === 1) {
-      return 'Due tomorrow'
-    }
     if (apptDue === 0) {
       return 'Due today'
     }
-    return `Due in ${apptDue} days`
+    return `Due on ${dayjs(addFiveBusinessDays).format(config.dateFormat)}`
   })
 
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)

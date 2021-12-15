@@ -59,40 +59,5 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
     return cases > 99 ? '99+' : `${cases}`
   })
 
-  njkEnv.addFilter('calculateDays', (date: string) => {
-    const appt = dayjs(date).format('D MMM YYYY')
-    const today = dayjs().format('D MMM YYYY')
-
-    const diffInDays = dayjs(appt).diff(today, 'day')
-
-    switch (true) {
-      case diffInDays === 0:
-        return 'Today'
-      case diffInDays === 1:
-        return 'Tomorrow'
-      case diffInDays >= 2:
-        return `In ${diffInDays} days`
-      default:
-        return 'Overdue'
-    }
-  })
-
-  njkEnv.addFilter('overdueFlag', (days: string) => {
-    return days === 'Today' || days === 'Tomorrow' || days === 'In 2 days' || days === 'Overdue'
-  })
-
-  njkEnv.addFilter('calculateBusinessDays', (sentenceDate: string) => {
-    const addFiveBusinessDays = moment(sentenceDate, 'YYYY-MM-DD').businessAdd(5, 'days').format('YYYY-MM-DD')
-    const apptDue = moment(addFiveBusinessDays, 'YYYY-MM-DD').businessDiff(moment(config.currentDate, 'YYYY-MM-DD'))
-
-    if (apptDue > 5) {
-      return 'Overdue'
-    }
-    if (apptDue === 0) {
-      return 'Due today'
-    }
-    return `Due on ${dayjs(addFiveBusinessDays).format(config.dateFormat)}`
-  })
-
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)
 }

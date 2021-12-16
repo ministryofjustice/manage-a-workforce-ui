@@ -77,6 +77,14 @@ export default {
             initialAppointment: null,
             status: 'Previously managed',
           },
+          {
+            name: 'Fiona Sipsmith',
+            crn: 'G574565',
+            tier: 'C1',
+            sentenceDate: '2021-08-16',
+            initialAppointment: null,
+            status: 'Previously managed',
+          },
         ],
       },
     })

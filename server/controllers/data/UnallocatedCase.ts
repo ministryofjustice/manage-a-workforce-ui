@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import moment from 'moment-business-days'
+import moment, { Moment } from 'moment-business-days'
 import config from '../../config'
 
 export default class UnallocatedCase {
@@ -68,15 +68,24 @@ export default class UnallocatedCase {
   }
 
   calculateBusinessDays(sentenceDate: string): string {
-    const addFiveBusinessDays = moment(sentenceDate, 'YYYY-MM-DD').businessAdd(5, 'days')
-    const apptDue = addFiveBusinessDays.businessDiff(moment(config.currentDate(), 'YYYY-MM-DD'))
+    const lastDayOfSLA = moment(sentenceDate, 'YYYY-MM-DD').businessAdd(5, 'days')
+    const today = moment(config.currentDate(), 'YYYY-MM-DD')
 
-    if (apptDue > 5) {
+    if (this.isBeforeToday(lastDayOfSLA, today)) {
       return 'Overdue'
     }
-    if (apptDue === 0) {
+
+    if (this.isToday(lastDayOfSLA, today)) {
       return 'Due today'
     }
-    return `Due on ${addFiveBusinessDays.format(config.dateFormat)}`
+    return `Due on ${lastDayOfSLA.format(config.dateFormat)}`
+  }
+
+  isToday(date: Moment, today: Moment): boolean {
+    return date.isSame(today, 'day')
+  }
+
+  isBeforeToday(date: Moment, today: Moment): boolean {
+    return date.isBefore(today, 'day')
   }
 }

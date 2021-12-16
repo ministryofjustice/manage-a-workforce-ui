@@ -3,9 +3,7 @@ import nunjucks from 'nunjucks'
 import express from 'express'
 import dayjs from 'dayjs'
 import * as pathModule from 'path'
-import moment from 'moment-business-days'
 import config from '../config'
-import applyBankHols from './bankHolidays'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -13,8 +11,6 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
   app.set('view engine', 'njk')
   app.locals.asset_path = '/assets/'
   app.locals.applicationName = 'Manage A Workforce Ui'
-
-  applyBankHols()
 
   // Cachebusting version string
   if (production) {

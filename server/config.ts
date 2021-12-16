@@ -7,7 +7,7 @@ function get<T>(name: string, fallback: T, options = { requireInProduction: fals
   if (process.env[name]) {
     return process.env[name]
   }
-  if (fallback !== undefined && (!production || !options.requireInProduction)) {
+  if (!production || !options.requireInProduction) {
     return fallback
   }
   throw new Error(`Missing env var ${name}`)
@@ -82,5 +82,5 @@ export default {
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   dateFormat: 'D MMM YYYY',
-  currentDate: get('CURRENT_DATE', moment().format('YYYY-MM-DD')),
+  currentDate: () => get('CURRENT_DATE', moment().format('YYYY-MM-DD')),
 }

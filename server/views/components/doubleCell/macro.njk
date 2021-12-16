@@ -1,6 +1,6 @@
-{% macro doubleCell(first, second) -%}
+{% macro doubleCell(first, second, secondStyle) -%}
 {{ first | safe}}
 {% if second -%}
-<br><span class="govuk-body-s">{{ second }}</span>
+<br><span class="{{ secondStyle }}">{{ second }}
 {%- endif %}
 {%- endmacro %}

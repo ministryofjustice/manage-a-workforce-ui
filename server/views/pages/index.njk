@@ -10,13 +10,29 @@
     captionClasses: 'govuk-heading-l',
     attributes: {
     'data-module': 'moj-sortable-table'
-    },
+    }, 
     head: [
-        { text: 'Name / CRN' },
-        { text: 'Tier' },
-        { text: 'Sentence date' },
-        { text: 'Induction appointment' },
-        { text: 'Probation status' },
+        { text: 'Name / CRN',
+      attributes: {
+        "aria-sort": "none"
+      } 
+      },
+        { text: 'Tier' ,
+      attributes: {
+        "aria-sort": "none"
+      }},
+        { text: 'Sentence date' ,
+      attributes: {
+        "aria-sort": "none"
+      }},
+        { text: 'Induction appointment' ,
+      attributes: {
+        "aria-sort": "none"
+      }},
+        { text: 'Probation status' ,
+      attributes: {
+        "aria-sort": "none"
+      }},
         { text: 'Action' }
     ],
     rows: []

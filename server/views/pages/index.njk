@@ -24,7 +24,7 @@
         { text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' )},
         { text: item.tier },
         { text: item.sentenceDate | dateFormat },
-        { text: doubleCell(item.primaryInitialAppointment,item.secondaryInitialAppointment, item.secondaryInitialAppointmentStyle )},
+        { text: doubleCell(item.primaryInitialAppointment,item.secondaryInitialAppointment, 'maw-secondary maw-overdue' )},
         { text: doubleCell(item.primaryStatus, item.secondaryStatus, 'govuk-body-s')},
         { text: ('<a href="/" class="govuk-link--no-visited-state" aria-label="Review case">' + "Review case" + '</a>' ) | safe}
     ] -%}

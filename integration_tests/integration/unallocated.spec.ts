@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import UnallocatedPage from '../pages/unallocated'
 import AuthSignInPage from '../pages/authSignIn'
 import Page from '../pages/page'
@@ -95,8 +94,8 @@ context('Unallocated', () => {
         {
           'Name / CRN': 'Dylan Adam ArmstrongJ678910',
           Tier: 'C1',
-          'Sentence date': '17 Oct 2021',
-          'Induction appointment': `${dayjs().format('D MMM YYYY')}Today`,
+          'Sentence date': '1 Sep 2021',
+          'Induction appointment': '1 Sep 2021Today',
           'Probation status': 'Currently managed',
           Action: 'Review case',
         },
@@ -111,32 +110,32 @@ context('Unallocated', () => {
         {
           'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
-          'Sentence date': '23 Sep 2021',
-          'Induction appointment': '15 Oct 2021Overdue',
+          'Sentence date': '23 Jul 2021',
+          'Induction appointment': '17 Aug 2021Overdue',
           'Probation status': 'New to probation',
           Action: 'Review case',
         },
         {
           'Name / CRN': 'Kacey RayE124321',
           Tier: 'C2',
-          'Sentence date': '23 Nov 2021',
-          'Induction appointment': `${dayjs().add(1, 'day').format('D MMM YYYY')}Tomorrow`,
+          'Sentence date': '1 Sep 2021',
+          'Induction appointment': '2 Sep 2021Tomorrow',
           'Probation status': 'New to probation',
           Action: 'Review case',
         },
         {
           'Name / CRN': 'Andrew WilliamsP567654',
           Tier: 'C1',
-          'Sentence date': '26 Nov 2021',
-          'Induction appointment': `${dayjs().add(2, 'day').format('D MMM YYYY')}In 2 days`,
+          'Sentence date': '1 Sep 2021',
+          'Induction appointment': '3 Sep 2021In 2 days',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },
         {
           'Name / CRN': 'Sarah SiddallC567654',
           Tier: 'C2',
-          'Sentence date': '26 Nov 2021',
-          'Induction appointment': `${dayjs().add(3, 'day').format('D MMM YYYY')}In 3 days`,
+          'Sentence date': '1 Sep 2021',
+          'Induction appointment': '4 Sep 2021In 3 days',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },

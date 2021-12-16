@@ -1,5 +1,4 @@
 import { SuperAgentRequest } from 'superagent'
-import dayjs from 'dayjs'
 import { stubFor } from './wiremock'
 
 export default {
@@ -17,8 +16,8 @@ export default {
             name: 'Dylan Adam Armstrong',
             crn: 'J678910',
             tier: 'C1',
-            sentenceDate: '2021-10-17',
-            initialAppointment: `${dayjs().format('YYYY-MM-D')}`,
+            sentenceDate: '2021-09-01',
+            initialAppointment: '2021-09-01',
             status: 'Currently managed',
           },
           {
@@ -34,32 +33,32 @@ export default {
             name: 'John Smith',
             crn: 'P125643',
             tier: 'C3',
-            sentenceDate: '2021-09-23',
-            initialAppointment: '2021-10-15',
+            sentenceDate: '2021-07-23',
+            initialAppointment: '2021-08-17',
             status: 'New to probation',
           },
           {
             name: 'Kacey Ray',
             crn: 'E124321',
             tier: 'C2',
-            sentenceDate: '2021-11-23',
-            initialAppointment: `${dayjs().add(1, 'day')}`,
+            sentenceDate: '2021-09-01',
+            initialAppointment: '2021-09-02',
             status: 'New to probation',
           },
           {
             name: 'Andrew Williams',
             crn: 'P567654',
             tier: 'C1',
-            sentenceDate: '2021-11-26',
-            initialAppointment: `${dayjs().add(2, 'day')}`,
+            sentenceDate: '2021-09-01',
+            initialAppointment: '2021-09-03',
             status: 'Previously managed',
           },
           {
             name: 'Sarah Siddall',
             crn: 'C567654',
             tier: 'C2',
-            sentenceDate: '2021-11-26',
-            initialAppointment: `${dayjs().add(3, 'day')}`,
+            sentenceDate: '2021-09-01',
+            initialAppointment: '2021-09-04',
             status: 'Previously managed',
           },
           {

@@ -15,8 +15,6 @@ export default class UnallocatedCase {
 
   secondaryInitialAppointment: string
 
-  secondaryInitialAppointmentStyle: string
-
   primaryStatus: string
 
   secondaryStatus: string
@@ -49,19 +47,11 @@ export default class UnallocatedCase {
       this.primaryInitialAppointment = 'Not booked'
       this.secondaryInitialAppointment = this.calculateBusinessDays(sentenceDate)
     }
-    this.secondaryInitialAppointmentStyle = this.getSecondaryInitialAppointmentStyling(this.secondaryInitialAppointment)
-  }
-
-  getSecondaryInitialAppointmentStyling(days: string): string {
-    if (days === 'Today' || days === 'Tomorrow' || days === 'In 2 days' || days === 'Overdue') {
-      return 'maw-secondary maw-overdue'
-    }
-    return 'maw-secondary'
   }
 
   calculateDays(date: string): string {
     const appt = dayjs(date).format('D MMM YYYY')
-    const today = dayjs().format('D MMM YYYY')
+    const today = dayjs(config.currentDate()).format('D MMM YYYY')
 
     const diffInDays = dayjs(appt).diff(today, 'day')
 

@@ -78,8 +78,8 @@ export default class UnallocatedCase {
   }
 
   calculateBusinessDays(sentenceDate: string): string {
-    const addFiveBusinessDays = moment(sentenceDate, 'YYYY-MM-DD').businessAdd(5, 'days').format('YYYY-MM-DD')
-    const apptDue = moment(addFiveBusinessDays, 'YYYY-MM-DD').businessDiff(moment(config.currentDate, 'YYYY-MM-DD'))
+    const addFiveBusinessDays = moment(sentenceDate, 'YYYY-MM-DD').businessAdd(5, 'days')
+    const apptDue = addFiveBusinessDays.businessDiff(moment(config.currentDate, 'YYYY-MM-DD'))
 
     if (apptDue > 5) {
       return 'Overdue'
@@ -87,6 +87,6 @@ export default class UnallocatedCase {
     if (apptDue === 0) {
       return 'Due today'
     }
-    return `Due on ${dayjs(addFiveBusinessDays).format(config.dateFormat)}`
+    return `Due on ${addFiveBusinessDays.format(config.dateFormat)}`
   }
 }

@@ -10,6 +10,7 @@ export interface Allocation {
   initialAppointment: string
   status: string
   previousConvictionEndDate: string
+  offenderManager: OffenderManager
 }
 
 export default class AllocationsService {
@@ -26,4 +27,8 @@ export default class AllocationsService {
       headers: { Accept: 'application/json' },
     })) as Allocation[]
   }
+}
+interface OffenderManager {
+  forenames: string
+  surname: string
 }

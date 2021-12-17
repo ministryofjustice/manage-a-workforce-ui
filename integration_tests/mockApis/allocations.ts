@@ -19,6 +19,10 @@ export default {
             sentenceDate: '2021-09-01',
             initialAppointment: '2021-09-01',
             status: 'Currently managed',
+            offenderManager: {
+              forenames: 'Antonio',
+              surname: 'LoSardo',
+            },
           },
           {
             name: 'Sofia Mitchell',

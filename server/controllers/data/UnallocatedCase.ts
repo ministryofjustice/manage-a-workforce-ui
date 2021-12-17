@@ -1,6 +1,8 @@
 import dayjs from 'dayjs'
 import moment, { Moment } from 'moment-business-days'
+
 import config from '../../config'
+import OffenderManager from './OffenderManager'
 
 export default class UnallocatedCase {
   name: string
@@ -26,7 +28,8 @@ export default class UnallocatedCase {
     sentenceDate: string,
     initialAppointment: string,
     primaryStatus: string,
-    previousConvictionEndDate: string
+    previousConvictionEndDate: string,
+    offenderManager: OffenderManager
   ) {
     this.name = name
     this.crn = crn
@@ -36,6 +39,9 @@ export default class UnallocatedCase {
     this.primaryStatus = primaryStatus
     if (primaryStatus === 'Previously managed' && previousConvictionEndDate) {
       this.secondaryStatus = `(${dayjs(previousConvictionEndDate).format(config.dateFormat)})`
+    }
+    if (primaryStatus === 'Currently managed' && offenderManager) {
+      this.secondaryStatus = `(${offenderManager.forenames} ${offenderManager.surname})`
     }
   }
 

@@ -96,7 +96,7 @@ context('Unallocated', () => {
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
           'Induction appointment': '1 Sep 2021Today',
-          'Probation status': 'Currently managed',
+          'Probation status': 'Currently managed(Antonio LoSardo)',
           Action: 'Review case',
         },
         {

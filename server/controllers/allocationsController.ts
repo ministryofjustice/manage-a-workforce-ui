@@ -16,7 +16,8 @@ export default class AllocationsController {
           value.sentenceDate,
           value.initialAppointment,
           value.status,
-          value.previousConvictionEndDate
+          value.previousConvictionEndDate,
+          value.offenderManager
         )
     )
     res.render('pages/index', {

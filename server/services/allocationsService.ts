@@ -13,6 +13,10 @@ export interface Allocation {
   offenderManager: OffenderManager
 }
 
+export interface OffenderManager {
+  forenames: string
+  surname: string
+}
 export default class AllocationsService {
   constructor(private readonly config: ApiConfig) {}
 
@@ -27,8 +31,4 @@ export default class AllocationsService {
       headers: { Accept: 'application/json' },
     })) as Allocation[]
   }
-}
-interface OffenderManager {
-  forenames: string
-  surname: string
 }

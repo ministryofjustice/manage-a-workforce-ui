@@ -127,4 +127,28 @@ export default {
       },
     })
   },
+  stubGetUnallocatedCase: (): SuperAgentRequest => {
+    return stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          sentenceDate: '2021-09-01',
+          initialAppointment: '2021-09-01',
+          status: 'Currently managed',
+          offenderManager: {
+            forenames: 'Antonio',
+            surname: 'LoSardo',
+          },
+        },
+      },
+    })
+  },
 }

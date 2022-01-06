@@ -60,7 +60,7 @@ context('Unallocated', () => {
     unallocatedPage.notificationsBadge().should('contain.text', '9')
   })
 
-  it('Must show 99+ when unallocationed cases are greater than 99', () => {
+  it('Must show 99+ when unallocated cases are greater than 99', () => {
     cy.task('stubOverOneHundredAllocations')
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)

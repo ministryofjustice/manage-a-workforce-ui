@@ -16,6 +16,7 @@ export interface Allocation {
 export interface OffenderManager {
   forenames: string
   surname: string
+  grade: string
 }
 export default class AllocationsService {
   constructor(private readonly config: ApiConfig) {}

@@ -22,6 +22,7 @@ export default {
             offenderManager: {
               forenames: 'Antonio',
               surname: 'LoSardo',
+              grade: 'SPO',
             },
           },
           {
@@ -88,6 +89,18 @@ export default {
             sentenceDate: '2021-08-16',
             initialAppointment: null,
             status: 'Previously managed',
+          },
+          {
+            name: 'Bill Turner',
+            crn: 'F5635632',
+            tier: 'D1',
+            sentenceDate: '2021-09-01',
+            initialAppointment: '2021-09-01',
+            status: 'Currently managed',
+            offenderManager: {
+              forenames: 'Richard',
+              surname: 'Moore',
+            },
           },
         ],
       },

@@ -57,7 +57,7 @@ context('Unallocated', () => {
   it('Notification badge visible on page with number of unallocations', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.notificationsBadge().should('contain.text', '9')
+    unallocatedPage.notificationsBadge().should('contain.text', '10')
   })
 
   it('Must show 99+ when unallocationed cases are greater than 99', () => {
@@ -70,7 +70,7 @@ context('Unallocated', () => {
   it('Sub nav visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.subNav().should('contain', 'Unallocated community cases (9)')
+    unallocatedPage.subNav().should('contain', 'Unallocated community cases (10)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
@@ -96,7 +96,7 @@ context('Unallocated', () => {
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
           'Induction appointment': '1 Sep 2021Today',
-          'Probation status': 'Currently managed(Antonio LoSardo)',
+          'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
           Action: 'Review case',
         },
         {
@@ -161,6 +161,14 @@ context('Unallocated', () => {
           'Sentence date': '16 Aug 2021',
           'Induction appointment': 'Not bookedOverdue',
           'Probation status': 'Previously managed',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Bill TurnerF5635632',
+          Tier: 'D1',
+          'Sentence date': '1 Sep 2021',
+          'Induction appointment': '1 Sep 2021Today',
+          'Probation status': 'Currently managed(Richard Moore)',
           Action: 'Review case',
         },
       ])

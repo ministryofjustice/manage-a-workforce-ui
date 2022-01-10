@@ -41,7 +41,8 @@ export default class UnallocatedCase {
       this.secondaryStatus = `(${dayjs(previousConvictionEndDate).format(config.dateFormat)})`
     }
     if (primaryStatus === 'Currently managed' && offenderManager) {
-      this.secondaryStatus = `(${offenderManager.forenames} ${offenderManager.surname})`
+      const grade = offenderManager.grade ? `, ${offenderManager.grade}` : ''
+      this.secondaryStatus = `(${offenderManager.forenames} ${offenderManager.surname}${grade})`
     }
   }
 

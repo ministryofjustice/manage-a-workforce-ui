@@ -1,0 +1,33 @@
+{% extends "partials/layout.njk" %}
+{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+{% set pageTitle = applicationName + " - Case view" %}
+
+{% block content %}
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ data.name or name}}</h1>
+
+    {{ mojSubNavigation({
+        label: 'Sub navigation',
+        items: [
+            {
+                text: 'Summary',
+                href: '/summary',
+                active: title === 'Summary'
+            },
+            {
+                text: 'Probation record',
+                href: '/probation-record',
+                active: title === 'Probation record'
+            },
+            {
+                text: 'Risk',
+                href: '/risk',
+                active: title === 'Risk'
+            }
+        ]
+    }) }}
+
+    {% block caseContent %}{% endblock %}
+
+{% endblock %}
+

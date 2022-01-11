@@ -21,5 +21,7 @@ export default (on: (string, Record) => void): void => {
     stubGetNoAllocations: allocations.stubGetNoAllocations,
 
     stubOverOneHundredAllocations: allocations.stubOverOneHundredAllocations,
+
+    stubGetUnallocatedCase: allocations.stubGetUnallocatedCase,
   })
 }

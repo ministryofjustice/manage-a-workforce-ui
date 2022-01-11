@@ -25,4 +25,39 @@ export default class AllocationsController {
       casesLength: response.length,
     })
   }
+
+  async getUnallocatedCase(req: Request, res: Response, crn): Promise<void> {
+    const response: Allocation = await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn)
+    const { session } = req
+    session.name = response.name
+
+    res.render('pages/summary', {
+      data: response,
+      title: 'Summary',
+    })
+  }
+
+  getProbationRecord(req: Request, res: Response) {
+    const { session } = req
+    res.render('pages/probation-record', {
+      title: 'Probation record',
+      name: session.name,
+    })
+  }
+
+  getRisk(req: Request, res: Response) {
+    const { session } = req
+    res.render('pages/risk', {
+      title: 'Risk',
+      name: session.name,
+    })
+  }
+
+  getSummary(req: Request, res: Response) {
+    const { session } = req
+    res.render('pages/summary', {
+      title: 'Summary',
+      name: session.name,
+    })
+  }
 }

@@ -1,13 +1,16 @@
-import createApp from './app'
+import { Application } from 'express'
+import configureApplication from './app'
 import HmppsAuthClient from './data/hmppsAuthClient'
+import { createRedisClient } from './data/redisClient'
+import TokenStore from './data/tokenStore'
 import UserService from './services/userService'
-import config from './config'
 import AllocationsService from './services/allocationsService'
+import config from './config'
 
-const hmppsAuthClient = new HmppsAuthClient()
-const userService = new UserService(hmppsAuthClient)
-const allocationsService = new AllocationsService(config.apis.allocationsService)
+export default async function createApplication(): Promise<Application> {
+  const hmppsAuthClient = new HmppsAuthClient(new TokenStore(createRedisClient()))
+  const userService = new UserService(hmppsAuthClient)
+  const allocationsService = new AllocationsService(config.apis.allocationsService)
 
-const app = createApp(userService, allocationsService)
-
-export default app
+  return configureApplication(userService, allocationsService)
+}

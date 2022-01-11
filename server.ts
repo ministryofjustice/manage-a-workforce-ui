@@ -8,9 +8,15 @@ import { initialiseAppInsights, buildAppInsightsClient } from './server/utils/az
 initialiseAppInsights()
 buildAppInsightsClient()
 
-import app from './server/index'
+import createApplication from './server/index'
 import logger from './logger'
 
-app.listen(app.get('port'), () => {
-  logger.info(`Server listening on port ${app.get('port')}`)
-})
+createApplication()
+  .then(app => {
+    app.listen(app.get('port'), () => {
+      logger.info(`Server listening on port: ${app.get('port')}`)
+    })
+  })
+  .catch(error => {
+    logger.error(`Failed to start application: ${error.message}`)
+  })

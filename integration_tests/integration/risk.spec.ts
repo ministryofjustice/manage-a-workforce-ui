@@ -26,4 +26,12 @@ context('Risk', () => {
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.riskHeading().should('contain', 'Risk')
   })
+
+  it('Allocate button visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.visit('/J678910/case-view')
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.button().should('contain', 'Allocate')
+  })
 })

@@ -32,4 +32,12 @@ context('Summary', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.subNav().should('contain', 'Summary').and('contain', 'Probation record').and('contain', 'Risk')
   })
+
+  it('Allocate button visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.visit('/J678910/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.button().should('contain', 'Allocate')
+  })
 })

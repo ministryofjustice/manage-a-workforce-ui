@@ -26,4 +26,12 @@ context('Probation record', () => {
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
   })
+
+  it('Allocate button visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.visit('/J678910/case-view')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.button().should('contain', 'Allocate')
+  })
 })

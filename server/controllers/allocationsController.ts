@@ -66,4 +66,10 @@ export default class AllocationsController {
       name: session.name,
     })
   }
+
+  getAllocate(req: Request, res: Response) {
+    res.render('pages/allocate', {
+      title: 'Allocate',
+    })
+  }
 }

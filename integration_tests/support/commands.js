@@ -25,4 +25,29 @@ const getTable = (subject, options = {}) => {
   )
 }
 
+const getSummaryList = subject => {
+  if (subject.get().length > 1) {
+    throw new Error(`Selector "${subject.selector}" returned more than 1 element.`)
+  }
+
+  const summaryListElement = subject.get()[0]
+
+  const rows = [...summaryListElement.querySelectorAll('.govuk-summary-list__row')].map(row => {
+    const key = row
+      .querySelector('.govuk-summary-list__key')
+      .textContent.trim()
+      .replace(/\r?\n|\r/, '')
+    const value = row
+      .querySelector('.govuk-summary-list__value')
+      .textContent.trim()
+      .replace(/\r?\n|\r/, '')
+    return { [key]: value }
+  })
+
+  return rows.reduce((acc, curr) => {
+    return { ...acc, ...curr }
+  }, {})
+}
+
 Cypress.Commands.add('getTable', { prevSubject: true }, getTable)
+Cypress.Commands.add('getSummaryList', { prevSubject: true }, getSummaryList)

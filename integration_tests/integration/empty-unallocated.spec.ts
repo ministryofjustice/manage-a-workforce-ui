@@ -1,7 +1,7 @@
 import UnallocatedPage from '../pages/unallocated'
 import Page from '../pages/page'
 
-context('Unallocated', () => {
+context('No unallocated cases', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')

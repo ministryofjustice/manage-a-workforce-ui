@@ -34,5 +34,9 @@ export default function routes(router: Router, services: Services): Router {
     allocationsController.getSummary(req, res)
   })
 
+  get('/allocate', (req, res) => {
+    allocationsController.getAllocate(req, res)
+  })
+
   return router
 }

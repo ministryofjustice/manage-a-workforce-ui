@@ -4,30 +4,48 @@
 
 {% block content %}
 
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ data.name or name}}</h1>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ data.name or name }}</h1>
+            <span class="govuk-caption-xl">Tier: {{ data.tier or tier }}</span>
+            <span class="govuk-caption-xl">CRN: {{ data.crn or crn }}</span>
+        </div>
 
-    {{ mojSubNavigation({
-        label: 'Sub navigation',
-        items: [
-            {
-                text: 'Summary',
-                href: '/summary',
-                active: title === 'Summary'
-            },
-            {
-                text: 'Probation record',
-                href: '/probation-record',
-                active: title === 'Probation record'
-            },
-            {
-                text: 'Risk',
-                href: '/risk',
-                active: title === 'Risk'
-            }
-        ]
-    }) }}
 
-    {% block caseContent %}{% endblock %}
+        <div class="govuk-grid-column-one-third">
+            <a class="govuk-!-margin-top-8 govuk-button" href="/allocate" role="button" draggable="false"
+               data-module="govuk-button">Allocate case</a>
+        </div>
+    </div>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            {{ mojSubNavigation({
+                label: 'Sub navigation',
+                items: [
+                    {
+                        text: 'Summary',
+                        href: '/' + crn + '/case-view',
+                        active: title === 'Summary'
+                    },
+                    {
+                        text: 'Probation record',
+                        href: '/probation-record',
+                        active: title === 'Probation record'
+                    },
+                    {
+                        text: 'Risk',
+                        href: '/risk',
+                        active: title === 'Risk'
+                    }
+                ]
+            }) }}
+
+
+            {% block caseContent %}{% endblock %}
+
+        </div>
+    </div>
 
 {% endblock %}
 

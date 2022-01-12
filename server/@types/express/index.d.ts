@@ -6,6 +6,8 @@ declare module 'express-session' {
     returnTo: string
     nowInMinutes: number
     name: string
+    crn: string
+    tier: string
   }
 }
 

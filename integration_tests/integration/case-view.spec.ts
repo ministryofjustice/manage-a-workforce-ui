@@ -30,5 +30,10 @@ context('Unallocated', () => {
     cy.get('a[href*="J678910/case-view"]').click()
     const caseViewPage = Page.verifyOnPage(CaseViewPage)
     caseViewPage.personalDetailsTitle().should('have.text', 'Personal details')
+    cy.get('#personal-details .govuk-summary-list').getSummaryList().should('deep.equal', {
+      Name: 'Dylan Adam Armstrong',
+      Gender: 'Male',
+      'Date of birth': '27 Sep 1984 (37 years old)',
+    })
   })
 })

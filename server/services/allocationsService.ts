@@ -11,6 +11,9 @@ export interface Allocation {
   status: string
   previousConvictionEndDate: string
   offenderManager: OffenderManager
+  gender: string
+  dateOfBirth: string
+  age: number
 }
 
 export interface OffenderManager {

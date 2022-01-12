@@ -30,6 +30,8 @@ export default class AllocationsController {
     const response: Allocation = await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn)
     const { session } = req
     session.name = response.name
+    session.crn = crn
+    session.tier = response.tier
 
     res.render('pages/summary', {
       data: response,
@@ -42,6 +44,8 @@ export default class AllocationsController {
     res.render('pages/probation-record', {
       title: 'Probation record',
       name: session.name,
+      crn: session.crn,
+      tier: session.tier,
     })
   }
 
@@ -50,6 +54,8 @@ export default class AllocationsController {
     res.render('pages/risk', {
       title: 'Risk',
       name: session.name,
+      crn: session.crn,
+      tier: session.tier,
     })
   }
 

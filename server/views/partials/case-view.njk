@@ -5,13 +5,15 @@
 {% block content %}
 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ data.name or name}}</h1>
+    <span class="govuk-caption-xl">Tier: {{ data.tier or tier }}</span>
+    <span class="govuk-caption-xl">CRN: {{ data.crn or crn }}</span>
 
     {{ mojSubNavigation({
         label: 'Sub navigation',
         items: [
             {
                 text: 'Summary',
-                href: '/summary',
+                href: '/' + crn + '/case-view',
                 active: title === 'Summary'
             },
             {

@@ -6,4 +6,6 @@ export default class CaseViewPage extends Page {
   }
 
   subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
+
+  personalDetailsTitle = (): PageElement => cy.get('#personal-details > header > h2 ')
 }

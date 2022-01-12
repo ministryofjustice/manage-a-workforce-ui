@@ -160,6 +160,9 @@ export default {
             forenames: 'Antonio',
             surname: 'LoSardo',
           },
+          gender: 'Male',
+          dateOfBirth: '1984-09-27',
+          age: 37,
         },
       },
     })

@@ -1,5 +1,5 @@
 {% extends "partials/case-view.njk" %}
-
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% set pageTitle = applicationName + " - Summary" %}
 
 
@@ -8,6 +8,42 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <h2 class="govuk-heading-l">Summary</h2>
+        <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id ="personal-details">
+            <header class="app-summary-card__header">
+                <h2 class="app-summary-card__title">Personal details</h2>
+            </header>
+            <div class="app-summary-card__body">
+                {{ govukSummaryList({
+                    rows: [
+                        {
+                            key: {
+                                text: "Name"
+                            },
+                            value: {
+                                text: data.name
+                            }
+                        },
+                        {
+                            key: {
+                                text: "Gender"
+                            },
+                            value: {
+                                text: data.gender
+                            }
+                        },
+                        {
+                            key: {
+                                text: "Date of birth"
+                            },
+                            value: {
+                                text: data.dateOfBirth  | dateFormat + ' (' + data.age + ' years old)'
+                            }
+                        }
+                    ]
+                })}}
+            </div>
+        </section>
+
     </div>
 </div>
 

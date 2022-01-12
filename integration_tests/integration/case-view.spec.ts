@@ -23,4 +23,12 @@ context('Unallocated', () => {
     const caseViewPage = Page.verifyOnPage(CaseViewPage)
     caseViewPage.subNav().should('contain', 'Summary').and('contain', 'Probation record').and('contain', 'Risk')
   })
+
+  it('Personal details visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.get('a[href*="J678910/case-view"]').click()
+    const caseViewPage = Page.verifyOnPage(CaseViewPage)
+    caseViewPage.personalDetailsTitle().should('have.text', 'Personal details')
+  })
 })

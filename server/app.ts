@@ -19,6 +19,7 @@ import authorisationMiddleware from './middleware/authorisationMiddleware'
 import AllocationsService from './services/allocationsService'
 import unauthenticatedRoutes from './routes/unauthenticated'
 import applyBankHols from './utils/bankHolidays'
+import setUpBackButtonEnabled from './middleware/setUpBackButtonEnabled'
 
 export default function createApp(
   userService: UserService,
@@ -35,6 +36,7 @@ export default function createApp(
   app.use(setUpWebSession())
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
+  app.use(setUpBackButtonEnabled())
   nunjucksSetup(app, path)
   app.use(setUpAuthentication())
   app.use(unauthenticatedRoutes())

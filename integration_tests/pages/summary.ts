@@ -14,4 +14,6 @@ export default class SummaryPage extends Page {
   button = (): PageElement => cy.get('.govuk-button')
 
   personalDetailsTitle = (): PageElement => cy.get('#personal-details > header > h2 ')
+
+  backLink = (): PageElement => cy.get('.govuk-back-link')
 }

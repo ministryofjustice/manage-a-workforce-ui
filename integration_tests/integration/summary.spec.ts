@@ -53,4 +53,20 @@ context('Summary', () => {
       'Date of birth': '27 Sep 1984 (37 years old)',
     })
   })
+
+  it('Back button displayed if coming from previous page', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.get('a[href*="J678910/case-view"]').click()
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.backLink().should('have.text', 'Back to unallocated cases')
+  })
+
+  it('Back button is not displayed if going directly onto page', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.visit('/J678910/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.backLink().should('not.exist')
+  })
 })

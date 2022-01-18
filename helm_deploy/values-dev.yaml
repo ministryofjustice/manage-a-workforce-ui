@@ -6,7 +6,6 @@ generic-service:
 
   ingress:
     host: workforce-management-dev.hmpps.service.justice.gov.uk
-    contextColour: green
 
   env:
     INGRESS_URL: "https://workforce-management-dev.hmpps.service.justice.gov.uk"

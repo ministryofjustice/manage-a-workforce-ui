@@ -15,6 +15,7 @@ generic-service:
     host: app-hostname.local    # override per environment
     tlsSecretName: manage-a-workforce-ui-cert
     path: /
+    contextColour: green
 
   livenessProbe:
     httpGet:

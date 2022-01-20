@@ -1,13 +1,34 @@
 {% extends "../partials/layout.njk" %}
 
-{% set pageTitle = applicationName + " - Error" %}
+{% if status === 404  %}
+  {% set pageTitle = applicationName + " - Page not found" %}
+{% else %}
+  {% set pageTitle = applicationName + " - Error" %}
+{% endif %}
 
 {% block content %}
+  {% if status === 404  %}
+    <h1 class="govuk-heading-l">Page not found</h1>
+    <p class="govuk-body">If you entered a web address, check it is correct.</p>
+    <p class="govuk-body">You can <a class="govuk-link" href="/">go to the homepage</a> to find the information you need.</p>
+  {% endif %}
 
-  <div class="app-container">
-    <h1>{{ message }}</h1>
-    <h2>{{ status }}</h2>
-    <pre>{{ stack }}</pre>
-  </div>
+  {% if status === 500  %}
+    <h1 class="govuk-heading-l">Sorry, there is a problem with the service</h1>
+    <p class="govuk-body">Please try again later.</p>
+  {% endif %}
+
+  {% if status === 503  %}
+    <h1 class="govuk-heading-l">Sorry, the service is unavailable</h1>
+    <p class="govuk-body">Please try again later.</p>
+  {% endif %}
+
+  {% if message and message | length %}
+    <p class="govuk-body">{{ message }}</p>
+  {% endif %}
+
+  {% if stack and stack | length %}
+    <p class="govuk-body">{{ stack }}</p>
+  {% endif %}
 
 {% endblock %}

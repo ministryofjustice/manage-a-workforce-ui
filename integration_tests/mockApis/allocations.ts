@@ -163,6 +163,22 @@ export default {
           gender: 'Male',
           dateOfBirth: '1984-09-27',
           age: 37,
+          offences: [
+            {
+              mainOffence: true,
+              mainCategory: 'Common assault and battery',
+              subCategory: 'Contrary to section 39 of the Criminal Justice Act 1988.',
+            },
+          ],
+          expectedSentenceEndDate: '2021-12-16',
+          requirements: [
+            {
+              mainCategory: 'Unpaid Work',
+              subCategory: 'Regular',
+              length: 100,
+              lengthUnit: 'Hours',
+            },
+          ],
         },
       },
     })

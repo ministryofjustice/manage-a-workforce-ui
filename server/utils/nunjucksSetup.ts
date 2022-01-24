@@ -51,6 +51,10 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
     return dayjs(date).format(config.dateFormat)
   })
 
+  njkEnv.addFilter('dateDifference', (startDate: string, endDate: string) => {
+    return dayjs(endDate).diff(startDate, 'month')
+  })
+
   njkEnv.addFilter('getCaseCount', (cases: number) => {
     return cases > 99 ? '99+' : `${cases}`
   })

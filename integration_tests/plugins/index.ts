@@ -23,5 +23,7 @@ export default (on: (string, Record) => void): void => {
     stubOverOneHundredAllocations: allocations.stubOverOneHundredAllocations,
 
     stubGetUnallocatedCase: allocations.stubGetUnallocatedCase,
+
+    stubGetUnallocatedCaseMultiOffences: allocations.stubGetUnallocatedCaseMultiOffences,
   })
 }

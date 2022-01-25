@@ -48,7 +48,7 @@
         </div>
     </section>
 
-    <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title">
+    <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id ="sentence">
         <header class="app-summary-card__header">
             <h2 class="app-summary-card__title">Sentence</h2>
         </header>
@@ -56,33 +56,30 @@
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">Offence</dt>
-                    {%- for offence in data.offences  if data.offences %}
                         <dd class="govuk-summary-list__value">
                             {% if offences | length == 1 %}
+                                {%- for offence in data.offences  if data.offences %}
                                 <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
                                     {{  offence.mainCategory}}
                                 </h3>
+                                    <p class="govuk-body-s maw-secondary-text-col"><strong>{{ offence.subCategory }}</strong></p>
+                                {% endfor -%}
                             {% else %}
                                 <ol class="govuk-list govuk-list--number">
+                                    {%- for offence in data.offences  if data.offences %}
                                     <li>{{ offence.mainCategory }}</li>
+                                        <p class="govuk-body-s maw-secondary-text-col"><strong>{{ offence.subCategory }}</strong></p>
+                                    {% endfor -%}
                                 </ol>
                             {% endif %}
-                            <p class="govuk-body-s maw-secondary-text-col"><strong>{{ offence.subCategory }}</strong></p>
                         </dd>
-                    {% endfor -%}
-                </div>
-
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Detail</dt>
-                    <dd class="govuk-summary-list__value">
-                    </dd>
                 </div>
 
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">Order</dt>
                     <dd class="govuk-summary-list__value">
                         <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
-                            Community order ({{ data.sentenceDate | dateDifference(data.expectedSentenceEndDate)}} months)
+                            Community order ({{ data.sentenceDate | dateDifference(data.expectedSentenceEndDate)}})
                         </h3>
                         <ul class="govuk-list govuk-list--bullet">
                             <li>Start date: {{ data.sentenceDate | dateFormat }}</li>
@@ -96,7 +93,7 @@
                     <dd class="govuk-summary-list__value">
                         <ul class="govuk-list govuk-list--bullet">
                             {%- for requirement in data.requirements  if data.requirements %}
-                            <li>{{ requirement.mainCategory }}</li>
+                            <li>{{ requirement.mainCategory}}: {{ requirement.length}} {{ requirement.lengthUnit }}</li>
                             {% endfor -%}
                         </ul>
                     </dd>

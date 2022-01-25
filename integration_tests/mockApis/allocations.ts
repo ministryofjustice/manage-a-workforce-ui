@@ -183,4 +183,68 @@ export default {
       },
     })
   },
+
+  stubGetUnallocatedCaseMultiOffences: (): SuperAgentRequest => {
+    return stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/L786545`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'L786545',
+          tier: 'C1',
+          sentenceDate: '2021-09-01',
+          initialAppointment: '2021-09-01',
+          status: 'Previously managed',
+          offenderManager: {
+            forenames: 'Sarah',
+            surname: 'Banks',
+          },
+          gender: 'Female',
+          dateOfBirth: '1994-11-17',
+          age: 27,
+          offences: [
+            {
+              mainOffence: true,
+              mainCategory: 'Common assault and battery',
+              subCategory: 'Contrary to section 39 of the Criminal Justice Act 1988.',
+            },
+            {
+              mainCategory: 'Attempt theft from the person of another',
+              subCategory: 'Contrary to section 1(1) of the Criminal Attempts Act 1981.',
+            },
+            {
+              mainCategory: 'Assault by beating',
+              subCategory: 'Contrary to section 39 of the Criminal Justice Act 1988.',
+            },
+          ],
+          expectedSentenceEndDate: '2021-09-28',
+          requirements: [
+            {
+              mainCategory: 'Unpaid Work',
+              subCategory: 'Regular',
+              length: 100,
+              lengthUnit: 'Hours',
+            },
+            {
+              mainCategory: 'Rehabilitation Activity Requirement (RAR)',
+              subCategory: 'Regular',
+              length: 20,
+              lengthUnit: 'Days',
+            },
+            {
+              mainCategory: 'Court - Accredited Programme - Building Better Relationships',
+              subCategory: 'Regular',
+              length: 20,
+              lengthUnit: 'Days',
+            },
+          ],
+        },
+      },
+    })
+  },
 }

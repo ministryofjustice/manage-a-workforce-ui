@@ -36,11 +36,11 @@ const getSummaryList = subject => {
     const key = row
       .querySelector('.govuk-summary-list__key')
       .textContent.trim()
-      .replace(/\r?\n|\r/, '')
+      .replace(/\s{2,}/g, ' ')
     const value = row
       .querySelector('.govuk-summary-list__value')
       .textContent.trim()
-      .replace(/\r?\n|\r/, '')
+      .replace(/\s{2,}/g, ' ')
     return { [key]: value }
   })
 

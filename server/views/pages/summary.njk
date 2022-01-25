@@ -58,7 +58,7 @@
                     <dt class="govuk-summary-list__key">Offence</dt>
                         <dd class="govuk-summary-list__value">
                             {% if offences | length == 1 %}
-                                {%- for offence in data.offences  if data.offences %}
+                                {%- for offence in offences  if offences %}
                                 <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
                                     {{  offence.mainCategory}}
                                 </h3>
@@ -66,7 +66,7 @@
                                 {% endfor -%}
                             {% else %}
                                 <ol class="govuk-list govuk-list--number">
-                                    {%- for offence in data.offences  if data.offences %}
+                                    {%- for offence in offences  if offences %}
                                     <li>{{ offence.mainCategory }}</li>
                                         <p class="govuk-body-s maw-secondary-text-col"><strong>{{ offence.subCategory }}</strong></p>
                                     {% endfor -%}

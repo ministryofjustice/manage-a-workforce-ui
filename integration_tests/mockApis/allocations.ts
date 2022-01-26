@@ -170,7 +170,7 @@ export default {
               subCategory: 'Contrary to section 39 of the Criminal Justice Act 1988.',
             },
           ],
-          expectedSentenceEndDate: '2021-12-16',
+          expectedSentenceEndDate: '2021-09-28',
           requirements: [
             {
               mainCategory: 'Unpaid Work',
@@ -197,7 +197,7 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'L786545',
           tier: 'C1',
-          sentenceDate: '2021-09-01',
+          sentenceDate: '2021-09-02',
           initialAppointment: '2021-09-01',
           status: 'Previously managed',
           offenderManager: {
@@ -222,7 +222,7 @@ export default {
               subCategory: 'Contrary to section 39 of the Criminal Justice Act 1988.',
             },
           ],
-          expectedSentenceEndDate: '2021-09-28',
+          expectedSentenceEndDate: '2021-12-01',
           requirements: [
             {
               mainCategory: 'Unpaid Work',

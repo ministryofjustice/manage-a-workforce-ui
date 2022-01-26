@@ -63,7 +63,7 @@ context('Summary', () => {
     cy.get('#sentence .govuk-summary-list').getSummaryList().should('deep.equal', {
       Offence: 'Common assault and battery Contrary to section 39 of the Criminal Justice Act 1988.',
       Order: 'Community order (3 months) Start date: 1 Sep 2021 End date: 16 Dec 2021',
-      Requirements: 'Unpaid Work: 100 Hours',
+      Requirements: 'Unpaid Work: Regular 100 Hours',
     })
   })
 
@@ -78,7 +78,7 @@ context('Summary', () => {
         'Common assault and battery Contrary to section 39 of the Criminal Justice Act 1988. Attempt theft from the person of another Contrary to section 1(1) of the Criminal Attempts Act 1981. Assault by beating Contrary to section 39 of the Criminal Justice Act 1988.',
       Order: 'Community order (27 days) Start date: 1 Sep 2021 End date: 28 Sep 2021',
       Requirements:
-        'Unpaid Work: 100 Hours Rehabilitation Activity Requirement (RAR): 20 Days Court - Accredited Programme - Building Better Relationships: 20 Days',
+        'Unpaid Work: Regular 100 Hours Rehabilitation Activity Requirement (RAR): Regular 20 Days Court - Accredited Programme - Building Better Relationships: Regular 20 Days',
     })
   })
 

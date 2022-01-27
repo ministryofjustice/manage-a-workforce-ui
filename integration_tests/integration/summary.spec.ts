@@ -82,6 +82,21 @@ context('Summary', () => {
     })
   })
 
+  it('Case details visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.get('a[href*="J678910/case-view"]').click()
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.caseDetailsTitle().should('have.text', 'Case details')
+    cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
+      PNC: 'D/9874483AB',
+      'CPS pack': 'Missing',
+      'Pre-convictions': 'Missing',
+      'Pre-sentence reportFast': '27 Jan 2022',
+      'Last OASys assessment': '27 Jan 2022',
+    })
+  })
+
   it('Back button displayed if coming from previous page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()

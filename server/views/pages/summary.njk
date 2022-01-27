@@ -146,7 +146,7 @@
                         text: 'Last OASys assessment'
                     },
                         value: {
-                        text: (data.assessment.lastAssessedOn | dateFormat if data.assessment.lastAssessedOn else '<span class="moj-badge moj-badge--red moj-badge--large">Missing</span>' | safe )
+                        text: (data.assessment.lastAssessedOn | dateFormat if data.assessment.lastAssessedOn else '<span class="moj-badge moj-badge--black moj-badge--large">No assessment created</span>' | safe )
                     }
                     }
                 ]

@@ -108,7 +108,7 @@ context('Summary', () => {
       'CPS pack': 'Missing',
       'Pre-convictions': 'Missing',
       'Pre-sentence report': 'No report created',
-      'Last OASys assessment': 'Missing',
+      'Last OASys assessment': 'No assessment created',
     })
   })
 

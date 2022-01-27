@@ -107,8 +107,8 @@ context('Summary', () => {
       PNC: 'A/8404713BA',
       'CPS pack': 'Missing',
       'Pre-convictions': 'Missing',
-      'Pre-sentence report': 'Missing',
-      'Last OASys assessment': 'Missing',
+      'Pre-sentence report': 'No report created',
+      'Last OASys assessment': 'No assessment created',
     })
   })
 

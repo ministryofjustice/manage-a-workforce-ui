@@ -34,4 +34,24 @@ context('Probation record', () => {
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.button().should('contain', 'Allocate')
   })
+
+  it('Current order sub-heading visible on page with body text', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.visit('/J678910/case-view')
+    cy.get('a[href*="/probation-record"]').click()
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.subHeading().should('contain', 'Current order')
+    probationRecordPage.bodyText().should('contain', 'No current orders.')
+  })
+
+  it('Previous orders sub-heading visible on page with body text', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.visit('/J678910/case-view')
+    cy.get('a[href*="/probation-record"]').click()
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.subHeading().should('contain', 'Previous orders')
+    probationRecordPage.bodyText().should('contain', 'No previous orders.')
+  })
 })

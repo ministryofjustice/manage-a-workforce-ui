@@ -5,7 +5,22 @@
 
 {% block caseContent %}
 
-            <h2 class="govuk-heading-l">Probation record</h2>
-            <p class="govuk-body">Under construction.</p>
+    <h2 class="govuk-heading-l">Probation record</h2>
+
+    {% if not currentOrder %}
+
+        <h3 class="govuk-heading-m">Current order</h3>
+        <p class="govuk-body">No current orders.</p>
+
+    {% endif %}
+
+    {% if not previousOrders %}
+
+        <h3 class="govuk-heading-m">Previous orders</h3>
+        <p class="govuk-body">No previous orders.</p>
+
+    {% endif %}
+
+
 
 {% endblock %}

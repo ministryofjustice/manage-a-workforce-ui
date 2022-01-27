@@ -102,6 +102,59 @@
         </div>
     </section>
 
+    <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id ="case-details">
+        <header class="app-summary-card__header">
+            <h2 class="app-summary-card__title">Case details</h2>
+        </header>
+        <div class="app-summary-card__body">
+            {{ govukSummaryList({
+                rows: [
+                    {
+                        key: {
+                        text: "PNC"
+                    },
+                        value: {
+                        text: data.pncNumber
+                    }
+                    },
+                    {
+                        key: {
+                        text: "CPS pack"
+                    },
+                        value: {
+                        html: '<span class="moj-badge moj-badge--red moj-badge--large">Missing</span>'
+                    }
+                    },
+                    {
+                        key: {
+                        text: "Pre-convictions"
+                    },
+                        value: {
+                        html: '<span class="moj-badge moj-badge--red moj-badge--large">Missing</span>'
+                    }
+                    },
+                    {
+                        key: {
+                        html: 'Pre-sentence report' + ('<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + data.courtReport.description + '</span>' if data.courtReport.description)
+                    },
+                        value: {
+                        text: (data.courtReport.completedDate | dateFormat if data.courtReport.completedDate else '<span class="moj-badge moj-badge--red moj-badge--large">Missing</span>' | safe )
+                    }
+                    },
+                    {
+                        key: {
+                        text: 'Last OASys assessment'
+                    },
+                        value: {
+                        text: (data.assessment.lastAssessedOn | dateFormat if data.assessment.lastAssessedOn else '<span class="moj-badge moj-badge--red moj-badge--large">Missing</span>' | safe )
+                    }
+                    }
+                ]
+            })}}
+        </div>
+    </section>
+
+
 {% endblock %}
 
 

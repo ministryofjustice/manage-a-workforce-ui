@@ -179,6 +179,15 @@ export default {
               lengthUnit: 'Hours',
             },
           ],
+          pncNumber: 'D/9874483AB',
+          courtReport: {
+            code: 'CJF',
+            description: 'Fast',
+            completedDate: '2022-01-27T10:54:32.868Z',
+          },
+          assessment: {
+            lastAssessedOn: '2022-01-27T10:54:32.869Z',
+          },
         },
       },
     })
@@ -243,6 +252,7 @@ export default {
               lengthUnit: 'Days',
             },
           ],
+          pncNumber: 'A/8404713BA',
         },
       },
     })

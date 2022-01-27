@@ -97,6 +97,21 @@ context('Summary', () => {
     })
   })
 
+  it('Case details visible on page with missing reports and assessments', () => {
+    cy.task('stubGetUnallocatedCaseMultiOffences')
+    cy.signIn()
+    cy.get('a[href*="L786545/case-view"]').click()
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.caseDetailsTitle().should('have.text', 'Case details')
+    cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
+      PNC: 'A/8404713BA',
+      'CPS pack': 'Missing',
+      'Pre-convictions': 'Missing',
+      'Pre-sentence report': 'Missing',
+      'Last OASys assessment': 'Missing',
+    })
+  })
+
   it('Back button displayed if coming from previous page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()

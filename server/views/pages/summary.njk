@@ -135,10 +135,10 @@
                     },
                     {
                         key: {
-                        html: 'Pre-sentence report' + '<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + data.courtReport.description + '</span>'
+                        html: 'Pre-sentence report' + ('<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + data.courtReport.description + '</span>' if data.courtReport.description)
                     },
                         value: {
-                        text: data.courtReport.completedDate | dateFormat
+                        text: (data.courtReport.completedDate | dateFormat if data.courtReport.completedDate else '<span class="moj-badge moj-badge--red moj-badge--large">Missing</span>' | safe )
                     }
                     },
                     {
@@ -146,7 +146,7 @@
                         text: 'Last OASys assessment'
                     },
                         value: {
-                        text: data.assessment.lastAssessedOn | dateFormat
+                        text: (data.assessment.lastAssessedOn | dateFormat if data.assessment.lastAssessedOn else '<span class="moj-badge moj-badge--red moj-badge--large">Missing</span>' | safe )
                     }
                     }
                 ]

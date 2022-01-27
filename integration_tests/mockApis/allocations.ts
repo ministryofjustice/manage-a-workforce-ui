@@ -253,14 +253,6 @@ export default {
             },
           ],
           pncNumber: 'A/8404713BA',
-          courtReport: {
-            code: 'CJF',
-            description: 'Fast',
-            completedDate: '2022-01-27T10:54:32.868Z',
-          },
-          assessment: {
-            lastAssessedOn: '2022-01-27T10:54:32.869Z',
-          },
         },
       },
     })

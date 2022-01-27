@@ -10,4 +10,8 @@ export default class ProbationRecordPage extends Page {
   probationRecordHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
   button = (): PageElement => cy.get('.govuk-button')
+
+  subHeading = (): PageElement => cy.get('h3.govuk-heading-m')
+
+  bodyText = (): PageElement => cy.get('p.govuk-body')
 }

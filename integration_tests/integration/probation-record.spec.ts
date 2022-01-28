@@ -1,4 +1,3 @@
-import probationRecord from '../mockApis/probationRecord'
 import Page from '../pages/page'
 import ProbationRecordPage from '../pages/probationRecord'
 
@@ -62,8 +61,32 @@ context('Probation record', () => {
       .getTable()
       .should('deep.equal', [
         {
+          Sentence: 'ORA Community Order (18 Months)',
+          Offence: 'Common assault and battery - 10501',
+          'Start date': '5 Nov 2020',
+          'Probation practitioner': 'Faraz Haynes (PO)',
+        },
+        {
           Sentence: 'Adult Custody < 12m (6 Months)',
           Offence: 'Abstracting electricity - 04300',
+          'Start date': '17 Nov 2019',
+          'Probation practitioner': 'Sheila Linda Hancock (PSO)',
+        },
+      ])
+  })
+
+  it('Current Order table displays multiple offences as numbered list', () => {
+    cy.task('stubGetProbationRecordMultipleOffences')
+    cy.signIn()
+    cy.visit('/J678910/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage
+      .currentOrderTable()
+      .getTable()
+      .should('deep.equal', [
+        {
+          Sentence: 'Adult Custody < 12m (6 Months)',
+          Offence: 'Abstracting electricity - 04300Common assault and battery - 10501',
           'Start date': '17 Nov 2019',
           'Probation practitioner': 'Sheila Linda Hancock (PSO)',
         },

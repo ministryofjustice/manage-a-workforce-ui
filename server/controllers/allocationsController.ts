@@ -46,7 +46,7 @@ export default class AllocationsController {
   async getProbationRecord(req: Request, res: Response, crn): Promise<void> {
     const response: ProbationRecord = await this.allocationsService.getProbationRecord(res.locals.user.token, crn)
     const currentOrders = response.active
-      .sort((a: Conviction, b: Conviction) => Date.parse(a.startDate) - Date.parse(b.startDate))
+      .sort((a: Conviction, b: Conviction) => Date.parse(b.startDate) - Date.parse(a.startDate))
       .map(
         activeRecord =>
           new Order(

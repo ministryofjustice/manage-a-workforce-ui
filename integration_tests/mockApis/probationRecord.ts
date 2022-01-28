@@ -57,4 +57,23 @@ export default {
       },
     })
   },
+  stubGetProbationRecordNoConvictions: (): SuperAgentRequest => {
+    return stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910/convictions`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          active: [],
+          previous: [],
+        },
+      },
+    })
+  },
 }

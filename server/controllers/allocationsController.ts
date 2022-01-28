@@ -3,6 +3,8 @@ import AllocationsService from '../services/allocationsService'
 import Allocation from '../models/allocation'
 import ProbationRecord from '../models/probationRecord'
 import UnallocatedCase from './data/UnallocatedCase'
+import Order from './data/Order'
+import Conviction from '../models/conviction'
 
 export default class AllocationsController {
   constructor(private readonly allocationsService: AllocationsService) {}
@@ -43,8 +45,24 @@ export default class AllocationsController {
 
   async getProbationRecord(req: Request, res: Response, crn): Promise<void> {
     const response: ProbationRecord = await this.allocationsService.getProbationRecord(res.locals.user.token, crn)
+    const currentOrders = response.active
+      .sort((a: Conviction, b: Conviction) => Date.parse(a.startDate) - Date.parse(b.startDate))
+      .map(
+        activeRecord =>
+          new Order(
+            activeRecord.description,
+            activeRecord.length,
+            activeRecord.lengthUnit,
+            activeRecord.offences,
+            activeRecord.startDate,
+            activeRecord.offenderManager
+          )
+      )
     res.render('pages/probation-record', {
-      data: response,
+      name: response.name,
+      crn: response.crn,
+      tier: response.tier,
+      currentOrders,
       title: 'Probation record',
     })
   }

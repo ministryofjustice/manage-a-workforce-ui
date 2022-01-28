@@ -14,4 +14,6 @@ export default class ProbationRecordPage extends Page {
   subHeading = (): PageElement => cy.get('h3.govuk-heading-m')
 
   bodyText = (): PageElement => cy.get('p.govuk-body')
+
+  currentOrderTable = (): PageElement => cy.get('.current-order-table')
 }

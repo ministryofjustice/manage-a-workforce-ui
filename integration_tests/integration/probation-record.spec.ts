@@ -1,3 +1,4 @@
+import probationRecord from '../mockApis/probationRecord'
 import Page from '../pages/page'
 import ProbationRecordPage from '../pages/probationRecord'
 
@@ -34,7 +35,7 @@ context('Probation record', () => {
   })
 
   it('Current order sub-heading visible on page with body text', () => {
-    cy.task('stubGetProbationRecord')
+    cy.task('stubGetProbationRecordNoConvictions')
     cy.signIn()
     cy.visit('/J678910/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
@@ -43,11 +44,29 @@ context('Probation record', () => {
   })
 
   it('Previous orders sub-heading visible on page with body text', () => {
-    cy.task('stubGetProbationRecord')
+    cy.task('stubGetProbationRecordNoConvictions')
     cy.signIn()
     cy.visit('/J678910/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.subHeading().should('contain', 'Previous orders')
     probationRecordPage.bodyText().should('contain', 'No previous orders.')
+  })
+
+  it('Current Order table displayed on page when active convictions exist', () => {
+    cy.task('stubGetProbationRecord')
+    cy.signIn()
+    cy.visit('/J678910/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage
+      .currentOrderTable()
+      .getTable()
+      .should('deep.equal', [
+        {
+          Sentence: 'Adult Custody < 12m (6 Months)',
+          Offence: 'Abstracting electricity - 04300',
+          'Start date': '17 Nov 2019',
+          'Probation practitioner': 'Sheila Linda Hancock (PSO)',
+        },
+      ])
   })
 })

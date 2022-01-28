@@ -28,5 +28,7 @@ export default (on: (string, Record) => void): void => {
     stubGetUnallocatedCaseMultiOffences: allocations.stubGetUnallocatedCaseMultiOffences,
 
     stubGetProbationRecord: probationRecord.stubGetProbationRecord,
+
+    stubGetProbationRecordNoConvictions: probationRecord.stubGetProbationRecordNoConvictions,
   })
 }

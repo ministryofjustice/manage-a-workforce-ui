@@ -3,6 +3,7 @@ import { resetStubs } from '../mockApis/wiremock'
 import auth from '../mockApis/auth'
 import tokenVerification from '../mockApis/tokenVerification'
 import allocations from '../mockApis/allocations'
+import probationRecord from '../mockApis/probationRecord'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
@@ -25,5 +26,7 @@ export default (on: (string, Record) => void): void => {
     stubGetUnallocatedCase: allocations.stubGetUnallocatedCase,
 
     stubGetUnallocatedCaseMultiOffences: allocations.stubGetUnallocatedCaseMultiOffences,
+
+    stubGetProbationRecord: probationRecord.stubGetProbationRecord,
   })
 }

@@ -22,19 +22,16 @@ export default function routes(router: Router, services: Services): Router {
     allocationsController.getUnallocatedCase(req, res, crn)
   })
 
-  get('/probation-record', (req, res) => {
-    allocationsController.getProbationRecord(req, res)
+  get('/:crn/probation-record', (req, res) => {
+    const { crn } = req.params
+    allocationsController.getProbationRecord(req, res, crn)
   })
 
-  get('/risk', (req, res) => {
+  get('/:crn/risk', (req, res) => {
     allocationsController.getRisk(req, res)
   })
 
-  get('/summary', (req, res) => {
-    allocationsController.getSummary(req, res)
-  })
-
-  get('/allocate', (req, res) => {
+  get('/:crn/allocate', (req, res) => {
     allocationsController.getAllocate(req, res)
   })
 

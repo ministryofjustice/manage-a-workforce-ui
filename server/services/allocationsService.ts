@@ -1,26 +1,9 @@
 import RestClient from '../data/restClient'
 import logger from '../../logger'
 import { ApiConfig } from '../config'
+import Allocation from '../models/allocation'
+import ProbationRecord from '../models/probationRecord'
 
-export interface Allocation {
-  name: string
-  crn: string
-  tier: string
-  sentenceDate: string
-  initialAppointment: string
-  status: string
-  previousConvictionEndDate: string
-  offenderManager: OffenderManager
-  gender: string
-  dateOfBirth: string
-  age: number
-}
-
-export interface OffenderManager {
-  forenames: string
-  surname: string
-  grade: string
-}
 export default class AllocationsService {
   constructor(private readonly config: ApiConfig) {}
 
@@ -42,5 +25,13 @@ export default class AllocationsService {
       path: `/cases/unallocated/${crn}`,
       headers: { Accept: 'application/json' },
     })) as Allocation
+  }
+
+  async getProbationRecord(token: string, crn): Promise<ProbationRecord> {
+    logger.info(`Getting probation record for crn ${crn}`)
+    return (await this.restClient(token).get({
+      path: `/cases/unallocated/${crn}/convictions`,
+      headers: { Accept: 'application/json' },
+    })) as ProbationRecord
   }
 }

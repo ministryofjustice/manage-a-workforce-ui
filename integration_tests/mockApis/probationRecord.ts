@@ -69,6 +69,23 @@ export default {
                 },
               ],
             },
+            {
+              description: 'ORA Community Order',
+              length: 18,
+              lengthUnit: 'Months',
+              startDate: '2020-11-05',
+              offenderManager: {
+                forenames: 'Faraz',
+                surname: 'Haynes',
+                grade: 'PO',
+              },
+              offences: [
+                {
+                  description: 'Common assault and battery - 10501',
+                  mainOffence: true,
+                },
+              ],
+            },
           ],
         },
       },

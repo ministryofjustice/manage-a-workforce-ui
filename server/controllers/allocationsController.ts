@@ -39,6 +39,7 @@ export default class AllocationsController {
 
     res.render('pages/summary', {
       data: response,
+      crn: response.crn,
       title: 'Summary',
     })
   }

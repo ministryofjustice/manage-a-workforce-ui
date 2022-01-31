@@ -25,6 +25,15 @@ context('Probation record', () => {
     probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
   })
 
+  it('navigate to probation record through case summary', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.task('stubGetProbationRecord')
+    cy.signIn()
+    cy.get('a[href*="J678910/case-view"]').click()
+    cy.get('a[href*="J678910/probation-record"]').click()
+    Page.verifyOnPage(ProbationRecordPage)
+  })
+
   it('Allocate button visible on page', () => {
     cy.task('stubGetProbationRecord')
     cy.signIn()

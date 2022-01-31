@@ -1,6 +1,10 @@
 import { Request, Response } from 'express'
-import AllocationsService, { Allocation } from '../services/allocationsService'
+import AllocationsService from '../services/allocationsService'
+import Allocation from '../models/allocation'
+import ProbationRecord from '../models/probationRecord'
 import UnallocatedCase from './data/UnallocatedCase'
+import Order from './data/Order'
+import Conviction from '../models/conviction'
 
 export default class AllocationsController {
   constructor(private readonly allocationsService: AllocationsService) {}
@@ -39,13 +43,27 @@ export default class AllocationsController {
     })
   }
 
-  getProbationRecord(req: Request, res: Response) {
-    const { session } = req
+  async getProbationRecord(req: Request, res: Response, crn): Promise<void> {
+    const response: ProbationRecord = await this.allocationsService.getProbationRecord(res.locals.user.token, crn)
+    const currentOrders = response.active
+      .sort((a: Conviction, b: Conviction) => Date.parse(b.startDate) - Date.parse(a.startDate))
+      .map(
+        activeRecord =>
+          new Order(
+            activeRecord.description,
+            activeRecord.length,
+            activeRecord.lengthUnit,
+            activeRecord.offences,
+            activeRecord.startDate,
+            activeRecord.offenderManager
+          )
+      )
     res.render('pages/probation-record', {
+      name: response.name,
+      crn: response.crn,
+      tier: response.tier,
+      currentOrders,
       title: 'Probation record',
-      name: session.name,
-      crn: session.crn,
-      tier: session.tier,
     })
   }
 
@@ -56,14 +74,6 @@ export default class AllocationsController {
       name: session.name,
       crn: session.crn,
       tier: session.tier,
-    })
-  }
-
-  getSummary(req: Request, res: Response) {
-    const { session } = req
-    res.render('pages/summary', {
-      title: 'Summary',
-      name: session.name,
     })
   }
 

@@ -93,7 +93,7 @@ context('Summary', () => {
       'CPS pack': 'Missing',
       'Pre-convictions': 'Missing',
       'Pre-sentence reportFast': '27 Jan 2022',
-      'Last OASys assessment': '27 Jan 2022',
+      'Last OASys assessmentOASys Assessment Layer 3': '27 Jan 2022',
     })
   })
 

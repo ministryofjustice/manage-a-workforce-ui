@@ -143,7 +143,7 @@
                     },
                     {
                         key: {
-                        text: 'Last OASys assessment'
+                        html: 'Last OASys assessment' + ('<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">OASys Assessment ' + data.assessment.type | capitalize | replace("_", " ")  + '</span>' if data.assessment.type)
                     },
                         value: {
                         text: (data.assessment.lastAssessedOn | dateFormat if data.assessment.lastAssessedOn else '<span class="moj-badge moj-badge--black moj-badge--large">No assessment created</span>' | safe )

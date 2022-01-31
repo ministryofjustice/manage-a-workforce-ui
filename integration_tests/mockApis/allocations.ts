@@ -187,6 +187,7 @@ export default {
           },
           assessment: {
             lastAssessedOn: '2022-01-27T10:54:32.869Z',
+            type: 'LAYER_3',
           },
         },
       },

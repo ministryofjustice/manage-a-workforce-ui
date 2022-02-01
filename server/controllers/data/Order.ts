@@ -8,7 +8,7 @@ export default class Order {
 
   offences: string[]
 
-  startDate: string
+  date: string
 
   probationPractitioner: string
 
@@ -17,7 +17,7 @@ export default class Order {
     length: number,
     lengthUnit: string,
     offences: Offence[],
-    startDate: string,
+    date: string,
     offenderManager: OffenderManager
   ) {
     this.sentence = `${description} (${length} ${lengthUnit})`
@@ -26,7 +26,7 @@ export default class Order {
         return value.mainOffence ? -1 : 1
       })
       .map(value => value.description)
-    this.startDate = dayjs(startDate).format(config.dateFormat)
+    this.date = dayjs(date).format(config.dateFormat)
     if (offenderManager) {
       const grade = offenderManager.grade ? ` (${offenderManager.grade})` : ''
       this.probationPractitioner = `${offenderManager.forenames} ${offenderManager.surname}${grade}`

@@ -21,8 +21,32 @@
         currentOrderData.rows.push([
             { text: currentOrder.sentence },
             { text: (currentOrder.offences[0] if currentOrder.offences | length == 1  else '<ol class="govuk-list govuk-list--number"><li>' +  currentOrder.offences | join("</li><li>") + '</li></ol>') | safe},
-            { text: currentOrder.startDate},
+            { text: currentOrder.date},
             { text: currentOrder.probationPractitioner}
+        ])
+    }}
+
+{% endfor %}
+
+{% set previousOrderData = {
+                classes: 'previous-order-table',
+                caption: 'Previous order',
+                captionClasses: 'govuk-table__caption--m',
+                firstCellIsHeader: true,
+                head: [
+                    { text: 'Sentence'},
+                    { text: 'Offence'},
+                    { text: 'End date'}
+                ],
+                rows: []
+ } %}
+
+ {% for previousOrder in previousOrders %}
+    {{
+        previousOrderData.rows.push([
+            { text: previousOrder.sentence },
+            { text: (previousOrder.offences[0] if previousOrder.offences | length == 1  else '<ol class="govuk-list govuk-list--number"><li>' +  previousOrder.offences | join("</li><li>") + '</li></ol>') | safe},
+            { text: previousOrder.date}
         ])
     }}
 
@@ -40,8 +64,12 @@
 
         {% endif %}
 
-    {% if not previousOrders %}
-
+    {% if previousOrders | length > 0 %}
+        {{ govukTable(previousOrderData) }}
+        {% if not viewAll %}
+            <a href="{{ '/' + crn + '/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous orders ({{ totalPreviousCount }})</a>
+        {% endif %}
+    {% else %}
         <h3 class="govuk-heading-m">Previous orders</h3>
         <p class="govuk-body">No previous orders.</p>
 

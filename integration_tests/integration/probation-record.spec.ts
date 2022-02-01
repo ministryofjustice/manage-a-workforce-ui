@@ -101,4 +101,45 @@ context('Probation record', () => {
         },
       ])
   })
+
+  it('Previous Order table displays when inactive convictions exist', () => {
+    cy.task('stubGetProbationRecord')
+    cy.signIn()
+    cy.visit('/J678910/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage
+      .previousOrderTable()
+      .getTable()
+      .should('deep.equal', [
+        {
+          Sentence: 'ORA Community Order (18 Months)',
+          Offence: 'Common assault and battery - 10501',
+          'End date': '5 Nov 2020',
+        },
+        {
+          Sentence: 'Adult Custody < 12m (6 Months)',
+          Offence: 'Abstracting electricity - 04300',
+          'End date': '23 Jun 2018',
+        },
+      ])
+    probationRecordPage.viewAllLink().should('not.exist')
+  })
+
+  it('more than 3 previous orders should display first three orders and view all link', () => {
+    cy.task('stubGetManyPreviousProbationRecord')
+    cy.signIn()
+    cy.visit('/J678910/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.previousOrderTable().getTable().should('have.length', 3)
+    probationRecordPage.viewAllLink().should('exist')
+  })
+
+  it('more than 3 previous orders with view all as true should display all orders and not view all link', () => {
+    cy.task('stubGetManyPreviousProbationRecord')
+    cy.signIn()
+    cy.visit('/J678910/probation-record?viewAll=true')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.previousOrderTable().getTable().should('have.length', 100)
+    probationRecordPage.viewAllLink().should('not.exist')
+  })
 })

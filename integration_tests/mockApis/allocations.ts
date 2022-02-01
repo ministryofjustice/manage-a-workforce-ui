@@ -171,6 +171,7 @@ export default {
             },
           ],
           expectedSentenceEndDate: '2021-09-28',
+          sentenceDescription: 'SA2020 Suspended Sentence Order',
           requirements: [
             {
               mainCategory: 'Unpaid Work',
@@ -233,6 +234,7 @@ export default {
             },
           ],
           expectedSentenceEndDate: '2021-12-01',
+          sentenceDescription: 'SA2020 Suspended Sentence Order',
           requirements: [
             {
               mainCategory: 'Unpaid Work',

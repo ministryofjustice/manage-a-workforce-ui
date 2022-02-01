@@ -79,7 +79,7 @@
                     <dt class="govuk-summary-list__key">Order</dt>
                     <dd class="govuk-summary-list__value">
                         <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
-                            Community order ({{ data.sentenceDate | dateDifference(data.expectedSentenceEndDate)}})
+                            {{ data.sentenceDescription }} ({{ data.sentenceDate | dateDifference(data.expectedSentenceEndDate)}})
                         </h3>
                         <ul class="govuk-list govuk-list--bullet">
                             <li>Start date: {{ data.sentenceDate | dateFormat }}</li>

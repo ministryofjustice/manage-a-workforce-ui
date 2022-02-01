@@ -59,11 +59,25 @@ export default class AllocationsController {
             activeRecord.offenderManager
           )
       )
+    const previousOrders = response.previous
+      .sort((a: Conviction, b: Conviction) => Date.parse(b.endDate) - Date.parse(a.endDate))
+      .map(
+        activeRecord =>
+          new Order(
+            activeRecord.description,
+            activeRecord.length,
+            activeRecord.lengthUnit,
+            activeRecord.offences,
+            activeRecord.endDate,
+            activeRecord.offenderManager
+          )
+      )
     res.render('pages/probation-record', {
       name: response.name,
       crn: response.crn,
       tier: response.tier,
       currentOrders,
+      previousOrders,
       title: 'Probation record',
     })
   }

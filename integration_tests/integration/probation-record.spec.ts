@@ -101,4 +101,26 @@ context('Probation record', () => {
         },
       ])
   })
+
+  it('Previous Order table displays when inactive convictions exist', () => {
+    cy.task('stubGetProbationRecord')
+    cy.signIn()
+    cy.visit('/J678910/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage
+      .previousOrderTable()
+      .getTable()
+      .should('deep.equal', [
+        {
+          Sentence: 'ORA Community Order (18 Months)',
+          Offence: 'Common assault and battery - 10501',
+          'End date': '5 Nov 2020',
+        },
+        {
+          Sentence: 'Adult Custody < 12m (6 Months)',
+          Offence: 'Abstracting electricity - 04300',
+          'End date': '23 Jun 2018',
+        },
+      ])
+  })
 })

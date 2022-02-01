@@ -73,7 +73,7 @@ export default {
               description: 'ORA Community Order',
               length: 18,
               lengthUnit: 'Months',
-              startDate: '2020-11-05',
+              endDate: '2020-11-05',
               offenderManager: {
                 forenames: 'Faraz',
                 surname: 'Haynes',

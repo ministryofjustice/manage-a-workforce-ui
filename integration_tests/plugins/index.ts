@@ -32,5 +32,7 @@ export default (on: (string, Record) => void): void => {
     stubGetProbationRecordNoConvictions: probationRecord.stubGetProbationRecordNoConvictions,
 
     stubGetProbationRecordMultipleOffences: probationRecord.stubGetProbationRecordMultipleOffences,
+
+    stubGetManyPreviousProbationRecord: probationRecord.stubGetManyPreviousProbationRecord,
   })
 }

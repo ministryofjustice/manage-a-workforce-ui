@@ -46,6 +46,9 @@ export default class AllocationsController {
 
   async getProbationRecord(req: Request, res: Response, crn): Promise<void> {
     const response: ProbationRecord = await this.allocationsService.getProbationRecord(res.locals.user.token, crn)
+    const totalPreviousCount = response.previous.length
+    const viewAll = totalPreviousCount <= 3 ? true : req.query.viewAll
+    const amountToSlice = viewAll ? totalPreviousCount : 3
     const currentOrders = response.active
       .sort((a: Conviction, b: Conviction) => Date.parse(b.startDate) - Date.parse(a.startDate))
       .map(
@@ -72,12 +75,15 @@ export default class AllocationsController {
             activeRecord.offenderManager
           )
       )
+      .slice(0, amountToSlice)
     res.render('pages/probation-record', {
       name: response.name,
       crn: response.crn,
       tier: response.tier,
       currentOrders,
       previousOrders,
+      viewAll,
+      totalPreviousCount,
       title: 'Probation record',
     })
   }

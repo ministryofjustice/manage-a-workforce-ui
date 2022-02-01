@@ -66,6 +66,9 @@
 
     {% if previousOrders | length > 0 %}
         {{ govukTable(previousOrderData) }}
+        {% if not viewAll %}
+            <a href="{{ '/' + crn + '/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous orders ({{ totalPreviousCount }})</a>
+        {% endif %}
     {% else %}
         <h3 class="govuk-heading-m">Previous orders</h3>
         <p class="govuk-body">No previous orders.</p>

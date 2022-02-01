@@ -122,5 +122,24 @@ context('Probation record', () => {
           'End date': '23 Jun 2018',
         },
       ])
+    probationRecordPage.viewAllLink().should('not.exist')
+  })
+
+  it('more than 3 previous orders should display first three orders and view all link', () => {
+    cy.task('stubGetManyPreviousProbationRecord')
+    cy.signIn()
+    cy.visit('/J678910/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.previousOrderTable().getTable().should('have.length', 3)
+    probationRecordPage.viewAllLink().should('exist')
+  })
+
+  it('more than 3 previous orders with view all as true should display all orders and not view all link', () => {
+    cy.task('stubGetManyPreviousProbationRecord')
+    cy.signIn()
+    cy.visit('/J678910/probation-record?viewAll=true')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.previousOrderTable().getTable().should('have.length', 100)
+    probationRecordPage.viewAllLink().should('not.exist')
   })
 })

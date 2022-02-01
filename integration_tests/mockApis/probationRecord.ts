@@ -173,4 +173,66 @@ export default {
       },
     })
   },
+  stubGetManyPreviousProbationRecord: (): SuperAgentRequest => {
+    const previousOrders = new Array(100).fill(0).map(() => ({
+      description: 'Adult Custody < 12m',
+      length: 6,
+      lengthUnit: 'Months',
+      endDate: '2018-06-23',
+      offenderManager: {
+        forenames: 'Sheila Linda',
+        surname: 'Hancock',
+        grade: 'PSO',
+      },
+      offences: [
+        {
+          description: 'Abstracting electricity - 04300',
+          mainOffence: true,
+        },
+        {
+          description: 'Common assault and battery - 10501',
+          mainOffence: false,
+        },
+      ],
+    }))
+    return stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910/convictions`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          active: [
+            {
+              description: 'Adult Custody < 12m',
+              length: 6,
+              lengthUnit: 'Months',
+              startDate: '2019-11-17',
+              offenderManager: {
+                forenames: 'Sheila Linda',
+                surname: 'Hancock',
+                grade: 'PSO',
+              },
+              offences: [
+                {
+                  description: 'Common assault and battery - 10501',
+                  mainOffence: false,
+                },
+                {
+                  description: 'Abstracting electricity - 04300',
+                  mainOffence: true,
+                },
+              ],
+            },
+          ],
+          previous: previousOrders,
+        },
+      },
+    })
+  },
 }

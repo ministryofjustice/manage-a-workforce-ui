@@ -117,7 +117,7 @@ context('Probation record', () => {
           'End date': '5 Nov 2020',
         },
         {
-          Sentence: 'Adult Custody < 12m (6 Months)',
+          Sentence: 'Fine',
           Offence: 'Abstracting electricity - 04300',
           'End date': '23 Jun 2018',
         },

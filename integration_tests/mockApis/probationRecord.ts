@@ -53,9 +53,8 @@ export default {
           ],
           previous: [
             {
-              description: 'Adult Custody < 12m',
-              length: 6,
-              lengthUnit: 'Months',
+              description: 'Fine',
+              length: 0,
               endDate: '2018-06-23',
               offenderManager: {
                 forenames: 'Sheila Linda',

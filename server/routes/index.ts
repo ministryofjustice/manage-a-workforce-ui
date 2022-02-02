@@ -28,7 +28,8 @@ export default function routes(router: Router, services: Services): Router {
   })
 
   get('/:crn/risk', (req, res) => {
-    allocationsController.getRisk(req, res)
+    const { crn } = req.params
+    allocationsController.getRisk(req, res, crn)
   })
 
   get('/:crn/allocate', (req, res) => {

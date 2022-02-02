@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import AllocationsService from '../services/allocationsService'
 import Allocation from '../models/allocation'
 import ProbationRecord from '../models/probationRecord'
+import Risk from '../models/risk'
 import UnallocatedCase from './data/UnallocatedCase'
 import Order from './data/Order'
 import Conviction from '../models/conviction'
@@ -32,11 +33,6 @@ export default class AllocationsController {
 
   async getUnallocatedCase(req: Request, res: Response, crn): Promise<void> {
     const response: Allocation = await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn)
-    const { session } = req
-    session.name = response.name
-    session.crn = crn
-    session.tier = response.tier
-
     res.render('pages/summary', {
       data: response,
       crn: response.crn,
@@ -88,13 +84,11 @@ export default class AllocationsController {
     })
   }
 
-  getRisk(req: Request, res: Response) {
-    const { session } = req
+  async getRisk(req: Request, res: Response, crn) {
+    const response: Risk = await this.allocationsService.getRisk(res.locals.user.token, crn)
     res.render('pages/risk', {
       title: 'Risk',
-      name: session.name,
-      crn: session.crn,
-      tier: session.tier,
+      data: response,
     })
   }
 

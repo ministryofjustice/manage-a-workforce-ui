@@ -4,6 +4,7 @@ import auth from '../mockApis/auth'
 import tokenVerification from '../mockApis/tokenVerification'
 import allocations from '../mockApis/allocations'
 import probationRecord from '../mockApis/probationRecord'
+import risk from '../mockApis/risk'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
@@ -34,5 +35,9 @@ export default (on: (string, Record) => void): void => {
     stubGetProbationRecordMultipleOffences: probationRecord.stubGetProbationRecordMultipleOffences,
 
     stubGetManyPreviousProbationRecord: probationRecord.stubGetManyPreviousProbationRecord,
+
+    stubGetRisk: risk.stubGetRisk,
+
+    stubGetRiskNoRegistrations: risk.stubGetRiskNoRegistrations,
   })
 }

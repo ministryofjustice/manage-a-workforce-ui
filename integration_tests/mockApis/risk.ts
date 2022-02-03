@@ -6,7 +6,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/risk`,
+        urlPattern: `/cases/unallocated/J678910/risks`,
       },
       response: {
         status: 200,
@@ -57,7 +57,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/risk`,
+        urlPattern: `/cases/unallocated/J678910/risks`,
       },
       response: {
         status: 200,

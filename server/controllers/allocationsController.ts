@@ -43,7 +43,6 @@ export default class AllocationsController {
       data: response,
       crn: response.crn,
       title: 'Summary',
-      offenderManager: session.offenderManager,
     })
   }
 

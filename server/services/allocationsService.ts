@@ -39,7 +39,7 @@ export default class AllocationsService {
   async getRisk(token: string, crn): Promise<Risk> {
     logger.info(`Getting risk for crn ${crn}`)
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/risk`,
+      path: `/cases/unallocated/${crn}/risks`,
       headers: { Accept: 'application/json' },
     })) as Risk
   }

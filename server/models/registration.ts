@@ -1,5 +1,7 @@
-export default interface OffenderManager {
-  forenames: string
-  surname: string
-  grade: string
+export default interface Registration {
+  type: string
+  registered: string
+  nextReviewDate: string
+  notes: string
+  endDate: string
 }

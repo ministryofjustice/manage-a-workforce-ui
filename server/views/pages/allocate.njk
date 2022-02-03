@@ -2,6 +2,8 @@
 
 {% set pageTitle = applicationName + " - Allocate" %}
 
+{% set offenderManagerDetails = offenderManager.forenames + ' ' + offenderManager.surname + ' (' + offenderManager.grade + ')' %}
+
 
 {% block content %}
 
@@ -13,6 +15,21 @@
             </h1>
         </div>
     </div>
+
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l">Allocate to a probation practitioner <br>in Wrexham</h2>
+
+    {% if probationStatus == 'Currently managed' and offenderManager %}
+        <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+                <span class="govuk-warning-text__assistive">Warning</span>
+                {{ name }} is currently managed by {{ offenderManagerDetails }}.
+            </strong>
+        </div>
+    {% endif %}
+
 
 
 {% endblock %}

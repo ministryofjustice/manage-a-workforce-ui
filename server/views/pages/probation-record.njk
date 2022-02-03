@@ -3,7 +3,7 @@
 
 {% set pageTitle = applicationName + " - Probation record" %}
 {% set currentOrderData = {
-                classes: 'current-order-table',
+                classes: 'current-order-table govuk-table-xl',
                 caption: 'Current order',
                 captionClasses: 'govuk-table__caption--m',
                 firstCellIsHeader: true,
@@ -29,7 +29,7 @@
 {% endfor %}
 
 {% set previousOrderData = {
-                classes: 'previous-order-table',
+                classes: 'previous-order-table govuk-table-xl',
                 caption: 'Previous order',
                 captionClasses: 'govuk-table__caption--m',
                 firstCellIsHeader: true,
@@ -59,9 +59,10 @@
         {% if currentOrders | length > 0 %}
             {{ govukTable(currentOrderData) }}
         {% else %}
+        
             <h3 class="govuk-heading-m">Current order</h3>
             <p class="govuk-body">No current orders.</p>
-
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
         {% endif %}
 
     {% if previousOrders | length > 0 %}
@@ -70,8 +71,10 @@
             <a href="{{ '/' + crn + '/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous orders ({{ totalPreviousCount }})</a>
         {% endif %}
     {% else %}
+        
         <h3 class="govuk-heading-m">Previous orders</h3>
         <p class="govuk-body">No previous orders.</p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
     {% endif %}
 

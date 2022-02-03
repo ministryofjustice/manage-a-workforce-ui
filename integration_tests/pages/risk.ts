@@ -10,4 +10,10 @@ export default class RiskPage extends Page {
   riskHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
   button = (): PageElement => cy.get('.govuk-button')
+
+  activeRegistrationsTable = (): PageElement => cy.get('.active-registrations-table')
+
+  inactiveRegistrationsTable = (): PageElement => cy.get('.inactive-registrations-table')
+
+  bodyText = (): PageElement => cy.get('.govuk-body')
 }

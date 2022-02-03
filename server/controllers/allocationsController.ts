@@ -33,6 +33,10 @@ export default class AllocationsController {
 
   async getUnallocatedCase(req: Request, res: Response, crn): Promise<void> {
     const response: Allocation = await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn)
+    const { session } = req
+    session.name = response.name
+    session.crn = crn
+    session.tier = response.tier
     res.render('pages/summary', {
       data: response,
       crn: response.crn,
@@ -93,8 +97,12 @@ export default class AllocationsController {
   }
 
   getAllocate(req: Request, res: Response) {
+    const { session } = req
     res.render('pages/allocate', {
       title: 'Allocate',
+      name: session.name,
+      crn: session.crn,
+      tier: session.tier,
     })
   }
 }

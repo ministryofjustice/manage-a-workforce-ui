@@ -5,7 +5,14 @@
 
 {% block content %}
 
-            <h1 class="govuk-heading-xl">Allocate</h1>
-            <p class="govuk-body">Under construction.</p>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ name }}
+                <span class="govuk-caption-xl">Tier: {{ tier }}</span>
+                <span class="govuk-caption-xl">CRN: {{ crn }}</span>
+            </h1>
+        </div>
+    </div>
+
 
 {% endblock %}

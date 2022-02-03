@@ -3,6 +3,7 @@ import logger from '../../logger'
 import { ApiConfig } from '../config'
 import Allocation from '../models/allocation'
 import ProbationRecord from '../models/probationRecord'
+import Risk from '../models/risk'
 
 export default class AllocationsService {
   constructor(private readonly config: ApiConfig) {}
@@ -33,5 +34,13 @@ export default class AllocationsService {
       path: `/cases/unallocated/${crn}/convictions`,
       headers: { Accept: 'application/json' },
     })) as ProbationRecord
+  }
+
+  async getRisk(token: string, crn): Promise<Risk> {
+    logger.info(`Getting risk for crn ${crn}`)
+    return (await this.restClient(token).get({
+      path: `/cases/unallocated/${crn}/risk`,
+      headers: { Accept: 'application/json' },
+    })) as Risk
   }
 }

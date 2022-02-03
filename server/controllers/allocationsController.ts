@@ -93,6 +93,7 @@ export default class AllocationsController {
     res.render('pages/risk', {
       title: 'Risk',
       data: response,
+      crn: response.crn,
     })
   }
 

@@ -39,5 +39,11 @@ export default (on: (string, Record) => void): void => {
     stubGetRisk: risk.stubGetRisk,
 
     stubGetRiskNoRegistrations: risk.stubGetRiskNoRegistrations,
+
+    stubGetUnallocatedCasePreviouslyManaged: allocations.stubGetUnallocatedCasePreviouslyManaged,
+
+    stubGetUnallocatedCaseNewToProbation: allocations.stubGetUnallocatedCaseNewToProbation,
+
+    stubGetUnallocatedCaseNoOffenderManager: allocations.stubGetUnallocatedCaseNoOffenderManager,
   })
 }

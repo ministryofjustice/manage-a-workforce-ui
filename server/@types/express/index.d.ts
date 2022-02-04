@@ -8,6 +8,8 @@ declare module 'express-session' {
     name: string
     crn: string
     tier: string
+    probationStatus: string
+    offenderManager: object
   }
 }
 

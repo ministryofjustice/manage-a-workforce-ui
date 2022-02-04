@@ -159,7 +159,161 @@ export default {
           offenderManager: {
             forenames: 'Antonio',
             surname: 'LoSardo',
+            grade: 'SPO',
           },
+          gender: 'Male',
+          dateOfBirth: '1984-09-27',
+          age: 37,
+          offences: [
+            {
+              mainOffence: true,
+              mainCategory: 'Common assault and battery',
+              subCategory: 'Contrary to section 39 of the Criminal Justice Act 1988.',
+            },
+          ],
+          expectedSentenceEndDate: '2021-09-28',
+          sentenceDescription: 'SA2020 Suspended Sentence Order',
+          requirements: [
+            {
+              mainCategory: 'Unpaid Work',
+              subCategory: 'Regular',
+              length: 100,
+              lengthUnit: 'Hours',
+            },
+          ],
+          pncNumber: 'D/9874483AB',
+          courtReport: {
+            code: 'CJF',
+            description: 'Fast',
+            completedDate: '2022-01-27T10:54:32.868Z',
+          },
+          assessment: {
+            lastAssessedOn: '2022-01-27T10:54:32.869Z',
+            type: 'LAYER_3',
+          },
+        },
+      },
+    })
+  },
+
+  stubGetUnallocatedCasePreviouslyManaged: (): SuperAgentRequest => {
+    return stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          sentenceDate: '2021-09-01',
+          initialAppointment: '2021-09-01',
+          status: 'Previously managed',
+          gender: 'Male',
+          dateOfBirth: '1984-09-27',
+          age: 37,
+          offences: [
+            {
+              mainOffence: true,
+              mainCategory: 'Common assault and battery',
+              subCategory: 'Contrary to section 39 of the Criminal Justice Act 1988.',
+            },
+          ],
+          expectedSentenceEndDate: '2021-09-28',
+          sentenceDescription: 'SA2020 Suspended Sentence Order',
+          requirements: [
+            {
+              mainCategory: 'Unpaid Work',
+              subCategory: 'Regular',
+              length: 100,
+              lengthUnit: 'Hours',
+            },
+          ],
+          pncNumber: 'D/9874483AB',
+          courtReport: {
+            code: 'CJF',
+            description: 'Fast',
+            completedDate: '2022-01-27T10:54:32.868Z',
+          },
+          assessment: {
+            lastAssessedOn: '2022-01-27T10:54:32.869Z',
+            type: 'LAYER_3',
+          },
+        },
+      },
+    })
+  },
+
+  stubGetUnallocatedCaseNewToProbation: (): SuperAgentRequest => {
+    return stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          sentenceDate: '2021-09-01',
+          initialAppointment: '2021-09-01',
+          status: 'New to probation',
+          gender: 'Male',
+          dateOfBirth: '1984-09-27',
+          age: 37,
+          offences: [
+            {
+              mainOffence: true,
+              mainCategory: 'Common assault and battery',
+              subCategory: 'Contrary to section 39 of the Criminal Justice Act 1988.',
+            },
+          ],
+          expectedSentenceEndDate: '2021-09-28',
+          sentenceDescription: 'SA2020 Suspended Sentence Order',
+          requirements: [
+            {
+              mainCategory: 'Unpaid Work',
+              subCategory: 'Regular',
+              length: 100,
+              lengthUnit: 'Hours',
+            },
+          ],
+          pncNumber: 'D/9874483AB',
+          courtReport: {
+            code: 'CJF',
+            description: 'Fast',
+            completedDate: '2022-01-27T10:54:32.868Z',
+          },
+          assessment: {
+            lastAssessedOn: '2022-01-27T10:54:32.869Z',
+            type: 'LAYER_3',
+          },
+        },
+      },
+    })
+  },
+
+  stubGetUnallocatedCaseNoOffenderManager: (): SuperAgentRequest => {
+    return stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          sentenceDate: '2021-09-01',
+          initialAppointment: '2021-09-01',
+          status: 'Currently managed',
           gender: 'Male',
           dateOfBirth: '1984-09-27',
           age: 37,

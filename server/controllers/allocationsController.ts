@@ -37,6 +37,8 @@ export default class AllocationsController {
     session.name = response.name
     session.crn = crn
     session.tier = response.tier
+    session.probationStatus = response.status
+    session.offenderManager = response.offenderManager
     res.render('pages/summary', {
       data: response,
       crn: response.crn,
@@ -93,6 +95,7 @@ export default class AllocationsController {
     res.render('pages/risk', {
       title: 'Risk',
       data: response,
+      crn: response.crn,
     })
   }
 
@@ -103,6 +106,8 @@ export default class AllocationsController {
       name: session.name,
       crn: session.crn,
       tier: session.tier,
+      probationStatus: session.probationStatus,
+      offenderManager: session.offenderManager,
     })
   }
 }

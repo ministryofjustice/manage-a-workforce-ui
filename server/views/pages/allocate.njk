@@ -2,7 +2,7 @@
 
 {% set pageTitle = applicationName + " - Allocate" %}
 
-{% set offenderManagerDetails = offenderManager.forenames + ' ' + offenderManager.surname + ' (' + offenderManager.grade + ')' %}
+{% set offenderManagerDetails = offenderManager.forenames + ' ' + offenderManager.surname + (' (' + offenderManager.grade + ')' if offenderManager.grade)  %}
 
 
 {% block content %}

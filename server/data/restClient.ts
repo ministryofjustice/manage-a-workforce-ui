@@ -64,7 +64,7 @@ export default class RestClient {
     } catch (error) {
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError, query }, `Error calling ${this.name}, path: '${path}', verb: 'GET'`)
-      return Promise.reject(sanitisedError)
+      throw sanitisedError
     }
   }
 

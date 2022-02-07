@@ -75,4 +75,21 @@ context('Allocate', () => {
     allocatePage.warningText().should('not.exist')
     allocatePage.warningIcon().should('not.exist')
   })
+
+  it('Officer table headers visible on page', () => {
+    cy.task('stubGetUnallocatedCaseNewToProbation')
+    cy.signIn()
+    cy.visit('/J678910/case-view')
+    cy.get('a[href*="J678910/allocate"]').click()
+    const allocatePage = Page.verifyOnPage(AllocatePage)
+    allocatePage
+      .tableHeader()
+      .should('contain', 'Name')
+      .and('contain', 'Grade')
+      .and('contain', 'Capacity')
+      .and('contain', 'Cases in past 7 days')
+      .and('contain', 'Community cases')
+      .and('contain', 'Custody cases')
+      .and('contain', 'Select')
+  })
 })

@@ -11,12 +11,10 @@ export default function createErrorHandler(production: boolean) {
       return res.redirect('/sign-out')
     }
 
-    res.locals.message = production ? null : error.message
-    res.locals.status = error.status || 500
-    res.locals.stack = production ? null : error.stack
-
-    res.status(error.status || 500)
-
-    return res.render('pages/error')
+    return res.status(error.status || 500).render('pages/error', {
+      message: production ? null : error.message,
+      status: error.status || 500,
+      stack: production ? null : error.stack,
+    })
   }
 }

@@ -1,4 +1,5 @@
 {% extends "partials/layout.njk" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% set pageTitle = applicationName + " - Allocate" %}
 
@@ -30,6 +31,36 @@
         </div>
     {% endif %}
 
+    {{ govukTable({
+        firstCellIsHeader: true,
+        head: [
+            {
+                text: "Name"
+            },
+            {
+                text: "Grade"
+            },
+            {
+                text: "Capacity"
+            },
+            {
+                text: "Cases in past 7 days",
+                format: "numeric"
+            },
+            {
+                text: "Community cases",
+                format: "numeric"
+            },
+            {
+                text: "Custody cases",
+                format: "numeric"
+            },
+            {
+                text: "Select"
+            }
+        ],
+        rows: []
+    }) }}
 
 
 {% endblock %}

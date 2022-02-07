@@ -8,7 +8,7 @@ import errorHandler from '../../errorHandler'
 import standardRouter from '../standardRouter'
 import UserService from '../../services/userService'
 import * as auth from '../../authentication/auth'
-import AllocationsService from '../../services/allocationsService'
+import MockErrorAllocationService from './MockErrorAllocationService'
 import authenticatedRoutes from '../index'
 import unauthenticatedRoutes from '../unauthenticated'
 
@@ -42,7 +42,7 @@ const appSetup = (authenticated: RequestHandler, unauthenticated: RequestHandler
 
   app.use((req, res, next) => {
     res.locals = {}
-    res.locals.user = req.user
+    res.locals.user = {}
     next()
   })
 
@@ -61,7 +61,7 @@ const appSetup = (authenticated: RequestHandler, unauthenticated: RequestHandler
 export const appWithAllRoutes = ({ production = false }: { production?: boolean }): Express => {
   auth.default.authenticationMiddleware = () => (req, res, next) => next()
   const authenticated = authenticatedRoutes(standardRouter(new MockUserService()), {
-    allocationsService: {} as AllocationsService,
+    allocationsService: new MockErrorAllocationService(undefined),
   })
   const unauthenticated = unauthenticatedRoutes()
   return appSetup(authenticated, unauthenticated, production)

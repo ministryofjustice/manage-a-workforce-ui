@@ -12,7 +12,7 @@ export default function createErrorHandler(production: boolean) {
     }
 
     res.locals.message = production ? null : error.message
-    res.locals.status = error.status
+    res.locals.status = error.status || 500
     res.locals.stack = production ? null : error.stack
 
     res.status(error.status || 500)

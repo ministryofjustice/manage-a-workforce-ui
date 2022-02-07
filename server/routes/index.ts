@@ -13,27 +13,27 @@ export default function routes(router: Router, services: Services): Router {
 
   const allocationsController = new AllocationsController(services.allocationsService)
 
-  get('/', (req, res) => {
-    allocationsController.getAllocations(req, res)
+  get('/', async (req, res) => {
+    await allocationsController.getAllocations(req, res)
   })
 
-  get('/:crn/case-view', (req, res) => {
+  get('/:crn/case-view', async (req, res) => {
     const { crn } = req.params
-    allocationsController.getUnallocatedCase(req, res, crn)
+    await allocationsController.getUnallocatedCase(req, res, crn)
   })
 
-  get('/:crn/probation-record', (req, res) => {
+  get('/:crn/probation-record', async (req, res) => {
     const { crn } = req.params
-    allocationsController.getProbationRecord(req, res, crn)
+    await allocationsController.getProbationRecord(req, res, crn)
   })
 
-  get('/:crn/risk', (req, res) => {
+  get('/:crn/risk', async (req, res) => {
     const { crn } = req.params
-    allocationsController.getRisk(req, res, crn)
+    await allocationsController.getRisk(req, res, crn)
   })
 
-  get('/:crn/allocate', (req, res) => {
-    allocationsController.getAllocate(req, res)
+  get('/:crn/allocate', async (req, res) => {
+    await allocationsController.getAllocate(req, res)
   })
 
   return router

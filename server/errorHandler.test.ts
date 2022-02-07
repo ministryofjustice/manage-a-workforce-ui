@@ -35,3 +35,16 @@ describe('GET 404', () => {
       })
   })
 })
+
+describe('GET 500', () => {
+  it('should render problem with service', () => {
+    return request(appWithAllRoutes({}))
+      .get('/')
+      .expect(500)
+      .expect('Content-Type', /html/)
+      .expect(res => {
+        expect(res.text).toContain('Sorry, there is a problem with the service')
+        expect(res.text).toContain('Please try again later.')
+      })
+  })
+})

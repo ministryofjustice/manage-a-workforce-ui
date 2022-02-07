@@ -11,7 +11,7 @@ export default function createErrorHandler(production: boolean) {
       return res.redirect('/sign-out')
     }
 
-    return res.status(error.status || 500).render('pages/error', {
+    return res.render('pages/error', {
       message: production ? null : error.message,
       status: error.status || 500,
       stack: production ? null : error.stack,

@@ -90,14 +90,14 @@ context('Summary', () => {
     summaryPage.caseDetailsTitle().should('have.text', 'Case details')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       PNC: 'D/9874483AB',
-      'CPS pack': 'Missing',
-      'Pre-convictions': 'Missing',
+      'CPS pack': 'Check ndelius',
+      'Pre-convictions': 'Check ndelius',
       'Pre-sentence reportFast': '27 Jan 2022',
       'Last OASys assessmentOASys Assessment Layer 3': '27 Jan 2022',
     })
   })
 
-  it('Case details visible on page with missing reports and assessments', () => {
+  it('Case details visible on page with no reports or assessments', () => {
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.signIn()
     cy.get('a[href*="L786545/case-view"]').click()
@@ -105,8 +105,8 @@ context('Summary', () => {
     summaryPage.caseDetailsTitle().should('have.text', 'Case details')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       PNC: 'A/8404713BA',
-      'CPS pack': 'Missing',
-      'Pre-convictions': 'Missing',
+      'CPS pack': 'Check ndelius',
+      'Pre-convictions': 'Check ndelius',
       'Pre-sentence report': 'No report created',
       'Last OASys assessment': 'No assessment created',
     })

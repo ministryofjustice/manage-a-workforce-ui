@@ -87,7 +87,6 @@ context('Allocate', () => {
       .should('contain', 'Name')
       .and('contain', 'Grade')
       .and('contain', 'Capacity')
-      .and('contain', 'Cases in past 7 days')
       .and('contain', 'Community cases')
       .and('contain', 'Custody cases')
       .and('contain', 'Select')

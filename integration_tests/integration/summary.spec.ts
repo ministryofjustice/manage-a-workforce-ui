@@ -112,19 +112,11 @@ context('Summary', () => {
     })
   })
 
-  it('Back button displayed if coming from previous page', () => {
-    cy.task('stubGetUnallocatedCase')
-    cy.signIn()
-    cy.get('a[href*="J678910/case-view"]').click()
-    const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.backLink().should('have.text', 'Back to unallocated cases')
-  })
-
-  it('Back button is not displayed if going directly onto page', () => {
+  it('Breadcrumbs visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
     cy.visit('/J678910/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.backLink().should('not.exist')
+    summaryPage.breadCrumbs().should('contain', 'Home').and('contain', 'Unallocated cases')
   })
 })

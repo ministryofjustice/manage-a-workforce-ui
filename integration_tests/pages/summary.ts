@@ -19,5 +19,5 @@ export default class SummaryPage extends Page {
 
   caseDetailsTitle = (): PageElement => cy.get('#case-details > header > h2 ')
 
-  backLink = (): PageElement => cy.get('.govuk-back-link')
+  breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
 }

@@ -1,10 +1,28 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% set pageTitle = applicationName + " - Allocate" %}
 
 {% set offenderManagerDetails = offenderManager.forenames + ' ' + offenderManager.surname + (' (' + offenderManager.grade + ')' if offenderManager.grade)  %}
 
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home"
+            },
+            {
+                text: "Unallocated cases",
+                href: "/"
+            },
+            {
+                text: "Case view",
+                href: "/" + crn + "/case-view"
+            }
+        ]
+    }) }}
+{% endblock %}
 
 {% block content %}
 

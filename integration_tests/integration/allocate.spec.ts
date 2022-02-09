@@ -91,4 +91,13 @@ context('Allocate', () => {
       .and('contain', 'Custody cases')
       .and('contain', 'Select')
   })
+
+  it('Breadcrumbs visible on page', () => {
+    cy.task('stubGetUnallocatedCaseNewToProbation')
+    cy.signIn()
+    cy.visit('/J678910/case-view')
+    cy.get('a[href*="J678910/allocate"]').click()
+    const allocatePage = Page.verifyOnPage(AllocatePage)
+    allocatePage.breadCrumbs().should('contain', 'Home').and('contain', 'Unallocated cases').and('contain', 'Case view')
+  })
 })

@@ -3,6 +3,57 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% set pageTitle = applicationName + " - Allocate" %}
+{% set tableData = {
+    firstCellIsHeader: true,
+    attributes: {
+    'data-module': 'moj-sortable-table'
+    },
+    head: [
+        { text: 'Name',
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Grade',
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Capacity',
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Community cases',
+            format: "numeric",
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Custody cases',
+            format: "numeric",
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Select' }
+    ],
+    rows: []
+} %}
+
+{% for item in offenderManagersToAllocate %}
+    {%- set tableRow = [
+        { text: (item.forename + ' ' + item.surname)},
+        { text: item.grade},
+        { text: ((item.capacity | round(1)) + '%')},
+        { text: item.totalCommunityCases},
+        { text: item.totalCustodyCases},
+        { text: ''}
+    ] -%}
+    {{ tableData.rows.push(tableRow) }}
+
+{% endfor %}
+
 
 {% set offenderManagerDetails = offenderManager.forenames + ' ' + offenderManager.surname + (' (' + offenderManager.grade + ')' if offenderManager.grade)  %}
 
@@ -49,32 +100,7 @@
         </div>
     {% endif %}
 
-    {{ govukTable({
-        firstCellIsHeader: true,
-        head: [
-            {
-                text: "Name"
-            },
-            {
-                text: "Grade"
-            },
-            {
-                text: "Capacity"
-            },
-            {
-                text: "Community cases",
-                format: "numeric"
-            },
-            {
-                text: "Custody cases",
-                format: "numeric"
-            },
-            {
-                text: "Select"
-            }
-        ],
-        rows: []
-    }) }}
+    {{ govukTable(tableData) }}
 
 
 {% endblock %}

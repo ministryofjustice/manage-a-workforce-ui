@@ -6,6 +6,7 @@ import Risk from '../models/risk'
 import UnallocatedCase from './data/UnallocatedCase'
 import Order from './data/Order'
 import Conviction from '../models/conviction'
+import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 
 export default class AllocationsController {
   constructor(private readonly allocationsService: AllocationsService) {}
@@ -33,12 +34,6 @@ export default class AllocationsController {
 
   async getUnallocatedCase(req: Request, res: Response, crn): Promise<void> {
     const response: Allocation = await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn)
-    const { session } = req
-    session.name = response.name
-    session.crn = crn
-    session.tier = response.tier
-    session.probationStatus = response.status
-    session.offenderManager = response.offenderManager
     res.render('pages/summary', {
       data: response,
       crn: response.crn,
@@ -99,15 +94,19 @@ export default class AllocationsController {
     })
   }
 
-  getAllocate(req: Request, res: Response) {
-    const { session } = req
+  async getAllocate(req: Request, res: Response, crn) {
+    const response: AllocateOffenderManagers = await this.allocationsService.getOffenderManagersToAllocate(
+      res.locals.user.token,
+      crn
+    )
     res.render('pages/allocate', {
       title: 'Allocate',
-      name: session.name,
-      crn: session.crn,
-      tier: session.tier,
-      probationStatus: session.probationStatus,
-      offenderManager: session.offenderManager,
+      name: response.name,
+      crn: response.crn,
+      tier: response.tier,
+      probationStatus: response.status,
+      offenderManager: response.offenderManager,
+      offenderManagersToAllocate: response.offenderManagersToAllocate,
     })
   }
 }

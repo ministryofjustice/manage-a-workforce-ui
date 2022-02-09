@@ -4,6 +4,7 @@ import { ApiConfig } from '../config'
 import Allocation from '../models/allocation'
 import ProbationRecord from '../models/probationRecord'
 import Risk from '../models/risk'
+import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 
 export default class AllocationsService {
   constructor(private readonly config: ApiConfig) {}
@@ -42,5 +43,13 @@ export default class AllocationsService {
       path: `/cases/unallocated/${crn}/risks`,
       headers: { Accept: 'application/json' },
     })) as Risk
+  }
+
+  async getOffenderManagersToAllocate(token: string, crn): Promise<AllocateOffenderManagers> {
+    logger.info(`Getting offender managers to allocate for crn ${crn}`)
+    return (await this.restClient(token).get({
+      path: `/cases/${crn}/allocate/offenderManagers`,
+      headers: { Accept: 'application/json' },
+    })) as AllocateOffenderManagers
   }
 }

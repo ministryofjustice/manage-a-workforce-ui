@@ -46,9 +46,18 @@
         { text: (item.forename + ' ' + item.surname)},
         { text: item.grade},
         { text: ((item.capacity | round(1)) + '%'),format: "numeric",
-        classes: ('percentage-extra-over' if item.capacity > 110)},
-        { text: item.totalCommunityCases, format: "numeric"},
-        { text: item.totalCustodyCases, format: "numeric"},
+        classes: ('percentage-extra-over' if item.capacity > 110),
+            attributes: {
+                "data-sort-value": item.capacity
+            }},
+        { text: item.totalCommunityCases, format: "numeric",
+            attributes: {
+                "data-sort-value": item.totalCommunityCases
+            }},
+        { text: item.totalCustodyCases, format: "numeric",
+            attributes: {
+                "data-sort-value": item.totalCustodyCases
+            }},
         { text: ''}
     ] -%}
     {{ tableData.rows.push(tableRow) }}

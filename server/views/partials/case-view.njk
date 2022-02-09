@@ -1,15 +1,24 @@
 {% extends "partials/layout.njk" %}
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
 {% set pageTitle = applicationName + " - Case view" %}
 
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home"
+            },
+            {
+                text: "Unallocated cases",
+                href: "/"
+            }
+        ]
+    }) }}
+{% endblock %}
+
 {% block content %}
-    {% if enableBackButton %}
-    {{ govukBackLink({
-        text: "Back to unallocated cases",
-        href: "/"
-        }) }}
-    {% endif %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ data.name or name }}

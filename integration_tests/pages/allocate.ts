@@ -16,4 +16,6 @@ export default class AllocatePage extends Page {
   warningIcon = (): PageElement => cy.get('.govuk-warning-text__icon')
 
   tableHeader = (): PageElement => cy.get('.govuk-table__header')
+
+  breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
 }

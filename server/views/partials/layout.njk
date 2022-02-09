@@ -62,11 +62,8 @@
 {% endblock %}
 
 
-<nav class="govuk-width-container" aria-label="Backwards navigation">
-    {% block backlink %}{% endblock %}
-</nav>
-
 <div class="govuk-width-container">
+    {% block beforeContent %}{% endblock %}
     <main class="govuk-main-wrapper" id="main-content" role="main">
         {% block content %}{% endblock %}
     </main>

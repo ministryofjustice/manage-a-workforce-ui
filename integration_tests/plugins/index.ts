@@ -5,6 +5,7 @@ import tokenVerification from '../mockApis/tokenVerification'
 import allocations from '../mockApis/allocations'
 import probationRecord from '../mockApis/probationRecord'
 import risk from '../mockApis/risk'
+import allocateOffenderManagers from '../mockApis/allocateOffenderManagers'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
@@ -45,5 +46,16 @@ export default (on: (string, Record) => void): void => {
     stubGetUnallocatedCaseNewToProbation: allocations.stubGetUnallocatedCaseNewToProbation,
 
     stubGetUnallocatedCaseNoOffenderManager: allocations.stubGetUnallocatedCaseNoOffenderManager,
+
+    stubGetAllocateOffenderManagers: allocateOffenderManagers.stubGetAllocateOffenderManagers,
+
+    stubGetAllocateOffenderManagersNoOffenderManager:
+      allocateOffenderManagers.stubGetAllocateOffenderManagersNoOffenderManager,
+
+    stubGetAllocateOffenderManagersPreviouslyManaged:
+      allocateOffenderManagers.stubGetAllocateOffenderManagersPreviouslyManaged,
+
+    stubGetAllocateOffenderManagersNewToProbation:
+      allocateOffenderManagers.stubGetAllocateOffenderManagersNewToProbation,
   })
 }

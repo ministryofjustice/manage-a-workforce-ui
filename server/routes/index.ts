@@ -33,7 +33,8 @@ export default function routes(router: Router, services: Services): Router {
   })
 
   get('/:crn/allocate', async (req, res) => {
-    await allocationsController.getAllocate(req, res)
+    const { crn } = req.params
+    await allocationsController.getAllocate(req, res, crn)
   })
 
   return router

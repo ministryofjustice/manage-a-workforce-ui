@@ -79,6 +79,14 @@ context('Allocate', () => {
       .getTable()
       .should('deep.equal', [
         {
+          Name: 'Sally Smith',
+          Grade: 'PSOProbation Service Officer',
+          Capacity: '80%',
+          'Community cases': '25',
+          'Custody cases': '28',
+          Select: '',
+        },
+        {
           Name: 'Ben Doe',
           Grade: 'POProbation Officer',
           Capacity: '50%',
@@ -95,5 +103,16 @@ context('Allocate', () => {
     cy.visit('/J678910/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.breadCrumbs().should('contain', 'Home').and('contain', 'Unallocated cases').and('contain', 'Case view')
+  })
+
+  it('should only be able to select one offender manager at a time', () => {
+    cy.task('stubGetAllocateOffenderManagers')
+    cy.signIn()
+    cy.visit('/J678910/allocate')
+    const allocatePage = Page.verifyOnPage(AllocatePage)
+    allocatePage.radioButtons().first().check()
+    allocatePage.checkedRadioButton().should('have.value', 'OM2')
+    allocatePage.radioButtons().last().check()
+    allocatePage.checkedRadioButton().should('have.value', 'OM1')
   })
 })

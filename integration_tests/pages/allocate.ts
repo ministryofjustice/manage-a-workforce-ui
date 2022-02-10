@@ -18,4 +18,8 @@ export default class AllocatePage extends Page {
   table = (): PageElement => cy.get('table')
 
   breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
+
+  checkedRadioButton = (): PageElement => cy.get('input[type="radio"]:checked')
+
+  radioButtons = (): PageElement => cy.get('[type="radio"]')
 }

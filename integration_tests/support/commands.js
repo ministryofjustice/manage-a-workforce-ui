@@ -12,7 +12,7 @@ const getTable = (subject, options = {}) => {
   const headers = [...tableElement.querySelectorAll('thead th')].map(e => e.textContent)
 
   const rows = [...tableElement.querySelectorAll('tbody tr')].map(row => {
-    return [...row.querySelectorAll('td, th')].map(e => e.textContent.replace(/\r?\n|\r/, ''))
+    return [...row.querySelectorAll('td, th')].map(e => e.textContent.replace(/\r?\n|\r|\n/g, '').trim())
   })
 
   return rows.map(row =>

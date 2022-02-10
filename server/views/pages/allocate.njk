@@ -1,6 +1,8 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/label/macro.njk" import govukLabel %}
 
 {% set pageTitle = applicationName + " - Allocate" %}
 {% set tableData = {
@@ -43,7 +45,10 @@
 
 {% for item in offenderManagersToAllocate %}
     {%- set tableRow = [
-        { text: item.name},
+        { html: govukLabel({
+            text: item.name,
+            for: ('allocated-officer-' + item.code)
+          }) },
         { html: ('<div class="tooltip">' + item.grade + '<span class="tooltiptext">' + item.gradeTip + '</span></div>'),
             attributes: {
                 "data-sort-value": item.gradeTip
@@ -65,7 +70,8 @@
                 "data-sort-value": item.custodyCases
             }
         },
-        { text: ''}
+        { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + item.code + '" name="allocated-officer" type="radio" value="' + item.code + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + item.code + '"></label></div></div>')
+        }
     ] -%}
     {{ tableData.rows.push(tableRow) }}
 
@@ -116,9 +122,12 @@
             </strong>
         </div>
     {% endif %}
-
+    <form method="post">
     {{ govukTable(tableData) }}
-
+    {{ govukButton({
+  text: 'Allocate case'
+}) }}
+    </form>
 
 {% endblock %}
 

@@ -109,7 +109,8 @@ export default class AllocationsController {
             offenderManagerToAllocate.grade,
             offenderManagerToAllocate.capacity,
             offenderManagerToAllocate.totalCommunityCases,
-            offenderManagerToAllocate.totalCustodyCases
+            offenderManagerToAllocate.totalCustodyCases,
+            offenderManagerToAllocate.code
           )
       )
       .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => b.capacity - a.capacity)

@@ -7,6 +7,7 @@ import UnallocatedCase from './data/UnallocatedCase'
 import Order from './data/Order'
 import Conviction from '../models/conviction'
 import AllocateOffenderManagers from '../models/allocateOffenderManagers'
+import AllocateOffenderManager from './data/AllocateOffenderManager'
 
 export default class AllocationsController {
   constructor(private readonly allocationsService: AllocationsService) {}
@@ -99,6 +100,20 @@ export default class AllocationsController {
       res.locals.user.token,
       crn
     )
+    const offenderManagersToAllocate = response.offenderManagersToAllocate
+      .map(
+        offenderManagerToAllocate =>
+          new AllocateOffenderManager(
+            offenderManagerToAllocate.forename,
+            offenderManagerToAllocate.surname,
+            offenderManagerToAllocate.grade,
+            offenderManagerToAllocate.capacity,
+            offenderManagerToAllocate.totalCommunityCases,
+            offenderManagerToAllocate.totalCustodyCases
+          )
+      )
+      .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => a.capacity - b.capacity)
+
     res.render('pages/allocate', {
       title: 'Allocate',
       name: response.name,
@@ -106,7 +121,7 @@ export default class AllocationsController {
       tier: response.tier,
       probationStatus: response.status,
       offenderManager: response.offenderManager,
-      offenderManagersToAllocate: response.offenderManagersToAllocate,
+      offenderManagersToAllocate,
     })
   }
 }

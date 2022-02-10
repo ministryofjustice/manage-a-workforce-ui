@@ -43,21 +43,12 @@
 
 {% for item in offenderManagersToAllocate %}
     {%- set tableRow = [
-        { text: (item.forename + ' ' + item.surname)},
-        { text: item.grade},
+        { text: item.name},
+        { html: ('<div class="tooltip">' + item.grade + '<span class="tooltiptext">' + item.gradeTip + '</span></div>')},
         { text: ((item.capacity | round(1)) + '%'),format: "numeric",
-        classes: ('percentage-extra-over' if item.capacity > 110),
-            attributes: {
-                "data-sort-value": item.capacity
-            }},
-        { text: item.totalCommunityCases, format: "numeric",
-            attributes: {
-                "data-sort-value": item.totalCommunityCases
-            }},
-        { text: item.totalCustodyCases, format: "numeric",
-            attributes: {
-                "data-sort-value": item.totalCustodyCases
-            }},
+        classes: ('percentage-extra-over' if item.capacity > 110)},
+        { text: item.communityCases, format: "numeric"},
+        { text: item.custodyCases, format: "numeric"},
         { text: ''}
     ] -%}
     {{ tableData.rows.push(tableRow) }}

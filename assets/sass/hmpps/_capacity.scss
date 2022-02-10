@@ -2,3 +2,30 @@
     color: govuk-colour('red');
     font-weight: 800;
   }
+
+  .tooltip {
+    border-bottom: 1px dashed govuk-colour('dark-grey');
+    display: inline-block;
+    position: relative;
+  
+    .tooltiptext {
+      background-color: govuk-colour('dark-grey');
+      border-radius: 6px;
+      color: govuk-colour('white');
+      cursor: help;
+      left: 105%;
+      padding: 5px 0;
+      position: absolute;
+      text-align: center;
+      top: -5px;
+      visibility: hidden;
+      width: 120px;
+      z-index: 999;
+    }
+  
+    &:hover {
+      .tooltiptext {
+        visibility: visible;
+      }
+    }
+  }

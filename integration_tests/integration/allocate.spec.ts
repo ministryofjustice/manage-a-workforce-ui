@@ -80,7 +80,7 @@ context('Allocate', () => {
       .should('deep.equal', [
         {
           Name: 'Ben Doe',
-          Grade: 'PO',
+          Grade: 'POProbation Officer',
           Capacity: '50%',
           'Community cases': '15',
           'Custody cases': '20',

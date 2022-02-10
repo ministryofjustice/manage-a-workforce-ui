@@ -4,7 +4,6 @@
 
 {% set pageTitle = applicationName + " - Allocate" %}
 {% set tableData = {
-    firstCellIsHeader: true,
     attributes: {
     'data-module': 'moj-sortable-table'
     },
@@ -123,6 +122,3 @@
 
 {% endblock %}
 
-{% block javascripts %}
-    <script src="/assets/sortableTableInit.js"></script>
-{% endblock %}

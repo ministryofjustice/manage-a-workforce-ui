@@ -20,6 +20,7 @@
             }
         },
         { text: 'Capacity',
+            format: "numeric",
             attributes: {
                 "aria-sort": "descending"
             }
@@ -44,11 +45,27 @@
 {% for item in offenderManagersToAllocate %}
     {%- set tableRow = [
         { text: item.name},
-        { html: ('<div class="tooltip">' + item.grade + '<span class="tooltiptext">' + item.gradeTip + '</span></div>')},
+        { html: ('<div class="tooltip">' + item.grade + '<span class="tooltiptext">' + item.gradeTip + '</span></div>'),
+            attributes: {
+                "data-sort-value": item.gradeTip
+            }
+        },
         { text: ((item.capacity | round(1)) + '%'),format: "numeric",
-        classes: ('percentage-extra-over' if item.capacity > 110)},
-        { text: item.communityCases, format: "numeric"},
-        { text: item.custodyCases, format: "numeric"},
+        classes: ('percentage-extra-over' if item.capacity > 100),
+            attributes: {
+                "data-sort-value": item.capacity
+            }
+        },
+        { text: item.communityCases, format: "numeric",
+            attributes: {
+                "data-sort-value": item.communityCases
+            }
+        },
+        { text: item.custodyCases, format: "numeric",
+            attributes: {
+                "data-sort-value": item.custodyCases
+            }
+        },
         { text: ''}
     ] -%}
     {{ tableData.rows.push(tableRow) }}

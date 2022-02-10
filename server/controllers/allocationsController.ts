@@ -112,7 +112,7 @@ export default class AllocationsController {
             offenderManagerToAllocate.totalCustodyCases
           )
       )
-      .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => a.capacity - b.capacity)
+      .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => b.capacity - a.capacity)
 
     res.render('pages/allocate', {
       title: 'Allocate',

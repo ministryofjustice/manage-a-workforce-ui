@@ -142,11 +142,14 @@
     {% endif %}
 
     {{ govukTable(tableData) }}
+    <div class="govuk-button-group">
     {{ govukButton({
   text: 'Allocate case'
 }) }}
-    </form>
     <a class="govuk-button govuk-button--secondary" href="{{'/' + crn + '/allocate'}}">Clear selection </a>
+    </div>
+    </form>
+    
 
 {% endblock %}
 

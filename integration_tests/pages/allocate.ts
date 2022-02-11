@@ -23,7 +23,7 @@ export default class AllocatePage extends Page {
 
   radioButtons = (): PageElement => cy.get('[type="radio"]')
 
-  allocateCaseButton = (): PageElement => cy.get('form > button.govuk-button')
+  allocateCaseButton = (): PageElement => cy.get('form > div > button.govuk-button')
 
   errorSummary = (): PageElement => cy.get('.govuk-error-summary')
 

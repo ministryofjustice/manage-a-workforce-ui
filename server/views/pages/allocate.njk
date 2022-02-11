@@ -128,26 +128,26 @@
     
 
     <form method="post">
-    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-    {% if error %}
-        {{ govukErrorSummary({
-            titleText: "There is a problem",
-            errorList: [
-                {
-                text: "Select a probation practitioner"
-                }
-            ]
-        }) }}
-    {% endif %}
+        {% if error %}
+            {{ govukErrorSummary({
+                titleText: "There is a problem",
+                errorList: [
+                    {
+                    text: "Select a probation practitioner"
+                    }
+                ]
+            }) }}
+        {% endif %}
 
-    {{ govukTable(tableData) }}
-    <div class="govuk-button-group">
-    {{ govukButton({
-  text: 'Allocate case'
-}) }}
-    <a class="govuk-button govuk-button--secondary" href="{{'/' + crn + '/allocate'}}">Clear selection </a>
-    </div>
+        {{ govukTable(tableData) }}
+        <div class="govuk-button-group">
+                {{ govukButton({
+            text: 'Allocate case'
+            }) }}
+            <a class="govuk-button govuk-button--secondary" href="{{'/' + crn + '/allocate'}}">Clear selection </a>
+        </div>
     </form>
     
 

@@ -123,6 +123,18 @@ export default class AllocationsController {
       probationStatus: response.status,
       offenderManager: response.offenderManager,
       offenderManagersToAllocate,
+      error: req.query.error,
     })
+  }
+
+  async selectAllocateOffenderManager(req: Request, res: Response, crn) {
+    const {
+      body: { allocatedOfficer },
+    } = req
+    let error = false
+    if (!allocatedOfficer) {
+      error = true
+    }
+    res.redirect(`/${crn}/allocate?error=${error}`)
   }
 }

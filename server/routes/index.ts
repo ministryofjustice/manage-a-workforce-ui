@@ -10,7 +10,7 @@ export interface Services {
 
 export default function routes(router: Router, services: Services): Router {
   const get = (path: string, handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
-
+  const post = (path: string, handler: RequestHandler) => router.post(path, asyncMiddleware(handler))
   const allocationsController = new AllocationsController(services.allocationsService)
 
   get('/', async (req, res) => {
@@ -35,6 +35,11 @@ export default function routes(router: Router, services: Services): Router {
   get('/:crn/allocate', async (req, res) => {
     const { crn } = req.params
     await allocationsController.getAllocate(req, res, crn)
+  })
+
+  post('/:crn/allocate', async (req, res) => {
+    const { crn } = req.params
+    await allocationsController.selectAllocateOffenderManager(req, res, crn)
   })
 
   return router

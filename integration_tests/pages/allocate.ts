@@ -22,4 +22,8 @@ export default class AllocatePage extends Page {
   checkedRadioButton = (): PageElement => cy.get('input[type="radio"]:checked')
 
   radioButtons = (): PageElement => cy.get('[type="radio"]')
+
+  allocateCaseButton = (): PageElement => cy.get('form > button.govuk-button')
+
+  errorSummary = (): PageElement => cy.get('.govuk-error-summary')
 }

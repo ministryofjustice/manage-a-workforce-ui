@@ -115,4 +115,13 @@ context('Allocate', () => {
     allocatePage.radioButtons().last().check()
     allocatePage.checkedRadioButton().should('have.value', 'OM1')
   })
+
+  it('should display error when no offender managers selected and allocate case button clicked', () => {
+    cy.task('stubGetAllocateOffenderManagers')
+    cy.signIn()
+    cy.visit('/J678910/allocate')
+    const allocatePage = Page.verifyOnPage(AllocatePage)
+    allocatePage.allocateCaseButton().click()
+    allocatePage.errorSummary().trimTextContent().should('equal', 'There is a problem Select a probation practitioner')
+  })
 })

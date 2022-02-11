@@ -3,6 +3,8 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/label/macro.njk" import govukLabel %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
 
 {% set pageTitle = applicationName + " - Allocate" %}
 {% set tableData = {
@@ -70,7 +72,7 @@
                 "data-sort-value": item.custodyCases
             }
         },
-        { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + item.code + '" name="allocated-officer" type="radio" value="' + item.code + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + item.code + '"></label></div></div>')
+        { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + item.code + '" name="allocatedOfficer" type="radio" value="' + item.code + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + item.code + '"></label></div></div>')
         }
     ] -%}
     {{ tableData.rows.push(tableRow) }}
@@ -122,7 +124,23 @@
             </strong>
         </div>
     {% endif %}
-    <form>
+
+    
+
+    <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {% if error %}
+        {{ govukErrorSummary({
+            titleText: "There is a problem",
+            errorList: [
+                {
+                text: "Select a probation practitioner"
+                }
+            ]
+        }) }}
+    {% endif %}
+
     {{ govukTable(tableData) }}
     {{ govukButton({
   text: 'Allocate case'

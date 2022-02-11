@@ -49,5 +49,16 @@ const getSummaryList = subject => {
   }, {})
 }
 
+const trimTextContent = subject => {
+  if (subject.get().length > 1) {
+    throw new Error(`Selector "${subject.selector}" returned more than 1 element.`)
+  }
+
+  const element = subject.get()[0]
+
+  return element.textContent.trim().replace(/\s{2,}/g, ' ')
+}
+
 Cypress.Commands.add('getTable', { prevSubject: true }, getTable)
 Cypress.Commands.add('getSummaryList', { prevSubject: true }, getSummaryList)
+Cypress.Commands.add('trimTextContent', { prevSubject: true }, trimTextContent)

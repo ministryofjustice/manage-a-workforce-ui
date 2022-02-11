@@ -114,7 +114,7 @@ export default class AllocationsController {
           )
       )
       .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => b.capacity - a.capacity)
-
+    const error = req.query.error === 'true'
     res.render('pages/allocate', {
       title: 'Allocate',
       name: response.name,
@@ -123,7 +123,7 @@ export default class AllocationsController {
       probationStatus: response.status,
       offenderManager: response.offenderManager,
       offenderManagersToAllocate,
-      error: req.query.error,
+      error,
     })
   }
 

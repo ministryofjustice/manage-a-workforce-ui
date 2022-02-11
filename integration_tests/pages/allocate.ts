@@ -26,4 +26,6 @@ export default class AllocatePage extends Page {
   allocateCaseButton = (): PageElement => cy.get('form > button.govuk-button')
 
   errorSummary = (): PageElement => cy.get('.govuk-error-summary')
+
+  clearSelectionButton = (crn): PageElement => cy.get(`a[href*="${crn}/allocate"]`)
 }

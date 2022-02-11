@@ -124,4 +124,15 @@ context('Allocate', () => {
     allocatePage.allocateCaseButton().click()
     allocatePage.errorSummary().trimTextContent().should('equal', 'There is a problem Select a probation practitioner')
   })
+
+  it('should clear selection when clicking on Clear selection', () => {
+    cy.task('stubGetAllocateOffenderManagers')
+    cy.signIn()
+    cy.visit('/J678910/allocate')
+    const allocatePage = Page.verifyOnPage(AllocatePage)
+    allocatePage.radioButtons().first().check()
+    allocatePage.checkedRadioButton().should('have.value', 'OM2')
+    allocatePage.clearSelectionButton('J678910').click()
+    allocatePage.checkedRadioButton().should('not.exist')
+  })
 })

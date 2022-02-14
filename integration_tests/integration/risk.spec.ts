@@ -109,6 +109,5 @@ context('Risk', () => {
       .trimTextContent()
       .should('equal', 'RSRRisk of Serious Recidivism3.8% Last updated: 12 Feb 2019 MEDIUM')
     riskPage.ogrsIndexCard().trimTextContent().should('equal', 'OGRSOffender Group Reconviction Scale85%')
-    cy.screenshot()
   })
 })

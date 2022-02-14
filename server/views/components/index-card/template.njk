@@ -8,7 +8,9 @@
     {{ params.descriptionHtml | safe if params.descriptionHtml else params.descriptionText }}
   </p>
     <span class="govuk-tag
-    {%- if params.tagClasses %} {{ params.tagClasses }}{% endif %}">
+    {%- if params.tagClasses %} {{ params.tagClasses }}{% endif %}"
+    {%- for attribute, value in params.tagAttributes %} {{ attribute }}="{{ value }}"{% endfor %}
+    >
     {{ params.tagHtml | safe if params.tagHtml else params.tagText }}
     </span>
 </section>

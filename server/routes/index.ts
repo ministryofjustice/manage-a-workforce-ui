@@ -42,5 +42,10 @@ export default function routes(router: Router, services: Services): Router {
     await allocationsController.selectAllocateOffenderManager(req, res, crn)
   })
 
+  get('/:crn/allocate/:offenderManagerCode/confirm', async (req, res) => {
+    const { crn, offenderManagerCode } = req.params
+    await allocationsController.getConfirmAllocation(req, res, crn, offenderManagerCode)
+  })
+
   return router
 }

@@ -5,6 +5,7 @@ import Allocation from '../models/allocation'
 import ProbationRecord from '../models/probationRecord'
 import Risk from '../models/risk'
 import AllocateOffenderManagers from '../models/allocateOffenderManagers'
+import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 
 export default class AllocationsService {
   constructor(private readonly config: ApiConfig) {}
@@ -51,5 +52,13 @@ export default class AllocationsService {
       path: `/cases/${crn}/allocate/offenderManagers`,
       headers: { Accept: 'application/json' },
     })) as AllocateOffenderManagers
+  }
+
+  async getCaseAllocationImpact(token: string, crn, offenderManagerCode): Promise<OffenderManagerPotentialWorkload> {
+    logger.info(`Getting case allocation impact for crn ${crn}`)
+    return (await this.restClient(token).get({
+      path: `/cases/${crn}/allocate/${offenderManagerCode}/impact`,
+      headers: { Accept: 'application/json' },
+    })) as OffenderManagerPotentialWorkload
   }
 }

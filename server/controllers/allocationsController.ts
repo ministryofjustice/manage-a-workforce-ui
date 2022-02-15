@@ -132,11 +132,11 @@ export default class AllocationsController {
     const {
       body: { allocatedOfficer },
     } = req
-    let error = false
-    if (!allocatedOfficer) {
-      error = true
+    let redirectUrl = `/${crn}/allocate?error=true`
+    if (allocatedOfficer) {
+      redirectUrl = `/${crn}/allocate/${allocatedOfficer}/confirm`
     }
-    res.redirect(`/${crn}/allocate?error=${error}`)
+    res.redirect(redirectUrl)
   }
 
   async getConfirmAllocation(req: Request, res: Response, crn, offenderManagerCode) {

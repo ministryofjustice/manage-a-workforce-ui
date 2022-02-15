@@ -70,7 +70,7 @@
     {{
         indexCard({
             titleHtml: '<div class="tooltip">ROSH<span class="tooltiptext govuk-body-s">Risk of Serious Harm</span></div>',
-            descriptionText: ('Last updated: ' + data.rosh.lastUpdatedOn | dateFormat),
+            descriptionText: ('Last updated: ' + data.rosh.lastUpdatedOn | dateFormat if data.rosh else 'Score unavailable'),
             tagText: data.rosh.level,
             tagClasses: levelClasses[data.rosh.level]
         })
@@ -79,8 +79,8 @@
   <div class="govuk-grid-column-one-quarter">
      {{
         indexCard({
-            titleHtml: ('<div class="tooltip">RSR<span class="tooltiptext govuk-body-s">Risk of Serious Recidivism</span></div><span>' + data.rsr.percentage + '%</span>'),
-            descriptionText: ('Last updated: ' + data.rsr.lastUpdatedOn | dateFormat),
+            titleHtml: ('<div class="tooltip">RSR<span class="tooltiptext govuk-body-s">Risk of Serious Recidivism</span></div>' + ('<span>' + data.rsr.percentage + '%</span>' if data.rsr else '')),
+            descriptionText: ('Last updated: ' + data.rsr.lastUpdatedOn | dateFormat if data.rsr else 'Score unavailable'),
             tagText: data.rsr.level,
             tagClasses: levelClasses[data.rsr.level]
         })
@@ -89,10 +89,8 @@
   <div class="govuk-grid-column-one-quarter">
     {{
         indexCard({
-            titleHtml: ('<div class="tooltip">OGRS<span class="tooltiptext govuk-body-s">Offender Group Reconviction Scale</span></div><span>' + data.ogrs.score + '%</span>'),
-            tagAttributes: {
-                style:'visibility: hidden;'
-            }
+            titleHtml: ('<div class="tooltip">OGRS<span class="tooltiptext govuk-body-s">Offender Group Reconviction Scale</span></div>' + ('<span>' + data.ogrs.score + '%</span>' if data.ogrs else '')),
+            descriptionText: ('' if data.ogrs else 'Score unavailable')
         })
     }}
   </div>

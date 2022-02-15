@@ -110,4 +110,17 @@ context('Risk', () => {
       .should('equal', 'RSRRisk of Serious Recidivism3.8% Last updated: 12 Feb 2019 MEDIUM')
     riskPage.ogrsIndexCard().trimTextContent().should('equal', 'OGRSOffender Group Reconviction Scale85%')
   })
+
+  it('Displays score unavailable when no assessments returned', () => {
+    cy.task('stubGetRiskNoRegistrations')
+    cy.signIn()
+    cy.visit('/J678910/risk')
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.roshIndexCard().trimTextContent().should('equal', 'ROSHRisk of Serious Harm Score unavailable')
+    riskPage.rsrIndexCard().trimTextContent().should('equal', 'RSRRisk of Serious Recidivism Score unavailable')
+    riskPage
+      .ogrsIndexCard()
+      .trimTextContent()
+      .should('equal', 'OGRSOffender Group Reconviction Scale Score unavailable')
+  })
 })

@@ -107,8 +107,8 @@ context('Risk', () => {
     riskPage
       .rsrIndexCard()
       .trimTextContent()
-      .should('equal', 'RSRRisk of Serious Recidivism3.8% Last updated: 12 Feb 2019 MEDIUM')
-    riskPage.ogrsIndexCard().trimTextContent().should('equal', 'OGRSOffender Group Reconviction Scale85%')
+      .should('equal', 'RSRRisk of Serious Recidivism 3.8% Last updated: 12 Feb 2019 MEDIUM')
+    riskPage.ogrsIndexCard().trimTextContent().should('equal', 'OGRSOffender Group Reconviction Scale 85%')
   })
 
   it('Displays score unavailable when no assessments returned', () => {

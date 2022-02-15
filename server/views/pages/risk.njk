@@ -79,7 +79,7 @@
   <div class="govuk-grid-column-one-quarter">
      {{
         indexCard({
-            titleHtml: ('<div class="tooltip">RSR<span class="tooltiptext govuk-body-s">Risk of Serious Recidivism</span></div>' + ('<span>' + data.rsr.percentage + '%</span>' if data.rsr else '')),
+            titleHtml: ('<div class="tooltip">RSR<span class="tooltiptext govuk-body-s">Risk of Serious Recidivism</span></div>' + ('<span> ' + data.rsr.percentage + '%</span>' if data.rsr else '')),
             descriptionText: ('Last updated: ' + data.rsr.lastUpdatedOn | dateFormat if data.rsr else 'Score unavailable'),
             tagText: data.rsr.level,
             tagClasses: levelClasses[data.rsr.level]
@@ -89,7 +89,7 @@
   <div class="govuk-grid-column-one-quarter">
     {{
         indexCard({
-            titleHtml: ('<div class="tooltip">OGRS<span class="tooltiptext govuk-body-s">Offender Group Reconviction Scale</span></div>' + ('<span>' + data.ogrs.score + '%</span>' if data.ogrs else '')),
+            titleHtml: ('<div class="tooltip">OGRS<span class="tooltiptext govuk-body-s">Offender Group Reconviction Scale</span></div>' + ('<span> ' + data.ogrs.score + '%</span>' if data.ogrs else '')),
             descriptionText: ('' if data.ogrs else 'Score unavailable')
         })
     }}

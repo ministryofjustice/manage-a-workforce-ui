@@ -49,6 +49,18 @@ export default {
               notes: null,
             },
           ],
+          rosh: {
+            level: 'HIGH',
+            lastUpdatedOn: '2022-02-02',
+          },
+          rsr: {
+            level: 'MEDIUM',
+            lastUpdatedOn: '2019-02-12',
+            percentage: 3.8,
+          },
+          ogrs: {
+            score: 85,
+          },
         },
       },
     })

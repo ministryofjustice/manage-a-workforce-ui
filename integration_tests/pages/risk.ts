@@ -16,4 +16,10 @@ export default class RiskPage extends Page {
   inactiveRegistrationsTable = (): PageElement => cy.get('.inactive-registrations-table')
 
   bodyText = (): PageElement => cy.get('.govuk-body')
+
+  roshIndexCard = (): PageElement => cy.get('.index-card').eq(0)
+
+  rsrIndexCard = (): PageElement => cy.get('.index-card').eq(1)
+
+  ogrsIndexCard = (): PageElement => cy.get('.index-card').eq(2)
 }

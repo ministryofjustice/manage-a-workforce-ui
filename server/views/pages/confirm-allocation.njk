@@ -1,0 +1,46 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+
+{% set offenderManagerDetails = data.offenderManagerForename + ' ' + data.offenderManagerSurname + (' (' + data.offenderManagerGrade + ')' if data.offenderManagerGrade)  %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home"
+            },
+            {
+                text: "Unallocated cases",
+                href: "/"
+            },
+            {
+                text: "Case view",
+                href: "/" + crn + "/case-view"
+            },
+            {
+               text: "Allocate to probation practitioner",
+                href: "/" + crn + "/allocate" 
+            }
+        ]
+    }) }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ name }}
+                <span class="govuk-caption-xl">Tier: {{ tier }}</span>
+                <span class="govuk-caption-xl">CRN: {{ crn }}</span>
+            </h1>
+        </div>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l">You are allocating probation practitioner {{ offenderManagerDetails }} to this case.</h2>
+    
+
+{% endblock %}
+

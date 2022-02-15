@@ -6,6 +6,7 @@ import allocations from '../mockApis/allocations'
 import probationRecord from '../mockApis/probationRecord'
 import risk from '../mockApis/risk'
 import allocateOffenderManagers from '../mockApis/allocateOffenderManagers'
+import allocationConfirm from '../mockApis/allocationConfirm'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
@@ -57,5 +58,7 @@ export default (on: (string, Record) => void): void => {
 
     stubGetAllocateOffenderManagersNewToProbation:
       allocateOffenderManagers.stubGetAllocateOffenderManagersNewToProbation,
+
+    stubGetPotentialOffenderManagerWorkload: allocationConfirm.stubGetPotentialOffenderManagerWorkload,
   })
 }

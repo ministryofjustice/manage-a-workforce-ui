@@ -8,6 +8,7 @@ import Order from './data/Order'
 import Conviction from '../models/conviction'
 import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 import AllocateOffenderManager from './data/AllocateOffenderManager'
+import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 
 export default class AllocationsController {
   constructor(private readonly allocationsService: AllocationsService) {}
@@ -136,5 +137,20 @@ export default class AllocationsController {
       error = true
     }
     res.redirect(`/${crn}/allocate?error=${error}`)
+  }
+
+  async getConfirmAllocation(req: Request, res: Response, crn, offenderManagerCode) {
+    const response: OffenderManagerPotentialWorkload = await this.allocationsService.getCaseAllocationImpact(
+      res.locals.user.token,
+      crn,
+      offenderManagerCode
+    )
+    res.render('pages/confirm-allocation', {
+      title: 'Allocation Impact',
+      data: response,
+      name: response.name,
+      crn: response.crn,
+      tier: response.tier,
+    })
   }
 }

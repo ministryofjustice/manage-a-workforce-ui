@@ -41,6 +41,11 @@
 
     <h2 class="govuk-heading-l">You are allocating probation practitioner {{ offenderManagerDetails }} to this case.</h2>
     
-
+    <div class="govuk-form-group govuk-!-margin-top-9">
+        <div class="govuk-button-group">
+          <a class="govuk-button" href="#">Continue</a>
+          <a class="govuk-link govuk-link--no-visited-state" href="{{ '/' + crn + '/allocate' }}">Choose a different probation practitioner</a>
+        </div>
+      </div>
 {% endblock %}
 

@@ -13,7 +13,7 @@ export default class AllocationConfirmPage extends Page {
 
   breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
 
-  allocateCaseButton = (): PageElement => cy.get('form > div > button.govuk-button')
+  continueButton = (): PageElement => cy.get('.govuk-button')
 
-  clearSelectionButton = (crn): PageElement => cy.get(`a[href*="${crn}/allocate"]`)
+  chooseDifferentProbationPractitionerLink = (crn): PageElement => cy.get(`a[href*="${crn}/allocate"]`).eq(1)
 }

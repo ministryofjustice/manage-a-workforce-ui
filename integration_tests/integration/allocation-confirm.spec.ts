@@ -47,4 +47,23 @@ context('Allocate', () => {
       .and('contain', 'Case view')
       .and('contain', 'Allocate to probation practitioner')
   })
+
+  it('Continue button visible on page', () => {
+    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.signIn()
+    cy.visit('/J678910/allocate/OM1/confirm')
+    const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
+    allocatePage.continueButton().should('exist').and('have.text', 'Continue')
+  })
+
+  it('Choose different probation practitioner visible on page', () => {
+    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.signIn()
+    cy.visit('/J678910/allocate/OM1/confirm')
+    const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
+    allocatePage
+      .chooseDifferentProbationPractitionerLink('J678910')
+      .should('exist')
+      .and('have.text', 'Choose a different probation practitioner')
+  })
 })

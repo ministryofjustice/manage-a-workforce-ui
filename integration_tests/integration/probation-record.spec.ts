@@ -115,11 +115,13 @@ context('Probation record', () => {
           Sentence: 'ORA Community Order (18 Months)',
           Offence: 'Common assault and battery - 10501',
           'End date': '5 Nov 2020',
+          'Probation practitioner': 'Faraz Haynes (PO)',
         },
         {
           Sentence: 'Fine',
           Offence: 'Abstracting electricity - 04300',
           'End date': '23 Jun 2018',
+          'Probation practitioner': 'Sheila Linda Hancock (PSO)',
         },
       ])
     probationRecordPage.viewAllLink().should('not.exist')

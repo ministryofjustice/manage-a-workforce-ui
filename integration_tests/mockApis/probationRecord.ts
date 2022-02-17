@@ -22,8 +22,7 @@ export default {
               lengthUnit: 'Months',
               startDate: '2019-11-17',
               offenderManager: {
-                forenames: 'Sheila Linda',
-                surname: 'Hancock',
+                name: 'Sheila Linda Hancock',
                 grade: 'PSO',
               },
               offences: [
@@ -39,8 +38,7 @@ export default {
               lengthUnit: 'Months',
               startDate: '2020-11-05',
               offenderManager: {
-                forenames: 'Faraz',
-                surname: 'Haynes',
+                name: 'Faraz Haynes',
                 grade: 'PO',
               },
               offences: [
@@ -57,8 +55,7 @@ export default {
               length: 0,
               endDate: '2018-06-23',
               offenderManager: {
-                forenames: 'Sheila Linda',
-                surname: 'Hancock',
+                name: 'Sheila Linda Hancock',
                 grade: 'PSO',
               },
               offences: [
@@ -74,8 +71,7 @@ export default {
               lengthUnit: 'Months',
               endDate: '2020-11-05',
               offenderManager: {
-                forenames: 'Faraz',
-                surname: 'Haynes',
+                name: 'Faraz Haynes',
                 grade: 'PO',
               },
               offences: [
@@ -129,8 +125,7 @@ export default {
               lengthUnit: 'Months',
               startDate: '2019-11-17',
               offenderManager: {
-                forenames: 'Sheila Linda',
-                surname: 'Hancock',
+                name: 'Sheila Linda Hancock',
                 grade: 'PSO',
               },
               offences: [
@@ -152,8 +147,7 @@ export default {
               lengthUnit: 'Months',
               endDate: '2018-06-23',
               offenderManager: {
-                forenames: 'Sheila Linda',
-                surname: 'Hancock',
+                name: 'Sheila Linda Hancock',
                 grade: 'PSO',
               },
               offences: [
@@ -179,8 +173,7 @@ export default {
       lengthUnit: 'Months',
       endDate: '2018-06-23',
       offenderManager: {
-        forenames: 'Sheila Linda',
-        surname: 'Hancock',
+        name: 'Sheila Linda Hancock',
         grade: 'PSO',
       },
       offences: [
@@ -213,8 +206,7 @@ export default {
               lengthUnit: 'Months',
               startDate: '2019-11-17',
               offenderManager: {
-                forenames: 'Sheila Linda',
-                surname: 'Hancock',
+                name: 'Sheila Linda Hancock',
                 grade: 'PSO',
               },
               offences: [

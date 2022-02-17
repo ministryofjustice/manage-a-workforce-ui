@@ -1,11 +1,11 @@
 import Offence from './offence'
-import OffenderManager from './offenderManager'
+import ConvictionOffenderManager from './convictionOffenderManager'
 
 export default interface Conviction {
   description: string
   length: number
   lengthUnit: string
-  offenderManager: OffenderManager
+  offenderManager: ConvictionOffenderManager
   startDate: string
   endDate: string
   offences: Offence[]

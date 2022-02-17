@@ -36,7 +36,8 @@
                 head: [
                     { text: 'Sentence'},
                     { text: 'Offence'},
-                    { text: 'End date'}
+                    { text: 'End date'},
+                    { text: 'Probation practitioner'}
                 ],
                 rows: []
  } %}
@@ -46,7 +47,8 @@
         previousOrderData.rows.push([
             { text: previousOrder.sentence },
             { text: (previousOrder.offences[0] if previousOrder.offences | length == 1  else '<ol class="govuk-list govuk-list--number"><li>' +  previousOrder.offences | join("</li><li>") + '</li></ol>') | safe},
-            { text: previousOrder.date}
+            { text: previousOrder.date},
+            { text: previousOrder.probationPractitioner}
         ])
     }}
 

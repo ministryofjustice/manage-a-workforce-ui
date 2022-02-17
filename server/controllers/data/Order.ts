@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import Offence from '../../models/offence'
 import config from '../../config'
-import OffenderManager from '../../models/offenderManager'
+import ConvictionOffenderManager from '../../models/convictionOffenderManager'
 
 export default class Order {
   sentence: string
@@ -18,7 +18,7 @@ export default class Order {
     lengthUnit: string,
     offences: Offence[],
     date: string,
-    offenderManager: OffenderManager
+    offenderManager: ConvictionOffenderManager
   ) {
     const sentenceLength = length ? ` (${length} ${lengthUnit})` : ''
     this.sentence = `${description}${sentenceLength}`
@@ -30,7 +30,7 @@ export default class Order {
     this.date = dayjs(date).format(config.dateFormat)
     if (offenderManager) {
       const grade = offenderManager.grade ? ` (${offenderManager.grade})` : ''
-      this.probationPractitioner = `${offenderManager.forenames} ${offenderManager.surname}${grade}`
+      this.probationPractitioner = `${offenderManager.name}${grade}`
     }
   }
 }

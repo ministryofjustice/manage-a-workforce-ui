@@ -60,5 +60,8 @@ export default (on: (string, Record) => void): void => {
       allocateOffenderManagers.stubGetAllocateOffenderManagersNewToProbation,
 
     stubGetPotentialOffenderManagerWorkload: allocationConfirm.stubGetPotentialOffenderManagerWorkload,
+
+    stubGetPotentialOffenderManagerWorkloadOverCapacity:
+      allocationConfirm.stubGetPotentialOffenderManagerWorkloadOverCapacity,
   })
 }

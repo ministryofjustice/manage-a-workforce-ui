@@ -66,4 +66,22 @@ context('Allocate', () => {
       .should('exist')
       .and('have.text', 'Choose a different probation practitioner')
   })
+
+  it('Displays current and potential capacity', () => {
+    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.signIn()
+    cy.visit('/J678910/allocate/OM1/confirm')
+    const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
+    allocatePage
+      .capacityImpactStatement()
+      .should('have.text', 'This will change their workload capacity from 50.4% to 64.8%.')
+  })
+
+  it('Display current and potential capacity as red when over capacity', () => {
+    cy.task('stubGetPotentialOffenderManagerWorkloadOverCapacity')
+    cy.signIn()
+    cy.visit('/J678910/allocate/OM1/confirm')
+    const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
+    allocatePage.redCapacities().should('have.text', '100.2%108.6%')
+  })
 })

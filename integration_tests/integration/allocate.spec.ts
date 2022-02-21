@@ -1,5 +1,6 @@
 import Page from '../pages/page'
 import AllocatePage from '../pages/allocate'
+import SummaryPage from '../pages/summary'
 
 context('Allocate', () => {
   beforeEach(() => {
@@ -15,6 +16,16 @@ context('Allocate', () => {
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
+  })
+
+  it('navigate to allocate page through case view', () => {
+    cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.allocateCaseButton('J678910', '123456789').click()
+    Page.verifyOnPage(AllocatePage)
   })
 
   it('Section break is visible on page', () => {

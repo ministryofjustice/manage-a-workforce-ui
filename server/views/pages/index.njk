@@ -49,7 +49,7 @@
         { text: item.sentenceDate | dateFormat },
         { text: doubleCell(item.primaryInitialAppointment,item.secondaryInitialAppointment, 'maw-secondary maw-overdue' )},
         { text: doubleCell(item.primaryStatus, item.secondaryStatus, 'govuk-body-s')},
-        { text: ('<a href="/' + item.crn + '/case-view" " class="govuk-link--no-visited-state" aria-label="Review case">' + "Review case" + '</a>' ) | safe}
+        { text: ('<a href="/' + item.crn + '/convictions/' + item.convictionId +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case">' + "Review case" + '</a>' ) | safe}
     ] -%}
     {{ tableData.rows.push(tableRow) }}
 

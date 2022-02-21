@@ -22,4 +22,5 @@ export default interface Allocation {
   pncNumber: string
   courtReport: CourtReport
   assessment: Assessment
+  convictionId: number
 }

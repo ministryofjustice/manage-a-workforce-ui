@@ -25,7 +25,8 @@ export default class AllocationsController {
           value.initialAppointment,
           value.status,
           value.previousConvictionEndDate,
-          value.offenderManager
+          value.offenderManager,
+          value.convictionId
         )
     )
     res.render('pages/index', {
@@ -34,8 +35,12 @@ export default class AllocationsController {
     })
   }
 
-  async getUnallocatedCase(req: Request, res: Response, crn): Promise<void> {
-    const response: Allocation = await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn)
+  async getUnallocatedCase(req: Request, res: Response, crn, convictionId): Promise<void> {
+    const response: Allocation = await this.allocationsService.getUnallocatedCase(
+      res.locals.user.token,
+      crn,
+      convictionId
+    )
     res.render('pages/summary', {
       data: response,
       crn: response.crn,

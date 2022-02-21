@@ -22,10 +22,10 @@ export default class AllocationsService {
     })) as Allocation[]
   }
 
-  async getUnallocatedCase(token: string, crn): Promise<Allocation> {
+  async getUnallocatedCase(token: string, crn, convictionId): Promise<Allocation> {
     logger.info(`Getting unallocated case for crn ${crn}`)
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}`,
+      path: `/cases/unallocated/${crn}/convictions/${convictionId}`,
       headers: { Accept: 'application/json' },
     })) as Allocation
   }

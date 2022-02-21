@@ -6,7 +6,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions`,
+        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,
       },
       response: {
         status: 200,
@@ -90,7 +90,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions`,
+        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,
       },
       response: {
         status: 200,
@@ -109,7 +109,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions`,
+        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,
       },
       response: {
         status: 200,
@@ -190,7 +190,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions`,
+        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,
       },
       response: {
         status: 200,

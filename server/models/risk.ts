@@ -6,4 +6,5 @@ export default interface Risk {
   tier: string
   active: Registration[]
   previous: Registration[]
+  convictionId: number
 }

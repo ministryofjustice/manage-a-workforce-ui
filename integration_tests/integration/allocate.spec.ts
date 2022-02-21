@@ -12,7 +12,7 @@ context('Allocate', () => {
   it('Offender details visible on page', () => {
     cy.task('stubGetAllocateOffenderManagers')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
@@ -20,7 +20,7 @@ context('Allocate', () => {
   it('Section break is visible on page', () => {
     cy.task('stubGetAllocateOffenderManagers')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.sectionBreak().should('exist')
   })
@@ -28,7 +28,7 @@ context('Allocate', () => {
   it('Sub heading is visible on page', () => {
     cy.task('stubGetAllocateOffenderManagers')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.subHeading().should('contain', 'Allocate to a probation practitioner in Wrexham')
   })
@@ -36,7 +36,7 @@ context('Allocate', () => {
   it('Warning is visible on page if currently managed', () => {
     cy.task('stubGetAllocateOffenderManagers')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.warningText().should('contain', 'Dylan Adam Armstrong is currently managed by Antonio LoSardo (SPO)')
     allocatePage.warningIcon().should('exist')
@@ -45,7 +45,7 @@ context('Allocate', () => {
   it('Warning is not visible on page if no offender manager details', () => {
     cy.task('stubGetAllocateOffenderManagersNoOffenderManager')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.warningText().should('not.exist')
     allocatePage.warningIcon().should('not.exist')
@@ -54,7 +54,7 @@ context('Allocate', () => {
   it('Warning is not visible on page if probation status is Previously managed', () => {
     cy.task('stubGetAllocateOffenderManagersPreviouslyManaged')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.warningText().should('not.exist')
     allocatePage.warningIcon().should('not.exist')
@@ -63,7 +63,7 @@ context('Allocate', () => {
   it('Warning is not visible on page if probation status is New to probation', () => {
     cy.task('stubGetAllocateOffenderManagersNewToProbation')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.warningText().should('not.exist')
     allocatePage.warningIcon().should('not.exist')
@@ -72,7 +72,7 @@ context('Allocate', () => {
   it('Officer table visible on page', () => {
     cy.task('stubGetAllocateOffenderManagers')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage
       .table()
@@ -100,7 +100,7 @@ context('Allocate', () => {
   it('Breadcrumbs visible on page', () => {
     cy.task('stubGetAllocateOffenderManagers')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.breadCrumbs().should('contain', 'Home').and('contain', 'Unallocated cases').and('contain', 'Case view')
   })
@@ -108,7 +108,7 @@ context('Allocate', () => {
   it('should only be able to select one offender manager at a time', () => {
     cy.task('stubGetAllocateOffenderManagers')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.radioButtons().first().check()
     allocatePage.checkedRadioButton().should('have.value', 'OM2')
@@ -119,7 +119,7 @@ context('Allocate', () => {
   it('should display error when no offender managers selected and allocate case button clicked', () => {
     cy.task('stubGetAllocateOffenderManagers')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.allocateCaseButton().click()
     allocatePage.errorSummary().trimTextContent().should('equal', 'There is a problem Select a probation practitioner')
@@ -128,11 +128,11 @@ context('Allocate', () => {
   it('should clear selection when clicking on Clear selection', () => {
     cy.task('stubGetAllocateOffenderManagers')
     cy.signIn()
-    cy.visit('/J678910/allocate')
+    cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.radioButtons().first().check()
     allocatePage.checkedRadioButton().should('have.value', 'OM2')
-    allocatePage.clearSelectionButton('J678910').click()
+    allocatePage.clearSelectionButton('J678910', '123456789').click()
     allocatePage.checkedRadioButton().should('not.exist')
   })
 })

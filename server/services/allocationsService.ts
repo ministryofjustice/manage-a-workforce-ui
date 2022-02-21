@@ -46,18 +46,23 @@ export default class AllocationsService {
     })) as Risk
   }
 
-  async getOffenderManagersToAllocate(token: string, crn): Promise<AllocateOffenderManagers> {
+  async getOffenderManagersToAllocate(token: string, crn, convictionId): Promise<AllocateOffenderManagers> {
     logger.info(`Getting offender managers to allocate for crn ${crn}`)
     return (await this.restClient(token).get({
-      path: `/cases/${crn}/allocate/offenderManagers`,
+      path: `/cases/${crn}/convictions/${convictionId}/allocate/offenderManagers`,
       headers: { Accept: 'application/json' },
     })) as AllocateOffenderManagers
   }
 
-  async getCaseAllocationImpact(token: string, crn, offenderManagerCode): Promise<OffenderManagerPotentialWorkload> {
+  async getCaseAllocationImpact(
+    token: string,
+    crn,
+    offenderManagerCode,
+    convictionId
+  ): Promise<OffenderManagerPotentialWorkload> {
     logger.info(`Getting case allocation impact for crn ${crn}`)
     return (await this.restClient(token).get({
-      path: `/cases/${crn}/allocate/${offenderManagerCode}/impact`,
+      path: `/cases/${crn}/convictions/${convictionId}/allocate/${offenderManagerCode}/impact`,
       headers: { Accept: 'application/json' },
     })) as OffenderManagerPotentialWorkload
   }

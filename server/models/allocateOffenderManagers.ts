@@ -8,4 +8,5 @@ export default interface AllocateOffenderManagers {
   status: string
   offenderManager: OffenderManager
   offenderManagersToAllocate: OffenderManagerWorkload[]
+  convictionId: number
 }

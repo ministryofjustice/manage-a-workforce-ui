@@ -32,19 +32,19 @@ export default function routes(router: Router, services: Services): Router {
     await allocationsController.getRisk(req, res, crn, convictionId)
   })
 
-  get('/:crn/allocate', async (req, res) => {
-    const { crn } = req.params
-    await allocationsController.getAllocate(req, res, crn)
+  get('/:crn/convictions/:convictionId/allocate', async (req, res) => {
+    const { crn, convictionId } = req.params
+    await allocationsController.getAllocate(req, res, crn, convictionId)
   })
 
-  post('/:crn/allocate', async (req, res) => {
-    const { crn } = req.params
-    await allocationsController.selectAllocateOffenderManager(req, res, crn)
+  post('/:crn/convictions/:convictionId/allocate', async (req, res) => {
+    const { crn, convictionId } = req.params
+    await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionId)
   })
 
-  get('/:crn/allocate/:offenderManagerCode/confirm', async (req, res) => {
-    const { crn, offenderManagerCode } = req.params
-    await allocationsController.getConfirmAllocation(req, res, crn, offenderManagerCode)
+  get('/:crn/convictions/:convictionId/allocate/:offenderManagerCode/confirm', async (req, res) => {
+    const { crn, convictionId, offenderManagerCode } = req.params
+    await allocationsController.getConfirmAllocation(req, res, crn, offenderManagerCode, convictionId)
   })
 
   return router

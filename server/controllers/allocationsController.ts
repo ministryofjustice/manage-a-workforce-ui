@@ -108,10 +108,11 @@ export default class AllocationsController {
     })
   }
 
-  async getAllocate(req: Request, res: Response, crn) {
+  async getAllocate(req: Request, res: Response, crn, convictionId) {
     const response: AllocateOffenderManagers = await this.allocationsService.getOffenderManagersToAllocate(
       res.locals.user.token,
-      crn
+      crn,
+      convictionId
     )
     const offenderManagersToAllocate = response.offenderManagersToAllocate
       .map(
@@ -133,6 +134,7 @@ export default class AllocationsController {
       name: response.name,
       crn: response.crn,
       tier: response.tier,
+      convictionId: response.convictionId,
       probationStatus: response.status,
       offenderManager: response.offenderManager,
       offenderManagersToAllocate,
@@ -140,22 +142,23 @@ export default class AllocationsController {
     })
   }
 
-  async selectAllocateOffenderManager(req: Request, res: Response, crn) {
+  async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionId) {
     const {
       body: { allocatedOfficer },
     } = req
-    let redirectUrl = `/${crn}/allocate?error=true`
+    let redirectUrl = `/${crn}/convictions/${convictionId}/allocate?error=true`
     if (allocatedOfficer) {
-      redirectUrl = `/${crn}/allocate/${allocatedOfficer}/confirm`
+      redirectUrl = `/${crn}/convictions/${convictionId}/allocate/${allocatedOfficer}/confirm`
     }
     res.redirect(redirectUrl)
   }
 
-  async getConfirmAllocation(req: Request, res: Response, crn, offenderManagerCode) {
+  async getConfirmAllocation(req: Request, res: Response, crn, offenderManagerCode, convictionId) {
     const response: OffenderManagerPotentialWorkload = await this.allocationsService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,
-      offenderManagerCode
+      offenderManagerCode,
+      convictionId
     )
     res.render('pages/confirm-allocation', {
       title: 'Allocation Impact',
@@ -163,6 +166,7 @@ export default class AllocationsController {
       name: response.name,
       crn: response.crn,
       tier: response.tier,
+      convictionId: response.convictionId,
     })
   }
 }

@@ -17,19 +17,19 @@ export default function routes(router: Router, services: Services): Router {
     await allocationsController.getAllocations(req, res)
   })
 
-  get('/:crn/case-view', async (req, res) => {
-    const { crn } = req.params
-    await allocationsController.getUnallocatedCase(req, res, crn)
+  get('/:crn/convictions/:convictionId/case-view', async (req, res) => {
+    const { crn, convictionId } = req.params
+    await allocationsController.getUnallocatedCase(req, res, crn, convictionId)
   })
 
-  get('/:crn/probation-record', async (req, res) => {
-    const { crn } = req.params
-    await allocationsController.getProbationRecord(req, res, crn)
+  get('/:crn/convictions/:convictionId/probation-record', async (req, res) => {
+    const { crn, convictionId } = req.params
+    await allocationsController.getProbationRecord(req, res, crn, convictionId)
   })
 
-  get('/:crn/risk', async (req, res) => {
-    const { crn } = req.params
-    await allocationsController.getRisk(req, res, crn)
+  get('/:crn/convictions/:convictionId/risk', async (req, res) => {
+    const { crn, convictionId } = req.params
+    await allocationsController.getRisk(req, res, crn, convictionId)
   })
 
   get('/:crn/allocate', async (req, res) => {

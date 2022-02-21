@@ -22,26 +22,26 @@ export default class AllocationsService {
     })) as Allocation[]
   }
 
-  async getUnallocatedCase(token: string, crn): Promise<Allocation> {
+  async getUnallocatedCase(token: string, crn, convictionId): Promise<Allocation> {
     logger.info(`Getting unallocated case for crn ${crn}`)
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}`,
+      path: `/cases/unallocated/${crn}/convictions/${convictionId}`,
       headers: { Accept: 'application/json' },
     })) as Allocation
   }
 
-  async getProbationRecord(token: string, crn): Promise<ProbationRecord> {
+  async getProbationRecord(token: string, crn, convictionId): Promise<ProbationRecord> {
     logger.info(`Getting probation record for crn ${crn}`)
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/convictions`,
+      path: `/cases/unallocated/${crn}/convictions?excludeConvictionId=${convictionId}`,
       headers: { Accept: 'application/json' },
     })) as ProbationRecord
   }
 
-  async getRisk(token: string, crn): Promise<Risk> {
+  async getRisk(token: string, crn, convictionId): Promise<Risk> {
     logger.info(`Getting risk for crn ${crn}`)
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/risks`,
+      path: `/cases/unallocated/${crn}/convictions/${convictionId}/risks`,
       headers: { Accept: 'application/json' },
     })) as Risk
   }

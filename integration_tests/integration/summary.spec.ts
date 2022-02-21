@@ -12,7 +12,7 @@ context('Summary', () => {
   it('Caption text visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.visit('/J678910/case-view')
+    cy.visit('/J678910/convictions/123456789/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
@@ -20,7 +20,7 @@ context('Summary', () => {
   it('Summary header visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.visit('/J678910/case-view')
+    cy.visit('/J678910/convictions/123456789/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.summaryHeading().should('contain', 'Summary')
   })
@@ -28,7 +28,7 @@ context('Summary', () => {
   it('Sub nav visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.get('a[href*="J678910/case-view"]').click()
+    cy.get('a[href*="J678910/convictions/123456789/case-view"]').click()
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.subNav().should('contain', 'Summary').and('contain', 'Probation record').and('contain', 'Risk')
   })
@@ -36,7 +36,7 @@ context('Summary', () => {
   it('Allocate button visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.visit('/J678910/case-view')
+    cy.visit('/J678910/convictions/123456789/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.button().should('contain', 'Allocate')
   })
@@ -44,7 +44,7 @@ context('Summary', () => {
   it('Personal details visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.get('a[href*="J678910/case-view"]').click()
+    cy.get('a[href*="J678910/convictions/123456789/case-view"]').click()
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.personalDetailsTitle().should('have.text', 'Personal details')
     cy.get('#personal-details .govuk-summary-list').getSummaryList().should('deep.equal', {
@@ -57,7 +57,7 @@ context('Summary', () => {
   it('Sentence visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.get('a[href*="J678910/case-view"]').click()
+    cy.get('a[href*="J678910/convictions/123456789/case-view"]').click()
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.sentenceTitle().should('have.text', 'Sentence')
     cy.get('#sentence .govuk-summary-list').getSummaryList().should('deep.equal', {
@@ -70,7 +70,7 @@ context('Summary', () => {
   it('Sentence visible on page with multiple offences and requirements', () => {
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.signIn()
-    cy.get('a[href*="L786545/case-view"]').click()
+    cy.get('a[href*="L786545/convictions/56789/case-view"]').click()
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.sentenceTitle().should('have.text', 'Sentence')
     cy.get('#sentence .govuk-summary-list').getSummaryList().should('deep.equal', {
@@ -85,7 +85,7 @@ context('Summary', () => {
   it('Case details visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.get('a[href*="J678910/case-view"]').click()
+    cy.get('a[href*="J678910/convictions/123456789/case-view"]').click()
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.caseDetailsTitle().should('have.text', 'Case details')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
@@ -100,7 +100,7 @@ context('Summary', () => {
   it('Case details visible on page with no reports or assessments', () => {
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.signIn()
-    cy.get('a[href*="L786545/case-view"]').click()
+    cy.get('a[href*="L786545/convictions/56789/case-view"]').click()
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.caseDetailsTitle().should('have.text', 'Case details')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
@@ -115,7 +115,7 @@ context('Summary', () => {
   it('Breadcrumbs visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.visit('/J678910/case-view')
+    cy.visit('/J678910/convictions/123456789/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.breadCrumbs().should('contain', 'Home').and('contain', 'Unallocated cases')
   })

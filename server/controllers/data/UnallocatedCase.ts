@@ -21,6 +21,8 @@ export default class UnallocatedCase {
 
   secondaryStatus: string
 
+  convictionId: number
+
   constructor(
     name: string,
     crn: string,
@@ -29,7 +31,8 @@ export default class UnallocatedCase {
     initialAppointment: string,
     primaryStatus: string,
     previousConvictionEndDate: string,
-    offenderManager: OffenderManager
+    offenderManager: OffenderManager,
+    convictionId: number
   ) {
     this.name = name
     this.crn = crn
@@ -44,6 +47,7 @@ export default class UnallocatedCase {
       const grade = offenderManager.grade ? `, ${offenderManager.grade}` : ''
       this.secondaryStatus = `(${offenderManager.forenames} ${offenderManager.surname}${grade})`
     }
+    this.convictionId = convictionId
   }
 
   setInitialAppointment(initialAppointment: string, sentenceDate: string): void {

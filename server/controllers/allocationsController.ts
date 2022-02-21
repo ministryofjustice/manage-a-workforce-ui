@@ -25,7 +25,8 @@ export default class AllocationsController {
           value.initialAppointment,
           value.status,
           value.previousConvictionEndDate,
-          value.offenderManager
+          value.offenderManager,
+          value.convictionId
         )
     )
     res.render('pages/index', {
@@ -34,17 +35,26 @@ export default class AllocationsController {
     })
   }
 
-  async getUnallocatedCase(req: Request, res: Response, crn): Promise<void> {
-    const response: Allocation = await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn)
+  async getUnallocatedCase(req: Request, res: Response, crn, convictionId): Promise<void> {
+    const response: Allocation = await this.allocationsService.getUnallocatedCase(
+      res.locals.user.token,
+      crn,
+      convictionId
+    )
     res.render('pages/summary', {
       data: response,
       crn: response.crn,
+      convictionId: response.convictionId,
       title: 'Summary',
     })
   }
 
-  async getProbationRecord(req: Request, res: Response, crn): Promise<void> {
-    const response: ProbationRecord = await this.allocationsService.getProbationRecord(res.locals.user.token, crn)
+  async getProbationRecord(req: Request, res: Response, crn, convictionId): Promise<void> {
+    const response: ProbationRecord = await this.allocationsService.getProbationRecord(
+      res.locals.user.token,
+      crn,
+      convictionId
+    )
     const totalPreviousCount = response.previous.length
     const viewAll = totalPreviousCount <= 3 ? true : req.query.viewAll
     const amountToSlice = viewAll ? totalPreviousCount : 3
@@ -83,16 +93,18 @@ export default class AllocationsController {
       previousOrders,
       viewAll,
       totalPreviousCount,
+      convictionId,
       title: 'Probation record',
     })
   }
 
-  async getRisk(req: Request, res: Response, crn) {
-    const response: Risk = await this.allocationsService.getRisk(res.locals.user.token, crn)
+  async getRisk(req: Request, res: Response, crn, convictionId) {
+    const response: Risk = await this.allocationsService.getRisk(res.locals.user.token, crn, convictionId)
     res.render('pages/risk', {
       title: 'Risk',
       data: response,
       crn: response.crn,
+      convictionId: response.convictionId,
     })
   }
 

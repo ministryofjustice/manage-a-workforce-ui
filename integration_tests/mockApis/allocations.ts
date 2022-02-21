@@ -24,6 +24,7 @@ export default {
               surname: 'LoSardo',
               grade: 'SPO',
             },
+            convictionId: 123456789,
           },
           {
             name: 'Sofia Mitchell',
@@ -33,6 +34,7 @@ export default {
             initialAppointment: null,
             status: 'Previously managed',
             previousConvictionEndDate: '2019-12-13',
+            convictionId: 56789,
           },
           {
             name: 'John Smith',
@@ -41,6 +43,7 @@ export default {
             sentenceDate: '2021-07-23',
             initialAppointment: '2021-08-17',
             status: 'New to probation',
+            convictionId: 74534,
           },
           {
             name: 'Kacey Ray',
@@ -49,6 +52,7 @@ export default {
             sentenceDate: '2021-09-01',
             initialAppointment: '2021-09-02',
             status: 'New to probation',
+            convictionId: 268452,
           },
           {
             name: 'Andrew Williams',
@@ -57,6 +61,7 @@ export default {
             sentenceDate: '2021-09-01',
             initialAppointment: '2021-09-03',
             status: 'Previously managed',
+            convictionId: 7314214,
           },
           {
             name: 'Sarah Siddall',
@@ -65,6 +70,7 @@ export default {
             sentenceDate: '2021-09-01',
             initialAppointment: '2021-09-04',
             status: 'Previously managed',
+            convictionId: 834124,
           },
           {
             name: 'Mick Jones',
@@ -73,6 +79,7 @@ export default {
             sentenceDate: '2021-08-25',
             initialAppointment: null,
             status: 'Previously managed',
+            convictionId: 24436547,
           },
           {
             name: 'Sarah Smith',
@@ -81,6 +88,7 @@ export default {
             sentenceDate: '2021-08-24',
             initialAppointment: null,
             status: 'Previously managed',
+            convictionId: 8743453,
           },
           {
             name: 'Fiona Sipsmith',
@@ -89,6 +97,7 @@ export default {
             sentenceDate: '2021-08-16',
             initialAppointment: null,
             status: 'Previously managed',
+            convictionId: 46546235,
           },
           {
             name: 'Bill Turner',
@@ -101,6 +110,7 @@ export default {
               forenames: 'Richard',
               surname: 'Moore',
             },
+            convictionId: 7362532,
           },
         ],
       },
@@ -114,6 +124,7 @@ export default {
       sentenceDate: '2021-10-17',
       initialAppointment: '2021-10-22',
       status: 'Currently managed',
+      convictionId: 123456789,
     }))
     return stubFor({
       request: {
@@ -144,7 +155,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910`,
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789`,
       },
       response: {
         status: 200,
@@ -191,6 +202,7 @@ export default {
             lastAssessedOn: '2022-01-27T10:54:32.869Z',
             type: 'LAYER_3',
           },
+          convictionId: 123456789,
         },
       },
     })
@@ -200,7 +212,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910`,
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789`,
       },
       response: {
         status: 200,
@@ -242,6 +254,7 @@ export default {
             lastAssessedOn: '2022-01-27T10:54:32.869Z',
             type: 'LAYER_3',
           },
+          convictionId: 123456789,
         },
       },
     })
@@ -251,7 +264,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910`,
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789`,
       },
       response: {
         status: 200,
@@ -293,6 +306,7 @@ export default {
             lastAssessedOn: '2022-01-27T10:54:32.869Z',
             type: 'LAYER_3',
           },
+          convictionId: 123456789,
         },
       },
     })
@@ -302,7 +316,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910`,
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789`,
       },
       response: {
         status: 200,
@@ -345,6 +359,7 @@ export default {
             type: 'LAYER_3',
           },
         },
+        convictionId: 123456789,
       },
     })
   },
@@ -353,7 +368,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/L786545`,
+        urlPattern: `/cases/unallocated/L786545/convictions/56789`,
       },
       response: {
         status: 200,
@@ -410,6 +425,7 @@ export default {
             },
           ],
           pncNumber: 'A/8404713BA',
+          convictionId: 56789,
         },
       },
     })

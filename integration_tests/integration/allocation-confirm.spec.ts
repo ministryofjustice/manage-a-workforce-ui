@@ -1,7 +1,7 @@
 import Page from '../pages/page'
 import AllocationConfirmPage from '../pages/allocation-confirm'
 
-context('Allocate', () => {
+context('Allocate Confirmation', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
@@ -12,7 +12,7 @@ context('Allocate', () => {
   it('Offender details visible on page', () => {
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.signIn()
-    cy.visit('/J678910/allocate/OM1/confirm')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
     allocatePage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
@@ -20,7 +20,7 @@ context('Allocate', () => {
   it('Section break is visible on page', () => {
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.signIn()
-    cy.visit('/J678910/allocate/OM1/confirm')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
     allocatePage.sectionBreak().should('exist')
   })
@@ -28,7 +28,7 @@ context('Allocate', () => {
   it('Sub heading is visible on page', () => {
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.signIn()
-    cy.visit('/J678910/allocate/OM1/confirm')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
     allocatePage
       .subHeading()
@@ -38,7 +38,7 @@ context('Allocate', () => {
   it('Breadcrumbs visible on page', () => {
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.signIn()
-    cy.visit('/J678910/allocate/OM1/confirm')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
     allocatePage
       .breadCrumbs()
@@ -51,7 +51,7 @@ context('Allocate', () => {
   it('Continue button visible on page', () => {
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.signIn()
-    cy.visit('/J678910/allocate/OM1/confirm')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
     allocatePage.continueButton().should('exist').and('have.text', 'Continue')
   })
@@ -59,10 +59,10 @@ context('Allocate', () => {
   it('Choose different probation practitioner visible on page', () => {
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.signIn()
-    cy.visit('/J678910/allocate/OM1/confirm')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
     allocatePage
-      .chooseDifferentProbationPractitionerLink('J678910')
+      .chooseDifferentProbationPractitionerLink('J678910', '123456789')
       .should('exist')
       .and('have.text', 'Choose a different probation practitioner')
   })
@@ -70,7 +70,7 @@ context('Allocate', () => {
   it('Displays current and potential capacity', () => {
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.signIn()
-    cy.visit('/J678910/allocate/OM1/confirm')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
     allocatePage
       .capacityImpactStatement()
@@ -80,7 +80,7 @@ context('Allocate', () => {
   it('Display current and potential capacity as red when over capacity', () => {
     cy.task('stubGetPotentialOffenderManagerWorkloadOverCapacity')
     cy.signIn()
-    cy.visit('/J678910/allocate/OM1/confirm')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
     allocatePage.redCapacities().should('have.text', '100.2%108.6%')
   })

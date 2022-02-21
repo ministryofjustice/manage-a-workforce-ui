@@ -6,7 +6,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/J678910/allocate/offenderManagers`,
+        urlPattern: `/cases/J678910/convictions/123456789/allocate/offenderManagers`,
       },
       response: {
         status: 200,
@@ -41,6 +41,7 @@ export default {
               code: 'OM2',
             },
           ],
+          convictionId: 123456789,
         },
       },
     })
@@ -50,7 +51,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/J678910/allocate/offenderManagers`,
+        urlPattern: `/cases/J678910/convictions/123456789/allocate/offenderManagers`,
       },
       response: {
         status: 200,
@@ -71,6 +72,7 @@ export default {
               code: 'OM1',
             },
           ],
+          convictionId: 123456789,
         },
       },
     })
@@ -80,7 +82,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/J678910/allocate/offenderManagers`,
+        urlPattern: `/cases/J678910/convictions/123456789/allocate/offenderManagers`,
       },
       response: {
         status: 200,
@@ -101,6 +103,7 @@ export default {
               code: 'OM1',
             },
           ],
+          convictionId: 123456789,
         },
       },
     })
@@ -110,7 +113,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/J678910/allocate/offenderManagers`,
+        urlPattern: `/cases/J678910/convictions/123456789/allocate/offenderManagers`,
       },
       response: {
         status: 200,
@@ -131,6 +134,7 @@ export default {
               code: 'OM1',
             },
           ],
+          convictionId: 123456789,
         },
       },
     })

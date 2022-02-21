@@ -8,4 +8,5 @@ export default interface OffenderManagerPotentialWorkload {
   offenderManagerCurrentCapacity: number
   offenderManagerCode: string
   offenderManagerPotentialCapacity: number
+  convictionId: number
 }

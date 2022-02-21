@@ -6,7 +6,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/J678910/allocate/OM1/impact`,
+        urlPattern: `/cases/J678910/convictions/123456789/allocate/OM1/impact`,
       },
       response: {
         status: 200,
@@ -21,6 +21,7 @@ export default {
           offenderManagerCurrentCapacity: 50.4,
           offenderManagerCode: 'OM1',
           offenderManagerPotentialCapacity: 64.8,
+          convictionId: 123456789,
         },
       },
     })
@@ -29,7 +30,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/J678910/allocate/OM1/impact`,
+        urlPattern: `/cases/J678910/convictions/123456789/allocate/OM1/impact`,
       },
       response: {
         status: 200,
@@ -44,6 +45,7 @@ export default {
           offenderManagerCurrentCapacity: 100.2,
           offenderManagerCode: 'OM1',
           offenderManagerPotentialCapacity: 108.6,
+          convictionId: 123456789,
         },
       },
     })

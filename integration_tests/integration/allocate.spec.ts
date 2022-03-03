@@ -44,7 +44,7 @@ context('Allocate', () => {
     allocatePage.subHeading().should('contain', 'Allocate to a probation practitioner in Wrexham')
   })
 
-  it('Warning is visible on page if currently managed', () => {
+  it('Warning is visible on page if probation status is currently managed', () => {
     cy.task('stubGetAllocateOffenderManagers')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
@@ -62,13 +62,15 @@ context('Allocate', () => {
     allocatePage.warningIcon().should('not.exist')
   })
 
-  it('Warning is not visible on page if probation status is Previously managed', () => {
+  it('Warning is visible on page if probation status is Previously managed', () => {
     cy.task('stubGetAllocateOffenderManagersPreviouslyManaged')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.warningText().should('not.exist')
-    allocatePage.warningIcon().should('not.exist')
+    allocatePage
+      .warningText()
+      .should('contain', 'Dylan Adam Armstrong has been previously managed by Sofia Micheals (PO)')
+    allocatePage.warningIcon().should('exist')
   })
 
   it('Warning is not visible on page if probation status is New to probation', () => {

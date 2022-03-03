@@ -90,16 +90,16 @@
     {{
         indexCard({
             titleHtml: ('<div class="tooltip">OGRS<span class="tooltiptext govuk-body-s">Offender Group Reconviction Scale</span></div>' + ('<span> ' + data.ogrs.score + '%</span>' if data.ogrs else '')),
-            descriptionText: ('' if data.ogrs else 'Score unavailable')
+            descriptionText: ('Last updated: ' + data.ogrs.lastUpdatedOn | dateFormat if data.ogrs else 'Score unavailable')
         })
     }}
   </div>
 </div>
-    
 
-   
 
-    
+
+
+
 
     <h3 class="govuk-heading-m">Register</h3>
 

@@ -13,6 +13,6 @@ context('Allocate', () => {
     cy.task('stubGetWorkloadDetails')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
-    const officerViewPage = Page.verifyOnPage(OfficerViewPage)
+    Page.verifyOnPage(OfficerViewPage)
   })
 })

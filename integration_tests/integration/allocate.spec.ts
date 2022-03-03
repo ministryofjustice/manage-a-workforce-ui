@@ -97,6 +97,7 @@ context('Allocate', () => {
           Capacity: '80%',
           'Community cases': '25',
           'Custody cases': '28',
+          'Workload details': 'View',
           Select: '',
         },
         {
@@ -105,6 +106,7 @@ context('Allocate', () => {
           Capacity: '50%',
           'Community cases': '15',
           'Custody cases': '20',
+          'Workload details': 'View',
           Select: '',
         },
       ])
@@ -145,7 +147,7 @@ context('Allocate', () => {
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.radioButtons().first().check()
     allocatePage.checkedRadioButton().should('have.value', 'OM2')
-    allocatePage.clearSelectionButton('J678910', '123456789').click()
+    allocatePage.clearSelectionButton().click()
     allocatePage.checkedRadioButton().should('not.exist')
   })
 })

@@ -1,0 +1,29 @@
+import { SuperAgentRequest } from 'superagent'
+import { stubFor } from './wiremock'
+
+export default {
+  stubGetWorkloadDetails: (): SuperAgentRequest => {
+    return stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/J678910/convictions/123456789/allocate/OM2/impact`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          offenderManagerForename: 'John',
+          offenderManagerSurname: 'Doe',
+          offenderManagerGrade: 'PO',
+          offenderManagerCurrentCapacity: 100.2,
+          offenderManagerCode: 'OM2',
+          offenderManagerPotentialCapacity: 108.6,
+          convictionId: 123456789,
+        },
+      },
+    })
+  },
+}

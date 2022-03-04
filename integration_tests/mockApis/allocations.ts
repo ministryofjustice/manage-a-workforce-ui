@@ -25,6 +25,7 @@ export default {
               grade: 'SPO',
             },
             convictionId: 123456789,
+            caseType: 'COMMUNITY',
           },
           {
             name: 'Sofia Mitchell',
@@ -35,6 +36,7 @@ export default {
             status: 'Previously managed',
             previousConvictionEndDate: '2019-12-13',
             convictionId: 56789,
+            caseType: 'CUSTODY',
           },
           {
             name: 'John Smith',
@@ -44,6 +46,7 @@ export default {
             initialAppointment: '2021-08-17',
             status: 'New to probation',
             convictionId: 74534,
+            caseType: 'COMMUNITY',
           },
           {
             name: 'Kacey Ray',
@@ -53,6 +56,7 @@ export default {
             initialAppointment: '2021-09-02',
             status: 'New to probation',
             convictionId: 268452,
+            caseType: 'COMMUNITY',
           },
           {
             name: 'Andrew Williams',
@@ -62,6 +66,7 @@ export default {
             initialAppointment: '2021-09-03',
             status: 'Previously managed',
             convictionId: 7314214,
+            caseType: 'COMMUNITY',
           },
           {
             name: 'Sarah Siddall',
@@ -71,6 +76,7 @@ export default {
             initialAppointment: '2021-09-04',
             status: 'Previously managed',
             convictionId: 834124,
+            caseType: 'COMMUNITY',
           },
           {
             name: 'Mick Jones',
@@ -80,6 +86,7 @@ export default {
             initialAppointment: null,
             status: 'Previously managed',
             convictionId: 24436547,
+            caseType: 'COMMUNITY',
           },
           {
             name: 'Sarah Smith',
@@ -89,6 +96,7 @@ export default {
             initialAppointment: null,
             status: 'Previously managed',
             convictionId: 8743453,
+            caseType: 'COMMUNITY',
           },
           {
             name: 'Fiona Sipsmith',
@@ -98,6 +106,7 @@ export default {
             initialAppointment: null,
             status: 'Previously managed',
             convictionId: 46546235,
+            caseType: 'COMMUNITY',
           },
           {
             name: 'Bill Turner',
@@ -111,6 +120,7 @@ export default {
               surname: 'Moore',
             },
             convictionId: 7362532,
+            caseType: 'COMMUNITY',
           },
         ],
       },
@@ -125,6 +135,7 @@ export default {
       initialAppointment: '2021-10-22',
       status: 'Currently managed',
       convictionId: 123456789,
+      caseType: 'COMMUNITY',
     }))
     return stubFor({
       request: {
@@ -203,6 +214,7 @@ export default {
             type: 'LAYER_3',
           },
           convictionId: 123456789,
+          caseType: 'COMMUNITY',
         },
       },
     })
@@ -255,6 +267,7 @@ export default {
             type: 'LAYER_3',
           },
           convictionId: 123456789,
+          caseType: 'COMMUNITY',
         },
       },
     })
@@ -307,6 +320,7 @@ export default {
             type: 'LAYER_3',
           },
           convictionId: 123456789,
+          caseType: 'COMMUNITY',
         },
       },
     })
@@ -360,6 +374,7 @@ export default {
           },
         },
         convictionId: 123456789,
+        caseType: 'COMMUNITY',
       },
     })
   },
@@ -426,6 +441,7 @@ export default {
           ],
           pncNumber: 'A/8404713BA',
           convictionId: 56789,
+          caseType: 'COMMUNITY',
         },
       },
     })

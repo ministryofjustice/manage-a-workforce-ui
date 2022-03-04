@@ -22,6 +22,7 @@ export default {
           offenderManagerCode: 'OM1',
           offenderManagerPotentialCapacity: 64.8,
           convictionId: 123456789,
+          caseType: 'CUSTODY',
         },
       },
     })
@@ -46,6 +47,7 @@ export default {
           offenderManagerCode: 'OM1',
           offenderManagerPotentialCapacity: 108.6,
           convictionId: 123456789,
+          caseType: 'CUSTODY',
         },
       },
     })

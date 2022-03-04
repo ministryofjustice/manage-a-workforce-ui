@@ -15,6 +15,7 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
+          caseType: 'COMMUNITY',
           active: [
             {
               description: 'Adult Custody < 12m',
@@ -99,6 +100,7 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
+          caseType: 'COMMUNITY',
           active: [],
           previous: [],
         },
@@ -118,6 +120,7 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
+          caseType: 'COMMUNITY',
           active: [
             {
               description: 'Adult Custody < 12m',
@@ -199,6 +202,7 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
+          caseType: 'COMMUNITY',
           active: [
             {
               description: 'Adult Custody < 12m',

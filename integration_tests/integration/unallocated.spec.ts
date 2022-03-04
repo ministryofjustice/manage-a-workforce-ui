@@ -103,7 +103,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Sofia MitchellL786545',
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': 'Not bookedDue on 8 Sep 2021',
+          'Induction appointment': 'Not needed',
           'Probation status': 'Previously managed(13 Dec 2019)',
           Action: 'Review case',
         },

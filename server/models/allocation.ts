@@ -23,4 +23,5 @@ export default interface Allocation {
   courtReport: CourtReport
   assessment: Assessment
   convictionId: number
+  caseType: string
 }

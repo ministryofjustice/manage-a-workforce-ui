@@ -42,6 +42,7 @@ export default {
             },
           ],
           convictionId: 123456789,
+          caseType: 'CUSTODY',
         },
       },
     })
@@ -73,6 +74,7 @@ export default {
             },
           ],
           convictionId: 123456789,
+          caseType: 'CUSTODY',
         },
       },
     })
@@ -109,6 +111,7 @@ export default {
             },
           ],
           convictionId: 123456789,
+          caseType: 'CUSTODY',
         },
       },
     })
@@ -140,6 +143,7 @@ export default {
             },
           ],
           convictionId: 123456789,
+          caseType: 'CUSTODY',
         },
       },
     })

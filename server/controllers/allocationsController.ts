@@ -170,4 +170,17 @@ export default class AllocationsController {
       convictionId: response.convictionId,
     })
   }
+
+  async getOfficerWorkload(req: Request, res: Response, crn, offenderManagerCode, convictionId) {
+    const response: OffenderManagerPotentialWorkload = await this.allocationsService.getCaseAllocationImpact(
+      res.locals.user.token,
+      crn,
+      offenderManagerCode,
+      convictionId
+    )
+    res.render('pages/officer-view', {
+      title: 'Officer view',
+      data: response,
+    })
+  }
 }

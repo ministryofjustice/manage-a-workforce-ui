@@ -27,6 +27,5 @@ export default class AllocatePage extends Page {
 
   errorSummary = (): PageElement => cy.get('.govuk-error-summary')
 
-  clearSelectionButton = (crn, convictionId): PageElement =>
-    cy.get(`a[href*="${crn}/convictions/${convictionId}/allocate"]`)
+  clearSelectionButton = (): PageElement => cy.get(`.govuk-button--secondary`)
 }

@@ -94,6 +94,11 @@ export default {
           crn: 'J678910',
           tier: 'C1',
           status: 'Previously managed',
+          offenderManager: {
+            forenames: 'Sofia',
+            surname: 'Micheals',
+            grade: 'PO',
+          },
           offenderManagersToAllocate: [
             {
               forename: 'Ben',

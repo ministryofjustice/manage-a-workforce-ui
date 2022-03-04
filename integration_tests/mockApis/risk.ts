@@ -60,6 +60,7 @@ export default {
             percentage: 3.8,
           },
           ogrs: {
+            lastUpdatedOn: '2018-11-17',
             score: 85,
           },
         },

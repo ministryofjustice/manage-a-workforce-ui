@@ -40,6 +40,7 @@
                 "aria-sort": "none"
             }
         },
+        { text: 'Workload details' },
         { text: 'Select' }
     ],
     rows: []
@@ -72,6 +73,7 @@
                 "data-sort-value": item.custodyCases
             }
         },
+        { text: ('<a href="/' + crn + '/convictions/' + convictionId + '/allocate/' + item.code + '/officer-view" " class="govuk-link--no-visited-state" aria-label="View">' + "View" + '</a>' ) | safe},
         { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + item.code + '" name="allocatedOfficer" type="radio" value="' + item.code + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + item.code + '"></label></div></div>')
         }
     ] -%}
@@ -125,7 +127,16 @@
         </div>
     {% endif %}
 
-    
+    {% if probationStatus == 'Previously managed' and offenderManager %}
+        <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+                <span class="govuk-warning-text__assistive">Warning</span>
+                {{ name }} has been previously managed by {{ offenderManagerDetails }}.
+            </strong>
+        </div>
+    {% endif %}
+
 
     <form method="post">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
@@ -149,7 +160,7 @@
             <a class="govuk-button govuk-button--secondary" href="{{'/' + crn + '/convictions/' + convictionId + '/allocate'}}">Clear selection </a>
         </div>
     </form>
-    
+
 
 {% endblock %}
 

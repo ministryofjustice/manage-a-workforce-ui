@@ -26,7 +26,8 @@ export default class AllocationsController {
           value.status,
           value.previousConvictionEndDate,
           value.offenderManager,
-          value.convictionId
+          value.convictionId,
+          value.caseType
         )
     )
     res.render('pages/index', {

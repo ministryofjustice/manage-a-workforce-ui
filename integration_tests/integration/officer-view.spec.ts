@@ -1,6 +1,5 @@
 import Page from '../pages/page'
 import OfficerViewPage from '../pages/officerView'
-import AllocatePage from '../pages/allocate'
 
 context('Allocate', () => {
   beforeEach(() => {

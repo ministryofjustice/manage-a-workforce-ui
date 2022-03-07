@@ -1,7 +1,30 @@
 {% extends "partials/layout.njk" %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% set pageTitle = applicationName + " - Officer view" %}
 {% set officerName = data.offenderManagerForename + ' '  + data.offenderManagerSurname %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home"
+            },
+            {
+                text: "Unallocated cases",
+                href: "/"
+            },
+            {
+                text: "Case view",
+                href: "/" + crn + "/convictions/" + convictionId + "/case-view"
+            },
+            {
+                text: "Allocate to probation practitioner",
+                href: "/" + crn + "/convictions/" + convictionId + "/allocate"
+            }
+        ]
+    }) }}
+{% endblock %}
 
 {% block content %}
 
@@ -11,7 +34,6 @@
             </h1>
         </div>
     </div>
-
 
 {% endblock %}
 

@@ -181,6 +181,8 @@ export default class AllocationsController {
     res.render('pages/officer-view', {
       title: 'Officer view',
       data: response,
+      crn: response.crn,
+      convictionId: response.convictionId,
     })
   }
 }

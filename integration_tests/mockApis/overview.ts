@@ -6,7 +6,7 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/J678910/convictions/123456789/allocate/OM2/impact`,
+        urlPattern: `/cases/J678910/convictions/123456789/allocate/OM2/overview`,
       },
       response: {
         status: 200,
@@ -20,8 +20,14 @@ export default {
           offenderManagerGrade: 'PO',
           offenderManagerCurrentCapacity: 100.2,
           offenderManagerCode: 'OM2',
-          offenderManagerPotentialCapacity: 108.6,
+          offenderManagerTotalCases: 22,
           convictionId: 123456789,
+          teamName: 'Wrexham - Team 1',
+          offenderManagerWeeklyHours: 22.5,
+          offenderManagerTotalReductionHours: 10,
+          offenderManagerPointsAvailable: 1265,
+          offenderManagerPointsUsed: 1580,
+          offenderManagerPointsRemaining: -315,
         },
       },
     })

@@ -9,6 +9,7 @@ import Conviction from '../models/conviction'
 import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 import AllocateOffenderManager from './data/AllocateOffenderManager'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
+import OffenderManagerOverview from '../models/offenderManagerOverview'
 
 export default class AllocationsController {
   constructor(private readonly allocationsService: AllocationsService) {}
@@ -171,8 +172,8 @@ export default class AllocationsController {
     })
   }
 
-  async getOfficerWorkload(req: Request, res: Response, crn, offenderManagerCode, convictionId) {
-    const response: OffenderManagerPotentialWorkload = await this.allocationsService.getCaseAllocationImpact(
+  async getOverview(req: Request, res: Response, crn, offenderManagerCode, convictionId) {
+    const response: OffenderManagerOverview = await this.allocationsService.getOffenderManagerOverview(
       res.locals.user.token,
       crn,
       offenderManagerCode,
@@ -187,7 +188,7 @@ export default class AllocationsController {
   }
 
   async getActiveCases(req: Request, res: Response, crn, offenderManagerCode, convictionId) {
-    const response: OffenderManagerPotentialWorkload = await this.allocationsService.getCaseAllocationImpact(
+    const response: OffenderManagerOverview = await this.allocationsService.getOffenderManagerOverview(
       res.locals.user.token,
       crn,
       offenderManagerCode,

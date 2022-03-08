@@ -8,4 +8,6 @@ export default class OfficerViewPage extends Page {
   captionText = (): PageElement => cy.get('.govuk-caption-xl')
 
   breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
+
+  secondaryText = (): PageElement => cy.get('.maw-secondary-text-col')
 }

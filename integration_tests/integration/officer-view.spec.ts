@@ -13,7 +13,9 @@ context('Allocate', () => {
     cy.task('stubGetWorkloadDetails')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
-    Page.verifyOnPage(OfficerViewPage)
+    const officerViewPage = Page.verifyOnPage(OfficerViewPage)
+    officerViewPage.captionText().should('contain', 'Wrexham - Team 1')
+    officerViewPage.secondaryText().should('contain', 'PO')
   })
 
   it('Breadcrumbs are visible on page', () => {

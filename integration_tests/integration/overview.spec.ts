@@ -1,7 +1,7 @@
 import Page from '../pages/page'
-import OfficerViewPage from '../pages/officerView'
+import OverviewPage from '../pages/overview'
 
-context('Allocate', () => {
+context('Overview', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
@@ -13,21 +13,29 @@ context('Allocate', () => {
     cy.task('stubGetWorkloadDetails')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
-    const officerViewPage = Page.verifyOnPage(OfficerViewPage)
-    officerViewPage.captionText().should('contain', 'Wrexham - Team 1')
-    officerViewPage.secondaryText().should('contain', 'PO')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage.captionText().should('contain', 'Wrexham - Team 1')
+    overviewPage.secondaryText().should('contain', 'PO')
   })
 
   it('Breadcrumbs are visible on page', () => {
     cy.task('stubGetWorkloadDetails')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
-    const officerViewPage = Page.verifyOnPage(OfficerViewPage)
-    officerViewPage
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage
       .breadCrumbs()
       .should('contain', 'Home')
       .and('contain', 'Unallocated cases')
       .and('contain', 'Case view')
       .and('contain', 'Allocate to probation practitioner')
+  })
+
+  it('Heading is visible on page', () => {
+    cy.task('stubGetWorkloadDetails')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage.heading().should('contain', 'Current workload')
   })
 })

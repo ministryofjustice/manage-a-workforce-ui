@@ -178,8 +178,23 @@ export default class AllocationsController {
       offenderManagerCode,
       convictionId
     )
-    res.render('pages/officer-view', {
-      title: 'Officer view',
+    res.render('pages/overview', {
+      title: 'Overview',
+      data: response,
+      crn: response.crn,
+      convictionId: response.convictionId,
+    })
+  }
+
+  async getActiveCases(req: Request, res: Response, crn, offenderManagerCode, convictionId) {
+    const response: OffenderManagerPotentialWorkload = await this.allocationsService.getCaseAllocationImpact(
+      res.locals.user.token,
+      crn,
+      offenderManagerCode,
+      convictionId
+    )
+    res.render('pages/active-cases', {
+      title: 'Active cases',
       data: response,
       crn: response.crn,
       convictionId: response.convictionId,

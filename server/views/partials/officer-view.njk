@@ -1,4 +1,5 @@
 {% extends "partials/layout.njk" %}
+{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% set pageTitle = applicationName + " - Officer view" %}
@@ -27,13 +28,36 @@
 {% endblock %}
 
 {% block content %}
-
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <span class="govuk-caption-xl">Wrexham - Team 1</span>
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ officerName }}
                 <span class="maw-secondary-text-col govuk-!-display-block">{{ data.offenderManagerGrade }}</span>
             </h1>
+        </div>
+    </div>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            {{ mojSubNavigation({
+                label: 'Sub navigation',
+                items: [
+                    {
+                        text: 'Overview',
+                        href: '/' + crn + '/convictions/' + convictionId + '/allocate/' + data.offenderManagerCode + '/officer-view',
+                        active: title === 'Overview'
+                    },
+                    {
+                        text: 'Active cases ()',
+                        href: '/' + crn + '/convictions/' + convictionId + '/allocate/' + data.offenderManagerCode + '/active-cases',
+                        active: title === 'Active cases'
+                    }
+                ]
+            }) }}
+
+
+            {% block officerContent %}{% endblock %}
+
         </div>
     </div>
 

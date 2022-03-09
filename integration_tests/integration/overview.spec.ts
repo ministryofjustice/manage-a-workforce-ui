@@ -10,7 +10,7 @@ context('Overview', () => {
   })
 
   it('Officer details visible on page', () => {
-    cy.task('stubGetWorkloadDetails')
+    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -19,7 +19,7 @@ context('Overview', () => {
   })
 
   it('Breadcrumbs are visible on page', () => {
-    cy.task('stubGetWorkloadDetails')
+    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -32,10 +32,18 @@ context('Overview', () => {
   })
 
   it('Heading is visible on page', () => {
-    cy.task('stubGetWorkloadDetails')
+    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.heading().should('contain', 'Current workload')
+  })
+
+  it('Sub nav visible on page', () => {
+    cy.task('stubGetOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage.subNav().should('contain', 'Overview').and('contain', 'Active cases (22)')
   })
 })

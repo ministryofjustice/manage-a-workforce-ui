@@ -2,7 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { stubFor } from './wiremock'
 
 export default {
-  stubGetWorkloadDetails: (): SuperAgentRequest => {
+  stubGetOverview: (): SuperAgentRequest => {
     return stubFor({
       request: {
         method: 'GET',

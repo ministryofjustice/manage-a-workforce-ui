@@ -1,6 +1,5 @@
 import Page from '../pages/page'
 import OverviewPage from '../pages/overview'
-import SummaryPage from '../pages/summary'
 
 context('Overview', () => {
   beforeEach(() => {

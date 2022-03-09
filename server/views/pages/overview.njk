@@ -1,5 +1,6 @@
 {% extends "partials/officer-view.njk" %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% set pageTitle = applicationName + " - Overview" %}
 
@@ -8,6 +9,33 @@
 
     {{ govukDetails({
         summaryText: "View as points",
-        text: ""
+        text: govukSummaryList({
+            rows: [
+                {
+                    key: {
+                    text: "Points available"
+                },
+                    value: {
+                    text: data.offenderManagerPointsAvailable
+                }
+                },
+                {
+                    key: {
+                    text: "Points used"
+                },
+                    value: {
+                    text: data.offenderManagerPointsUsed
+                }
+                },
+                {
+                    key: {
+                    text: "Points remaining"
+                },
+                    value: {
+                    text: data.offenderManagerPointsRemaining
+                }
+                }
+            ]
+        })
     }) }}
 {% endblock %}

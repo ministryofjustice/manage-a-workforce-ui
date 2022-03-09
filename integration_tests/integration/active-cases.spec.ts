@@ -10,7 +10,7 @@ context('Active Cases', () => {
   })
 
   it('Officer details visible on page', () => {
-    cy.task('stubGetWorkloadDetails')
+    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
     const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
@@ -19,7 +19,7 @@ context('Active Cases', () => {
   })
 
   it('Breadcrumbs are visible on page', () => {
-    cy.task('stubGetWorkloadDetails')
+    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
     const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
@@ -32,7 +32,7 @@ context('Active Cases', () => {
   })
 
   it('Heading is visible on page', () => {
-    cy.task('stubGetWorkloadDetails')
+    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
     const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)

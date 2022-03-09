@@ -12,4 +12,6 @@ export default class OverviewPage extends Page {
   secondaryText = (): PageElement => cy.get('.maw-secondary-text-col')
 
   heading = (): PageElement => cy.get('h2.govuk-heading-l')
+
+  subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
 }

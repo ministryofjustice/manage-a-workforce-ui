@@ -65,6 +65,6 @@ export default (on: (string, Record) => void): void => {
     stubGetPotentialOffenderManagerWorkloadOverCapacity:
       allocationConfirm.stubGetPotentialOffenderManagerWorkloadOverCapacity,
 
-    stubGetWorkloadDetails: workloadDetails.stubGetWorkloadDetails,
+    stubGetOverview: workloadDetails.stubGetOverview,
   })
 }

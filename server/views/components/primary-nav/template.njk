@@ -10,10 +10,9 @@
 
                     <li class="moj-primary-navigation__item">
                         <a class="moj-primary-navigation__link" aria-current="page"
-                           href="/"> {% if params.casesLength %}
+                           href="/">Allocations {% if params.casesLength %}
                                 <span id="notifications" class="moj-notification-badge">{{ params.casesLength | getCaseCount }}</span>
-                                     {% endif %}
-                            Allocations</a>
+                            {% endif %}</a>
                     </li>
 
                     <li class="moj-primary-navigation__item">

@@ -6,6 +6,7 @@ import ProbationRecord from '../models/probationRecord'
 import Risk from '../models/risk'
 import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
+import OffenderManagerOverview from '../models/offenderManagerOverview'
 
 export default class AllocationsService {
   constructor(private readonly config: ApiConfig) {}
@@ -65,5 +66,18 @@ export default class AllocationsService {
       path: `/cases/${crn}/convictions/${convictionId}/allocate/${offenderManagerCode}/impact`,
       headers: { Accept: 'application/json' },
     })) as OffenderManagerPotentialWorkload
+  }
+
+  async getOffenderManagerOverview(
+    token: string,
+    crn,
+    offenderManagerCode,
+    convictionId
+  ): Promise<OffenderManagerOverview> {
+    logger.info(`Getting offender manager overview for crn ${crn}`)
+    return (await this.restClient(token).get({
+      path: `/cases/${crn}/convictions/${convictionId}/allocate/${offenderManagerCode}/overview`,
+      headers: { Accept: 'application/json' },
+    })) as OffenderManagerOverview
   }
 }

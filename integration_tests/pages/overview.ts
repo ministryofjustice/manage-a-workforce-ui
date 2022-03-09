@@ -14,4 +14,6 @@ export default class OverviewPage extends Page {
   heading = (): PageElement => cy.get('h2.govuk-heading-l')
 
   subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
+
+  summaryText = (): PageElement => cy.get('.govuk-details__summary-text')
 }

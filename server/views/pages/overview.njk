@@ -1,7 +1,13 @@
 {% extends "partials/officer-view.njk" %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% set pageTitle = applicationName + " - Overview" %}
 
 {% block officerContent %}
     <h2 class="govuk-heading-l">Current workload</h2>
+
+    {{ govukDetails({
+        summaryText: "View as points",
+        text: ""
+    }) }}
 {% endblock %}

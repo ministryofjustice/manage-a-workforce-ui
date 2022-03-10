@@ -65,4 +65,22 @@ context('Overview', () => {
       'Points remaining': '-315',
     })
   })
+
+  it('Under capacity card visible on page', () => {
+    cy.task('stubGetOverviewUnderCapacity')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage.cardHeading().should('contain', '98%')
+    overviewPage.underCapacityCard().should('exist')
+  })
+
+  it('Over capacity card visible on page', () => {
+    cy.task('stubGetOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage.cardHeading().should('contain', '100.2%')
+    overviewPage.overCapacityCard().should('exist')
+  })
 })

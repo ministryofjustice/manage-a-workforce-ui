@@ -1,41 +1,52 @@
 {% extends "partials/officer-view.njk" %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "../components/card/macro.njk" import card %}
 
 {% set pageTitle = applicationName + " - Overview" %}
 
 {% block officerContent %}
-    <h2 class="govuk-heading-l">Current workload</h2>
+            <h2 class="govuk-heading-l">Current workload</h2>
 
-    {{ govukDetails({
-        summaryText: "View as points",
-        text: govukSummaryList({
-            rows: [
-                {
-                    key: {
-                    text: "Points available"
-                },
-                    value: {
-                    text: data.offenderManagerPointsAvailable
-                }
-                },
-                {
-                    key: {
-                    text: "Points used"
-                },
-                    value: {
-                    text: data.offenderManagerPointsUsed
-                }
-                },
-                {
-                    key: {
-                    text: "Points remaining"
-                },
-                    value: {
-                    text: data.offenderManagerPointsRemaining
-                }
-                }
-            ]
-        })
-    }) }}
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-quarter">
+                    {{ card({
+                        classes: ('over-capacity' if data.offenderManagerCurrentCapacity > 100 else 'under-capacity'),
+                        titleText: data.offenderManagerCurrentCapacity + '%',
+                        descriptionText: 'capacity'
+                    }) }}
+                </div>
+            </div>
+
+            {{ govukDetails({
+                summaryText: "View as points",
+                text: govukSummaryList({
+                    rows: [
+                        {
+                            key: {
+                            text: "Points available"
+                        },
+                            value: {
+                            text: data.offenderManagerPointsAvailable
+                        }
+                        },
+                        {
+                            key: {
+                            text: "Points used"
+                        },
+                            value: {
+                            text: data.offenderManagerPointsUsed
+                        }
+                        },
+                        {
+                            key: {
+                            text: "Points remaining"
+                        },
+                            value: {
+                            text: data.offenderManagerPointsRemaining
+                        }
+                        }
+                    ]
+                })
+            }) }}
 {% endblock %}

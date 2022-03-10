@@ -7,7 +7,7 @@ import probationRecord from '../mockApis/probationRecord'
 import risk from '../mockApis/risk'
 import allocateOffenderManagers from '../mockApis/allocateOffenderManagers'
 import allocationConfirm from '../mockApis/allocationConfirm'
-import workloadDetails from '../mockApis/overview'
+import overview from '../mockApis/overview'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
@@ -65,6 +65,8 @@ export default (on: (string, Record) => void): void => {
     stubGetPotentialOffenderManagerWorkloadOverCapacity:
       allocationConfirm.stubGetPotentialOffenderManagerWorkloadOverCapacity,
 
-    stubGetOverview: workloadDetails.stubGetOverview,
+    stubGetOverview: overview.stubGetOverview,
+
+    stubGetOverviewUnderCapacity: overview.stubGetOverviewUnderCapacity,
   })
 }

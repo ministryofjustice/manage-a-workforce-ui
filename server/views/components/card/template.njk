@@ -1,0 +1,10 @@
+<div class="card card-total-subset {%- if params.classes %} {{ params.classes }}{% endif %}">
+  {{ params.html | safe if params.html else params.text }}
+  <span class="card__heading
+{%- if params.headingClasses %} {{ params.headingClasses }}{% endif %}">
+    {{ params.titleHtml | safe if params.titleHtml else params.titleText }}
+  </span>
+  <p class="{%- if params.paragraphClasses %} {{ params.paragraphClasses }}{% endif %}">
+    {{ params.descriptionHtml | safe if params.descriptionHtml else params.descriptionText }}
+  </p>
+</div>

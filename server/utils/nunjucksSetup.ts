@@ -51,6 +51,10 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
     return dayjs(date).format(config.dateFormat)
   })
 
+  njkEnv.addFilter('timeFormat', (time: string) => {
+    return dayjs(time).format('h:mma')
+  })
+
   njkEnv.addFilter('dateDifference', (startDate: string, endDate: string) => {
     const addOneDay = dayjs(endDate).add(1, 'day')
     const months = dayjs(addOneDay).diff(startDate, 'month')

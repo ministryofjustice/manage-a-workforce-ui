@@ -22,4 +22,6 @@ export default class OverviewPage extends Page {
   underCapacityCard = (): PageElement => cy.get('.under-capacity')
 
   cardHeading = (): PageElement => cy.get('.card__heading')
+
+  lastUpdated = (): PageElement => cy.get('.govuk-body-s')
 }

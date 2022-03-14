@@ -9,7 +9,7 @@
     padding: 15px 20px;
     background-color: #fff;
     border: 1px solid #0b0c0c;
-    max-width: 140px;
+    max-width: 960px;
     font-family: "GDS Transport",arial,sans-serif;
 
     p {
@@ -18,11 +18,11 @@
 }
 
 .card-total p {
-  color: $govuk-brand-colour;
+    color: $govuk-brand-colour;
 }
 
 .card-total-subset p {
-  color: white;
+    color: white;
 }
 
 .card-total-subset {
@@ -44,9 +44,17 @@
 
 
 @media (min-width: 40.0625em) {
-.card {
-    font-size: 16px;
-    font-size: 1rem;
-    line-height: 1.25;
+    .card {
+        font-size: 16px;
+        font-size: 1rem;
+        line-height: 1.25;
     }
+}
+
+.card__layout {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 15px;
+    width: 28%;
+    float: left
 }

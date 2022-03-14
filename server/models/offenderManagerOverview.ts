@@ -15,4 +15,5 @@ export default interface OffenderManagerOverview {
   offenderManagerPointsAvailable: number
   offenderManagerPointsUsed: number
   offenderManagerPointsRemaining: number
+  lastUpdatedOn: string
 }

@@ -6,17 +6,25 @@
 {% set pageTitle = applicationName + " - Overview" %}
 
 {% block officerContent %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
             <h2 class="govuk-heading-l">Current workload</h2>
 
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-quarter">
+                <div class="card__layout">
+                </div>
+
+                <div class="card__layout">
                     {{ card({
-                        classes: ('over-capacity' if data.offenderManagerCurrentCapacity > 100 else 'under-capacity'),
+                        classes: ('over-capacity' if data.offenderManagerCurrentCapacity > 99 else 'under-capacity'),
                         titleText: data.offenderManagerCurrentCapacity + '%',
                         descriptionText: 'capacity'
                     }) }}
                 </div>
+
             </div>
+
 
             {{ govukDetails({
                 summaryText: "View as points",
@@ -49,4 +57,9 @@
                     ]
                 })
             }) }}
+        </div>
+
+        <div class="govuk-grid-column-one-third">
+        </div>
+    </div>
 {% endblock %}

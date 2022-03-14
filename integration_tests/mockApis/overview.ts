@@ -18,7 +18,7 @@ export default {
           offenderManagerForename: 'John',
           offenderManagerSurname: 'Doe',
           offenderManagerGrade: 'PO',
-          offenderManagerCurrentCapacity: 100.2,
+          offenderManagerCurrentCapacity: 126,
           offenderManagerCode: 'OM2',
           offenderManagerTotalCases: 22,
           convictionId: 123456789,

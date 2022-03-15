@@ -23,5 +23,9 @@ export default class OverviewPage extends Page {
 
   cardHeading = (): PageElement => cy.get('.card__heading')
 
+  totalCases = (): PageElement => cy.get('.card__heading > a > p')
+
   lastUpdated = (): PageElement => cy.get('.govuk-body-s')
+
+  totalCasesLink = (): PageElement => cy.get('a[href*="/J678910/convictions/123456789/allocate/OM2/active-cases"]')
 }

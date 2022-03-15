@@ -14,13 +14,15 @@
 
             <div class="govuk-grid-row">
                 <div class="card__layout">
+                    {{ card({
+                        classes: 'card-total',
+                        titleHtml: ('<a href="/' + crn + '/convictions/' + convictionId + '/allocate/' + data.offenderManagerCode + '/active-cases" class="govuk-link--no-visited-state" aria-label="Total cases">' + data.offenderManagerTotalCases + '<br>' + '<p>' + "total cases"  + '</p>' + '</a>')
+                    }) }}
                 </div>
-
                 <div class="card__layout">
                     {{ card({
-                        classes: ('over-capacity' if data.offenderManagerCurrentCapacity > 99 else 'under-capacity'),
-                        titleText: data.offenderManagerCurrentCapacity + '%',
-                        descriptionText: 'capacity'
+                        classes: 'card-total-subset ' + ('over-capacity' if data.offenderManagerCurrentCapacity > 99 else 'under-capacity'),
+                        titleHtml: (data.offenderManagerCurrentCapacity + '%' + '<p class="">' + "capacity"  + '</p>')
                     }) }}
                 </div>
 

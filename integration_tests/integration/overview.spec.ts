@@ -91,4 +91,17 @@ context('Overview', () => {
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.lastUpdated().should('contain', 'Last updated: 3 Nov 2013 at 9:00am')
   })
+
+  it('Total cases card visible on page', () => {
+    cy.task('stubGetOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage.cardHeading().should('contain', '22')
+    overviewPage.totalCases().should('contain', 'total cases')
+    overviewPage
+      .totalCasesLink()
+      .should('have.attr', 'href')
+      .and('include', '/J678910/convictions/123456789/allocate/OM2/active-cases')
+  })
 })

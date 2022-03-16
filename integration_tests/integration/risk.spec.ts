@@ -111,7 +111,7 @@ context('Risk', () => {
     riskPage
       .ogrsIndexCard()
       .trimTextContent()
-      .should('equal', 'OGRSOffender Group Reconviction Scale 85% Last updated: 17 Nov 2018')
+      .should('equal', 'OGRSOffender Group Reconviction Scale 85% Last updated: 17 Nov 2018 HIGH')
   })
 
   it('Displays score unavailable when no assessments returned', () => {

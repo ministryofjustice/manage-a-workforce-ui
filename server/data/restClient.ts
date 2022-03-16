@@ -6,6 +6,7 @@ import logger from '../../logger'
 import sanitiseError from '../sanitisedError'
 import { ApiConfig } from '../config'
 import type { UnsanitisedError } from '../sanitisedError'
+import FileDownload from '../models/fileDownload'
 
 interface GetRequest {
   path?: string
@@ -98,7 +99,7 @@ export default class RestClient {
     }
   }
 
-  async stream({ path = null, headers = {} }: StreamRequest = {}): Promise<unknown> {
+  async stream({ path = null, headers = {} }: StreamRequest = {}): Promise<FileDownload> {
     logger.info(`Get using user credentials: calling ${this.name}: ${path}`)
     return new Promise((resolve, reject) => {
       superagent
@@ -121,7 +122,7 @@ export default class RestClient {
             s._read = () => {}
             s.push(response.body)
             s.push(null)
-            resolve(s)
+            resolve(new FileDownload(s, new Map(Object.entries(response.headers))))
           }
         })
     })

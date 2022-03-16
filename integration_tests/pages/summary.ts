@@ -17,6 +17,9 @@ export default class SummaryPage extends Page {
 
   sentenceTitle = (): PageElement => cy.get('#sentence > header > h2 ')
 
+  downloadPsrLink = (crn, convictionId, documentId): PageElement =>
+    cy.get(`a[href*="/${crn}/convictions/${convictionId}/documents/${documentId}"]`)
+
   caseDetailsTitle = (): PageElement => cy.get('#case-details > header > h2 ')
 
   breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')

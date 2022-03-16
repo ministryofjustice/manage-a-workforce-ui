@@ -138,7 +138,7 @@
                         html: 'Pre-sentence report' + ('<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + data.courtReport.description + '</span>' if data.courtReport.description)
                     },
                         value: {
-                        text: (data.courtReport.completedDate | dateFormat if data.courtReport.completedDate else '<strong class="govuk-tag govuk-tag--grey">No report created</strong>' | safe )
+                        html: (data.courtReport.completedDate | dateFormat + '<br><a class="govuk-link--no-visited-state" href="/' + crn + '/convictions/' + convictionId + '/documents/' + data.courtReport.documentId + '">Download report</a>' if data.courtReport.completedDate else '<strong class="govuk-tag govuk-tag--grey">No report created</strong>' )
                     }
                     },
                     {

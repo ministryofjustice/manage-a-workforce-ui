@@ -7,6 +7,7 @@ import Risk from '../models/risk'
 import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerOverview from '../models/offenderManagerOverview'
+import FileDownload from '../models/fileDownload'
 
 export default class AllocationsService {
   constructor(private readonly config: ApiConfig) {}
@@ -79,5 +80,12 @@ export default class AllocationsService {
       path: `/cases/${crn}/convictions/${convictionId}/allocate/${offenderManagerCode}/overview`,
       headers: { Accept: 'application/json' },
     })) as OffenderManagerOverview
+  }
+
+  async getDocument(token: string, crn, convictionId, documentId): Promise<FileDownload> {
+    logger.info(`Getting document for crn ${crn}`)
+    return this.restClient(token).stream({
+      path: `/cases/unallocated/${crn}/convictions/${convictionId}/documents/${documentId}`,
+    })
   }
 }

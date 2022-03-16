@@ -104,4 +104,20 @@ context('Overview', () => {
       .should('have.attr', 'href')
       .and('include', '/J678910/convictions/123456789/allocate/OM2/active-cases')
   })
+
+  it('Section break visible on page', () => {
+    cy.task('stubGetOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage.sectionBreak().should('exist')
+  })
+
+  it('Availability header visible on page', () => {
+    cy.task('stubGetOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage.heading().should('contain', 'Availability')
+  })
 })

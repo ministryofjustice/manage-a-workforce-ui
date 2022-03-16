@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import AllocationsService from '../services/allocationsService'
 import Allocation from '../models/allocation'
 import ProbationRecord from '../models/probationRecord'
@@ -203,7 +203,7 @@ export default class AllocationsController {
     })
   }
 
-  async getDocument(req: Request, res: Response, crn, convictionId, documentId) {
+  async getDocument(req: Request, res: Response, next: NextFunction, crn, convictionId, documentId) {
     const response: FileDownload = await this.allocationsService.getDocument(
       res.locals.user.token,
       crn,
@@ -213,6 +213,7 @@ export default class AllocationsController {
     response.headers.forEach((value, key) => {
       res.setHeader(key, value)
     })
-    response.data.unpipe(res)
+    response.data.pipe(res)
+    response.data.on('end', next)
   }
 }

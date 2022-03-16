@@ -58,6 +58,16 @@
     }}
 {% endfor %}
 
+{% set ogrsScore = data.ogrs.score %}
+{% if (ogrsScore < 50) %}
+    {% set ogrsBanding = 'LOW' %}
+{% elseif ogrsScore > 49 and ogrsScore < 75 %}
+    {% set ogrsBanding = 'MEDIUM' %}
+{% elseif ogrsScore > 74 and ogrsScore < 90 %}
+    {% set ogrsBanding = 'HIGH' %}
+{% elseif ogrsScore > 89 %}
+    {% set ogrsBanding = 'VERY_HIGH' %}
+{% endif %}
 
 {% block caseContent %}
 
@@ -90,7 +100,9 @@
     {{
         indexCard({
             titleHtml: ('<div class="tooltip">OGRS<span class="tooltiptext govuk-body-s">Offender Group Reconviction Scale</span></div>' + ('<span> ' + data.ogrs.score + '%</span>' if data.ogrs else '')),
-            descriptionText: ('Last updated: ' + data.ogrs.lastUpdatedOn | dateFormat if data.ogrs else 'Score unavailable')
+            descriptionText: ('Last updated: ' + data.ogrs.lastUpdatedOn | dateFormat if data.ogrs else 'Score unavailable'),
+            tagText: ogrsBanding,
+            tagClasses: levelClasses[ogrsBanding]
         })
     }}
   </div>

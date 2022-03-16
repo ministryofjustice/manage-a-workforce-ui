@@ -88,11 +88,12 @@ context('Summary', () => {
     cy.get('a[href*="J678910/convictions/123456789/case-view"]').click()
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.caseDetailsTitle().should('have.text', 'Case details')
+    summaryPage.downloadPsrLink('J678910', '123456789', '00000000-0000-0000-0000-000000000000').should('exist')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       PNC: 'D/9874483AB',
       'CPS pack': 'Check ndelius',
       'Pre-convictions': 'Check ndelius',
-      'Pre-sentence reportFast': '27 Jan 2022',
+      'Pre-sentence reportFast': '27 Jan 2022Download report',
       'Last OASys assessmentOASys Assessment Layer 3': '27 Jan 2022',
     })
   })

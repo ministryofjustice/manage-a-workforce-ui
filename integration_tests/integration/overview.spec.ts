@@ -59,7 +59,7 @@ context('Overview', () => {
     cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
-    cy.get('.govuk-summary-list').getSummaryList().should('deep.equal', {
+    cy.get('.govuk-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Points available': '1265',
       'Points used': '1580',
       'Points remaining': '-315',

@@ -120,4 +120,15 @@ context('Overview', () => {
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.heading().should('contain', 'Availability')
   })
+
+  it('Availability summary list visible on page', () => {
+    cy.task('stubGetOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.get('.availability').getSummaryList().should('deep.equal', {
+      'Weekly hours': '22.5',
+      Reductions: '10 hours until',
+      'Last case allocated': '',
+    })
+  })
 })

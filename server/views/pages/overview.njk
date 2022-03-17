@@ -65,6 +65,37 @@
 
             <h2 class="govuk-heading-l">Availability</h2>
 
+            {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+            {{ govukSummaryList({
+                rows: [
+                    {
+                        key: {
+                        text: "Weekly hours"
+                    },
+                        value: {
+                        text: data.offenderManagerWeeklyHours
+                    }
+                    },
+                    {
+                        key: {
+                        text: "Reductions"
+                    },
+                        value: {
+                        text: data.offenderManagerTotalReductionHours + "hours until"
+                    }
+                    },
+                    {
+                        key: {
+                        text: "Last case allocated"
+                    },
+                        value: {
+                        text: ""
+                    }
+                    }
+                ]
+            }) }}
+
         </div>
 
         <div class="govuk-grid-column-one-third">

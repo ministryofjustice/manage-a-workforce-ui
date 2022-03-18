@@ -117,7 +117,10 @@ export default class RestClient {
             logger.warn(sanitiseError(error), `Error calling ${this.name}`)
             reject(error)
           } else if (response) {
-            resolve(new FileDownload(response, new Map(Object.entries(response.headers))))
+            Object.entries(response).forEach(([key, value]) => {
+              logger.info(`Key: ${key} has value of type ${typeof value}`)
+            })
+            resolve(new FileDownload(response.body, new Map(Object.entries(response.headers))))
           }
         })
     })

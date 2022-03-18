@@ -1,3 +1,4 @@
+import { SuperAgentRequest } from 'superagent'
 import RestClient from '../data/restClient'
 import logger from '../../logger'
 import { ApiConfig } from '../config'
@@ -7,7 +8,6 @@ import Risk from '../models/risk'
 import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerOverview from '../models/offenderManagerOverview'
-import FileDownload from '../models/fileDownload'
 
 export default class AllocationsService {
   constructor(private readonly config: ApiConfig) {}
@@ -82,7 +82,7 @@ export default class AllocationsService {
     })) as OffenderManagerOverview
   }
 
-  async getDocument(token: string, crn, convictionId, documentId): Promise<FileDownload> {
+  getDocument(token: string, crn, convictionId, documentId): SuperAgentRequest {
     logger.info(`Getting document for crn ${crn}`)
     return this.restClient(token).stream({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/documents/${documentId}`,

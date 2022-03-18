@@ -1,12 +1,11 @@
 /* eslint-disable dot-notation */
-import superagent from 'superagent'
+import superagent, { SuperAgentRequest } from 'superagent'
 import Agent, { HttpsAgent } from 'agentkeepalive'
 
 import logger from '../../logger'
 import sanitiseError from '../sanitisedError'
 import { ApiConfig } from '../config'
 import type { UnsanitisedError } from '../sanitisedError'
-import FileDownload from '../models/fileDownload'
 
 interface GetRequest {
   path?: string
@@ -99,27 +98,17 @@ export default class RestClient {
     }
   }
 
-  async stream({ path = null, headers = {} }: StreamRequest = {}): Promise<FileDownload> {
+  stream({ path = null, headers = {} }: StreamRequest = {}): SuperAgentRequest {
     logger.info(`Get using user credentials: calling ${this.name}: ${path}`)
-    return new Promise((resolve, reject) => {
-      superagent
-        .get(`${this.apiUrl()}${path}`)
-        .agent(this.agent)
-        .auth(this.token, { type: 'bearer' })
-        .retry(2, (err, res) => {
-          if (err) logger.info(`Retry handler found API error with ${err.code} ${err.message}`)
-          return undefined // retry handler only for logging retries, not to influence retry logic
-        })
-        .timeout(this.timeoutConfig())
-        .set(headers)
-        .responseType('blob')
-        .then(response => {
-          resolve(new FileDownload(response.body, new Map(Object.entries(response.headers))))
-        })
-        .catch(error => {
-          logger.warn(sanitiseError(error), `Error calling ${this.name}`)
-          reject(error)
-        })
-    })
+    return superagent
+      .get(`${this.apiUrl()}${path}`)
+      .agent(this.agent)
+      .auth(this.token, { type: 'bearer' })
+      .retry(2, (err, res) => {
+        if (err) logger.info(`Retry handler found API error with ${err.code} ${err.message}`)
+        return undefined // retry handler only for logging retries, not to influence retry logic
+      })
+      .timeout(this.timeoutConfig())
+      .set(headers)
   }
 }

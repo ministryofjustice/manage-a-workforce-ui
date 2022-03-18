@@ -10,7 +10,6 @@ import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 import AllocateOffenderManager from './data/AllocateOffenderManager'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerOverview from '../models/offenderManagerOverview'
-import FileDownload from '../models/fileDownload'
 
 export default class AllocationsController {
   constructor(private readonly allocationsService: AllocationsService) {}
@@ -204,16 +203,8 @@ export default class AllocationsController {
   }
 
   async getDocument(req: Request, res: Response, next: NextFunction, crn, convictionId, documentId) {
-    const response: FileDownload = await this.allocationsService.getDocument(
-      res.locals.user.token,
-      crn,
-      convictionId,
-      documentId
-    )
-    response.headers.forEach((value, key) => {
-      res.setHeader(key, value)
-    })
-    response.data.pipe(res)
-    response.data.on('end', next)
+    const response = this.allocationsService.getDocument(res.locals.user.token, crn, convictionId, documentId)
+    response.pipe(res)
+    response.on('end', next)
   }
 }

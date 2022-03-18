@@ -112,7 +112,7 @@ export default class RestClient {
         })
         .timeout(this.timeoutConfig())
         .set(headers)
-        .buffer(true)
+        .responseType('blob')
         .end((error, response) => {
           if (error) {
             logger.warn(sanitiseError(error), `Error calling ${this.name}`)

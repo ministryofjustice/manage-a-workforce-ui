@@ -1,4 +1,4 @@
-export default interface CourtReport {
+export default interface Document {
   code: string
   description: string
   completedDate: string

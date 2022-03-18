@@ -122,7 +122,7 @@
                         text: "CPS pack"
                     },
                         value: {
-                        html: '<strong class="govuk-tag">Check ndelius</strong>'
+                        html: (data.cpsPack.completedDate | dateFormat + '<br><a class="govuk-link--no-visited-state" href="/' + crn + '/convictions/' + convictionId + '/documents/' + data.cpsPack.documentId + '">Download pack</a>' if data.cpsPack.completedDate else '<strong class="govuk-tag govuk-tag--grey">No pack created</strong>' )
                     }
                     },
                     {

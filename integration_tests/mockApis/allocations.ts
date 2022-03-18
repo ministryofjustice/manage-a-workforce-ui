@@ -210,6 +210,10 @@ export default {
             completedDate: '2022-01-27T10:54:32.868Z',
             documentId: '00000000-0000-0000-0000-000000000000',
           },
+          cpsPack: {
+            completedDate: '2022-02-27T10:54:32.868Z',
+            documentId: '11111111-1111-1111-1111-111111111111',
+          },
           assessment: {
             lastAssessedOn: '2022-01-27T10:54:32.869Z',
             type: 'LAYER_3',
@@ -371,6 +375,10 @@ export default {
             description: 'Fast',
             completedDate: '2022-01-27T10:54:32.868Z',
             documentId: '00000000-0000-0000-0000-000000000000',
+          },
+          cpsPack: {
+            completedDate: '2022-02-27T10:54:32.868Z',
+            documentId: '11111111-1111-1111-1111-111111111111',
           },
           assessment: {
             lastAssessedOn: '2022-01-27T10:54:32.869Z',

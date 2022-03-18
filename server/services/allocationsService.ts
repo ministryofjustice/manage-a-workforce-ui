@@ -13,8 +13,14 @@ import OffenderManagerOverview from '../models/offenderManagerOverview'
 export default class AllocationsService {
   config: ApiConfig
 
+  httpsAgent: https.Agent
+
   constructor(config: ApiConfig) {
     this.config = config
+    this.httpsAgent = new https.Agent({
+      rejectUnauthorized: false,
+      requestCert: false,
+    })
   }
 
   private restClient(token: string): RestClient {
@@ -97,6 +103,7 @@ export default class AllocationsService {
       method: 'GET',
       headers: req.headers,
       rejectUnauthorized: false,
+      agent: this.httpsAgent,
     }
 
     const creq = https

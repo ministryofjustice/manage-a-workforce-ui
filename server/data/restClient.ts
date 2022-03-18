@@ -119,11 +119,11 @@ export default class RestClient {
             reject(error)
           } else if (response) {
             logger.info(
-              `response type ${response.type} and is buffered? ${
-                response['buffered']
-              } \n with res being ${JSON.stringify(response['res'])} \n and body ${JSON.stringify(response.body)}`
+              `response type ${response.type} and is buffered? ${response['buffered']} \n with body ${JSON.stringify(
+                response.body
+              )}`
             )
-            resolve(new FileDownload(response['res'], new Map(Object.entries(response.headers))))
+            resolve(new FileDownload(response.body, new Map(Object.entries(response.headers))))
           }
         })
     })

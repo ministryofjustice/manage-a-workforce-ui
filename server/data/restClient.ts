@@ -112,18 +112,13 @@ export default class RestClient {
         })
         .timeout(this.timeoutConfig())
         .set(headers)
-        .responseType('arraybuffer')
+        .responseType('blob')
         .end((error, response) => {
           if (error) {
             logger.warn(sanitiseError(error), `Error calling ${this.name}`)
             reject(error)
           } else if (response) {
-            const s = new Readable()
-            // eslint-disable-next-line no-underscore-dangle,@typescript-eslint/no-empty-function
-            s._read = () => {}
-            s.push(response.body)
-            s.push(null)
-            resolve(new FileDownload(s, new Map(Object.entries(response.headers))))
+            resolve(new FileDownload(response.body.stream(), new Map(Object.entries(response.headers))))
           }
         })
     })

@@ -1,6 +1,5 @@
 import superagent from 'superagent'
 import Agent, { HttpsAgent } from 'agentkeepalive'
-import { Readable } from 'stream'
 
 import logger from '../../logger'
 import sanitiseError from '../sanitisedError'

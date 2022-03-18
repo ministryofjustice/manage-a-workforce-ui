@@ -113,11 +113,13 @@ export default class AllocationsService {
 
         proxyResponse.on('close', () => {
           // closed, let's end client request as well
+          res.end()
           next()
         })
 
         proxyResponse.on('end', () => {
           // finished, let's finish client request as well
+          res.end()
           next()
         })
       })

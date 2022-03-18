@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 import superagent from 'superagent'
 import Agent, { HttpsAgent } from 'agentkeepalive'
 
@@ -117,10 +118,12 @@ export default class RestClient {
             logger.warn(sanitiseError(error), `Error calling ${this.name}`)
             reject(error)
           } else if (response) {
-            Object.entries(response).forEach(([key, value]) => {
-              logger.info(`Key: ${key} has value of type ${typeof value}`)
-            })
-            resolve(new FileDownload(response.body, new Map(Object.entries(response.headers))))
+            logger.info(
+              `response type ${response.type} and is buffered? ${
+                response['buffered']
+              } \n with res being ${JSON.stringify(response['res'])} \n and body ${JSON.stringify(response.body)}`
+            )
+            resolve(new FileDownload(response['res'], new Map(Object.entries(response.headers))))
           }
         })
     })

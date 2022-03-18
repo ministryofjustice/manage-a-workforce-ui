@@ -203,8 +203,6 @@ export default class AllocationsController {
   }
 
   async getDocument(req: Request, res: Response, next: NextFunction, crn, convictionId, documentId) {
-    const response = this.allocationsService.getDocument(res.locals.user.token, crn, convictionId, documentId)
-    response.pipe(res)
-    response.on('end', next)
+    this.allocationsService.getDocument(req, res, next, res.locals.user.token, crn, convictionId, documentId)
   }
 }

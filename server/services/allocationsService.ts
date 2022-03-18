@@ -1,4 +1,5 @@
-import { SuperAgentRequest } from 'superagent'
+import { NextFunction, Request, Response } from 'express'
+import http from 'http'
 import RestClient from '../data/restClient'
 import logger from '../../logger'
 import { ApiConfig } from '../config'
@@ -10,7 +11,11 @@ import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotential
 import OffenderManagerOverview from '../models/offenderManagerOverview'
 
 export default class AllocationsService {
-  constructor(private readonly config: ApiConfig) {}
+  config: ApiConfig
+
+  constructor(config: ApiConfig) {
+    this.config = config
+  }
 
   private restClient(token: string): RestClient {
     return new RestClient('Allocations Service API Client', this.config, token)
@@ -82,10 +87,44 @@ export default class AllocationsService {
     })) as OffenderManagerOverview
   }
 
-  getDocument(token: string, crn, convictionId, documentId): SuperAgentRequest {
+  getDocument(req: Request, res: Response, next: NextFunction, token: string, crn, convictionId, documentId) {
     logger.info(`Getting document for crn ${crn}`)
-    return this.restClient(token).stream({
+    // eslint-disable-next-line dot-notation
+    req.headers['Authorization'] = `Bearer ${token}`
+    const options = {
+      host: this.config.url,
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/documents/${documentId}`,
-    })
+      method: 'GET',
+      headers: req.headers,
+    }
+
+    const creq = http
+      .request(options, proxyResponse => {
+        // set encoding
+        proxyResponse.setEncoding('utf8')
+
+        // set http status code based on proxied response
+        res.writeHead(proxyResponse.statusCode, proxyResponse.headers)
+
+        // wait for data
+        proxyResponse.on('data', chunk => {
+          res.write(chunk)
+        })
+
+        proxyResponse.on('close', () => {
+          // closed, let's end client request as well
+          next()
+        })
+
+        proxyResponse.on('end', () => {
+          // finished, let's finish client request as well
+          next()
+        })
+      })
+      .on('error', e => {
+        next(e)
+      })
+
+    creq.end()
   }
 }

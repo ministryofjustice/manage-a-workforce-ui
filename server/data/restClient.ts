@@ -113,18 +113,12 @@ export default class RestClient {
         .timeout(this.timeoutConfig())
         .set(headers)
         .responseType('blob')
-        .end((error, response) => {
-          if (error) {
-            logger.warn(sanitiseError(error), `Error calling ${this.name}`)
-            reject(error)
-          } else if (response) {
-            logger.info(
-              `response type ${response.type} and is buffered? ${response['buffered']} \n with body ${JSON.stringify(
-                response.body
-              )}`
-            )
-            resolve(new FileDownload(response.body, new Map(Object.entries(response.headers))))
-          }
+        .then(response => {
+          resolve(new FileDownload(response.body, new Map(Object.entries(response.headers))))
+        })
+        .catch(error => {
+          logger.warn(sanitiseError(error), `Error calling ${this.name}`)
+          reject(error)
         })
     })
   }

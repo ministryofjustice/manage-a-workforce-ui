@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import http from 'http'
+import https from 'https'
 import RestClient from '../data/restClient'
 import logger from '../../logger'
 import { ApiConfig } from '../config'
@@ -98,7 +98,7 @@ export default class AllocationsService {
       headers: req.headers,
     }
 
-    const creq = http
+    const creq = https
       .request(options, proxyResponse => {
         // set encoding
         proxyResponse.setEncoding('utf8')

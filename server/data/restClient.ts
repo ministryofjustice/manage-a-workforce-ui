@@ -110,5 +110,6 @@ export default class RestClient {
       })
       .timeout(this.timeoutConfig())
       .set(headers)
+      .responseType('blob')
   }
 }

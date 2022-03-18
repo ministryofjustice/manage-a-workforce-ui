@@ -96,6 +96,7 @@ export default class AllocationsService {
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/documents/${documentId}`,
       method: 'GET',
       headers: req.headers,
+      rejectUnauthorized: false,
     }
 
     const creq = https

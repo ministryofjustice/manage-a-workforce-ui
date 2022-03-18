@@ -112,12 +112,12 @@ export default class RestClient {
         })
         .timeout(this.timeoutConfig())
         .set(headers)
+        .buffer(true)
         .end((error, response) => {
           if (error) {
             logger.warn(sanitiseError(error), `Error calling ${this.name}`)
             reject(error)
           } else if (response) {
-            logger.info(`Response from download file ${JSON.stringify(response.body)}`)
             const s = new Readable()
             // eslint-disable-next-line no-underscore-dangle,@typescript-eslint/no-empty-function
             s._read = () => {}

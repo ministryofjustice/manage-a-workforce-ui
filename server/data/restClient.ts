@@ -1,5 +1,6 @@
 import superagent from 'superagent'
 import Agent, { HttpsAgent } from 'agentkeepalive'
+import util from 'util'
 
 import logger from '../../logger'
 import sanitiseError from '../sanitisedError'
@@ -117,6 +118,7 @@ export default class RestClient {
             logger.warn(sanitiseError(error), `Error calling ${this.name}`)
             reject(error)
           } else if (response) {
+            logger.info(`full response ${util.inspect(response, false, null, true)}`)
             resolve(new FileDownload(response.body.stream(), new Map(Object.entries(response.headers))))
           }
         })

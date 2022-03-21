@@ -9,6 +9,7 @@ import Risk from '../models/risk'
 import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerOverview from '../models/offenderManagerOverview'
+import FileDownload from '../models/fileDownload'
 
 export default class AllocationsService {
   config: ApiConfig
@@ -93,48 +94,10 @@ export default class AllocationsService {
     })) as OffenderManagerOverview
   }
 
-  getDocument(req: Request, res: Response, next: NextFunction, token: string, crn, convictionId, documentId) {
+  getDocument(token: string, crn, convictionId, documentId): Promise<FileDownload> {
     logger.info(`Getting document for crn ${crn}`)
-    // eslint-disable-next-line dot-notation
-    req.headers['Authorization'] = `Bearer ${token}`
-    const options = {
-      host: this.config.url,
+    return this.restClient(token).stream({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/documents/${documentId}`,
-      method: 'GET',
-      headers: req.headers,
-      rejectUnauthorized: false,
-      agent: this.httpsAgent,
-    }
-
-    const creq = https
-      .request(options, proxyResponse => {
-        // set encoding
-        proxyResponse.setEncoding('utf8')
-
-        // set http status code based on proxied response
-        res.writeHead(proxyResponse.statusCode, proxyResponse.headers)
-
-        // wait for data
-        proxyResponse.on('data', chunk => {
-          res.write(chunk)
-        })
-
-        proxyResponse.on('close', () => {
-          // closed, let's end client request as well
-          res.end()
-          next()
-        })
-
-        proxyResponse.on('end', () => {
-          // finished, let's finish client request as well
-          res.end()
-          next()
-        })
-      })
-      .on('error', e => {
-        next(e)
-      })
-
-    creq.end()
+    })
   }
 }

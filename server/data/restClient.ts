@@ -1,11 +1,13 @@
 /* eslint-disable dot-notation */
-import superagent, { SuperAgentRequest } from 'superagent'
+import superagent from 'superagent'
 import Agent, { HttpsAgent } from 'agentkeepalive'
+import axios, { AxiosInstance } from 'axios'
 
 import logger from '../../logger'
 import sanitiseError from '../sanitisedError'
 import { ApiConfig } from '../config'
 import type { UnsanitisedError } from '../sanitisedError'
+import FileDownload from '../models/fileDownload'
 
 interface GetRequest {
   path?: string
@@ -32,8 +34,14 @@ interface StreamRequest {
 export default class RestClient {
   agent: Agent
 
+  axiosClient: AxiosInstance
+
   constructor(private readonly name: string, private readonly config: ApiConfig, private readonly token: string) {
     this.agent = config.url.startsWith('https') ? new HttpsAgent(config.agent) : new Agent(config.agent)
+    this.axiosClient = axios.create({
+      baseURL: config.url,
+      timeout: config.timeout.response,
+    })
   }
 
   private apiUrl() {
@@ -98,18 +106,17 @@ export default class RestClient {
     }
   }
 
-  stream({ path = null, headers = {} }: StreamRequest = {}): SuperAgentRequest {
+  stream({ path = null, headers = {} }: StreamRequest = {}): Promise<FileDownload> {
     logger.info(`Get using user credentials: calling ${this.name}: ${path}`)
-    return superagent
-      .get(`${this.apiUrl()}${path}`)
-      .agent(this.agent)
-      .auth(this.token, { type: 'bearer' })
-      .retry(2, (err, res) => {
-        if (err) logger.info(`Retry handler found API error with ${err.code} ${err.message}`)
-        return undefined // retry handler only for logging retries, not to influence retry logic
+    return axios
+      .get(path, {
+        baseURL: this.apiUrl(),
+        headers: { ...headers, Authorization: `Bearer ${this.token}` },
+        timeout: this.timeoutConfig().response,
+        responseType: 'stream',
       })
-      .timeout(this.timeoutConfig())
-      .set(headers)
-      .responseType('blob')
+      .then(response => {
+        return new FileDownload(response.data, new Map(Object.entries(response.headers)))
+      })
   }
 }

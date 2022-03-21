@@ -25,4 +25,5 @@ export default interface Allocation {
   assessment: Assessment
   convictionId: number
   caseType: string
+  preConvictionDocument: Document
 }

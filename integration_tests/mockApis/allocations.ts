@@ -214,6 +214,10 @@ export default {
             completedDate: '2022-02-27T10:54:32.868Z',
             documentId: '11111111-1111-1111-1111-111111111111',
           },
+          preConvictionDocument: {
+            completedDate: '2022-03-27T10:54:32.868Z',
+            documentId: '22222222-2222-2222-2222-222222222222',
+          },
           assessment: {
             lastAssessedOn: '2022-01-27T10:54:32.869Z',
             type: 'LAYER_3',

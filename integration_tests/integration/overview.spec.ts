@@ -59,7 +59,7 @@ context('Overview', () => {
     cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
-    cy.get('.govuk-summary-list').getSummaryList().should('deep.equal', {
+    cy.get('.govuk-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Points available': '1265',
       'Points used': '1580',
       'Points remaining': '-315',
@@ -119,6 +119,17 @@ context('Overview', () => {
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.heading().should('contain', 'Availability')
+  })
+
+  it('Availability summary list visible on page', () => {
+    cy.task('stubGetOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.get('.availability').getSummaryList().should('deep.equal', {
+      'Weekly hours': '22.5',
+      Reductions: '10 hours until 3 Nov 2022',
+      'Last case allocated': '',
+    })
   })
 
   it('Case mix header is visible on page', () => {

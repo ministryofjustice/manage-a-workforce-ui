@@ -1,5 +1,3 @@
-import { NextFunction, Request, Response } from 'express'
-import https from 'https'
 import RestClient from '../data/restClient'
 import logger from '../../logger'
 import { ApiConfig } from '../config'
@@ -14,14 +12,8 @@ import FileDownload from '../models/fileDownload'
 export default class AllocationsService {
   config: ApiConfig
 
-  httpsAgent: https.Agent
-
   constructor(config: ApiConfig) {
     this.config = config
-    this.httpsAgent = new https.Agent({
-      rejectUnauthorized: false,
-      requestCert: false,
-    })
   }
 
   private restClient(token: string): RestClient {

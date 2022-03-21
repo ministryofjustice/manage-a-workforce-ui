@@ -1,6 +1,7 @@
+/* eslint-disable dot-notation */
 import superagent from 'superagent'
 import Agent, { HttpsAgent } from 'agentkeepalive'
-import { Readable } from 'stream'
+import axios, { AxiosInstance } from 'axios'
 
 import logger from '../../logger'
 import sanitiseError from '../sanitisedError'
@@ -33,8 +34,14 @@ interface StreamRequest {
 export default class RestClient {
   agent: Agent
 
+  axiosClient: AxiosInstance
+
   constructor(private readonly name: string, private readonly config: ApiConfig, private readonly token: string) {
     this.agent = config.url.startsWith('https') ? new HttpsAgent(config.agent) : new Agent(config.agent)
+    this.axiosClient = axios.create({
+      baseURL: config.url,
+      timeout: config.timeout.response,
+    })
   }
 
   private apiUrl() {
@@ -99,32 +106,17 @@ export default class RestClient {
     }
   }
 
-  async stream({ path = null, headers = {} }: StreamRequest = {}): Promise<FileDownload> {
+  stream({ path = null, headers = {} }: StreamRequest = {}): Promise<FileDownload> {
     logger.info(`Get using user credentials: calling ${this.name}: ${path}`)
-    return new Promise((resolve, reject) => {
-      superagent
-        .get(`${this.apiUrl()}${path}`)
-        .agent(this.agent)
-        .auth(this.token, { type: 'bearer' })
-        .retry(2, (err, res) => {
-          if (err) logger.info(`Retry handler found API error with ${err.code} ${err.message}`)
-          return undefined // retry handler only for logging retries, not to influence retry logic
-        })
-        .timeout(this.timeoutConfig())
-        .set(headers)
-        .end((error, response) => {
-          if (error) {
-            logger.warn(sanitiseError(error), `Error calling ${this.name}`)
-            reject(error)
-          } else if (response) {
-            const s = new Readable()
-            // eslint-disable-next-line no-underscore-dangle,@typescript-eslint/no-empty-function
-            s._read = () => {}
-            s.push(response.body)
-            s.push(null)
-            resolve(new FileDownload(s, new Map(Object.entries(response.headers))))
-          }
-        })
-    })
+    return axios
+      .get(path, {
+        baseURL: this.apiUrl(),
+        headers: { ...headers, Authorization: `Bearer ${this.token}` },
+        timeout: this.timeoutConfig().response,
+        responseType: 'stream',
+      })
+      .then(response => {
+        return new FileDownload(response.data, new Map(Object.entries(response.headers)))
+      })
   }
 }

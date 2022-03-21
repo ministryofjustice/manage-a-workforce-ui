@@ -1,7 +1,7 @@
 import OffenderManager from './offenderManager'
 import Offence from './offence'
 import Requirement from './requirement'
-import CourtReport from './courtReport'
+import Document from './Document'
 import Assessment from './assessment'
 
 export default interface Allocation {
@@ -20,8 +20,10 @@ export default interface Allocation {
   expectedSentenceEndDate: string
   requirements: Requirement[]
   pncNumber: string
-  courtReport: CourtReport
+  courtReport: Document
+  cpsPack: Document
   assessment: Assessment
   convictionId: number
   caseType: string
+  preConvictionDocument: Document
 }

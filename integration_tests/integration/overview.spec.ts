@@ -131,4 +131,12 @@ context('Overview', () => {
       'Last case allocated': '',
     })
   })
+
+  it('Case mix header is visible on page', () => {
+    cy.task('stubGetOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage.mediumHeading().should('contain', 'Case mix by tier')
+  })
 })

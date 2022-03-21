@@ -10,7 +10,11 @@ import OffenderManagerOverview from '../models/offenderManagerOverview'
 import FileDownload from '../models/fileDownload'
 
 export default class AllocationsService {
-  constructor(private readonly config: ApiConfig) {}
+  config: ApiConfig
+
+  constructor(config: ApiConfig) {
+    this.config = config
+  }
 
   private restClient(token: string): RestClient {
     return new RestClient('Allocations Service API Client', this.config, token)
@@ -82,7 +86,7 @@ export default class AllocationsService {
     })) as OffenderManagerOverview
   }
 
-  async getDocument(token: string, crn, convictionId, documentId): Promise<FileDownload> {
+  getDocument(token: string, crn, convictionId, documentId): Promise<FileDownload> {
     logger.info(`Getting document for crn ${crn}`)
     return this.restClient(token).stream({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/documents/${documentId}`,

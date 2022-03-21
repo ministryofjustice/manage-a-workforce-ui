@@ -130,7 +130,7 @@
                         text: "Pre-convictions"
                     },
                         value: {
-                        html: (data.preConvictionDocument.completedDate | dateFormat + '<br><a class="govuk-link--no-visited-state" href="/' + crn + '/convictions/' + convictionId + '/documents/' + data.preConvictionDocument.documentId + '">Download pack</a>' if data.preConvictionDocument.completedDate else '<strong class="govuk-tag govuk-tag--grey">No document created</strong>' )
+                        html: (data.preConvictionDocument.completedDate | dateFormat + '<br><a class="govuk-link--no-visited-state" href="/' + crn + '/convictions/' + convictionId + '/documents/' + data.preConvictionDocument.documentId + '">Download document</a>' if data.preConvictionDocument.completedDate else '<strong class="govuk-tag govuk-tag--grey">No document created</strong>' )
                     }
                     },
                     {

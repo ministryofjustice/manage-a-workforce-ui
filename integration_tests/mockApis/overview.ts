@@ -30,6 +30,13 @@ export default {
           offenderManagerPointsRemaining: -315,
           lastUpdatedOn: '2013-11-03T09:00:00',
           nextReductionChange: '2022-11-03T09:00:00Z',
+          caseTotals: {
+            a: 6,
+            b: 10,
+            c: 12,
+            d: 14,
+            untiered: 2,
+          },
         },
       },
     })
@@ -62,6 +69,14 @@ export default {
           offenderManagerPointsUsed: 1580,
           offenderManagerPointsRemaining: -315,
           lastUpdatedOn: '2013-11-03T09:00:00',
+          nextReductionChange: '2022-11-03T09:00:00Z',
+          caseTotals: {
+            a: 6,
+            b: 10,
+            c: 12,
+            d: 14,
+            untiered: 2,
+          },
         },
       },
     })

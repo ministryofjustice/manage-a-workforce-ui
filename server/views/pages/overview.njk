@@ -2,8 +2,30 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "../components/card/macro.njk" import card %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% set pageTitle = applicationName + " - Overview" %}
+
+{% set tableData = {
+    firstCellIsHeader: false,
+    head: [
+        {
+            text: "Tier"
+        },
+        {
+            text: "Number of cases"
+        }
+    ],
+    rows: []
+} %}
+
+{% for tier, cases in data.caseTotals %}
+    {%- set tableRow = [
+        { text: tier | capitalize },
+        { text: cases }
+    ] -%}
+    {{ tableData.rows.push(tableRow) }}
+{% endfor %}
 
 {% block officerContent %}
     <div class="govuk-grid-row">
@@ -61,7 +83,7 @@
                 })
             }) }}
 
-            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible page-width">
 
             <h2 class="govuk-heading-l">Availability</h2>
 
@@ -94,13 +116,17 @@
                     }
                     }
                 ],
-                classes: 'availability'
+                classes: 'availability page-width'
             }) }}
 
         </div>
 
         <div class="govuk-grid-column-one-third">
             <h3 class="govuk-heading-m">Case mix by tier</h3>
+
+            {{ govukTable(tableData) }}
+
         </div>
+
     </div>
 {% endblock %}

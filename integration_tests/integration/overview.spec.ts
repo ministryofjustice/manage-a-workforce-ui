@@ -139,4 +139,36 @@ context('Overview', () => {
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.mediumHeading().should('contain', 'Case mix by tier')
   })
+
+  it('Tier table is visible on page', () => {
+    cy.task('stubGetOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage
+      .tierTable()
+      .getTable()
+      .should('deep.equal', [
+        {
+          Tier: 'A',
+          'Number of cases': '6',
+        },
+        {
+          Tier: 'B',
+          'Number of cases': '10',
+        },
+        {
+          Tier: 'C',
+          'Number of cases': '12',
+        },
+        {
+          Tier: 'D',
+          'Number of cases': '14',
+        },
+        {
+          Tier: 'Untiered',
+          'Number of cases': '2',
+        },
+      ])
+  })
 })

@@ -12,6 +12,7 @@ context('Allocate', () => {
 
   it('Offender details visible on page', () => {
     cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
@@ -20,6 +21,7 @@ context('Allocate', () => {
 
   it('navigate to allocate page through case view', () => {
     cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/case-view')
@@ -30,6 +32,7 @@ context('Allocate', () => {
 
   it('Section break is visible on page', () => {
     cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
@@ -38,6 +41,7 @@ context('Allocate', () => {
 
   it('Sub heading is visible on page', () => {
     cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
@@ -46,6 +50,7 @@ context('Allocate', () => {
 
   it('Warning is visible on page if probation status is currently managed', () => {
     cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
@@ -54,7 +59,8 @@ context('Allocate', () => {
   })
 
   it('Warning is not visible on page if no offender manager details', () => {
-    cy.task('stubGetAllocateOffenderManagersNoOffenderManager')
+    cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetCurrentlyManagedNoOffenderManagerCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
@@ -63,7 +69,8 @@ context('Allocate', () => {
   })
 
   it('Warning is visible on page if probation status is Previously managed', () => {
-    cy.task('stubGetAllocateOffenderManagersPreviouslyManaged')
+    cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetPreviouslyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
@@ -74,7 +81,8 @@ context('Allocate', () => {
   })
 
   it('Warning is not visible on page if probation status is New to probation', () => {
-    cy.task('stubGetAllocateOffenderManagersNewToProbation')
+    cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
@@ -84,6 +92,7 @@ context('Allocate', () => {
 
   it('Officer table visible on page', () => {
     cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
@@ -114,6 +123,7 @@ context('Allocate', () => {
 
   it('Breadcrumbs visible on page', () => {
     cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
@@ -122,6 +132,7 @@ context('Allocate', () => {
 
   it('should only be able to select one offender manager at a time', () => {
     cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
@@ -133,6 +144,7 @@ context('Allocate', () => {
 
   it('should display error when no offender managers selected and allocate case button clicked', () => {
     cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
@@ -142,6 +154,7 @@ context('Allocate', () => {
 
   it('should clear selection when clicking on Clear selection', () => {
     cy.task('stubGetAllocateOffenderManagers')
+    cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)

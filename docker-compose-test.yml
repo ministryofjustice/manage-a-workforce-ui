@@ -10,14 +10,20 @@ services:
     ports:
       - '6379:6379'
 
-  wiremock:
+  allocation-wiremock:
     image: rodolpheche/wiremock
     networks:
     - hmpps_int
-    container_name: wiremock
     restart: always
     ports:
       - "9091:8080"
+  workload-wiremock:
+    image: rodolpheche/wiremock
+    networks:
+    - hmpps_int
+    restart: always
+    ports:
+      - "9092:8080"
 
 networks:
   hmpps_int:

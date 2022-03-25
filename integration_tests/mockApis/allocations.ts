@@ -1,5 +1,5 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubFor } from './wiremock'
+import { stubFor } from './allocation-wiremock'
 
 export default {
   stubGetAllocations: (): SuperAgentRequest => {

@@ -65,6 +65,14 @@ export default {
       },
       agent: new AgentConfig(),
     },
+    workloadService: {
+      url: get('WORKLOAD_SERVICE_URL', 'http://localhost:8092', requiredInProduction),
+      timeout: {
+        response: 10000,
+        deadline: 10000,
+      },
+      agent: new AgentConfig(),
+    },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
       timeout: {

@@ -9,6 +9,7 @@ import standardRouter from '../standardRouter'
 import UserService from '../../services/userService'
 import * as auth from '../../authentication/auth'
 import MockErrorAllocationService from './MockErrorAllocationService'
+import MockWorkloadService from './MockWorkloadService'
 import authenticatedRoutes from '../index'
 import unauthenticatedRoutes from '../unauthenticated'
 
@@ -62,6 +63,7 @@ export const appWithAllRoutes = ({ production = false }: { production?: boolean 
   auth.default.authenticationMiddleware = () => (req, res, next) => next()
   const authenticated = authenticatedRoutes(standardRouter(new MockUserService()), {
     allocationsService: new MockErrorAllocationService(undefined),
+    workloadService: new MockWorkloadService(undefined),
   })
   const unauthenticated = unauthenticatedRoutes()
   return appSetup(authenticated, unauthenticated, production)

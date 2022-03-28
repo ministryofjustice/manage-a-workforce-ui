@@ -1,27 +1,18 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubFor } from './wiremock'
+import { stubForWorkload } from './workload-wiremock'
 
 export default {
   stubGetAllocateOffenderManagers: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/cases/J678910/convictions/123456789/allocate/offenderManagers`,
+        urlPattern: `/team/N03F01/offenderManagers`,
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          status: 'Currently managed',
-          offenderManager: {
-            forenames: 'Antonio',
-            surname: 'LoSardo',
-            grade: 'SPO',
-          },
-          offenderManagersToAllocate: [
+          offenderManagers: [
             {
               forename: 'Ben',
               surname: 'Doe',
@@ -30,6 +21,7 @@ export default {
               totalCustodyCases: 20,
               capacity: 50,
               code: 'OM1',
+              staffId: 12345,
             },
             {
               forename: 'Sally',
@@ -39,111 +31,9 @@ export default {
               totalCustodyCases: 28,
               capacity: 80,
               code: 'OM2',
+              staffId: 6789,
             },
           ],
-          convictionId: 123456789,
-          caseType: 'CUSTODY',
-        },
-      },
-    })
-  },
-
-  stubGetAllocateOffenderManagersNoOffenderManager: (): SuperAgentRequest => {
-    return stubFor({
-      request: {
-        method: 'GET',
-        urlPattern: `/cases/J678910/convictions/123456789/allocate/offenderManagers`,
-      },
-      response: {
-        status: 200,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          status: 'Currently managed',
-          offenderManagersToAllocate: [
-            {
-              forename: 'Ben',
-              surname: 'Doe',
-              grade: 'PO',
-              totalCommunityCases: 15,
-              totalCustodyCases: 20,
-              capacity: 50,
-              code: 'OM1',
-            },
-          ],
-          convictionId: 123456789,
-          caseType: 'CUSTODY',
-        },
-      },
-    })
-  },
-
-  stubGetAllocateOffenderManagersPreviouslyManaged: (): SuperAgentRequest => {
-    return stubFor({
-      request: {
-        method: 'GET',
-        urlPattern: `/cases/J678910/convictions/123456789/allocate/offenderManagers`,
-      },
-      response: {
-        status: 200,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          status: 'Previously managed',
-          offenderManager: {
-            forenames: 'Sofia',
-            surname: 'Micheals',
-            grade: 'PO',
-          },
-          offenderManagersToAllocate: [
-            {
-              forename: 'Ben',
-              surname: 'Doe',
-              grade: 'PO',
-              totalCommunityCases: 15,
-              totalCustodyCases: 20,
-              capacity: 50,
-              code: 'OM1',
-            },
-          ],
-          convictionId: 123456789,
-          caseType: 'CUSTODY',
-        },
-      },
-    })
-  },
-
-  stubGetAllocateOffenderManagersNewToProbation: (): SuperAgentRequest => {
-    return stubFor({
-      request: {
-        method: 'GET',
-        urlPattern: `/cases/J678910/convictions/123456789/allocate/offenderManagers`,
-      },
-      response: {
-        status: 200,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          status: 'New to probation',
-          offenderManagersToAllocate: [
-            {
-              forename: 'Ben',
-              surname: 'Doe',
-              grade: 'PO',
-              totalCommunityCases: 15,
-              totalCustodyCases: 20,
-              capacity: 50,
-              code: 'OM1',
-            },
-          ],
-          convictionId: 123456789,
-          caseType: 'CUSTODY',
         },
       },
     })

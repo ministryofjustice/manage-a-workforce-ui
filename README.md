@@ -17,6 +17,7 @@ The app requires:
 * [hmpps-auth](https://github.com/ministryofjustice/hmpps-auth) - for authentication
 * redis - session store and token caching
 * [hmpps-allocations](https://github.com/ministryofjustice/hmpps-allocations)
+* [hmpps-workload](https://github.com/ministryofjustice/hmpps-workload)
 
 ### Run linter
 

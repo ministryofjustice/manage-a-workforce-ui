@@ -6,14 +6,17 @@ import Risk from '../models/risk'
 import UnallocatedCase from './data/UnallocatedCase'
 import Order from './data/Order'
 import Conviction from '../models/conviction'
-import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 import AllocateOffenderManager from './data/AllocateOffenderManager'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerOverview from '../models/offenderManagerOverview'
 import FileDownload from '../models/fileDownload'
+import WorkloadService from '../services/workloadService'
 
 export default class AllocationsController {
-  constructor(private readonly allocationsService: AllocationsService) {}
+  constructor(
+    private readonly allocationsService: AllocationsService,
+    private readonly workloadService: WorkloadService
+  ) {}
 
   async getAllocations(req: Request, res: Response): Promise<void> {
     const response: Allocation[] = await this.allocationsService.getUnallocatedCases(res.locals.user.token)
@@ -112,25 +115,25 @@ export default class AllocationsController {
   }
 
   async getAllocate(req: Request, res: Response, crn, convictionId) {
-    const response: AllocateOffenderManagers = await this.allocationsService.getOffenderManagersToAllocate(
-      res.locals.user.token,
-      crn,
-      convictionId
-    )
-    const offenderManagersToAllocate = response.offenderManagersToAllocate
-      .map(
-        offenderManagerToAllocate =>
-          new AllocateOffenderManager(
-            offenderManagerToAllocate.forename,
-            offenderManagerToAllocate.surname,
-            offenderManagerToAllocate.grade,
-            offenderManagerToAllocate.capacity,
-            offenderManagerToAllocate.totalCommunityCases,
-            offenderManagerToAllocate.totalCustodyCases,
-            offenderManagerToAllocate.code
+    const offenderManagersToAllocate = await this.workloadService
+      .getOffenderManagersToAllocate(res.locals.user.token)
+      .then(response =>
+        response.offenderManagers
+          .map(
+            offenderManagerToAllocate =>
+              new AllocateOffenderManager(
+                offenderManagerToAllocate.forename,
+                offenderManagerToAllocate.surname,
+                offenderManagerToAllocate.grade,
+                offenderManagerToAllocate.capacity,
+                offenderManagerToAllocate.totalCommunityCases,
+                offenderManagerToAllocate.totalCustodyCases,
+                offenderManagerToAllocate.code
+              )
           )
+          .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => b.capacity - a.capacity)
       )
-      .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => b.capacity - a.capacity)
+    const response: Allocation = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
     const error = req.query.error === 'true'
     res.render('pages/allocate', {
       title: 'Allocate',

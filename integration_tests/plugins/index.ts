@@ -1,4 +1,5 @@
-import { resetStubs } from '../mockApis/wiremock'
+import { resetStubs } from '../mockApis/allocation-wiremock'
+import { resetWorkloadStubs } from '../mockApis/workload-wiremock'
 
 import auth from '../mockApis/auth'
 import tokenVerification from '../mockApis/tokenVerification'
@@ -8,10 +9,11 @@ import risk from '../mockApis/risk'
 import allocateOffenderManagers from '../mockApis/allocateOffenderManagers'
 import allocationConfirm from '../mockApis/allocationConfirm'
 import overview from '../mockApis/overview'
+import allocationCase from '../mockApis/allocationCase'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
-    reset: resetStubs,
+    reset: () => resetStubs().then(() => resetWorkloadStubs()),
 
     getSignInUrl: auth.getSignInUrl,
     stubSignIn: auth.stubSignIn,
@@ -51,14 +53,14 @@ export default (on: (string, Record) => void): void => {
 
     stubGetAllocateOffenderManagers: allocateOffenderManagers.stubGetAllocateOffenderManagers,
 
-    stubGetAllocateOffenderManagersNoOffenderManager:
-      allocateOffenderManagers.stubGetAllocateOffenderManagersNoOffenderManager,
+    stubGetCurrentlyManagedCaseOverview: allocationCase.stubGetCurrentlyManagedCaseOverview,
 
-    stubGetAllocateOffenderManagersPreviouslyManaged:
-      allocateOffenderManagers.stubGetAllocateOffenderManagersPreviouslyManaged,
+    stubGetCurrentlyManagedNoOffenderManagerCaseOverview:
+      allocationCase.stubGetCurrentlyManagedNoOffenderManagerCaseOverview,
 
-    stubGetAllocateOffenderManagersNewToProbation:
-      allocateOffenderManagers.stubGetAllocateOffenderManagersNewToProbation,
+    stubGetPreviouslyManagedCaseOverview: allocationCase.stubGetPreviouslyManagedCaseOverview,
+
+    stubGetNewToProbationCaseOverview: allocationCase.stubGetNewToProbationCaseOverview,
 
     stubGetPotentialOffenderManagerWorkload: allocationConfirm.stubGetPotentialOffenderManagerWorkload,
 

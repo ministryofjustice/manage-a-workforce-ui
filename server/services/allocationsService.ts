@@ -86,6 +86,14 @@ export default class AllocationsService {
     })) as OffenderManagerOverview
   }
 
+  async getCaseOverview(token: string, crn, convictionId): Promise<Allocation> {
+    logger.info(`Getting case overview for crn ${crn}`)
+    return (await this.restClient(token).get({
+      path: `/cases/unallocated/${crn}/convictions/${convictionId}/overview`,
+      headers: { Accept: 'application/json' },
+    })) as Allocation
+  }
+
   getDocument(token: string, crn, convictionId, documentId): Promise<FileDownload> {
     logger.info(`Getting document for crn ${crn}`)
     return this.restClient(token).stream({

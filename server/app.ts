@@ -17,12 +17,14 @@ import setUpHealthChecks from './middleware/setUpHealthChecks'
 import setUpWebRequestParsing from './middleware/setupRequestParsing'
 import authorisationMiddleware from './middleware/authorisationMiddleware'
 import AllocationsService from './services/allocationsService'
+import WorkloadService from './services/workloadService'
 import unauthenticatedRoutes from './routes/unauthenticated'
 import applyBankHols from './utils/bankHolidays'
 
 export default function createApp(
   userService: UserService,
-  allocationsService: AllocationsService
+  allocationsService: AllocationsService,
+  workloadService: WorkloadService
 ): express.Application {
   const app = express()
 
@@ -46,6 +48,7 @@ export default function createApp(
     '/',
     indexRoutes(standardRouter(userService), {
       allocationsService,
+      workloadService,
     })
   )
 

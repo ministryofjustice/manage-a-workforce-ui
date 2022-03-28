@@ -3,15 +3,17 @@ import type { RequestHandler, Router } from 'express'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import AllocationsController from '../controllers/allocationsController'
 import AllocationsService from '../services/allocationsService'
+import WorkloadService from '../services/workloadService'
 
 export interface Services {
   allocationsService: AllocationsService
+  workloadService: WorkloadService
 }
 
 export default function routes(router: Router, services: Services): Router {
   const get = (path: string, handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (path: string, handler: RequestHandler) => router.post(path, asyncMiddleware(handler))
-  const allocationsController = new AllocationsController(services.allocationsService)
+  const allocationsController = new AllocationsController(services.allocationsService, services.workloadService)
 
   get('/', async (req, res) => {
     await allocationsController.getAllocations(req, res)

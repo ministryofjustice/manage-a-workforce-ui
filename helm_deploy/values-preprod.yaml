@@ -12,4 +12,5 @@ generic-service:
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
     ALLOCATIONS_SERVICE_URL: "https://hmpps-allocations-preprod.hmpps.service.justice.gov.uk"
     WORKLOAD_MEASUREMENT_URL: "https://workload-measurement-preprod.hmpps.service.justice.gov.uk"
+    WORKLOAD_SERVICE_URL: "https://hmpps-workload-preprod.hmpps.service.justice.gov.uk"
 

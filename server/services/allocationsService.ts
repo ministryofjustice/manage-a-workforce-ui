@@ -4,8 +4,6 @@ import { ApiConfig } from '../config'
 import Allocation from '../models/allocation'
 import ProbationRecord from '../models/probationRecord'
 import Risk from '../models/risk'
-import AllocateOffenderManagers from '../models/allocateOffenderManagers'
-import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerOverview from '../models/offenderManagerOverview'
 import FileDownload from '../models/fileDownload'
 

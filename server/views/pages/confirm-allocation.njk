@@ -2,7 +2,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 
-{% set offenderManagerDetails = data.offenderManagerForename + ' ' + data.offenderManagerSurname + (' (' + data.offenderManagerGrade + ')' if data.offenderManagerGrade)  %}
+{% set offenderManagerDetails = data.forename + ' ' + data.surname + (' (' + data.grade + ')' if data.grade)  %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -40,7 +40,7 @@
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
     <h2 class="govuk-heading-l">You are allocating probation practitioner {{ offenderManagerDetails }} to this case.</h2>
-    <p id="impact-statement">This will change their workload capacity from <span class="{{ 'percentage-extra-over' if data.offenderManagerCurrentCapacity > 100 }}">{{ data.offenderManagerCurrentCapacity | round(1)}}%</span> to <span class="{{ 'percentage-extra-over' if data.offenderManagerPotentialCapacity > 100 }}">{{ data.offenderManagerPotentialCapacity | round(1) }}%</span>.</p>
+    <p id="impact-statement">This will change their workload capacity from <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> to <span class="{{ 'percentage-extra-over' if data.potentialCapacity > 100 }}">{{ data.potentialCapacity | round(1) }}%</span>.</p>
     <div class="govuk-form-group govuk-!-margin-top-9">
         <div class="govuk-button-group">
           <a class="govuk-button" href="#">Continue</a>

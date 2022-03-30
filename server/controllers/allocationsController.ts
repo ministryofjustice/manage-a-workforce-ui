@@ -128,7 +128,8 @@ export default class AllocationsController {
                 offenderManagerToAllocate.capacity,
                 offenderManagerToAllocate.totalCommunityCases,
                 offenderManagerToAllocate.totalCustodyCases,
-                offenderManagerToAllocate.code
+                offenderManagerToAllocate.code,
+                offenderManagerToAllocate.staffId
               )
           )
           .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => b.capacity - a.capacity)
@@ -159,20 +160,22 @@ export default class AllocationsController {
     res.redirect(redirectUrl)
   }
 
-  async getConfirmAllocation(req: Request, res: Response, crn, offenderManagerCode, convictionId) {
-    const response: OffenderManagerPotentialWorkload = await this.allocationsService.getCaseAllocationImpact(
+  async getConfirmAllocation(req: Request, res: Response, crn, staffId, convictionId) {
+    const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,
-      offenderManagerCode,
+      staffId,
       convictionId
     )
+
+    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
     res.render('pages/confirm-allocation', {
       title: 'Allocation Impact',
       data: response,
-      name: response.name,
-      crn: response.crn,
-      tier: response.tier,
-      convictionId: response.convictionId,
+      name: caseOverview.name,
+      crn: caseOverview.crn,
+      tier: caseOverview.tier,
+      convictionId: caseOverview.convictionId,
     })
   }
 

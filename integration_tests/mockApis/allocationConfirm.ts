@@ -1,53 +1,53 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubFor } from './allocation-wiremock'
+import { stubForWorkload } from './workload-wiremock'
 
 export default {
   stubGetPotentialOffenderManagerWorkload: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForWorkload({
       request: {
-        method: 'GET',
-        urlPattern: `/cases/J678910/convictions/123456789/allocate/OM1/impact`,
+        method: 'POST',
+        urlPattern: `/team/N03F01/offenderManagers/5678/impact`,
+        bodyPatterns: [
+          {
+            equalToJson: '{"crn":"J678910", "convictionId": 123456789}',
+          },
+        ],
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          offenderManagerForename: 'John',
-          offenderManagerSurname: 'Doe',
-          offenderManagerGrade: 'PO',
-          offenderManagerCurrentCapacity: 50.4,
-          offenderManagerCode: 'OM1',
-          offenderManagerPotentialCapacity: 64.8,
-          convictionId: 123456789,
-          caseType: 'CUSTODY',
+          forename: 'John',
+          surname: 'Doe',
+          grade: 'PO',
+          capacity: 50.4,
+          code: 'OM1',
+          potentialCapacity: 64.8,
         },
       },
     })
   },
   stubGetPotentialOffenderManagerWorkloadOverCapacity: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForWorkload({
       request: {
-        method: 'GET',
-        urlPattern: `/cases/J678910/convictions/123456789/allocate/OM1/impact`,
+        method: 'POST',
+        urlPattern: `/team/N03F01/offenderManagers/5678/impact`,
+        bodyPatterns: [
+          {
+            equalToJson: '{"crn":"J678910", "convictionId": 123456789}',
+          },
+        ],
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          offenderManagerForename: 'John',
-          offenderManagerSurname: 'Doe',
-          offenderManagerGrade: 'PO',
-          offenderManagerCurrentCapacity: 100.2,
-          offenderManagerCode: 'OM1',
-          offenderManagerPotentialCapacity: 108.6,
-          convictionId: 123456789,
-          caseType: 'CUSTODY',
+          forename: 'John',
+          surname: 'Doe',
+          grade: 'PO',
+          capacity: 100.2,
+          code: 'OM1',
+          potentialCapacity: 108.6,
         },
       },
     })

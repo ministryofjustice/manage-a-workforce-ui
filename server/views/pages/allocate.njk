@@ -50,7 +50,7 @@
     {%- set tableRow = [
         { html: govukLabel({
             text: item.name,
-            for: ('allocated-officer-' + item.code)
+            for: ('allocated-officer-' + item.staffId)
           }) },
         { html: ('<div class="tooltip">' + item.grade + '<span class="tooltiptext">' + item.gradeTip + '</span></div>'),
             attributes: {
@@ -74,7 +74,7 @@
             }
         },
         { text: ('<a href="/' + crn + '/convictions/' + convictionId + '/allocate/' + item.code + '/officer-view" class="govuk-link--no-visited-state" aria-label="View">' + "View" + '</a>' ) | safe, classes: "govuk-!-text-align-centre"},
-        { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + item.code + '" name="allocatedOfficer" type="radio" value="' + item.code + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + item.code + '"></label></div></div>')
+        { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + item.staffId + '" name="allocatedOfficer" type="radio" value="' + item.staffId + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + item.staffId + '"></label></div></div>')
         }
     ] -%}
     {{ tableData.rows.push(tableRow) }}

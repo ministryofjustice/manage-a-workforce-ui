@@ -226,4 +226,94 @@ context('Unallocated', () => {
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
     unallocatedPage.overdueFlag().should('exist')
   })
+
+  it('Should sort tier by correct order', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage.tierSortButton().click()
+    cy.get('table')
+      .getTable()
+      .should('deep.equal', [
+        {
+          'Name / CRN': 'Bill TurnerF5635632',
+          Tier: 'D1',
+          'Sentence date': '1 Sep 2021',
+          'Induction appointment': '1 Sep 2021Today',
+          'Probation status': 'Currently managed(Richard Moore)',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Dylan Adam ArmstrongJ678910',
+          Tier: 'C1',
+          'Sentence date': '1 Sep 2021',
+          'Induction appointment': '1 Sep 2021Today',
+          'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Sofia MitchellL786545',
+          Tier: 'C1',
+          'Sentence date': '1 Sep 2021',
+          'Induction appointment': 'Not needed',
+          'Probation status': 'Previously managed(13 Dec 2019)',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Andrew WilliamsP567654',
+          Tier: 'C1',
+          'Sentence date': '1 Sep 2021',
+          'Induction appointment': '3 Sep 2021In 2 days',
+          'Probation status': 'Previously managed',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Mick JonesC234432',
+          Tier: 'C1',
+          'Sentence date': '25 Aug 2021',
+          'Induction appointment': 'Not bookedDue on 2 Sep 2021',
+          'Probation status': 'Previously managed',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Sarah SmithC254565',
+          Tier: 'C1',
+          'Sentence date': '24 Aug 2021',
+          'Induction appointment': 'Not bookedDue today',
+          'Probation status': 'Previously managed',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Fiona SipsmithG574565',
+          Tier: 'C1',
+          'Sentence date': '16 Aug 2021',
+          'Induction appointment': 'Not bookedOverdue',
+          'Probation status': 'Previously managed',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Kacey RayE124321',
+          Tier: 'C2',
+          'Sentence date': '1 Sep 2021',
+          'Induction appointment': '2 Sep 2021Tomorrow',
+          'Probation status': 'New to probation',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'Sarah SiddallC567654',
+          Tier: 'C2',
+          'Sentence date': '1 Sep 2021',
+          'Induction appointment': '4 Sep 2021In 3 days',
+          'Probation status': 'Previously managed',
+          Action: 'Review case',
+        },
+        {
+          'Name / CRN': 'John SmithP125643',
+          Tier: 'C3',
+          'Sentence date': '23 Jul 2021',
+          'Induction appointment': '17 Aug 2021Overdue',
+          'Probation status': 'New to probation',
+          Action: 'Review case',
+        },
+      ])
+  })
 })

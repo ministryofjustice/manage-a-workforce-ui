@@ -32,4 +32,6 @@ export default class UnallocatedPage extends Page {
   warningIcon = (): PageElement => cy.get('.govuk-warning-text__icon')
 
   warningText = (): PageElement => cy.get('.govuk-warning-text__text')
+
+  tierSortButton = (): PageElement => cy.get('button[data-index="1"]')
 }

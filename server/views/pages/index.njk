@@ -45,7 +45,7 @@
 {% for item in unallocatedCases %}
     {%- set tableRow = [
         { text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' )},
-        { text: item.tier },
+        { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
         { text: (item.sentenceDate | dateFormat), attributes: {
             "data-sort-value": item.sentenceDate
         } },

@@ -3,6 +3,7 @@ import moment, { Moment } from 'moment-business-days'
 
 import config from '../../config'
 import OffenderManager from '../../models/offenderManager'
+import tierOrder from './TierOrder'
 
 export default class UnallocatedCase {
   name: string
@@ -10,6 +11,8 @@ export default class UnallocatedCase {
   crn: string
 
   tier: string
+
+  tierOrder: number
 
   sentenceDate: string
 
@@ -38,6 +41,7 @@ export default class UnallocatedCase {
     this.name = name
     this.crn = crn
     this.tier = tier
+    this.tierOrder = tierOrder.get(tier) ?? 0
     this.sentenceDate = sentenceDate
     this.setInitialAppointment(initialAppointment, sentenceDate, caseType)
     this.primaryStatus = primaryStatus

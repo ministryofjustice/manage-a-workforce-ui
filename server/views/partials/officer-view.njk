@@ -4,6 +4,9 @@
 
 {% set pageTitle = applicationName + " - Officer view" %}
 {% set officerName = data.offenderManagerForename + ' '  + data.offenderManagerSurname %}
+{% set officerGrade =  data.offenderManagerGrade %}
+{% set officerCode =  data.offenderManagerCode %}
+{% set officerTotalCases = data.offenderManagerTotalCases %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -32,7 +35,7 @@
         <div class="govuk-grid-column-full">
             <span class="govuk-caption-xl">{{ data.teamName }}</span>
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ officerName }}
-                <span class="maw-secondary-text-col govuk-!-display-block">{{ data.offenderManagerGrade }}</span>
+                <span class="maw-secondary-text-col govuk-!-display-block">{{ officerGrade }}</span>
             </h1>
         </div>
     </div>
@@ -44,12 +47,12 @@
                 items: [
                     {
                         text: 'Overview',
-                        href: '/' + crn + '/convictions/' + convictionId + '/allocate/' + data.offenderManagerCode + '/officer-view',
+                        href: '/' + crn + '/convictions/' + convictionId + '/allocate/' + officerCode + '/officer-view',
                         active: title === 'Overview'
                     },
                     {
-                        text: 'Active cases (' + data.offenderManagerTotalCases + ')',
-                        href: '/' + crn + '/convictions/' + convictionId + '/allocate/' + data.offenderManagerCode + '/active-cases',
+                        text: 'Active cases (' + officerTotalCases + ')',
+                        href: '/' + crn + '/convictions/' + convictionId + '/allocate/' + officerCode + '/active-cases',
                         active: title === 'Active cases'
                     }
                 ]

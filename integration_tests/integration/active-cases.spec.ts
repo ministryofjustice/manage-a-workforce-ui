@@ -10,7 +10,7 @@ context('Active Cases', () => {
   })
 
   it('Officer details visible on page', () => {
-    cy.task('stubGetOverview')
+    cy.task('stubGetOffenderManagerCases')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
     const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
@@ -19,7 +19,7 @@ context('Active Cases', () => {
   })
 
   it('Breadcrumbs are visible on page', () => {
-    cy.task('stubGetOverview')
+    cy.task('stubGetOffenderManagerCases')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
     const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
@@ -32,10 +32,30 @@ context('Active Cases', () => {
   })
 
   it('Heading is visible on page', () => {
-    cy.task('stubGetOverview')
+    cy.task('stubGetOffenderManagerCases')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
     const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
     activeCasesPage.heading().should('contain', 'Active cases')
+  })
+
+  it('Table visible on page', () => {
+    cy.task('stubGetOffenderManagerCases')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
+    cy.get('table')
+      .getTable()
+      .should('deep.equal', [
+        {
+          'Name / CRN': 'Dylan Adam ArmstrongCRN1111',
+          tier: 'B3',
+          'Type of case': 'Custody',
+        },
+        {
+          'Name / CRN': 'Cindy SmithCRN2222',
+          tier: 'A0',
+          'Type of case': 'License',
+        },
+      ])
   })
 })

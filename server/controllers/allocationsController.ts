@@ -11,6 +11,7 @@ import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotential
 import OffenderManagerOverview from '../models/offenderManagerOverview'
 import FileDownload from '../models/fileDownload'
 import WorkloadService from '../services/workloadService'
+import OffenderManagerCases from '../models/offenderManagerCases'
 
 export default class AllocationsController {
   constructor(
@@ -195,17 +196,15 @@ export default class AllocationsController {
   }
 
   async getActiveCases(req: Request, res: Response, crn, offenderManagerCode, convictionId) {
-    const response: OffenderManagerOverview = await this.allocationsService.getOffenderManagerOverview(
+    const response: OffenderManagerCases = await this.workloadService.getOffenderManagerCases(
       res.locals.user.token,
-      crn,
-      offenderManagerCode,
-      convictionId
+      offenderManagerCode
     )
     res.render('pages/active-cases', {
       title: 'Active cases',
       data: response,
-      crn: response.crn,
-      convictionId: response.convictionId,
+      crn,
+      convictionId,
     })
   }
 

@@ -1,0 +1,17 @@
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+
+<div class="govuk-grid-column-two-thirds">
+{{ govukTextarea({
+  name: "instructions",
+  id: "instructions",
+  label: {
+    text: "Write allocation instructions",
+    classes: "govuk-label--l",
+    isPageHeading: false
+  },
+  hint: {
+    text: "Enter any details you want to highlight to the probation practitioner. These are saved automatically, and you will have a chance to review later."
+  }
+}) }}
+
+</div>

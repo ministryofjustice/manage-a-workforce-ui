@@ -6,13 +6,13 @@ export default {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/team/N03F01/offenderManagers/OM1/cases`,
+        urlPattern: `/team/N03F01/offenderManagers/OM2/cases`,
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          forename: 'Ben',
+          forename: 'John',
           surname: 'Doe',
           grade: 'PO',
           code: 'OM1',

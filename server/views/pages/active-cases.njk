@@ -39,7 +39,7 @@
     {%- set tableRow = [
         { text: doubleCell('<strong>' + item.forename + ' ' + item.surname + '</strong>', item.crn, 'govuk-body-s' )},
         { text: item.tier },
-        { text: (item.caseCategory | capitalize)},
+        { text: (item.caseCategory | capitalize)}
     ] -%}
     {{ tableData.rows.push(tableRow) }}
 

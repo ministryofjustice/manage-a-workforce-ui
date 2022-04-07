@@ -48,12 +48,12 @@ context('Active Cases', () => {
       .should('deep.equal', [
         {
           'Name / CRN': 'Dylan Adam ArmstrongCRN1111',
-          tier: 'B3',
+          Tier: 'B3',
           'Type of case': 'Custody',
         },
         {
           'Name / CRN': 'Cindy SmithCRN2222',
-          tier: 'A0',
+          Tier: 'A0',
           'Type of case': 'License',
         },
       ])

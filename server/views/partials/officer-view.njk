@@ -2,11 +2,7 @@
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
-{% set pageTitle = applicationName + " - Officer view" %}
-{% set officerName = data.offenderManagerForename + ' '  + data.offenderManagerSurname %}
-{% set officerGrade =  data.offenderManagerGrade %}
-{% set officerCode =  data.offenderManagerCode %}
-{% set officerTotalCases = data.offenderManagerTotalCases %}
+
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({

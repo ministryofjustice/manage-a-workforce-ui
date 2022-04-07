@@ -5,6 +5,10 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% set pageTitle = applicationName + " - Overview" %}
+{% set officerName = data.offenderManagerForename + ' '  + data.offenderManagerSurname %}
+{% set officerGrade =  data.offenderManagerGrade %}
+{% set officerCode =  data.offenderManagerCode %}
+{% set officerTotalCases = data.offenderManagerTotalCases %}
 
 {% set tableData = {
     firstCellIsHeader: false,

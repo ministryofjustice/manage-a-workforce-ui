@@ -11,5 +11,5 @@ export default class ActiveCasesPage extends Page {
 
   secondaryText = (): PageElement => cy.get('.maw-secondary-text-col')
 
-  heading = (): PageElement => cy.get('h2.govuk-heading-l')
+  heading = (): PageElement => cy.get('caption.govuk-heading-l')
 }

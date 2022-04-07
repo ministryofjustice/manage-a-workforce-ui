@@ -3,6 +3,7 @@ import logger from '../../logger'
 import { ApiConfig } from '../config'
 import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
+import OffenderManagerCases from '../models/offenderManagerCases'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -33,5 +34,13 @@ export default class WorkloadService {
       },
       headers: { Accept: 'application/json' },
     })) as OffenderManagerPotentialWorkload
+  }
+
+  async getOffenderManagerCases(token: string, offenderManagerCode): Promise<OffenderManagerCases> {
+    logger.info(`Getting active cases for team N03F01 and offender manager ${offenderManagerCode}`)
+    return (await this.restClient(token).get({
+      path: `/team/N03F01/offenderManagers/${offenderManagerCode}/cases`,
+      headers: { Accept: 'application/json' },
+    })) as OffenderManagerCases
   }
 }

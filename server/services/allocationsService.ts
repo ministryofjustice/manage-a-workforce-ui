@@ -4,7 +4,6 @@ import { ApiConfig } from '../config'
 import Allocation from '../models/allocation'
 import ProbationRecord from '../models/probationRecord'
 import Risk from '../models/risk'
-import OffenderManagerOverview from '../models/offenderManagerOverview'
 import FileDownload from '../models/fileDownload'
 
 export default class AllocationsService {
@@ -48,19 +47,6 @@ export default class AllocationsService {
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/risks`,
       headers: { Accept: 'application/json' },
     })) as Risk
-  }
-
-  async getOffenderManagerOverview(
-    token: string,
-    crn,
-    offenderManagerCode,
-    convictionId
-  ): Promise<OffenderManagerOverview> {
-    logger.info(`Getting offender manager overview for crn ${crn}`)
-    return (await this.restClient(token).get({
-      path: `/cases/${crn}/convictions/${convictionId}/allocate/${offenderManagerCode}/overview`,
-      headers: { Accept: 'application/json' },
-    })) as OffenderManagerOverview
   }
 
   async getCaseOverview(token: string, crn, convictionId): Promise<Allocation> {

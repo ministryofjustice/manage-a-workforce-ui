@@ -1,33 +1,29 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubFor } from './allocation-wiremock'
+import { stubForWorkload } from './workload-wiremock'
 
 export default {
   stubGetOverview: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/cases/J678910/convictions/123456789/allocate/OM2/overview`,
+        urlPattern: `/team/N03F01/offenderManagers/OM2`,
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          offenderManagerForename: 'John',
-          offenderManagerSurname: 'Doe',
-          offenderManagerGrade: 'PO',
-          offenderManagerCurrentCapacity: 126,
-          offenderManagerCode: 'OM2',
-          offenderManagerTotalCases: 22,
-          convictionId: 123456789,
+          forename: 'John',
+          surname: 'Doe',
+          grade: 'PO',
+          capacity: 126,
+          code: 'OM2',
+          totalCases: 22,
           teamName: 'Wrexham - Team 1',
-          offenderManagerWeeklyHours: 22.5,
-          offenderManagerTotalReductionHours: 10,
-          offenderManagerPointsAvailable: 1265,
-          offenderManagerPointsUsed: 1580,
-          offenderManagerPointsRemaining: -315,
+          weeklyHours: 22.5,
+          totalReductionHours: 10,
+          pointsAvailable: 1265,
+          pointsUsed: 1580,
+          pointsRemaining: -315,
           lastUpdatedOn: '2013-11-03T09:00:00',
           nextReductionChange: '2022-11-03T09:00:00Z',
           caseTotals: {
@@ -43,31 +39,27 @@ export default {
   },
 
   stubGetOverviewUnderCapacity: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/cases/J678910/convictions/123456789/allocate/OM2/overview`,
+        urlPattern: `/team/N03F01/offenderManagers/OM2`,
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          offenderManagerForename: 'John',
-          offenderManagerSurname: 'Doe',
-          offenderManagerGrade: 'PO',
-          offenderManagerCurrentCapacity: 98,
-          offenderManagerCode: 'OM2',
-          offenderManagerTotalCases: 22,
-          convictionId: 123456789,
+          forename: 'John',
+          surname: 'Doe',
+          grade: 'PO',
+          capacity: 98,
+          code: 'OM2',
+          totalCases: 22,
           teamName: 'Wrexham - Team 1',
-          offenderManagerWeeklyHours: 22.5,
-          offenderManagerTotalReductionHours: 10,
-          offenderManagerPointsAvailable: 1265,
-          offenderManagerPointsUsed: 1580,
-          offenderManagerPointsRemaining: -315,
+          weeklyHours: 22.5,
+          totalReductionHours: 10,
+          pointsAvailable: 1265,
+          pointsUsed: 1580,
+          pointsRemaining: -315,
           lastUpdatedOn: '2013-11-03T09:00:00',
           nextReductionChange: '2022-11-03T09:00:00Z',
           caseTotals: {

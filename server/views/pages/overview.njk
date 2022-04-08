@@ -5,10 +5,10 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% set pageTitle = applicationName + " - Overview" %}
-{% set officerName = data.offenderManagerForename + ' '  + data.offenderManagerSurname %}
-{% set officerGrade =  data.offenderManagerGrade %}
-{% set officerCode =  data.offenderManagerCode %}
-{% set officerTotalCases = data.offenderManagerTotalCases %}
+{% set officerName = data.forename + ' '  + data.surname %}
+{% set officerGrade =  data.grade %}
+{% set officerCode =  data.code %}
+{% set officerTotalCases = data.totalCases %}
 
 {% set tableData = {
     firstCellIsHeader: false,
@@ -42,13 +42,13 @@
                 <div class="card__layout">
                     {{ card({
                         classes: 'card-total',
-                        titleHtml: ('<a href="/' + crn + '/convictions/' + convictionId + '/allocate/' + data.offenderManagerCode + '/active-cases" class="govuk-link--no-visited-state" aria-label="Total cases">' + data.offenderManagerTotalCases + '<br>' + '<p>' + "total cases"  + '</p>' + '</a>')
+                        titleHtml: ('<a href="/' + crn + '/convictions/' + convictionId + '/allocate/' + data.code + '/active-cases" class="govuk-link--no-visited-state" aria-label="Total cases">' + data.totalCases + '<br>' + '<p>' + "total cases"  + '</p>' + '</a>')
                     }) }}
                 </div>
                 <div class="card__layout">
                     {{ card({
-                        classes: 'card-total-subset ' + ('over-capacity' if data.offenderManagerCurrentCapacity > 99 else 'under-capacity'),
-                        titleHtml: (data.offenderManagerCurrentCapacity + '%' + '<p class="">' + "capacity"  + '</p>')
+                        classes: 'card-total-subset ' + ('over-capacity' if data.capacity > 99 else 'under-capacity'),
+                        titleHtml: (data.capacity + '%' + '<p class="">' + "capacity"  + '</p>')
                     }) }}
                 </div>
 
@@ -64,7 +64,7 @@
                             text: "Points available"
                         },
                             value: {
-                            text: data.offenderManagerPointsAvailable
+                            text: data.pointsAvailable
                         }
                         },
                         {
@@ -72,7 +72,7 @@
                             text: "Points used"
                         },
                             value: {
-                            text: data.offenderManagerPointsUsed
+                            text: data.pointsUsed
                         }
                         },
                         {
@@ -80,7 +80,7 @@
                             text: "Points remaining"
                         },
                             value: {
-                            text: data.offenderManagerPointsRemaining
+                            text: data.pointsRemaining
                         }
                         }
                     ]
@@ -100,7 +100,7 @@
                         text: "Weekly hours"
                     },
                         value: {
-                        text: data.offenderManagerWeeklyHours
+                        text: data.weeklyHours
                     }
                     },
                     {
@@ -108,7 +108,7 @@
                         text: "Reductions"
                     },
                         value: {
-                        text: data.offenderManagerTotalReductionHours + " hours until " + data.nextReductionChange | dateFormat
+                        text: data.totalReductionHours + (" hours until " + data.nextReductionChange | dateFormat if data.nextReductionChange) 
                     }
                     },
                     {

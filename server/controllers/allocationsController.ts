@@ -182,17 +182,15 @@ export default class AllocationsController {
   }
 
   async getOverview(req: Request, res: Response, crn, offenderManagerCode, convictionId) {
-    const response: OffenderManagerOverview = await this.allocationsService.getOffenderManagerOverview(
+    const response: OffenderManagerOverview = await this.workloadService.getOffenderManagerOverview(
       res.locals.user.token,
-      crn,
-      offenderManagerCode,
-      convictionId
+      offenderManagerCode
     )
     res.render('pages/overview', {
       title: 'Overview',
       data: response,
-      crn: response.crn,
-      convictionId: response.convictionId,
+      crn,
+      convictionId,
     })
   }
 

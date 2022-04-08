@@ -1,5 +1,6 @@
 {% extends "partials/case-view.njk" %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "../components/instructions/macro.njk" import instructions %}
 {% set pageTitle = applicationName + " - Summary" %}
 {% set offenceData = data.offences %}
 {%- set offences = [] -%}
@@ -153,6 +154,8 @@
             })}}
         </div>
     </section>
+
+    {{ instructions() }}
 
 
 {% endblock %}

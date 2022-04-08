@@ -122,4 +122,12 @@ context('Summary', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.breadCrumbs().should('contain', 'Home').and('contain', 'Unallocated cases')
   })
+
+  it('Instructions textArea should be visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.instructionsTextArea().should('exist')
+  })
 })

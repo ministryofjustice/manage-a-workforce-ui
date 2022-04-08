@@ -1,7 +1,8 @@
 $(document).ready(function () {
   window.onbeforeunload = function () {
-    if ($.trim($('#instructions').val()) !== '') {
-      localStorage.setItem('instructions-save', $('#instructions').val())
+    const instructions = $('#instructions').val()
+    if ($.trim(instructions) !== '') {
+      localStorage.setItem('instructions-save', instructions)
     }
   }
   if (localStorage['instructions-save']) {

@@ -32,6 +32,11 @@ export default {
               tier: 'A0',
               caseCategory: 'LICENSE',
             },
+            {
+              crn: 'CRN3333',
+              tier: 'C2',
+              caseCategory: 'COMMUNITY',
+            },
           ],
         },
       },

@@ -35,10 +35,10 @@
     rows: []
 } %}
 
-{% for item in data.activeCases %}
+{% for item in cases %}
     {%- set tableRow = [
-        { text: doubleCell('<strong>' + item.forename + ' ' + item.surname + '</strong>', item.crn, 'govuk-body-s' )},
-        { text: item.tier },
+        { text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' )},
+        { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
         { text: (item.caseCategory | capitalize)}
     ] -%}
     {{ tableData.rows.push(tableRow) }}

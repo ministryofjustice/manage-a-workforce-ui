@@ -56,6 +56,11 @@ context('Active Cases', () => {
           Tier: 'A0',
           'Type of case': 'License',
         },
+        {
+          'Name / CRN': 'CRN3333',
+          Tier: 'C2',
+          'Type of case': 'Community',
+        },
       ])
   })
 })

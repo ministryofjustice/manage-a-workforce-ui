@@ -12,6 +12,7 @@ import OffenderManagerOverview from '../models/offenderManagerOverview'
 import FileDownload from '../models/fileDownload'
 import WorkloadService from '../services/workloadService'
 import OffenderManagerCases from '../models/offenderManagerCases'
+import Case from './data/Case'
 
 export default class AllocationsController {
   constructor(
@@ -200,9 +201,14 @@ export default class AllocationsController {
       res.locals.user.token,
       offenderManagerCode
     )
+    const cases = response.activeCases.map(
+      activeCase =>
+        new Case(activeCase.crn, activeCase.tier, activeCase.caseCategory, activeCase.forename, activeCase.surname)
+    )
     res.render('pages/active-cases', {
       title: 'Active cases',
       data: response,
+      cases,
       crn,
       convictionId,
     })

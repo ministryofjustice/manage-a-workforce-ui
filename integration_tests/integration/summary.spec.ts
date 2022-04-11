@@ -129,7 +129,7 @@ context('Summary', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.instructionsTextArea().should('exist')
+    summaryPage.instructionsTextArea('123456789').should('exist')
   })
 
   it('Instructions text should save and display on probation record page', () => {
@@ -137,11 +137,11 @@ context('Summary', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.instructionsTextArea().should('exist')
-    summaryPage.instructionsTextArea().type('Test')
+    summaryPage.instructionsTextArea('123456789').should('exist')
+    summaryPage.instructionsTextArea('123456789').type('Test')
     cy.task('stubGetProbationRecord')
     cy.visit('/J678910/convictions/123456789/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.instructionsTextArea().should('have.value', 'Test')
+    probationRecordPage.instructionsTextArea('123456789').should('have.value', 'Test')
   })
 })

@@ -1,6 +1,7 @@
 import Page from '../pages/page'
 import SummaryPage from '../pages/summary'
 import ProbationRecordPage from '../pages/probationRecord'
+import RiskPage from '../pages/risk'
 
 context('Summary', () => {
   beforeEach(() => {
@@ -143,5 +144,18 @@ context('Summary', () => {
     cy.visit('/J678910/convictions/123456789/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.instructionsTextArea('123456789').should('have.value', 'Test')
+  })
+
+  it('Instructions text should save and display on risk page', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.instructionsTextArea('123456789').should('exist')
+    summaryPage.instructionsTextArea('123456789').type(' - this is a test')
+    cy.task('stubGetRisk')
+    cy.visit('/J678910/convictions/123456789/risk')
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.instructionsTextArea('123456789').should('have.value', 'Test - this is a test')
   })
 })

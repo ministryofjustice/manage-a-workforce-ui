@@ -1,5 +1,7 @@
 import Page from '../pages/page'
 import RiskPage from '../pages/risk'
+import SummaryPage from '../pages/summary'
+import ProbationRecordPage from '../pages/probationRecord'
 
 context('Risk', () => {
   beforeEach(() => {
@@ -125,5 +127,31 @@ context('Risk', () => {
       .ogrsIndexCard()
       .trimTextContent()
       .should('equal', 'OGRSOffender Group Reconviction Scale Score unavailable')
+  })
+
+  it('Instructions text should save and display on summary page', () => {
+    cy.task('stubGetRisk')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/risk')
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.instructionsTextArea('123456789').should('exist')
+    riskPage.instructionsTextArea('123456789').type('Test')
+    cy.task('stubGetUnallocatedCase')
+    cy.visit('/J678910/convictions/123456789/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.instructionsTextArea('123456789').should('have.value', 'Test')
+  })
+
+  it('Instructions text should save and display on probation record page', () => {
+    cy.task('stubGetRisk')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/risk')
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.instructionsTextArea('123456789').should('exist')
+    riskPage.instructionsTextArea('123456789').type(' - this is a test')
+    cy.task('stubGetProbationRecord')
+    cy.visit('/J678910/convictions/123456789/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.instructionsTextArea('123456789').should('have.value', 'Test - this is a test')
   })
 })

@@ -1,5 +1,7 @@
 import Page from '../pages/page'
 import ProbationRecordPage from '../pages/probationRecord'
+import RiskPage from '../pages/risk'
+import SummaryPage from '../pages/summary'
 
 context('Probation record', () => {
   beforeEach(() => {
@@ -143,5 +145,33 @@ context('Probation record', () => {
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.previousOrderTable().getTable().should('have.length', 100)
     probationRecordPage.viewAllLink().should('not.exist')
+  })
+
+  it('Instructions text should save and display on risk page', () => {
+    cy.task('stubGetProbationRecord')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.instructionsTextArea('123456789').type('Test')
+    cy.task('stubGetRisk')
+    cy.visit('/J678910/convictions/123456789/risk')
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.instructionsTextArea('123456789').should('have.value', 'Test')
+    riskPage.instructionsTextArea('123456789').type(' - this is a test')
+    cy.task('stubGetProbationRecord')
+    cy.visit('/J678910/convictions/123456789/probation-record')
+    probationRecordPage.instructionsTextArea('123456789').should('have.value', 'Test - this is a test')
+  })
+
+  it('Instructions text should save and display on summary page', () => {
+    cy.task('stubGetProbationRecord')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.instructionsTextArea('123456789').type('. Test')
+    cy.task('stubGetUnallocatedCase')
+    cy.visit('/J678910/convictions/123456789/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.instructionsTextArea('123456789').should('have.value', 'Test - this is a test. Test')
   })
 })

@@ -63,6 +63,7 @@ export default {
             lastUpdatedOn: '2018-11-17',
             score: 85,
           },
+          convictionId: '123456789',
         },
       },
     })

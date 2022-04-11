@@ -1,15 +1,16 @@
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 
-<div class="govuk-grid-column-two-thirds">
-  <div class="govuk-form-group">
-    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="instructions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}">
-        Write allocation instructions
-      </label>
-    </h1>
-    <div id="more-detail-hint" class="govuk-hint">
-      Enter any details you want to highlight to the probation practitioner. These are saved automatically, and you will have a chance to review later.
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-form-group">
+      <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="instructions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}">
+          Write allocation instructions
+        </label>
+      </h1>
+      <div id="more-detail-hint" class="govuk-hint">
+        Enter any details you want to highlight to the probation practitioner. These are saved automatically, and you will have a chance to review later.
+      </div>
+      <textarea class="govuk-textarea" id="instructions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}" name="instructions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}" rows="5" aria-describedby="instuctions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}-hint"></textarea>
     </div>
-    <textarea class="govuk-textarea" id="instructions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}" name="instructions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}" rows="5" aria-describedby="instuctions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}-hint"></textarea>
   </div>
-
 </div>

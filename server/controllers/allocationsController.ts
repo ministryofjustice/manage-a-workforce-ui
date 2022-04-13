@@ -178,6 +178,25 @@ export default class AllocationsController {
       crn: caseOverview.crn,
       tier: caseOverview.tier,
       convictionId: caseOverview.convictionId,
+      staffId,
+    })
+  }
+
+  async getConfirmInstructions(req: Request, res: Response, crn, staffId, convictionId) {
+    const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
+      res.locals.user.token,
+      crn,
+      staffId,
+      convictionId
+    )
+    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
+    res.render('pages/confirm-instructions', {
+      title: 'Instructions',
+      data: response,
+      name: caseOverview.name,
+      crn: caseOverview.crn,
+      tier: caseOverview.tier,
+      convictionId: caseOverview.convictionId,
     })
   }
 

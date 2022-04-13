@@ -19,6 +19,7 @@ export default {
         jsonBody: {
           forename: 'John',
           surname: 'Doe',
+          email: 'john.doe@test.justice.gov.uk',
           grade: 'PO',
           capacity: 50.4,
           code: 'OM1',
@@ -44,6 +45,7 @@ export default {
         jsonBody: {
           forename: 'John',
           surname: 'Doe',
+          email: 'john.doe@test.justice.gov.uk',
           grade: 'PO',
           capacity: 100.2,
           code: 'OM1',

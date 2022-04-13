@@ -15,8 +15,7 @@ export default class AllocationConfirmPage extends Page {
 
   continueButton = (): PageElement => cy.get('.govuk-button')
 
-  chooseDifferentProbationPractitionerLink = (crn, convictionId): PageElement =>
-    cy.get(`a[href*="${crn}/convictions/${convictionId}/allocate"]`).eq(1)
+  link = (): PageElement => cy.get('.govuk-button-group .govuk-link')
 
   capacityImpactStatement = (): PageElement => cy.get('#impact-statement')
 

@@ -10,7 +10,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Offender details visible on page', () => {
-    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.task('stubGetStaffById')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
@@ -19,7 +19,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Section break is visible on page', () => {
-    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.task('stubGetStaffById')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
@@ -28,7 +28,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Breadcrumbs visible on page', () => {
-    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.task('stubGetStaffById')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
@@ -42,7 +42,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Continue button visible on page', () => {
-    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.task('stubGetStaffById')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
@@ -51,7 +51,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Cancel link visible on page', () => {
-    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.task('stubGetStaffById')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
@@ -60,7 +60,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Instructions textArea should be visible on page', () => {
-    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.task('stubGetStaffById')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
@@ -73,7 +73,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Inset text should be visible on page', () => {
-    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.task('stubGetStaffById')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')

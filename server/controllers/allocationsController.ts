@@ -13,6 +13,7 @@ import FileDownload from '../models/fileDownload'
 import WorkloadService from '../services/workloadService'
 import OffenderManagerCases from '../models/offenderManagerCases'
 import Case from './data/Case'
+import StaffSummary from '../models/StaffSummary'
 
 export default class AllocationsController {
   constructor(
@@ -183,12 +184,7 @@ export default class AllocationsController {
   }
 
   async getConfirmInstructions(req: Request, res: Response, crn, staffId, convictionId) {
-    const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
-      res.locals.user.token,
-      crn,
-      staffId,
-      convictionId
-    )
+    const response: StaffSummary = await this.workloadService.getStaffById(res.locals.user.token, staffId)
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
     res.render('pages/confirm-instructions', {
       title: 'Instructions',

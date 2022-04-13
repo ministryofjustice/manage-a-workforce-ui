@@ -5,6 +5,7 @@ import AllocateOffenderManagers from '../models/allocateOffenderManagers'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerCases from '../models/offenderManagerCases'
 import OffenderManagerOverview from '../models/offenderManagerOverview'
+import StaffSummary from '../models/StaffSummary'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -51,5 +52,13 @@ export default class WorkloadService {
       path: `/team/N03F01/offenderManagers/${offenderManagerCode}`,
       headers: { Accept: 'application/json' },
     })) as OffenderManagerOverview
+  }
+
+  async getStaffById(token: string, staffId): Promise<StaffSummary> {
+    logger.info(`Getting staff by ID ${staffId}`)
+    return (await this.restClient(token).get({
+      path: `/staff/${staffId}`,
+      headers: { Accept: 'application/json' },
+    })) as StaffSummary
   }
 }

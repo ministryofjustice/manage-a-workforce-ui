@@ -54,6 +54,11 @@ export default function routes(router: Router, services: Services): Router {
     await allocationsController.getConfirmAllocation(req, res, crn, staffId, convictionId)
   })
 
+  get('/:crn/convictions/:convictionId/allocate/:staffId/instructions', async (req, res) => {
+    const { crn, convictionId, staffId } = req.params
+    await allocationsController.getConfirmInstructions(req, res, crn, staffId, convictionId)
+  })
+
   get('/:crn/convictions/:convictionId/allocate/:offenderManagerCode/officer-view', async (req, res) => {
     const { crn, convictionId, offenderManagerCode } = req.params
     await allocationsController.getOverview(req, res, crn, offenderManagerCode, convictionId)

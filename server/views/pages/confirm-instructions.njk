@@ -1,0 +1,62 @@
+{% extends "partials/layout.njk" %}
+{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "../components/instructions/macro.njk" import instructions %}
+
+{% set pageTitle = applicationName + " - Case view" %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home"
+            },
+            {
+                text: "Unallocated cases",
+                href: "/"
+            },
+            {
+                text: "Case view",
+                href: "/" + crn + "/convictions/" + convictionId + "/case-view"
+            },
+            {
+                text: "Allocate to probation practitioner",
+                href: "/" + crn + "/convictions/" + convictionId + "/allocate"
+            }
+        ]
+    }) }}
+{% endblock %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ data.name or name }}
+                <span class="govuk-caption-xl">Tier: {{ data.tier or tier }}</span>
+                <span class="govuk-caption-xl">CRN: {{ data.crn or crn }}</span>
+            </h1>
+        </div>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    {{
+    instructions({
+        titleText: "Review allocation instructions",
+        hintText: "Review the notes you have made before sending to the probation practitioner.",
+        convictionId: convictionId
+    })
+    }}
+
+
+    <div class="govuk-inset-text govuk-!-margin-bottom-7">
+        <p>These notes will automatically be sent to <br>{{ data.forename +  ' ' + data.surname }} (<em>{{ data.email }}</em>)</p>
+    </div>
+
+    <div class="govuk-button-group">
+        <button class="govuk-button" data-module="govuk-button" href="#">Continue</button>
+        <a class="govuk-link" href="{{ '/' + crn + '/convictions/' + convictionId + '/allocate' }}">Cancel</a>
+    </div>
+
+
+{% endblock %}
+

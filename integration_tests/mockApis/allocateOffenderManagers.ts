@@ -6,7 +6,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/team/N03F01/offenderManagers`,
+        urlPattern: `/team/N03F01/offenderManagers?grades=PSO,PQiP,PO`,
       },
       response: {
         status: 200,

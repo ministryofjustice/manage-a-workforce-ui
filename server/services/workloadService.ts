@@ -22,6 +22,7 @@ export default class WorkloadService {
     logger.info(`Getting offender managers to allocate for team N03F01`)
     return (await this.restClient(token).get({
       path: `/team/N03F01/offenderManagers`,
+      query: 'grades=PSO,PQiP,PO',
       headers: { Accept: 'application/json' },
     })) as AllocateOffenderManagers
   }

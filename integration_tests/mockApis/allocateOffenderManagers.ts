@@ -6,7 +6,12 @@ export default {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/team/N03F01/offenderManagers?grades=PSO,PQiP,PO`,
+        urlPath: `/team/N03F01/offenderManagers`,
+        queryParameters: {
+          grades: {
+            equalTo: 'PSO,PQiP,PO',
+          },
+        },
       },
       response: {
         status: 200,

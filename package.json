@@ -111,7 +111,7 @@
     "nunjucks": "^3.2.3",
     "passport": "0.5.2",
     "passport-oauth2": "^1.6.0",
-    "redis": "4.0.1",
+    "redis": "4.0.6",
     "superagent": "7.1.2"
   },
   "devDependencies": {

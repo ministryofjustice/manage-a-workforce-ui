@@ -20,16 +20,50 @@
             text: "Number of cases"
         }
     ],
-    rows: []
+    rows: [
+        [
+            {
+                text: "A"
+            },
+            {
+                text: data.caseTotals.a
+            }
+        ],
+        [
+            {
+                text: "B"
+            },
+            {
+                text: data.caseTotals.b
+            }
+        ],
+        [
+            {
+                text: "C"
+            },
+            {
+                text: data.caseTotals.c
+            }
+        ],
+        [
+            {
+                text: "D"
+            },
+            {
+                text: data.caseTotals.d
+            }
+        ],
+        [
+            {
+                text: "Untiered"
+            },
+            {
+                text: data.caseTotals.untiered
+            }
+        ]
+    ]
 } %}
 
-{% for tier, cases in data.caseTotals %}
-    {%- set tableRow = [
-        { text: tier | capitalize },
-        { text: cases }
-    ] -%}
-    {{ tableData.rows.push(tableRow) }}
-{% endfor %}
 
 {% block officerContent %}
     <div class="govuk-grid-row">
@@ -108,7 +142,7 @@
                         text: "Reductions"
                     },
                         value: {
-                        text: data.totalReductionHours + (" hours until " + data.nextReductionChange | dateFormat if data.nextReductionChange) 
+                        text: data.totalReductionHours + (" hours until " + data.nextReductionChange | dateFormat if data.nextReductionChange)
                     }
                     },
                     {

@@ -19,6 +19,14 @@ context('Risk', () => {
     riskPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
 
+  it('Notification badge visible on page with number of unallocations', () => {
+    cy.task('stubGetRisk')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/risk')
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.notificationsBadge().should('contain.text', '10')
+  })
+
   it('Risk header visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()

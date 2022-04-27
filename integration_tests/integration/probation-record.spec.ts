@@ -19,6 +19,14 @@ context('Probation record', () => {
     probationRecordPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
 
+  it('Notification badge visible on page with number of unallocations', () => {
+    cy.task('stubGetProbationRecord')
+    cy.signIn()
+    cy.visit('J678910/convictions/123456789/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.notificationsBadge().should('contain.text', '10')
+  })
+
   it('Probation record header visible on page', () => {
     cy.task('stubGetProbationRecord')
     cy.signIn()

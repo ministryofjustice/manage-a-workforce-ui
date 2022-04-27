@@ -24,4 +24,6 @@ export default class RiskPage extends Page {
   ogrsIndexCard = (): PageElement => cy.get('.index-card').eq(2)
 
   instructionsTextArea = (convictionId): PageElement => cy.get(`#instructions-${convictionId}`)
+
+  notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 }

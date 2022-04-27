@@ -9,6 +9,15 @@ context('Allocate Confirmation', () => {
     cy.task('stubGetAllocations')
   })
 
+  it('Notification badge visible on page with number of unallocations', () => {
+    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/5678/confirm')
+    const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
+    allocatePage.notificationsBadge().should('contain.text', '10')
+  })
+
   it('Offender details visible on page', () => {
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.task('stubGetCurrentlyManagedCaseOverview')

@@ -38,6 +38,8 @@ export default class AllocationsController {
           value.caseType
         )
     )
+    const { session } = req
+    session.casesLength = response.length
     res.render('pages/index', {
       unallocatedCases,
       casesLength: response.length,
@@ -50,11 +52,13 @@ export default class AllocationsController {
       crn,
       convictionId
     )
+    const { session } = req
     res.render('pages/summary', {
       data: response,
       crn: response.crn,
       convictionId: response.convictionId,
       title: 'Summary',
+      casesLength: session.casesLength,
     })
   }
 
@@ -104,6 +108,7 @@ export default class AllocationsController {
       totalPreviousCount,
       convictionId,
       title: 'Probation record',
+      casesLength: res.locals.casesLength,
     })
   }
 
@@ -114,6 +119,7 @@ export default class AllocationsController {
       data: response,
       crn: response.crn,
       convictionId: response.convictionId,
+      casesLength: res.locals.casesLength,
     })
   }
 
@@ -149,6 +155,7 @@ export default class AllocationsController {
       offenderManager: response.offenderManager,
       offenderManagersToAllocate,
       error,
+      casesLength: res.locals.casesLength,
     })
   }
 
@@ -170,7 +177,6 @@ export default class AllocationsController {
       staffId,
       convictionId
     )
-
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
     res.render('pages/confirm-allocation', {
       title: 'Allocation Impact',
@@ -180,6 +186,7 @@ export default class AllocationsController {
       tier: caseOverview.tier,
       convictionId: caseOverview.convictionId,
       staffId,
+      casesLength: res.locals.casesLength,
     })
   }
 
@@ -193,6 +200,7 @@ export default class AllocationsController {
       crn: caseOverview.crn,
       tier: caseOverview.tier,
       convictionId: caseOverview.convictionId,
+      casesLength: res.locals.casesLength,
     })
   }
 
@@ -206,6 +214,7 @@ export default class AllocationsController {
       data: response,
       crn,
       convictionId,
+      casesLength: res.locals.casesLength,
     })
   }
 
@@ -224,6 +233,7 @@ export default class AllocationsController {
       cases,
       crn,
       convictionId,
+      casesLength: res.locals.casesLength,
     })
   }
 

@@ -42,6 +42,11 @@ export default function createApp(
   app.use(unauthenticatedRoutes())
   app.use(authorisationMiddleware(['ROLE_MANAGE_A_WORKFORCE_ALLOCATE']))
 
+  app.use((req, res, next) => {
+    res.locals.casesLength = req.session.casesLength
+    next()
+  })
+
   applyBankHols()
 
   app.use(

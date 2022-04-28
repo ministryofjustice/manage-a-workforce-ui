@@ -55,6 +55,14 @@ context('Overview', () => {
     overviewPage.summaryText().should('contain', 'View as points')
   })
 
+  it('Notification badge visible on page with number of unallocations', () => {
+    cy.task('stubGetOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage.notificationsBadge().should('contain.text', '10')
+  })
+
   it('Points information visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()

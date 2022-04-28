@@ -10,6 +10,7 @@ declare module 'express-session' {
     tier: string
     probationStatus: string
     offenderManager: object
+    casesLength: number
   }
 }
 

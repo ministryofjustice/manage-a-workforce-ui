@@ -6,6 +6,7 @@ import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotential
 import OffenderManagerCases from '../models/offenderManagerCases'
 import OffenderManagerOverview from '../models/offenderManagerOverview'
 import StaffSummary from '../models/StaffSummary'
+import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -61,5 +62,24 @@ export default class WorkloadService {
       path: `/staff/${staffId}`,
       headers: { Accept: 'application/json' },
     })) as StaffSummary
+  }
+
+  async allocateCaseToOffenderManager(
+    token: string,
+    crn,
+    staffId,
+    convictionId,
+    instructions
+  ): Promise<OffenderManagerAllocatedCase> {
+    logger.info(`Allocating case with crn ${crn} for team N03F01 and staff id ${staffId}`)
+    return (await this.restClient(token).post({
+      path: `/team/N03F01/offenderManagers/${staffId}/cases`,
+      data: {
+        crn,
+        eventId: parseInt(convictionId, 10),
+        instructions,
+      },
+      headers: { Accept: 'application/json' },
+    })) as OffenderManagerAllocatedCase
   }
 }

@@ -14,6 +14,7 @@ import WorkloadService from '../services/workloadService'
 import OffenderManagerCases from '../models/offenderManagerCases'
 import Case from './data/Case'
 import StaffSummary from '../models/StaffSummary'
+import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 
 export default class AllocationsController {
   constructor(
@@ -199,6 +200,7 @@ export default class AllocationsController {
       name: caseOverview.name,
       crn: caseOverview.crn,
       tier: caseOverview.tier,
+      staffId,
       convictionId: caseOverview.convictionId,
       casesLength: res.locals.casesLength,
     })
@@ -249,5 +251,22 @@ export default class AllocationsController {
     })
     response.data.pipe(res)
     response.data.on('end', next)
+  }
+
+  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffId, convictionId, instructions) {
+    const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
+      res.locals.user.token,
+      crn,
+      staffId,
+      convictionId,
+      instructions
+    )
+    res.render('pages/allocation-complete', {
+      title: 'Allocation complete',
+      data: response,
+      crn,
+      convictionId,
+      casesLength: res.locals.casesLength,
+    })
   }
 }

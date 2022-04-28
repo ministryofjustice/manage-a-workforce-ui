@@ -39,6 +39,8 @@
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
+<form action="{{ '/' + crn + '/convictions/' + convictionId + '/allocate/' + staffId + '/confirm-allocation' }}" method="POST">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     {{
     instructions({
         titleText: "Review allocation instructions",
@@ -53,9 +55,10 @@
     </div>
 
     <div class="govuk-button-group">
-        <button class="govuk-button allocate" id="{{convictionId}}" data-module="govuk-button" href="#">Continue</button>
+        <button class="govuk-button allocate" type="submit" data-module="govuk-button">Continue</button>
         <a class="govuk-link" href="{{ '/' + crn + '/convictions/' + convictionId + '/allocate' }}">Cancel</a>
     </div>
+</form>
 
 
 {% endblock %}

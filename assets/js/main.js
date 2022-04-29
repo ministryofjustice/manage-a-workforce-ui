@@ -10,5 +10,11 @@ $(document).ready(function () {
     document.getElementById(`instructions-${convictionId}`).value = localStorage.getItem(
       `instructions-save-${convictionId}`
     )
+    $('.allocate').click = clearLocalStorage()
+  }
+
+  function clearLocalStorage() {
+    const localStorage = localStorage.getItem(`instructions-save-${convictionId}`)
+    localStorage.clear()
   }
 })

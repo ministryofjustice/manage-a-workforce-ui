@@ -11,4 +11,8 @@ $(document).ready(function () {
       `instructions-save-${convictionId}`
     )
   }
+
+  if ($('.allocate').click) {
+    localStorage.removeItem(`instructions-save-${convictionId}`)
+  }
 })

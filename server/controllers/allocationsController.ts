@@ -15,6 +15,7 @@ import OffenderManagerCases from '../models/offenderManagerCases'
 import Case from './data/Case'
 import StaffSummary from '../models/StaffSummary'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
+import validate from '../validation/validation'
 
 export default class AllocationsController {
   constructor(
@@ -203,6 +204,8 @@ export default class AllocationsController {
       staffId,
       convictionId: caseOverview.convictionId,
       casesLength: res.locals.casesLength,
+      errors: req.flash('errors') || [],
+      emails: req.session.emails || [],
     })
   }
 
@@ -253,20 +256,48 @@ export default class AllocationsController {
     response.data.on('end', next)
   }
 
-  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffId, convictionId, instructions) {
-    const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
-      res.locals.user.token,
-      crn,
-      staffId,
-      convictionId,
-      instructions
-    )
-    res.render('pages/allocation-complete', {
-      title: 'Allocation complete',
-      data: response,
-      crn,
-      convictionId,
-      casesLength: res.locals.casesLength,
-    })
+  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffId, convictionId, instructions, emails) {
+    const errors = validate(
+      emails,
+      { '*.email': 'required|email' },
+      { '*.email': 'Enter an email address in the correct format, like name@example.com' }
+    ).map(error => fixupArrayNotation(error))
+
+    if (errors.length > 0) {
+      req.session.emails = emails
+      req.flash('errors', errors)
+      res.redirect(`/${crn}/convictions/${convictionId}/allocate/${staffId}/instructions`)
+    } else {
+      const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
+        res.locals.user.token,
+        crn,
+        staffId,
+        convictionId,
+        instructions
+      )
+      res.render('pages/allocation-complete', {
+        title: 'Allocation complete',
+        data: response,
+        crn,
+        convictionId,
+        casesLength: res.locals.casesLength,
+      })
+    }
   }
+}
+
+function toArrayNotation(href: string) {
+  /*
+  validator returns:
+  "person.0.email"
+  we want:
+  "person[0][email]"
+  as ID
+  */
+  const parts = href.split(/\./)
+  return parts.reduce((acc, text) => `${acc}[${text}]`)
+}
+
+function fixupArrayNotation({ text, href }: { text: string; href: string }) {
+  return { text, href: toArrayNotation(href) }
 }

@@ -11,6 +11,7 @@ declare module 'express-session' {
     probationStatus: string
     offenderManager: object
     casesLength: number
+    emails: { email?: string }[]
   }
 }
 
@@ -24,6 +25,8 @@ export declare global {
 
     interface Request {
       verified?: boolean
+      flash(type: string, message: Array<Record<string, string>>): number
+      flash(message: 'errors'): Array<Record<string, string>>
     }
   }
 }

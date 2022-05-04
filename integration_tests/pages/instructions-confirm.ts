@@ -13,7 +13,7 @@ export default class InstructionsConfirmPage extends Page {
 
   breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
 
-  continueButton = (): PageElement => cy.get('.govuk-button')
+  continueButton = (convictionId): PageElement => cy.get(`#${convictionId}`)
 
   instructionsTextArea = (convictionId): PageElement => cy.get(`#instructions-${convictionId}`)
 

@@ -47,7 +47,7 @@ context('Instructions Confirmation', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsPage.continueButton().should('exist').and('have.text', 'Continue')
+    instructionsPage.continueButton('123456789').should('exist').and('have.text', '\n  Continue\n')
   })
 
   it('Cancel link visible on page', () => {

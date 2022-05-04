@@ -9,7 +9,7 @@ import WorkloadService from './services/workloadService'
 import config from './config'
 
 export default async function createApplication(): Promise<Application> {
-  const hmppsAuthClient = new HmppsAuthClient(new TokenStore(createRedisClient()))
+  const hmppsAuthClient = new HmppsAuthClient(new TokenStore(createRedisClient({ legacyMode: false })))
   const userService = new UserService(hmppsAuthClient)
   const allocationsService = new AllocationsService(config.apis.allocationsService)
   const workloadService = new WorkloadService(config.apis.workloadService)

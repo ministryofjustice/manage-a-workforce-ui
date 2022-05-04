@@ -126,7 +126,7 @@
     "@types/express-session": "^1.17.4",
     "@types/http-errors": "^1.8.2",
     "@types/jest": "27.5.0",
-    "@types/jsonwebtoken": "^8.5.5",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "17.0.31",
     "@types/nunjucks": "3.2.1",
     "@types/passport": "^1.0.7",

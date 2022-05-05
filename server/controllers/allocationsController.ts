@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
+import type { ConfirmInstructionForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
 import Allocation from '../models/allocation'
 import ProbationRecord from '../models/probationRecord'
@@ -16,6 +17,7 @@ import Case from './data/Case'
 import StaffSummary from '../models/StaffSummary'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 import validate from '../validation/validation'
+import trimForm from '../utils/trim'
 
 export default class AllocationsController {
   constructor(
@@ -205,7 +207,7 @@ export default class AllocationsController {
       convictionId: caseOverview.convictionId,
       casesLength: res.locals.casesLength,
       errors: req.flash('errors') || [],
-      emails: req.session.emails || [],
+      confirmInstructionForm: req.session.confirmInstructionForm || { person: [] },
     })
   }
 
@@ -256,15 +258,18 @@ export default class AllocationsController {
     response.data.on('end', next)
   }
 
-  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffId, convictionId, instructions, emails) {
+  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffId, convictionId, instructions, form) {
+    const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
-      emails,
-      { '*.email': 'required|email' },
-      { '*.email': 'Enter an email address in the correct format, like name@example.com' }
+      confirmInstructionForm,
+      { 'person.*.email': 'email' },
+      {
+        email: 'Enter an email address in the correct format, like name@example.com',
+      }
     ).map(error => fixupArrayNotation(error))
 
     if (errors.length > 0) {
-      req.session.emails = emails
+      req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
       res.redirect(`/${crn}/convictions/${convictionId}/allocate/${staffId}/instructions`)
     } else {
@@ -273,7 +278,8 @@ export default class AllocationsController {
         crn,
         staffId,
         convictionId,
-        instructions
+        instructions,
+        form.person.map(person => person.email).filter(email => email)
       )
       res.render('pages/allocation-complete', {
         title: 'Allocation complete',
@@ -284,6 +290,10 @@ export default class AllocationsController {
       })
     }
   }
+}
+
+function filterEmptyEmails(form: ConfirmInstructionForm): ConfirmInstructionForm {
+  return { ...form, person: form.person.filter(person => person.email) }
 }
 
 function toArrayNotation(href: string) {

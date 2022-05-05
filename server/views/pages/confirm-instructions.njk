@@ -59,7 +59,7 @@
     </div>
 
     <p id='copyText'>You can also send a copy of the notes to another recipient, for example your case admin officer.</p>
- {% if emails.length === 0 %}
+ {% if confirmInstructionForm.person.length === 0 %}
 {% call govukFieldset({
       classes: 'moj-add-another__item',
       legend: {
@@ -88,7 +88,7 @@
     {% endcall %}
     {% endif %}
 
-    {% for email in emails %}
+    {% for person in confirmInstructionForm.person %}
 
     {% call govukFieldset({
       classes: 'moj-add-another__item',
@@ -99,7 +99,7 @@
       }
     }) %}
 
-    {% if emails.length > 1 %}
+    {% if confirmInstructionForm.person.length > 1 %}
       <button type="button" class="govuk-button govuk-button--secondary moj-add-another__remove-button">Remove</button>
     {% endif %}
     
@@ -113,7 +113,7 @@
       type: "email",
       autocomplete: "email",
       spellcheck: false,
-      value: email.email,
+      value: person.email,
       errorMessage: errors | findError('person[' +loop.index0 +'][email]'),
       attributes: {
         'data-name': 'person[%index%][email]',

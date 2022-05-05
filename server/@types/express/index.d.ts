@@ -1,3 +1,5 @@
+import type { ConfirmInstructionForm } from 'forms'
+
 export default {}
 
 declare module 'express-session' {
@@ -11,7 +13,7 @@ declare module 'express-session' {
     probationStatus: string
     offenderManager: object
     casesLength: number
-    emails: { email?: string }[]
+    confirmInstructionForm: ConfirmInstructionForm
   }
 }
 

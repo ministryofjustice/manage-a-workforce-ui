@@ -69,7 +69,8 @@ export default class WorkloadService {
     crn,
     staffId,
     convictionId,
-    instructions
+    instructions,
+    emailTo
   ): Promise<OffenderManagerAllocatedCase> {
     logger.info(`Allocating case with crn ${crn} for team N03F01 and staff id ${staffId}`)
     return (await this.restClient(token).post({
@@ -78,6 +79,7 @@ export default class WorkloadService {
         crn,
         eventId: parseInt(convictionId, 10),
         instructions,
+        emailTo,
       },
       headers: { Accept: 'application/json' },
     })) as OffenderManagerAllocatedCase

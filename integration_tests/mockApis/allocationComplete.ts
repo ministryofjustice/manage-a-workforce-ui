@@ -9,7 +9,7 @@ export default {
         urlPattern: `/team/N03F01/offenderManagers/5678/cases`,
         bodyPatterns: [
           {
-            equalToJson: '{"crn":"J678910", "eventId": 123456789, "instructions": "Test"}',
+            equalToJson: '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "emailTo": []}',
           },
         ],
       },

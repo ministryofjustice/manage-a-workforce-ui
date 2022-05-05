@@ -1,7 +1,10 @@
 {% extends "partials/layout.njk" %}
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{%- from "govuk/components/fieldset/macro.njk" import govukFieldset -%}
 {% from "../components/instructions/macro.njk" import instructions %}
+{%- from "govuk/components/input/macro.njk" import govukInput -%}
+{%- from "govuk/components/button/macro.njk" import govukButton -%}
 
 {% set pageTitle = applicationName + " - Case view" %}
 
@@ -39,6 +42,7 @@
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
+<div data-module="moj-add-another">
 <form action="{{ '/' + crn + '/convictions/' + convictionId + '/allocate/' + staffId + '/confirm-allocation' }}" method="POST">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     {{
@@ -54,12 +58,100 @@
         <p>These notes will automatically be sent to <br>{{ data.forename +  ' ' + data.surname }} (<em>{{ data.email }}</em>)</p>
     </div>
 
+    <p id='copyText'>You can also send a copy of the notes to another recipient, for example your case admin officer.</p>
+ {% if confirmInstructionForm.person.length === 0 %}
+{% call govukFieldset({
+      classes: 'moj-add-another__item',
+      legend: {
+        text: 'Add a recipient',
+        classes: 'moj-add-another__title govuk-fieldset__legend--m',
+        isPageHeading: false
+      }
+    }) %}
+    
+    {{ govukInput({
+      id: 'person[0][email]',
+      name: 'person[0][email]',
+      label: {
+        text: 'Email address',
+        classes: 'govuk-!-font-weight-bold'
+      },
+      type: "email",
+      autocomplete: "email",
+      spellcheck: false,
+      attributes: {
+        'data-name': 'person[%index%][email]',
+        'data-id': 'person[%index%][email]'
+      }
+    }) }}
+
+    {% endcall %}
+    {% endif %}
+
+    {% for person in confirmInstructionForm.person %}
+
+    {% call govukFieldset({
+      classes: 'moj-add-another__item',
+      legend: {
+        text: 'Add a recipient',
+        classes: 'moj-add-another__title govuk-fieldset__legend--m',
+        isPageHeading: false
+      }
+    }) %}
+
+    {% if confirmInstructionForm.person.length > 1 %}
+      <button type="button" class="govuk-button govuk-button--secondary moj-add-another__remove-button">Remove</button>
+    {% endif %}
+    
+    {{ govukInput({
+      id: 'person[' +loop.index0 +'][email]',
+      name: 'person[' +loop.index0 +'][email]',
+      label: {
+        text: 'Email address',
+        classes: 'govuk-!-font-weight-bold'
+      },
+      type: "email",
+      autocomplete: "email",
+      spellcheck: false,
+      value: person.email,
+      errorMessage: errors | findError('person[' +loop.index0 +'][email]'),
+      attributes: {
+        'data-name': 'person[%index%][email]',
+        'data-id': 'person[%index%][email]'
+      }
+    }) }}
+
+    {% endcall %}
+
+    {% endfor %}
+
+<div class="moj-button-action">
+      {{ govukButton({
+        text: 'Add another person',
+        name: 'action',
+        value: 'add-another-person',
+        classes: 'govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4'
+      }) }}
+    </div>
+
+
     <div class="govuk-button-group">
-        <button class="govuk-button allocate" id="{{convictionId}}" type="submit" data-module="govuk-button">Continue</button>
+        {{
+            govukButton({
+                text: 'Continue',
+                classes: 'allocate',
+                type: 'submit',
+                name: 'action',
+                value: 'continue',
+                attributes: {
+                    id: convictionId
+                }
+            })
+        }}
         <a class="govuk-link" href="{{ '/' + crn + '/convictions/' + convictionId + '/allocate' }}">Cancel</a>
     </div>
 </form>
-
+</div>
 
 {% endblock %}
 

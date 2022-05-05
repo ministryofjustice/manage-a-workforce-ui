@@ -7,6 +7,11 @@ import config from '../config'
 
 const production = process.env.NODE_ENV === 'production'
 
+type Error = {
+  href: string
+  text: string
+}
+
 export default function nunjucksSetup(app: express.Express, path: pathModule.PlatformPath): void {
   app.set('view engine', 'njk')
   app.locals.asset_path = '/assets/'
@@ -53,6 +58,16 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
 
   njkEnv.addFilter('timeFormat', (time: string) => {
     return dayjs(time).format('h:mma')
+  })
+
+  njkEnv.addFilter('findError', (array: Error[], formFieldId: string) => {
+    const item = array.find(error => error.href === `#${formFieldId}`)
+    if (item) {
+      return {
+        text: item.text,
+      }
+    }
+    return null
   })
 
   njkEnv.addFilter('dateDifference', (startDate: string, endDate: string) => {

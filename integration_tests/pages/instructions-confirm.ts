@@ -13,7 +13,7 @@ export default class InstructionsConfirmPage extends Page {
 
   breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
 
-  continueButton = (): PageElement => cy.get('.govuk-button')
+  continueButton = (convictionId): PageElement => cy.get(`#${convictionId}`)
 
   instructionsTextArea = (convictionId): PageElement => cy.get(`#instructions-${convictionId}`)
 
@@ -22,6 +22,14 @@ export default class InstructionsConfirmPage extends Page {
   hint = (): PageElement => cy.get('.govuk-hint')
 
   insetText = (): PageElement => cy.get('.govuk-inset-text p')
+
+  copyText = (): PageElement => cy.get('#copyText')
+
+  addRecipientHeader = (): PageElement => cy.get('.moj-add-another__title')
+
+  addAnotherPersonButton = (): PageElement => cy.get('.moj-add-another__add-button')
+
+  inputTexts = (): PageElement => cy.get('input.govuk-input')
 
   cancelLink = (crn, convictionId): PageElement =>
     cy.get(`a[href*="${crn}/convictions/${convictionId}/allocate"]`).eq(1)

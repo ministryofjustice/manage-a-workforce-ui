@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
+import type { ConfirmInstructionForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
 import Allocation from '../models/allocation'
 import ProbationRecord from '../models/probationRecord'
@@ -15,6 +16,8 @@ import OffenderManagerCases from '../models/offenderManagerCases'
 import Case from './data/Case'
 import StaffSummary from '../models/StaffSummary'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
+import validate from '../validation/validation'
+import trimForm from '../utils/trim'
 
 export default class AllocationsController {
   constructor(
@@ -203,6 +206,8 @@ export default class AllocationsController {
       staffId,
       convictionId: caseOverview.convictionId,
       casesLength: res.locals.casesLength,
+      errors: req.flash('errors') || [],
+      confirmInstructionForm: req.session.confirmInstructionForm || { person: [] },
     })
   }
 
@@ -253,20 +258,56 @@ export default class AllocationsController {
     response.data.on('end', next)
   }
 
-  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffId, convictionId, instructions) {
-    const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
-      res.locals.user.token,
-      crn,
-      staffId,
-      convictionId,
-      instructions
-    )
-    res.render('pages/allocation-complete', {
-      title: 'Allocation complete',
-      data: response,
-      crn,
-      convictionId,
-      casesLength: res.locals.casesLength,
-    })
+  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffId, convictionId, instructions, form) {
+    const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
+    const errors = validate(
+      confirmInstructionForm,
+      { 'person.*.email': 'email' },
+      {
+        email: 'Enter an email address in the correct format, like name@example.com',
+      }
+    ).map(error => fixupArrayNotation(error))
+
+    if (errors.length > 0) {
+      req.session.confirmInstructionForm = confirmInstructionForm
+      req.flash('errors', errors)
+      res.redirect(`/${crn}/convictions/${convictionId}/allocate/${staffId}/instructions`)
+    } else {
+      const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
+        res.locals.user.token,
+        crn,
+        staffId,
+        convictionId,
+        instructions,
+        form.person.map(person => person.email).filter(email => email)
+      )
+      res.render('pages/allocation-complete', {
+        title: 'Allocation complete',
+        data: response,
+        crn,
+        convictionId,
+        casesLength: res.locals.casesLength,
+      })
+    }
   }
+}
+
+function filterEmptyEmails(form: ConfirmInstructionForm): ConfirmInstructionForm {
+  return { ...form, person: form.person.filter(person => person.email) }
+}
+
+function toArrayNotation(href: string) {
+  /*
+  validator returns:
+  "person.0.email"
+  we want:
+  "person[0][email]"
+  as ID
+  */
+  const parts = href.split(/\./)
+  return parts.reduce((acc, text) => `${acc}[${text}]`)
+}
+
+function fixupArrayNotation({ text, href }: { text: string; href: string }) {
+  return { text, href: toArrayNotation(href) }
 }

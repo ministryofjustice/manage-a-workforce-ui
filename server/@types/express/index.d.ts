@@ -1,3 +1,5 @@
+import type { ConfirmInstructionForm } from 'forms'
+
 export default {}
 
 declare module 'express-session' {
@@ -11,6 +13,7 @@ declare module 'express-session' {
     probationStatus: string
     offenderManager: object
     casesLength: number
+    confirmInstructionForm: ConfirmInstructionForm
   }
 }
 
@@ -24,6 +27,8 @@ export declare global {
 
     interface Request {
       verified?: boolean
+      flash(type: string, message: Array<Record<string, string>>): number
+      flash(message: 'errors'): Array<Record<string, string>>
     }
   }
 }

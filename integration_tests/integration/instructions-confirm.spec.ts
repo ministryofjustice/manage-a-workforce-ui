@@ -47,7 +47,7 @@ context('Instructions Confirmation', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsPage.continueButton().should('exist').and('have.text', 'Continue')
+    instructionsPage.continueButton('123456789').should('exist').and('have.text', '\n  Continue\n')
   })
 
   it('Cancel link visible on page', () => {
@@ -81,5 +81,39 @@ context('Instructions Confirmation', () => {
     instructionsPage
       .insetText()
       .should('contain', 'These notes will automatically be sent to John Doe (john.doe@test.justice.gov.uk)')
+  })
+
+  it('another copy text should be visible on page', () => {
+    cy.task('stubGetStaffById')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
+    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsPage
+      .copyText()
+      .should(
+        'contain',
+        'You can also send a copy of the notes to another recipient, for example your case admin officer.'
+      )
+  })
+
+  it('add a recipient should be visible on page', () => {
+    cy.task('stubGetStaffById')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
+    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsPage.addRecipientHeader().should('contain', 'Add a recipient')
+  })
+
+  it('adding another person adds more email address inputs', () => {
+    cy.task('stubGetStaffById')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
+    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsPage.inputTexts().should('have.length', 1)
+    instructionsPage.addAnotherPersonButton().click()
+    instructionsPage.inputTexts().should('have.length', 2)
   })
 })

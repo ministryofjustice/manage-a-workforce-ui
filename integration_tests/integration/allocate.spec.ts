@@ -101,20 +101,29 @@ context('Allocate', () => {
       .getTable()
       .should('deep.equal', [
         {
-          Name: 'Sally Smith',
-          Grade: 'PSOProbation Service Officer',
-          Capacity: '80%',
-          'Community cases': '25',
-          'Custody cases': '28',
-          'Workload details': 'View',
-          Select: '',
-        },
-        {
           Name: 'Ben Doe',
           Grade: 'POProbation Officer',
           Capacity: '50%',
           'Community cases': '15',
           'Custody cases': '20',
+          'Workload details': 'View',
+          Select: '',
+        },
+        {
+          Name: 'John Smith',
+          Grade: 'POProbation Officer',
+          Capacity: '10%',
+          'Community cases': '25',
+          'Custody cases': '15',
+          'Workload details': 'View',
+          Select: '',
+        },
+        {
+          Name: 'Sally Smith',
+          Grade: 'PSOProbation Service Officer',
+          Capacity: '80%',
+          'Community cases': '25',
+          'Custody cases': '28',
           'Workload details': 'View',
           Select: '',
         },
@@ -137,9 +146,9 @@ context('Allocate', () => {
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.radioButtons().first().check()
-    allocatePage.checkedRadioButton().should('have.value', '6789')
-    allocatePage.radioButtons().last().check()
     allocatePage.checkedRadioButton().should('have.value', '12345')
+    allocatePage.radioButtons().last().check()
+    allocatePage.checkedRadioButton().should('have.value', '6789')
   })
 
   it('should display error when no offender managers selected and allocate case button clicked', () => {
@@ -159,7 +168,7 @@ context('Allocate', () => {
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.radioButtons().first().check()
-    allocatePage.checkedRadioButton().should('have.value', '6789')
+    allocatePage.checkedRadioButton().should('have.value', '12345')
     allocatePage.clearSelectionButton().click()
     allocatePage.checkedRadioButton().should('not.exist')
   })

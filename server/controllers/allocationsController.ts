@@ -145,7 +145,12 @@ export default class AllocationsController {
                 offenderManagerToAllocate.staffId
               )
           )
-          .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => b.capacity - a.capacity)
+          .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => {
+            if (b.gradeOrder === a.gradeOrder) {
+              return b.capacity - a.capacity
+            }
+            return b.gradeOrder - a.gradeOrder
+          })
       )
     const response: Allocation = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
     const error = req.query.error === 'true'

@@ -19,6 +19,16 @@ export default {
         jsonBody: {
           offenderManagers: [
             {
+              forename: 'John',
+              surname: 'Smith',
+              grade: 'PO',
+              totalCommunityCases: 25,
+              totalCustodyCases: 15,
+              capacity: 10,
+              code: 'OM3',
+              staffId: 123455423,
+            },
+            {
               forename: 'Ben',
               surname: 'Doe',
               grade: 'PO',

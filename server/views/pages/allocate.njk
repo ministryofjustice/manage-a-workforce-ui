@@ -19,13 +19,13 @@
         },
         { text: 'Grade',
             attributes: {
-                "aria-sort": "none"
+                "aria-sort": "descending"
             }
         },
         { text: 'Capacity',
             format: "numeric",
             attributes: {
-                "aria-sort": "descending"
+                "aria-sort": "none"
             }
         },
         { text: 'Community cases',
@@ -54,7 +54,7 @@
           }) },
         { html: ('<div class="tooltip">' + item.grade + '<span class="tooltiptext">' + item.gradeTip + '</span></div>'),
             attributes: {
-                "data-sort-value": item.gradeTip
+                "data-sort-value": item.gradeOrder
             }
         },
         { text: ((item.capacity | round(1)) + '%'),format: "numeric",

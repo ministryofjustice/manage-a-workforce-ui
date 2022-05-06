@@ -9,7 +9,7 @@
 {% set pageTitle = applicationName + " - Allocate" %}
 {% set tableData = {
     attributes: {
-    'data-module': 'moj-sortable-table'
+    'data-module': 'moj-natural-sortable-table'
     },
     head: [
         { text: 'Name',
@@ -25,7 +25,8 @@
         { text: 'Capacity',
             format: "numeric",
             attributes: {
-                "aria-sort": "none"
+                "aria-sort": "none",
+                "aria-sort-natual": "descending"
             }
         },
         { text: 'Community cases',

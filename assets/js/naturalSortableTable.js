@@ -117,7 +117,7 @@ MOJFrontend.NaturalSortableTable.prototype.sort = function (rows, columnNumber, 
         if (valueA > valueB) {
           return 1
         }
-        return 0
+        return this.sortNatural(rowA, rowB)
       } else {
         if (valueB < valueA) {
           return -1
@@ -125,7 +125,7 @@ MOJFrontend.NaturalSortableTable.prototype.sort = function (rows, columnNumber, 
         if (valueB > valueA) {
           return 1
         }
-        return 0
+        return this.sortNatural(rowA, rowB)
       }
     }, this)
   )

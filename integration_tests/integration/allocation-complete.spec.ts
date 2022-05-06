@@ -20,4 +20,19 @@ context('Allocate Complete', () => {
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage.notificationsBadge().should('contain', 10)
   })
+
+  it('return to unallocated cases link exists', () => {
+    cy.task('stubGetStaffById')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
+    cy.get('#instructions-123456789').type('Test')
+    cy.task('stubAllocateOffenderManagerToCase')
+    cy.get('.allocate').click()
+    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
+    allocationCompletePage
+      .returnToUnallocatedLink()
+      .should('have.text', 'Return to unallocated cases')
+      .and('have.attr', 'href', '/')
+  })
 })

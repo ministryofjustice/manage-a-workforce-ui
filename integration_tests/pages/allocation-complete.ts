@@ -6,4 +6,6 @@ export default class AllocationConfirmPage extends Page {
   }
 
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
+
+  returnToUnallocatedLink = (): PageElement => cy.get('.govuk-link--no-visited-state')
 }

@@ -2,10 +2,14 @@ import Page, { PageElement } from './page'
 
 export default class AllocationConfirmPage extends Page {
   constructor() {
-    super('J678910')
+    super('Allocation complete')
   }
 
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 
   returnToUnallocatedLink = (): PageElement => cy.get('.govuk-link--no-visited-state')
+
+  panelBody = (): PageElement => cy.get('.govuk-panel__body')
+
+  panelTitle = (): PageElement => cy.get('.govuk-panel__title')
 }

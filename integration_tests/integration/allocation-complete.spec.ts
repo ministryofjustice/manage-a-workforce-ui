@@ -17,6 +17,7 @@ context('Allocate Complete', () => {
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
     cy.get('#instructions-123456789').type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
+    cy.task('stubGetPersonById')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage.notificationsBadge().should('contain', 10)
@@ -30,6 +31,7 @@ context('Allocate Complete', () => {
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
     cy.get('#instructions-123456789').type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
+    cy.task('stubGetPersonById')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
@@ -41,11 +43,11 @@ context('Allocate Complete', () => {
   it('panel visible on page with correct information', () => {
     cy.task('stubGetStaffById')
     cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
     cy.get('#instructions-123456789').type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
+    cy.task('stubGetPersonById')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')

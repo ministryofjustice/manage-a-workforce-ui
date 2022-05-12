@@ -13,6 +13,7 @@ import allocationCase from '../mockApis/allocationCase'
 import offenderManagerCases from '../mockApis/offenderManagerCases'
 import staff from '../mockApis/staff'
 import allocationComplete from '../mockApis/allocationComplete'
+import person from '../mockApis/person'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
@@ -79,5 +80,7 @@ export default (on: (string, Record) => void): void => {
     stubGetStaffById: staff.stubGetStaffById,
 
     stubAllocateOffenderManagerToCase: allocationComplete.stubAllocateOffenderManagerToCase,
+
+    stubGetPersonById: person.stubGetPersonById,
   })
 }

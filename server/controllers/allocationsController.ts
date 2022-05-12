@@ -15,6 +15,7 @@ import WorkloadService from '../services/workloadService'
 import OffenderManagerCases from '../models/offenderManagerCases'
 import Case from './data/Case'
 import StaffSummary from '../models/StaffSummary'
+import Person from '../models/Person'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 import validate from '../validation/validation'
 import trimForm from '../utils/trim'
@@ -265,13 +266,6 @@ export default class AllocationsController {
 
   async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffId, convictionId, instructions, form) {
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
-    const OffenderManagerDetails: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
-      res.locals.user.token,
-      crn,
-      staffId,
-      convictionId
-    )
-    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
     const errors = validate(
       confirmInstructionForm,
       { 'person.*.email': 'email' },
@@ -293,14 +287,17 @@ export default class AllocationsController {
         instructions,
         form.person.map(person => person.email).filter(email => email)
       )
+      const personDetails: Person = await this.workloadService.getPersonById(
+        res.locals.user.token,
+        response.personManagerId
+      )
       res.render('pages/allocation-complete', {
         title: 'Allocation complete',
         data: response,
         crn,
         convictionId,
         casesLength: res.locals.casesLength,
-        offenderManager: OffenderManagerDetails,
-        name: caseOverview.name,
+        personDetails,
       })
     }
   }

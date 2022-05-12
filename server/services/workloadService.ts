@@ -6,6 +6,7 @@ import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotential
 import OffenderManagerCases from '../models/offenderManagerCases'
 import OffenderManagerOverview from '../models/offenderManagerOverview'
 import StaffSummary from '../models/StaffSummary'
+import Person from '../models/Person'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 
 export default class WorkloadService {
@@ -62,6 +63,14 @@ export default class WorkloadService {
       path: `/staff/${staffId}`,
       headers: { Accept: 'application/json' },
     })) as StaffSummary
+  }
+
+  async getPersonById(token: string, personManagerId): Promise<Person> {
+    logger.info(`Getting person by ID ${personManagerId}`)
+    return (await this.restClient(token).get({
+      path: `/allocation/person/${personManagerId}`,
+      headers: { Accept: 'application/json' },
+    })) as Person
   }
 
   async allocateCaseToOffenderManager(

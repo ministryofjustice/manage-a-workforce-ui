@@ -1,4 +1,4 @@
-export default interface Person {
+export default interface PersonManager {
   staffId: number
   staffCode: string
   teamCode: string

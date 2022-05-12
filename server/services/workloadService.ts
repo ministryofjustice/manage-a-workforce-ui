@@ -1,12 +1,12 @@
 import RestClient from '../data/restClient'
 import logger from '../../logger'
 import { ApiConfig } from '../config'
-import AllocateOffenderManagers from '../models/allocateOffenderManagers'
+import AllocateOffenderManagers from '../models/AllocateOffenderManagers'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
-import OffenderManagerCases from '../models/offenderManagerCases'
-import OffenderManagerOverview from '../models/offenderManagerOverview'
+import OffenderManagerCases from '../models/OffenderManagerCases'
+import OffenderManagerOverview from '../models/OffenderManagerOverview'
 import StaffSummary from '../models/StaffSummary'
-import Person from '../models/Person'
+import PersonManager from '../models/PersonManager'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 
 export default class WorkloadService {
@@ -65,12 +65,12 @@ export default class WorkloadService {
     })) as StaffSummary
   }
 
-  async getPersonById(token: string, personManagerId): Promise<Person> {
+  async getPersonById(token: string, personManagerId): Promise<PersonManager> {
     logger.info(`Getting person by ID ${personManagerId}`)
     return (await this.restClient(token).get({
       path: `/allocation/person/${personManagerId}`,
       headers: { Accept: 'application/json' },
-    })) as Person
+    })) as PersonManager
   }
 
   async allocateCaseToOffenderManager(

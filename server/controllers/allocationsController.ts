@@ -1,20 +1,21 @@
 import { NextFunction, Request, Response } from 'express'
 import type { ConfirmInstructionForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
-import Allocation from '../models/allocation'
-import ProbationRecord from '../models/probationRecord'
-import Risk from '../models/risk'
+import Allocation from '../models/Allocation'
+import ProbationRecord from '../models/ProbationRecord'
+import Risk from '../models/Risk'
 import UnallocatedCase from './data/UnallocatedCase'
 import Order from './data/Order'
-import Conviction from '../models/conviction'
+import Conviction from '../models/Conviction'
 import AllocateOffenderManager from './data/AllocateOffenderManager'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
-import OffenderManagerOverview from '../models/offenderManagerOverview'
-import FileDownload from '../models/fileDownload'
+import OffenderManagerOverview from '../models/OffenderManagerOverview'
+import FileDownload from '../models/FileDownload'
 import WorkloadService from '../services/workloadService'
-import OffenderManagerCases from '../models/offenderManagerCases'
+import OffenderManagerCases from '../models/OffenderManagerCases'
 import Case from './data/Case'
 import StaffSummary from '../models/StaffSummary'
+import PersonManager from '../models/PersonManager'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 import validate from '../validation/validation'
 import trimForm from '../utils/trim'
@@ -286,12 +287,17 @@ export default class AllocationsController {
         instructions,
         form.person.map(person => person.email).filter(email => email)
       )
+      const personDetails: PersonManager = await this.workloadService.getPersonById(
+        res.locals.user.token,
+        response.personManagerId
+      )
       res.render('pages/allocation-complete', {
         title: 'Allocation complete',
         data: response,
         crn,
         convictionId,
         casesLength: res.locals.casesLength,
+        personDetails,
       })
     }
   }

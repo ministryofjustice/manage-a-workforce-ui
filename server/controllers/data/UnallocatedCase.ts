@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import moment, { Moment } from 'moment-business-days'
 
 import config from '../../config'
-import OffenderManager from '../../models/offenderManager'
+import OffenderManager from '../../models/OffenderManager'
 import tierOrder from './TierOrder'
 
 export default class UnallocatedCase {

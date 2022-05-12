@@ -7,7 +7,7 @@ import logger from '../../logger'
 import sanitiseError from '../sanitisedError'
 import { ApiConfig } from '../config'
 import type { UnsanitisedError } from '../sanitisedError'
-import FileDownload from '../models/fileDownload'
+import FileDownload from '../models/FileDownload'
 
 interface GetRequest {
   path?: string

@@ -1,10 +1,10 @@
 import RestClient from '../data/restClient'
 import logger from '../../logger'
 import { ApiConfig } from '../config'
-import Allocation from '../models/allocation'
-import ProbationRecord from '../models/probationRecord'
-import Risk from '../models/risk'
-import FileDownload from '../models/fileDownload'
+import Allocation from '../models/Allocation'
+import ProbationRecord from '../models/ProbationRecord'
+import Risk from '../models/Risk'
+import FileDownload from '../models/FileDownload'
 
 export default class AllocationsService {
   config: ApiConfig

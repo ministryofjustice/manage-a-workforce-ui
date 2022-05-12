@@ -1,8 +1,8 @@
-import OffenderManager from './offenderManager'
-import Offence from './offence'
-import Requirement from './requirement'
+import OffenderManager from './OffenderManager'
+import Offence from './Offence'
+import Requirement from './Requirement'
 import Document from './Document'
-import Assessment from './assessment'
+import Assessment from './Assessment'
 
 export default interface Allocation {
   name: string

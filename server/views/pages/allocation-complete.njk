@@ -1,4 +1,6 @@
 {% extends "partials/layout.njk" %}
+{% set offenderManagerName = personDetails.staffForename + ' ' + personDetails.staffSurname %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
 
 
 {% block beforeContent %}
@@ -9,8 +11,10 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ crn }}
-            </h1>
+                        {{ govukPanel({
+                            titleText: "Allocation complete",
+                            html: personDetails.personName + " (" + personDetails.crn + ") has been allocated to <strong>" + offenderManagerName + " (" + personDetails.staffGrade + ")</strong>"
+                        }) }}
             <p><a class="govuk-link--no-visited-state" href="/">Return to unallocated cases</a></p>
         </div>
     </div>

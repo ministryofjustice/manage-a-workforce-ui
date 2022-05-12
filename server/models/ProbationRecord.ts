@@ -1,4 +1,4 @@
-import Conviction from './conviction'
+import Conviction from './Conviction'
 
 export default interface ProbationRecord {
   name: string

@@ -1,5 +1,5 @@
-import Offence from './offence'
-import ConvictionOffenderManager from './convictionOffenderManager'
+import Offence from './Offence'
+import ConvictionOffenderManager from './ConvictionOffenderManager'
 
 export default interface Conviction {
   description: string

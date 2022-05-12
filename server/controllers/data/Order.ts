@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
-import Offence from '../../models/offence'
+import Offence from '../../models/Offence'
 import config from '../../config'
-import ConvictionOffenderManager from '../../models/convictionOffenderManager'
+import ConvictionOffenderManager from '../../models/ConvictionOffenderManager'
 
 export default class Order {
   sentence: string

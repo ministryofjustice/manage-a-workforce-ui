@@ -1,4 +1,4 @@
-import Registration from './registration'
+import Registration from './Registration'
 
 export default interface Risk {
   name: string

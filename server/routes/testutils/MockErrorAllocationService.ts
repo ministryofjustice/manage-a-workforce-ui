@@ -1,4 +1,4 @@
-import allocation from '../../models/allocation'
+import allocation from '../../models/Allocation'
 import AllocationsService from '../../services/allocationsService'
 import sanitisedError, { UnsanitisedError } from '../../sanitisedError'
 

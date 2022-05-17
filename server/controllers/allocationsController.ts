@@ -298,6 +298,7 @@ export default class AllocationsController {
         convictionId,
         casesLength: res.locals.casesLength,
         personDetails,
+        addAnotherEmail: form.person,
       })
     }
   }

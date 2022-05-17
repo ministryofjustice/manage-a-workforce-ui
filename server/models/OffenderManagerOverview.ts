@@ -1,3 +1,5 @@
+import CaseTotals from './CaseTotals'
+
 export default interface OffenderManagerOverview {
   forename: string
   surname: string
@@ -13,4 +15,6 @@ export default interface OffenderManagerOverview {
   pointsRemaining: number
   lastUpdatedOn: string
   nextReductionChange: string
+  caseTotals: CaseTotals
+  paroleReportsDue: number
 }

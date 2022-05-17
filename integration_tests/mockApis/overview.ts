@@ -33,6 +33,7 @@ export default {
             d: 14,
             untiered: 2,
           },
+          paroleReportsDue: 5,
         },
       },
     })
@@ -69,6 +70,7 @@ export default {
             d: 14,
             untiered: 2,
           },
+          paroleReportsDue: 1,
         },
       },
     })

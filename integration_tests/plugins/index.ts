@@ -84,5 +84,7 @@ export default (on: (string, Record) => void): void => {
     stubAllocateOffenderManagerToCaseMultipleEmails: allocationComplete.stubAllocateOffenderManagerToCaseMultipleEmails,
 
     stubGetPersonById: person.stubGetPersonById,
+
+    stubGetCaseOverviewNoInitialAppointment: allocationCase.stubGetCaseOverviewNoInitialAppointment,
   })
 }

@@ -25,7 +25,11 @@
             <ul class="govuk-list govuk-list--bullet">
                 <li>This allocation will be updated in NDelius</li>
                 <li><strong>{{ offenderManagerName }}</strong> (<em> {{ personDetails.staffEmail }}</em>) has been notified about this allocation, and we have sent a copy of your allocation instructions to <em>{{ addAnotherEmails | join(", ") }}</em></li>
-                <li>The induction interview is scheduled for <strong></strong></li>
+                {% if initialAppointment %}
+                <li>The induction interview is scheduled for <strong>{{ initialAppointment | dateFormat }}</strong></li>
+                {% else %}
+                    <li>The induction interview needs to be scheduled by <strong>{{ initialAppointmentDue }}</strong></li>
+                {% endif %}
             </ul>
 
             <p><a class="govuk-link--no-visited-state" href="/">Return to unallocated cases</a></p>

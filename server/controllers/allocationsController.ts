@@ -19,6 +19,7 @@ import PersonManager from '../models/PersonManager'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 import validate from '../validation/validation'
 import trimForm from '../utils/trim'
+import CaseOverview from './data/CaseOverview'
 
 export default class AllocationsController {
   constructor(
@@ -291,6 +292,21 @@ export default class AllocationsController {
         res.locals.user.token,
         response.personManagerId
       )
+      const caseOverviewResponse = await this.allocationsService.getCaseOverview(
+        res.locals.user.token,
+        crn,
+        convictionId
+      )
+      const caseOverview = new CaseOverview(
+        caseOverviewResponse.name,
+        caseOverviewResponse.crn,
+        caseOverviewResponse.tier,
+        caseOverviewResponse.sentenceDate,
+        caseOverviewResponse.initialAppointment,
+        caseOverviewResponse.status,
+        caseOverviewResponse.convictionId
+      )
+
       res.render('pages/allocation-complete', {
         title: 'Allocation complete',
         data: response,
@@ -298,6 +314,10 @@ export default class AllocationsController {
         convictionId,
         casesLength: res.locals.casesLength,
         personDetails,
+        addAnotherEmail: form.person,
+        initialAppointment: caseOverview.initialAppointment,
+        initialAppointmentDue: caseOverview.initialAppointmentDue,
+        caseOverview,
       })
     }
   }

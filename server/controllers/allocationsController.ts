@@ -304,7 +304,6 @@ export default class AllocationsController {
         caseOverviewResponse.sentenceDate,
         caseOverviewResponse.initialAppointment,
         caseOverviewResponse.status,
-        caseOverviewResponse.offenderManager,
         caseOverviewResponse.convictionId
       )
 
@@ -318,6 +317,7 @@ export default class AllocationsController {
         addAnotherEmail: form.person,
         initialAppointment: caseOverview.initialAppointment,
         initialAppointmentDue: caseOverview.initialAppointmentDue,
+        caseOverview,
       })
     }
   }

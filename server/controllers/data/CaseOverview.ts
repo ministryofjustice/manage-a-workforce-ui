@@ -1,7 +1,6 @@
 import moment from 'moment-business-days'
 
 import config from '../../config'
-import OffenderManager from '../../models/OffenderManager'
 
 export default class CaseOverview {
   name: string
@@ -27,7 +26,6 @@ export default class CaseOverview {
     sentenceDate: string,
     initialAppointment: string,
     status: string,
-    offenderManager: OffenderManager,
     convictionId: number
   ) {
     this.name = name

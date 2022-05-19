@@ -317,7 +317,7 @@ export default class AllocationsController {
         addAnotherEmail: form.person,
         initialAppointment: caseOverview.initialAppointment,
         initialAppointmentDue: caseOverview.initialAppointmentDue,
-        caseOverview,
+        caseType: caseOverviewResponse.caseType,
       })
     }
   }

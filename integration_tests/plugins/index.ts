@@ -86,5 +86,7 @@ export default (on: (string, Record) => void): void => {
     stubGetPersonById: person.stubGetPersonById,
 
     stubGetCaseOverviewNoInitialAppointment: allocationCase.stubGetCaseOverviewNoInitialAppointment,
+
+    stubGetCaseOverviewCustodyCase: allocationCase.stubGetCaseOverviewCustodyCase,
   })
 }

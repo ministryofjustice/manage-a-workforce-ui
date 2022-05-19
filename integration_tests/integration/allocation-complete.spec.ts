@@ -77,7 +77,7 @@ context('Allocate Complete', () => {
       .should('contain', 'This allocation will be updated in NDelius')
       .and(
         'contain',
-        'John Doe ( john.doe@test.justice.gov.uk) has been notified about this allocation, and we have sent a copy of your allocation instructions to example.admin@justice.gov.uk, example.admin@justice.gov.uk'
+        'John Doe (john.doe@test.justice.gov.uk) has been notified about this allocation, and we have sent a copy of your allocation instructions to example.admin@justice.gov.uk, example.admin@justice.gov.uk'
       )
       .and('contain', 'The induction interview is scheduled for 1 Sep 2021')
   })

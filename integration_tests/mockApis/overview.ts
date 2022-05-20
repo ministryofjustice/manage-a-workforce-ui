@@ -34,6 +34,7 @@ export default {
             untiered: 2,
           },
           paroleReportsDue: 5,
+          caseEndDue: 3,
         },
       },
     })

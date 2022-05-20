@@ -12,4 +12,8 @@ export default class AllocationConfirmPage extends Page {
   panelBody = (): PageElement => cy.get('.govuk-panel__body')
 
   panelTitle = (): PageElement => cy.get('.govuk-panel__title')
+
+  mediumHeading = (): PageElement => cy.get('.govuk-heading-m')
+
+  bulletedList = (): PageElement => cy.get('ul.govuk-list--bullet').children()
 }

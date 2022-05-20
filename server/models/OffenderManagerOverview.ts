@@ -17,4 +17,5 @@ export default interface OffenderManagerOverview {
   nextReductionChange: string
   caseTotals: CaseTotals
   paroleReportsDue: number
+  caseEndDue: number
 }

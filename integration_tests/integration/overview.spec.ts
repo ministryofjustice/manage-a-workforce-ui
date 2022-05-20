@@ -138,6 +138,7 @@ context('Overview', () => {
       Reductions: '10 hours until 3 Nov 2022',
       'Last case allocated': '',
       'Cases due to end within next 4 weeks': '3',
+      'Releases within next 4 weeks': '6',
       'Parole reports to complete within next 4 weeks': '5',
     })
   })

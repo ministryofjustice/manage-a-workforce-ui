@@ -18,4 +18,5 @@ export default interface OffenderManagerOverview {
   caseTotals: CaseTotals
   paroleReportsDue: number
   caseEndDue: number
+  releasesDue: number
 }

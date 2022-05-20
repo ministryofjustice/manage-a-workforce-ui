@@ -35,6 +35,7 @@ export default {
           },
           paroleReportsDue: 5,
           caseEndDue: 3,
+          releasesDue: 6,
         },
       },
     })

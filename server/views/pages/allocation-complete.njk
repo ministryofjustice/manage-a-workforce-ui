@@ -24,7 +24,7 @@
 
             <ul class="govuk-list govuk-list--bullet">
                 <li>This allocation will be updated in NDelius</li>
-                <li><strong>{{ offenderManagerName }}</strong> (<em>{{ personDetails.staffEmail }}</em>) has been notified about this allocation, and we have sent a copy of your allocation instructions to <em>{{ addAnotherEmails | join(", ") }}</em></li>
+                <li><strong>{{ offenderManagerName }}</strong> (<em>{{ personDetails.staffEmail }}</em>) has been notified about this allocation{{ ', and we have sent a copy of your allocation instructions to ' + addAnotherEmails | join(", ")  if addAnotherEmails != '' }}</li>
                 {% if caseType === 'CUSTODY' %}
                     <li>No induction interview needed (custody case)</li>
                 {% elseif initialAppointment %}

@@ -17,11 +17,11 @@ export default class RiskPage extends Page {
 
   bodyText = (): PageElement => cy.get('.govuk-body')
 
-  roshIndexCard = (): PageElement => cy.get('.index-card').eq(0)
+  roshWidget = (): PageElement => cy.get('.rosh-widget').eq(0)
 
-  rsrIndexCard = (): PageElement => cy.get('.index-card').eq(1)
+  rsrWidget = (): PageElement => cy.get('.rosh-widget').eq(1)
 
-  ogrsIndexCard = (): PageElement => cy.get('.index-card').eq(2)
+  ogrsWidget = (): PageElement => cy.get('.rosh-widget').eq(2)
 
   instructionsTextArea = (convictionId): PageElement => cy.get(`#instructions-${convictionId}`)
 

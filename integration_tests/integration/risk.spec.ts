@@ -113,15 +113,15 @@ context('Risk', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
-    riskPage.roshIndexCard().trimTextContent().should('equal', 'ROSHRisk of Serious Harm Last updated: 2 Feb 2022 HIGH')
+    riskPage.roshWidget().trimTextContent().should('equal', 'High RoSH Risk of serious harmLast updated: 2 Feb 2022')
     riskPage
-      .rsrIndexCard()
+      .rsrWidget()
       .trimTextContent()
-      .should('equal', 'RSRRisk of Serious Recidivism 3.8% Last updated: 12 Feb 2019 MEDIUM')
+      .should('equal', 'Medium RSR 3.8% Risk of serious recidivismLast updated: 12 Feb 2019')
     riskPage
-      .ogrsIndexCard()
+      .ogrsWidget()
       .trimTextContent()
-      .should('equal', 'OGRSOffender Group Reconviction Scale 85% Last updated: 17 Nov 2018 HIGH')
+      .should('equal', 'High OGRS 85% Offender group reconviction scaleLast updated: 17 Nov 2018')
   })
 
   it('Displays score unavailable when no assessments returned', () => {
@@ -129,12 +129,9 @@ context('Risk', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
-    riskPage.roshIndexCard().trimTextContent().should('equal', 'ROSHRisk of Serious Harm Score unavailable')
-    riskPage.rsrIndexCard().trimTextContent().should('equal', 'RSRRisk of Serious Recidivism Score unavailable')
-    riskPage
-      .ogrsIndexCard()
-      .trimTextContent()
-      .should('equal', 'OGRSOffender Group Reconviction Scale Score unavailable')
+    riskPage.roshWidget().trimTextContent().should('equal', 'RoSH Risk of serious harmScore unavailable')
+    riskPage.rsrWidget().trimTextContent().should('equal', 'RSR Risk of serious recidivismScore unavailable')
+    riskPage.ogrsWidget().trimTextContent().should('equal', 'OGRS Offender group reconviction scaleScore unavailable')
   })
 
   it('Instructions text should save and display on summary page', () => {

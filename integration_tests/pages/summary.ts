@@ -27,7 +27,7 @@ export default class SummaryPage extends Page {
   allocateCaseButton = (crn, convictionId): PageElement =>
     cy.get(`a[href*="${crn}/convictions/${convictionId}/allocate"]`)
 
-  instructionsTextArea = (convictionId): PageElement => cy.get(`#instructions-${convictionId}`)
+  instructionsTextArea = (): PageElement => cy.get(`#instructions`)
 
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 }

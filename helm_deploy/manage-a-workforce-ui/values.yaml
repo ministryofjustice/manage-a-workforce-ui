@@ -27,7 +27,7 @@ generic-service:
         phase:1,\
         pass,\
         nolog,\
-        ctl:ruleRemoveTargetByTag=attack-sqli;REQUEST_BODY"
+        ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:instructions"
       SecAction \
         "id:900000,\
         phase:1,\

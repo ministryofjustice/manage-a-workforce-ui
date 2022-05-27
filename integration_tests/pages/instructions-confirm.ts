@@ -15,7 +15,7 @@ export default class InstructionsConfirmPage extends Page {
 
   continueButton = (convictionId): PageElement => cy.get(`#${convictionId}`)
 
-  instructionsTextArea = (convictionId): PageElement => cy.get(`#instructions-${convictionId}`)
+  instructionsTextArea = (): PageElement => cy.get(`#instructions`)
 
   label = (): PageElement => cy.get('.govuk-label')
 

@@ -71,16 +71,7 @@ export default function routes(router: Router, services: Services): Router {
 
   post('/:crn/convictions/:convictionId/allocate/:staffId/confirm-allocation', async (req, res) => {
     const { crn, convictionId, staffId } = req.params
-    const instructions = req.body[`instructions-${convictionId}`]
-    await allocationsController.allocateCaseToOffenderManager(
-      req,
-      res,
-      crn,
-      staffId,
-      convictionId,
-      instructions,
-      req.body
-    )
+    await allocationsController.allocateCaseToOffenderManager(req, res, crn, staffId, convictionId, req.body)
   })
 
   return router

@@ -109,7 +109,7 @@
     "moment-business-days": "^1.2.0",
     "nocache": "^3.0.4",
     "nunjucks": "^3.2.3",
-    "passport": "0.5.3",
+    "passport": "0.6.0",
     "passport-oauth2": "^1.6.0",
     "redis": "4.1.0",
     "superagent": "7.1.3",

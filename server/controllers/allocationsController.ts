@@ -285,7 +285,7 @@ export default class AllocationsController {
         crn,
         staffId,
         convictionId,
-        instructions,
+        form.instructions,
         form.person.map(person => person.email).filter(email => email)
       )
       const personDetails: PersonManager = await this.workloadService.getPersonById(

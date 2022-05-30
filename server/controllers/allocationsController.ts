@@ -265,7 +265,7 @@ export default class AllocationsController {
     response.data.on('end', next)
   }
 
-  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffId, convictionId, instructions, form) {
+  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffId, convictionId, form) {
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
       confirmInstructionForm,
@@ -285,7 +285,7 @@ export default class AllocationsController {
         crn,
         staffId,
         convictionId,
-        instructions,
+        form.instructions,
         form.person.map(person => person.email).filter(email => email)
       )
       const personDetails: PersonManager = await this.workloadService.getPersonById(

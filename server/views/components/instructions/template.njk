@@ -1,14 +1,14 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-form-group">
-      <h1><label class="govuk-label govuk-label--l" for="instructions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}">
+      <h1><label class="govuk-label govuk-label--l" for="instructions">
           {{ params.titleText | safe if params.titleText else "Write allocation instructions" }}
         </label>
       </h1>
       <div id="more-detail-hint" class="govuk-hint">
         {{ params.hintText | safe if params.hintText else "Enter any details you want to highlight to the probation practitioner. These are saved automatically, and you will have a chance to review later." }}
       </div>
-      <textarea class="govuk-textarea" id="instructions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}" name="instructions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}" rows="5" aria-describedby="instuctions-{%- if params.convictionId %}{{ params.convictionId }}{% endif %}-hint"></textarea>
+      <textarea class="govuk-textarea" id="instructions" name="instructions" rows="5" aria-describedby="instuctions-hint"></textarea>
     </div>
   </div>
 </div>

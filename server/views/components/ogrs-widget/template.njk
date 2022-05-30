@@ -1,0 +1,36 @@
+{% macro getRiskLevelText(score) %}
+{% if (score < 50) %}
+Low
+{% elif score > 49 and score < 75 %}
+Medium
+{% elif score > 74 and score < 90 %}
+High
+{% elif score > 74 and score < 90 %}
+Very high
+{% endif %}
+{% endmacro %}
+
+{% macro getOgrsBandingClass(score) %}
+{% if (score < 50) %}
+    rosh-widget--low
+{% elif score > 49 and score < 75 %}
+    rosh-widget--medium
+{% elif score > 74 and score < 90 %}
+    rosh-widget--high
+{% elif score > 89 %}
+    rosh-widget--very-high
+{% endif %}
+{% endmacro %}
+
+{% if params.ogrs %}
+<div class="rosh-widget {{ getOgrsBandingClass(params.ogrs.score) }}">
+    <h3 class="govuk-heading-m"><strong>{{ getRiskLevelText(params.ogrs.score) }}</strong> OGRS <span>{{ params.ogrs.score }}%</span></h3>
+    <p class="govuk-body-m">Offender group reconviction scale<br><span class="govuk-body-s govuk-hint">Last updated: {{ params.ogrs.lastUpdatedOn | dateFormat | default("Not known") }}</span></p>
+</div>
+{% else %}
+<div class="rosh-widget rosh-widget--none">
+    <h3 class="govuk-heading-m"> OGRS</h3>
+    <p class="govuk-body-m">Offender group reconviction scale<br><span class="govuk-body-s govuk-hint">Score unavailable</span></p>
+</div>
+{% endif %}
+

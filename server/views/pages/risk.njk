@@ -1,16 +1,12 @@
 {% extends "partials/case-view.njk" %}
 {% from "govuk/components/tabs/macro.njk" import govukTabs %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
-{% from "../components/index-card/macro.njk" import indexCard %}
 {% from "../components/instructions/macro.njk" import instructions %}
+{% from "../components/rosh-widget/macro.njk" import roshWidget %}
+{% from "../components/rsr-widget/macro.njk" import rsrWidget %}
+{% from "../components/ogrs-widget/macro.njk" import ogrsWidget %}
 
 {% set pageTitle = applicationName + " - Risk" %}
-{% set levelClasses = {
-    'LOW': 'moj-tag--green',
-    'MEDIUM': 'moj-tag--orange',
-    'HIGH': 'moj-tag--red',
-    'VERY_HIGH': 'moj-tag--black'
-}%}
 {% set activeRegistrationsData = {
     classes: 'active-registrations-table',
     caption: 'Active registrations',
@@ -59,83 +55,48 @@
     }}
 {% endfor %}
 
-{% set ogrsScore = data.ogrs.score %}
-{% if (ogrsScore < 50) %}
-    {% set ogrsBanding = 'LOW' %}
-{% elseif ogrsScore > 49 and ogrsScore < 75 %}
-    {% set ogrsBanding = 'MEDIUM' %}
-{% elseif ogrsScore > 74 and ogrsScore < 90 %}
-    {% set ogrsBanding = 'HIGH' %}
-{% elseif ogrsScore > 89 %}
-    {% set ogrsBanding = 'VERY_HIGH' %}
-{% endif %}
-
 {% block caseContent %}
 
     <h2 class="govuk-heading-l">Risk</h2>
 
-    <h3 class="govuk-heading-m">Assessment tools</h3>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h3 class="govuk-heading-m">Registers</h3>
+            {{ govukTabs({
+                items: [
+                    {
+                        label: "Active registrations (" + (data.activeRegistrations | length) + ")",
+                        id: "active-registrations",
+                        panel: {
+                        html: (govukTable(activeRegistrationsData) if data.activeRegistrations | length > 0 else '<div class="govuk-body">There are no active registrations.</div>')
+                    }
+                    },
+                    {
+                        label: "Inactive registrations (" + (data.inactiveRegistrations | length) + ")",
+                        id: "inactive-registrations",
+                        panel: {
+                        html: (govukTable(inactiveRegistrationsData) if data.inactiveRegistrations | length > 0 else '<div class="govuk-body">There are no inactive registrations.</div>')
+                    }
+                    }
+                ]
+            }) }}
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-one-quarter">
-    {{
-        indexCard({
-            titleHtml: '<div class="tooltip">ROSH<span class="tooltiptext govuk-body-s">Risk of Serious Harm</span></div>',
-            descriptionText: ('Last updated: ' + data.rosh.lastUpdatedOn | dateFormat if data.rosh else 'Score unavailable'),
-            tagText: data.rosh.level,
-            tagClasses: levelClasses[data.rosh.level]
-        })
-    }}
-  </div>
-  <div class="govuk-grid-column-one-quarter">
-     {{
-        indexCard({
-            titleHtml: ('<div class="tooltip">RSR<span class="tooltiptext govuk-body-s">Risk of Serious Recidivism</span></div>' + ('<span> ' + data.rsr.percentage + '%</span>' if data.rsr else '')),
-            descriptionText: ('Last updated: ' + data.rsr.lastUpdatedOn | dateFormat if data.rsr else 'Score unavailable'),
-            tagText: data.rsr.level,
-            tagClasses: levelClasses[data.rsr.level]
-        })
-    }}
-  </div>
-  <div class="govuk-grid-column-one-quarter">
-    {{
-        indexCard({
-            titleHtml: ('<div class="tooltip">OGRS<span class="tooltiptext govuk-body-s">Offender Group Reconviction Scale</span></div>' + ('<span> ' + data.ogrs.score + '%</span>' if data.ogrs else '')),
-            descriptionText: ('Last updated: ' + data.ogrs.lastUpdatedOn | dateFormat if data.ogrs else 'Score unavailable'),
-            tagText: ogrsBanding,
-            tagClasses: levelClasses[ogrsBanding]
-        })
-    }}
-  </div>
+
+        </div>
+
+        <div class="govuk-grid-column-one-third">
+            <h3 class="govuk-heading-m">Assessment tools</h3>
+
+            {{ roshWidget(data) }}
+
+            {{ rsrWidget(data) }}
+
+            {{ ogrsWidget(data) }}
+        </div>
+
 </div>
-
-
-
-
-
-
-    <h3 class="govuk-heading-m">Register</h3>
-
-    {{ govukTabs({
-        items: [
-            {
-                label: "Active registrations (" + (data.activeRegistrations | length) + ")",
-                id: "active-registrations",
-                panel: {
-                html: (govukTable(activeRegistrationsData) if data.activeRegistrations | length > 0 else '<div class="govuk-body">There are no active registrations.</div>')
-            }
-            },
-            {
-                label: "Inactive registrations (" + (data.inactiveRegistrations | length) + ")",
-                id: "inactive-registrations",
-                panel: {
-                html: (govukTable(inactiveRegistrationsData) if data.inactiveRegistrations | length > 0 else '<div class="govuk-body">There are no inactive registrations.</div>')
-            }
-            }
-        ]
-    }) }}
-
 {% endblock %}
+
 
 {% block instructions %}
     {{ instructions({convictionId: convictionId }) }}

@@ -65,7 +65,7 @@ context('Instructions Confirmation', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsPage.instructionsTextArea('123456789').should('exist')
+    instructionsPage.instructionsTextArea().should('exist')
     instructionsPage.label().should('contain', 'Review allocation instructions')
     instructionsPage
       .hint()

@@ -1,0 +1,162 @@
+$low-score-colour: #485b10;
+$low-score-border-colour: #85994b;
+$medium-score-colour: #a34e00;
+$medium-score-border-colour: #f47738;
+$high-score-colour: #942514;
+$high-score-border-colour: #d4351c;
+$very-high-score-colour: #711a0d;
+$very-high-score-border-colour: #942514;
+$mappa-colour: #4c2c92;
+
+.rosh-widget,
+.risk-badge {
+  border: 2px solid govuk-colour("black");
+  padding: govuk-spacing(4);
+  margin-bottom: govuk-spacing(4);
+
+  & h3 {
+    margin-bottom: govuk-spacing(1);
+    font-weight: 400;
+  }
+}
+
+.risk-badge {
+  display: inline-block;
+  padding: govuk-spacing(1);
+  margin: 0 govuk-spacing(1) govuk-spacing(1) 0;
+
+  & h3 {
+    margin-bottom: 0;
+    font-weight: 400;
+  }
+}
+
+.rosh-widget--low,
+.risk-badge--low {
+  border: 2px solid $low-score-border-colour;
+
+  & h3 {
+    color: $low-score-colour;
+  }
+}
+
+.rosh-widget--medium,
+.risk-badge--medium {
+  border: 2px solid $medium-score-border-colour;
+
+  & h3 {
+    color: $medium-score-colour;
+  }
+}
+
+.rosh-widget--high,
+.risk-badge--high {
+  border: 2px solid $high-score-border-colour;
+
+  & h3 {
+    color: $high-score-colour;
+  }
+}
+
+.rosh-widget--very-high,
+.risk-badge--very-high {
+  border: 2px solid $very-high-score-border-colour;
+
+  & h3 {
+    color: $very-high-score-colour;
+  }
+}
+
+.rosh-widget__table {
+  text-align: left;
+  margin: 0;
+
+  & tbody {
+    & th {
+      font-weight: 400;
+    }
+
+    & td {
+      font-weight: bold;
+    }
+  }
+}
+
+.rosh-widget__risk--low,
+.risk-badge--low {
+  color: $low-score-colour;
+}
+
+.rosh-widget__risk--medium,
+.risk-badge--medium {
+  color: $medium-score-colour;
+}
+
+.rosh-widget__risk--high,
+.risk-badge--high {
+  color: $high-score-colour;
+}
+
+.rosh-widget__risk--very-high,
+.risk-badge--very-high {
+  color: $very-high-score-colour;
+}
+
+.mappa-widget {
+  border: 2px solid $mappa-colour;
+  padding: govuk-spacing(4);
+  margin-bottom: govuk-spacing(4);
+
+  & h3 {
+    color: $mappa-colour;
+    margin-bottom: govuk-spacing(1);
+    font-weight: 400;
+  }
+}
+
+.risk-flag-widget {
+  border: 2px solid #93afc3;
+  background-color: #ebf7ff;
+  padding: govuk-spacing(4);
+  margin-bottom: govuk-spacing(4);
+}
+
+
+// MaW specific
+$no-score-colour: #505a5f;
+$no-score-border-colour: #505a5f;
+$no-score-background-colour: #f8f8f8;
+$predictor-score-background-colour: #f9e8bd;
+
+
+
+.rosh-widget,
+.risk-badge {
+  h3 {
+    strong {
+      text-transform: uppercase;
+    }
+
+    span {
+      background-color: $predictor-score-background-colour;
+      color: $govuk-text-colour;
+      font-weight: 800;
+      padding: 4px 6px;
+    }
+  }
+}
+
+.rosh-widget--none,
+.risk-badge--none {
+  background-color: $no-score-background-colour;
+  border: 2px solid $no-score-border-colour;
+
+  & h3 {
+    color: $no-score-colour;
+  }
+}
+
+.rosh-widget__risk--none,
+.risk-badge--none {
+  color: $no-score-colour;
+}

@@ -7,4 +7,5 @@ export default interface OffenderManagerWorkload {
   capacity: number
   code: string
   staffId: number
+  totalCasesInLastWeek: number
 }

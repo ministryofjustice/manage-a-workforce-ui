@@ -124,11 +124,11 @@ context('Allocate', () => {
           Name: 'Sally Smith',
           Grade: 'PSOProbation Service Officer',
           Capacity: '80%',
-          'Cases in past 7 days': '',
+          'Cases in past 7 days': '6',
           'Community cases': '25',
           'Custody cases': '28',
           'Workload details': 'View',
-          Select: '6',
+          Select: '',
         },
       ])
   })

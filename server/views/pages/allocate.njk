@@ -29,6 +29,12 @@
                 "aria-sort-natual": "descending"
             }
         },
+        { text: 'Cases in past 7 days',
+            format: "numeric",
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
         { text: 'Community cases',
             format: "numeric",
             attributes: {
@@ -62,6 +68,11 @@
         classes: ('percentage-extra-over' if item.capacity > 100),
             attributes: {
                 "data-sort-value": item.capacity
+            }
+        },
+        { text: item.totalCasesInLastWeek, format: "numeric",
+            attributes: {
+                "data-sort-value": item.totalCasesInLastWeek
             }
         },
         { text: item.communityCases, format: "numeric",

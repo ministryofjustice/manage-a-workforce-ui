@@ -144,7 +144,8 @@ export default class AllocationsController {
                 offenderManagerToAllocate.totalCommunityCases,
                 offenderManagerToAllocate.totalCustodyCases,
                 offenderManagerToAllocate.code,
-                offenderManagerToAllocate.staffId
+                offenderManagerToAllocate.staffId,
+                offenderManagerToAllocate.totalCasesInLastWeek
               )
           )
           .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => {

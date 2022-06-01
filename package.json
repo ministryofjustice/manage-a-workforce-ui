@@ -112,7 +112,7 @@
     "passport": "0.6.0",
     "passport-oauth2": "^1.6.0",
     "redis": "4.1.0",
-    "superagent": "7.1.3",
+    "superagent": "7.1.6",
     "validatorjs": "^3.22.1"
   },
   "devDependencies": {

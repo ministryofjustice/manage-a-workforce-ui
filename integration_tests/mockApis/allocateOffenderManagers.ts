@@ -27,6 +27,7 @@ export default {
               capacity: 10,
               code: 'OM3',
               staffId: 123455423,
+              totalCasesInLastWeek: 3,
             },
             {
               forename: 'Ben',
@@ -37,6 +38,7 @@ export default {
               capacity: 50,
               code: 'OM1',
               staffId: 12345,
+              totalCasesInLastWeek: 0,
             },
             {
               forename: 'Sally',
@@ -47,6 +49,7 @@ export default {
               capacity: 80,
               code: 'OM2',
               staffId: 6789,
+              totalCasesInLastWeek: 6,
             },
           ],
         },

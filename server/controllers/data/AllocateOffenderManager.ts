@@ -30,6 +30,8 @@ export default class AllocateOffenderManager {
 
   staffId: number
 
+  totalCasesInLastWeek: number
+
   constructor(
     forename: string,
     surname: string,
@@ -38,7 +40,8 @@ export default class AllocateOffenderManager {
     communityCases: number,
     custodyCases: number,
     code: string,
-    staffId: number
+    staffId: number,
+    totalCasesInLastWeek: number
   ) {
     this.name = `${forename} ${surname}`
     this.grade = grade
@@ -49,5 +52,6 @@ export default class AllocateOffenderManager {
     this.custodyCases = custodyCases
     this.code = code
     this.staffId = staffId
+    this.totalCasesInLastWeek = totalCasesInLastWeek
   }
 }

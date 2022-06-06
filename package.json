@@ -154,12 +154,12 @@
     "jsonwebtoken": "^8.5.1",
     "lint-staged": "13.0.0",
     "mocha-junit-reporter": "^2.0.0",
-    "nock": "^13.2.4",
+    "nock": "^13.2.6",
     "nodemon": "^2.0.16",
     "prettier": "^2.6.2",
     "sass": "1.52.2",
     "supertest": "^6.2.3",
     "ts-jest": "27.1.4",
-    "typescript": "^4.7.2"
+    "typescript": "^4.7.3"
   }
 }

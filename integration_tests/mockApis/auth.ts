@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { Response } from 'superagent'
 
-import { stubFor, getRequests } from './allocation-wiremock'
+import { stubFor, getMatchingRequests } from './allocation-wiremock'
 import tokenVerification from './tokenVerification'
 
 const createToken = () => {
@@ -9,7 +9,7 @@ const createToken = () => {
     user_name: 'USER1',
     scope: ['read'],
     auth_source: 'nomis',
-    authorities: ['ROLE_MANAGE_A_WORKFORCE_ALLOCATE'],
+    authorities: [],
     jti: '83b50a10-cca6-41db-985f-e87efb303ddb',
     client_id: 'clientid',
   }
@@ -18,10 +18,12 @@ const createToken = () => {
 }
 
 const getSignInUrl = (): Promise<string> =>
-  getRequests().then(data => {
+  getMatchingRequests({
+    method: 'GET',
+    urlPath: '/auth/oauth/authorize',
+  }).then(data => {
     const { requests } = data.body
-    const stateParam = requests[0].request.queryParams.state
-    const stateValue = stateParam ? stateParam.values[0] : requests[1].request.queryParams.state.values[0]
+    const stateValue = requests[requests.length - 1].queryParams.state.values[0]
     return `/sign-in/callback?code=codexxxx&state=${stateValue}`
   })
 
@@ -78,6 +80,21 @@ const signOut = () =>
     },
   })
 
+const manageDetails = () =>
+  stubFor({
+    request: {
+      method: 'GET',
+      urlPattern: '/auth/account-details.*',
+    },
+    response: {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html',
+      },
+      body: '<html><body><h1>Your account details</h1></body></html>',
+    },
+  })
+
 const token = () =>
   stubFor({
     request: {
@@ -101,7 +118,7 @@ const token = () =>
     },
   })
 
-const stubUser = () =>
+const stubUser = (name: string) =>
   stubFor({
     request: {
       method: 'GET',
@@ -116,7 +133,7 @@ const stubUser = () =>
         staffId: 231232,
         username: 'USER1',
         active: true,
-        name: 'john smith',
+        name,
       },
     },
   })
@@ -132,14 +149,14 @@ const stubUserRoles = () =>
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
       },
-      jsonBody: [{ roleId: 'ROLE_MANAGE_A_WORKFORCE_ALLOCATE' }],
+      jsonBody: [{ roleCode: 'SOME_USER_ROLE' }],
     },
   })
 
 export default {
   getSignInUrl,
-  stubPing: (): Promise<[Response, Response]> => Promise.all([ping(), tokenVerification.stubPing()]),
-  stubSignIn: (): Promise<[Response, Response, Response, Response, Response]> =>
-    Promise.all([favicon(), redirect(), signOut(), token(), tokenVerification.stubVerifyToken()]),
-  stubUser: (): Promise<[Response, Response]> => Promise.all([stubUser(), stubUserRoles()]),
+  stubAuthPing: ping,
+  stubSignIn: (): Promise<[Response, Response, Response, Response, Response, Response]> =>
+    Promise.all([favicon(), redirect(), signOut(), manageDetails(), token(), tokenVerification.stubVerifyToken()]),
+  stubAuthUser: (name = 'john smith'): Promise<[Response, Response]> => Promise.all([stubUser(name), stubUserRoles()]),
 }

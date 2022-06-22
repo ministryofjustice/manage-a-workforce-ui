@@ -58,6 +58,7 @@ export default class UnallocatedCase {
   setInitialAppointment(initialAppointment: string, sentenceDate: string, caseType: string): void {
     if (caseType === 'CUSTODY') {
       this.primaryInitialAppointment = 'Not needed'
+      this.secondaryInitialAppointment = 'Custody case'
     } else if (initialAppointment) {
       this.primaryInitialAppointment = `${dayjs(initialAppointment).format(config.dateFormat)}`
       this.secondaryInitialAppointment = this.calculateDays(initialAppointment)

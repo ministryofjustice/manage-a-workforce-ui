@@ -29,7 +29,7 @@ generic-service:
         nolog,\
         ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:instructions"
       SecRule REQUEST_URI "@endsWith /confirm-allocation" \
-        "id:1004,\
+        "id:1005,\
         phase:1,\
         pass,\
         nolog,\

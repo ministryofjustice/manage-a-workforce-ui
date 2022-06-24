@@ -49,6 +49,7 @@ export default class AllocationsController {
     res.render('pages/index', {
       unallocatedCases,
       casesLength: response.length,
+      title: 'Unallocated cases | Manage a workforce',
     })
   }
 
@@ -63,7 +64,7 @@ export default class AllocationsController {
       data: response,
       crn: response.crn,
       convictionId: response.convictionId,
-      title: 'Summary',
+      title: `${response.name} | Summary | Manage a workforce`,
       casesLength: session.casesLength,
     })
   }
@@ -113,7 +114,7 @@ export default class AllocationsController {
       viewAll,
       totalPreviousCount,
       convictionId,
-      title: 'Probation record',
+      title: `${response.name} | Probation record | Manage a workforce`,
       casesLength: res.locals.casesLength,
     })
   }
@@ -121,7 +122,7 @@ export default class AllocationsController {
   async getRisk(req: Request, res: Response, crn, convictionId) {
     const response: Risk = await this.allocationsService.getRisk(res.locals.user.token, crn, convictionId)
     res.render('pages/risk', {
-      title: 'Risk',
+      title: `${response.name} | Risk | Manage a workforce`,
       data: response,
       crn: response.crn,
       convictionId: response.convictionId,
@@ -158,7 +159,7 @@ export default class AllocationsController {
     const response: Allocation = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
     const error = req.query.error === 'true'
     res.render('pages/allocate', {
-      title: 'Allocate',
+      title: `${response.name} | Choose practitioner | Manage a workforcee`,
       name: response.name,
       crn: response.crn,
       tier: response.tier,
@@ -191,7 +192,7 @@ export default class AllocationsController {
     )
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
     res.render('pages/confirm-allocation', {
-      title: 'Allocation Impact',
+      title: `${caseOverview.name} | Allocate to practitioner | Manage a workforce`,
       data: response,
       name: caseOverview.name,
       crn: caseOverview.crn,
@@ -206,7 +207,7 @@ export default class AllocationsController {
     const response: StaffSummary = await this.workloadService.getStaffById(res.locals.user.token, staffId)
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
     res.render('pages/confirm-instructions', {
-      title: 'Instructions',
+      title: `${caseOverview.name} | Review allocation instructions | Manage a workforce`,
       data: response,
       name: caseOverview.name,
       crn: caseOverview.crn,
@@ -225,7 +226,7 @@ export default class AllocationsController {
       offenderManagerCode
     )
     res.render('pages/overview', {
-      title: 'Overview',
+      title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
       data: response,
       crn,
       convictionId,
@@ -243,7 +244,7 @@ export default class AllocationsController {
         new Case(activeCase.crn, activeCase.tier, activeCase.caseCategory, activeCase.forename, activeCase.surname)
     )
     res.render('pages/active-cases', {
-      title: 'Active cases',
+      title: `${response.forename} ${response.surname} | Active cases | Manage a workforce`,
       data: response,
       cases,
       crn,
@@ -309,7 +310,7 @@ export default class AllocationsController {
       )
 
       res.render('pages/allocation-complete', {
-        title: 'Allocation complete',
+        title: `${caseOverview.name} | Case allocated | Manage a workforce`,
         data: response,
         crn,
         convictionId,

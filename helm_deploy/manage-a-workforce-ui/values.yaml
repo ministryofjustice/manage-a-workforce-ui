@@ -28,6 +28,12 @@ generic-service:
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:instructions"
+      SecRule REQUEST_URI "@endsWith /confirm-allocation" \
+        "id:1004,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=platform-windows;ARGS:instructions"
       SecAction \
         "id:900000,\
         phase:1,\

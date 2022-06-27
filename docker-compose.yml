@@ -35,6 +35,52 @@ services:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/auth/health" ]
     environment:
       - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+    - "allocations-postgres"
+
+
+  hmpps-workload:
+    image: quay.io/hmpps/hmpps-workload:latest
+    networks:
+      - hmpps
+    container_name: manage-a-workforce-hmpps-workload
+    ports:
+      - "8081:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health/ping"]
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=dev
+      - DATABASE_ENDPOINT=workload-postgres:5432
+      - COMMUNITY_ENDPOINT_URL=http://wiremock:8099
+      - HMPPS_TIER_ENDPOINT_URL=http://wiremock:8099
+    entrypoint: ["/bin/sh", "-c" , "sleep 10 && java -javaagent:/app/agent.jar -jar /app/app.jar"]
+    depends_on:
+        - "workload-postgres"
+
+  workload-postgres:
+    image: postgres:11
+    networks:
+      - hmpps
+    container_name: workload-postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=dev
+      - POSTGRES_USER=root
+
+  allocations-postgres:
+    image: postgres:11
+    networks:
+      - hmpps
+    container_name: allocations-postgres
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_PASSWORD=dev
+      - POSTGRES_USER=root
 
   wiremock:
     image: rodolpheche/wiremock
@@ -47,5 +93,6 @@ services:
     command: ["--port","8099","--global-response-templating"]
     volumes:
       - $PWD/wiremock:/home/wiremock:rw
+
 networks:
   hmpps:

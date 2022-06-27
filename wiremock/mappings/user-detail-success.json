@@ -16,7 +16,7 @@
       "enabled": true,
       "roles": [
         {
-          "name": "ROLE_MANAGE_A_WORKFORCE_ALLOCATE",
+          "name": "TEST_MANAGE_A_WORKFORCE_ALLOCATE_ROLE",
           "description": "A Allocate Test Role"
         }
       ]

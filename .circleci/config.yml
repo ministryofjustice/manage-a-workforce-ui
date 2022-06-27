@@ -72,7 +72,7 @@ jobs:
           command: 'npm --version'
       - run:
           name: Run check
-          command: 'npm outdated typescript govuk-frontend'
+          command: 'npm outdated govuk-frontend'
       - slack/notify:
           event: fail
           channel: << pipeline.parameters.alerts-slack-channel >>

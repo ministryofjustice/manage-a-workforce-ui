@@ -112,7 +112,7 @@
     "passport": "0.6.0",
     "passport-oauth2": "^1.6.0",
     "redis": "4.1.0",
-    "superagent": "7.1.6",
+    "superagent": "8.0.0",
     "validatorjs": "^3.22.1"
   },
   "devDependencies": {
@@ -135,7 +135,7 @@
     "@types/redis": "4.0.11",
     "@types/superagent": "4.1.15",
     "@types/supertest": "^2.0.12",
-    "@typescript-eslint/eslint-plugin": "5.29.0",
+    "@typescript-eslint/eslint-plugin": "5.30.0",
     "@typescript-eslint/parser": "5.29.0",
     "audit-ci": "^6.3.0",
     "concurrently": "7.2.2",

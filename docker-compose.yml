@@ -28,18 +28,21 @@ services:
 
   allocations-service:
     image: quay.io/hmpps/hmpps-allocations
+    networks:
+      - hmpps
     container_name: allocations-service
     ports:
       - "8091:8080"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/auth/health" ]
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - DATABASE_USERNAME=root
-      - DATABASE_PASSWORD=dev
+      - SPRING_PROFILES_ACTIVE=dev,docker
+      - DATABASE_ENDPOINT=allocations-postgres:5432
+      - HMPPS_SQS_LOCALSTACK_URL=http://localstack:4566
+      - OAUTH_ENDPOINT_URL=http://host.docker.internal:9090/auth
     depends_on:
-    - "allocations-postgres"
-
+      - "allocations-postgres"
+      - "localstack"
 
   hmpps-workload:
     image: quay.io/hmpps/hmpps-workload:latest
@@ -52,15 +55,13 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health/ping"]
     environment:
       - SERVER_PORT=8080
-      - SPRING_PROFILES_ACTIVE=dev
-      - DATABASE_ENDPOINT=workload-postgres:5433
-      - DATABASE_USERNAME=root
-      - DATABASE_PASSWORD=dev
-      - COMMUNITY_ENDPOINT_URL=http://wiremock:8099
-      - HMPPS_TIER_ENDPOINT_URL=http://wiremock:8099
+      - SPRING_PROFILES_ACTIVE=dev,docker
+      - DATABASE_ENDPOINT=workload-postgres:5432
+      - HMPPS_SQS_LOCALSTACK_URL=http://localstack:4566
     entrypoint: ["/bin/sh", "-c" , "sleep 10 && java -javaagent:/app/agent.jar -jar /app/app.jar"]
     depends_on:
         - "workload-postgres"
+        - "localstack"
 
   workload-postgres:
     image: postgres:11
@@ -90,7 +91,7 @@ services:
     image: rodolpheche/wiremock
     networks:
       - hmpps
-    container_name: wiremock
+    container_name:  manage-a-workforce-wiremock
     restart: always
     ports:
       - "8099:8099"
@@ -98,5 +99,25 @@ services:
     volumes:
       - $PWD/wiremock:/home/wiremock:rw
 
+  localstack:
+    image: localstack/localstack:0.14.4
+    networks:
+      - hmpps
+    container_name: manage-a-workforce-localstack
+    ports:
+      - 4566:4566
+      - 8999:8080
+    environment:
+      - SERVICES=sns,sqs
+      - DEBUG=${DEBUG- }
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DEFAULT_REGION=eu-west-2
+    healthcheck:
+      test: ["CMD","sh","-c", "awslocal sqs list-queues"]
+      interval: 5s
+      timeout: 10s
+      start_period: 10s
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
 networks:
   hmpps:

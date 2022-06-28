@@ -5,6 +5,8 @@
 {% from "../components/instructions/macro.njk" import instructions %}
 {%- from "govuk/components/input/macro.njk" import govukInput -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
 
 {% set pageTitle = applicationName + " - Case view" %}
 
@@ -28,7 +30,7 @@
             }
         ]
     }) }}
-    {% if error %}
+    {% if errors | length > 0 %}
       {{ govukErrorSummary({
           titleText: "There is a problem",
           errorList: [

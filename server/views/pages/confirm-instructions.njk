@@ -28,6 +28,17 @@
             }
         ]
     }) }}
+    {% if error %}
+      {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: [
+              {
+              text: "Enter an email address in the correct format, like name@example.com",
+              href: "#person[0][email]-error"
+              }
+          ]
+      }) }}
+    {% endif %}
 {% endblock %}
 
 {% block content %}

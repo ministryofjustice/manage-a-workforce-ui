@@ -30,7 +30,7 @@ services:
     image: quay.io/hmpps/hmpps-allocations
     networks:
       - hmpps
-    container_name: allocations-service
+    container_name: manage-a-workforce-allocations
     ports:
       - "8091:8080"
     healthcheck:

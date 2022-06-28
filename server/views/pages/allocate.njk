@@ -6,7 +6,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 
-{% set pageTitle = applicationName + " - Allocate" %}
+{% set pageTitle = applicationName %}
 {% set tableData = {
     attributes: {
     'data-module': 'moj-natural-sortable-table'
@@ -112,6 +112,17 @@
             }
         ]
     }) }}
+    {% if error %}
+        {{ govukErrorSummary({
+            titleText: "There is a problem",
+            errorList: [
+                {
+                text: "Select a probation practitioner",
+                href: "#select-probation-practitioner"
+                }
+            ]
+        }) }}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -150,20 +161,14 @@
     {% endif %}
 
 
+    {% if error %}
+        <div class="govuk-form-group govuk-form-group--error">
+            <p id="select-probation-practitioner" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> Select a probation practitioner
+            </p>
+    {% endif %}
     <form method="post">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-
-        {% if error %}
-            {{ govukErrorSummary({
-                titleText: "There is a problem",
-                errorList: [
-                    {
-                    text: "Select a probation practitioner"
-                    }
-                ]
-            }) }}
-        {% endif %}
-
         {{ govukTable(tableData) }}
         <div class="govuk-button-group">
                 {{ govukButton({
@@ -172,7 +177,9 @@
             <a class="govuk-button govuk-button--secondary" href="{{'/' + crn + '/convictions/' + convictionId + '/allocate'}}">Clear selection </a>
         </div>
     </form>
-
+    {% if error %}
+        </div>
+    {% endif %}
 
 {% endblock %}
 

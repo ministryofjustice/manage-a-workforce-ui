@@ -42,17 +42,17 @@
                     {
                         text: 'Summary',
                         href: '/' + crn + '/convictions/' + convictionId + '/case-view',
-                        active: title === 'Summary'
+                        active: 'Summary' in title
                     },
                     {
                         text: 'Probation record',
                         href: '/' + crn + '/convictions/' + convictionId + '/probation-record',
-                        active: title === 'Probation record'
+                        active: 'Probation record' in title
                     },
                     {
                         text: 'Risk',
                         href: '/' + crn + '/convictions/' + convictionId + '/risk',
-                        active: title === 'Risk'
+                        active: 'Risk' in title
                     }
                 ]
             }) }}

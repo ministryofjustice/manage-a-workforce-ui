@@ -24,7 +24,7 @@ context('Summary', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.notificationsBadge().should('contain.text', '10')
+    summaryPage.notificationsBadge().should('contain.text', '8')
   })
 
   it('Summary header visible on page', () => {

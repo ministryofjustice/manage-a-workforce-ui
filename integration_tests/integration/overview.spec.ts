@@ -60,7 +60,7 @@ context('Overview', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
-    overviewPage.notificationsBadge().should('contain.text', '10')
+    overviewPage.notificationsBadge().should('contain.text', '8')
   })
 
   it('Points information visible on page', () => {

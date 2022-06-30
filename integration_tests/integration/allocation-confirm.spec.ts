@@ -15,7 +15,7 @@ context('Allocate Confirmation', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/5678/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
-    allocatePage.notificationsBadge().should('contain.text', '10')
+    allocatePage.notificationsBadge().should('contain.text', '8')
   })
 
   it('Offender details visible on page', () => {

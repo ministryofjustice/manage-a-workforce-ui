@@ -20,7 +20,7 @@ context('Allocate Complete', () => {
     cy.task('stubGetPersonById')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
-    allocationCompletePage.notificationsBadge().should('contain', 10)
+    allocationCompletePage.notificationsBadge().should('contain', 8)
   })
 
   it('return to unallocated cases link exists', () => {

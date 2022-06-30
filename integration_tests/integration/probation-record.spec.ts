@@ -24,7 +24,7 @@ context('Probation record', () => {
     cy.signIn()
     cy.visit('J678910/convictions/123456789/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.notificationsBadge().should('contain.text', '10')
+    probationRecordPage.notificationsBadge().should('contain.text', '8')
   })
 
   it('Probation record header visible on page', () => {

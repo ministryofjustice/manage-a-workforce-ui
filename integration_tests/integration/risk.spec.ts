@@ -24,7 +24,7 @@ context('Risk', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
-    riskPage.notificationsBadge().should('contain.text', '10')
+    riskPage.notificationsBadge().should('contain.text', '8')
   })
 
   it('Risk header visible on page', () => {

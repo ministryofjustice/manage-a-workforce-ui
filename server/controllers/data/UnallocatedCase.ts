@@ -1,5 +1,4 @@
 import dayjs from 'dayjs'
-import moment, { Moment } from 'moment-business-days'
 
 import config from '../../config'
 import OffenderManager from '../../models/OffenderManager'
@@ -63,8 +62,8 @@ export default class UnallocatedCase {
       this.primaryInitialAppointment = `${dayjs(initialAppointment).format(config.dateFormat)}`
       this.secondaryInitialAppointment = this.calculateDays(initialAppointment)
     } else {
-      this.primaryInitialAppointment = 'Not booked'
-      this.secondaryInitialAppointment = this.calculateBusinessDays(sentenceDate)
+      this.primaryInitialAppointment = 'Not found'
+      this.secondaryInitialAppointment = 'Check with your team'
     }
   }
 
@@ -84,27 +83,5 @@ export default class UnallocatedCase {
       default:
         return 'Overdue'
     }
-  }
-
-  calculateBusinessDays(sentenceDate: string): string {
-    const lastDayOfSLA = moment(sentenceDate, 'YYYY-MM-DD').businessAdd(5, 'days')
-    const today = moment(config.currentDate(), 'YYYY-MM-DD')
-
-    if (this.isBeforeToday(lastDayOfSLA, today)) {
-      return 'Overdue'
-    }
-
-    if (this.isToday(lastDayOfSLA, today)) {
-      return 'Due today'
-    }
-    return `Due on ${lastDayOfSLA.format(config.dateFormat)}`
-  }
-
-  isToday(date: Moment, today: Moment): boolean {
-    return date.isSame(today, 'day')
-  }
-
-  isBeforeToday(date: Moment, today: Moment): boolean {
-    return date.isBefore(today, 'day')
   }
 }

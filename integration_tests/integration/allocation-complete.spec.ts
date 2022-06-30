@@ -82,7 +82,7 @@ context('Allocate Complete', () => {
       .and('contain', 'The induction interview is scheduled for 1 Sep 2021')
   })
 
-  it('When no induction appointment booked, induction appointment due by date visible on page', () => {
+  it('When no Initial appointment date booked, Initial appointment date due by date visible on page', () => {
     cy.task('stubGetStaffById')
     cy.task('stubGetCaseOverviewNoInitialAppointment')
     cy.signIn()
@@ -101,7 +101,7 @@ context('Allocate Complete', () => {
       .should('contain', 'The induction interview needs to be scheduled by 8 Sep 2021')
   })
 
-  it('When a custody case, induction appointment not needed visible on page', () => {
+  it('When a custody case, Initial appointment date not needed visible on page', () => {
     cy.task('stubGetStaffById')
     cy.task('stubGetCaseOverviewCustodyCase')
     cy.signIn()

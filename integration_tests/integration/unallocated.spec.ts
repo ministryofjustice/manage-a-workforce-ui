@@ -54,10 +54,10 @@ context('Unallocated', () => {
     unallocatedPage.navLink('search-link').should('equal', `${config.nav.workloadMeasurement.url}/officer-search`)
   })
 
-  it('Notification badge visible on page with number of unallocations', () => {
+  it('Notification badge visible on page with number of unallocated cases', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.notificationsBadge().should('contain.text', '10')
+    unallocatedPage.notificationsBadge().should('contain.text', '8')
   })
 
   it('Must show 99+ when unallocated cases are greater than 99', () => {
@@ -70,7 +70,7 @@ context('Unallocated', () => {
   it('Sub nav visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.subNav().should('contain', 'Unallocated community cases (10)')
+    unallocatedPage.subNav().should('contain', 'Unallocated community cases (8)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
@@ -95,7 +95,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Dylan Adam ArmstrongJ678910',
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': '1 Sep 2021Today',
+          'Initial appointment date': '1 Sep 2021Today',
           'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
           Action: 'Review case',
         },
@@ -103,7 +103,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Sofia MitchellL786545',
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': 'Not neededCustody case',
+          'Initial appointment date': 'Not neededCustody case',
           'Probation status': 'Previously managed(13 Dec 2019)',
           Action: 'Review case',
         },
@@ -111,7 +111,7 @@ context('Unallocated', () => {
           'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
           'Sentence date': '23 Jul 2021',
-          'Induction appointment': '17 Aug 2021Overdue',
+          'Initial appointment date': '17 Aug 2021Overdue',
           'Probation status': 'New to probation',
           Action: 'Review case',
         },
@@ -119,7 +119,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Kacey RayE124321',
           Tier: 'C2',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': '2 Sep 2021Tomorrow',
+          'Initial appointment date': '2 Sep 2021Tomorrow',
           'Probation status': 'New to probation',
           Action: 'Review case',
         },
@@ -127,7 +127,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Andrew WilliamsP567654',
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': '3 Sep 2021In 2 days',
+          'Initial appointment date': '3 Sep 2021In 2 days',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },
@@ -135,7 +135,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Sarah SiddallC567654',
           Tier: 'C2',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': '4 Sep 2021In 3 days',
+          'Initial appointment date': '4 Sep 2021In 3 days',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },
@@ -143,23 +143,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Mick JonesC234432',
           Tier: 'C1',
           'Sentence date': '25 Aug 2021',
-          'Induction appointment': 'Not bookedDue on 2 Sep 2021',
-          'Probation status': 'Previously managed',
-          Action: 'Review case',
-        },
-        {
-          'Name / CRN': 'Sarah SmithC254565',
-          Tier: 'C1',
-          'Sentence date': '24 Aug 2021',
-          'Induction appointment': 'Not bookedDue today',
-          'Probation status': 'Previously managed',
-          Action: 'Review case',
-        },
-        {
-          'Name / CRN': 'Fiona SipsmithG574565',
-          Tier: 'C1',
-          'Sentence date': '16 Aug 2021',
-          'Induction appointment': 'Not bookedOverdue',
+          'Initial appointment date': 'Not foundCheck with your team',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },
@@ -167,7 +151,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Bill TurnerF5635632',
           Tier: 'D1',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': '1 Sep 2021Today',
+          'Initial appointment date': '1 Sep 2021Today',
           'Probation status': 'Currently managed(Richard Moore)',
           Action: 'Review case',
         },
@@ -238,7 +222,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Bill TurnerF5635632',
           Tier: 'D1',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': '1 Sep 2021Today',
+          'Initial appointment date': '1 Sep 2021Today',
           'Probation status': 'Currently managed(Richard Moore)',
           Action: 'Review case',
         },
@@ -246,7 +230,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Dylan Adam ArmstrongJ678910',
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': '1 Sep 2021Today',
+          'Initial appointment date': '1 Sep 2021Today',
           'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
           Action: 'Review case',
         },
@@ -254,7 +238,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Sofia MitchellL786545',
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': 'Not neededCustody case',
+          'Initial appointment date': 'Not neededCustody case',
           'Probation status': 'Previously managed(13 Dec 2019)',
           Action: 'Review case',
         },
@@ -262,7 +246,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Andrew WilliamsP567654',
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': '3 Sep 2021In 2 days',
+          'Initial appointment date': '3 Sep 2021In 2 days',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },
@@ -270,23 +254,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Mick JonesC234432',
           Tier: 'C1',
           'Sentence date': '25 Aug 2021',
-          'Induction appointment': 'Not bookedDue on 2 Sep 2021',
-          'Probation status': 'Previously managed',
-          Action: 'Review case',
-        },
-        {
-          'Name / CRN': 'Sarah SmithC254565',
-          Tier: 'C1',
-          'Sentence date': '24 Aug 2021',
-          'Induction appointment': 'Not bookedDue today',
-          'Probation status': 'Previously managed',
-          Action: 'Review case',
-        },
-        {
-          'Name / CRN': 'Fiona SipsmithG574565',
-          Tier: 'C1',
-          'Sentence date': '16 Aug 2021',
-          'Induction appointment': 'Not bookedOverdue',
+          'Initial appointment date': 'Not foundCheck with your team',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },
@@ -294,7 +262,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Kacey RayE124321',
           Tier: 'C2',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': '2 Sep 2021Tomorrow',
+          'Initial appointment date': '2 Sep 2021Tomorrow',
           'Probation status': 'New to probation',
           Action: 'Review case',
         },
@@ -302,7 +270,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Sarah SiddallC567654',
           Tier: 'C2',
           'Sentence date': '1 Sep 2021',
-          'Induction appointment': '4 Sep 2021In 3 days',
+          'Initial appointment date': '4 Sep 2021In 3 days',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },
@@ -310,7 +278,7 @@ context('Unallocated', () => {
           'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
           'Sentence date': '23 Jul 2021',
-          'Induction appointment': '17 Aug 2021Overdue',
+          'Initial appointment date': '17 Aug 2021Overdue',
           'Probation status': 'New to probation',
           Action: 'Review case',
         },

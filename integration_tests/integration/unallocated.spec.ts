@@ -95,7 +95,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Dylan Adam ArmstrongJ678910',
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
-          'Initial appointment date': '1 Sep 2021Today',
+          'Initial appointment date': '1 Sep 2021',
           'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
           Action: 'Review case',
         },
@@ -111,7 +111,7 @@ context('Unallocated', () => {
           'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
           'Sentence date': '23 Jul 2021',
-          'Initial appointment date': '17 Aug 2021Overdue',
+          'Initial appointment date': '17 Aug 2021',
           'Probation status': 'New to probation',
           Action: 'Review case',
         },
@@ -119,7 +119,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Kacey RayE124321',
           Tier: 'C2',
           'Sentence date': '1 Sep 2021',
-          'Initial appointment date': '2 Sep 2021Tomorrow',
+          'Initial appointment date': '2 Sep 2021',
           'Probation status': 'New to probation',
           Action: 'Review case',
         },
@@ -127,7 +127,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Andrew WilliamsP567654',
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
-          'Initial appointment date': '3 Sep 2021In 2 days',
+          'Initial appointment date': '3 Sep 2021',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },
@@ -135,7 +135,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Sarah SiddallC567654',
           Tier: 'C2',
           'Sentence date': '1 Sep 2021',
-          'Initial appointment date': '4 Sep 2021In 3 days',
+          'Initial appointment date': '4 Sep 2021',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },
@@ -151,7 +151,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Bill TurnerF5635632',
           Tier: 'D1',
           'Sentence date': '1 Sep 2021',
-          'Initial appointment date': '1 Sep 2021Today',
+          'Initial appointment date': '1 Sep 2021',
           'Probation status': 'Currently managed(Richard Moore)',
           Action: 'Review case',
         },
@@ -196,19 +196,7 @@ context('Unallocated', () => {
   it('Secondary text is visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage
-      .secondaryText()
-      .should('contain', 'Overdue')
-      .and('contain', 'Today')
-      .and('contain', 'Tomorrow')
-      .and('contain', 'In 2 days')
-      .and('contain', 'In 3 days')
-  })
-
-  it('Overdue flag is visible on page', () => {
-    cy.signIn()
-    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.overdueFlag().should('exist')
+    unallocatedPage.secondaryText().should('contain', 'Custody case').and('contain', 'Check with your team')
   })
 
   it('Should sort tier by correct order', () => {
@@ -222,7 +210,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Bill TurnerF5635632',
           Tier: 'D1',
           'Sentence date': '1 Sep 2021',
-          'Initial appointment date': '1 Sep 2021Today',
+          'Initial appointment date': '1 Sep 2021',
           'Probation status': 'Currently managed(Richard Moore)',
           Action: 'Review case',
         },
@@ -230,7 +218,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Dylan Adam ArmstrongJ678910',
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
-          'Initial appointment date': '1 Sep 2021Today',
+          'Initial appointment date': '1 Sep 2021',
           'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
           Action: 'Review case',
         },
@@ -246,7 +234,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Andrew WilliamsP567654',
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
-          'Initial appointment date': '3 Sep 2021In 2 days',
+          'Initial appointment date': '3 Sep 2021',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },
@@ -262,7 +250,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Kacey RayE124321',
           Tier: 'C2',
           'Sentence date': '1 Sep 2021',
-          'Initial appointment date': '2 Sep 2021Tomorrow',
+          'Initial appointment date': '2 Sep 2021',
           'Probation status': 'New to probation',
           Action: 'Review case',
         },
@@ -270,7 +258,7 @@ context('Unallocated', () => {
           'Name / CRN': 'Sarah SiddallC567654',
           Tier: 'C2',
           'Sentence date': '1 Sep 2021',
-          'Initial appointment date': '4 Sep 2021In 3 days',
+          'Initial appointment date': '4 Sep 2021',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },
@@ -278,7 +266,7 @@ context('Unallocated', () => {
           'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
           'Sentence date': '23 Jul 2021',
-          'Initial appointment date': '17 Aug 2021Overdue',
+          'Initial appointment date': '17 Aug 2021',
           'Probation status': 'New to probation',
           Action: 'Review case',
         },

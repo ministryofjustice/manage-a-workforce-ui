@@ -60,28 +60,9 @@ export default class UnallocatedCase {
       this.secondaryInitialAppointment = 'Custody case'
     } else if (initialAppointment) {
       this.primaryInitialAppointment = `${dayjs(initialAppointment).format(config.dateFormat)}`
-      this.secondaryInitialAppointment = this.calculateDays(initialAppointment)
     } else {
       this.primaryInitialAppointment = 'Not found'
       this.secondaryInitialAppointment = 'Check with your team'
-    }
-  }
-
-  calculateDays(date: string): string {
-    const appt = dayjs(date).format('D MMM YYYY')
-    const today = dayjs(config.currentDate()).format('D MMM YYYY')
-
-    const diffInDays = dayjs(appt).diff(today, 'day')
-
-    switch (true) {
-      case diffInDays === 0:
-        return 'Today'
-      case diffInDays === 1:
-        return 'Tomorrow'
-      case diffInDays >= 2:
-        return `In ${diffInDays} days`
-      default:
-        return 'Overdue'
     }
   }
 }

@@ -33,12 +33,7 @@
     {% if errors | length > 0 %}
       {{ govukErrorSummary({
           titleText: "There is a problem",
-          errorList: [
-              {
-              text: "Enter an email address in the correct format, like name@example.com",
-              href: "#person[0][email]-error"
-              }
-          ]
+          errorList: errors
       }) }}
     {% endif %}
 {% endblock %}

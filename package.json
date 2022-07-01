@@ -23,8 +23,8 @@
     "typecheck": "tsc && tsc -p integration_tests",
     "test": "jest",
     "security_audit": "npx audit-ci --config audit-ci.json",
-    "int-test": "cypress run --config video=false",
-    "int-test-ui": "cypress open",
+    "int-test": "cypress run --config video=false --config-file=integration_tests/cypress.config.ts",
+    "int-test-ui": "cypress open --config-file=integration_tests/cypress.config.ts",
     "clean": "rm -rf dist build stylesheets"
   },
   "engines": {

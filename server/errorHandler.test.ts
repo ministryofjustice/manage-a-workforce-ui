@@ -32,6 +32,14 @@ describe('GET 404', () => {
         expect(res.text).not.toContain('NotFoundError: Not found')
       })
   })
+
+  it('should return 404 status', () => {
+    return request(appWithAllRoutes({ production: true }))
+      .get('/unknown')
+      .expect(res => {
+        expect(res.statusCode).toEqual(404)
+      })
+  })
 })
 
 describe('GET 500', () => {

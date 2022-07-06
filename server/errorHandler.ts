@@ -14,7 +14,7 @@ export default function createErrorHandler(production: boolean) {
 
     return res.render('pages/error', {
       message: production ? null : error.message,
-      status: res.statusCode,
+      status: error.status || 500,
       stack: production ? null : error.stack,
     })
   }

@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from 'express'
 import type { HTTPError } from 'superagent'
 import logger from '../logger'
 
-export default function createErrorHandler(production: boolean) {
+export default function createErrorHandler() {
   return (error: HTTPError, req: Request, res: Response, next: NextFunction): void => {
     logger.error(`Error handling request for '${req.originalUrl}', user '${res.locals.user?.username}'`, error)
     res.status(error.status || 500)
@@ -13,9 +13,7 @@ export default function createErrorHandler(production: boolean) {
     }
 
     return res.render('pages/error', {
-      message: production ? null : error.message,
       status: error.status || 500,
-      stack: production ? null : error.stack,
     })
   }
 }

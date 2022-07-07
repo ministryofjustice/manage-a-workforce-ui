@@ -13,23 +13,12 @@ afterEach(() => {
 })
 
 describe('GET 404', () => {
-  it('should render content with stack in dev mode', () => {
-    return request(app)
-      .get('/unknown')
-      .expect('Content-Type', /html/)
-      .expect(res => {
-        expect(res.text).toContain('Page not found')
-        expect(res.text).toContain('NotFoundError: Not found')
-      })
-  })
-
-  it('should render content without stack in production mode', () => {
+  it('should render correct content', () => {
     return request(appWithAllRoutes({ production: true }))
       .get('/unknown')
       .expect('Content-Type', /html/)
       .expect(res => {
         expect(res.text).toContain('Page not found')
-        expect(res.text).not.toContain('NotFoundError: Not found')
       })
   })
 

@@ -53,7 +53,7 @@ const appSetup = (authenticated: RequestHandler, unauthenticated: RequestHandler
   app.use(unauthenticated)
   app.use(authenticated)
   app.use((req, res, next) => next(createError(404, 'Not found')))
-  app.use(errorHandler(production))
+  app.use(errorHandler())
 
   return app
 }

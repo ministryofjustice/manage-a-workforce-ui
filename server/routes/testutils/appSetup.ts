@@ -34,7 +34,7 @@ class MockUserService extends UserService {
   }
 }
 
-const appSetup = (authenticated: RequestHandler, unauthenticated: RequestHandler, production: boolean): Express => {
+const appSetup = (authenticated: RequestHandler, unauthenticated: RequestHandler): Express => {
   const app = express()
 
   app.set('view engine', 'njk')
@@ -59,12 +59,12 @@ const appSetup = (authenticated: RequestHandler, unauthenticated: RequestHandler
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export const appWithAllRoutes = ({ production = false }: { production?: boolean }): Express => {
+export const appWithAllRoutes = (): Express => {
   auth.default.authenticationMiddleware = () => (req, res, next) => next()
   const authenticated = authenticatedRoutes(standardRouter(new MockUserService()), {
     allocationsService: new MockErrorAllocationService(undefined),
     workloadService: new MockWorkloadService(undefined),
   })
   const unauthenticated = unauthenticatedRoutes()
-  return appSetup(authenticated, unauthenticated, production)
+  return appSetup(authenticated, unauthenticated)
 }

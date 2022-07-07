@@ -22,6 +22,7 @@ generic-service:
       SecRuleUpdateActionById 959100 "t:none,deny,status:406,logdata:%{SERVER_NAME}"
       SecRuleRemoveById 942430
       SecRuleRemoveById 942210
+      SecRuleRemoveById 950100
       SecRule REQUEST_URI "@endsWith /confirm-allocation" \
         "id:1004,\
         phase:1,\

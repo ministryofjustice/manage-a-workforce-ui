@@ -52,4 +52,12 @@ describe('GET 500', () => {
         expect(res.text).toContain('Please try again later.')
       })
   })
+
+  it('should return 500 status', () => {
+    return request(appWithAllRoutes({ production: true }))
+      .get('/')
+      .expect(res => {
+        expect(res.statusCode).toEqual(500)
+      })
+  })
 })

@@ -30,8 +30,10 @@ describe('GET 500', () => {
       .get('/')
       .expect('Content-Type', /html/)
       .expect(res => {
-        expect(res.text).toContain('Sorry, there is a problem with the service')
-        expect(res.text).toContain('Please try again later.')
+        expect(res.text).toContain('Sorry, the service is unavailable | Manage a workforce')
+        // expect(res.text).toContain('Try reloading the page. You can do this by pressing F5 (on a PC) or Cmd + R (on a Mac).')
+        // expect(res.text).toContain('If you were near the end of allocating a case')
+        // expect(res.text).toContain('If you\'ve tried reloading the page and you still see this error message, check NDelius to see whether the case has been allocated.')
       })
   })
 

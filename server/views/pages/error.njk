@@ -1,11 +1,5 @@
 {% extends "../partials/layout.njk" %}
 
-{% if status === 404  %}
-  {% set pageTitle = applicationName + " - Page not found" %}
-{% else %}
-  {% set pageTitle = applicationName + " - Error" %}
-{% endif %}
-
 {% block content %}
   {% if status === 404  %}
     <h1 class="govuk-heading-l">Page not found</h1>

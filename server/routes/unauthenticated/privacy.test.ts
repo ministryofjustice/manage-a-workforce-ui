@@ -8,7 +8,7 @@ describe('GET Privacy', () => {
 
   describe('GET Privacy notice', () => {
     test("should render the 'Privacy notice' page", () => {
-      return request(appWithAllRoutes({ production: false }))
+      return request(appWithAllRoutes())
         .get(`/privacy-notice`)
         .expect('Content-Type', /html/)
         .expect(res => {

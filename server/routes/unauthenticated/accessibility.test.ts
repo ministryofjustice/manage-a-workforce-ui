@@ -8,7 +8,7 @@ describe('GET Accessibility', () => {
 
   describe('GET Accessibility statement', () => {
     test("should render the 'Accessibility statement' page", () => {
-      return request(appWithAllRoutes({ production: false }))
+      return request(appWithAllRoutes())
         .get(`/accessibility-statement`)
         .expect('Content-Type', /html/)
         .expect(res => {

@@ -12,7 +12,7 @@ export default {
   info(message) {
     logger.info({ message })
   },
-  error(error, message) {
+  error(error: Error, message: string) {
     if (appInsightsClient) {
       appInsightsClient.trackException({ exception: error })
     }

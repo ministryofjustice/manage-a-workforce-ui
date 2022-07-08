@@ -3,7 +3,7 @@ import sanitisedError, { UnsanitisedError } from './sanitisedError'
 describe('sanitised error', () => {
   it('it should omit the request headers from the error object ', () => {
     const error = {
-      name: '',
+      name: 'SomeError',
       status: 404,
       response: {
         req: {
@@ -32,6 +32,7 @@ describe('sanitised error', () => {
       status: 404,
       text: { details: 'details' },
       data: { content: 'hello' },
+      name: 'SomeError',
     })
   })
 

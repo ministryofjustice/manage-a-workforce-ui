@@ -1,6 +1,6 @@
 import type { ResponseError } from 'superagent'
 
-interface SanitisedError {
+interface SanitisedError extends Error {
   text?: string
   status?: number
   headers?: unknown
@@ -20,10 +20,12 @@ export default function sanitise(error: UnsanitisedError): SanitisedError {
       data: error.response.body,
       message: error.message,
       stack: error.stack,
+      name: error.name,
     }
   }
   return {
     message: error.message,
     stack: error.stack,
+    name: error.name,
   }
 }

@@ -12,7 +12,6 @@ export default {
   },
   error(error, message) {
     if (appInsightsClient) {
-      logger.info({ message: 'app insights is enabled' })
       appInsightsClient.trackException({ exception: error })
     }
     logger.error(error, message)

@@ -1,6 +1,6 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
-{% macro breadCrumb(pageTitle, breadCrumbList) %}
+{% macro breadCrumb(title, breadCrumbList) %}
 
   {% set rows = [ {
     text: "Home",
@@ -19,7 +19,7 @@
 
   {% set completedRows = (rows.push(
     {
-      text: pageTitle
+      text: title
     }
   ), rows) %}
 

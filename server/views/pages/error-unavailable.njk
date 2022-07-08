@@ -1,21 +1,8 @@
 {% extends "../partials/layout.njk" %}
 
 {% block content %}
-  {% if status === 404  %}
-    <h1 class="govuk-heading-l">Page not found</h1>
-    <p class="govuk-body">If you entered a web address, check it is correct.</p>
-    <p class="govuk-body">You can <a class="govuk-link" href="/">go to the homepage</a> to find the information you need.</p>
-  {% endif %}
-
-  {% if status === 500  %}
     <h1 class="govuk-heading-l">Sorry, the service is unavailable</h1>
     <p class="govuk-body">Try reloading the page. You can do this by pressing F5 (on a PC) or Cmd + R (on a Mac). </p>
     <h2 class="govuk-heading-m"> If you were near the end of allocating a case</h2>
     <p class="govuk-body"> If you've tried reloading the page and you still see this error message, check NDelius to see whether the case has been allocated. </p>
-  {% endif %}
-
-  {% if status === 503  %}
-    <h1 class="govuk-heading-l">Sorry, the service is unavailable</h1>
-    <p class="govuk-body">Please try again later.</p>
-  {% endif %}
 {% endblock %}

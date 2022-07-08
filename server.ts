@@ -18,5 +18,5 @@ createApplication()
     })
   })
   .catch(error => {
-    logger.error(`Failed to start application: ${error.message}`)
+    logger.error(error, `Failed to start application: ${error.message}`)
   })

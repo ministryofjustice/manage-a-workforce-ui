@@ -10,7 +10,7 @@ const RedisStore = connectRedis(session)
 
 export default function setUpWebSession(): Router {
   const client = createRedisClient({ legacyMode: true })
-  client.connect().catch((err: Error) => logger.error(`Error connecting to Redis`, err))
+  client.connect().catch((err: Error) => logger.error(err, `Error connecting to Redis`))
 
   const router = express.Router()
   router.use(

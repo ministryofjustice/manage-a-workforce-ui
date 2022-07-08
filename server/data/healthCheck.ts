@@ -31,7 +31,7 @@ export function serviceCheckFactory(
         .timeout(serviceTimeout)
         .end((error, result) => {
           if (error) {
-            logger.error(error.stack, `Error calling ${name}`)
+            logger.error(error, `Error calling ${name}`)
             reject(error)
           } else if (result.status === 200) {
             resolve('OK')

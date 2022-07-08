@@ -25,7 +25,7 @@ export const createRedisClient = ({ legacyMode }: { legacyMode: boolean }): Redi
     },
   })
 
-  client.on('error', (e: Error) => logger.error('Redis client error', e))
+  client.on('error', (e: Error) => logger.error(e, 'Redis client error'))
 
   return client
 }

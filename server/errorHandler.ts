@@ -16,15 +16,13 @@ export default function createErrorHandler() {
     }
 
     const status = error.status || 500
-    switch (status) {
-      case 404:
-        return res.status(status).render('pages/error-notfound', {
-          title: 'Not Found | Manage a workforce',
-        })
-      default:
-        return res.status(status).render('pages/error-unavailable', {
-          title: 'Sorry, the service is unavailable | Manage a workforce',
-        })
+    if (status === 404) {
+      return res.status(status).render('pages/error-notfound', {
+        title: 'Not Found | Manage a workforce',
+      })
     }
+    return res.status(status).render('pages/error-unavailable', {
+      title: 'Sorry, the service is unavailable | Manage a workforce',
+    })
   }
 }

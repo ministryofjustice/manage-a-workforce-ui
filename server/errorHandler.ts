@@ -5,15 +5,26 @@ import logger from '../logger'
 export default function createErrorHandler() {
   return (error: HTTPError, req: Request, res: Response, next: NextFunction): void => {
     logger.error(`Error handling request for '${req.originalUrl}', user '${res.locals.user?.username}'`, error)
-    res.status(error.status || 500)
 
     if (error.status === 401 || error.status === 403) {
       logger.info('Logging user out')
       return res.redirect('/sign-out')
     }
 
-    return res.render('pages/error', {
-      status: error.status || 500,
-    })
+    const status = error.status || 500
+    switch (status) {
+      case 404:
+        return res.status(status).render('pages/error-notfound', {
+          title: 'Not Found | Manage a workforce',
+        })
+      case 503:
+        return res.status(status).render('pages/error-unavailable', {
+          title: 'Sorry, the service is unavailable | Manage a workforce',
+        })
+      default:
+        return res.status(status).render('pages/error-server', {
+          title: 'Sorry, the service is unavailable | Manage a workforce',
+        })
+    }
   }
 }

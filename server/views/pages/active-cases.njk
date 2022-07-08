@@ -2,8 +2,6 @@
 {%- from "../components/doubleCell/macro.njk" import doubleCell -%}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
-
-{% set pageTitle = applicationName + " - Active cases" %}
 {% set officerName = data.forename + ' '  + data.surname %}
 {% set officerGrade =  data.grade %}
 {% set officerCode =  data.code %}

@@ -2,8 +2,6 @@
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
-{% set pageTitle = applicationName + " - Case view" %}
-
 {% block beforeContent %}
     {{ govukBreadcrumbs({
         items: [

@@ -1,10 +1,12 @@
 import bunyan from 'bunyan'
 import bunyanFormat from 'bunyan-format'
-import { defaultClient as appInsightsClient } from 'applicationinsights'
+import { buildAppInsightsClient } from './server/utils/azureAppInsights'
 
 const formatOut = bunyanFormat({ outputMode: 'short', color: true })
 
 const logger = bunyan.createLogger({ name: 'Manage A Workforce Ui', stream: formatOut, level: 'debug' })
+
+const appInsightsClient = buildAppInsightsClient()
 
 export default {
   info(message) {

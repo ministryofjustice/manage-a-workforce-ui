@@ -23,7 +23,7 @@ export default abstract class Page {
     )
   }
 
-  feedbackLink = (): PageElement => cy.get('.govuk-link')
+  feedbackLink = (): PageElement => cy.get('.feedback')
 
   signOut = (): PageElement => cy.get("[href='/sign-out']")
 }

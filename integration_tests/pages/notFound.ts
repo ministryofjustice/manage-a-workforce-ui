@@ -7,5 +7,5 @@ export default class NotFoundPage extends Page {
 
   bodyText = (): PageElement => cy.get('p.govuk-body')
 
-  link = (): PageElement => cy.get('a.govuk-link')
+  link = (): PageElement => cy.get('.home')
 }

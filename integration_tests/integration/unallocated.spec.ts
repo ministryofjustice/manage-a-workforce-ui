@@ -23,6 +23,12 @@ context('Unallocated', () => {
     unallocatedPage.headerUserName().should('contain.text', 'J. Smith')
   })
 
+  it('Feedback link goes to Manage a Workforce mailbox', () => {
+    cy.signIn()
+    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    unallocatedPage.feedbackLink().should('have.attr', 'href').and('equal', 'mailto: manageaworkforce@justice.gov.uk')
+  })
+
   it('Probation Delivery Unit visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)

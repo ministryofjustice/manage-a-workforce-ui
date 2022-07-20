@@ -37,7 +37,6 @@ export default class RestClient {
   axiosClient: AxiosInstance
 
   constructor(private readonly name: string, private readonly config: ApiConfig, private readonly token: string) {
-    this.agent = config.url.startsWith('https') ? new HttpsAgent(config.agent) : new Agent(config.agent)
     this.axiosClient = axios.create({
       baseURL: config.url,
       timeout: config.timeout.response,

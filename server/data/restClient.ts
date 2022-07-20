@@ -1,6 +1,6 @@
 /* eslint-disable dot-notation */
 import superagent from 'superagent'
-import Agent, { HttpsAgent } from 'agentkeepalive'
+import Agent from 'agentkeepalive'
 import axios, { AxiosInstance } from 'axios'
 
 import logger from '../../logger'

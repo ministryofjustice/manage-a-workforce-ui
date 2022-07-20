@@ -60,8 +60,8 @@ export default {
     allocationsService: {
       url: get('ALLOCATIONS_SERVICE_URL', 'http://localhost:8091', requiredInProduction),
       timeout: {
-        response: 10000,
-        deadline: 10000,
+        response: 15000,
+        deadline: 15000,
       },
       agent: new AgentConfig(),
     },

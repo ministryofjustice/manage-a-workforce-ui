@@ -20,7 +20,7 @@ export class AgentConfig {
 
   maxFreeSockets: 10
 
-  freeSocketTimeout: 30000
+  freeSocketTimeout: 4000
 }
 
 export interface ApiConfig {

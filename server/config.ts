@@ -16,11 +16,11 @@ function get<T>(name: string, fallback: T, options = { requireInProduction: fals
 const requiredInProduction = { requireInProduction: true }
 
 export class AgentConfig {
-  maxSockets: 100
+  timeout: number
 
-  maxFreeSockets: 10
-
-  freeSocketTimeout: 4000
+  constructor(timeout = 8000) {
+    this.timeout = timeout
+  }
 }
 
 export interface ApiConfig {
@@ -63,15 +63,15 @@ export default {
         response: 15000,
         deadline: 15000,
       },
-      agent: new AgentConfig(),
+      agent: new AgentConfig(15000),
     },
     workloadService: {
       url: get('WORKLOAD_SERVICE_URL', 'http://localhost:8092', requiredInProduction),
       timeout: {
-        response: 10000,
-        deadline: 10000,
+        response: 15000,
+        deadline: 15000,
       },
-      agent: new AgentConfig(),
+      agent: new AgentConfig(15000),
     },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),

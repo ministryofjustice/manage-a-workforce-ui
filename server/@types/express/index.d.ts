@@ -33,4 +33,10 @@ export declare global {
       flash(message: 'errors'): Array<Record<string, string>>
     }
   }
+
+  export interface Response {
+    locals: {
+      cspNonce: string
+    }
+  }
 }

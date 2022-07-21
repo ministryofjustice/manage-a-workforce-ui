@@ -1,6 +1,5 @@
 import 'dotenv/config'
 import moment from 'moment-business-days'
-import crypto from 'crypto'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -93,5 +92,4 @@ export default {
   dateFormat: 'D MMM YYYY',
   currentDate: () => get('CURRENT_DATE', moment().format('YYYY-MM-DD')),
   googleAnalyticsKey: get('GOOGLE_ANALYTICS_KEY', null),
-  nonce: crypto.randomBytes(16).toString('base64'),
 }

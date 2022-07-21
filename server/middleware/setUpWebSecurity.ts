@@ -1,9 +1,14 @@
 import express, { Router } from 'express'
 import helmet from 'helmet'
-import config from '../config'
+import crypto from 'crypto'
 
 export default function setUpWebSecurity(): Router {
   const router = express.Router()
+
+  router.use((req, res, next) => {
+    res.locals.cspNonce = crypto.randomBytes(16).toString('base64')
+    next()
+  })
 
   // Secure code best practice - see:
   // 1. https://expressjs.com/en/advanced/best-practice-security.html,
@@ -17,9 +22,11 @@ export default function setUpWebSecurity(): Router {
           scriptSrc: [
             "'self'",
             'code.jquery.com',
+            'www.googletagmanager.com',
+            'www.google-analytics.com',
             "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
             "'sha256-xseXYIyJf+ofw4QIbNxoWnzeuWkO8antz0n3bwjWrMk='",
-            `'nonce-${config.nonce}'`,
+            (req, res) => `'nonce-${(res as unknown as Response).locals.cspNonce}'`,
           ],
           styleSrc: ["'self'", 'code.jquery.com'],
           fontSrc: ["'self'"],

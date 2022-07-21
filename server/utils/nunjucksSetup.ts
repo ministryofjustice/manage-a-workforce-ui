@@ -82,4 +82,5 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
   })
 
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)
+  njkEnv.addGlobal('googleAnalyticsKey', config.googleAnalyticsKey)
 }

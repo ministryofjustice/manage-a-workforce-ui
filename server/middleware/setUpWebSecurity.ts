@@ -17,21 +17,28 @@ export default function setUpWebSecurity(): Router {
     helmet({
       contentSecurityPolicy: {
         directives: {
-          defaultSrc: ["'self'"],
+          defaultSrc: ["'self'", 'https://www.google-analytics.com', 'www.google-analytics.com'],
           // Hash allows inline script pulled in from https://github.com/alphagov/govuk-frontend/blob/master/src/govuk/template.njk
           scriptSrc: [
             "'self'",
             'code.jquery.com',
             'www.googletagmanager.com',
             'www.google-analytics.com',
+            'https://www.google-analytics.com',
+            'https://www.googletagmanager.com',
             "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
             "'sha256-xseXYIyJf+ofw4QIbNxoWnzeuWkO8antz0n3bwjWrMk='",
             (req, res) => `'nonce-${(res as unknown as Response).locals.cspNonce}'`,
           ],
           styleSrc: ["'self'", 'code.jquery.com'],
           fontSrc: ["'self'"],
-          imgSrc: ["'self'", 'www.googletagmanager.com', 'www.google-analytics.com'],
-          connectSrc: ["'self'", 'www.googletagmanager.com', 'www.google-analytics.com'],
+          imgSrc: ["'self'", 'https://www.google-analytics.com', 'www.google-analytics.com'],
+          connectSrc: [
+            "'self'",
+            'www.googletagmanager.com',
+            'www.google-analytics.com',
+            'https://www.google-analytics.com',
+          ],
         },
       },
       referrerPolicy: {

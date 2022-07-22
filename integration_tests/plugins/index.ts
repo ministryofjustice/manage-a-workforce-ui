@@ -77,7 +77,7 @@ export default (on: (string, Record) => void): void => {
 
     stubGetOffenderManagerCases: offenderManagerCases.stubGetOffenderManagerCases,
 
-    stubGetStaffById: staff.stubGetStaffById,
+    stubGetStaffByCode: staff.stubGetStaffByCode,
 
     stubAllocateOffenderManagerToCase: allocationComplete.stubAllocateOffenderManagerToCase,
 

@@ -10,11 +10,11 @@ context('Allocate Complete', () => {
   })
 
   it('Notification badge visible on page with number of unallocations', () => {
-    cy.task('stubGetStaffById')
+    cy.task('stubGetStaffByCode')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/instructions')
     cy.get('#instructions').type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
     cy.task('stubGetPersonById')
@@ -24,11 +24,11 @@ context('Allocate Complete', () => {
   })
 
   it('return to unallocated cases link exists', () => {
-    cy.task('stubGetStaffById')
+    cy.task('stubGetStaffByCode')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/instructions')
     cy.get('#instructions').type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
     cy.task('stubGetPersonById')
@@ -41,10 +41,10 @@ context('Allocate Complete', () => {
   })
 
   it('panel visible on page with correct information', () => {
-    cy.task('stubGetStaffById')
+    cy.task('stubGetStaffByCode')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/instructions')
     cy.get('#instructions').type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
     cy.task('stubGetPersonById')
@@ -57,10 +57,10 @@ context('Allocate Complete', () => {
   })
 
   it('What happens next content visible on page', () => {
-    cy.task('stubGetStaffById')
+    cy.task('stubGetStaffByCode')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/instructions')
     cy.get('#instructions').type('Test')
     cy.get('#person\\[0\\]\\[email\\]').type('example.admin@justice.gov.uk')
     cy.get('.moj-add-another__add-button').click()
@@ -83,10 +83,10 @@ context('Allocate Complete', () => {
   })
 
   it('When no Initial appointment date booked, Initial appointment date due by date visible on page', () => {
-    cy.task('stubGetStaffById')
+    cy.task('stubGetStaffByCode')
     cy.task('stubGetCaseOverviewNoInitialAppointment')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/instructions')
     cy.get('#instructions').type('Test')
     cy.get('#person\\[0\\]\\[email\\]').type('example.admin@justice.gov.uk')
     cy.get('.moj-add-another__add-button').click()
@@ -102,10 +102,10 @@ context('Allocate Complete', () => {
   })
 
   it('When a custody case, Initial appointment date not needed visible on page', () => {
-    cy.task('stubGetStaffById')
+    cy.task('stubGetStaffByCode')
     cy.task('stubGetCaseOverviewCustodyCase')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/5678/instructions')
+    cy.visit('/J678910/convictions/123456789/allocate/OM1/instructions')
     cy.get('#instructions').type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
     cy.task('stubGetPersonById')

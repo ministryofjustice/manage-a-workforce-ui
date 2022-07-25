@@ -42,6 +42,12 @@ generic-service:
         pass,\
         t:none,\
         setvar:tx.paranoia_level=2"
+      SecRule REQUEST_URI "@endsWith /confirm-allocation" \
+        "id:1006,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=attack-rce;ARGS:instructions"
 
   livenessProbe:
     httpGet:

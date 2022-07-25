@@ -48,6 +48,8 @@ generic-service:
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=attack-rce;ARGS:instructions"
+      SecRuleUpdateTargetById 942440 "!ARGS:_csrf"
+
 
   livenessProbe:
     httpGet:

@@ -49,14 +49,14 @@ export default function routes(router: Router, services: Services): Router {
     await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionId)
   })
 
-  get('/:crn/convictions/:convictionId/allocate/:staffId/confirm', async (req, res) => {
-    const { crn, convictionId, staffId } = req.params
-    await allocationsController.getConfirmAllocation(req, res, crn, staffId, convictionId)
+  get('/:crn/convictions/:convictionId/allocate/:staffCode/confirm', async (req, res) => {
+    const { crn, convictionId, staffCode } = req.params
+    await allocationsController.getAllocationImpact(req, res, crn, staffCode, convictionId)
   })
 
-  get('/:crn/convictions/:convictionId/allocate/:staffId/instructions', async (req, res) => {
-    const { crn, convictionId, staffId } = req.params
-    await allocationsController.getConfirmInstructions(req, res, crn, staffId, convictionId)
+  get('/:crn/convictions/:convictionId/allocate/:staffCode/instructions', async (req, res) => {
+    const { crn, convictionId, staffCode } = req.params
+    await allocationsController.getConfirmInstructions(req, res, crn, staffCode, convictionId)
   })
 
   get('/:crn/convictions/:convictionId/allocate/:offenderManagerCode/officer-view', async (req, res) => {
@@ -69,9 +69,9 @@ export default function routes(router: Router, services: Services): Router {
     await allocationsController.getActiveCases(req, res, crn, offenderManagerCode, convictionId)
   })
 
-  post('/:crn/convictions/:convictionId/allocate/:staffId/confirm-allocation', async (req, res) => {
-    const { crn, convictionId, staffId } = req.params
-    await allocationsController.allocateCaseToOffenderManager(req, res, crn, staffId, convictionId, req.body)
+  post('/:crn/convictions/:convictionId/allocate/:staffCode/confirm-allocation', async (req, res) => {
+    const { crn, convictionId, staffCode } = req.params
+    await allocationsController.allocateCaseToOffenderManager(req, res, crn, staffCode, convictionId, req.body)
   })
 
   return router

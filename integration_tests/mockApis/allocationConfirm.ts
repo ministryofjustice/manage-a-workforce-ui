@@ -6,7 +6,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/N03F01/offenderManagers/5678/impact`,
+        urlPattern: `/team/N03F01/offenderManager/OM1/impact`,
         bodyPatterns: [
           {
             equalToJson: '{"crn":"J678910", "convictionId": 123456789}',
@@ -31,7 +31,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/N03F01/offenderManagers/5678/impact`,
+        urlPattern: `/team/N03F01/offenderManager/OM1/impact`,
         bodyPatterns: [
           {
             equalToJson: '{"crn":"J678910", "convictionId": 123456789}',

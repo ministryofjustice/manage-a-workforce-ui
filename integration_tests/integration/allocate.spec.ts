@@ -149,9 +149,9 @@ context('Allocate', () => {
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.radioButtons().first().check()
-    allocatePage.checkedRadioButton().should('have.value', '12345')
+    allocatePage.checkedRadioButton().should('have.value', 'OM1')
     allocatePage.radioButtons().last().check()
-    allocatePage.checkedRadioButton().should('have.value', '6789')
+    allocatePage.checkedRadioButton().should('have.value', 'OM2')
   })
 
   it('should display error when no offender managers selected and allocate case button clicked', () => {
@@ -171,7 +171,7 @@ context('Allocate', () => {
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
     allocatePage.radioButtons().first().check()
-    allocatePage.checkedRadioButton().should('have.value', '12345')
+    allocatePage.checkedRadioButton().should('have.value', 'OM1')
     allocatePage.clearSelectionButton().click()
     allocatePage.checkedRadioButton().should('not.exist')
   })

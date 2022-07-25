@@ -29,10 +29,14 @@ export default class WorkloadService {
     })) as AllocateOffenderManagers
   }
 
-  async getCaseAllocationImpact(token: string, crn, staffId, convictionId): Promise<OffenderManagerPotentialWorkload> {
-    logger.info(`Getting impact for team N03F01 and staff id ${staffId}`)
+  async getCaseAllocationImpact(
+    token: string,
+    crn,
+    staffCode,
+    convictionId
+  ): Promise<OffenderManagerPotentialWorkload> {
     return (await this.restClient(token).post({
-      path: `/team/N03F01/offenderManagers/${staffId}/impact`,
+      path: `/team/N03F01/offenderManager/${staffCode}/impact`,
       data: {
         crn,
         convictionId: parseInt(convictionId, 10),
@@ -57,10 +61,9 @@ export default class WorkloadService {
     })) as OffenderManagerOverview
   }
 
-  async getStaffById(token: string, staffId): Promise<StaffSummary> {
-    logger.info(`Getting staff by ID ${staffId}`)
+  async getStaffByCode(token: string, staffCode): Promise<StaffSummary> {
     return (await this.restClient(token).get({
-      path: `/staff/${staffId}`,
+      path: `/staff/code/${staffCode}`,
       headers: { Accept: 'application/json' },
     })) as StaffSummary
   }
@@ -76,14 +79,13 @@ export default class WorkloadService {
   async allocateCaseToOffenderManager(
     token: string,
     crn,
-    staffId,
+    staffCode,
     convictionId,
     instructions,
     emailTo
   ): Promise<OffenderManagerAllocatedCase> {
-    logger.info(`Allocating case with crn ${crn} for team N03F01 and staff id ${staffId}`)
     return (await this.restClient(token).post({
-      path: `/team/N03F01/offenderManagers/${staffId}/cases`,
+      path: `/team/N03F01/offenderManager/${staffCode}/case`,
       data: {
         crn,
         eventId: parseInt(convictionId, 10),

@@ -183,11 +183,11 @@ export default class AllocationsController {
     res.redirect(redirectUrl)
   }
 
-  async getConfirmAllocation(req: Request, res: Response, crn, staffId, convictionId) {
+  async getAllocationImpact(req: Request, res: Response, crn, staffCode, convictionId) {
     const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,
-      staffId,
+      staffCode,
       convictionId
     )
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
@@ -198,13 +198,13 @@ export default class AllocationsController {
       crn: caseOverview.crn,
       tier: caseOverview.tier,
       convictionId: caseOverview.convictionId,
-      staffId,
+      staffCode,
       casesLength: res.locals.casesLength,
     })
   }
 
-  async getConfirmInstructions(req: Request, res: Response, crn, staffId, convictionId) {
-    const response: StaffSummary = await this.workloadService.getStaffById(res.locals.user.token, staffId)
+  async getConfirmInstructions(req: Request, res: Response, crn, staffCode, convictionId) {
+    const response: StaffSummary = await this.workloadService.getStaffByCode(res.locals.user.token, staffCode)
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
     res.render('pages/confirm-instructions', {
       title: `${caseOverview.name} | Review allocation instructions | Manage a workforce`,
@@ -212,7 +212,7 @@ export default class AllocationsController {
       name: caseOverview.name,
       crn: caseOverview.crn,
       tier: caseOverview.tier,
-      staffId,
+      staffCode,
       convictionId: caseOverview.convictionId,
       casesLength: res.locals.casesLength,
       errors: req.flash('errors') || [],
@@ -267,7 +267,7 @@ export default class AllocationsController {
     response.data.on('end', next)
   }
 
-  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffId, convictionId, form) {
+  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffCode, convictionId, form) {
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
       confirmInstructionForm,
@@ -280,12 +280,12 @@ export default class AllocationsController {
     if (errors.length > 0) {
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
-      res.redirect(`/${crn}/convictions/${convictionId}/allocate/${staffId}/instructions`)
+      res.redirect(`/${crn}/convictions/${convictionId}/allocate/${staffCode}/instructions`)
     } else {
       const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
         res.locals.user.token,
         crn,
-        staffId,
+        staffCode,
         convictionId,
         form.instructions,
         form.person.map(person => person.email).filter(email => email)

@@ -1,3 +1,5 @@
+/* eslint-disable security-node/detect-dangerous-redirects */
+
 import type { Router } from 'express'
 import express from 'express'
 import passport from 'passport'

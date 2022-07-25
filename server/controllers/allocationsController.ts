@@ -176,11 +176,11 @@ export default class AllocationsController {
     const {
       body: { allocatedOfficer },
     } = req
-    let redirectUrl = `/${crn}/convictions/${convictionId}/allocate?error=true`
     if (allocatedOfficer) {
-      redirectUrl = `/${crn}/convictions/${convictionId}/allocate/${allocatedOfficer}/confirm`
+      return this.getAllocationImpact(req, res, crn, allocatedOfficer, convictionId)
     }
-    res.redirect(redirectUrl)
+    req.query.error = 'true'
+    return this.getAllocate(req, res, crn, convictionId)
   }
 
   async getAllocationImpact(req: Request, res: Response, crn, staffCode, convictionId) {
@@ -280,48 +280,43 @@ export default class AllocationsController {
     if (errors.length > 0) {
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
-      res.redirect(`/${crn}/convictions/${convictionId}/allocate/${staffCode}/instructions`)
-    } else {
-      const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
-        res.locals.user.token,
-        crn,
-        staffCode,
-        convictionId,
-        form.instructions,
-        form.person.map(person => person.email).filter(email => email)
-      )
-      const personDetails: PersonManager = await this.workloadService.getPersonById(
-        res.locals.user.token,
-        response.personManagerId
-      )
-      const caseOverviewResponse = await this.allocationsService.getCaseOverview(
-        res.locals.user.token,
-        crn,
-        convictionId
-      )
-      const caseOverview = new CaseOverview(
-        caseOverviewResponse.name,
-        caseOverviewResponse.crn,
-        caseOverviewResponse.tier,
-        caseOverviewResponse.sentenceDate,
-        caseOverviewResponse.initialAppointment,
-        caseOverviewResponse.status,
-        caseOverviewResponse.convictionId
-      )
-
-      res.render('pages/allocation-complete', {
-        title: `${caseOverview.name} | Case allocated | Manage a workforce`,
-        data: response,
-        crn,
-        convictionId,
-        casesLength: res.locals.casesLength,
-        personDetails,
-        addAnotherEmail: form.person,
-        initialAppointment: caseOverview.initialAppointment,
-        initialAppointmentDue: caseOverview.initialAppointmentDue,
-        caseType: caseOverviewResponse.caseType,
-      })
+      return this.getConfirmInstructions(req, res, crn, staffCode, convictionId)
     }
+    const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
+      res.locals.user.token,
+      crn,
+      staffCode,
+      convictionId,
+      form.instructions,
+      form.person.map(person => person.email).filter(email => email)
+    )
+    const personDetails: PersonManager = await this.workloadService.getPersonById(
+      res.locals.user.token,
+      response.personManagerId
+    )
+    const caseOverviewResponse = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
+    const caseOverview = new CaseOverview(
+      caseOverviewResponse.name,
+      caseOverviewResponse.crn,
+      caseOverviewResponse.tier,
+      caseOverviewResponse.sentenceDate,
+      caseOverviewResponse.initialAppointment,
+      caseOverviewResponse.status,
+      caseOverviewResponse.convictionId
+    )
+
+    return res.render('pages/allocation-complete', {
+      title: `${caseOverview.name} | Case allocated | Manage a workforce`,
+      data: response,
+      crn,
+      convictionId,
+      casesLength: res.locals.casesLength,
+      personDetails,
+      addAnotherEmail: form.person,
+      initialAppointment: caseOverview.initialAppointment,
+      initialAppointmentDue: caseOverview.initialAppointmentDue,
+      caseType: caseOverviewResponse.caseType,
+    })
   }
 }
 

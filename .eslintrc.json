@@ -5,7 +5,7 @@
     "jest": true
   },
 
-  "plugins": ["import"],
+  "plugins": ["import", "security-node"],
 
   "settings": {
     "import/parsers": {
@@ -59,7 +59,7 @@
     }
   ],
 
-  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "extends": ["airbnb-base", "plugin:prettier/recommended", "plugin:security-node/recommended"],
 
   "rules": {
     "no-unused-vars": [

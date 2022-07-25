@@ -36,8 +36,7 @@ For local running, start a test db, redis, and wiremock instance by:
 Install dependencies and run the build
 
 ```sh
-npm install
-npm run build
+npm install && npm run build
 ```
 
 Then run the server in test mode by:

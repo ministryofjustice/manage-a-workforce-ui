@@ -26,4 +26,6 @@ export default abstract class Page {
   feedbackLink = (): PageElement => cy.get('.feedback')
 
   signOut = (): PageElement => cy.get("[href='/sign-out']")
+
+  highlightedTab = (): PageElement => cy.get('a[aria-current*="page"]')
 }

@@ -231,6 +231,7 @@ export default class AllocationsController {
       crn,
       convictionId,
       casesLength: res.locals.casesLength,
+      isOverview: true,
     })
   }
 
@@ -250,6 +251,7 @@ export default class AllocationsController {
       crn,
       convictionId,
       casesLength: res.locals.casesLength,
+      isActiveCases: true,
     })
   }
 

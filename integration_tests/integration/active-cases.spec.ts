@@ -39,6 +39,14 @@ context('Active Cases', () => {
     activeCasesPage.heading().should('contain', 'Active cases')
   })
 
+  it('Active cases tab is highlighted', () => {
+    cy.task('stubGetOffenderManagerCases')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
+    const overviewPage = Page.verifyOnPage(ActiveCasesPage)
+    overviewPage.highlightedTab().should('contain.text', 'Active cases').and('not.contain.text', 'Overview')
+  })
+
   it('Table visible on page', () => {
     cy.task('stubGetOffenderManagerCases')
     cy.signIn()

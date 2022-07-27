@@ -47,6 +47,14 @@ context('Overview', () => {
     overviewPage.subNav().should('contain', 'Overview').and('contain', 'Active cases (22)')
   })
 
+  it('Overview tab is highlighted', () => {
+    cy.task('stubGetOverview')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    const overviewPage = Page.verifyOnPage(OverviewPage)
+    overviewPage.highlightedTab().should('contain.text', 'Overview').and('not.contain.text', 'Active cases')
+  })
+
   it('Summary text is visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()

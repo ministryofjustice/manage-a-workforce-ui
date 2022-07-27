@@ -44,12 +44,12 @@
                     {
                         text: 'Overview',
                         href: '/' + crn + '/convictions/' + convictionId + '/allocate/' + officerCode + '/officer-view',
-                        active: title === 'Overview'
+                        active: isOverview
                     },
                     {
                         text: 'Active cases (' + officerTotalCases + ')',
                         href: '/' + crn + '/convictions/' + convictionId + '/allocate/' + officerCode + '/active-cases',
-                        active: title === 'Active cases'
+                        active: isActiveCases
                     }
                 ]
             }) }}

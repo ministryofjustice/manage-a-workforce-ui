@@ -2,11 +2,11 @@
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-form-group">
       <h1><label class="govuk-label govuk-label--l" for="instructions">
-          {{ params.titleText | safe if params.titleText else "Write allocation instructions" }}
+          {{ params.titleText | safe if params.titleText else "Allocation instructions" }}
         </label>
       </h1>
       <div id="more-detail-hint" class="govuk-hint">
-        {{ params.hintText | safe if params.hintText else "Enter any details you want to highlight to the probation practitioner. These are saved automatically, and you will have a chance to review later." }}
+        {{ params.hintText | safe if params.hintText else "Enter any instructions/information you want to pass on. This is saved automatically, and you can review it later when selecting the recipients." }}
       </div>
       <textarea class="govuk-textarea" id="instructions" name="instructions" rows="5" aria-describedby="instuctions-hint"></textarea>
     </div>

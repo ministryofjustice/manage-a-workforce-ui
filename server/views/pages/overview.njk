@@ -68,14 +68,14 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
 
-            <h2 class="govuk-heading-l govuk-!-margin-bottom-0">Current workload</h2>
+            <h2 class="govuk-heading-l govuk-!-margin-bottom-0">Workload</h2>
             <p class="govuk-body-s govuk-!-margin-bottom-2">Last updated: {{ data.lastUpdatedOn | dateFormat }} at {{ data.lastUpdatedOn | timeFormat }}</p>
 
             <div class="govuk-grid-row">
                 <div class="card__layout">
                     {{ card({
                         classes: 'card-total',
-                        titleHtml: ('<a href="/' + crn + '/convictions/' + convictionId + '/allocate/' + data.code + '/active-cases" class="govuk-link--no-visited-state" aria-label="Total cases">' + data.totalCases + '<br>' + '<p>' + "total cases"  + '</p>' + '</a>')
+                        titleHtml: ('<a href="/' + crn + '/convictions/' + convictionId + '/allocate/' + data.code + '/active-cases" class="govuk-link--no-visited-state" aria-label="Total cases">' + data.totalCases + '<br>' + '<p>' + "cases"  + '</p>' + '</a>')
                     }) }}
                 </div>
                 <div class="card__layout">

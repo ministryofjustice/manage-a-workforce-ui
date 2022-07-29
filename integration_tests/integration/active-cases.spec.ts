@@ -18,17 +18,12 @@ context('Active Cases', () => {
     activeCasesPage.secondaryText().should('contain', 'PO')
   })
 
-  it('Breadcrumbs are visible on page', () => {
+  it('Back link is visible on page', () => {
     cy.task('stubGetOffenderManagerCases')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
     const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
-    activeCasesPage
-      .breadCrumbs()
-      .should('contain', 'Home')
-      .and('contain', 'Unallocated cases')
-      .and('contain', 'Case view')
-      .and('contain', 'Allocate to probation practitioner')
+    activeCasesPage.backLink().should('contain', 'Back')
   })
 
   it('Heading is visible on page', () => {

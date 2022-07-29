@@ -139,7 +139,11 @@ context('Allocate', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.breadCrumbs().should('contain', 'Home').and('contain', 'Unallocated cases').and('contain', 'Case view')
+    allocatePage
+      .breadCrumbs()
+      .should('contain', 'Home')
+      .and('contain', 'Unallocated cases')
+      .and('contain', 'Case details')
   })
 
   it('should only be able to select one offender manager at a time', () => {

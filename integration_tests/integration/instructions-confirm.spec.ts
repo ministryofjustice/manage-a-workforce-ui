@@ -37,7 +37,7 @@ context('Instructions Confirmation', () => {
       .breadCrumbs()
       .should('contain', 'Home')
       .and('contain', 'Unallocated cases')
-      .and('contain', 'Case view')
+      .and('contain', 'Case details')
       .and('contain', 'Allocate to probation practitioner')
   })
 
@@ -67,9 +67,7 @@ context('Instructions Confirmation', () => {
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.instructionsTextArea().should('exist')
     instructionsPage.label().should('contain', 'Review allocation instructions')
-    instructionsPage
-      .hint()
-      .should('contain', 'Review the notes you have made before sending to the probation practitioner.')
+    instructionsPage.hint().should('contain', 'Review your notes for the probation practitioner.')
   })
 
   it('Inset text should be visible on page', () => {
@@ -91,10 +89,7 @@ context('Instructions Confirmation', () => {
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage
       .copyText()
-      .should(
-        'contain',
-        'You can also send a copy of the notes to another recipient, for example your case admin officer.'
-      )
+      .should('contain', 'You can send a copy of these notes to another recipient, for example a case admin officer.')
   })
 
   it('add a recipient should be visible on page', () => {

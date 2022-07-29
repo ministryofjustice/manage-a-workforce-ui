@@ -3,6 +3,8 @@ import plugins from './plugins'
 
 export default defineConfig({
   chromeWebSecurity: false,
+  viewportWidth: 1280,
+  viewportHeight: 750,
   fixturesFolder: 'integration_tests/fixtures',
   reporter: 'cypress-multi-reporters',
   reporterOptions: {

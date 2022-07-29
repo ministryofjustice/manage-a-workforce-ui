@@ -74,12 +74,12 @@ context('Allocate Complete', () => {
     allocationCompletePage.mediumHeading().should('have.text', 'What happens next')
     allocationCompletePage
       .bulletedList()
-      .should('contain', 'This allocation will be updated in NDelius')
+      .should('contain', 'this case will be updated in NDelius within 5 minutes')
       .and(
         'contain',
-        'John Doe (john.doe@test.justice.gov.uk) has been notified about this allocation, and we have sent a copy of your allocation instructions to example.admin@justice.gov.uk, example.admin@justice.gov.uk'
+        'John Doe (john.doe@test.justice.gov.uk) has been notified, and we have sent a copy of your allocation instructions to example.admin@justice.gov.uk, example.admin@justice.gov.uk'
       )
-      .and('contain', 'The induction interview is scheduled for 1 Sep 2021')
+      .and('contain', 'the initial appointment is scheduled for 1 Sep 2021')
   })
 
   it('When no Initial appointment date booked, Initial appointment date due by date visible on page', () => {
@@ -98,7 +98,7 @@ context('Allocate Complete', () => {
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
       .bulletedList()
-      .should('contain', 'The induction interview needs to be scheduled by 8 Sep 2021')
+      .should('contain', 'the initial appointment needs to be scheduled by 8 Sep 2021')
   })
 
   it('When a custody case, Initial appointment date not needed visible on page', () => {
@@ -114,7 +114,7 @@ context('Allocate Complete', () => {
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
       .bulletedList()
-      .should('contain', 'No induction interview needed (custody case)')
-      .and('contain', 'John Doe (john.doe@test.justice.gov.uk) has been notified about this allocation')
+      .should('contain', 'no initial appointment needed (custody case)')
+      .and('contain', 'John Doe (john.doe@test.justice.gov.uk) has been notified')
   })
 })

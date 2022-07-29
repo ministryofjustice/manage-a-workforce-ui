@@ -1,5 +1,5 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubFor } from './allocation-wiremock'
+import { stubFor } from '../mockServices/allocation-wiremock'
 
 export default {
   stubGetRisk: (): SuperAgentRequest => {

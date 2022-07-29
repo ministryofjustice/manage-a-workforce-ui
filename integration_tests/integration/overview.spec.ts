@@ -18,17 +18,12 @@ context('Overview', () => {
     overviewPage.secondaryText().should('contain', 'PO')
   })
 
-  it('Breadcrumbs are visible on page', () => {
+  it('Back link is visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
-    overviewPage
-      .breadCrumbs()
-      .should('contain', 'Home')
-      .and('contain', 'Unallocated cases')
-      .and('contain', 'Case view')
-      .and('contain', 'Allocate to probation practitioner')
+    overviewPage.backLink().should('contain', 'Back')
   })
 
   it('Heading is visible on page', () => {
@@ -36,7 +31,7 @@ context('Overview', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
-    overviewPage.heading().should('contain', 'Current workload')
+    overviewPage.heading().should('contain', 'Workload')
   })
 
   it('Sub nav visible on page', () => {
@@ -114,7 +109,7 @@ context('Overview', () => {
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.cardHeading().should('contain', '22')
-    overviewPage.totalCases().should('contain', 'total cases')
+    overviewPage.totalCases().should('contain', 'cases')
     overviewPage
       .totalCasesLink()
       .should('have.attr', 'href')

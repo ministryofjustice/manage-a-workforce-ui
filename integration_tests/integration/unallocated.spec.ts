@@ -167,7 +167,7 @@ context('Unallocated', () => {
   it('Unallocated custody cases visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.otherCasesHeading().should('have.text', 'Unallocated custody cases')
+    unallocatedPage.otherCasesHeading().should('have.text', 'Other types of cases')
   })
 
   it('Unallocated custody cases warning visible on page', () => {
@@ -176,7 +176,7 @@ context('Unallocated', () => {
     unallocatedPage.warningIcon().should('exist')
     unallocatedPage
       .warningText()
-      .should('contain', 'You must also check NDelius for any custody cases that need to be allocated.')
+      .should('contain', 'You must also check NDelius for any other cases that need to be allocated.')
   })
 
   it('User can log out', () => {

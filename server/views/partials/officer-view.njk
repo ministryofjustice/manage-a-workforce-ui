@@ -1,28 +1,11 @@
 {% extends "partials/layout.njk" %}
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-
-
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% block beforeContent %}
-    {{ govukBreadcrumbs({
-        items: [
-            {
-                text: "Home"
-            },
-            {
-                text: "Unallocated cases",
-                href: "/"
-            },
-            {
-                text: "Case view",
-                href: "/" + crn + "/convictions/" + convictionId + "/case-view"
-            },
-            {
-                text: "Allocate to probation practitioner",
-                href: "/" + crn + "/convictions/" + convictionId + "/allocate"
-            }
-        ]
+    {{ govukBackLink({
+      text: "Back",
+      href: "/" + crn + "/convictions/" + convictionId + "/allocate"
     }) }}
 {% endblock %}
 

@@ -97,7 +97,7 @@ context('Summary', () => {
     cy.signIn()
     cy.get('a[href*="J678910/convictions/123456789/case-view"]').click()
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.caseDetailsTitle().should('have.text', 'Case details')
+    summaryPage.caseDetailsTitle().should('have.text', 'Case information')
     summaryPage.downloadLink('J678910', '123456789', '00000000-0000-0000-0000-000000000000').should('exist')
     summaryPage.downloadLink('J678910', '123456789', '11111111-1111-1111-1111-111111111111').should('exist')
     summaryPage.downloadLink('J678910', '123456789', '22222222-2222-2222-2222-222222222222').should('exist')
@@ -115,7 +115,7 @@ context('Summary', () => {
     cy.signIn()
     cy.get('a[href*="L786545/convictions/56789/case-view"]').click()
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.caseDetailsTitle().should('have.text', 'Case details')
+    summaryPage.caseDetailsTitle().should('have.text', 'Case information')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       PNC: 'A/8404713BA',
       'CPS pack': 'No pack created',

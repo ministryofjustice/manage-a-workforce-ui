@@ -42,9 +42,7 @@ context('Allocate Confirmation', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
-    allocatePage
-      .subHeading()
-      .should('have.text', 'You are allocating probation practitioner John Doe (PO) to this case.')
+    allocatePage.subHeading().should('have.text', 'You’re allocating this case to probation practitioner John Doe (PO)')
   })
 
   it('Breadcrumbs visible on page', () => {
@@ -57,7 +55,7 @@ context('Allocate Confirmation', () => {
       .breadCrumbs()
       .should('contain', 'Home')
       .and('contain', 'Unallocated cases')
-      .and('contain', 'Case view')
+      .and('contain', 'Case details')
       .and('contain', 'Allocate to probation practitioner')
   })
 
@@ -86,9 +84,7 @@ context('Allocate Confirmation', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
-    allocatePage
-      .capacityImpactStatement()
-      .should('have.text', 'This will change their workload capacity from 50.4% to 64.8%.')
+    allocatePage.capacityImpactStatement().should('have.text', 'This will increase their workload from 50.4% to 64.8%.')
   })
 
   it('Display current and potential capacity as red when over capacity', () => {

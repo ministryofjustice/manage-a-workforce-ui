@@ -140,6 +140,7 @@ workflows:
           name: deploy_dev
           env: "dev"
           jira_update: true
+          jira_env_type: development
           context: hmpps-common-vars
           filters:
             branches:

@@ -12,6 +12,8 @@ generic-service:
   ingress:
     enabled: true
     modsecurity_enabled: true
+    v1_2_enabled: true
+    v0_47_enabled: true
     host: app-hostname.local    # override per environment
     tlsSecretName: manage-a-workforce-ui-cert
     path: /

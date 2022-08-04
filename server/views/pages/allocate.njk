@@ -56,7 +56,11 @@
         { html: govukLabel({
             text: item.name,
             for: ('allocated-officer-' + item.code)
-          }) },
+          }),
+            attributes: {
+                "data-sort-value": item.name
+                }
+        },
         { html: ('<div class="tooltip">' + item.grade + '<span class="tooltiptext">' + item.gradeTip + '</span></div>'),
             attributes: {
                 "data-sort-value": item.gradeOrder

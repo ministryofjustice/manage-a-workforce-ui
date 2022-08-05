@@ -86,7 +86,7 @@
   "dependencies": {
     "@ministryofjustice/frontend": "1.4.2",
     "agentkeepalive": "4.2.1",
-    "applicationinsights": "^2.3.3",
+    "applicationinsights": "^2.3.4",
     "axios": "^0.27.2",
     "body-parser": "1.20.0",
     "bunyan": "^1.8.15",
@@ -144,7 +144,7 @@
     "eslint": "^8.21.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-import-resolver-typescript": "^3.3.0",
+    "eslint-import-resolver-typescript": "^3.4.0",
     "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-prettier": "^4.2.1",

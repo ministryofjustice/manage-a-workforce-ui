@@ -54,16 +54,15 @@
     {{
     instructions({
         titleText: "Review allocation instructions",
-            <div class="govuk-inset-text govuk-!-margin-bottom-7">
-                <p>These notes will automatically be sent to <br><strong>{{ data.forename +  ' ' + data.surname }}</strong> (<em>{{ data.email }}</em>)</p>
-            </div>
         hintText: "Review your notes for the probation practitioner.",
         convictionId: convictionId
     })
     }}
 
 
-
+    <div class="govuk-inset-text govuk-!-margin-bottom-7">
+        <p>These notes will automatically be sent to <br><strong>{{ data.forename +  ' ' + data.surname }}</strong> (<em>{{ data.email }}</em>)</p>
+    </div>
 
     <p id='copyText'>You can send a copy of these notes to another recipient, for example a case admin officer.</p>
  {% if confirmInstructionForm.person.length === 0 %}

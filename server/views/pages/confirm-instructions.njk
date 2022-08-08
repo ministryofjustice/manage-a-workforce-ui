@@ -52,9 +52,9 @@
 
 <form action="{{ '/' + crn + '/convictions/' + convictionId + '/allocate/' + staffCode + '/confirm-allocation' }}" method="POST">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">
-                    <p>These notes will automatically be sent to <br><strong>{{ data.forename +  ' ' + data.surname }}</strong> (<em>{{ data.email }}</em>)</p>
-                </div>
+        <div class="govuk-inset-text govuk-!-margin-bottom-7">
+            <p>These notes will automatically be sent to <br><strong>{{ data.forename +  ' ' + data.surname }}</strong> (<em>{{ data.email }}</em>)</p>
+        </div>
     {{
     instructions({
         titleText: "Review allocation instructions",
@@ -62,8 +62,6 @@
         convictionId: convictionId
     })
     }}
-
-
 
     <p id='copyText'>You can send a copy of these notes to another recipient, for example a case admin officer.</p>
  {% if confirmInstructionForm.person.length === 0 %}

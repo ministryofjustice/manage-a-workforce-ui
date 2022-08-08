@@ -5,6 +5,7 @@
           {{ params.titleText | safe if params.titleText else "Allocation instructions" }}
         </label>
       </h1>
+      {{ params.html | safe if params.html}}
       <div id="more-detail-hint" class="govuk-hint">
         {{ params.hintText | safe if params.hintText else "Enter any instructions/information you want to pass on. This is saved automatically, and you can review it later when selecting the recipients." }}
       </div>

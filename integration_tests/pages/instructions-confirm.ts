@@ -21,8 +21,6 @@ export default class InstructionsConfirmPage extends Page {
 
   hint = (): PageElement => cy.get('.govuk-hint')
 
-  insetText = (): PageElement => cy.get('.govuk-inset-text p')
-
   copyText = (): PageElement => cy.get('#copyText')
 
   addRecipientHeader = (): PageElement => cy.get('.moj-add-another__title')

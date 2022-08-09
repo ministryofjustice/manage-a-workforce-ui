@@ -49,20 +49,17 @@
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <div data-module="moj-add-another">
+
 <form action="{{ '/' + crn + '/convictions/' + convictionId + '/allocate/' + staffCode + '/confirm-allocation' }}" method="POST">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     {{
     instructions({
         titleText: "Review allocation instructions",
+        html: ('<p>These notes will automatically be sent to <br><strong>' + data.forename +  ' ' + data.surname + '</strong> (<em>' + data.email + '</em>)</p>') | safe,
         hintText: "Review your notes for the probation practitioner.",
         convictionId: convictionId
     })
     }}
-
-
-    <div class="govuk-inset-text govuk-!-margin-bottom-7">
-        <p>These notes will automatically be sent to <br><strong>{{ data.forename +  ' ' + data.surname }}</strong> (<em>{{ data.email }}</em>)</p>
-    </div>
 
     <p id='copyText'>You can send a copy of these notes to another recipient, for example a case admin officer.</p>
  {% if confirmInstructionForm.person.length === 0 %}

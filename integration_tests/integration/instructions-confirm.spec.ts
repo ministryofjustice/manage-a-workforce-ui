@@ -67,18 +67,10 @@ context('Instructions Confirmation', () => {
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.instructionsTextArea().should('exist')
     instructionsPage.label().should('contain', 'Review allocation instructions')
-    instructionsPage.hint().should('contain', 'Review your notes for the probation practitioner.')
-  })
-
-  it('Inset text should be visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM1/instructions')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage
-      .insetText()
+      .label()
       .should('contain', 'These notes will automatically be sent to John Doe (john.doe@test.justice.gov.uk)')
+    instructionsPage.hint().should('contain', 'Review your notes for the probation practitioner.')
   })
 
   it('another copy text should be visible on page', () => {

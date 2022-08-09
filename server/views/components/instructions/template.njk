@@ -2,11 +2,11 @@
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-form-group">
       <h2 class="govuk-heading-l">
+            {{ params.titleText | safe if params.titleText else "Allocation instructions" }}
       <label class="govuk-label govuk-label--l" for="instructions">
-              {{ params.titleText | safe if params.titleText else "Allocation instructions" }}
       </h2>
       <div class="govuk-label">
-      {{ params.html | safe if params.html}}
+        {{ params.html | safe if params.html}}
       </div>
             <div id="more-detail-hint" class="govuk-hint">
               {{ params.hintText | safe if params.hintText else "Enter any instructions/information you want to pass on. This is saved automatically, and you can review it later when selecting the recipients." }}

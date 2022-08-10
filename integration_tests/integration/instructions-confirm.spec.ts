@@ -66,7 +66,7 @@ context('Instructions Confirmation', () => {
     cy.visit('/J678910/convictions/123456789/allocate/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.instructionsTextArea().should('exist')
-    instructionsPage.label().should('contain', 'Review allocation instructions')
+    instructionsPage.subHeading().should('contain', 'Review allocation instructions')
     instructionsPage
       .label()
       .should('contain', 'These notes will automatically be sent to John Doe (john.doe@test.justice.gov.uk)')

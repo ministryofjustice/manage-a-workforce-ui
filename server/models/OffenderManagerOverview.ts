@@ -1,4 +1,5 @@
 import CaseTotals from './CaseTotals'
+import LastAllocatedEvent from './LastAllocatedEvent'
 
 export default interface OffenderManagerOverview {
   forename: string
@@ -19,4 +20,5 @@ export default interface OffenderManagerOverview {
   paroleReportsDue: number
   caseEndDue: number
   releasesDue: number
+  lastAllocatedEvent: LastAllocatedEvent
 }

@@ -20,6 +20,7 @@ import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase
 import validate from '../validation/validation'
 import trimForm from '../utils/trim'
 import CaseOverview from './data/CaseOverview'
+import OfficerView from './data/OfficerView'
 
 export default class AllocationsController {
   constructor(
@@ -225,9 +226,10 @@ export default class AllocationsController {
       res.locals.user.token,
       offenderManagerCode
     )
+    const data: OfficerView = new OfficerView(response)
     res.render('pages/overview', {
       title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
-      data: response,
+      data,
       crn,
       convictionId,
       casesLength: res.locals.casesLength,

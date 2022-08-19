@@ -185,4 +185,18 @@ context('Overview', () => {
         },
       ])
   })
+
+  it('must show last allocated event information in Last Case Allocated', () => {
+    cy.task('stubGetOverviewWithLastAllocatedEvent')
+    cy.signIn()
+    cy.visit('/J678910/convictions/123456789/allocate/OM6/officer-view')
+    cy.get('.availability').getSummaryList().should('deep.equal', {
+      'Weekly hours': '22.5',
+      Reductions: '10 hours until 3 Nov 2022',
+      'Last case allocated': '19 Aug 2022 (Tier A3, in community)',
+      'Cases due to end within next 4 weeks': '3',
+      'Releases within next 4 weeks': '6',
+      'Parole reports to complete within next 4 weeks': '5',
+    })
+  })
 })

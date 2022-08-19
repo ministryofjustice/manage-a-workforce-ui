@@ -141,7 +141,7 @@
                         text: "Reductions"
                     },
                         value: {
-                        text: data.totalReductionHours + (" hours until " + data.nextReductionChange | dateFormat if data.nextReductionChange)
+                        text: data.reductions
                     }
                     },
                     {
@@ -149,7 +149,7 @@
                         text: "Last case allocated"
                     },
                         value: {
-                        text: ""
+                        text: data.lastCaseAllocated
                     }
                     },
                     {

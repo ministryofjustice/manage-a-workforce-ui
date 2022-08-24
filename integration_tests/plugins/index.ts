@@ -1,5 +1,6 @@
 import { resetStubs } from '../mockApis/allocation-wiremock'
 import { resetWorkloadStubs } from '../mockApis/workload-wiremock'
+import { resetProbationEstateStubs } from '../mockApis/probation-estate-wiremock'
 
 import auth from '../mockApis/auth'
 import tokenVerification from '../mockApis/tokenVerification'
@@ -14,10 +15,14 @@ import offenderManagerCases from '../mockApis/offenderManagerCases'
 import staff from '../mockApis/staff'
 import allocationComplete from '../mockApis/allocationComplete'
 import person from '../mockApis/person'
+import selectTeams from '../mockApis/select-teams'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
-    reset: () => resetStubs().then(() => resetWorkloadStubs()),
+    reset: () =>
+      resetStubs()
+        .then(() => resetWorkloadStubs())
+        .then(() => resetProbationEstateStubs()),
 
     getSignInUrl: auth.getSignInUrl,
     stubSignIn: auth.stubSignIn,
@@ -90,5 +95,7 @@ export default (on: (string, Record) => void): void => {
     stubGetCaseOverviewCustodyCase: allocationCase.stubGetCaseOverviewCustodyCase,
 
     stubGetOverviewWithLastAllocatedEvent: overview.stubGetOverviewWithLastAllocatedEvent,
+
+    stubGetTeamsByPdu: selectTeams.stubGetTeamsByPdu,
   })
 }

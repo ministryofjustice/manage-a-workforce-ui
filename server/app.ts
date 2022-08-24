@@ -20,11 +20,13 @@ import AllocationsService from './services/allocationsService'
 import WorkloadService from './services/workloadService'
 import unauthenticatedRoutes from './routes/unauthenticated'
 import applyBankHols from './utils/bankHolidays'
+import ProbationEstateService from './services/probationEstateService'
 
 export default function createApp(
   userService: UserService,
   allocationsService: AllocationsService,
-  workloadService: WorkloadService
+  workloadService: WorkloadService,
+  probationEstateService: ProbationEstateService
 ): express.Application {
   const app = express()
 
@@ -54,6 +56,7 @@ export default function createApp(
     indexRoutes(standardRouter(userService), {
       allocationsService,
       workloadService,
+      probationEstateService,
     })
   )
 

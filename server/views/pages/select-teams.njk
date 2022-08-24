@@ -1,0 +1,46 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{% set checkboxItems = [] %}
+{% for item in data %}
+    {{ checkboxItems.push({
+        value: item.code,
+        text: item.name
+    }) }}
+{% endfor %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <span class="govuk-caption-xl">Wales</span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">North Wales</h1>
+        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    </div>    
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        {{ govukCheckboxes({
+            name: "team",
+            fieldset: {
+                legend: {
+                    text: "Select your teams",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                }
+            },
+            hint: {
+                html: "Select all the teams you currently allocate cases to. This includes teams you manage and teams you allocate to when on duty. 
+                <br> 
+                <br> 
+                You can select more than one team."
+            },
+            items: checkboxItems
+        })}}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -73,6 +73,14 @@ export default {
       },
       agent: new AgentConfig(15000),
     },
+    probationEstateService: {
+      url: get('PROBATION_ESTATE_SERVICE_URL', 'http://localhost:8093', requiredInProduction),
+      timeout: {
+        response: 15000,
+        deadline: 15000,
+      },
+      agent: new AgentConfig(15000),
+    },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
       timeout: {

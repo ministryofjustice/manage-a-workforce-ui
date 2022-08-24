@@ -24,6 +24,13 @@ services:
     restart: always
     ports:
       - "9092:8080"
+  probation-estate-wiremock:
+    image: rodolpheche/wiremock
+    networks:
+    - hmpps_int
+    restart: always
+    ports:
+      - "9093:8080"
 
 networks:
   hmpps_int:

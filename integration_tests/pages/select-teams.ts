@@ -10,4 +10,6 @@ export default class SelectTeamsPage extends Page {
   legendHeading = (): PageElement => cy.get('.govuk-fieldset__heading')
 
   hint = (): PageElement => cy.get('.govuk-hint')
+
+  checkboxes = (): PageElement => cy.get('.govuk-checkboxes')
 }

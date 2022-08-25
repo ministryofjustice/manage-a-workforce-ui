@@ -49,6 +49,22 @@ const getSummaryList = subject => {
   }, {})
 }
 
+const getCheckBoxes = subject => {
+  if (subject.get().length > 1) {
+    throw new Error(`Selector "${subject.selector}" returned more than 1 element.`)
+  }
+
+  const checkBoxElement = subject.get()[0]
+  return [...checkBoxElement.querySelectorAll('.govuk-checkboxes__item')].map(row => {
+    const inputValue = row.querySelector('.govuk-checkboxes__input').getAttribute('value')
+    const labelValue = row
+      .querySelector('.govuk-checkboxes__label')
+      .textContent.trim()
+      .replace(/\s{2,}/g, ' ')
+    return { inputValue, labelValue }
+  })
+}
+
 const trimTextContent = subject => {
   if (subject.get().length > 1) {
     throw new Error(`Selector "${subject.selector}" returned more than 1 element.`)
@@ -61,4 +77,5 @@ const trimTextContent = subject => {
 
 Cypress.Commands.add('getTable', { prevSubject: true }, getTable)
 Cypress.Commands.add('getSummaryList', { prevSubject: true }, getSummaryList)
+Cypress.Commands.add('getCheckBoxes', { prevSubject: true }, getCheckBoxes)
 Cypress.Commands.add('trimTextContent', { prevSubject: true }, trimTextContent)

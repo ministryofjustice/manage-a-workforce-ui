@@ -36,4 +36,31 @@ context('Select teams', () => {
       )
       .and('contain', 'You can select more than one team.')
   })
+
+  it('teams in alphabetical order', () => {
+    cy.signIn()
+    cy.visit('/pdu/PDU1/teams')
+    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+    selectTeamsPage
+      .checkboxes()
+      .getCheckBoxes()
+      .should('deep.equal', [
+        {
+          inputValue: 'TM1',
+          labelValue: 'A Team',
+        },
+        {
+          inputValue: 'TM2',
+          labelValue: 'B Team',
+        },
+        {
+          inputValue: 'TM3',
+          labelValue: 'C Team',
+        },
+        {
+          inputValue: 'TM4',
+          labelValue: 'D Team',
+        },
+      ])
+  })
 })

@@ -12,7 +12,7 @@ export default class ProbationEstateController {
     )
     res.render('pages/select-teams', {
       title: `Select your teams | Manage a workforce`,
-      data: response,
+      data: response.sort((a, b) => a.name.localeCompare(b.name)),
     })
   }
 }

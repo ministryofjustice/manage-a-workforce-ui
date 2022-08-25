@@ -31,7 +31,7 @@ The app requires:
 
 For local running, start a test db, redis, and wiremock instance by:
 
-`docker-compose -f docker-compose-test.yml up -d`
+`docker compose -f docker-compose-test.yml up -d`
 
 Install dependencies and run the build
 

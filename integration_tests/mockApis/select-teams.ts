@@ -17,6 +17,14 @@ export default {
             name: 'A Team',
           },
           {
+            code: 'TM4',
+            name: 'D Team',
+          },
+          {
+            code: 'TM3',
+            name: 'C Team',
+          },
+          {
             code: 'TM2',
             name: 'B Team',
           },

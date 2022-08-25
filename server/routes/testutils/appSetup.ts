@@ -10,6 +10,7 @@ import UserService from '../../services/userService'
 import * as auth from '../../authentication/auth'
 import MockErrorAllocationService from './MockErrorAllocationService'
 import MockWorkloadService from './MockWorkloadService'
+import MockProbationEstateService from './MockProbationEstateService'
 import authenticatedRoutes from '../index'
 import unauthenticatedRoutes from '../unauthenticated'
 
@@ -64,6 +65,7 @@ export const appWithAllRoutes = (): Express => {
   const authenticated = authenticatedRoutes(standardRouter(new MockUserService()), {
     allocationsService: new MockErrorAllocationService(undefined),
     workloadService: new MockWorkloadService(undefined),
+    probationEstateService: new MockProbationEstateService(undefined),
   })
   const unauthenticated = unauthenticatedRoutes()
   return appSetup(authenticated, unauthenticated)

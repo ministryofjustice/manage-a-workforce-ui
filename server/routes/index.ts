@@ -4,16 +4,20 @@ import asyncMiddleware from '../middleware/asyncMiddleware'
 import AllocationsController from '../controllers/allocationsController'
 import AllocationsService from '../services/allocationsService'
 import WorkloadService from '../services/workloadService'
+import ProbationEstateService from '../services/probationEstateService'
+import ProbationEstateController from '../controllers/probationEstateController'
 
 export interface Services {
   allocationsService: AllocationsService
   workloadService: WorkloadService
+  probationEstateService: ProbationEstateService
 }
 
 export default function routes(router: Router, services: Services): Router {
   const get = (path: string, handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (path: string, handler: RequestHandler) => router.post(path, asyncMiddleware(handler))
   const allocationsController = new AllocationsController(services.allocationsService, services.workloadService)
+  const probationEstateController = new ProbationEstateController(services.probationEstateService)
 
   get('/', async (req, res) => {
     await allocationsController.getAllocations(req, res)
@@ -72,6 +76,11 @@ export default function routes(router: Router, services: Services): Router {
   post('/:crn/convictions/:convictionId/allocate/:staffCode/confirm-allocation', async (req, res) => {
     const { crn, convictionId, staffCode } = req.params
     await allocationsController.allocateCaseToOffenderManager(req, res, crn, staffCode, convictionId, req.body)
+  })
+
+  get('/probationDeliveryUnit/:pduCode/teams', async (req, res) => {
+    const { pduCode } = req.params
+    await probationEstateController.getPduTeams(req, res, pduCode)
   })
 
   return router

@@ -13,4 +13,4 @@ generic-service:
     ALLOCATIONS_SERVICE_URL: "https://hmpps-allocations.hmpps.service.justice.gov.uk"
     WORKLOAD_MEASUREMENT_URL: "https://workload-measurement.hmpps.service.justice.gov.uk"
     WORKLOAD_SERVICE_URL: "https://hmpps-workload.hmpps.service.justice.gov.uk"
-
+    PROBATION_ESTATE_SERVICE_URL: "https://hmpps-probation-estate-api.hmpps.service.justice.gov.uk"

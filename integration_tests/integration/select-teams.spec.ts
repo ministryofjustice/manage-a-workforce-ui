@@ -12,21 +12,21 @@ context('Select teams', () => {
 
   it('Caption text visible on page', () => {
     cy.signIn()
-    cy.visit('/pdu/PDU1/teams')
+    cy.visit('/probationDeliveryUnit/PDU1/teams')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.captionText().should('contain', 'Wales')
   })
 
   it('Legend heading visible on page', () => {
     cy.signIn()
-    cy.visit('/pdu/PDU1/teams')
+    cy.visit('/probationDeliveryUnit/PDU1/teams')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.legendHeading().trimTextContent().should('equal', 'Select your teams')
   })
 
   it('hint visible on page', () => {
     cy.signIn()
-    cy.visit('/pdu/PDU1/teams')
+    cy.visit('/probationDeliveryUnit/PDU1/teams')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage
       .hint()
@@ -39,7 +39,7 @@ context('Select teams', () => {
 
   it('teams in alphabetical order', () => {
     cy.signIn()
-    cy.visit('/pdu/PDU1/teams')
+    cy.visit('/probationDeliveryUnit/PDU1/teams')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage
       .checkboxes()
@@ -66,7 +66,7 @@ context('Select teams', () => {
 
   it('continue button exists', () => {
     cy.signIn()
-    cy.visit('/pdu/PDU1/teams')
+    cy.visit('/probationDeliveryUnit/PDU1/teams')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.button().trimTextContent().should('equal', 'Continue')
   })

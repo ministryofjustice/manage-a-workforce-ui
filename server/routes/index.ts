@@ -78,7 +78,7 @@ export default function routes(router: Router, services: Services): Router {
     await allocationsController.allocateCaseToOffenderManager(req, res, crn, staffCode, convictionId, req.body)
   })
 
-  get('/pdu/:pduCode/teams', async (req, res) => {
+  get('/probationDeliveryUnit/:pduCode/teams', async (req, res) => {
     const { pduCode } = req.params
     await probationEstateController.getPduTeams(req, res, pduCode)
   })

@@ -12,4 +12,6 @@ export default class SelectTeamsPage extends Page {
   hint = (): PageElement => cy.get('.govuk-hint')
 
   checkboxes = (): PageElement => cy.get('.govuk-checkboxes')
+
+  button = (): PageElement => cy.get('.govuk-button')
 }

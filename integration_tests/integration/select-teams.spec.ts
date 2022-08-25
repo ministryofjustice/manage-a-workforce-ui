@@ -63,4 +63,11 @@ context('Select teams', () => {
         },
       ])
   })
+
+  it('continue button exists', () => {
+    cy.signIn()
+    cy.visit('/pdu/PDU1/teams')
+    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+    selectTeamsPage.button().trimTextContent().should('equal', 'Continue')
+  })
 })

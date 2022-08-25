@@ -1,5 +1,7 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
 
 {% set checkboxItems = [] %}
 {% for item in data %}
@@ -20,7 +22,7 @@
 </div>
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form method="post">
+        <form method="post" onsubmit="return false;">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         {{ govukCheckboxes({
             name: "team",
@@ -39,6 +41,10 @@
             },
             items: checkboxItems
         })}}
+
+        {{ govukButton({
+            text: "Continue"
+        }) }}
         </form>
     </div>
 </div>

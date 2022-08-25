@@ -4,6 +4,7 @@ import express from 'express'
 import dayjs from 'dayjs'
 import * as pathModule from 'path'
 import config from '../config'
+import { initialiseName } from './utils'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -43,14 +44,7 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
     }
   )
 
-  njkEnv.addFilter('initialiseName', (fullName: string) => {
-    // this check is for the authError page
-    if (!fullName) {
-      return null
-    }
-    const array = fullName.split(' ')
-    return `${array[0][0]}. ${array.reverse()[0]}`
-  })
+  njkEnv.addFilter('initialiseName', initialiseName)
 
   njkEnv.addFilter('dateFormat', (date: string) => {
     return dayjs(date).format(config.dateFormat)

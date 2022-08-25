@@ -1,72 +1,60 @@
-import express, { RequestHandler, Express } from 'express'
+import express, { Express } from 'express'
 import cookieSession from 'cookie-session'
 import createError from 'http-errors'
 import path from 'path'
 
+import routes from '../index'
 import nunjucksSetup from '../../utils/nunjucksSetup'
 import errorHandler from '../../errorHandler'
-import standardRouter from '../standardRouter'
-import UserService from '../../services/userService'
 import * as auth from '../../authentication/auth'
-import MockErrorAllocationService from './MockErrorAllocationService'
-import MockWorkloadService from './MockWorkloadService'
-import MockProbationEstateService from './MockProbationEstateService'
-import authenticatedRoutes from '../index'
+import { Services } from '../../services'
 import unauthenticatedRoutes from '../unauthenticated'
 
-const user = {
+export const user = {
   name: 'john smith',
   firstName: 'john',
   lastName: 'smith',
+  userId: 'id',
+  token: 'token',
   username: 'user1',
   displayName: 'John Smith',
+  activeCaseLoadId: 'MDI',
+  authSource: 'NOMIS',
 }
 
-class MockUserService extends UserService {
-  constructor() {
-    super(undefined)
-  }
+export const flashProvider = jest.fn()
 
-  async getUser(token: string) {
-    return {
-      token,
-      ...user,
-    }
-  }
-}
-
-const appSetup = (authenticated: RequestHandler, unauthenticated: RequestHandler): Express => {
+function appSetup(services: Services, userSupplier: () => Express.User): Express {
   const app = express()
 
   app.set('view engine', 'njk')
 
   nunjucksSetup(app, path)
-
+  app.use(cookieSession({ keys: [''] }))
   app.use((req, res, next) => {
+    req.user = userSupplier()
+    req.flash = flashProvider
     res.locals = {}
-    res.locals.user = {}
+    res.locals.user = { ...req.user }
     next()
   })
-
-  app.use(cookieSession({ keys: [''] }))
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
-  app.use(unauthenticated)
-  app.use(authenticated)
+  app.use(routes(services))
+  app.use(unauthenticatedRoutes())
   app.use((req, res, next) => next(createError(404, 'Not found')))
   app.use(errorHandler())
 
   return app
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export const appWithAllRoutes = (): Express => {
+export function appWithAllRoutes({
+  services = {},
+  userSupplier = () => user,
+}: {
+  services?: Partial<Services>
+  userSupplier?: () => Express.User
+}): Express {
   auth.default.authenticationMiddleware = () => (req, res, next) => next()
-  const authenticated = authenticatedRoutes(standardRouter(new MockUserService()), {
-    allocationsService: new MockErrorAllocationService(undefined),
-    workloadService: new MockWorkloadService(undefined),
-    probationEstateService: new MockProbationEstateService(undefined),
-  })
-  const unauthenticated = unauthenticatedRoutes()
-  return appSetup(authenticated, unauthenticated)
+  return appSetup(services as Services, userSupplier)
 }

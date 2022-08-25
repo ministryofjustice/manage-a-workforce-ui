@@ -1,19 +1,12 @@
-import type { RequestHandler, Router } from 'express'
+import { type RequestHandler, Router } from 'express'
 
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import AllocationsController from '../controllers/allocationsController'
-import AllocationsService from '../services/allocationsService'
-import WorkloadService from '../services/workloadService'
-import ProbationEstateService from '../services/probationEstateService'
 import ProbationEstateController from '../controllers/probationEstateController'
+import type { Services } from '../services'
 
-export interface Services {
-  allocationsService: AllocationsService
-  workloadService: WorkloadService
-  probationEstateService: ProbationEstateService
-}
-
-export default function routes(router: Router, services: Services): Router {
+export default function routes(services: Services): Router {
+  const router = Router()
   const get = (path: string, handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (path: string, handler: RequestHandler) => router.post(path, asyncMiddleware(handler))
   const allocationsController = new AllocationsController(services.allocationsService, services.workloadService)

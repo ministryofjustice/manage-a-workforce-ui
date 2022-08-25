@@ -8,7 +8,7 @@ describe('GET Cookies', () => {
 
   describe('GET Cookie policy', () => {
     test("should render the 'Cookie policy' page", () => {
-      return request(appWithAllRoutes())
+      return request(appWithAllRoutes({}))
         .get(`/cookie-policy`)
         .expect('Content-Type', /html/)
         .expect(res => {

@@ -70,4 +70,15 @@ context('Select teams', () => {
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.button().trimTextContent().should('equal', 'Continue')
   })
+
+  it('selecting no teams and continuing causes error', () => {
+    cy.signIn()
+    cy.visit('/probationDeliveryUnit/PDU1/teams')
+    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+    selectTeamsPage.button().click()
+    selectTeamsPage
+      .errorSummary()
+      .trimTextContent()
+      .should('equal', 'There is a problem Select the teams you allocate to')
+  })
 })

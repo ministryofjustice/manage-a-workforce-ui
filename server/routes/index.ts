@@ -76,5 +76,10 @@ export default function routes(services: Services): Router {
     await probationEstateController.getPduTeams(req, res, pduCode)
   })
 
+  post('/probationDeliveryUnit/:pduCode/teams', async (req, res) => {
+    const { pduCode } = req.params
+    await probationEstateController.selectPduTeams(req, res, pduCode)
+  })
+
   return router
 }

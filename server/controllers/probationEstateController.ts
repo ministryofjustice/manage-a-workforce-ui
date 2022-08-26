@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import logger from '../../logger'
 import EstateTeam from '../models/EstateTeam'
 import ProbationEstateService from '../services/probationEstateService'
 
@@ -10,9 +11,29 @@ export default class ProbationEstateController {
       pduCode,
       res.locals.user.token
     )
+    const error = req.query.error === 'true'
     res.render('pages/select-teams', {
       title: `Select your teams | Manage a workforce`,
       data: response.sort((a, b) => a.name.localeCompare(b.name)),
+      error,
+    })
+  }
+
+  async selectPduTeams(req: Request, res: Response, pduCode) {
+    logger.info(`req body: ${JSON.stringify(req.body)}`)
+    const {
+      body: { team },
+    } = req
+    if (team) {
+      return this.getSelectedTeams(req, res)
+    }
+    req.query.error = 'true'
+    return this.getPduTeams(req, res, pduCode)
+  }
+
+  async getSelectedTeams(req: Request, res: Response) {
+    res.render('pages/selected-teams', {
+      title: 'Allocate cases by team | Manage a workforce',
     })
   }
 }

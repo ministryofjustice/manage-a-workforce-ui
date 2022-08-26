@@ -28,4 +28,6 @@ export default abstract class Page {
   signOut = (): PageElement => cy.get("[href='/sign-out']")
 
   highlightedTab = (): PageElement => cy.get('a[aria-current*="page"]')
+
+  errorSummary = (): PageElement => cy.get('.govuk-error-summary')
 }

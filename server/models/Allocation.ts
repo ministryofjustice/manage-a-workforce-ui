@@ -3,6 +3,7 @@ import Offence from './Offence'
 import Requirement from './Requirement'
 import Document from './Document'
 import Assessment from './Assessment'
+import Address from './Address'
 
 export default interface Allocation {
   name: string
@@ -26,4 +27,5 @@ export default interface Allocation {
   convictionId: number
   caseType: string
   preConvictionDocument: Document
+  address: Address
 }

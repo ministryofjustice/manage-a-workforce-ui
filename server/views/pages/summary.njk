@@ -7,8 +7,6 @@
     {{ offences.push(offence) }}
 {% endfor -%}
 
-
-
 {% block caseContent %}
 
     <h2 class="govuk-heading-l">Summary</h2>
@@ -50,6 +48,12 @@
                         value: {
                         text: data.pncNumber
                     }
+                    },
+                    {
+                        key: { text: "Main address" },
+                        value: {
+                            html: address.rows | join("<br>")
+                        }
                     }
                 ]
             })}}

@@ -204,6 +204,14 @@ export default {
           },
           convictionId: 123456789,
           caseType: 'COMMUNITY',
+          address: {
+            addressNumber: '5A',
+            buildingName: 'The Building',
+            streetName: 'The Street',
+            town: 'Reading',
+            county: 'Berkshire',
+            postcode: 'RG22 3EF',
+          },
         },
       },
     })

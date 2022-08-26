@@ -62,6 +62,22 @@ context('Summary', () => {
       Gender: 'Male',
       'Date of birth': '27 Sep 1984 (37 years old)',
       PNC: 'D/9874483AB',
+      'Main address': '5A The Building The StreetReadingBerkshireRG22 3EF',
+    })
+  })
+
+  it('Personal details no address visible on page', () => {
+    cy.task('stubGetUnallocatedCaseMultiOffences')
+    cy.signIn()
+    cy.get('a[href*="L786545/convictions/56789/case-view"]').click()
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.personalDetailsTitle().should('have.text', 'Personal details')
+    cy.get('#personal-details .govuk-summary-list').getSummaryList().should('deep.equal', {
+      Name: 'Dylan Adam Armstrong',
+      Gender: 'Female',
+      'Date of birth': '17 Nov 1994 (27 years old)',
+      PNC: 'A/8404713BA',
+      'Main address': 'No address found',
     })
   })
 

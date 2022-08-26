@@ -21,6 +21,7 @@ import validate from '../validation/validation'
 import trimForm from '../utils/trim'
 import CaseOverview from './data/CaseOverview'
 import OfficerView from './data/OfficerView'
+import DisplayAddress from './data/DisplayAddress'
 
 export default class AllocationsController {
   constructor(
@@ -61,8 +62,10 @@ export default class AllocationsController {
       convictionId
     )
     const { session } = req
+    const address = new DisplayAddress(response.address)
     res.render('pages/summary', {
       data: response,
+      address,
       crn: response.crn,
       convictionId: response.convictionId,
       title: `${response.name} | Summary | Manage a workforce`,

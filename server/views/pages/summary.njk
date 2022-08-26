@@ -42,6 +42,14 @@
                         value: {
                         text: data.dateOfBirth  | dateFormat + ' (' + data.age + ' years old)'
                     }
+                    },
+                    {
+                        key: {
+                        text: "PNC"
+                    },
+                        value: {
+                        text: data.pncNumber
+                    }
                     }
                 ]
             })}}
@@ -109,14 +117,6 @@
         <div class="app-summary-card__body">
             {{ govukSummaryList({
                 rows: [
-                    {
-                        key: {
-                        text: "PNC"
-                    },
-                        value: {
-                        text: data.pncNumber
-                    }
-                    },
                     {
                         key: {
                         text: "CPS pack"

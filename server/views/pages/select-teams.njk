@@ -1,6 +1,7 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 
 {% set checkboxItems = [] %}
@@ -10,6 +11,21 @@
         text: item.name
     }) }}
 {% endfor %}
+
+{% block beforeContent %}
+{% if error %}
+        {{ govukErrorSummary({
+            titleText: "There is a problem",
+            errorList: [
+                {
+                text: "Select the teams you allocate to",
+                href: "#team-error"
+                }
+            ]
+        }) }}
+    {% endif %}
+{% endblock %}
+
 
 {% block content %}
 
@@ -22,7 +38,8 @@
 </div>
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form method="post" onsubmit="return false;">
+        
+        <form method="post">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         {{ govukCheckboxes({
             name: "team",
@@ -33,6 +50,7 @@
                     classes: "govuk-fieldset__legend--l"
                 }
             },
+            errorMessage: { text: "Select the teams you allocate to"} if error,
             hint: {
                 html: "Select all the teams you currently allocate cases to. This includes teams you manage and teams you allocate to when on duty. 
                 <br> 

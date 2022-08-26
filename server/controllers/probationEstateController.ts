@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import logger from '../../logger'
 import EstateTeam from '../models/EstateTeam'
 import ProbationEstateService from '../services/probationEstateService'
 
@@ -20,7 +19,6 @@ export default class ProbationEstateController {
   }
 
   async selectPduTeams(req: Request, res: Response, pduCode) {
-    logger.info(`req body: ${JSON.stringify(req.body)}`)
     const {
       body: { team },
     } = req

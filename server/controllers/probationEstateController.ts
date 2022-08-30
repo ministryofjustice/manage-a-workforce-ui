@@ -35,7 +35,7 @@ export default class ProbationEstateController {
     } = req
     res.render('pages/allocate-cases-by-team', {
       title: 'Allocate cases by team | Manage a workforce',
-      teams,
+      teams: Array.isArray(teams) ? teams : [teams],
       pduCode,
     })
   }

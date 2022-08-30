@@ -45,4 +45,8 @@ context('Select teams', () => {
         },
       ])
   })
+
+  it('link to edit team list must exist', () => {
+    allocateCasesByTeamPage.link().should('contain', 'editing your team list')
+  })
 })

@@ -30,8 +30,12 @@ export default class ProbationEstateController {
   }
 
   async getAllocateCasesByTeam(req: Request, res: Response) {
+    const {
+      body: { team: teams },
+    } = req
     res.render('pages/allocate-cases-by-team', {
       title: 'Allocate cases by team | Manage a workforce',
+      teams,
     })
   }
 }

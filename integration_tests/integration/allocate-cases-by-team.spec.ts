@@ -26,4 +26,23 @@ context('Select teams', () => {
   it('Table caption visible on page', () => {
     allocateCasesByTeamPage.tableCaption().should('contain', 'Your teams')
   })
+
+  it('team code displayed in table (for now)', () => {
+    cy.get('table')
+      .getTable()
+      .should('deep.equal', [
+        {
+          Name: 'TM1',
+          Workload: '',
+          Cases: '',
+          Action: 'View unallocated cases',
+        },
+        {
+          Name: 'TM2',
+          Workload: '',
+          Cases: '',
+          Action: 'View unallocated cases',
+        },
+      ])
+  })
 })

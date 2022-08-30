@@ -1,7 +1,25 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
-
+{% set tableRows = [] %}
+{% for team in teams %}
+    {{ tableRows.push(
+      [
+      {
+        text: team
+      },
+      {
+        text: ""
+      },
+      {
+        text: ""
+      },
+      {
+        text: "View unallocated cases"
+      }
+    ]) 
+    }}
+{% endfor %}
 
 {% block content %}
 
@@ -31,7 +49,7 @@
       text: "Action"
     }
   ],
-  rows: []
+  rows: tableRows
   }) 
 }}
 {% endblock %}

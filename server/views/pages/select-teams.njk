@@ -12,7 +12,8 @@
     }) }}
 {% endfor %}
 
-{% block beforeContent %}
+{% block content %}
+
 {% if error %}
         {{ govukErrorSummary({
             titleText: "There is a problem",
@@ -24,10 +25,6 @@
             ]
         }) }}
     {% endif %}
-{% endblock %}
-
-
-{% block content %}
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">

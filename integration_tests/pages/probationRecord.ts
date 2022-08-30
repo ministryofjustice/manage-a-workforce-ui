@@ -5,8 +5,6 @@ export default class ProbationRecordPage extends Page {
     super('Dylan Adam Armstrong')
   }
 
-  captionText = (): PageElement => cy.get('.govuk-caption-xl')
-
   probationRecordHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
   button = (): PageElement => cy.get('.govuk-button')

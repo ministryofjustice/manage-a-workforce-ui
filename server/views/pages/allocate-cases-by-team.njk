@@ -1,0 +1,37 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <span class="govuk-caption-xl">Wales</span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">North Wales</h1>
+        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    </div>    
+</div>
+
+{{ govukTable({
+  caption: "Your teams",
+  captionClasses: "govuk-table__caption--l",
+  firstCellIsHeader: true,
+  head: [
+    {
+      text: "Name"
+    },
+    {
+      text: "Workload"
+    },
+    {
+      text: "Cases"
+    },
+    {
+      text: "Action"
+    }
+  ],
+  rows: []
+  }) 
+}}
+{% endblock %}

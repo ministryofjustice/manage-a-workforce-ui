@@ -23,14 +23,14 @@ export default class ProbationEstateController {
       body: { team },
     } = req
     if (team) {
-      return this.getSelectedTeams(req, res)
+      return this.getAllocateCasesByTeam(req, res)
     }
     req.query.error = 'true'
     return this.getPduTeams(req, res, pduCode)
   }
 
-  async getSelectedTeams(req: Request, res: Response) {
-    res.render('pages/selected-teams', {
+  async getAllocateCasesByTeam(req: Request, res: Response) {
+    res.render('pages/allocate-cases-by-team', {
       title: 'Allocate cases by team | Manage a workforce',
     })
   }

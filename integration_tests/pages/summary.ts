@@ -7,8 +7,6 @@ export default class SummaryPage extends Page {
 
   subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
 
-  captionText = (): PageElement => cy.get('.govuk-caption-xl')
-
   summaryHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
   button = (): PageElement => cy.get('.govuk-button')

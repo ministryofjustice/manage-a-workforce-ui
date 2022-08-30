@@ -5,8 +5,6 @@ export default class AllocationConfirmPage extends Page {
     super('Dylan Adam Armstrong')
   }
 
-  captionText = (): PageElement => cy.get('.govuk-caption-xl')
-
   sectionBreak = (): PageElement => cy.get('.govuk-section-break')
 
   subHeading = (): PageElement => cy.get('.govuk-heading-l')

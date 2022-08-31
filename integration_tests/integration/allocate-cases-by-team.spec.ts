@@ -12,6 +12,8 @@ context('Select teams', () => {
       cy.task('stubAuthUser')
       cy.task('stubGetAllocations')
       cy.task('stubGetTeamsByPdu')
+      cy.task('stubGetUnallocatedCasesByTeams')
+      cy.task('stubWorkloadCases')
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/teams')
       const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
@@ -20,15 +22,15 @@ context('Select teams', () => {
       allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     })
 
-    it('team code displayed in table (for now)', () => {
+    it.only('team code displayed in table (for now)', () => {
       cy.get('table')
         .getTable()
         .should('deep.equal', [
           {
             Name: 'TM1',
-            Workload: '',
-            Cases: '',
-            Action: 'View unallocated cases',
+            Workload: '77%',
+            Cases: '2',
+            Action: 'View unallocated cases (1)',
           },
         ])
     })
@@ -64,15 +66,15 @@ context('Select teams', () => {
         .should('deep.equal', [
           {
             Name: 'TM1',
-            Workload: '',
-            Cases: '',
-            Action: 'View unallocated cases',
+            Workload: '77%',
+            Cases: '1',
+            Action: 'View unallocated cases (1)',
           },
           {
             Name: 'TM2',
-            Workload: '',
-            Cases: '',
-            Action: 'View unallocated cases',
+            Workload: '88%',
+            Cases: '2',
+            Action: 'View unallocated cases (2)',
           },
         ])
     })

@@ -6,7 +6,7 @@
     {{ tableRows.push(
       [
       {
-        text: team
+        text: team.teamCode
       },
       {
         text: ""
@@ -15,7 +15,7 @@
         text: ""
       },
       {
-        text: "View unallocated cases"
+        text: 'View unallocated cases (' + team.caseCount  + ')'
       }
     ]) 
     }}

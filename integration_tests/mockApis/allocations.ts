@@ -455,16 +455,18 @@ export default {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/teamCount?teams=TM1`,
+        urlPattern: `/cases/unallocated/teamCount\\?teams=TM1`,
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          teamCode: 'TM1',
-          caseCount: 1,
-        }
-      }
+        jsonBody: [
+          {
+            teamCode: 'TM1',
+            caseCount: 1,
+          },
+        ],
+      },
     })
   },
 }

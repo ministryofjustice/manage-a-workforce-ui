@@ -5,6 +5,7 @@ import Allocation from '../models/Allocation'
 import ProbationRecord from '../models/ProbationRecord'
 import Risk from '../models/Risk'
 import FileDownload from '../models/FileDownload'
+import UnallocatedCaseCountByTeam from '../models/UnallocatedCaseCountByTeam'
 
 export default class AllocationsService {
   config: ApiConfig
@@ -62,5 +63,12 @@ export default class AllocationsService {
     return this.restClient(token).stream({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/documents/${documentId}`,
     })
+  }
+
+  async getCaseCountByTeamCodes(token: string, teamCodes: string[]): Promise<UnallocatedCaseCountByTeam[]> {
+    return (await this.restClient(token).get({
+      path: `/cases/unallocated/teamCount?teams=${teamCodes.join(',')}`,
+      headers: { Accept: 'application/json' },
+    })) as UnallocatedCaseCountByTeam[]
   }
 }

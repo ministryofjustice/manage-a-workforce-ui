@@ -15,7 +15,7 @@
         text: team.caseCount
       },
       {
-        text: 'View unallocated cases (' + team.unallocatedCaseCount  + ')'
+        text: 'View unallocated cases' + ( ' (' + team.unallocatedCaseCount  + ')' if team.unallocatedCaseCount)
       }
     ]) 
     }}

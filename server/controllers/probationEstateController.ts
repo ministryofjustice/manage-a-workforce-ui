@@ -45,11 +45,19 @@ export default class ProbationEstateController {
       this.workloadService.getWorkloadByTeams(res.locals.user.token, teamCodes),
     ])
     const caseInformationByTeam = teamCodes.map(teamCode => {
+      const teamWorkload = workloadByTeam.find(w => w.teamCode === teamCode) ?? {
+        totalCases: '-',
+        workload: '-',
+      }
+      const teamAllocations = allocationCasesByTeam.find(uc => uc.teamCode === teamCode) ?? {
+        caseCount: 0,
+      }
+
       return {
         teamCode,
-        workload: `${workloadByTeam.find(w => w.teamCode === teamCode).workload}%`,
-        caseCount: workloadByTeam.find(w => w.teamCode === teamCode).totalCases,
-        unallocatedCaseCount: allocationCasesByTeam.find(uc => uc.teamCode === teamCode).caseCount,
+        workload: `${teamWorkload.workload}%`,
+        caseCount: teamWorkload.totalCases,
+        unallocatedCaseCount: teamAllocations.caseCount,
       }
     })
     res.render('pages/allocate-cases-by-team', {

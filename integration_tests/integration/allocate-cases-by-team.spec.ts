@@ -128,4 +128,107 @@ context('Select teams', () => {
       allocateCasesByTeamPage.link().should('contain', 'editing your team list')
     })
   })
+
+  context('Edge cases', () => {
+    let selectTeamsPage
+    beforeEach(() => {
+      cy.task('reset')
+      cy.task('stubSignIn')
+      cy.task('stubAuthUser')
+      cy.task('stubGetAllocations')
+      cy.task('stubGetTeamsByPdu')
+      cy.signIn()
+      cy.visit('/probationDeliveryUnit/PDU1/teams')
+      selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+      selectTeamsPage.checkbox('team').click()
+      selectTeamsPage.checkbox('team-2').click()
+    })
+
+    it('returning no workload for team still displays it', () => {
+      cy.task('stubGetUnallocatedCasesByTeams', {
+        teamCodes: 'TM1,TM2',
+        response: [
+          {
+            teamCode: 'TM1',
+            caseCount: 1,
+          },
+          {
+            teamCode: 'TM2',
+            caseCount: 2,
+          },
+        ],
+      })
+      cy.task('stubWorkloadCases', {
+        teamCodes: 'TM1,TM2',
+        response: [
+          {
+            teamCode: 'TM1',
+            totalCases: 3,
+            workload: 77,
+          },
+        ],
+      })
+      selectTeamsPage.button().click()
+      cy.get('table')
+        .getTable()
+        .should('deep.equal', [
+          {
+            Name: 'TM1',
+            Workload: '77%',
+            Cases: '3',
+            Action: 'View unallocated cases (1)',
+          },
+          {
+            Name: 'TM2',
+            Workload: '-%',
+            Cases: '-',
+            Action: 'View unallocated cases (2)',
+          },
+        ])
+    })
+
+    it('returning no allocations for team still displays it', () => {
+      cy.task('stubGetUnallocatedCasesByTeams', {
+        teamCodes: 'TM1,TM2',
+        response: [
+          {
+            teamCode: 'TM1',
+            caseCount: 1,
+          },
+        ],
+      })
+      cy.task('stubWorkloadCases', {
+        teamCodes: 'TM1,TM2',
+        response: [
+          {
+            teamCode: 'TM1',
+            totalCases: 3,
+            workload: 77,
+          },
+          {
+            teamCode: 'TM2',
+            totalCases: 4,
+            workload: 88,
+          },
+        ],
+      })
+      selectTeamsPage.button().click()
+      cy.get('table')
+        .getTable()
+        .should('deep.equal', [
+          {
+            Name: 'TM1',
+            Workload: '77%',
+            Cases: '3',
+            Action: 'View unallocated cases (1)',
+          },
+          {
+            Name: 'TM2',
+            Workload: '88%',
+            Cases: '4',
+            Action: 'View unallocated cases',
+          },
+        ])
+    })
+  })
 })

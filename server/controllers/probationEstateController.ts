@@ -2,11 +2,13 @@ import { Request, Response } from 'express'
 import EstateTeam from '../models/EstateTeam'
 import ProbationEstateService from '../services/probationEstateService'
 import AllocationsService from '../services/allocationsService'
+import WorkloadService from '../services/workloadService'
 
 export default class ProbationEstateController {
   constructor(
     private readonly probationEstateService: ProbationEstateService,
-    private readonly allocationService: AllocationsService
+    private readonly allocationService: AllocationsService,
+    private readonly workloadService: WorkloadService
   ) {}
 
   async getPduTeams(req: Request, res: Response, pduCode) {
@@ -38,10 +40,21 @@ export default class ProbationEstateController {
       body: { team: teams },
     } = req
     const teamCodes = Array.isArray(teams) ? teams : [teams]
-    const allocationCasesByTeam = await this.allocationService.getCaseCountByTeamCodes(res.locals.user.token, teamCodes)
+    const [allocationCasesByTeam, workloadByTeam] = await Promise.all([
+      this.allocationService.getCaseCountByTeamCodes(res.locals.user.token, teamCodes),
+      this.workloadService.getWorkloadByTeams(res.locals.user.token, teamCodes),
+    ])
+    const caseInformationByTeam = teamCodes.map(teamCode => {
+      return {
+        teamCode,
+        workload: `${workloadByTeam.find(w => w.teamCode === teamCode).workload}%`,
+        caseCount: workloadByTeam.find(w => w.teamCode === teamCode).totalCases,
+        unallocatedCaseCount: allocationCasesByTeam.find(uc => uc.teamCode === teamCode).caseCount,
+      }
+    })
     res.render('pages/allocate-cases-by-team', {
       title: 'Allocate cases by team | Manage a workforce',
-      teams: allocationCasesByTeam,
+      teams: caseInformationByTeam,
       pduCode,
     })
   }

@@ -451,21 +451,22 @@ export default {
     })
   },
 
-  stubGetUnallocatedCasesByTeams: (): SuperAgentRequest => {
+  stubGetUnallocatedCasesByTeams: ({
+    teamCodes,
+    response,
+  }: {
+    teamCodes: string
+    response: Array<Record<string, unknown>>
+  }): SuperAgentRequest => {
     return stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/teamCount\\?teams=TM1`,
+        urlPattern: `/cases/unallocated/teamCount\\?teams=${teamCodes}`,
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: [
-          {
-            teamCode: 'TM1',
-            caseCount: 1,
-          },
-        ],
+        jsonBody: response,
       },
     })
   },

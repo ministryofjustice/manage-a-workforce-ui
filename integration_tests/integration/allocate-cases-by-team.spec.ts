@@ -12,8 +12,25 @@ context('Select teams', () => {
       cy.task('stubAuthUser')
       cy.task('stubGetAllocations')
       cy.task('stubGetTeamsByPdu')
-      cy.task('stubGetUnallocatedCasesByTeams')
-      cy.task('stubWorkloadCases')
+      cy.task('stubGetUnallocatedCasesByTeams', {
+        teamCodes: 'TM1',
+        response: [
+          {
+            teamCode: 'TM1',
+            caseCount: 1,
+          },
+        ],
+      })
+      cy.task('stubWorkloadCases', {
+        teamCodes: 'TM1',
+        response: [
+          {
+            teamCode: 'TM1',
+            totalCases: 2,
+            workload: 77,
+          },
+        ],
+      })
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/teams')
       const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
@@ -22,7 +39,7 @@ context('Select teams', () => {
       allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     })
 
-    it.only('team code displayed in table (for now)', () => {
+    it('team code displayed in table (for now)', () => {
       cy.get('table')
         .getTable()
         .should('deep.equal', [
@@ -43,6 +60,34 @@ context('Select teams', () => {
       cy.task('stubAuthUser')
       cy.task('stubGetAllocations')
       cy.task('stubGetTeamsByPdu')
+      cy.task('stubGetUnallocatedCasesByTeams', {
+        teamCodes: 'TM1,TM2',
+        response: [
+          {
+            teamCode: 'TM1',
+            caseCount: 1,
+          },
+          {
+            teamCode: 'TM2',
+            caseCount: 2,
+          },
+        ],
+      })
+      cy.task('stubWorkloadCases', {
+        teamCodes: 'TM1,TM2',
+        response: [
+          {
+            teamCode: 'TM1',
+            totalCases: 3,
+            workload: 77,
+          },
+          {
+            teamCode: 'TM2',
+            totalCases: 4,
+            workload: 88,
+          },
+        ],
+      })
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/teams')
       const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
@@ -67,13 +112,13 @@ context('Select teams', () => {
           {
             Name: 'TM1',
             Workload: '77%',
-            Cases: '1',
+            Cases: '3',
             Action: 'View unallocated cases (1)',
           },
           {
             Name: 'TM2',
             Workload: '88%',
-            Cases: '2',
+            Cases: '4',
             Action: 'View unallocated cases (2)',
           },
         ])

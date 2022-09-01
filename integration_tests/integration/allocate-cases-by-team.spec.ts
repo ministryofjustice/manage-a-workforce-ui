@@ -265,5 +265,42 @@ context('Select teams', () => {
           },
         ])
     })
+
+    it('does not display teams if probation estate does not return teams', () => {
+      cy.task('stubGetTeamsByCodes', {
+        codes: 'TM1,TM2',
+        response: [],
+      })
+      cy.task('stubGetUnallocatedCasesByTeams', {
+        teamCodes: 'TM1,TM2',
+        response: [
+          {
+            teamCode: 'TM1',
+            caseCount: 1,
+          },
+          {
+            teamCode: 'TM2',
+            caseCount: 6,
+          },
+        ],
+      })
+      cy.task('stubWorkloadCases', {
+        teamCodes: 'TM1,TM2',
+        response: [
+          {
+            teamCode: 'TM1',
+            totalCases: 3,
+            workload: 77,
+          },
+          {
+            teamCode: 'TM2',
+            totalCases: 4,
+            workload: 88,
+          },
+        ],
+      })
+      selectTeamsPage.button().click()
+      cy.get('table').getTable().should('deep.equal', [])
+    })
   })
 })

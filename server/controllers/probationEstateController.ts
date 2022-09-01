@@ -45,22 +45,24 @@ export default class ProbationEstateController {
       this.workloadService.getWorkloadByTeams(res.locals.user.token, teamCodes),
       this.probationEstateService.getTeamsByCode(res.locals.user.token, teamCodes),
     ])
-    const caseInformationByTeam = probationEstateTeams.map(team => {
-      const teamWorkload = workloadByTeam.find(w => w.teamCode === team.code) ?? {
-        totalCases: '-',
-        workload: '-',
-      }
-      const teamAllocations = allocationCasesByTeam.find(uc => uc.teamCode === team.code) ?? {
-        caseCount: 0,
-      }
+    const caseInformationByTeam = probationEstateTeams
+      .map(team => {
+        const teamWorkload = workloadByTeam.find(w => w.teamCode === team.code) ?? {
+          totalCases: '-',
+          workload: '-',
+        }
+        const teamAllocations = allocationCasesByTeam.find(uc => uc.teamCode === team.code) ?? {
+          caseCount: 0,
+        }
 
-      return {
-        teamName: team.name,
-        workload: `${teamWorkload.workload}%`,
-        caseCount: teamWorkload.totalCases,
-        unallocatedCaseCount: teamAllocations.caseCount,
-      }
-    })
+        return {
+          teamName: team.name,
+          workload: `${teamWorkload.workload}%`,
+          caseCount: teamWorkload.totalCases,
+          unallocatedCaseCount: teamAllocations.caseCount,
+        }
+      })
+      .sort((a, b) => a.teamName.localeCompare(b.teamName))
     res.render('pages/allocate-cases-by-team', {
       title: 'Allocate cases by team | Manage a workforce',
       teams: caseInformationByTeam,

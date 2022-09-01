@@ -101,12 +101,12 @@ context('Select teams', () => {
         codes: 'TM1,TM2',
         response: [
           {
-            code: 'TM1',
-            name: 'Team 1',
-          },
-          {
             code: 'TM2',
             name: 'Team 2',
+          },
+          {
+            code: 'TM1',
+            name: 'Team 1',
           },
         ],
       })

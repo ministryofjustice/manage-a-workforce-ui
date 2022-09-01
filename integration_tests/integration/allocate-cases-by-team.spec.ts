@@ -41,7 +41,7 @@ context('Select teams', () => {
         ],
       })
       cy.signIn()
-      cy.visit('/probationDeliveryUnit/PDU1/teams')
+      cy.visit('/probationDeliveryUnit/PDU1/select-teams')
       const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
       selectTeamsPage.checkbox('team').click()
       selectTeamsPage.button().click()
@@ -111,7 +111,7 @@ context('Select teams', () => {
         ],
       })
       cy.signIn()
-      cy.visit('/probationDeliveryUnit/PDU1/teams')
+      cy.visit('/probationDeliveryUnit/PDU1/select-teams')
       const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
       selectTeamsPage.checkbox('team').click()
       selectTeamsPage.checkbox('team-2').click()
@@ -201,7 +201,7 @@ context('Select teams', () => {
         ],
       })
       cy.signIn()
-      cy.visit('/probationDeliveryUnit/PDU1/teams')
+      cy.visit('/probationDeliveryUnit/PDU1/select-teams')
       selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
       selectTeamsPage.checkbox('team').click()
       selectTeamsPage.checkbox('team-2').click()

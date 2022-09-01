@@ -6,7 +6,7 @@ export default {
     return stubForProbationEstate({
       request: {
         method: 'GET',
-        urlPattern: `/probationDeliveryUnit/PDU1/teams`,
+        urlPattern: `/probationDeliveryUnit/PDU1/select-teams`,
       },
       response: {
         status: 200,

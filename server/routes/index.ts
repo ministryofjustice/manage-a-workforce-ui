@@ -75,12 +75,12 @@ export default function routes(services: Services): Router {
     await allocationsController.allocateCaseToOffenderManager(req, res, crn, staffCode, convictionId, req.body)
   })
 
-  get('/probationDeliveryUnit/:pduCode/teams', async (req, res) => {
+  get('/probationDeliveryUnit/:pduCode/select-teams', async (req, res) => {
     const { pduCode } = req.params
     await probationEstateController.getPduTeams(req, res, pduCode)
   })
 
-  post('/probationDeliveryUnit/:pduCode/teams', async (req, res) => {
+  post('/probationDeliveryUnit/:pduCode/select-teams', async (req, res) => {
     const { pduCode } = req.params
     await probationEstateController.selectPduTeams(req, res, pduCode)
   })

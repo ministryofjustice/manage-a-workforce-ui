@@ -18,6 +18,7 @@ import allocationComplete from '../mockApis/allocationComplete'
 import person from '../mockApis/person'
 import selectTeams from '../mockApis/select-teams'
 import probationEstate from '../mockApis/probationEstate'
+import userPreferences from 'mockApis/userPreferences'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
@@ -105,5 +106,7 @@ export default (on: (string, Record) => void): void => {
     stubGetTeamsByPdu: selectTeams.stubGetTeamsByPdu,
 
     stubGetTeamsByCodes: probationEstate.stubGetTeamsByCodes,
+
+    stubUserPreferenceTeams: userPreferences.stubUserPreferenceTeams
   })
 }

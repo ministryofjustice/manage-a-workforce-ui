@@ -2,7 +2,7 @@ import AllocateCasesByTeamPage from '../pages/allocate-cases-by-team'
 import Page from '../pages/page'
 import SelectTeamsPage from '../pages/select-teams'
 
-context('Select teams', () => {
+context('Select teams and show allocate cases by team', () => {
   let allocateCasesByTeamPage
 
   context('single team', () => {
@@ -21,6 +21,7 @@ context('Select teams', () => {
           },
         ],
       })
+      
       cy.task('stubWorkloadCases', {
         teamCodes: 'TM1',
         response: [
@@ -48,7 +49,7 @@ context('Select teams', () => {
       allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     })
 
-    it('team code displayed in table (for now)', () => {
+    it('team data displayed in table', () => {
       cy.get('table')
         .getTable()
         .should('deep.equal', [
@@ -127,7 +128,7 @@ context('Select teams', () => {
       allocateCasesByTeamPage.tableCaption().should('contain', 'Your teams')
     })
 
-    it('team code displayed in table (for now)', () => {
+    it('team data displayed in table', () => {
       cy.get('table')
         .getTable()
         .should('deep.equal', [

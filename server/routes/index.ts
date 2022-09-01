@@ -3,6 +3,7 @@ import { type RequestHandler, Router } from 'express'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import AllocationsController from '../controllers/allocationsController'
 import ProbationEstateController from '../controllers/probationEstateController'
+import AllocateCasesController from '../controllers/allocateCasesController'
 import type { Services } from '../services'
 
 export default function routes(services: Services): Router {
@@ -15,6 +16,7 @@ export default function routes(services: Services): Router {
     services.allocationsService,
     services.workloadService
   )
+  const allocateCasesController = new AllocateCasesController()
 
   get('/', async (req, res) => {
     await allocationsController.getAllocations(req, res)
@@ -83,6 +85,10 @@ export default function routes(services: Services): Router {
   post('/probationDeliveryUnit/:pduCode/select-teams', async (req, res) => {
     const { pduCode } = req.params
     await probationEstateController.selectPduTeams(req, res, pduCode)
+  })
+
+  get('/probationDeliveryUnit/:pduCode/teams', async (req, res) => {
+    await allocateCasesController.getDataByTeams(req, res)
   })
 
   return router

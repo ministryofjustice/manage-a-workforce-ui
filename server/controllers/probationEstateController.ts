@@ -13,8 +13,8 @@ export default class ProbationEstateController {
 
   async getPduTeams(req: Request, res: Response, pduCode) {
     const response: EstateTeam[] = await this.probationEstateService.getProbationDeliveryUnitTeams(
-      pduCode,
-      res.locals.user.token
+      res.locals.user.token,
+      pduCode
     )
     const error = req.query.error === 'true'
     res.render('pages/select-teams', {
@@ -40,21 +40,22 @@ export default class ProbationEstateController {
       body: { team: teams },
     } = req
     const teamCodes = Array.isArray(teams) ? teams : [teams]
-    const [allocationCasesByTeam, workloadByTeam] = await Promise.all([
+    const [allocationCasesByTeam, workloadByTeam, probationEstateTeams] = await Promise.all([
       this.allocationService.getCaseCountByTeamCodes(res.locals.user.token, teamCodes),
       this.workloadService.getWorkloadByTeams(res.locals.user.token, teamCodes),
+      this.probationEstateService.getTeamsByCode(res.locals.user.token, teamCodes),
     ])
-    const caseInformationByTeam = teamCodes.map(teamCode => {
-      const teamWorkload = workloadByTeam.find(w => w.teamCode === teamCode) ?? {
+    const caseInformationByTeam = probationEstateTeams.map(team => {
+      const teamWorkload = workloadByTeam.find(w => w.teamCode === team.code) ?? {
         totalCases: '-',
         workload: '-',
       }
-      const teamAllocations = allocationCasesByTeam.find(uc => uc.teamCode === teamCode) ?? {
+      const teamAllocations = allocationCasesByTeam.find(uc => uc.teamCode === team.code) ?? {
         caseCount: 0,
       }
 
       return {
-        teamCode,
+        teamName: team.name,
         workload: `${teamWorkload.workload}%`,
         caseCount: teamWorkload.totalCases,
         unallocatedCaseCount: teamAllocations.caseCount,

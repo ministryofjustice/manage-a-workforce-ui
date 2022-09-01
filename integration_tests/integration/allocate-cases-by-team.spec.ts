@@ -172,14 +172,21 @@ context('Select teams', () => {
           },
         ],
       })
-      cy.signIn()
-      cy.visit('/probationDeliveryUnit/PDU1/teams')
-      selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
-      selectTeamsPage.checkbox('team').click()
-      selectTeamsPage.checkbox('team-2').click()
-    })
-
-    it('returning no workload for team still displays it', () => {
+      cy.task('stubWorkloadCases', {
+        teamCodes: 'TM1,TM2',
+        response: [
+          {
+            teamCode: 'TM1',
+            totalCases: 3,
+            workload: 77,
+          },
+          {
+            teamCode: 'TM2',
+            totalCases: 4,
+            workload: 88,
+          },
+        ],
+      })
       cy.task('stubGetUnallocatedCasesByTeams', {
         teamCodes: 'TM1,TM2',
         response: [
@@ -189,10 +196,18 @@ context('Select teams', () => {
           },
           {
             teamCode: 'TM2',
-            caseCount: 2,
+            caseCount: 6,
           },
         ],
       })
+      cy.signIn()
+      cy.visit('/probationDeliveryUnit/PDU1/teams')
+      selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+      selectTeamsPage.checkbox('team').click()
+      selectTeamsPage.checkbox('team-2').click()
+    })
+
+    it('returning no workload for team still displays it', () => {
       cy.task('stubWorkloadCases', {
         teamCodes: 'TM1,TM2',
         response: [
@@ -217,7 +232,7 @@ context('Select teams', () => {
             Name: 'Team 2',
             Workload: '-%',
             Cases: '-',
-            Action: 'View unallocated cases (2)',
+            Action: 'View unallocated cases (6)',
           },
         ])
     })
@@ -229,21 +244,6 @@ context('Select teams', () => {
           {
             teamCode: 'TM1',
             caseCount: 1,
-          },
-        ],
-      })
-      cy.task('stubWorkloadCases', {
-        teamCodes: 'TM1,TM2',
-        response: [
-          {
-            teamCode: 'TM1',
-            totalCases: 3,
-            workload: 77,
-          },
-          {
-            teamCode: 'TM2',
-            totalCases: 4,
-            workload: 88,
           },
         ],
       })
@@ -270,34 +270,6 @@ context('Select teams', () => {
       cy.task('stubGetTeamsByCodes', {
         codes: 'TM1,TM2',
         response: [],
-      })
-      cy.task('stubGetUnallocatedCasesByTeams', {
-        teamCodes: 'TM1,TM2',
-        response: [
-          {
-            teamCode: 'TM1',
-            caseCount: 1,
-          },
-          {
-            teamCode: 'TM2',
-            caseCount: 6,
-          },
-        ],
-      })
-      cy.task('stubWorkloadCases', {
-        teamCodes: 'TM1,TM2',
-        response: [
-          {
-            teamCode: 'TM1',
-            totalCases: 3,
-            workload: 77,
-          },
-          {
-            teamCode: 'TM2',
-            totalCases: 4,
-            workload: 88,
-          },
-        ],
       })
       selectTeamsPage.button().click()
       cy.get('table').getTable().should('deep.equal', [])

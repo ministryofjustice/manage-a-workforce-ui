@@ -9,6 +9,7 @@ import probationRecord from '../mockApis/probationRecord'
 import risk from '../mockApis/risk'
 import allocateOffenderManagers from '../mockApis/allocateOffenderManagers'
 import allocationConfirm from '../mockApis/allocationConfirm'
+import workload from '../mockApis/workload'
 import overview from '../mockApis/overview'
 import allocationCase from '../mockApis/allocationCase'
 import offenderManagerCases from '../mockApis/offenderManagerCases'
@@ -41,6 +42,8 @@ export default (on: (string, Record) => void): void => {
     stubGetUnallocatedCase: allocations.stubGetUnallocatedCase,
 
     stubGetUnallocatedCaseMultiOffences: allocations.stubGetUnallocatedCaseMultiOffences,
+
+    stubGetUnallocatedCasesByTeams: allocations.stubGetUnallocatedCasesByTeams,
 
     stubGetProbationRecord: probationRecord.stubGetProbationRecord,
 
@@ -75,6 +78,8 @@ export default (on: (string, Record) => void): void => {
 
     stubGetPotentialOffenderManagerWorkloadOverCapacity:
       allocationConfirm.stubGetPotentialOffenderManagerWorkloadOverCapacity,
+
+    stubWorkloadCases: workload.stubWorkloadCases,
 
     stubGetOverview: overview.stubGetOverview,
 

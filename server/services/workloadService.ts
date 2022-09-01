@@ -8,6 +8,7 @@ import OffenderManagerOverview from '../models/OffenderManagerOverview'
 import StaffSummary from '../models/StaffSummary'
 import PersonManager from '../models/PersonManager'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
+import WorkloadByTeam from '../models/workloadByTeam'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -94,5 +95,12 @@ export default class WorkloadService {
       },
       headers: { Accept: 'application/json' },
     })) as OffenderManagerAllocatedCase
+  }
+
+  async getWorkloadByTeams(token: string, teamCodes: string[]): Promise<WorkloadByTeam[]> {
+    return (await this.restClient(token).get({
+      path: `/team/workloadcases?teams=${teamCodes.join(',')}`,
+      headers: { Accept: 'application/json' },
+    })) as WorkloadByTeam[]
   }
 }

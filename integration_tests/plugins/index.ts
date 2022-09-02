@@ -116,5 +116,7 @@ export default (on: (string, Record) => void): void => {
     stubUserPreferenceTeams: userPreference.stubUserPreferenceTeams,
 
     stubPutUserPreferenceTeams: userPreference.stubPutUserPreferenceTeams,
+
+    verifyPutUserPreferenceTeams: userPreference.verifySaveOffenceDetails,
   })
 }

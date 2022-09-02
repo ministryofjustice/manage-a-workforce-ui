@@ -1,5 +1,5 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubForUserPreference } from './wiremock'
+import { stubForUserPreference, verifyRequestForUserPreference } from './wiremock'
 
 export default {
   stubUserPreferenceTeams: (teams = ['TM1']): SuperAgentRequest => {
@@ -37,4 +37,12 @@ export default {
       },
     })
   },
-}
+  verifySaveOffenceDetails: () =>
+    verifyRequestForUserPreference({
+      requestUrlPattern: `/users/USER1/preferences/allocation-teams`,
+      method: 'PUT',
+      body: {
+        items: ['TM1', 'TM2'],
+      },
+    })
+  }

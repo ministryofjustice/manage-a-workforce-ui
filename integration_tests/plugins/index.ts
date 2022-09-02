@@ -15,7 +15,6 @@ import offenderManagerCases from '../mockApis/offenderManagerCases'
 import staff from '../mockApis/staff'
 import allocationComplete from '../mockApis/allocationComplete'
 import person from '../mockApis/person'
-import selectTeams from '../mockApis/select-teams'
 import probationEstate from '../mockApis/probationEstate'
 
 export default (on: (string, Record) => void): void => {
@@ -101,7 +100,7 @@ export default (on: (string, Record) => void): void => {
 
     stubGetOverviewWithLastAllocatedEvent: overview.stubGetOverviewWithLastAllocatedEvent,
 
-    stubGetTeamsByPdu: selectTeams.stubGetTeamsByPdu,
+    stubGetTeamsByPdu: probationEstate.stubGetTeamsByPdu,
 
     stubGetTeamsByCodes: probationEstate.stubGetTeamsByCodes,
 

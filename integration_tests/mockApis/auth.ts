@@ -23,13 +23,17 @@ const getSignInUrl = async (): Promise<string> => {
       requests: [
         {
           request: {
-            queryParams: { state: stateParam },
+            queryParams: {
+              state: {
+                values: [stateParam],
+              },
+            },
           },
         },
       ],
     },
   } = await getAllocationRequests()
-  return `/sign-in/callback?code=codexxxx&state=${stateParam.values[0]}`
+  return `/sign-in/callback?code=codexxxx&state=${stateParam}`
 }
 
 const favicon = () =>

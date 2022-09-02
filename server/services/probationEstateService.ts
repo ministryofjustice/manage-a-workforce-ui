@@ -17,7 +17,7 @@ export default class ProbationEstateService {
   async getProbationDeliveryUnitTeams(token: string, pduCode: string): Promise<EstateTeam[]> {
     logger.info(`Getting Teams for PDU ${pduCode}`)
     return (await this.restClient(token).get({
-      path: `/probationDeliveryUnit/${pduCode}/select-teams`,
+      path: `/probationDeliveryUnit/${pduCode}/teams`,
       headers: { Accept: 'application/json' },
     })) as EstateTeam[]
   }

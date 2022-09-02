@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { Response } from 'superagent'
 
-import { stubFor, getRequests } from './allocation-wiremock'
+import { stubForAllocation, getAllocationRequests } from './wiremock'
 import tokenVerification from './tokenVerification'
 
 const createToken = () => {
@@ -18,7 +18,7 @@ const createToken = () => {
 }
 
 const getSignInUrl = (): Promise<string> =>
-  getRequests().then(data => {
+  getAllocationRequests().then(data => {
     const { requests } = data.body
     const stateParam = requests[0].request.queryParams.state
     const stateValue = stateParam ? stateParam.values[0] : requests[1].request.queryParams.state.values[0]
@@ -26,7 +26,7 @@ const getSignInUrl = (): Promise<string> =>
   })
 
 const favicon = () =>
-  stubFor({
+  stubForAllocation({
     request: {
       method: 'GET',
       urlPattern: '/favicon.ico',
@@ -37,7 +37,7 @@ const favicon = () =>
   })
 
 const ping = () =>
-  stubFor({
+  stubForAllocation({
     request: {
       method: 'GET',
       urlPattern: '/auth/health/ping',
@@ -48,7 +48,7 @@ const ping = () =>
   })
 
 const redirect = () =>
-  stubFor({
+  stubForAllocation({
     request: {
       method: 'GET',
       urlPattern: '/auth/oauth/authorize\\?response_type=code&redirect_uri=.+?&state=.+?&client_id=clientid',
@@ -64,7 +64,7 @@ const redirect = () =>
   })
 
 const signOut = () =>
-  stubFor({
+  stubForAllocation({
     request: {
       method: 'GET',
       urlPattern: '/auth/sign-out.*',
@@ -79,7 +79,7 @@ const signOut = () =>
   })
 
 const token = () =>
-  stubFor({
+  stubForAllocation({
     request: {
       method: 'POST',
       urlPattern: '/auth/oauth/token',
@@ -102,7 +102,7 @@ const token = () =>
   })
 
 const stubUser = () =>
-  stubFor({
+  stubForAllocation({
     request: {
       method: 'GET',
       urlPattern: '/auth/api/user/me',
@@ -122,7 +122,7 @@ const stubUser = () =>
   })
 
 const stubUserRoles = () =>
-  stubFor({
+  stubForAllocation({
     request: {
       method: 'GET',
       urlPattern: '/auth/api/user/me/roles',

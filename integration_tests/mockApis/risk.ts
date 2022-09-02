@@ -1,9 +1,9 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubFor } from './allocation-wiremock'
+import { stubForAllocation } from './wiremock'
 
 export default {
   stubGetRisk: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789/risks`,
@@ -69,7 +69,7 @@ export default {
     })
   },
   stubGetRiskNoRegistrations: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789/risks`,

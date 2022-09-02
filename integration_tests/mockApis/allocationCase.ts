@@ -1,9 +1,9 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubFor } from './allocation-wiremock'
+import { stubForAllocation } from './wiremock'
 
 export default {
   stubGetCurrentlyManagedCaseOverview: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789/overview`,
@@ -31,7 +31,7 @@ export default {
   },
 
   stubGetCaseOverviewNoInitialAppointment: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789/overview`,
@@ -59,7 +59,7 @@ export default {
   },
 
   stubGetCaseOverviewCustodyCase: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789/overview`,
@@ -87,7 +87,7 @@ export default {
   },
 
   stubGetCurrentlyManagedNoOffenderManagerCaseOverview: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789/overview`,
@@ -110,7 +110,7 @@ export default {
   },
 
   stubGetPreviouslyManagedCaseOverview: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789/overview`,
@@ -138,7 +138,7 @@ export default {
   },
 
   stubGetNewToProbationCaseOverview: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789/overview`,

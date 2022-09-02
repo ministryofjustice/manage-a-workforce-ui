@@ -58,7 +58,7 @@ export default {
       apiClientSecret: get('API_CLIENT_SECRET', 'clientsecret', requiredInProduction),
     },
     allocationsService: {
-      url: get('ALLOCATIONS_SERVICE_URL', 'http://localhost:8091', requiredInProduction),
+      url: get('ALLOCATIONS_SERVICE_URL', 'http://localhost:9091', requiredInProduction),
       timeout: {
         response: 15000,
         deadline: 15000,
@@ -66,7 +66,7 @@ export default {
       agent: new AgentConfig(15000),
     },
     workloadService: {
-      url: get('WORKLOAD_SERVICE_URL', 'http://localhost:8092', requiredInProduction),
+      url: get('WORKLOAD_SERVICE_URL', 'http://localhost:9092', requiredInProduction),
       timeout: {
         response: 15000,
         deadline: 15000,
@@ -74,7 +74,7 @@ export default {
       agent: new AgentConfig(15000),
     },
     probationEstateService: {
-      url: get('PROBATION_ESTATE_SERVICE_URL', 'http://localhost:8093', requiredInProduction),
+      url: get('PROBATION_ESTATE_SERVICE_URL', 'http://localhost:9093', requiredInProduction),
       timeout: {
         response: 15000,
         deadline: 15000,

@@ -1,9 +1,9 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubFor } from './allocation-wiremock'
+import { stubForAllocation } from './wiremock'
 
 export default {
   stubGetAllocations: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated`,
@@ -117,7 +117,7 @@ export default {
       convictionId: 123456789,
       caseType: 'COMMUNITY',
     }))
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated`,
@@ -130,7 +130,7 @@ export default {
     })
   },
   stubGetNoAllocations: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated`,
@@ -143,7 +143,7 @@ export default {
     })
   },
   stubGetUnallocatedCase: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789`,
@@ -218,7 +218,7 @@ export default {
   },
 
   stubGetUnallocatedCasePreviouslyManaged: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789`,
@@ -272,7 +272,7 @@ export default {
   },
 
   stubGetUnallocatedCaseNewToProbation: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789`,
@@ -326,7 +326,7 @@ export default {
   },
 
   stubGetUnallocatedCaseNoOffenderManager: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions/123456789`,
@@ -384,7 +384,7 @@ export default {
   },
 
   stubGetUnallocatedCaseMultiOffences: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/L786545/convictions/56789`,
@@ -458,7 +458,7 @@ export default {
     teamCodes: string
     response: Array<Record<string, unknown>>
   }): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/teamCount\\?teams=${teamCodes}`,

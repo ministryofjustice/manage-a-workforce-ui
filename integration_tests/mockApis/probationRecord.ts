@@ -1,9 +1,9 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubFor } from './wiremock'
+import { stubForAllocation } from './wiremock'
 
 export default {
   stubGetProbationRecord: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,
@@ -88,7 +88,7 @@ export default {
     })
   },
   stubGetProbationRecordNoConvictions: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,
@@ -108,7 +108,7 @@ export default {
     })
   },
   stubGetProbationRecordMultipleOffences: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,
@@ -190,7 +190,7 @@ export default {
         },
       ],
     }))
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,

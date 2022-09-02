@@ -19,4 +19,14 @@ export default class UserPreferenceService {
       headers: { Accept: 'application/json' },
     })) as UserPreference
   }
+
+  async saveTeamsUserPreference(token: string, username: string, items: string[]): Promise<UserPreference> {
+    return (await this.restClient(token).put({
+      path: `/users/${username}/preferences/allocation-teams`,
+      headers: { Accept: 'application/json' },
+      data: {
+        items,
+      },
+    })) as UserPreference
+  }
 }

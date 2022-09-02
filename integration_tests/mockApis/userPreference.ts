@@ -24,7 +24,7 @@ export default {
         urlPattern: `/users/USER1/preferences/allocation-teams`,
         bodyPatterns: [
           {
-            equalToJson: '{ "items": ["TM1"]}',
+            equalToJson: '{ "items": ["TM1", "TM2"]}',
           },
         ],
       },
@@ -32,7 +32,7 @@ export default {
         status: 201,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          items: ['TM1'],
+          items: ['TM1', 'TM2'],
         },
       },
     })

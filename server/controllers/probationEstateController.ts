@@ -3,12 +3,14 @@ import EstateTeam from '../models/EstateTeam'
 import ProbationEstateService from '../services/probationEstateService'
 import AllocationsService from '../services/allocationsService'
 import WorkloadService from '../services/workloadService'
+import UserPreferenceService from '../services/userPreferenceService'
 
 export default class ProbationEstateController {
   constructor(
     private readonly probationEstateService: ProbationEstateService,
     private readonly allocationService: AllocationsService,
-    private readonly workloadService: WorkloadService
+    private readonly workloadService: WorkloadService,
+    private readonly userPreferenceService: UserPreferenceService
   ) {}
 
   async getPduTeams(req: Request, res: Response, pduCode) {
@@ -29,6 +31,8 @@ export default class ProbationEstateController {
       body: { team },
     } = req
     if (team) {
+      await this.userPreferenceService.saveTeamsUserPreference(res.locals.user.token, res.locals.user.username, team)
+      // redirect
       return this.getAllocateCasesByTeam(req, res, pduCode)
     }
     req.query.error = 'true'

@@ -1,5 +1,10 @@
 import userPreference from '../mockApis/userPreference'
-import { resetAllocationStubs, resetProbationEstateStubs, resetWorkloadStubs } from '../mockApis/wiremock'
+import {
+  resetAllocationStubs,
+  resetProbationEstateStubs,
+  resetUserPreferenceStubs,
+  resetWorkloadStubs,
+} from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
 import tokenVerification from '../mockApis/tokenVerification'
@@ -19,10 +24,14 @@ import probationEstate from '../mockApis/probationEstate'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
-    reset: () =>
-      resetAllocationStubs()
-        .then(() => resetWorkloadStubs())
-        .then(() => resetProbationEstateStubs()),
+    reset: async () => {
+      return Promise.all([
+        resetAllocationStubs(),
+        resetWorkloadStubs(),
+        resetProbationEstateStubs(),
+        resetUserPreferenceStubs(),
+      ])
+    },
 
     getSignInUrl: auth.getSignInUrl,
     stubSignIn: auth.stubSignIn,

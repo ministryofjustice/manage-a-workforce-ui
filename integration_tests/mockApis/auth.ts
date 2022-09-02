@@ -17,13 +17,24 @@ const createToken = () => {
   return jwt.sign(payload, 'secret', { expiresIn: '1h' })
 }
 
-const getSignInUrl = (): Promise<string> =>
-  getAllocationRequests().then(data => {
-    const { requests } = data.body
-    const stateParam = requests[0].request.queryParams.state
-    const stateValue = stateParam ? stateParam.values[0] : requests[1].request.queryParams.state.values[0]
-    return `/sign-in/callback?code=codexxxx&state=${stateValue}`
-  })
+const getSignInUrl = async (): Promise<string> => {
+  const {
+    body: {
+      requests: [
+        {
+          request: {
+            queryParams: {
+              state: {
+                values: [stateParam],
+              },
+            },
+          },
+        },
+      ],
+    },
+  } = await getAllocationRequests()
+  return `/sign-in/callback?code=codexxxx&state=${stateParam}`
+}
 
 const favicon = () =>
   stubForAllocation({

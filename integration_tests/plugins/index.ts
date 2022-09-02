@@ -1,6 +1,5 @@
-import { resetStubs } from '../mockApis/allocation-wiremock'
 import { resetWorkloadStubs } from '../mockApis/workload-wiremock'
-import { resetProbationEstateStubs } from '../mockApis/wiremock'
+import { resetStubs, resetProbationEstateStubs } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
 import tokenVerification from '../mockApis/tokenVerification'

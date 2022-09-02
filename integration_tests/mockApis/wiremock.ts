@@ -14,10 +14,14 @@ const wiremock = (url: string) => {
 
 export default wiremock
 
-const url = 'http://localhost:9093/__admin'
+const probationUrl = 'http://localhost:9093/__admin'
 const {
   stubFor: stubForProbationEstate,
   getRequests: getProbationEstateRequests,
   resetStubs: resetProbationEstateStubs,
-} = wiremock(url)
+} = wiremock(probationUrl)
 export { stubForProbationEstate, getProbationEstateRequests, resetProbationEstateStubs }
+
+const allocationUrl = 'http://localhost:9091/__admin'
+const { stubFor, getRequests, resetStubs } = wiremock(allocationUrl)
+export { stubFor, getRequests, resetStubs }

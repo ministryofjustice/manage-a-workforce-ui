@@ -27,7 +27,12 @@ export default class ProbationEstateController {
       body: { team },
     } = req
     if (team) {
-      await this.userPreferenceService.saveTeamsUserPreference(res.locals.user.token, res.locals.user.username, team)
+      const teamCodes = Array.isArray(team) ? team : [team]
+      await this.userPreferenceService.saveTeamsUserPreference(
+        res.locals.user.token,
+        res.locals.user.username,
+        teamCodes
+      )
 
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       return res.redirect(`/probationDeliveryUnit/${pduCode}/teams`)

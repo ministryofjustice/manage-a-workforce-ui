@@ -5,6 +5,56 @@ import SelectTeamsPage from '../pages/select-teams'
 context('Select teams and show allocate cases by team', () => {
   let allocateCasesByTeamPage
 
+  context('Single teams', () => {
+    beforeEach(() => {
+      cy.task('reset')
+      cy.task('stubSignIn')
+      cy.task('stubAuthUser')
+      cy.task('stubGetAllocations')
+      cy.task('stubGetTeamsByPdu')
+      cy.task('stubGetUnallocatedCasesByTeams', {
+        teamCodes: 'TM1',
+        response: [
+          {
+            teamCode: 'TM1',
+            caseCount: 1,
+          },
+        ],
+      })
+      cy.task('stubWorkloadCases', {
+        teamCodes: 'TM1',
+        response: [
+          {
+            teamCode: 'TM1',
+            totalCases: 3,
+            workload: 77,
+          },
+        ],
+      })
+      cy.task('stubGetTeamsByCodes', {
+        codes: 'TM1',
+        response: [
+          {
+            code: 'TM2',
+            name: 'Team 2',
+          },
+        ],
+      })
+      cy.task('stubPutUserPreferenceTeams', ['TM1'])
+      cy.task('stubUserPreferenceTeams', ['TM1'])
+      cy.signIn()
+      cy.visit('/probationDeliveryUnit/PDU1/select-teams')
+      const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+      selectTeamsPage.checkbox('team').click()
+      selectTeamsPage.button().click()
+      allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
+    })
+
+    it('Team selection saved as user preference', () => {
+      cy.task('verifyPutUserPreferenceTeams', ['TM1'])
+    })
+  })
+
   context('Multiple teams', () => {
     beforeEach(() => {
       cy.task('reset')
@@ -53,7 +103,7 @@ context('Select teams and show allocate cases by team', () => {
           },
         ],
       })
-      cy.task('stubPutUserPreferenceTeams')
+      cy.task('stubPutUserPreferenceTeams', ['TM1', 'TM2'])
       cy.task('stubUserPreferenceTeams', ['TM1', 'TM2'])
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/select-teams')
@@ -92,7 +142,7 @@ context('Select teams and show allocate cases by team', () => {
     })
 
     it('Team selection saved as user preference', () => {
-      cy.task('verifyPutUserPreferenceTeams')
+      cy.task('verifyPutUserPreferenceTeams', ['TM1', 'TM2'])
     })
 
     it('link to edit team list must exist', () => {

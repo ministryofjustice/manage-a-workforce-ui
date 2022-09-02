@@ -17,14 +17,14 @@ export default {
       },
     })
   },
-  stubPutUserPreferenceTeams: (): SuperAgentRequest => {
+  stubPutUserPreferenceTeams: (teams: string[]): SuperAgentRequest => {
     return stubForUserPreference({
       request: {
         method: 'PUT',
         urlPattern: `/users/USER1/preferences/allocation-teams`,
         bodyPatterns: [
           {
-            equalToJson: '{ "items": ["TM1", "TM2"]}',
+            equalToJson: `{ "items": ${JSON.stringify(teams)}}`,
           },
         ],
       },
@@ -37,12 +37,12 @@ export default {
       },
     })
   },
-  verifySaveOffenceDetails: () =>
+  verifyPutUserPreferenceTeams: (teams: string[]) =>
     verifyRequestForUserPreference({
       requestUrlPattern: `/users/USER1/preferences/allocation-teams`,
       method: 'PUT',
       body: {
-        items: ['TM1', 'TM2'],
+        items: teams,
       },
     }),
 }

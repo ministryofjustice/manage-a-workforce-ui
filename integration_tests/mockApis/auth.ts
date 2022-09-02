@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { Response } from 'superagent'
 
-import { stubFor, getRequests } from './allocation-wiremock'
+import { stubFor, getRequests } from './wiremock'
 import tokenVerification from './tokenVerification'
 
 const createToken = () => {

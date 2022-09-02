@@ -1,4 +1,4 @@
-import { Request, Response } from 'express-serve-static-core'
+import { Request, Response } from 'express'
 import AllocationsService from '../services/allocationsService'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'

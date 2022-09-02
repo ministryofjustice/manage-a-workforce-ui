@@ -1,3 +1,4 @@
+import userPreference from '../mockApis/userPreference'
 import { resetAllocationStubs, resetProbationEstateStubs, resetWorkloadStubs } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
@@ -16,12 +17,11 @@ import allocationComplete from '../mockApis/allocationComplete'
 import person from '../mockApis/person'
 import selectTeams from '../mockApis/select-teams'
 import probationEstate from '../mockApis/probationEstate'
-import userPreferences from 'mockApis/userPreferences'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
     reset: () =>
-    resetAllocationStubs()
+      resetAllocationStubs()
         .then(() => resetWorkloadStubs())
         .then(() => resetProbationEstateStubs()),
 
@@ -105,6 +105,6 @@ export default (on: (string, Record) => void): void => {
 
     stubGetTeamsByCodes: probationEstate.stubGetTeamsByCodes,
 
-    stubUserPreferenceTeams: userPreferences.stubUserPreferenceTeams
+    stubUserPreferenceTeams: userPreference.stubUserPreferenceTeams,
   })
 }

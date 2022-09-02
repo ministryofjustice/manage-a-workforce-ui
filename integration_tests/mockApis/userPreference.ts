@@ -2,7 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForUserPreference } from './wiremock'
 
 export default {
-  stubUserPreferenceTeams: (): SuperAgentRequest => {
+  stubUserPreferenceTeams: (teams = ['TM1']): SuperAgentRequest => {
     return stubForUserPreference({
       request: {
         method: 'GET',
@@ -12,7 +12,7 @@ export default {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          items: ['TM1'],
+          items: teams,
         },
       },
     })

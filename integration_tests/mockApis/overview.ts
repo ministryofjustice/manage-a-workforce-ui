@@ -1,5 +1,5 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubForWorkload } from './workload-wiremock'
+import { stubForWorkload } from './wiremock'
 
 export default {
   stubGetOverview: (): SuperAgentRequest => {

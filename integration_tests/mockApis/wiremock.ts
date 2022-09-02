@@ -25,3 +25,11 @@ export { stubForProbationEstate, getProbationEstateRequests, resetProbationEstat
 const allocationUrl = 'http://localhost:9091/__admin'
 const { stubFor, getRequests, resetStubs } = wiremock(allocationUrl)
 export { stubFor, getRequests, resetStubs }
+
+const workloadUrl = 'http://localhost:9092/__admin'
+const {
+  stubFor: stubForWorkload,
+  getRequests: getWorkloadRequests,
+  resetStubs: resetWorkloadStubs,
+} = wiremock(workloadUrl)
+export { stubForWorkload, getWorkloadRequests, resetWorkloadStubs }

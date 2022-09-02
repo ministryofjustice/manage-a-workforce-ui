@@ -1,5 +1,5 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubForProbationEstate } from './probation-estate-wiremock'
+import { stubForProbationEstate } from './wiremock'
 
 export default {
   stubGetTeamsByPdu: (): SuperAgentRequest => {

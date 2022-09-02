@@ -93,8 +93,8 @@ export default function routes(services: Services): Router {
   })
 
   get('/probationDeliveryUnit/:pduCode/teams', async (req, res) => {
-    await allocateCasesController.getDataByTeams(req, res)
+    const { pduCode } = req.params
+    await allocateCasesController.getDataByTeams(req, res, pduCode)
   })
-
   return router
 }

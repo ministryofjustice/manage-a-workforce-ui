@@ -12,7 +12,7 @@ export default class AllocateCasesController {
     private readonly workloadService: WorkloadService
   ) {}
 
-  async getDataByTeams(req: Request, res: Response) {
+  async getDataByTeams(req: Request, res: Response, pduCode: string) {
     const teamCodes = await (
       await this.userPreferenceService.getTeamsUserPreference(req.user.username, req.user.token)
     ).items
@@ -42,7 +42,7 @@ export default class AllocateCasesController {
     res.render('pages/allocate-cases-by-team', {
       title: 'Allocate cases by team | Manage a workforce',
       teams: caseInformationByTeam,
-      pduCode: '',
+      pduCode,
     })
   }
 }

@@ -9,7 +9,34 @@ const wiremock = (url: string) => {
   const resetStubs = (): Promise<Array<Response>> =>
     Promise.all([superagent.delete(`${url}/mappings`), superagent.delete(`${url}/requests`)])
 
-  return { stubFor, getRequests, resetStubs }
+  const verifyRequest = ({
+    requestUrl,
+    requestUrlPattern,
+    method,
+    body,
+    queryParameters,
+  }: {
+    requestUrl?: string
+    requestUrlPattern?: string
+    method: string
+    body?: unknown
+    queryParameters?: unknown
+  }): SuperAgentRequest => {
+    const bodyPatterns =
+      (body && {
+        bodyPatterns: [{ equalToJson: JSON.stringify(body) }],
+      }) ||
+      {}
+    return superagent.post(`${url}/requests/count`).send({
+      method,
+      urlPattern: requestUrlPattern,
+      url: requestUrl,
+      ...bodyPatterns,
+      queryParameters,
+    })
+  }
+    
+  return { stubFor, getRequests, resetStubs, verifyRequest }
 }
 
 const probationUrl = 'http://localhost:9093/__admin'
@@ -42,5 +69,6 @@ const {
   stubFor: stubForUserPreference,
   getRequests: getUserPreferenceRequests,
   resetStubs: resetUserPreferenceStubs,
+  verifyRequest: verifyRequestForUserPreference
 } = wiremock(userPreferenceUrl)
-export { stubForUserPreference, getUserPreferenceRequests, resetUserPreferenceStubs }
+export { stubForUserPreference, getUserPreferenceRequests, resetUserPreferenceStubs, verifyRequestForUserPreference }

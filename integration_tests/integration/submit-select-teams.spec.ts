@@ -91,6 +91,10 @@ context('Select teams and show allocate cases by team', () => {
         ])
     })
 
+    it('Team selection saved as user preference', () => {
+      cy.task('verifyPutUserPreferenceTeams')
+    })
+
     it('link to edit team list must exist', () => {
       allocateCasesByTeamPage
         .link()

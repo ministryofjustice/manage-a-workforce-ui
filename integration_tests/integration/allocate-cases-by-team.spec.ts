@@ -40,6 +40,7 @@ context('Select teams and show allocate cases by team', () => {
           },
         ],
       })
+      cy.task('stubPutUserPreferenceTeams')
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/select-teams')
       const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)

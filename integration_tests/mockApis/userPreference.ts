@@ -44,5 +44,5 @@ export default {
       body: {
         items: ['TM1', 'TM2'],
       },
-    })
-  }
+    }),
+}

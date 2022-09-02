@@ -35,7 +35,7 @@ const wiremock = (url: string) => {
       queryParameters,
     })
   }
-    
+
   return { stubFor, getRequests, resetStubs, verifyRequest }
 }
 
@@ -69,6 +69,6 @@ const {
   stubFor: stubForUserPreference,
   getRequests: getUserPreferenceRequests,
   resetStubs: resetUserPreferenceStubs,
-  verifyRequest: verifyRequestForUserPreference
+  verifyRequest: verifyRequestForUserPreference,
 } = wiremock(userPreferenceUrl)
 export { stubForUserPreference, getUserPreferenceRequests, resetUserPreferenceStubs, verifyRequestForUserPreference }

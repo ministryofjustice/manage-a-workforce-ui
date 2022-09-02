@@ -1,4 +1,10 @@
-import { resetAllocationStubs, resetProbationEstateStubs, resetWorkloadStubs } from '../mockApis/wiremock'
+import userPreference from '../mockApis/userPreference'
+import {
+  resetAllocationStubs,
+  resetProbationEstateStubs,
+  resetUserPreferenceStubs,
+  resetWorkloadStubs,
+} from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
 import tokenVerification from '../mockApis/tokenVerification'
@@ -14,15 +20,18 @@ import offenderManagerCases from '../mockApis/offenderManagerCases'
 import staff from '../mockApis/staff'
 import allocationComplete from '../mockApis/allocationComplete'
 import person from '../mockApis/person'
-import selectTeams from '../mockApis/select-teams'
 import probationEstate from '../mockApis/probationEstate'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
-    reset: () =>
-      resetAllocationStubs()
-        .then(() => resetWorkloadStubs())
-        .then(() => resetProbationEstateStubs()),
+    reset: async () => {
+      return Promise.all([
+        resetAllocationStubs(),
+        resetWorkloadStubs(),
+        resetProbationEstateStubs(),
+        resetUserPreferenceStubs(),
+      ])
+    },
 
     getSignInUrl: auth.getSignInUrl,
     stubSignIn: auth.stubSignIn,
@@ -100,8 +109,14 @@ export default (on: (string, Record) => void): void => {
 
     stubGetOverviewWithLastAllocatedEvent: overview.stubGetOverviewWithLastAllocatedEvent,
 
-    stubGetTeamsByPdu: selectTeams.stubGetTeamsByPdu,
+    stubGetTeamsByPdu: probationEstate.stubGetTeamsByPdu,
 
     stubGetTeamsByCodes: probationEstate.stubGetTeamsByCodes,
+
+    stubUserPreferenceTeams: userPreference.stubUserPreferenceTeams,
+
+    stubPutUserPreferenceTeams: userPreference.stubPutUserPreferenceTeams,
+
+    verifyPutUserPreferenceTeams: userPreference.verifySaveOffenceDetails,
   })
 }

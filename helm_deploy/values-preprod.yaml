@@ -14,3 +14,4 @@ generic-service:
     WORKLOAD_MEASUREMENT_URL: "https://workload-measurement-preprod.hmpps.service.justice.gov.uk"
     WORKLOAD_SERVICE_URL: "https://hmpps-workload-preprod.hmpps.service.justice.gov.uk"
     PROBATION_ESTATE_SERVICE_URL: "https://hmpps-probation-estate-api-preprod.hmpps.service.justice.gov.uk"
+    USER_PREFERENCE_SERVICE_URL: "https://hmpps-user-preferences-preprod.hmpps.service.justice.gov.uk"

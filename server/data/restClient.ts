@@ -25,6 +25,12 @@ interface PostRequest {
   raw?: boolean
 }
 
+interface PutRequest {
+  path?: string
+  headers?: Record<string, string>
+  data?: Record<string, unknown>
+}
+
 interface StreamRequest {
   path?: string
   headers?: Record<string, string>
@@ -94,6 +100,20 @@ export default class RestClient {
     } catch (error) {
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'POST'`)
+      throw sanitisedError
+    }
+  }
+
+  async put({ path = null, headers = {}, data = {} }: PutRequest = {}): Promise<unknown> {
+    try {
+      return axios.put(path, data, {
+        baseURL: this.apiUrl(),
+        headers: { ...headers, Authorization: `Bearer ${this.token}` },
+        timeout: this.timeoutConfig().response,
+      })
+    } catch (error) {
+      const sanitisedError = sanitiseError(error)
+      logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'PUT'`)
       throw sanitisedError
     }
   }

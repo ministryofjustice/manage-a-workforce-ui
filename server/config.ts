@@ -81,6 +81,14 @@ export default {
       },
       agent: new AgentConfig(15000),
     },
+    userPreferenceService: {
+      url: get('USER_PREFERENCE_SERVICE_URL', 'http://localhost:9094', requiredInProduction),
+      timeout: {
+        response: 5000,
+        deadline: 5000,
+      },
+      agent: new AgentConfig(5000),
+    },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
       timeout: {

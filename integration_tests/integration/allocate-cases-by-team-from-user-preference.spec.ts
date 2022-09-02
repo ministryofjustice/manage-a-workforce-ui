@@ -1,8 +1,7 @@
 import AllocateCasesByTeamPage from '../pages/allocate-cases-by-team'
 import Page from '../pages/page'
-import SelectTeamsPage from '../pages/select-teams'
 
-context('Select teams', () => {
+context('Show allocate cases by team based on user preferences', () => {
   let allocateCasesByTeamPage
 
   context('single team', () => {
@@ -11,7 +10,7 @@ context('Select teams', () => {
       cy.task('stubSignIn')
       cy.task('stubAuthUser')
       cy.task('stubGetAllocations')
-      cy.task('stubGetTeamsByPdu')
+      cy.task('stubUserPreferenceTeams')
       cy.task('stubGetUnallocatedCasesByTeams', {
         teamCodes: 'TM1',
         response: [
@@ -42,13 +41,10 @@ context('Select teams', () => {
       })
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/teams')
-      const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
-      selectTeamsPage.checkbox('team').click()
-      selectTeamsPage.button().click()
       allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     })
 
-    it('team code displayed in table (for now)', () => {
+    it('team data displayed in table', () => {
       cy.get('table')
         .getTable()
         .should('deep.equal', [
@@ -60,105 +56,23 @@ context('Select teams', () => {
           },
         ])
     })
-  })
-
-  context('Multiple teams', () => {
-    beforeEach(() => {
-      cy.task('reset')
-      cy.task('stubSignIn')
-      cy.task('stubAuthUser')
-      cy.task('stubGetAllocations')
-      cy.task('stubGetTeamsByPdu')
-      cy.task('stubGetUnallocatedCasesByTeams', {
-        teamCodes: 'TM1,TM2',
-        response: [
-          {
-            teamCode: 'TM1',
-            caseCount: 1,
-          },
-          {
-            teamCode: 'TM2',
-            caseCount: 2,
-          },
-        ],
-      })
-      cy.task('stubWorkloadCases', {
-        teamCodes: 'TM1,TM2',
-        response: [
-          {
-            teamCode: 'TM1',
-            totalCases: 3,
-            workload: 77,
-          },
-          {
-            teamCode: 'TM2',
-            totalCases: 4,
-            workload: 88,
-          },
-        ],
-      })
-      cy.task('stubGetTeamsByCodes', {
-        codes: 'TM1,TM2',
-        response: [
-          {
-            code: 'TM2',
-            name: 'Team 2',
-          },
-          {
-            code: 'TM1',
-            name: 'Team 1',
-          },
-        ],
-      })
-      cy.signIn()
-      cy.visit('/probationDeliveryUnit/PDU1/teams')
-      const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
-      selectTeamsPage.checkbox('team').click()
-      selectTeamsPage.checkbox('team-2').click()
-      selectTeamsPage.button().click()
-      allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
-    })
-
-    it('Caption text visible on page', () => {
-      allocateCasesByTeamPage.captionText().should('contain', 'Wales')
-    })
-
-    it('Table caption visible on page', () => {
-      allocateCasesByTeamPage.tableCaption().should('contain', 'Your teams')
-    })
-
-    it('team code displayed in table (for now)', () => {
-      cy.get('table')
-        .getTable()
-        .should('deep.equal', [
-          {
-            Name: 'Team 1',
-            Workload: '77%',
-            Cases: '3',
-            Action: 'View unallocated cases (1)',
-          },
-          {
-            Name: 'Team 2',
-            Workload: '88%',
-            Cases: '4',
-            Action: 'View unallocated cases (2)',
-          },
-        ])
-    })
 
     it('link to edit team list must exist', () => {
-      allocateCasesByTeamPage.link().should('contain', 'editing your team list')
+      allocateCasesByTeamPage
+        .link()
+        .should('contain', 'editing your team list')
+        .should('have.attr', 'href')
+        .and('include', '/PDU1')
     })
   })
 
   context('Edge cases', () => {
-    let selectTeamsPage
     beforeEach(() => {
       cy.task('reset')
       cy.task('stubSignIn')
       cy.task('stubAuthUser')
       cy.task('stubGetAllocations')
-      cy.task('stubGetTeamsByPdu')
+      cy.task('stubUserPreferenceTeams', ['TM1', 'TM2'])
       cy.task('stubGetTeamsByCodes', {
         codes: 'TM1,TM2',
         response: [
@@ -201,10 +115,6 @@ context('Select teams', () => {
         ],
       })
       cy.signIn()
-      cy.visit('/probationDeliveryUnit/PDU1/teams')
-      selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
-      selectTeamsPage.checkbox('team').click()
-      selectTeamsPage.checkbox('team-2').click()
     })
 
     it('returning no workload for team still displays it', () => {
@@ -218,7 +128,7 @@ context('Select teams', () => {
           },
         ],
       })
-      selectTeamsPage.button().click()
+      cy.visit('/probationDeliveryUnit/PDU1/teams')
       cy.get('table')
         .getTable()
         .should('deep.equal', [
@@ -247,7 +157,7 @@ context('Select teams', () => {
           },
         ],
       })
-      selectTeamsPage.button().click()
+      cy.visit('/probationDeliveryUnit/PDU1/teams')
       cy.get('table')
         .getTable()
         .should('deep.equal', [
@@ -266,12 +176,18 @@ context('Select teams', () => {
         ])
     })
 
-    it('does not display teams if probation estate does not return teams', () => {
+    it('does not display teams if no probation estate teams', () => {
       cy.task('stubGetTeamsByCodes', {
         codes: 'TM1,TM2',
         response: [],
       })
-      selectTeamsPage.button().click()
+      cy.visit('/probationDeliveryUnit/PDU1/teams')
+      cy.get('table').getTable().should('deep.equal', [])
+    })
+
+    it('does not display teams if no user preferences', () => {
+      cy.task('stubUserPreferenceTeams', [])
+      cy.visit('/probationDeliveryUnit/PDU1/teams')
       cy.get('table').getTable().should('deep.equal', [])
     })
   })

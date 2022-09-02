@@ -31,6 +31,13 @@ services:
     restart: always
     ports:
       - "9093:8080"
+  user-preference-wiremock:
+    image: rodolpheche/wiremock
+    networks:
+    - hmpps_int
+    restart: always
+    ports:
+      - "9094:8080"
 
 networks:
   hmpps_int:

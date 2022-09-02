@@ -13,13 +13,12 @@ export default class AllocateCasesController {
   ) {}
 
   async getDataByTeams(req: Request, res: Response, pduCode: string) {
-    const teamCodes = await (
-      await this.userPreferenceService.getTeamsUserPreference(req.user.username, req.user.token)
-    ).items
+    const { token, username } = res.locals.user
+    const teamCodes = (await this.userPreferenceService.getTeamsUserPreference(token, username)).items
     const [allocationCasesByTeam, workloadByTeam, probationEstateTeams] = await Promise.all([
-      this.allocationsService.getCaseCountByTeamCodes(res.locals.user.token, teamCodes),
-      this.workloadService.getWorkloadByTeams(res.locals.user.token, teamCodes),
-      this.probationEstateService.getTeamsByCode(res.locals.user.token, teamCodes),
+      this.allocationsService.getCaseCountByTeamCodes(token, teamCodes),
+      this.workloadService.getWorkloadByTeams(token, teamCodes),
+      this.probationEstateService.getTeamsByCode(token, teamCodes),
     ])
     const caseInformationByTeam = probationEstateTeams
       .map(team => {

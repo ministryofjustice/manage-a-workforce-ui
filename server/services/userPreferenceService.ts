@@ -13,7 +13,7 @@ export default class UserPreferenceService {
     return new RestClient('User Preference Service API Client', this.config, token)
   }
 
-  async getTeamsUserPreference(username: string, token: string): Promise<UserPreference> {
+  async getTeamsUserPreference(token: string, username: string): Promise<UserPreference> {
     return (await this.restClient(token).get({
       path: `/users/${username}/preferences/allocation-teams`,
       headers: { Accept: 'application/json' },

@@ -20,7 +20,6 @@ context('Show allocate cases by team based on user preferences', () => {
           },
         ],
       })
-      
       cy.task('stubWorkloadCases', {
         teamCodes: 'TM1',
         response: [
@@ -57,6 +56,13 @@ context('Show allocate cases by team based on user preferences', () => {
           },
         ])
     })
-  })
 
+    it('link to edit team list must exist', () => {
+      allocateCasesByTeamPage
+        .link()
+        .should('contain', 'editing your team list')
+        .should('have.attr', 'href')
+        .and('include', '/PDU1')
+    })
+  })
 })

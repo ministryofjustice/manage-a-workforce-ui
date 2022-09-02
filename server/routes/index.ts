@@ -16,7 +16,12 @@ export default function routes(services: Services): Router {
     services.allocationsService,
     services.workloadService
   )
-  const allocateCasesController = new AllocateCasesController()
+  const allocateCasesController = new AllocateCasesController(
+    services.allocationsService,
+    services.probationEstateService,
+    services.userPreferenceService,
+    services.workloadService
+  )
 
   get('/', async (req, res) => {
     await allocationsController.getAllocations(req, res)

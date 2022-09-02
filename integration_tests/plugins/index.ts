@@ -1,4 +1,4 @@
-import { resetStubs, resetProbationEstateStubs, resetWorkloadStubs } from '../mockApis/wiremock'
+import { resetAllocationStubs, resetProbationEstateStubs, resetWorkloadStubs } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
 import tokenVerification from '../mockApis/tokenVerification'
@@ -20,7 +20,7 @@ import probationEstate from '../mockApis/probationEstate'
 export default (on: (string, Record) => void): void => {
   on('task', {
     reset: () =>
-      resetStubs()
+      resetAllocationStubs()
         .then(() => resetWorkloadStubs())
         .then(() => resetProbationEstateStubs()),
 

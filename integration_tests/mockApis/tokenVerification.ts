@@ -1,9 +1,9 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubFor } from './wiremock'
+import { stubForAllocation } from './wiremock'
 
 export default {
   stubPing: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'GET',
         urlPattern: '/verification/health/ping',
@@ -16,7 +16,7 @@ export default {
     })
   },
   stubVerifyToken: (): SuperAgentRequest => {
-    return stubFor({
+    return stubForAllocation({
       request: {
         method: 'POST',
         urlPattern: '/verification/token/verify',

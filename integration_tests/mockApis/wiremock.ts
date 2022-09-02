@@ -23,8 +23,12 @@ const {
 } = wiremock(probationUrl)
 export { stubForProbationEstate, getProbationEstateRequests, resetProbationEstateStubs }
 
-const { stubFor, getRequests, resetStubs } = wiremock(allocationUrl)
-export { stubFor, getRequests, resetStubs }
+const {
+  stubFor: stubForAllocation,
+  getRequests: getAllocationRequests,
+  resetStubs: resetAllocationStubs,
+} = wiremock(allocationUrl)
+export { stubForAllocation, getAllocationRequests, resetAllocationStubs }
 
 const {
   stubFor: stubForWorkload,

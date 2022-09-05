@@ -8,28 +8,32 @@ context('Unallocated cases by team', () => {
     cy.task('stubGetAllocations')
     cy.signIn()
     cy.task('stubGetAllocationsByTeam', 'TM1')
+    cy.task('stubGetTeamByCode', {
+      code: 'TM1',
+      name: 'Team Name',
+    })
     cy.visit('/team/TM1/cases/unallocated')
   })
 
   it('Probation Delivery Unit visible on page', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('TM1')
+    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.probationDeliveryUnit().should('contain.text', 'North Wales')
   })
 
   it('Sub nav visible on page', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('TM1')
+    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.subNav().should('contain', 'Unallocated community cases (8)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
     cy.task('stubOverOneHundredAllocationsByTeam', 'TM1')
     cy.visit('/team/TM1/cases/unallocated')
-    const unallocatedPage = new UnallocatedByTeamPage('TM1')
+    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.subNavLink().should('contain.text', 'Unallocated community cases (99+)')
   })
 
   it('Table caption visible on page', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('TM1')
+    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.tableCaption().should('have.text', 'Unallocated community cases')
   })
 
@@ -105,12 +109,12 @@ context('Unallocated cases by team', () => {
   })
 
   it('Unallocated custody cases visible on page', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('TM1')
+    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.otherCasesHeading().should('have.text', 'Other types of cases')
   })
 
   it('Unallocated custody cases warning visible on page', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('TM1')
+    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.warningIcon().should('exist')
     unallocatedPage
       .warningText()
@@ -118,7 +122,7 @@ context('Unallocated cases by team', () => {
   })
 
   it('Should sort tier by correct order', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('TM1')
+    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.tierSortButton().click()
     cy.get('table')
       .getTable()

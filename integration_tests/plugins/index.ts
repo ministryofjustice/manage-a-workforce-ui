@@ -117,6 +117,8 @@ export default (on: (string, Record) => void): void => {
 
     stubGetTeamsByCodes: probationEstate.stubGetTeamsByCodes,
 
+    stubGetTeamByCode: probationEstate.stubGetTeamByCode,
+
     stubUserPreferenceTeams: userPreference.stubUserPreferenceTeams,
 
     stubPutUserPreferenceTeams: userPreference.stubPutUserPreferenceTeams,

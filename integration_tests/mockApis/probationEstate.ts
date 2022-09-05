@@ -21,6 +21,22 @@ export default {
       },
     })
   },
+  stubGetTeamByCode: ({ code, name }: { code: string; name: string }): SuperAgentRequest => {
+    return stubForProbationEstate({
+      request: {
+        method: 'GET',
+        urlPattern: `/team/${code}`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          code,
+          name,
+        },
+      },
+    })
+  },
   stubGetTeamsByPdu: (): SuperAgentRequest => {
     return stubForProbationEstate({
       request: {

@@ -22,7 +22,7 @@ export default function routes(services: Services): Router {
     services.userPreferenceService,
     services.workloadService
   )
-  const casesByTeamController = new CasesByTeamController(services.allocationsService)
+  const casesByTeamController = new CasesByTeamController(services.allocationsService, services.probationEstateService)
 
   get('/', async (req, res) => {
     await allocationsController.getAllocations(req, res)

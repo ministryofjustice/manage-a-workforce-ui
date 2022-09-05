@@ -28,4 +28,11 @@ export default class ProbationEstateService {
       headers: { Accept: 'application/json' },
     })) as EstateTeam[]
   }
+
+  async getTeamByCode(token: string, teamCode: string): Promise<EstateTeam> {
+    return (await this.restClient(token).get({
+      path: `/team/${teamCode}`,
+      headers: { Accept: 'application/json' },
+    })) as EstateTeam
+  }
 }

@@ -193,4 +193,9 @@ context('Unallocated cases by team', () => {
         },
       ])
   })
+
+  it('link to case overview in table', () => {
+    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
+    unallocatedPage.tableLink('123456789').should('equal', '/J678910/convictions/123456789/case-view')
+  })
 })

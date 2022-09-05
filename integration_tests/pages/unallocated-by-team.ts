@@ -32,4 +32,6 @@ export default class UnallocatedByTeamPage extends Page {
   warningText = (): PageElement => cy.get('.govuk-warning-text__text')
 
   tierSortButton = (): PageElement => cy.get('button[data-index="1"]')
+
+  tableLink = (convictionId: string): PageElement => cy.get(`[data-qa-link="${convictionId}"]`).invoke('attr', 'href')
 }

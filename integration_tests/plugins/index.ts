@@ -43,6 +43,8 @@ export default (on: (string, Record) => void): void => {
 
     stubGetAllocations: allocations.stubGetAllocations,
 
+    stubGetAllocationsByTeam: allocations.stubGetAllocationsByTeam,
+
     stubGetNoAllocations: allocations.stubGetNoAllocations,
 
     stubOverOneHundredAllocations: allocations.stubOverOneHundredAllocations,
@@ -52,6 +54,8 @@ export default (on: (string, Record) => void): void => {
     stubGetUnallocatedCaseMultiOffences: allocations.stubGetUnallocatedCaseMultiOffences,
 
     stubGetUnallocatedCasesByTeams: allocations.stubGetUnallocatedCasesByTeams,
+
+    stubOverOneHundredAllocationsByTeam: allocations.stubOverOneHundredAllocationsByTeam,
 
     stubGetProbationRecord: probationRecord.stubGetProbationRecord,
 

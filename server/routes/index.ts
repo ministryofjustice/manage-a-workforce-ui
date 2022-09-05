@@ -4,6 +4,7 @@ import asyncMiddleware from '../middleware/asyncMiddleware'
 import AllocationsController from '../controllers/allocationsController'
 import ProbationEstateController from '../controllers/probationEstateController'
 import AllocateCasesController from '../controllers/allocateCasesController'
+import CasesByTeamController from '../controllers/casesByTeamController'
 import type { Services } from '../services'
 
 export default function routes(services: Services): Router {
@@ -21,9 +22,15 @@ export default function routes(services: Services): Router {
     services.userPreferenceService,
     services.workloadService
   )
+  const casesByTeamController = new CasesByTeamController(services.allocationsService)
 
   get('/', async (req, res) => {
     await allocationsController.getAllocations(req, res)
+  })
+
+  get('/team/:teamCode/cases/unallocated', async (req, res) => {
+    const { teamCode } = req.params
+    await casesByTeamController.getAllocationsByTeam(req, res, teamCode)
   })
 
   get('/:crn/convictions/:convictionId/case-view', async (req, res) => {

@@ -1,0 +1,88 @@
+{% extends "../partials/layout.njk" %}
+{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{%- from "../components/doubleCell/macro.njk" import doubleCell -%}
+
+{% set tableData = {
+    caption: 'Unallocated community cases',
+    captionClasses: 'govuk-heading-l',
+    attributes: {
+    'data-module': 'moj-sortable-table'
+    },
+    head: [
+        { text: 'Name / CRN',
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Tier',
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Sentence date',
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Initial appointment date',
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Probation status',
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Action' }
+    ],
+    rows: []
+} %}
+
+{% for item in unallocatedCases %}
+    {%- set tableRow = [
+        { text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' )},
+        { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+        { text: (item.sentenceDate | dateFormat), attributes: {
+            "data-sort-value": item.sentenceDate
+        } },
+        { text: doubleCell(item.primaryInitialAppointment,item.secondaryInitialAppointment, 'maw-secondary' )},
+        { text: doubleCell(item.primaryStatus, item.secondaryStatus, 'govuk-body-s')},
+        { text: ('<a href="/' + item.crn + '/convictions/' + item.convictionId +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case">' + "Review case" + '</a>' ) | safe}
+    ] -%}
+    {{ tableData.rows.push(tableRow) }}
+
+{% endfor %}
+
+{% block content %}
+
+        <span class="govuk-caption-xl">{{ pduName }}</span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ teamName }}</h1>
+
+        {{ mojSubNavigation({
+          label: 'Sub navigation',
+          items: [{
+            text: 'Unallocated community cases' +  (' (' + casesLength | getCaseCount + ')' if casesLength) ,
+            href: '#',
+            active: true
+          }]
+        }) }}
+
+
+        {{ govukTable(tableData) }}
+
+    {% if not casesLength %}
+          <p class="govuk-!-margin-bottom-9">No case list information available.</p>
+    {% endif %}
+
+            <h2 class="govuk-heading-l">Other types of cases</h2>
+            {{ govukWarningText({
+               text: "You must also check NDelius for any other cases that need to be allocated.",
+               iconFallbackText: "Warning"
+            }) }}
+
+
+{% endblock %}
+

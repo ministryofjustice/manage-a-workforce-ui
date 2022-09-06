@@ -171,7 +171,7 @@ context('Show allocate cases by team based on user preferences', () => {
             Name: 'Team 2',
             Workload: '88%',
             Cases: '4',
-            Action: 'View unallocated cases',
+            Action: 'View unallocated cases (0)',
           },
         ])
     })

@@ -25,6 +25,10 @@ generic-service:
       SecRuleRemoveById 942430
       SecRuleRemoveById 942210
       SecRuleRemoveById 950100
+      SecRuleUpdateTargetById 942440 "!REQUEST_COOKIES:/connect.sid/"
+      SecRuleUpdateTargetById 942450 "!REQUEST_COOKIES:/connect.sid/"
+      SecRuleUpdateTargetById 930120 "!REQUEST_COOKIES:/connect.sid/"
+      SecRuleUpdateTargetById 942210 "!REQUEST_COOKIES:/connect.sid/"
       SecRule REQUEST_URI "@endsWith /confirm-allocation" \
         "id:1004,\
         phase:1,\

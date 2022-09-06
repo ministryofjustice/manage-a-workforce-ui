@@ -21,6 +21,7 @@ import applyBankHols from './utils/bankHolidays'
 
 import routes from './routes'
 import type { Services } from './services'
+import getUnallocatedCasesCount from './middleware/getUnallocatedCasesCount'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -40,6 +41,7 @@ export default function createApp(services: Services): express.Application {
   app.use(authorisationMiddleware(['ROLE_MANAGE_A_WORKFORCE_ALLOCATE']))
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
+  app.use(getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService))
 
   app.use((req, res, next) => {
     res.locals.casesLength = req.session.casesLength

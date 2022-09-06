@@ -6,21 +6,9 @@ context('Allocate Complete', () => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
+    cy.task('stubUserPreferenceTeams')
+    cy.task('stubGetUnallocatedCasesByTeams', {})
     cy.task('stubGetAllocations')
-  })
-
-  it('Notification badge visible on page with number of unallocations', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.task('stubGetPotentialOffenderManagerWorkload')
-    cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM1/instructions')
-    cy.get('#instructions').type('Test')
-    cy.task('stubAllocateOffenderManagerToCase')
-    cy.task('stubGetPersonById')
-    cy.get('.allocate').click()
-    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
-    allocationCompletePage.notificationsBadge().should('contain', 8)
   })
 
   it('return to unallocated cases link exists', () => {

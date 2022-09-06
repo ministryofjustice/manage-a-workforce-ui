@@ -32,6 +32,4 @@ export default class OverviewPage extends Page {
   sectionBreak = (): PageElement => cy.get('.govuk-section-break')
 
   tierTable = (): PageElement => cy.get('.govuk-table')
-
-  notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 }

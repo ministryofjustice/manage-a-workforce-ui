@@ -579,8 +579,13 @@ export default {
   },
 
   stubGetUnallocatedCasesByTeams: ({
-    teamCodes,
-    response,
+    teamCodes = 'TM1',
+    response = [
+      {
+        teamCode: 'TM1',
+        caseCount: 10,
+      },
+    ],
   }: {
     teamCodes: string
     response: Array<Record<string, unknown>>

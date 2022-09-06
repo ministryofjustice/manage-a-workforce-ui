@@ -8,6 +8,8 @@ context('Probation record', () => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
+    cy.task('stubUserPreferenceTeams')
+    cy.task('stubGetUnallocatedCasesByTeams', {})
     cy.task('stubGetAllocations')
   })
 
@@ -17,14 +19,6 @@ context('Probation record', () => {
     cy.visit('J678910/convictions/123456789/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
-  })
-
-  it('Notification badge visible on page with number of unallocations', () => {
-    cy.task('stubGetProbationRecord')
-    cy.signIn()
-    cy.visit('J678910/convictions/123456789/probation-record')
-    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.notificationsBadge().should('contain.text', '8')
   })
 
   it('Probation record header visible on page', () => {

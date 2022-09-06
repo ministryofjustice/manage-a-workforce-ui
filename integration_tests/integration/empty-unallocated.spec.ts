@@ -6,13 +6,9 @@ context('No unallocated cases', () => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
+    cy.task('stubUserPreferenceTeams')
+    cy.task('stubGetUnallocatedCasesByTeams', {})
     cy.task('stubGetNoAllocations')
-  })
-
-  it('Must not show the notifications badge when no unallocated cases exist', () => {
-    cy.signIn()
-    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.notificationsBadge().should('not.exist')
   })
 
   it('Sub nav link visible on page with no number', () => {

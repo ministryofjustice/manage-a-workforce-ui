@@ -22,6 +22,4 @@ export default class RiskPage extends Page {
   ogrsWidget = (): PageElement => cy.get('.rosh-widget').eq(2)
 
   instructionsTextArea = (): PageElement => cy.get(`#instructions`)
-
-  notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 }

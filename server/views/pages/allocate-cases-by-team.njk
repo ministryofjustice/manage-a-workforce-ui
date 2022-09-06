@@ -15,7 +15,7 @@
         text: team.caseCount
       },
       {
-        text: 'View unallocated cases (' + team.unallocatedCaseCount  + ')'
+        html: '<a class="govuk-link--no-visited-state" href="/team/' + team.code + '/cases/unallocated">View unallocated cases (' + team.unallocatedCaseCount  + ')</a>'
       }
     ]) 
     }}

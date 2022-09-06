@@ -64,6 +64,10 @@ context('Show allocate cases by team based on user preferences', () => {
         .should('have.attr', 'href')
         .and('include', '/PDU1')
     })
+
+    it('link to view unallocated cases must exist', () => {
+      allocateCasesByTeamPage.unallocatedCasesLink('TM1').should('exist')
+    })
   })
 
   context('Edge cases', () => {

@@ -34,6 +34,7 @@ export default class AllocateCasesController {
 
           return {
             teamName: team.name,
+            code: team.code,
             workload: `${teamWorkload.workload}%`,
             caseCount: teamWorkload.totalCases,
             unallocatedCaseCount: teamAllocations.caseCount,

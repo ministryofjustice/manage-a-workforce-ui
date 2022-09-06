@@ -7,5 +7,7 @@ export default class AllocateCasesByTeamPage extends Page {
 
   tableCaption = (): PageElement => cy.get('.govuk-table__caption')
 
-  link = (): PageElement => cy.get('.govuk-link--no-visited-state')
+  link = (): PageElement => cy.get('[data-qa-link="edit-teams"]')
+
+  tableLink = (teamCode: string): PageElement => cy.get(`[data-qa-link="${teamCode}"]`).invoke('attr', 'href')
 }

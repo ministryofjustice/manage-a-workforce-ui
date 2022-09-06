@@ -15,7 +15,7 @@
         text: team.caseCount
       },
       {
-        text: 'View unallocated cases' + ( ' (' + team.unallocatedCaseCount  + ')' if team.unallocatedCaseCount)
+        html: '<a class="govuk-link--no-visited-state" href="/team/' + team.teamCode + '/cases/unallocated" data-qa-link="' + team.teamCode +'">View unallocated cases (' + team.unallocatedCaseCount  + ')</a>'
       }
     ]) 
     }}
@@ -53,6 +53,6 @@
   }) 
 }}
 
-<p class="govuk-!-margin-bottom-9">You can add and remove teams by <a class="govuk-link--no-visited-state" href="/probationDeliveryUnit/{{pduCode}}/select-teams">editing your team list</a>.</p>
+<p class="govuk-!-margin-bottom-9">You can add and remove teams by <a class="govuk-link--no-visited-state" href="/probationDeliveryUnit/{{pduCode}}/select-teams" data-qa-link="edit-teams">editing your team list</a>.</p>
 
 {% endblock %}

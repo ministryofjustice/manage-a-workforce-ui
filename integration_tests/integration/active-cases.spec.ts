@@ -4,11 +4,7 @@ import ActiveCasesPage from '../pages/activeCases'
 context('Active Cases', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
-    cy.task('stubAuthUser')
-    cy.task('stubUserPreferenceTeams')
-    cy.task('stubGetUnallocatedCasesByTeams', {})
-    cy.task('stubGetAllocations')
+    cy.task('stubSetup')
   })
 
   it('Officer details visible on page', () => {

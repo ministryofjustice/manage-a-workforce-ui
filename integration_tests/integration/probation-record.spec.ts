@@ -6,11 +6,7 @@ import SummaryPage from '../pages/summary'
 context('Probation record', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
-    cy.task('stubAuthUser')
-    cy.task('stubUserPreferenceTeams')
-    cy.task('stubGetUnallocatedCasesByTeams', {})
-    cy.task('stubGetAllocations')
+    cy.task('stubSetup')
   })
 
   it('Caption text visible on page', () => {

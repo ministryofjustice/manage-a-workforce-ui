@@ -17,11 +17,14 @@ export type HealthCheckService = () => Promise<HealthCheckStatus>
 export type HealthCheckCallback = (result: HealthCheckResult) => void
 
 function service(name: string, url: string, agentConfig: AgentConfig): HealthCheckService {
-  const check = serviceCheckFactory(name, url, agentConfig)
-  return () =>
-    check()
-      .then(result => ({ name, status: 'ok', message: result }))
-      .catch(err => ({ name, status: 'ERROR', message: err }))
+  return async () => {
+    try {
+      const result = await serviceCheckFactory(name, url, agentConfig)()
+      return { name, status: 'ok', message: result }
+    } catch (err) {
+      return { name, status: 'ERROR', message: err }
+    }
+  }
 }
 
 function addAppInfo(result: HealthCheckResult): HealthCheckResult {
@@ -61,15 +64,13 @@ const apiChecks = [
     : []),
 ]
 
-export default function healthCheck(callback: HealthCheckCallback, checks = apiChecks): void {
-  Promise.all(checks.map(fn => fn())).then(checkResults => {
-    const allOk = checkResults.every(item => item.status === 'ok')
+export default async function healthCheck(callback: HealthCheckCallback, checks = apiChecks): Promise<void> {
+  const checkResults = await Promise.all(checks.map(fn => fn()))
+  const healthy = checkResults.every(item => item.status === 'ok')
+  const result = {
+    healthy,
+    checks: checkResults.reduce(gatherCheckInfo, {}),
+  }
 
-    const result = {
-      healthy: allOk,
-      checks: checkResults.reduce(gatherCheckInfo, {}),
-    }
-
-    callback(addAppInfo(result))
-  })
+  callback(addAppInfo(result))
 }

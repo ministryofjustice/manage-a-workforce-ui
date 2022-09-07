@@ -17,11 +17,14 @@ export type HealthCheckService = () => Promise<HealthCheckStatus>
 export type HealthCheckCallback = (result: HealthCheckResult) => void
 
 function service(name: string, url: string, agentConfig: AgentConfig): HealthCheckService {
-  const check = serviceCheckFactory(name, url, agentConfig)
-  return () =>
-    check()
-      .then(result => ({ name, status: 'ok', message: result }))
-      .catch(err => ({ name, status: 'ERROR', message: err }))
+  return async () => {
+    try {
+      const result = await serviceCheckFactory(name, url, agentConfig)()
+      return { name, status: 'ok', message: result }
+    } catch (err) {
+      return { name, status: 'ERROR', message: err }
+    }
+  }
 }
 
 function addAppInfo(result: HealthCheckResult): HealthCheckResult {

@@ -135,35 +135,35 @@ export default class AllocationsController {
   }
 
   async getAllocate(req: Request, res: Response, crn, convictionId) {
-    const offenderManagersToAllocate = await this.workloadService
-      .getOffenderManagersToAllocate(res.locals.user.token)
-      .then(response =>
-        response.offenderManagers
-          .map(
-            offenderManagerToAllocate =>
-              new AllocateOffenderManager(
-                offenderManagerToAllocate.forename,
-                offenderManagerToAllocate.surname,
-                offenderManagerToAllocate.grade,
-                offenderManagerToAllocate.capacity,
-                offenderManagerToAllocate.totalCommunityCases,
-                offenderManagerToAllocate.totalCustodyCases,
-                offenderManagerToAllocate.code,
-                offenderManagerToAllocate.staffId,
-                offenderManagerToAllocate.totalCasesInLastWeek
-              )
+    const { token } = res.locals.user
+    const { offenderManagers } = await this.workloadService.getOffenderManagersToAllocate(token)
+
+    const offenderManagersToAllocate = offenderManagers
+      .map(
+        om =>
+          new AllocateOffenderManager(
+            om.forename,
+            om.surname,
+            om.grade,
+            om.capacity,
+            om.totalCommunityCases,
+            om.totalCustodyCases,
+            om.code,
+            om.staffId,
+            om.totalCasesInLastWeek
           )
-          .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => {
-            if (b.gradeOrder === a.gradeOrder) {
-              return b.capacity - a.capacity
-            }
-            return b.gradeOrder - a.gradeOrder
-          })
       )
-    const response: Allocation = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
+      .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => {
+        if (b.gradeOrder === a.gradeOrder) {
+          return b.capacity - a.capacity
+        }
+        return b.gradeOrder - a.gradeOrder
+      })
+
+    const response: Allocation = await this.allocationsService.getCaseOverview(token, crn, convictionId)
     const error = req.query.error === 'true'
     res.render('pages/allocate', {
-      title: `${response.name} | Choose practitioner | Manage a workforcee`,
+      title: `${response.name} | Choose practitioner | Manage a workforce`,
       name: response.name,
       crn: response.crn,
       tier: response.tier,

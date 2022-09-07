@@ -6,6 +6,8 @@ context('Overview', () => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
+    cy.task('stubUserPreferenceTeams')
+    cy.task('stubGetUnallocatedCasesByTeams', {})
     cy.task('stubGetAllocations')
   })
 
@@ -56,14 +58,6 @@ context('Overview', () => {
     cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.summaryText().should('contain', 'View as points')
-  })
-
-  it('Notification badge visible on page with number of unallocations', () => {
-    cy.task('stubGetOverview')
-    cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
-    const overviewPage = Page.verifyOnPage(OverviewPage)
-    overviewPage.notificationsBadge().should('contain.text', '8')
   })
 
   it('Points information visible on page', () => {

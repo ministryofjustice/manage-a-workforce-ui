@@ -8,6 +8,8 @@ context('Summary', () => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
+    cy.task('stubUserPreferenceTeams')
+    cy.task('stubGetUnallocatedCasesByTeams', {})
     cy.task('stubGetAllocations')
   })
 
@@ -17,14 +19,6 @@ context('Summary', () => {
     cy.visit('/J678910/convictions/123456789/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
-  })
-
-  it('Notification badge visible on page with number of unallocations', () => {
-    cy.task('stubGetUnallocatedCase')
-    cy.signIn()
-    cy.visit('/J678910/convictions/123456789/case-view')
-    const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.notificationsBadge().should('contain.text', '8')
   })
 
   it('Summary header visible on page', () => {

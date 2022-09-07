@@ -191,6 +191,15 @@ context('Show allocate cases by team based on user preferences', () => {
 
     it('does not display teams if no user preferences', () => {
       cy.task('stubUserPreferenceTeams', [])
+      cy.task('stubGetUnallocatedCasesByTeams', {
+        teamCodes: 'N03F01',
+        response: [
+          {
+            teamCode: 'N03F01',
+            caseCount: 10,
+          },
+        ],
+      })
       cy.visit('/probationDeliveryUnit/PDU1/teams')
       cy.get('table').getTable().should('deep.equal', [])
     })

@@ -18,6 +18,4 @@ export default class AllocationConfirmPage extends Page {
   capacityImpactStatement = (): PageElement => cy.get('#impact-statement')
 
   redCapacities = (): PageElement => cy.get('.percentage-extra-over')
-
-  notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 }

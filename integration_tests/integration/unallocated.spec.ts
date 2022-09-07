@@ -8,6 +8,8 @@ context('Unallocated', () => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
+    cy.task('stubUserPreferenceTeams')
+    cy.task('stubGetUnallocatedCasesByTeams', {})
     cy.task('stubGetAllocations')
   })
 
@@ -58,19 +60,6 @@ context('Unallocated', () => {
       .navLink('courts-link')
       .should('equal', `${config.nav.workloadMeasurement.url}/court-reports/hmpps/0`)
     unallocatedPage.navLink('search-link').should('equal', `${config.nav.workloadMeasurement.url}/officer-search`)
-  })
-
-  it('Notification badge visible on page with number of unallocated cases', () => {
-    cy.signIn()
-    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.notificationsBadge().should('contain.text', '8')
-  })
-
-  it('Must show 99+ when unallocated cases are greater than 99', () => {
-    cy.task('stubOverOneHundredAllocations')
-    cy.signIn()
-    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
-    unallocatedPage.notificationsBadge().should('contain.text', '99+')
   })
 
   it('Sub nav visible on page', () => {

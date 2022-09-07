@@ -6,27 +6,33 @@ context('Select teams', () => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
+    cy.task('stubGetUnallocatedCasesByTeams', {
+      teamCodes: 'N03F01',
+      response: [
+        {
+          teamCode: 'N03F01',
+          caseCount: 10,
+        },
+      ],
+    })
+    cy.task('stubUserPreferenceTeams', [])
     cy.task('stubGetAllocations')
     cy.task('stubGetTeamsByPdu')
+    cy.signIn()
+    cy.visit('/probationDeliveryUnit/PDU1/select-teams')
   })
 
   it('Caption text visible on page', () => {
-    cy.signIn()
-    cy.visit('/probationDeliveryUnit/PDU1/select-teams')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.captionText().should('contain', 'Wales')
   })
 
   it('Legend heading visible on page', () => {
-    cy.signIn()
-    cy.visit('/probationDeliveryUnit/PDU1/select-teams')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.legendHeading().trimTextContent().should('equal', 'Select your teams')
   })
 
   it('hint visible on page', () => {
-    cy.signIn()
-    cy.visit('/probationDeliveryUnit/PDU1/select-teams')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage
       .hint()
@@ -38,8 +44,6 @@ context('Select teams', () => {
   })
 
   it('teams in alphabetical order', () => {
-    cy.signIn()
-    cy.visit('/probationDeliveryUnit/PDU1/select-teams')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage
       .checkboxes()
@@ -65,15 +69,11 @@ context('Select teams', () => {
   })
 
   it('continue button exists', () => {
-    cy.signIn()
-    cy.visit('/probationDeliveryUnit/PDU1/select-teams')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.button().trimTextContent().should('equal', 'Continue')
   })
 
   it('selecting no teams and continuing causes error', () => {
-    cy.signIn()
-    cy.visit('/probationDeliveryUnit/PDU1/select-teams')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.button().click()
     selectTeamsPage

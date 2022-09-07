@@ -49,7 +49,11 @@ export default (on: (string, Record) => void): void => {
             },
           ],
         }),
-        allocations.stubGetAllocations(),
+        allocations.stubGetAllocationsByTeam('N03F01'),
+        probationEstate.stubGetTeamByCode({
+          code: 'N03F01',
+          name: 'Wrexham - Team 1',
+        }),
       ]),
 
     stubAuthUser: auth.stubUser,

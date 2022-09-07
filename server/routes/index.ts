@@ -25,7 +25,7 @@ export default function routes(services: Services): Router {
   const casesByTeamController = new CasesByTeamController(services.allocationsService, services.probationEstateService)
 
   get('/', async (req, res) => {
-    await allocationsController.getAllocations(req, res)
+    res.redirect('/team/N03F01/cases/unallocated')
   })
 
   get('/team/:teamCode/cases/unallocated', async (req, res) => {

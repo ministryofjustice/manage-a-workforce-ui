@@ -58,6 +58,11 @@ context('Unallocated', () => {
     unallocatedPage.navLink('search-link').should('equal', `${config.nav.workloadMeasurement.url}/officer-search`)
   })
 
+  it('redirects to Wrexham team 1', () => {
+    cy.signIn()
+    cy.url().should('include', '/team/N03F01/cases/unallocated')
+  })
+
   it('Sub nav visible on page', () => {
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
@@ -65,7 +70,7 @@ context('Unallocated', () => {
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
-    cy.task('stubOverOneHundredAllocations')
+    cy.task('stubOverOneHundredAllocationsByTeam', 'N03F01')
     cy.signIn()
     const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
     unallocatedPage.subNavLink().should('contain.text', 'Unallocated community cases (99+)')

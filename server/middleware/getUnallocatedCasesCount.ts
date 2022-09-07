@@ -23,7 +23,7 @@ export default function getUnallocatedCasesCount(
       }
       next()
     } catch (error) {
-      logger.error(error, `Failed to retrieve user for: ${res.locals.user && res.locals.user.username}`)
+      logger.error(error, 'Failed to retrieve unallocated case count')
       next(error)
     }
   }

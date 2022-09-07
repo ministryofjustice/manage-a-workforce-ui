@@ -4,7 +4,6 @@ import AllocationsService from '../services/allocationsService'
 import Allocation from '../models/Allocation'
 import ProbationRecord from '../models/ProbationRecord'
 import Risk from '../models/Risk'
-import UnallocatedCase from './data/UnallocatedCase'
 import Order from './data/Order'
 import Conviction from '../models/Conviction'
 import AllocateOffenderManager from './data/AllocateOffenderManager'
@@ -28,32 +27,6 @@ export default class AllocationsController {
     private readonly allocationsService: AllocationsService,
     private readonly workloadService: WorkloadService
   ) {}
-
-  async getAllocations(req: Request, res: Response): Promise<void> {
-    const response: Allocation[] = await this.allocationsService.getUnallocatedCases(res.locals.user.token)
-    const unallocatedCases = response.map(
-      value =>
-        new UnallocatedCase(
-          value.name,
-          value.crn,
-          value.tier,
-          value.sentenceDate,
-          value.initialAppointment,
-          value.status,
-          value.previousConvictionEndDate,
-          value.offenderManager,
-          value.convictionId,
-          value.caseType
-        )
-    )
-    const { session } = req
-    session.casesLength = response.length
-    res.render('pages/index', {
-      unallocatedCases,
-      casesLength: response.length,
-      title: 'Unallocated cases | Manage a workforce',
-    })
-  }
 
   async getUnallocatedCase(req: Request, res: Response, crn, convictionId): Promise<void> {
     const response: Allocation = await this.allocationsService.getUnallocatedCase(

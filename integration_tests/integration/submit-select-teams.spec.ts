@@ -10,6 +10,7 @@ context('Select teams and show allocate cases by team', () => {
       cy.task('reset')
       cy.task('stubSignIn')
       cy.task('stubGetTeamsByPdu')
+      cy.task('stubUserPreferenceTeams')
       cy.task('stubGetUnallocatedCasesByTeams', {
         teamCodes: 'TM1',
         response: [

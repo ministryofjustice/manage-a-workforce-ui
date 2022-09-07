@@ -64,15 +64,13 @@ const apiChecks = [
     : []),
 ]
 
-export default function healthCheck(callback: HealthCheckCallback, checks = apiChecks): void {
-  Promise.all(checks.map(fn => fn())).then(checkResults => {
-    const allOk = checkResults.every(item => item.status === 'ok')
+export default async function healthCheck(callback: HealthCheckCallback, checks = apiChecks): Promise<void> {
+  const checkResults = await Promise.all(checks.map(fn => fn()))
+  const healthy = checkResults.every(item => item.status === 'ok')
+  const result = {
+    healthy,
+    checks: checkResults.reduce(gatherCheckInfo, {}),
+  }
 
-    const result = {
-      healthy: allOk,
-      checks: checkResults.reduce(gatherCheckInfo, {}),
-    }
-
-    callback(addAppInfo(result))
-  })
+  callback(addAppInfo(result))
 }

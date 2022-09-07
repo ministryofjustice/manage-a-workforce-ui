@@ -34,7 +34,23 @@ export default (on: (string, Record) => void): void => {
     },
 
     getSignInUrl: auth.getSignInUrl,
-    stubSignIn: auth.stubSignIn,
+
+    stubSignIn: () =>
+      Promise.all([
+        auth.stubSignIn(),
+        auth.stubUser(),
+        userPreference.stubUserPreferenceTeams(),
+        allocations.stubGetUnallocatedCasesByTeams({
+          teamCodes: 'TM1',
+          response: [
+            {
+              teamCode: 'TM1',
+              caseCount: 10,
+            },
+          ],
+        }),
+        allocations.stubGetAllocations(),
+      ]),
 
     stubAuthUser: auth.stubUser,
     stubAuthPing: auth.stubPing,

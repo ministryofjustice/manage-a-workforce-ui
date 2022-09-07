@@ -5,10 +5,6 @@ context('No unallocated cases', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
-    cy.task('stubAuthUser')
-    cy.task('stubUserPreferenceTeams')
-    cy.task('stubGetUnallocatedCasesByTeams', {})
-    cy.task('stubGetNoAllocations')
   })
 
   it('Sub nav link visible on page with no number', () => {

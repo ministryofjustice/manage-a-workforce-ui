@@ -9,10 +9,7 @@ context('Select teams and show allocate cases by team', () => {
     beforeEach(() => {
       cy.task('reset')
       cy.task('stubSignIn')
-      cy.task('stubAuthUser')
-      cy.task('stubGetAllocations')
       cy.task('stubGetTeamsByPdu')
-      cy.task('stubUserPreferenceTeams')
       cy.task('stubGetUnallocatedCasesByTeams', {
         teamCodes: 'TM1',
         response: [
@@ -60,8 +57,6 @@ context('Select teams and show allocate cases by team', () => {
     beforeEach(() => {
       cy.task('reset')
       cy.task('stubSignIn')
-      cy.task('stubAuthUser')
-      cy.task('stubGetAllocations')
       cy.task('stubGetTeamsByPdu')
       cy.task('stubGetUnallocatedCasesByTeams', {
         teamCodes: 'TM1,TM2',

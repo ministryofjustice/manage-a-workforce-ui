@@ -4,10 +4,6 @@ context('Unallocated cases by team', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
-    cy.task('stubAuthUser')
-    cy.task('stubUserPreferenceTeams')
-    cy.task('stubGetUnallocatedCasesByTeams', {})
-    cy.task('stubGetAllocations')
     cy.signIn()
     cy.task('stubGetAllocationsByTeam', 'TM1')
     cy.task('stubGetTeamByCode', {

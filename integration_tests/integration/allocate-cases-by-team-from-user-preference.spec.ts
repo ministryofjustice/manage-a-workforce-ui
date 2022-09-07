@@ -8,9 +8,6 @@ context('Show allocate cases by team based on user preferences', () => {
     beforeEach(() => {
       cy.task('reset')
       cy.task('stubSignIn')
-      cy.task('stubAuthUser')
-      cy.task('stubGetAllocations')
-      cy.task('stubUserPreferenceTeams')
       cy.task('stubGetUnallocatedCasesByTeams', {
         teamCodes: 'TM1',
         response: [

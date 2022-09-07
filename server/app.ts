@@ -43,11 +43,6 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpCurrentUser(services))
   app.use(getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService))
 
-  app.use((req, res, next) => {
-    res.locals.casesLength = req.session.casesLength
-    next()
-  })
-
   applyBankHols()
 
   app.use(routes(services))

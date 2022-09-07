@@ -35,7 +35,7 @@ export default (on: (string, Record) => void): void => {
 
     getSignInUrl: auth.getSignInUrl,
 
-    stubSignIn: () =>
+    stubSetup: () =>
       Promise.all([
         auth.stubSignIn(),
         auth.stubUser(),

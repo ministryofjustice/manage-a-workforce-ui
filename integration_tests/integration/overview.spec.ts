@@ -4,7 +4,7 @@ import OverviewPage from '../pages/overview'
 context('Overview', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
   })
 
   it('Officer details visible on page', () => {

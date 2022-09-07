@@ -5,7 +5,7 @@ import SummaryPage from '../pages/summary'
 context('Allocate', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
   })
 
   it('Offender details visible on page', () => {

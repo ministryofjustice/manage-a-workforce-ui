@@ -4,7 +4,7 @@ import ActiveCasesPage from '../pages/activeCases'
 context('Active Cases', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
   })
 
   it('Officer details visible on page', () => {

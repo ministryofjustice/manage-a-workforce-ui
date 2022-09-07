@@ -4,7 +4,7 @@ import NotFoundPage from '../pages/notFound'
 context('Not found', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
   })
 
   it('Must show correct body text when 404', () => {

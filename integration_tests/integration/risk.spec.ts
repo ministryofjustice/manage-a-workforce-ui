@@ -6,7 +6,7 @@ import ProbationRecordPage from '../pages/probationRecord'
 context('Risk', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
   })
 
   it('Caption text visible on page', () => {

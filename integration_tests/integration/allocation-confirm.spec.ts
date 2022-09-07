@@ -4,7 +4,7 @@ import AllocationConfirmPage from '../pages/allocation-confirm'
 context('Allocate Confirmation', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
   })
 
   it('Offender details visible on page', () => {

@@ -6,7 +6,7 @@ import RiskPage from '../pages/risk'
 context('Summary', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
   })
 
   it('Caption text visible on page', () => {

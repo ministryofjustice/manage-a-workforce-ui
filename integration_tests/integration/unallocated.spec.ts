@@ -6,7 +6,7 @@ import config from '../../server/config'
 context('Unallocated', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
   })
 
   it('Unauthenticated user directed to auth', () => {

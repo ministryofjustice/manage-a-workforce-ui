@@ -7,7 +7,7 @@ context('Show allocate cases by team based on user preferences', () => {
   context('single team', () => {
     beforeEach(() => {
       cy.task('reset')
-      cy.task('stubSignIn')
+      cy.task('stubSetup')
       cy.task('stubGetUnallocatedCasesByTeams', {
         teamCodes: 'TM1',
         response: [
@@ -70,7 +70,7 @@ context('Show allocate cases by team based on user preferences', () => {
   context('Edge cases', () => {
     beforeEach(() => {
       cy.task('reset')
-      cy.task('stubSignIn')
+      cy.task('stubSetup')
       cy.task('stubAuthUser')
       cy.task('stubGetAllocations')
       cy.task('stubUserPreferenceTeams', ['TM1', 'TM2'])

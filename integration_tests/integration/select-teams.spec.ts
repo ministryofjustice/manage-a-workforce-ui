@@ -4,7 +4,7 @@ import SelectTeamsPage from '../pages/select-teams'
 context('Select teams', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
     cy.task('stubGetUnallocatedCasesByTeams', {
       teamCodes: 'N03F01',
       response: [

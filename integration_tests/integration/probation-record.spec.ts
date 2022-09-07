@@ -6,7 +6,7 @@ import SummaryPage from '../pages/summary'
 context('Probation record', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
   })
 
   it('Caption text visible on page', () => {

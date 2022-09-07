@@ -4,7 +4,7 @@ import Page from '../pages/page'
 context('No unallocated cases', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
     cy.task('stubGetAllocations', [])
     cy.signIn()
   })

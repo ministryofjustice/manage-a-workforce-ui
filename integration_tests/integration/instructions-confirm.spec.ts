@@ -4,7 +4,7 @@ import InstructionsConfirmPage from '../pages/instructions-confirm'
 context('Instructions Confirmation', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSetup')
   })
 
   it('Offender details visible on page', () => {

@@ -5,7 +5,7 @@ context('Unallocated cases by team', () => {
     cy.task('reset')
     cy.task('stubSetup')
     cy.signIn()
-    cy.task('stubGetAllocationsByTeam', 'TM1')
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
     cy.task('stubGetTeamByCode', {
       code: 'TM1',
       name: 'Team Name',

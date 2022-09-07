@@ -15,8 +15,6 @@ export default class UnallocatedByTeamPage extends Page {
 
   subNavLink = (): PageElement => cy.get('a.moj-sub-navigation__link')
 
-  manageMyTeamsLink = (): PageElement => cy.get('[data-qa-link="select-teams"]').invoke('attr', 'href')
-
   noCaseParagraph = (): PageElement => cy.get('p.govuk-\\!-margin-bottom-9')
 
   tableCaption = (): PageElement => cy.get('caption.govuk-table__caption')

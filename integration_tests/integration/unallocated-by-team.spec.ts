@@ -196,9 +196,4 @@ context('Unallocated cases by team', () => {
     const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.tableLink('123456789').should('equal', '/J678910/convictions/123456789/case-view')
   })
-
-  it('Shows link to Manage my teams', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
-    unallocatedPage.manageMyTeamsLink().should('equal', '/probationDeliveryUnit/WPTNWS/select-teams')
-  })
 })

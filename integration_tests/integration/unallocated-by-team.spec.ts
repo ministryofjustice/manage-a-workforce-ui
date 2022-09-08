@@ -1,5 +1,4 @@
 import UnallocatedByTeamPage from '../pages/unallocated-by-team'
-import AuthSignInPage from '../pages/authSignIn'
 
 import config from '../../server/config'
 
@@ -18,13 +17,6 @@ context('Unallocated cases by team', () => {
     unallocatedPage = new UnallocatedByTeamPage('Team Name')
   })
 
-  it('User name visible in header', () => {
-    unallocatedPage.headerUserName().should('contain.text', 'J. Smith')
-  })
-
-  it('Feedback link goes to Manage a Workforce mailbox', () => {
-    unallocatedPage.feedbackLink().should('have.attr', 'href').and('equal', 'mailto:manageaworkforce@justice.gov.uk')
-  })
   it('Probation Delivery Unit visible on page', () => {
     unallocatedPage.probationDeliveryUnit().should('contain.text', 'North Wales')
   })
@@ -144,22 +136,6 @@ context('Unallocated cases by team', () => {
     unallocatedPage
       .warningText()
       .should('contain', 'You must also check NDelius for any other cases that need to be allocated.')
-  })
-
-  it('User can log out', () => {
-    unallocatedPage.signOut().click()
-    const authPage = new AuthSignInPage()
-    authPage.checkOnPage()
-  })
-
-  it('Footer visible on page', () => {
-    unallocatedPage
-      .footer()
-      .should('contain', 'Accessibility statement')
-      .and('contain', 'Cookies')
-      .and('contain', 'Privacy')
-      .and('contain', 'Open Government Licence v3.0')
-      .and('contain', '© Crown copyright')
   })
 
   it('Secondary text is visible on page', () => {

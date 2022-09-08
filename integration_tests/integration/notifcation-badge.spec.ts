@@ -1,5 +1,4 @@
 import UnallocatedPage from '../pages/unallocated-by-team'
-import Page from '../pages/page'
 
 context('Unallocated', () => {
   beforeEach(() => {

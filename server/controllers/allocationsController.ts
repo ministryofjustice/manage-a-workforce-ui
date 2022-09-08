@@ -212,7 +212,7 @@ export default class AllocationsController {
     })
   }
 
-  async getActiveCases(req: Request, res: Response, crn, offenderManagerCode, convictionId) {
+  async getActiveCases(req: Request, res: Response, crn, offenderManagerCode, convictionId, teamCode) {
     const response: OffenderManagerCases = await this.workloadService.getOffenderManagerCases(
       res.locals.user.token,
       offenderManagerCode
@@ -227,8 +227,8 @@ export default class AllocationsController {
       cases,
       crn,
       convictionId,
-      casesLength: res.locals.casesLength,
       isActiveCases: true,
+      teamCode,
     })
   }
 

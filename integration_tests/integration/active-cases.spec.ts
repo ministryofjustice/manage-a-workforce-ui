@@ -10,7 +10,7 @@ context('Active Cases', () => {
   it('Officer details visible on page', () => {
     cy.task('stubGetOffenderManagerCases')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/active-cases')
     const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
     activeCasesPage.captionText().should('contain', 'Wrexham - Team 1')
     activeCasesPage.secondaryText().should('contain', 'PO')
@@ -19,7 +19,7 @@ context('Active Cases', () => {
   it('Back link is visible on page', () => {
     cy.task('stubGetOffenderManagerCases')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/active-cases')
     const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
     activeCasesPage.backLink().should('contain', 'Back')
   })
@@ -27,7 +27,7 @@ context('Active Cases', () => {
   it('Heading is visible on page', () => {
     cy.task('stubGetOffenderManagerCases')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/active-cases')
     const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
     activeCasesPage.heading().should('contain', 'Active cases')
   })
@@ -35,7 +35,7 @@ context('Active Cases', () => {
   it('Active cases tab is highlighted', () => {
     cy.task('stubGetOffenderManagerCases')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/active-cases')
     const overviewPage = Page.verifyOnPage(ActiveCasesPage)
     overviewPage.highlightedTab().should('contain.text', 'Active cases').and('not.contain.text', 'Overview')
   })
@@ -43,7 +43,7 @@ context('Active Cases', () => {
   it('Table visible on page', () => {
     cy.task('stubGetOffenderManagerCases')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/active-cases')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/active-cases')
     cy.get('table')
       .getTable()
       .should('deep.equal', [

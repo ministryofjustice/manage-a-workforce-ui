@@ -38,7 +38,7 @@ export default (on: (string, Record) => void): void => {
     stubSetup: () =>
       Promise.all([
         auth.stubSignIn(),
-        auth.stubUser(),
+        auth.stubAuthUser(),
         userPreference.stubUserPreferenceTeams(),
         allocations.stubGetUnallocatedCasesByTeams({
           teamCodes: 'TM1',
@@ -56,93 +56,21 @@ export default (on: (string, Record) => void): void => {
         }),
       ]),
 
-    stubAuthUser: auth.stubUser,
-    stubAuthPing: auth.stubPing,
-
-    stubTokenVerificationPing: tokenVerification.stubPing,
-
-    stubGetAllocations: allocations.stubGetAllocations,
-
-    stubGetAllocationsByTeam: allocations.stubGetAllocationsByTeam,
-
-    stubGetNoAllocations: allocations.stubGetNoAllocations,
-
-    stubOverOneHundredAllocations: allocations.stubOverOneHundredAllocations,
-
-    stubGetUnallocatedCase: allocations.stubGetUnallocatedCase,
-
-    stubGetUnallocatedCaseMultiOffences: allocations.stubGetUnallocatedCaseMultiOffences,
-
-    stubGetUnallocatedCasesByTeams: allocations.stubGetUnallocatedCasesByTeams,
-
-    stubOverOneHundredAllocationsByTeam: allocations.stubOverOneHundredAllocationsByTeam,
-
-    stubGetProbationRecord: probationRecord.stubGetProbationRecord,
-
-    stubGetProbationRecordNoConvictions: probationRecord.stubGetProbationRecordNoConvictions,
-
-    stubGetProbationRecordMultipleOffences: probationRecord.stubGetProbationRecordMultipleOffences,
-
-    stubGetManyPreviousProbationRecord: probationRecord.stubGetManyPreviousProbationRecord,
-
-    stubGetRisk: risk.stubGetRisk,
-
-    stubGetRiskNoRegistrations: risk.stubGetRiskNoRegistrations,
-
-    stubGetUnallocatedCasePreviouslyManaged: allocations.stubGetUnallocatedCasePreviouslyManaged,
-
-    stubGetUnallocatedCaseNewToProbation: allocations.stubGetUnallocatedCaseNewToProbation,
-
-    stubGetUnallocatedCaseNoOffenderManager: allocations.stubGetUnallocatedCaseNoOffenderManager,
-
-    stubGetAllocateOffenderManagers: allocateOffenderManagers.stubGetAllocateOffenderManagers,
-
-    stubGetCurrentlyManagedCaseOverview: allocationCase.stubGetCurrentlyManagedCaseOverview,
-
-    stubGetCurrentlyManagedNoOffenderManagerCaseOverview:
-      allocationCase.stubGetCurrentlyManagedNoOffenderManagerCaseOverview,
-
-    stubGetPreviouslyManagedCaseOverview: allocationCase.stubGetPreviouslyManagedCaseOverview,
-
-    stubGetNewToProbationCaseOverview: allocationCase.stubGetNewToProbationCaseOverview,
-
-    stubGetPotentialOffenderManagerWorkload: allocationConfirm.stubGetPotentialOffenderManagerWorkload,
-
-    stubGetPotentialOffenderManagerWorkloadOverCapacity:
-      allocationConfirm.stubGetPotentialOffenderManagerWorkloadOverCapacity,
-
-    stubWorkloadCases: workload.stubWorkloadCases,
-
-    stubGetOverview: overview.stubGetOverview,
-
-    stubGetOverviewUnderCapacity: overview.stubGetOverviewUnderCapacity,
-
-    stubGetOffenderManagerCases: offenderManagerCases.stubGetOffenderManagerCases,
-
-    stubGetStaffByCode: staff.stubGetStaffByCode,
-
-    stubAllocateOffenderManagerToCase: allocationComplete.stubAllocateOffenderManagerToCase,
-
-    stubAllocateOffenderManagerToCaseMultipleEmails: allocationComplete.stubAllocateOffenderManagerToCaseMultipleEmails,
-
-    stubGetPersonById: person.stubGetPersonById,
-
-    stubGetCaseOverviewNoInitialAppointment: allocationCase.stubGetCaseOverviewNoInitialAppointment,
-
-    stubGetCaseOverviewCustodyCase: allocationCase.stubGetCaseOverviewCustodyCase,
-
-    stubGetOverviewWithLastAllocatedEvent: overview.stubGetOverviewWithLastAllocatedEvent,
-
-    stubGetTeamsByPdu: probationEstate.stubGetTeamsByPdu,
-
-    stubGetTeamsByCodes: probationEstate.stubGetTeamsByCodes,
-
-    stubGetTeamByCode: probationEstate.stubGetTeamByCode,
-
-    stubUserPreferenceTeams: userPreference.stubUserPreferenceTeams,
-
-    stubPutUserPreferenceTeams: userPreference.stubPutUserPreferenceTeams,
-
-    verifyPutUserPreferenceTeams: userPreference.verifyPutUserPreferenceTeams,
+    ...auth,
+    ...tokenVerification,
+    ...probationRecord,
+    ...risk,
+    ...allocations,
+    ...allocateOffenderManagers,
+    ...allocationConfirm,
+    ...workload,
+    ...offenderManagerCases,
+    ...staff,
+    ...allocationComplete,
+    ...person,
+    ...allocationCase,
+    ...overview,
+    ...probationEstate,
+    ...userPreference,
   })
 }

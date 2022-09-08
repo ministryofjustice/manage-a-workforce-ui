@@ -10,7 +10,7 @@ context('Overview', () => {
   it('Officer details visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.captionText().should('contain', 'Wrexham - Team 1')
     overviewPage.secondaryText().should('contain', 'PO')
@@ -19,7 +19,7 @@ context('Overview', () => {
   it('Back link is visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.backLink().should('contain', 'Back')
   })
@@ -27,7 +27,7 @@ context('Overview', () => {
   it('Heading is visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.heading().should('contain', 'Workload')
   })
@@ -35,7 +35,7 @@ context('Overview', () => {
   it('Sub nav visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.subNav().should('contain', 'Overview').and('contain', 'Active cases (22)')
   })
@@ -43,7 +43,7 @@ context('Overview', () => {
   it('Overview tab is highlighted', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.highlightedTab().should('contain.text', 'Overview').and('not.contain.text', 'Active cases')
   })
@@ -51,7 +51,7 @@ context('Overview', () => {
   it('Summary text is visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.summaryText().should('contain', 'View as points')
   })
@@ -59,7 +59,7 @@ context('Overview', () => {
   it('Points information visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     cy.get('.govuk-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Points available': '1265',
       'Points used': '1580',
@@ -70,7 +70,7 @@ context('Overview', () => {
   it('Under capacity card visible on page', () => {
     cy.task('stubGetOverviewUnderCapacity')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.cardHeading().should('contain', '98%')
     overviewPage.underCapacityCard().should('exist')
@@ -79,7 +79,7 @@ context('Overview', () => {
   it('Over capacity card visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.cardHeading().should('contain', '126%')
     overviewPage.overCapacityCard().should('exist')
@@ -88,7 +88,7 @@ context('Overview', () => {
   it('Last updated visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.lastUpdated().should('contain', 'Last updated: 3 Nov 2013 at 9:00am')
   })
@@ -96,7 +96,7 @@ context('Overview', () => {
   it('Total cases card visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.cardHeading().should('contain', '22')
     overviewPage.totalCases().should('contain', 'cases')
@@ -109,7 +109,7 @@ context('Overview', () => {
   it('Section break visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.sectionBreak().should('exist')
   })
@@ -117,7 +117,7 @@ context('Overview', () => {
   it('Availability header visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.heading().should('contain', 'Availability')
   })
@@ -125,7 +125,7 @@ context('Overview', () => {
   it('Availability summary list visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     cy.get('.availability').getSummaryList().should('deep.equal', {
       'Weekly hours': '22.5',
       Reductions: '10 hours until 3 Nov 2022',
@@ -139,7 +139,7 @@ context('Overview', () => {
   it('Case mix header is visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage.mediumHeading().should('contain', 'Case mix by tier')
   })
@@ -147,7 +147,7 @@ context('Overview', () => {
   it('Tier table is visible on page', () => {
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
     overviewPage
       .tierTable()
@@ -179,7 +179,7 @@ context('Overview', () => {
   it('must show last allocated event information in Last Case Allocated', () => {
     cy.task('stubGetOverviewWithLastAllocatedEvent')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/allocate/OM6/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM6/officer-view')
     cy.get('.availability').getSummaryList().should('deep.equal', {
       'Weekly hours': '22.5',
       Reductions: '10 hours until 3 Nov 2022',

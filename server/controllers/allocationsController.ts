@@ -196,7 +196,7 @@ export default class AllocationsController {
     })
   }
 
-  async getOverview(req: Request, res: Response, crn, offenderManagerCode, convictionId) {
+  async getOverview(req: Request, res: Response, crn, offenderManagerCode, convictionId, teamCode) {
     const response: OffenderManagerOverview = await this.workloadService.getOffenderManagerOverview(
       res.locals.user.token,
       offenderManagerCode
@@ -207,8 +207,8 @@ export default class AllocationsController {
       data,
       crn,
       convictionId,
-      casesLength: res.locals.casesLength,
       isOverview: true,
+      teamCode,
     })
   }
 

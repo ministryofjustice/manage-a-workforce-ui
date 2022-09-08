@@ -33,6 +33,7 @@ export default class CasesByTeamController {
     res.render('pages/unallocated-cases-by-team', {
       pduName: 'North Wales',
       teamName: teamOverview.name,
+      teamCode,
       unallocatedCases,
       casesLength: unallocatedCasesByTeam.length,
       title: 'Unallocated cases | Manage a workforce',

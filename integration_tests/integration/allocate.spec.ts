@@ -22,7 +22,7 @@ context('Allocate', () => {
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/case-view')
+    cy.visit('/team/TM1/J678910/convictions/123456789/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.allocateCaseButton('J678910', '123456789').click()
     Page.verifyOnPage(AllocatePage)

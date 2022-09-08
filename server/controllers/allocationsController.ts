@@ -28,7 +28,7 @@ export default class AllocationsController {
     private readonly workloadService: WorkloadService
   ) {}
 
-  async getUnallocatedCase(req: Request, res: Response, crn, convictionId): Promise<void> {
+  async getUnallocatedCase(req: Request, res: Response, crn, convictionId, teamCode): Promise<void> {
     const response: Allocation = await this.allocationsService.getUnallocatedCase(
       res.locals.user.token,
       crn,
@@ -43,6 +43,7 @@ export default class AllocationsController {
       convictionId: response.convictionId,
       title: `${response.name} | Summary | Manage a workforce`,
       casesLength: session.casesLength,
+      teamCode,
     })
   }
 

@@ -1,5 +1,4 @@
-import UnallocatedPage from '../pages/unallocated'
-import Page from '../pages/page'
+import UnallocatedPage from '../pages/unallocated-by-team'
 
 context('Unallocated', () => {
   beforeEach(() => {
@@ -9,7 +8,7 @@ context('Unallocated', () => {
   })
 
   it('Notification badge visible on page with number of unallocated cases', () => {
-    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    const unallocatedPage = new UnallocatedPage('Wrexham - Team 1')
     unallocatedPage.notificationsBadge().should('contain.text', '10')
   })
 
@@ -24,7 +23,7 @@ context('Unallocated', () => {
       ],
     })
     cy.reload()
-    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    const unallocatedPage = new UnallocatedPage('Wrexham - Team 1')
     unallocatedPage.notificationsBadge().should('contain.text', '99+')
   })
 
@@ -39,7 +38,7 @@ context('Unallocated', () => {
       ],
     })
     cy.reload()
-    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    const unallocatedPage = new UnallocatedPage('Wrexham - Team 1')
     unallocatedPage.notificationsBadge().should('not.exist')
   })
 
@@ -55,7 +54,7 @@ context('Unallocated', () => {
       ],
     })
     cy.reload()
-    const unallocatedPage = Page.verifyOnPage(UnallocatedPage)
+    const unallocatedPage = new UnallocatedPage('Wrexham - Team 1')
     unallocatedPage.notificationsBadge().should('contain.text', '20')
   })
 })

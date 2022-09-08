@@ -1,4 +1,3 @@
-import logger from '../../logger'
 import config from '../config'
 import RestClient from './restClient'
 
@@ -17,13 +16,11 @@ export default class HmppsAuthClient {
   }
 
   getUser(token: string): Promise<User> {
-    logger.info(`Getting user details: calling HMPPS Auth`)
     return HmppsAuthClient.restClient(token).get({ path: '/api/user/me' }) as Promise<User>
   }
 
-  getUserRoles(token: string): Promise<string[]> {
-    return HmppsAuthClient.restClient(token)
-      .get({ path: '/api/user/me/roles' })
-      .then(roles => (<UserRole[]>roles).map(role => role.roleCode))
+  async getUserRoles(token: string): Promise<string[]> {
+    const roles = await HmppsAuthClient.restClient(token).get({ path: '/api/user/me/roles' })
+    return (<UserRole[]>roles).map(role => role.roleCode)
   }
 }

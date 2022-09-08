@@ -246,7 +246,7 @@ export default class AllocationsController {
     response.data.on('end', next)
   }
 
-  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffCode, convictionId, form) {
+  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffCode, convictionId, form, teamCode) {
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
       confirmInstructionForm,
@@ -259,7 +259,7 @@ export default class AllocationsController {
     if (errors.length > 0) {
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
-      return this.getConfirmInstructions(req, res, crn, staffCode, convictionId, 'undefined')
+      return this.getConfirmInstructions(req, res, crn, staffCode, convictionId, teamCode)
     }
     const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
@@ -289,12 +289,12 @@ export default class AllocationsController {
       data: response,
       crn,
       convictionId,
-      casesLength: res.locals.casesLength,
       personDetails,
       addAnotherEmail: form.person,
       initialAppointment: caseOverview.initialAppointment,
       initialAppointmentDue: caseOverview.initialAppointmentDue,
       caseType: caseOverviewResponse.caseType,
+      teamCode,
     })
   }
 }

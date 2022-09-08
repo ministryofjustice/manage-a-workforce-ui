@@ -24,7 +24,7 @@
             },
             {
                 text: "Allocate to probation practitioner",
-                href: "/" + crn + "/convictions/" + convictionId + "/allocate"
+                href: "/team/" + teamCode + "/" + crn + "/convictions/" + convictionId + "/allocate"
             }
         ]
     }) }}
@@ -52,7 +52,7 @@
     <div class="govuk-grid-column-one-half">
       <div data-module="moj-add-another">
 
-      <form action="{{ '/' + crn + '/convictions/' + convictionId + '/allocate/' + staffCode + '/confirm-allocation' }}" method="POST">
+      <form action="{{ '/team/' + teamCode + '/' + crn + '/convictions/' + convictionId + '/allocate/' + staffCode + '/confirm-allocation' }}" method="POST">
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
           {{
           instructions({

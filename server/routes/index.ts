@@ -83,9 +83,17 @@ export default function routes(services: Services): Router {
     await allocationsController.getActiveCases(req, res, crn, offenderManagerCode, convictionId, teamCode)
   })
 
-  post('/:crn/convictions/:convictionId/allocate/:staffCode/confirm-allocation', async (req, res) => {
-    const { crn, convictionId, staffCode } = req.params
-    await allocationsController.allocateCaseToOffenderManager(req, res, crn, staffCode, convictionId, req.body)
+  post('/team/:teamCode/:crn/convictions/:convictionId/allocate/:staffCode/confirm-allocation', async (req, res) => {
+    const { crn, convictionId, staffCode, teamCode } = req.params
+    await allocationsController.allocateCaseToOffenderManager(
+      req,
+      res,
+      crn,
+      staffCode,
+      convictionId,
+      req.body,
+      teamCode
+    )
   })
 
   get('/probationDeliveryUnit/:pduCode/select-teams', async (req, res) => {

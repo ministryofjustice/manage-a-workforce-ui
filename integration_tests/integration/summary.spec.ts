@@ -154,7 +154,7 @@ context('Summary', () => {
     summaryPage.instructionsTextArea().should('exist')
     summaryPage.instructionsTextArea().type('Test')
     cy.task('stubGetProbationRecord')
-    cy.visit('/J678910/convictions/123456789/probation-record')
+    cy.visit('/team/N03F01/J678910/convictions/123456789/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.instructionsTextArea().should('have.value', 'Test')
   })

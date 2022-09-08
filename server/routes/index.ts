@@ -43,9 +43,9 @@ export default function routes(services: Services): Router {
     await allocationsController.getDocument(req, res, next, crn, convictionId, documentId)
   })
 
-  get('/:crn/convictions/:convictionId/probation-record', async (req, res) => {
-    const { crn, convictionId } = req.params
-    await allocationsController.getProbationRecord(req, res, crn, convictionId)
+  get('/team/:teamCode/:crn/convictions/:convictionId/probation-record', async (req, res) => {
+    const { crn, convictionId, teamCode } = req.params
+    await allocationsController.getProbationRecord(req, res, crn, convictionId, teamCode)
   })
 
   get('/:crn/convictions/:convictionId/risk', async (req, res) => {

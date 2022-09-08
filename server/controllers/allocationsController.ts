@@ -34,7 +34,6 @@ export default class AllocationsController {
       crn,
       convictionId
     )
-    const { session } = req
     const address = new DisplayAddress(response.address)
     res.render('pages/summary', {
       data: response,
@@ -42,12 +41,11 @@ export default class AllocationsController {
       crn: response.crn,
       convictionId: response.convictionId,
       title: `${response.name} | Summary | Manage a workforce`,
-      casesLength: session.casesLength,
       teamCode,
     })
   }
 
-  async getProbationRecord(req: Request, res: Response, crn, convictionId): Promise<void> {
+  async getProbationRecord(req: Request, res: Response, crn, convictionId, teamCode): Promise<void> {
     const response: ProbationRecord = await this.allocationsService.getProbationRecord(
       res.locals.user.token,
       crn,
@@ -93,7 +91,7 @@ export default class AllocationsController {
       totalPreviousCount,
       convictionId,
       title: `${response.name} | Probation record | Manage a workforce`,
-      casesLength: res.locals.casesLength,
+      teamCode,
     })
   }
 

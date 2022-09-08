@@ -17,7 +17,8 @@ export default class ProbationRecordPage extends Page {
 
   previousOrderTable = (): PageElement => cy.get('.previous-order-table')
 
-  viewAllLink = (): PageElement => cy.get('a[href*="J678910/convictions/123456789/probation-record?viewAll=true"]')
+  viewAllLink = (): PageElement =>
+    cy.get('a[href*="/team/N03F01/J678910/convictions/123456789/probation-record?viewAll=true"]')
 
   instructionsTextArea = (): PageElement => cy.get(`#instructions`)
 }

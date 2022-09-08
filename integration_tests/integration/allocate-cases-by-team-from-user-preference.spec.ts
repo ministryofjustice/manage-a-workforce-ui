@@ -72,7 +72,6 @@ context('Show allocate cases by team based on user preferences', () => {
       cy.task('reset')
       cy.task('stubSetup')
       cy.task('stubAuthUser')
-      cy.task('stubGetAllocations')
       cy.task('stubUserPreferenceTeams', ['TM1', 'TM2'])
       cy.task('stubGetTeamsByCodes', {
         codes: 'TM1,TM2',

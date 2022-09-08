@@ -84,6 +84,19 @@ context('Summary', () => {
     })
   })
 
+  it('Sentence visible on page when invalid end date', () => {
+    cy.task('stubGetUnallocatedCaseInvalidEndDate')
+    cy.signIn()
+    cy.get('a[href*="J678910/convictions/123456789/case-view"]').click()
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.sentenceTitle().should('have.text', 'Sentence')
+    cy.get('#sentence .govuk-summary-list').getSummaryList().should('deep.equal', {
+      Offence: 'Common assault and battery Contrary to section 39 of the Criminal Justice Act 1988.',
+      Order: 'SA2020 Suspended Sentence Order Start date: 1 Sep 2021 End date: Invalid Date',
+      Requirements: 'Unpaid Work: Regular 100 Hours',
+    })
+  })
+
   it('Sentence visible on page with multiple offences and requirements', () => {
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.signIn()

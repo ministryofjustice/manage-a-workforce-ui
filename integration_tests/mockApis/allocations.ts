@@ -206,6 +206,80 @@ export default {
       },
     })
   },
+  stubGetUnallocatedCaseInvalidEndDate: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          sentenceDate: '2021-09-01',
+          initialAppointment: '2021-09-01',
+          status: 'Currently managed',
+          offenderManager: {
+            forenames: 'Antonio',
+            surname: 'LoSardo',
+            grade: 'SPO',
+          },
+          gender: 'Male',
+          dateOfBirth: '1984-09-27',
+          age: 37,
+          offences: [
+            {
+              mainOffence: true,
+              mainCategory: 'Common assault and battery',
+              subCategory: 'Contrary to section 39 of the Criminal Justice Act 1988.',
+            },
+          ],
+          expectedSentenceEndDate: null,
+          sentenceDescription: 'SA2020 Suspended Sentence Order',
+          requirements: [
+            {
+              mainCategory: 'Unpaid Work',
+              subCategory: 'Regular',
+              length: 100,
+              lengthUnit: 'Hours',
+            },
+          ],
+          pncNumber: 'D/9874483AB',
+          courtReport: {
+            code: 'CJF',
+            description: 'Fast',
+            completedDate: '2022-01-27T10:54:32.868Z',
+            documentId: '00000000-0000-0000-0000-000000000000',
+          },
+          cpsPack: {
+            completedDate: '2022-02-27T10:54:32.868Z',
+            documentId: '11111111-1111-1111-1111-111111111111',
+          },
+          preConvictionDocument: {
+            completedDate: '2022-03-27T10:54:32.868Z',
+            documentId: '22222222-2222-2222-2222-222222222222',
+          },
+          assessment: {
+            lastAssessedOn: '2022-01-27T10:54:32.869Z',
+            type: 'LAYER_3',
+          },
+          convictionId: 123456789,
+          caseType: 'COMMUNITY',
+          address: {
+            addressNumber: '5A',
+            buildingName: 'The Building',
+            streetName: 'The Street',
+            town: 'Reading',
+            county: 'Berkshire',
+            postcode: 'RG22 3EF',
+          },
+        },
+      },
+    })
+  },
 
   stubGetUnallocatedCasePreviouslyManaged: (): SuperAgentRequest => {
     return stubForAllocation({

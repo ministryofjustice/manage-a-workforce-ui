@@ -63,9 +63,9 @@ export default function routes(services: Services): Router {
     await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionId, teamCode)
   })
 
-  get('/:crn/convictions/:convictionId/allocate/:staffCode/confirm', async (req, res) => {
-    const { crn, convictionId, staffCode } = req.params
-    await allocationsController.getAllocationImpact(req, res, crn, staffCode, convictionId)
+  get('/team/:teamCode/:crn/convictions/:convictionId/allocate/:staffCode/confirm', async (req, res) => {
+    const { crn, convictionId, staffCode, teamCode } = req.params
+    await allocationsController.getAllocationImpact(req, res, crn, staffCode, convictionId, teamCode)
   })
 
   get('/:crn/convictions/:convictionId/allocate/:staffCode/instructions', async (req, res) => {

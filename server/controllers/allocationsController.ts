@@ -153,13 +153,13 @@ export default class AllocationsController {
       body: { allocatedOfficer },
     } = req
     if (allocatedOfficer) {
-      return this.getAllocationImpact(req, res, crn, allocatedOfficer, convictionId)
+      return this.getAllocationImpact(req, res, crn, allocatedOfficer, convictionId, teamCode)
     }
     req.query.error = 'true'
     return this.getAllocate(req, res, crn, convictionId, teamCode)
   }
 
-  async getAllocationImpact(req: Request, res: Response, crn, staffCode, convictionId) {
+  async getAllocationImpact(req: Request, res: Response, crn, staffCode, convictionId, teamCode) {
     const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,
@@ -175,7 +175,7 @@ export default class AllocationsController {
       tier: caseOverview.tier,
       convictionId: caseOverview.convictionId,
       staffCode,
-      casesLength: res.locals.casesLength,
+      teamCode,
     })
   }
 

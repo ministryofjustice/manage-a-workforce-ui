@@ -12,7 +12,7 @@ context('Risk', () => {
   it('Caption text visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
@@ -20,7 +20,7 @@ context('Risk', () => {
   it('Risk header visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.riskHeading().should('contain', 'Risk')
   })
@@ -28,7 +28,7 @@ context('Risk', () => {
   it('Allocate button visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.button().should('contain', 'Allocate')
   })
@@ -36,7 +36,7 @@ context('Risk', () => {
   it('Active registrations visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage
       .activeRegistrationsTable()
@@ -66,7 +66,7 @@ context('Risk', () => {
   it('Inactive registrations visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage
       .inactiveRegistrationsTable()
@@ -90,7 +90,7 @@ context('Risk', () => {
   it('Display text when no registrations on the page', () => {
     cy.task('stubGetRiskNoRegistrations')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.bodyText().contains('There are no active registrations.')
     riskPage.bodyText().contains('There are no inactive registrations.')
@@ -101,7 +101,7 @@ context('Risk', () => {
   it('Displays Assessments when returned', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.roshWidget().trimTextContent().should('equal', 'High RoSH Risk of serious harmLast updated: 2 Feb 2022')
     riskPage
@@ -117,7 +117,7 @@ context('Risk', () => {
   it('Displays score unavailable when no assessments returned', () => {
     cy.task('stubGetRiskNoRegistrations')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.roshWidget().trimTextContent().should('equal', 'RoSH Risk of serious harmScore unavailable')
     riskPage.rsrWidget().trimTextContent().should('equal', 'RSR Risk of serious recidivismScore unavailable')
@@ -127,7 +127,7 @@ context('Risk', () => {
   it('Instructions text should save and display on summary page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.instructionsTextArea().should('exist')
     riskPage.instructionsTextArea().type('Test')
@@ -140,7 +140,7 @@ context('Risk', () => {
   it('Instructions text should save and display on probation record page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.instructionsTextArea().should('exist')
     riskPage.instructionsTextArea().type(' - this is a test')

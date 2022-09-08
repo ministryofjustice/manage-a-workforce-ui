@@ -152,7 +152,7 @@ context('Probation record', () => {
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.instructionsTextArea().type('Test')
     cy.task('stubGetRisk')
-    cy.visit('/J678910/convictions/123456789/risk')
+    cy.visit('/team/N03F01/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.instructionsTextArea().should('have.value', 'Test')
     riskPage.instructionsTextArea().type(' - this is a test')

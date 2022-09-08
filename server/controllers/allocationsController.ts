@@ -179,7 +179,7 @@ export default class AllocationsController {
     })
   }
 
-  async getConfirmInstructions(req: Request, res: Response, crn, staffCode, convictionId) {
+  async getConfirmInstructions(req: Request, res: Response, crn, staffCode, convictionId, teamCode) {
     const response: StaffSummary = await this.workloadService.getStaffByCode(res.locals.user.token, staffCode)
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
     res.render('pages/confirm-instructions', {
@@ -190,9 +190,9 @@ export default class AllocationsController {
       tier: caseOverview.tier,
       staffCode,
       convictionId: caseOverview.convictionId,
-      casesLength: res.locals.casesLength,
       errors: req.flash('errors') || [],
       confirmInstructionForm: req.session.confirmInstructionForm || { person: [] },
+      teamCode,
     })
   }
 
@@ -259,7 +259,7 @@ export default class AllocationsController {
     if (errors.length > 0) {
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
-      return this.getConfirmInstructions(req, res, crn, staffCode, convictionId)
+      return this.getConfirmInstructions(req, res, crn, staffCode, convictionId, 'undefined')
     }
     const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,

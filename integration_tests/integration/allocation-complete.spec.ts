@@ -7,7 +7,7 @@ context('Allocate Complete', () => {
     cy.task('stubSetup')
   })
 
-  it('return to unallocated cases link exists', () => {
+  it('return to unallocated cases of team link exists', () => {
     cy.task('stubGetStaffByCode')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetPotentialOffenderManagerWorkload')
@@ -21,7 +21,7 @@ context('Allocate Complete', () => {
     allocationCompletePage
       .returnToUnallocatedLink()
       .should('have.text', 'Return to unallocated cases')
-      .and('have.attr', 'href', '/')
+      .and('have.attr', 'href', '/team/TM1/cases/unallocated')
   })
 
   it('panel visible on page with correct information', () => {

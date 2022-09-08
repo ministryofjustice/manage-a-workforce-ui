@@ -1,6 +1,10 @@
 import UnallocatedByTeamPage from '../pages/unallocated-by-team'
+import AuthSignInPage from '../pages/authSignIn'
+
+import config from '../../server/config'
 
 context('Unallocated cases by team', () => {
+  let unallocatedPage
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
@@ -11,27 +15,52 @@ context('Unallocated cases by team', () => {
       name: 'Team Name',
     })
     cy.visit('/team/TM1/cases/unallocated')
+    unallocatedPage = new UnallocatedByTeamPage('Team Name')
   })
 
+  it('User name visible in header', () => {
+    unallocatedPage.headerUserName().should('contain.text', 'J. Smith')
+  })
+
+  it('Feedback link goes to Manage a Workforce mailbox', () => {
+    unallocatedPage.feedbackLink().should('have.attr', 'href').and('equal', 'mailto:manageaworkforce@justice.gov.uk')
+  })
   it('Probation Delivery Unit visible on page', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.probationDeliveryUnit().should('contain.text', 'North Wales')
   })
 
+  it('Primary nav visible on page', () => {
+    unallocatedPage
+      .primaryNav()
+      .should('contain', 'Allocations')
+      .and('contain', 'Offender Management')
+      .and('contain', 'OMIC')
+      .and('contain', 'Courts')
+      .and('contain', 'Search')
+  })
+
+  it('Primary nav links to wmt', () => {
+    unallocatedPage
+      .navLink('offender-management-link')
+      .should('equal', `${config.nav.workloadMeasurement.url}/probation/hmpps/0`)
+    unallocatedPage.navLink('omic-link').should('equal', `${config.nav.workloadMeasurement.url}/omic/hmpps/0`)
+    unallocatedPage
+      .navLink('courts-link')
+      .should('equal', `${config.nav.workloadMeasurement.url}/court-reports/hmpps/0`)
+    unallocatedPage.navLink('search-link').should('equal', `${config.nav.workloadMeasurement.url}/officer-search`)
+  })
+
   it('Sub nav visible on page', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.subNav().should('contain', 'Unallocated community cases (8)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
     cy.task('stubOverOneHundredAllocationsByTeam', 'TM1')
     cy.visit('/team/TM1/cases/unallocated')
-    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.subNavLink().should('contain.text', 'Unallocated community cases (99+)')
   })
 
   it('Table caption visible on page', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.tableCaption().should('have.text', 'Unallocated community cases')
   })
 
@@ -107,20 +136,37 @@ context('Unallocated cases by team', () => {
   })
 
   it('Unallocated custody cases visible on page', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.otherCasesHeading().should('have.text', 'Other types of cases')
   })
 
   it('Unallocated custody cases warning visible on page', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.warningIcon().should('exist')
     unallocatedPage
       .warningText()
       .should('contain', 'You must also check NDelius for any other cases that need to be allocated.')
   })
 
+  it('User can log out', () => {
+    unallocatedPage.signOut().click()
+    const authPage = new AuthSignInPage()
+    authPage.checkOnPage()
+  })
+
+  it('Footer visible on page', () => {
+    unallocatedPage
+      .footer()
+      .should('contain', 'Accessibility statement')
+      .and('contain', 'Cookies')
+      .and('contain', 'Privacy')
+      .and('contain', 'Open Government Licence v3.0')
+      .and('contain', '© Crown copyright')
+  })
+
+  it('Secondary text is visible on page', () => {
+    unallocatedPage.secondaryText().should('contain', 'Custody case').and('contain', 'Check with your team')
+  })
+
   it('Should sort tier by correct order', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.tierSortButton().click()
     cy.get('table')
       .getTable()
@@ -193,7 +239,6 @@ context('Unallocated cases by team', () => {
   })
 
   it('link to case overview in table', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.tableLink('123456789').should('equal', '/J678910/convictions/123456789/case-view')
   })
 })

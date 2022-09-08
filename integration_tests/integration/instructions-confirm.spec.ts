@@ -54,7 +54,7 @@ context('Instructions Confirmation', () => {
     cy.signIn()
     cy.visit('/J678910/convictions/123456789/allocate/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsPage.cancelLink('J678910', '123456789').should('exist').and('have.text', 'Cancel')
+    instructionsPage.cancelLink('J678910', '123456789', 'undefined').should('exist').and('have.text', 'Cancel')
   })
 
   it('Instructions textArea should be visible on page', () => {

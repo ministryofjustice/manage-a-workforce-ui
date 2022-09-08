@@ -64,7 +64,10 @@ context('Allocate Confirmation', () => {
     cy.visit('/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
     allocatePage.link().should('exist').and('contain', 'Choose a different probation practitioner')
-    allocatePage.link().should('have.attr', 'href').and('include', '/J678910/convictions/123456789/allocate')
+    allocatePage
+      .link()
+      .should('have.attr', 'href')
+      .and('include', '/team/undefined/J678910/convictions/123456789/allocate')
   })
 
   it('Displays current and potential capacity', () => {

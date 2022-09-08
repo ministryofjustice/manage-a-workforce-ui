@@ -106,7 +106,7 @@ export default class AllocationsController {
     })
   }
 
-  async getAllocate(req: Request, res: Response, crn, convictionId) {
+  async getAllocate(req: Request, res: Response, crn, convictionId, teamCode) {
     const { token } = res.locals.user
     const { offenderManagers } = await this.workloadService.getOffenderManagersToAllocate(token)
 
@@ -144,11 +144,11 @@ export default class AllocationsController {
       offenderManager: response.offenderManager,
       offenderManagersToAllocate,
       error,
-      casesLength: res.locals.casesLength,
+      teamCode,
     })
   }
 
-  async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionId) {
+  async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionId, teamCode) {
     const {
       body: { allocatedOfficer },
     } = req
@@ -156,7 +156,7 @@ export default class AllocationsController {
       return this.getAllocationImpact(req, res, crn, allocatedOfficer, convictionId)
     }
     req.query.error = 'true'
-    return this.getAllocate(req, res, crn, convictionId)
+    return this.getAllocate(req, res, crn, convictionId, teamCode)
   }
 
   async getAllocationImpact(req: Request, res: Response, crn, staffCode, convictionId) {

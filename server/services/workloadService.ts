@@ -33,10 +33,11 @@ export default class WorkloadService {
     token: string,
     crn,
     staffCode,
-    convictionId
+    convictionId,
+    teamCode
   ): Promise<OffenderManagerPotentialWorkload> {
     return (await this.restClient(token).post({
-      path: `/team/N03F01/offenderManager/${staffCode}/impact`,
+      path: `/team/${teamCode}/offenderManager/${staffCode}/impact`,
       data: {
         crn,
         convictionId: parseInt(convictionId, 10),

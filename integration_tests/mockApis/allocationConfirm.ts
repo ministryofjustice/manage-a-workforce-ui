@@ -2,11 +2,11 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForWorkload } from './wiremock'
 
 export default {
-  stubGetPotentialOffenderManagerWorkload: (): SuperAgentRequest => {
+  stubGetPotentialOffenderManagerWorkload: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/N03F01/offenderManager/OM1/impact`,
+        urlPattern: `/team/${teamCode}/offenderManager/OM1/impact`,
         bodyPatterns: [
           {
             equalToJson: '{"crn":"J678910", "convictionId": 123456789}',
@@ -27,11 +27,11 @@ export default {
       },
     })
   },
-  stubGetPotentialOffenderManagerWorkloadOverCapacity: (): SuperAgentRequest => {
+  stubGetPotentialOffenderManagerWorkloadOverCapacity: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/N03F01/offenderManager/OM1/impact`,
+        urlPattern: `/team/${teamCode}/offenderManager/OM1/impact`,
         bodyPatterns: [
           {
             equalToJson: '{"crn":"J678910", "convictionId": 123456789}',

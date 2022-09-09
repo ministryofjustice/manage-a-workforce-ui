@@ -2,11 +2,11 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForWorkload } from './wiremock'
 
 export default {
-  stubAllocateOffenderManagerToCase: (): SuperAgentRequest => {
+  stubAllocateOffenderManagerToCase: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/N03F01/offenderManager/OM1/case`,
+        urlPattern: `/team/${teamCode}/offenderManager/OM1/case`,
         bodyPatterns: [
           {
             equalToJson: '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "emailTo": []}',
@@ -25,11 +25,11 @@ export default {
     })
   },
 
-  stubAllocateOffenderManagerToCaseMultipleEmails: (): SuperAgentRequest => {
+  stubAllocateOffenderManagerToCaseMultipleEmails: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/N03F01/offenderManager/OM1/case`,
+        urlPattern: `/team/${teamCode}/offenderManager/OM1/case`,
         bodyPatterns: [
           {
             equalToJson:

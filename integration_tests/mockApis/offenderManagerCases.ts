@@ -2,11 +2,11 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForWorkload } from './wiremock'
 
 export default {
-  stubGetOffenderManagerCases: (): SuperAgentRequest => {
+  stubGetOffenderManagerCases: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/team/N03F01/offenderManagers/OM2/cases`,
+        urlPattern: `/team/${teamCode}/offenderManagers/OM2/cases`,
       },
       response: {
         status: 200,

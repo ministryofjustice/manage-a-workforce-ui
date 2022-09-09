@@ -11,7 +11,11 @@ export default function routes(services: Services): Router {
   const router = Router()
   const get = (path: string, handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (path: string, handler: RequestHandler) => router.post(path, asyncMiddleware(handler))
-  const allocationsController = new AllocationsController(services.allocationsService, services.workloadService)
+  const allocationsController = new AllocationsController(
+    services.allocationsService,
+    services.workloadService,
+    services.probationEstateService
+  )
   const probationEstateController = new ProbationEstateController(
     services.probationEstateService,
     services.userPreferenceService

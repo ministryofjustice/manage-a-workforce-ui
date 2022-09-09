@@ -6,6 +6,10 @@ context('Allocate', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
+    cy.task('stubGetTeamByCode', {
+      code: 'TM1',
+      name: 'Wrexham Team 1',
+    })
   })
 
   it('Offender details visible on page', () => {
@@ -43,7 +47,7 @@ context('Allocate', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.subHeading().should('contain', 'Allocate to a probation practitioner in Wrexham')
+    allocatePage.subHeading().should('contain', 'Allocate to a probation practitioner in Wrexham Team 1')
   })
 
   it('Warning is visible on page if probation status is currently managed', () => {

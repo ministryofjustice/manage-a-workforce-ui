@@ -21,11 +21,13 @@ import trimForm from '../utils/trim'
 import CaseOverview from './data/CaseOverview'
 import OfficerView from './data/OfficerView'
 import DisplayAddress from './data/DisplayAddress'
+import ProbationEstateService from '../services/probationEstateService'
 
 export default class AllocationsController {
   constructor(
     private readonly allocationsService: AllocationsService,
-    private readonly workloadService: WorkloadService
+    private readonly workloadService: WorkloadService,
+    private readonly probationEstateService: ProbationEstateService
   ) {}
 
   async getUnallocatedCase(req: Request, res: Response, crn, convictionId, teamCode): Promise<void> {
@@ -109,6 +111,7 @@ export default class AllocationsController {
   async getAllocate(req: Request, res: Response, crn, convictionId, teamCode) {
     const { token } = res.locals.user
     const { offenderManagers } = await this.workloadService.getOffenderManagersToAllocate(token)
+    const { name: teamName } = await this.probationEstateService.getTeamByCode(token, teamCode)
 
     const offenderManagersToAllocate = offenderManagers
       .map(
@@ -145,6 +148,7 @@ export default class AllocationsController {
       offenderManagersToAllocate,
       error,
       teamCode,
+      teamName,
     })
   }
 

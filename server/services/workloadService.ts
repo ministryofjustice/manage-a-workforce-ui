@@ -18,13 +18,12 @@ export default class WorkloadService {
   }
 
   private restClient(token: string): RestClient {
-    return new RestClient('Allocations Service API Client', this.config, token)
+    return new RestClient('Workload Service API Client', this.config, token)
   }
 
-  async getOffenderManagersToAllocate(token: string): Promise<AllocateOffenderManagers> {
-    logger.info(`Getting offender managers to allocate for team N03F01`)
+  async getOffenderManagersToAllocate(token: string, teamCode: string): Promise<AllocateOffenderManagers> {
     return (await this.restClient(token).get({
-      path: `/team/N03F01/offenderManagers`,
+      path: `/team/${teamCode}/offenderManagers`,
       query: 'grades=PSO,PQiP,PO',
       headers: { Accept: 'application/json' },
     })) as AllocateOffenderManagers

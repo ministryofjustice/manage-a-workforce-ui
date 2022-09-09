@@ -110,7 +110,7 @@ export default class AllocationsController {
 
   async getAllocate(req: Request, res: Response, crn, convictionId, teamCode) {
     const { token } = res.locals.user
-    const { offenderManagers } = await this.workloadService.getOffenderManagersToAllocate(token)
+    const { offenderManagers } = await this.workloadService.getOffenderManagersToAllocate(token, teamCode)
     const { name: teamName } = await this.probationEstateService.getTeamByCode(token, teamCode)
 
     const offenderManagersToAllocate = offenderManagers

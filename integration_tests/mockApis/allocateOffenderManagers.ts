@@ -2,11 +2,11 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForWorkload } from './wiremock'
 
 export default {
-  stubGetAllocateOffenderManagers: (): SuperAgentRequest => {
+  stubGetAllocateOffenderManagers: (teamCode = 'N03F01'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPath: `/team/N03F01/offenderManagers`,
+        urlPath: `/team/${teamCode}/offenderManagers`,
         queryParameters: {
           grades: {
             equalTo: 'PSO,PQiP,PO',

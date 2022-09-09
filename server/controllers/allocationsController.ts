@@ -203,7 +203,8 @@ export default class AllocationsController {
   async getOverview(req: Request, res: Response, crn, offenderManagerCode, convictionId, teamCode) {
     const response: OffenderManagerOverview = await this.workloadService.getOffenderManagerOverview(
       res.locals.user.token,
-      offenderManagerCode
+      offenderManagerCode,
+      teamCode
     )
     const data: OfficerView = new OfficerView(response)
     res.render('pages/overview', {

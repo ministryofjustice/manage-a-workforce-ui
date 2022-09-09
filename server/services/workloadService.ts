@@ -52,9 +52,13 @@ export default class WorkloadService {
     })) as OffenderManagerCases
   }
 
-  async getOffenderManagerOverview(token: string, offenderManagerCode): Promise<OffenderManagerOverview> {
+  async getOffenderManagerOverview(
+    token: string,
+    offenderManagerCode,
+    teamCode: string
+  ): Promise<OffenderManagerOverview> {
     return (await this.restClient(token).get({
-      path: `/team/N03F01/offenderManagers/${offenderManagerCode}`,
+      path: `/team/${teamCode}/offenderManagers/${offenderManagerCode}`,
       headers: { Accept: 'application/json' },
     })) as OffenderManagerOverview
   }

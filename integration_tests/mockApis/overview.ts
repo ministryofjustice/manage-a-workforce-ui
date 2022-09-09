@@ -2,11 +2,11 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForWorkload } from './wiremock'
 
 export default {
-  stubGetOverview: (): SuperAgentRequest => {
+  stubGetOverview: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/team/N03F01/offenderManagers/OM2`,
+        urlPattern: `/team/${teamCode}/offenderManagers/OM2`,
       },
       response: {
         status: 200,
@@ -41,11 +41,11 @@ export default {
     })
   },
 
-  stubGetOverviewUnderCapacity: (): SuperAgentRequest => {
+  stubGetOverviewUnderCapacity: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/team/N03F01/offenderManagers/OM2`,
+        urlPattern: `/team/${teamCode}/offenderManagers/OM2`,
       },
       response: {
         status: 200,
@@ -78,11 +78,11 @@ export default {
     })
   },
 
-  stubGetOverviewWithLastAllocatedEvent: (): SuperAgentRequest => {
+  stubGetOverviewWithLastAllocatedEvent: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/team/N03F01/offenderManagers/OM6`,
+        urlPattern: `/team/${teamCode}/offenderManagers/OM6`,
       },
       response: {
         status: 200,

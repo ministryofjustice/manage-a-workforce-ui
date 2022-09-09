@@ -5,10 +5,10 @@ context('Overview', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
+    cy.task('stubGetOverview')
   })
 
   it('Officer details visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -17,7 +17,6 @@ context('Overview', () => {
   })
 
   it('Back link is visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -25,7 +24,6 @@ context('Overview', () => {
   })
 
   it('Heading is visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -33,7 +31,6 @@ context('Overview', () => {
   })
 
   it('Sub nav visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -41,7 +38,6 @@ context('Overview', () => {
   })
 
   it('Overview tab is highlighted', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -49,7 +45,6 @@ context('Overview', () => {
   })
 
   it('Summary text is visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -57,7 +52,6 @@ context('Overview', () => {
   })
 
   it('Points information visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     cy.get('.govuk-details .govuk-summary-list').getSummaryList().should('deep.equal', {
@@ -77,7 +71,6 @@ context('Overview', () => {
   })
 
   it('Over capacity card visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -86,7 +79,6 @@ context('Overview', () => {
   })
 
   it('Last updated visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -94,7 +86,6 @@ context('Overview', () => {
   })
 
   it('Total cases card visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -107,7 +98,6 @@ context('Overview', () => {
   })
 
   it('Section break visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -115,7 +105,6 @@ context('Overview', () => {
   })
 
   it('Availability header visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -123,7 +112,6 @@ context('Overview', () => {
   })
 
   it('Availability summary list visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     cy.get('.availability').getSummaryList().should('deep.equal', {
@@ -137,7 +125,6 @@ context('Overview', () => {
   })
 
   it('Case mix header is visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
@@ -145,7 +132,6 @@ context('Overview', () => {
   })
 
   it('Tier table is visible on page', () => {
-    cy.task('stubGetOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)

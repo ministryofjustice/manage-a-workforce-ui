@@ -48,6 +48,16 @@ context('Instructions Confirmation', () => {
     instructionsPage.continueButton('123456789').should('exist').and('have.text', '\n  Continue\n')
   })
 
+  it('Continue button goes to next page', () => {
+    cy.task('stubGetStaffByCode')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
+    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsPage.continueButton('123456789').click()
+    cy.url().should('include', '/team/TM1/J678910/convictions/123456789/allocate/OM1/confirm-allocation')
+  })
+
   it('Cancel link visible on page', () => {
     cy.task('stubGetStaffByCode')
     cy.task('stubGetCurrentlyManagedCaseOverview')

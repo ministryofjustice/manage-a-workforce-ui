@@ -273,6 +273,7 @@ export default class AllocationsController {
       crn,
       staffCode,
       convictionId,
+      teamCode,
       form.instructions,
       form.person.map(person => person.email).filter(email => email)
     )

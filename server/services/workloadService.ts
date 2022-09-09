@@ -84,11 +84,12 @@ export default class WorkloadService {
     crn,
     staffCode,
     convictionId,
+    teamCode,
     instructions,
     emailTo
   ): Promise<OffenderManagerAllocatedCase> {
     return (await this.restClient(token).post({
-      path: `/team/N03F01/offenderManager/${staffCode}/case`,
+      path: `/team/${teamCode}/offenderManager/${staffCode}/case`,
       data: {
         crn,
         eventId: parseInt(convictionId, 10),

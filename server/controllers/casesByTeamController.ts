@@ -10,11 +10,9 @@ export default class CasesByTeamController {
   ) {}
 
   async getAllocationsByTeam(req: Request, res: Response, teamCode: string): Promise<void> {
-    const unallocatedCasesByTeam = await this.allocationsService.getUnallocatedCasesByTeam(
-      res.locals.user.token,
-      teamCode
-    )
-    const teamOverview = await this.probationEstateService.getTeamByCode(res.locals.user.token, teamCode)
+    const { token } = res.locals.user
+    const unallocatedCasesByTeam = await this.allocationsService.getUnallocatedCasesByTeam(token, teamCode)
+    const teamOverview = await this.probationEstateService.getTeamByCode(token, teamCode)
 
     const unallocatedCases = unallocatedCasesByTeam.map(
       value =>

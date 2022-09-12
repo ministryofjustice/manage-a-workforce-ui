@@ -25,12 +25,12 @@ context('Risk', () => {
     riskPage.riskHeading().should('contain', 'Risk')
   })
 
-  it('Allocate button visible on page', () => {
+  it('Continue button visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
-    riskPage.button().should('contain', 'Allocate')
+    riskPage.button().should('contain', 'Continue')
   })
 
   it('Active registrations visible on page', () => {

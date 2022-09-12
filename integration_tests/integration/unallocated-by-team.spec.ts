@@ -73,7 +73,7 @@ context('Unallocated cases by team', () => {
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
           'Initial appointment date': 'Not neededCustody case',
-          'Probation status': 'Previously managed(13 Dec 2019)',
+          'Probation status': 'Previously managed',
           Action: 'Review case',
         },
         {
@@ -168,7 +168,7 @@ context('Unallocated cases by team', () => {
           Tier: 'C1',
           'Sentence date': '1 Sep 2021',
           'Initial appointment date': 'Not neededCustody case',
-          'Probation status': 'Previously managed(13 Dec 2019)',
+          'Probation status': 'Previously managed',
           Action: 'Review case',
         },
         {

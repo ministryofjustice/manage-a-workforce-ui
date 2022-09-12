@@ -6,6 +6,7 @@ import ProbationEstateController from '../controllers/probationEstateController'
 import AllocateCasesController from '../controllers/allocateCasesController'
 import CasesByTeamController from '../controllers/casesByTeamController'
 import type { Services } from '../services'
+import HomeController from '../controllers/homeController'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -28,8 +29,10 @@ export default function routes(services: Services): Router {
   )
   const casesByTeamController = new CasesByTeamController(services.allocationsService, services.probationEstateService)
 
+  const homeController = new HomeController(services.userPreferenceService)
+
   get('/', async (req, res) => {
-    res.redirect('/team/N03F01/cases/unallocated')
+    await homeController.redirectUser(req, res)
   })
 
   get('/team/:teamCode/cases/unallocated', async (req, res) => {

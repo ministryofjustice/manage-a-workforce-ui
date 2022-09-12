@@ -1,5 +1,5 @@
+import AllocateCasesByTeamPage from '../pages/allocate-cases-by-team'
 import AuthSignInPage from '../pages/authSignIn'
-import UnallocatedByTeamPage from '../pages/unallocated-by-team'
 
 context('Unallocated', () => {
   beforeEach(() => {
@@ -13,35 +13,38 @@ context('Unallocated', () => {
     authPage.checkOnPage()
   })
 
-  it('redirects to Wrexham team 1', () => {
+  it('redirects to North Wales Allocate cases by team', () => {
     cy.signIn()
-    cy.url().should('include', '/team/N03F01/cases/unallocated')
+    cy.url().should('include', '/probationdeliveryunit/WPTNWS/teams')
   })
 
   it('User can log out', () => {
     cy.signIn()
-    const unallocatedPage = new UnallocatedByTeamPage('Wrexham - Team 1')
-    unallocatedPage.signOut().click()
+    const allocateCasesByTeamPage = new AllocateCasesByTeamPage()
+    allocateCasesByTeamPage.signOut().click()
     const authPage = new AuthSignInPage()
     authPage.checkOnPage()
   })
 
   it('User name visible in header', () => {
     cy.signIn()
-    const unallocatedPage = new UnallocatedByTeamPage('Wrexham - Team 1')
-    unallocatedPage.headerUserName().should('contain.text', 'J. Smith')
+    const allocateCasesByTeamPage = new AllocateCasesByTeamPage()
+    allocateCasesByTeamPage.headerUserName().should('contain.text', 'J. Smith')
   })
 
   it('Feedback link goes to Manage a Workforce mailbox', () => {
     cy.signIn()
-    const unallocatedPage = new UnallocatedByTeamPage('Wrexham - Team 1')
-    unallocatedPage.feedbackLink().should('have.attr', 'href').and('equal', 'mailto:manageaworkforce@justice.gov.uk')
+    const allocateCasesByTeamPage = new AllocateCasesByTeamPage()
+    allocateCasesByTeamPage
+      .feedbackLink()
+      .should('have.attr', 'href')
+      .and('equal', 'mailto:manageaworkforce@justice.gov.uk')
   })
 
   it('Footer visible on page', () => {
     cy.signIn()
-    const unallocatedPage = new UnallocatedByTeamPage('Wrexham - Team 1')
-    unallocatedPage
+    const allocateCasesByTeamPage = new AllocateCasesByTeamPage()
+    allocateCasesByTeamPage
       .footer()
       .should('contain', 'Accessibility statement')
       .and('contain', 'Cookies')

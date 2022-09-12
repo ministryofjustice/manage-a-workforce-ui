@@ -70,9 +70,7 @@ context('Allocate', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage
-      .warningText()
-      .should('contain', 'Dylan Adam Armstrong has been previously managed by Sofia Micheals (PO)')
+    allocatePage.warningText().should('contain', 'Dylan Adam Armstrong was previously managed by Sofia Micheals (PO)')
     allocatePage.warningIcon().should('exist')
   })
 

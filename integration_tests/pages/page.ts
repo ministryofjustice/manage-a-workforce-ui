@@ -32,4 +32,6 @@ export default abstract class Page {
   errorSummary = (): PageElement => cy.get('.govuk-error-summary')
 
   captionText = (): PageElement => cy.get('.govuk-caption-xl')
+
+  notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 }

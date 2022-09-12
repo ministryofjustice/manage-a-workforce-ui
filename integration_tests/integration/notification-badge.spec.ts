@@ -1,4 +1,4 @@
-import UnallocatedPage from '../pages/unallocated-by-team'
+import AllocateCasesByTeamPage from '../pages/allocate-cases-by-team'
 
 context('Unallocated', () => {
   beforeEach(() => {
@@ -8,7 +8,7 @@ context('Unallocated', () => {
   })
 
   it('Notification badge visible on page with number of unallocated cases', () => {
-    const unallocatedPage = new UnallocatedPage('Wrexham - Team 1')
+    const unallocatedPage = new AllocateCasesByTeamPage()
     unallocatedPage.notificationsBadge().should('contain.text', '10')
   })
 
@@ -23,7 +23,7 @@ context('Unallocated', () => {
       ],
     })
     cy.reload()
-    const unallocatedPage = new UnallocatedPage('Wrexham - Team 1')
+    const unallocatedPage = new AllocateCasesByTeamPage()
     unallocatedPage.notificationsBadge().should('contain.text', '99+')
   })
 
@@ -38,14 +38,14 @@ context('Unallocated', () => {
       ],
     })
     cy.reload()
-    const unallocatedPage = new UnallocatedPage('Wrexham - Team 1')
+    const unallocatedPage = new AllocateCasesByTeamPage()
     unallocatedPage.notificationsBadge().should('not.exist')
   })
 
   it('must not show notification badge when no user preference is selected', () => {
     cy.task('stubUserPreferenceTeams', [])
     cy.reload()
-    const unallocatedPage = new UnallocatedPage('Wrexham - Team 1')
+    const unallocatedPage = new AllocateCasesByTeamPage()
     unallocatedPage.notificationsBadge().should('not.exist')
   })
 })

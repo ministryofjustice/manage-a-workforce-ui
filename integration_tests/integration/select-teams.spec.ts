@@ -5,19 +5,10 @@ context('Select teams', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
-    cy.task('stubGetUnallocatedCasesByTeams', {
-      teamCodes: 'N03F01',
-      response: [
-        {
-          teamCode: 'N03F01',
-          caseCount: 10,
-        },
-      ],
-    })
     cy.task('stubUserPreferenceTeams', [])
-    cy.task('stubGetTeamsByPdu')
+    cy.task('stubGetTeamsByPdu', 'WPTNWS')
     cy.signIn()
-    cy.visit('/probationDeliveryUnit/PDU1/select-teams')
+    cy.visit('/probationDeliveryUnit/WPTNWS/select-teams')
   })
 
   it('Caption text visible on page', () => {

@@ -4,8 +4,9 @@ context('No unallocated cases', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
-    cy.task('stubGetAllocationsByTeam', { teamCode: 'N03F01', response: [] })
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1', response: [] })
     cy.signIn()
+    cy.visit('/team/TM1/cases/unallocated')
   })
 
   it('Sub nav link visible on page with no number', () => {

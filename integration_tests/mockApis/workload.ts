@@ -7,7 +7,7 @@ export default {
     response,
   }: {
     teamCodes: string
-    response: Record<string, unknown>
+    response: Record<string, unknown>[]
   }): SuperAgentRequest => {
     return stubForWorkload({
       request: {

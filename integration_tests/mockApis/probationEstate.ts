@@ -7,7 +7,7 @@ export default {
     response,
   }: {
     codes: string
-    response: Record<string, unknown>
+    response: Record<string, unknown>[]
   }): SuperAgentRequest => {
     return stubForProbationEstate({
       request: {
@@ -37,11 +37,11 @@ export default {
       },
     })
   },
-  stubGetTeamsByPdu: (): SuperAgentRequest => {
+  stubGetTeamsByPdu: (pduCode = 'PDU1'): SuperAgentRequest => {
     return stubForProbationEstate({
       request: {
         method: 'GET',
-        urlPattern: `/probationDeliveryUnit/PDU1/teams`,
+        urlPattern: `/probationDeliveryUnit/${pduCode}/teams`,
       },
       response: {
         status: 200,

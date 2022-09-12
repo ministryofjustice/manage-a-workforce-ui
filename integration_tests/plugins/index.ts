@@ -49,9 +49,28 @@ export default (on: (string, Record) => void): void => {
             },
           ],
         }),
-        allocations.stubGetAllocationsByTeam({ teamCode: 'N03F01' }),
+        allocations.stubGetAllocationsByTeam({ teamCode: 'TM1' }),
+        probationEstate.stubGetTeamsByCodes({
+          codes: 'TM1',
+          response: [
+            {
+              code: 'TM1',
+              name: 'Team 1',
+            },
+          ],
+        }),
+        workload.stubWorkloadCases({
+          teamCodes: 'TM1',
+          response: [
+            {
+              teamCode: 'TM1',
+              totalCases: 2,
+              workload: 77,
+            },
+          ],
+        }),
         probationEstate.stubGetTeamByCode({
-          code: 'N03F01',
+          code: 'TM1',
           name: 'Wrexham - Team 1',
         }),
       ]),

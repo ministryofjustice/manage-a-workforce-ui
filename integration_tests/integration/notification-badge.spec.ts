@@ -42,19 +42,10 @@ context('Unallocated', () => {
     unallocatedPage.notificationsBadge().should('not.exist')
   })
 
-  it('must be backwards compatible, no user preference selected gets Wrexham Team 1 unallocated case count', () => {
+  it('must not show notification badge when no user preference is selected', () => {
     cy.task('stubUserPreferenceTeams', [])
-    cy.task('stubGetUnallocatedCasesByTeams', {
-      teamCodes: 'N03F01',
-      response: [
-        {
-          teamCode: 'N03F01',
-          caseCount: 20,
-        },
-      ],
-    })
     cy.reload()
     const unallocatedPage = new UnallocatedPage('Wrexham - Team 1')
-    unallocatedPage.notificationsBadge().should('contain.text', '20')
+    unallocatedPage.notificationsBadge().should('not.exist')
   })
 })

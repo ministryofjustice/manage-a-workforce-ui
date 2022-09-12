@@ -30,6 +30,7 @@ export default class CasesByTeamController {
         )
     )
     res.render('pages/unallocated-cases-by-team', {
+      pduCode: 'WPTNWS',
       pduName: 'North Wales',
       teamName: teamOverview.name,
       teamCode,

@@ -34,12 +34,12 @@ context('Probation record', () => {
     Page.verifyOnPage(ProbationRecordPage)
   })
 
-  it('Allocate button visible on page', () => {
+  it('Continue button visible on page', () => {
     cy.task('stubGetProbationRecord')
     cy.signIn()
     cy.visit('/team/N03F01/J678910/convictions/123456789/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.button().should('contain', 'Allocate')
+    probationRecordPage.button().should('contain', 'Continue')
   })
 
   it('Current order sub-heading visible on page with body text', () => {

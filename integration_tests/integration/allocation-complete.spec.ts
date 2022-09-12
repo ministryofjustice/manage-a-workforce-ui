@@ -59,6 +59,7 @@ context('Allocate Complete', () => {
     allocationCompletePage
       .bulletedList()
       .should('contain', 'this case will be updated in NDelius within 5 minutes')
+      .and('contain', "you'll need to create a Management Oversight contact separately")
       .and(
         'contain',
         'John Doe (john.doe@test.justice.gov.uk) has been notified, and we have sent a copy of your allocation instructions to example.admin@justice.gov.uk, example.admin@justice.gov.uk'

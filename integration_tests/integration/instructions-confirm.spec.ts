@@ -39,13 +39,13 @@ context('Instructions Confirmation', () => {
       .and('contain', 'Allocate to probation practitioner')
   })
 
-  it('Continue button visible on page', () => {
+  it('Allocate Case button visible on page', () => {
     cy.task('stubGetStaffByCode')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsPage.continueButton('123456789').should('exist').and('have.text', '\n  Continue\n')
+    instructionsPage.continueButton('123456789').should('exist').and('have.text', '\n  Allocate Case\n')
   })
 
   it('Continue button goes to next page', () => {

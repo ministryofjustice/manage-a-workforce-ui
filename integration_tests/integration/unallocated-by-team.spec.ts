@@ -219,7 +219,6 @@ context('Unallocated cases by team', () => {
   })
 
   it('Shows link to Manage my teams', () => {
-    const unallocatedPage = new UnallocatedByTeamPage('Team Name')
     unallocatedPage.manageMyTeamsLink().should('equal', '/probationDeliveryUnit/WPTNWS/select-teams')
   })
 })

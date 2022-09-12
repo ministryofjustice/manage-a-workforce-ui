@@ -24,6 +24,7 @@
 
             <ul class="govuk-list govuk-list--bullet">
                 <li>this case will be updated in NDelius within 5 minutes</li>
+                <li>you'll need to create a Management Oversight contact separately</li>
                 <li><strong>{{ offenderManagerName }}</strong> (<em>{{ personDetails.staffEmail }}</em>) has been notified{{ ', and we have sent a copy of your allocation instructions to ' + addAnotherEmails | join(", ")  if addAnotherEmails != '' }}</li>
                 {% if caseType === 'CUSTODY' %}
                     <li>no initial appointment needed (custody case)</li>

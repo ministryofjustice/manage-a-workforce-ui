@@ -27,7 +27,7 @@ context('Allocate Confirmation', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
-    allocatePage.subHeading().should('have.text', 'You’re allocating this case to probation practitioner John Doe (PO)')
+    allocatePage.subHeading().should('have.text', "You're allocating this case to probation practitioner John Doe (PO)")
   })
 
   it('Breadcrumbs visible on page', () => {
@@ -62,6 +62,16 @@ context('Allocate Confirmation', () => {
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/confirm')
     const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
     allocatePage.capacityImpactStatement().should('have.text', 'This will increase their workload from 50.4% to 64.8%.')
+  })
+
+  it('Displays current capacity only when same PoP allocated to same PO', () => {
+    cy.task('stubGetPotentialOffenderManagerWorkloadOverCapacitySamePoP')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/confirm')
+    const allocatePage = Page.verifyOnPage(AllocationConfirmPage)
+    allocatePage
+      .capacityImpactStatement()
+      .should('have.text', 'Their workload will remain at 50.4% as they are already managing this case.')
   })
 
   it('Display current and potential capacity as red when over capacity', () => {

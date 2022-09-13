@@ -82,7 +82,7 @@ context('Overview', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     const overviewPage = Page.verifyOnPage(OverviewPage)
-    overviewPage.lastUpdated().should('contain', 'Last updated: 3 Nov 2013 at 9:00am')
+    overviewPage.lastUpdated().should('contain', 'Last updated: 3 November 2013 at 9:00am')
   })
 
   it('Total cases card visible on page', () => {
@@ -116,7 +116,7 @@ context('Overview', () => {
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/officer-view')
     cy.get('.availability').getSummaryList().should('deep.equal', {
       'Weekly hours': '22.5',
-      Reductions: '10 hours until 3 Nov 2022',
+      Reductions: '10 hours until 3 November 2022',
       'Last case allocated': '',
       'Cases due to end within next 4 weeks': '3',
       'Releases within next 4 weeks': '6',
@@ -168,8 +168,8 @@ context('Overview', () => {
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM6/officer-view')
     cy.get('.availability').getSummaryList().should('deep.equal', {
       'Weekly hours': '22.5',
-      Reductions: '10 hours until 3 Nov 2022',
-      'Last case allocated': '19 Aug 2022 (Tier A3, in community)',
+      Reductions: '10 hours until 3 November 2022',
+      'Last case allocated': '19 August 2022 (Tier A3, in community)',
       'Cases due to end within next 4 weeks': '3',
       'Releases within next 4 weeks': '6',
       'Parole reports to complete within next 4 weeks': '5',

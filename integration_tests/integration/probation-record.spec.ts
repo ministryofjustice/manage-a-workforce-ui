@@ -73,13 +73,13 @@ context('Probation record', () => {
         {
           Sentence: 'ORA Community Order (18 Months)',
           Offence: 'Common assault and battery - 10501',
-          'Start date': '5 Nov 2020',
+          'Start date': '5 November 2020',
           'Probation practitioner': 'Faraz Haynes (PO)',
         },
         {
           Sentence: 'Adult Custody < 12m (6 Months)',
           Offence: 'Abstracting electricity - 04300',
-          'Start date': '17 Nov 2019',
+          'Start date': '17 November 2019',
           'Probation practitioner': 'Sheila Linda Hancock (PSO)',
         },
       ])
@@ -97,7 +97,7 @@ context('Probation record', () => {
         {
           Sentence: 'Adult Custody < 12m (6 Months)',
           Offence: 'Abstracting electricity - 04300Common assault and battery - 10501',
-          'Start date': '17 Nov 2019',
+          'Start date': '17 November 2019',
           'Probation practitioner': 'Sheila Linda Hancock (PSO)',
         },
       ])
@@ -115,13 +115,13 @@ context('Probation record', () => {
         {
           Sentence: 'ORA Community Order (18 Months)',
           Offence: 'Common assault and battery - 10501',
-          'End date': '5 Nov 2020',
+          'End date': '5 November 2020',
           'Probation practitioner': 'Faraz Haynes (PO)',
         },
         {
           Sentence: 'Fine',
           Offence: 'Abstracting electricity - 04300',
-          'End date': '23 Jun 2018',
+          'End date': '23 June 2018',
           'Probation practitioner': 'Sheila Linda Hancock (PSO)',
         },
       ])

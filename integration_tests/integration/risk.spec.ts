@@ -44,19 +44,19 @@ context('Risk', () => {
       .should('deep.equal', [
         {
           Type: 'Suicide/self-harm',
-          Registered: '13 Dec 2020',
-          'Next review': '13 Jun 2022',
+          Registered: '13 December 2020',
+          'Next review': '13 June 2022',
           Notes: 'Previous suicide /self-harm attempt. Needs further investigating.',
         },
         {
           Type: 'Child concerns',
-          Registered: '13 Dec 2020',
-          'Next review': '13 Mar 2022',
+          Registered: '13 December 2020',
+          'Next review': '13 March 2022',
           Notes: 'Awaiting outcome of social services enquiry.',
         },
         {
           Type: 'Medium RoSH',
-          Registered: '9 Nov 2021',
+          Registered: '9 November 2021',
           'Next review': '9 May 2022',
           Notes: '-',
         },
@@ -74,14 +74,14 @@ context('Risk', () => {
       .should('deep.equal', [
         {
           Type: 'Domestic abuse perpetrator',
-          Registered: '14 Jun 2012',
-          'End date': '26 Nov 2019',
+          Registered: '14 June 2012',
+          'End date': '26 November 2019',
           Notes: '-',
         },
         {
           Type: 'Mental health issues',
-          Registered: '13 Dec 2017',
-          'End date': '13 Jun 2019',
+          Registered: '13 December 2017',
+          'End date': '13 June 2019',
           Notes: '-',
         },
       ])
@@ -103,15 +103,18 @@ context('Risk', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
-    riskPage.roshWidget().trimTextContent().should('equal', 'High RoSH Risk of serious harmLast updated: 2 Feb 2022')
+    riskPage
+      .roshWidget()
+      .trimTextContent()
+      .should('equal', 'High RoSH Risk of serious harmLast updated: 2 February 2022')
     riskPage
       .rsrWidget()
       .trimTextContent()
-      .should('equal', 'Medium RSR 3.8% Risk of serious recidivismLast updated: 12 Feb 2019')
+      .should('equal', 'Medium RSR 3.8% Risk of serious recidivismLast updated: 12 February 2019')
     riskPage
       .ogrsWidget()
       .trimTextContent()
-      .should('equal', 'High OGRS 85% Offender group reconviction scaleLast updated: 17 Nov 2018')
+      .should('equal', 'High OGRS 85% Offender group reconviction scaleLast updated: 17 November 2018')
   })
 
   it('Displays score unavailable when no assessments returned', () => {

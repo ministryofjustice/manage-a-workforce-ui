@@ -38,7 +38,7 @@ context('Summary', () => {
     cy.get('#personal-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       Name: 'Dylan Adam Armstrong',
       Gender: 'Male',
-      'Date of birth': '27 Sep 1984 (37 years old)',
+      'Date of birth': '27 September 1984 (37 years old)',
       PNC: 'D/9874483AB',
       'Main address': '5A The Building The StreetReadingBerkshireRG22 3EF',
     })
@@ -52,7 +52,7 @@ context('Summary', () => {
     cy.get('#personal-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       Name: 'Dylan Adam Armstrong',
       Gender: 'Female',
-      'Date of birth': '17 Nov 1994 (27 years old)',
+      'Date of birth': '17 November 1994 (27 years old)',
       PNC: 'A/8404713BA',
       'Main address': 'No address found',
     })
@@ -63,7 +63,7 @@ context('Summary', () => {
     summaryPage.sentenceTitle().should('have.text', 'Sentence')
     cy.get('#sentence .govuk-summary-list').getSummaryList().should('deep.equal', {
       Offence: 'Common assault and battery Contrary to section 39 of the Criminal Justice Act 1988.',
-      Order: 'SA2020 Suspended Sentence Order (28 days) Start date: 1 Sep 2021 End date: 28 Sep 2021',
+      Order: 'SA2020 Suspended Sentence Order (28 days) Start date: 1 September 2021 End date: 28 September 2021',
       Requirements: 'Unpaid Work: Regular 100 Hours',
     })
   })
@@ -75,7 +75,7 @@ context('Summary', () => {
     summaryPage.sentenceTitle().should('have.text', 'Sentence')
     cy.get('#sentence .govuk-summary-list').getSummaryList().should('deep.equal', {
       Offence: 'Common assault and battery Contrary to section 39 of the Criminal Justice Act 1988.',
-      Order: 'SA2020 Suspended Sentence Order Start date: 1 Sep 2021 End date: Invalid Date',
+      Order: 'SA2020 Suspended Sentence Order Start date: 1 September 2021 End date: Invalid Date',
       Requirements: 'Unpaid Work: Regular 100 Hours',
     })
   })
@@ -88,7 +88,7 @@ context('Summary', () => {
     cy.get('#sentence .govuk-summary-list').getSummaryList().should('deep.equal', {
       Offence:
         'Common assault and battery Contrary to section 39 of the Criminal Justice Act 1988. Attempt theft from the person of another Contrary to section 1(1) of the Criminal Attempts Act 1981. Assault by beating Contrary to section 39 of the Criminal Justice Act 1988.',
-      Order: 'SA2020 Suspended Sentence Order (3 months) Start date: 2 Sep 2021 End date: 1 Dec 2021',
+      Order: 'SA2020 Suspended Sentence Order (3 months) Start date: 2 September 2021 End date: 1 December 2021',
       Requirements:
         'Unpaid Work: Regular 100 Hours Rehabilitation Activity Requirement (RAR): Regular 20 Days Court - Accredited Programme - Building Better Relationships: Regular 20 Days',
     })
@@ -101,10 +101,10 @@ context('Summary', () => {
     summaryPage.downloadLink('J678910', '123456789', '11111111-1111-1111-1111-111111111111').should('exist')
     summaryPage.downloadLink('J678910', '123456789', '22222222-2222-2222-2222-222222222222').should('exist')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
-      'CPS pack': '27 Feb 2022Download pack',
-      'Pre-convictions': '27 Mar 2022Download document',
-      'Pre-sentence reportFast': '27 Jan 2022Download report',
-      'Last OASys assessmentOASys Assessment Layer 3': '27 Jan 2022',
+      'CPS pack': '27 February 2022Download pack',
+      'Pre-convictions': '27 March 2022Download document',
+      'Pre-sentence reportFast': '27 January 2022Download report',
+      'Last OASys assessmentOASys Assessment Layer 3': '27 January 2022',
     })
   })
 

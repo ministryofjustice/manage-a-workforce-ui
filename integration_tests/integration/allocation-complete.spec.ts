@@ -64,7 +64,7 @@ context('Allocate Complete', () => {
         'contain',
         'John Doe (john.doe@test.justice.gov.uk) has been notified, and we have sent a copy of your allocation instructions to example.admin@justice.gov.uk, example.admin@justice.gov.uk'
       )
-      .and('contain', 'the initial appointment is scheduled for 1 Sep 2021')
+      .and('contain', 'the initial appointment is scheduled for 1 September 2021')
   })
 
   it('When no Initial appointment date booked, Initial appointment date due by date visible on page', () => {
@@ -83,7 +83,7 @@ context('Allocate Complete', () => {
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
       .bulletedList()
-      .should('contain', 'the initial appointment needs to be scheduled by 8 Sep 2021')
+      .should('contain', 'the initial appointment needs to be scheduled by 8 September 2021')
   })
 
   it('When a custody case, Initial appointment date not needed visible on page', () => {

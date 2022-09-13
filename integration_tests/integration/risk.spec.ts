@@ -45,19 +45,16 @@ context('Risk', () => {
         {
           Type: 'Suicide/self-harm',
           Registered: '13 December 2020',
-          'Next review': '13 June 2022',
           Notes: 'Previous suicide /self-harm attempt. Needs further investigating.',
         },
         {
           Type: 'Child concerns',
           Registered: '13 December 2020',
-          'Next review': '13 March 2022',
           Notes: 'Awaiting outcome of social services enquiry.',
         },
         {
           Type: 'Medium RoSH',
           Registered: '9 November 2021',
-          'Next review': '9 May 2022',
           Notes: '-',
         },
       ])

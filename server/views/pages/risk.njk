@@ -13,7 +13,6 @@
     head: [
         { text: 'Type'},
         { text: 'Registered'},
-        { text: 'Next review'},
         { text: 'Notes'}
     ],
     rows: []
@@ -24,7 +23,6 @@
     activeRegistrationsData.rows.push([
         { text: registration.type },
         { text: registration.registered | dateFormat },
-        { text: registration.nextReviewDate | dateFormat },
         { text: registration.notes if registration.notes | length else '-'}
     ])
     }}

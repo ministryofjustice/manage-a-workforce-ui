@@ -22,6 +22,7 @@ import CaseOverview from './data/CaseOverview'
 import OfficerView from './data/OfficerView'
 import DisplayAddress from './data/DisplayAddress'
 import ProbationEstateService from '../services/probationEstateService'
+import config from '../config'
 
 export default class AllocationsController {
   constructor(
@@ -43,6 +44,7 @@ export default class AllocationsController {
       crn: response.crn,
       convictionId: response.convictionId,
       title: `${response.name} | Summary | Manage a workforce`,
+      oasysUrl: config.nav.oasys.url,
       teamCode,
     })
   }

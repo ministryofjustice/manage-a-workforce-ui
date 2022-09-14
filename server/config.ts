@@ -103,6 +103,9 @@ export default {
     workloadMeasurement: {
       url: get('WORKLOAD_MEASUREMENT_URL', 'http://localhost:3010', requiredInProduction),
     },
+    oasys: {
+      url: get('OASYS_URL', 'http://localhost:3011', requiredInProduction),
+    },
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   dateFormat: 'D MMMM YYYY',

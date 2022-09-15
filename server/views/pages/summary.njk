@@ -150,10 +150,10 @@
                     },
                     {
                         key: {
-                        html: 'Last OASys assessment' + ('<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">OASys Assessment ' + data.assessment.type | capitalize | replace("_", " ")  + '</span>' if data.assessment.type)
+                        text: 'OASys'
                     },
                         value: {
-                        text: (data.assessment.lastAssessedOn | dateFormat if data.assessment.lastAssessedOn else '<strong class="govuk-tag govuk-tag--grey">No assessment created</strong>' | safe )
+                        html: '<a class="govuk-link--no-visited-state" href="' + oasysUrl +'">View all assessments on OASys</a>'
                     }
                     }
                 ]

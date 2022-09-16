@@ -30,6 +30,7 @@ export default {
         previousConvictionEndDate: '2019-12-13',
         convictionId: 56789,
         caseType: 'CUSTODY',
+        sentenceLength: '32 Years',
       },
       {
         name: 'John Smith',

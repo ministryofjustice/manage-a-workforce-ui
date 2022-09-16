@@ -104,11 +104,11 @@ context('Summary', () => {
       'CPS pack': '27 February 2022Download pack',
       'Pre-convictions': '27 March 2022Download document',
       'Pre-sentence reportFast': '27 January 2022Download report',
-      OASys: 'View all assessments on OASys',
+      'Last OASys assessmentOASys Assessment Layer 3': '27 January 2022',
     })
   })
 
-  it('Case details visible on page with no reports', () => {
+  it('Case details visible on page with no reports or assessments', () => {
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -117,7 +117,7 @@ context('Summary', () => {
       'CPS pack': 'No pack created',
       'Pre-convictions': 'No document created',
       'Pre-sentence report': 'No report created',
-      OASys: 'View all assessments on OASys',
+      'Last OASys assessment': 'No assessment created',
     })
   })
 

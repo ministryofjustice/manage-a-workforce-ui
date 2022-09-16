@@ -2,6 +2,7 @@ import OffenderManager from './OffenderManager'
 import Offence from './Offence'
 import Requirement from './Requirement'
 import Document from './Document'
+import Assessment from './Assessment'
 import Address from './Address'
 
 export default interface Allocation {
@@ -22,6 +23,7 @@ export default interface Allocation {
   pncNumber: string
   courtReport: Document
   cpsPack: Document
+  assessment: Assessment
   convictionId: number
   caseType: string
   preConvictionDocument: Document

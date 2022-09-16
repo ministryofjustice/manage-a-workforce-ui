@@ -189,6 +189,10 @@ export default {
             completedDate: '2022-03-27T10:54:32.868Z',
             documentId: '22222222-2222-2222-2222-222222222222',
           },
+          assessment: {
+            lastAssessedOn: '2022-01-27T10:54:32.869Z',
+            type: 'LAYER_3',
+          },
           convictionId: 123456789,
           caseType: 'COMMUNITY',
           address: {
@@ -259,6 +263,10 @@ export default {
             completedDate: '2022-03-27T10:54:32.868Z',
             documentId: '22222222-2222-2222-2222-222222222222',
           },
+          assessment: {
+            lastAssessedOn: '2022-01-27T10:54:32.869Z',
+            type: 'LAYER_3',
+          },
           convictionId: 123456789,
           caseType: 'COMMUNITY',
           address: {
@@ -318,6 +326,10 @@ export default {
             completedDate: '2022-01-27T10:54:32.868Z',
             documentId: '00000000-0000-0000-0000-000000000000',
           },
+          assessment: {
+            lastAssessedOn: '2022-01-27T10:54:32.869Z',
+            type: 'LAYER_3',
+          },
           convictionId: 123456789,
           caseType: 'COMMUNITY',
         },
@@ -368,6 +380,10 @@ export default {
             description: 'Fast',
             completedDate: '2022-01-27T10:54:32.868Z',
             documentId: '00000000-0000-0000-0000-000000000000',
+          },
+          assessment: {
+            lastAssessedOn: '2022-01-27T10:54:32.869Z',
+            type: 'LAYER_3',
           },
           convictionId: 123456789,
           caseType: 'COMMUNITY',
@@ -423,6 +439,10 @@ export default {
           cpsPack: {
             completedDate: '2022-02-27T10:54:32.868Z',
             documentId: '11111111-1111-1111-1111-111111111111',
+          },
+          assessment: {
+            lastAssessedOn: '2022-01-27T10:54:32.869Z',
+            type: 'LAYER_3',
           },
         },
         convictionId: 123456789,

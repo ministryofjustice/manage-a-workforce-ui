@@ -92,8 +92,8 @@
                     <dd class="govuk-summary-list__value">
                         <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
                             {{ data.sentenceDescription }} 
-                            {% if data.expectedSentenceEndDate %}
-                                ({{ data.sentenceDate | dateDifference(data.expectedSentenceEndDate)}})
+                            {% if data.sentenceLength %}
+                                ({{ data.sentenceLength }})
                             {% endif %}
                         </h3>
                         <ul class="govuk-list govuk-list--bullet">

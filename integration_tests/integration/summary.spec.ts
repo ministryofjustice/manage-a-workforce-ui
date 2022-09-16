@@ -63,7 +63,7 @@ context('Summary', () => {
     summaryPage.sentenceTitle().should('have.text', 'Sentence')
     cy.get('#sentence .govuk-summary-list').getSummaryList().should('deep.equal', {
       Offence: 'Common assault and battery Contrary to section 39 of the Criminal Justice Act 1988.',
-      Order: 'SA2020 Suspended Sentence Order (28 days) Start date: 1 September 2021 End date: 28 September 2021',
+      Order: 'SA2020 Suspended Sentence Order (6 Months) Start date: 1 September 2021 End date: 28 September 2021',
       Requirements: 'Unpaid Work: Regular 100 Hours',
     })
   })
@@ -88,7 +88,7 @@ context('Summary', () => {
     cy.get('#sentence .govuk-summary-list').getSummaryList().should('deep.equal', {
       Offence:
         'Common assault and battery Contrary to section 39 of the Criminal Justice Act 1988. Attempt theft from the person of another Contrary to section 1(1) of the Criminal Attempts Act 1981. Assault by beating Contrary to section 39 of the Criminal Justice Act 1988.',
-      Order: 'SA2020 Suspended Sentence Order (3 months) Start date: 2 September 2021 End date: 1 December 2021',
+      Order: 'SA2020 Suspended Sentence Order (8 Months) Start date: 2 September 2021 End date: 1 December 2021',
       Requirements:
         'Unpaid Work: Regular 100 Hours Rehabilitation Activity Requirement (RAR): Regular 20 Days Court - Accredited Programme - Building Better Relationships: Regular 20 Days',
     })

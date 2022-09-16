@@ -30,6 +30,7 @@ export default {
         previousConvictionEndDate: '2019-12-13',
         convictionId: 56789,
         caseType: 'CUSTODY',
+        sentenceLength: '32 Years',
       },
       {
         name: 'John Smith',
@@ -164,6 +165,7 @@ export default {
             },
           ],
           expectedSentenceEndDate: '2021-09-28',
+          sentenceLength: '6 Months',
           sentenceDescription: 'SA2020 Suspended Sentence Order',
           requirements: [
             {
@@ -308,6 +310,7 @@ export default {
             },
           ],
           expectedSentenceEndDate: '2021-09-28',
+          sentenceLength: '6 Months',
           sentenceDescription: 'SA2020 Suspended Sentence Order',
           requirements: [
             {
@@ -362,6 +365,7 @@ export default {
             },
           ],
           expectedSentenceEndDate: '2021-09-28',
+          sentenceLength: '6 Months',
           sentenceDescription: 'SA2020 Suspended Sentence Order',
           requirements: [
             {
@@ -416,6 +420,7 @@ export default {
             },
           ],
           expectedSentenceEndDate: '2021-09-28',
+          sentenceLength: '6 Months',
           sentenceDescription: 'SA2020 Suspended Sentence Order',
           requirements: [
             {
@@ -486,6 +491,7 @@ export default {
             },
           ],
           expectedSentenceEndDate: '2021-12-01',
+          sentenceLength: '8 Months',
           sentenceDescription: 'SA2020 Suspended Sentence Order',
           requirements: [
             {

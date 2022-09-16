@@ -28,4 +28,5 @@ export default interface Allocation {
   caseType: string
   preConvictionDocument: Document
   address: Address
+  sentenceLength: string
 }

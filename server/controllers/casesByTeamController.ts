@@ -26,7 +26,8 @@ export default class CasesByTeamController {
           value.previousConvictionEndDate,
           value.offenderManager,
           value.convictionId,
-          value.caseType
+          value.caseType,
+          value.sentenceLength
         )
     )
     res.render('pages/unallocated-cases-by-team', {

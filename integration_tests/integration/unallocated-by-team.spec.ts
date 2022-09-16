@@ -72,7 +72,7 @@ context('Unallocated cases by team', () => {
           'Name / CRN': 'Sofia MitchellL786545',
           Tier: 'C1',
           'Sentence date': '1 September 2021',
-          'Initial appointment date': 'Not neededCustody case',
+          'Initial appointment date': 'Not neededCustody case (32 Years)',
           'Probation status': 'Previously managed',
           Action: 'Review case',
         },

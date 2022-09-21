@@ -38,4 +38,16 @@ export default {
       },
     })
   },
+  stubNotFoundEventManagerDetails: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: '/allocation/event/eventId/123456789/details',
+      },
+      response: {
+        status: 404,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      },
+    })
+  },
 }

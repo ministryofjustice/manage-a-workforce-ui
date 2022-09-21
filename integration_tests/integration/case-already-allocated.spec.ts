@@ -1,5 +1,6 @@
 import Page from '../pages/page'
 import CaseAlreadyAllocated from '../pages/caseAlreadyAllocated'
+import NotFoundPage from '../pages/notFound'
 
 context('Case Already Allocated', () => {
   beforeEach(() => {
@@ -24,5 +25,11 @@ context('Case Already Allocated', () => {
   it('body text must indicate case already allocated', () => {
     const caseAlreadyAllocated = Page.verifyOnPage(CaseAlreadyAllocated)
     caseAlreadyAllocated.bodyText().should('have.text', 'This case has already been allocated')
+  })
+
+  it('must go to not found page if case is not allocated', () => {
+    cy.task('stubNotFoundEventManagerDetails')
+    cy.reload()
+    Page.verifyOnPage(NotFoundPage)
   })
 })

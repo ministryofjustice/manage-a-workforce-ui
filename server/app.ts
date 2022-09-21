@@ -22,6 +22,7 @@ import applyBankHols from './utils/bankHolidays'
 import routes from './routes'
 import type { Services } from './services'
 import getUnallocatedCasesCount from './middleware/getUnallocatedCasesCount'
+import checkCaseAlreadyAllocated from './middleware/checkCaseAlreadyAllocated'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -48,6 +49,7 @@ export default function createApp(services: Services): express.Application {
   app.use(routes(services))
 
   app.use((req, res, next) => next(createError(404, 'Not found')))
+  app.use('/team/:teamCode/:crn/convictions/:convictionId/', checkCaseAlreadyAllocated(services.workloadService))
   app.use(errorHandler())
 
   return app

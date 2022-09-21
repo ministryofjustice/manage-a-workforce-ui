@@ -9,6 +9,7 @@ import StaffSummary from '../models/StaffSummary'
 import PersonManager from '../models/PersonManager'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 import WorkloadByTeam from '../models/workloadByTeam'
+import EventManagerDetails from '../models/EventManagerDetails'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -105,5 +106,12 @@ export default class WorkloadService {
       path: `/team/workloadcases?teams=${teamCodes.join(',')}`,
       headers: { Accept: 'application/json' },
     })) as WorkloadByTeam[]
+  }
+
+  async getEventManagerDetails(token: string, eventId): Promise<EventManagerDetails> {
+    return (await this.restClient(token).get({
+      path: `/allocation/event/eventId/${eventId}/details`,
+      headers: { Accept: 'application/json' },
+    })) as EventManagerDetails
   }
 }

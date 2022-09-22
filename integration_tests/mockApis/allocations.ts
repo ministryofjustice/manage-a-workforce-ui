@@ -208,6 +208,18 @@ export default {
       },
     })
   },
+  stubNotFoundUnallocatedCase: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789`,
+      },
+      response: {
+        status: 404,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      },
+    })
+  },
   stubGetUnallocatedCaseInvalidEndDate: (): SuperAgentRequest => {
     return stubForAllocation({
       request: {

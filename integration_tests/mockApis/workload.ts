@@ -21,4 +21,33 @@ export default {
       },
     })
   },
+  stubGetEventManagerDetails: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: '/allocation/event/eventId/123456789/details',
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          tier: 'A3',
+          personOnProbationFirstName: 'Sally',
+          personOnProbationSurname: 'Smith',
+        },
+      },
+    })
+  },
+  stubNotFoundEventManagerDetails: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: '/allocation/event/eventId/123456789/details',
+      },
+      response: {
+        status: 404,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      },
+    })
+  },
 }

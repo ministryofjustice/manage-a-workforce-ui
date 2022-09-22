@@ -7,7 +7,7 @@ export default function checkCaseAlreadyAllocated(workloadService: WorkloadServi
     if (error.status === 404) {
       try {
         const { crn, convictionId, teamCode } = req.params
-        const eventManagerDetails = await workloadService.getEventManagerDetails(res.locals.token, convictionId)
+        const eventManagerDetails = await workloadService.getEventManagerDetails(res.locals.user.token, convictionId)
         return res.status(error.status).render('pages/case-already-allocated', {
           title: 'Case Unavailable | Manage a workforce',
           crn,

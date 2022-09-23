@@ -45,7 +45,7 @@ context('Instructions Confirmation', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsPage.continueButton('123456789').should('exist').and('have.text', '\n  Allocate Case\n')
+    instructionsPage.continueButton('123456789').should('exist').and('have.text', '\n  Allocate case\n')
   })
 
   it('Continue button goes to next page', () => {

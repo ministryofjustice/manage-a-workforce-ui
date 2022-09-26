@@ -22,7 +22,7 @@ export default function setUpWebSecurity(): Router {
           scriptSrc: [
             "'self'",
             'code.jquery.com',
-            'www.googletagmanager.com',
+            '*.googletagmanager.com',
             'www.google-analytics.com',
             'https://www.google-analytics.com',
             'https://www.googletagmanager.com',
@@ -34,6 +34,7 @@ export default function setUpWebSecurity(): Router {
           fontSrc: ["'self'"],
           imgSrc: [
             "'self'",
+            '*.googletagmanager.com',
             'https://www.google-analytics.com',
             'www.google-analytics.com',
             '*.analytics.google.com',
@@ -41,7 +42,7 @@ export default function setUpWebSecurity(): Router {
           ],
           connectSrc: [
             "'self'",
-            'www.googletagmanager.com',
+            '*.googletagmanager.com',
             'www.google-analytics.com',
             'https://www.google-analytics.com',
             '*.analytics.google.com',

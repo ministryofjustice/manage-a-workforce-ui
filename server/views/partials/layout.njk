@@ -11,6 +11,21 @@
 
         <title>{{ title }}</title>
 
+        <!-- Google Tag Manager -->
+        <script nonce="{{ cspNonce }}">window.dataLayer = window.dataLayer || [];</script>
+
+        <script nonce="{{ cspNonce }}">(function(w,d,s,l,i){
+          w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+          var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+          j.async=true;
+          j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+          var n=d.querySelector('[nonce]');
+          n&&j.setAttribute('nonce',n.nonce||n.getAttribute('nonce'));
+          f.parentNode.insertBefore(j,f);
+        })
+        (window,document,'script','dataLayer','GTM-WLS8X4P');
+         </script>
+
         <!--[if !IE 8]><!-->
         <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet"/>
         <!--<![endif]-->
@@ -25,15 +40,6 @@
                 integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
                 crossorigin="anonymous"></script>
         <link href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" crossorigin>
-
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsKey }}"></script>
-        <script nonce="{{ cspNonce }}">
-			    window.dataLayer = window.dataLayer || [];
-			    function gtag(){dataLayer.push(arguments);}
-			    gtag('js', new Date());
-			    gtag('config', '{{ googleAnalyticsKey }}');
-        </script>
 
     {% endblock %}
 </head>

@@ -74,7 +74,7 @@ jobs:
 
   integration_test:
     executor:
-      name: hmpps/node_redis_cimg
+      name: hmpps/node_redis
       node_tag: << pipeline.parameters.node-version >>
       redis_tag: "6.2"
     steps:

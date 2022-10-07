@@ -42,9 +42,8 @@ export default class ProbationEstateController {
     return this.getPduTeams(req, res, pduCode)
   }
 
-  async getRegions(req: Request, res: Response) {
+  async getRegions(req: Request, res: Response, error = false) {
     const response: EstateRegion[] = await this.probationEstateService.getRegions(res.locals.user.token)
-    const error = req.query.error === 'true'
     res.render('pages/select-region', {
       title: `Select your region | Manage a workforce`,
       data: response.sort((a, b) => a.name.localeCompare(b.name)),
@@ -60,7 +59,6 @@ export default class ProbationEstateController {
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       return res.redirect(`/region/${region}/probationDeliveryUnits`)
     }
-    req.query.error = 'true'
-    return this.getRegions(req, res)
+    return this.getRegions(req, res, true)
   }
 }

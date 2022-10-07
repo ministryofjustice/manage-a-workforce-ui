@@ -1,5 +1,5 @@
 {% extends "partials/layout.njk" %}
-{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
@@ -33,8 +33,8 @@
 
         <form method="post">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        {{ govukCheckboxes({
-            name: "team",
+        {{ govukRadios({
+            name: "region",
             fieldset: {
                 legend: {
                     text: "Select your region",

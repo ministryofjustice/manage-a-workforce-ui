@@ -38,7 +38,6 @@ export default class ProbationEstateService {
   }
 
   async getRegions(token: string): Promise<EstateRegion[]> {
-    logger.info(`Getting all regions`)
     return (await this.restClient(token).get({
       path: `/regions`,
       headers: { Accept: 'application/json' },

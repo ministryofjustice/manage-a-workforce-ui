@@ -1,7 +1,7 @@
 import Page from '../pages/page'
 import RegionPage from '../pages/region'
 
-context('Select teams', () => {
+context('Select region', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')

@@ -60,4 +60,10 @@ context('Select region', () => {
     const regionPage = Page.verifyOnPage(RegionPage)
     regionPage.button().trimTextContent().should('equal', 'Continue')
   })
+
+  it('selecting no region and continuing causes error', () => {
+    const regionPage = Page.verifyOnPage(RegionPage)
+    regionPage.button().click()
+    regionPage.errorSummary().trimTextContent().should('equal', 'Select a region')
+  })
 })

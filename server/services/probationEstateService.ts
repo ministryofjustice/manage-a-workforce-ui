@@ -2,6 +2,7 @@ import RestClient from '../data/restClient'
 import logger from '../../logger'
 import { ApiConfig } from '../config'
 import EstateTeam from '../models/EstateTeam'
+import EstateRegion from '../models/EstateRegion'
 
 export default class ProbationEstateService {
   config: ApiConfig
@@ -34,5 +35,12 @@ export default class ProbationEstateService {
       path: `/team/${teamCode}`,
       headers: { Accept: 'application/json' },
     })) as EstateTeam
+  }
+
+  async getRegions(token: string): Promise<EstateRegion[]> {
+    return (await this.restClient(token).get({
+      path: `/regions`,
+      headers: { Accept: 'application/json' },
+    })) as EstateRegion[]
   }
 }

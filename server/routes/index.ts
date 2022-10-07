@@ -117,5 +117,9 @@ export default function routes(services: Services): Router {
     const { pduCode } = req.params
     await allocateCasesController.getDataByTeams(req, res, pduCode)
   })
+
+  get('/regions', async (req, res) => {
+    await probationEstateController.getRegions(req, res)
+  })
   return router
 }

@@ -5,7 +5,6 @@ context('Select region', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
-    cy.task('stubUserPreferenceTeams', [])
     cy.task('stubGetAllRegions')
     cy.signIn()
     cy.visit('/regions')

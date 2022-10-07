@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import moment from 'moment-business-days'
 
 const production = process.env.NODE_ENV === 'production'

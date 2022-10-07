@@ -1,0 +1,55 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+
+
+{% set radioItems = [] %}
+{% for item in data %}
+    {{ radioItems.push({
+        value: item.code,
+        text: item.name
+    }) }}
+{% endfor %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <span class="govuk-caption-xl">Allocations</span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Select your teams</h1>
+        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    </div>    
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        
+        {{ govukNotificationBanner({
+            html: '
+        <p class="govuk-notification-banner__heading">As this is your first time signing in to Allocations, you need to select the teams you allocate cases to.</p>
+        <p class="govuk-notification-banner__heading">You can edit your team list at any time.</p>'
+        }) }}
+
+        <form method="post">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        {{ govukCheckboxes({
+            name: "team",
+            fieldset: {
+                legend: {
+                    text: "Select your region",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                }
+            },
+            items: radioItems
+        })}}
+
+        {{ govukButton({
+            text: "Continue"
+        }) }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

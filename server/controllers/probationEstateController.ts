@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import EstateTeam from '../models/EstateTeam'
+import EstateRegion from '../models/EstateRegion'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 
@@ -39,5 +40,13 @@ export default class ProbationEstateController {
     }
     req.query.error = 'true'
     return this.getPduTeams(req, res, pduCode)
+  }
+
+  async getRegions(req: Request, res: Response) {
+    const response: EstateRegion[] = await this.probationEstateService.getRegions(res.locals.user.token)
+    res.render('pages/select-region', {
+      title: `Select your region | Manage a workforce`,
+      data: response.sort((a, b) => a.name.localeCompare(b.name)),
+    })
   }
 }

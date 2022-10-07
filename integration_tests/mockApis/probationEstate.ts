@@ -67,4 +67,34 @@ export default {
       },
     })
   },
+  stubGetAllRegions: (): SuperAgentRequest => {
+    return stubForProbationEstate({
+      request: {
+        method: 'GET',
+        urlPattern: `/regions`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: [
+          {
+            code: 'RG1',
+            name: 'A Region',
+          },
+          {
+            code: 'RG4',
+            name: 'D Region',
+          },
+          {
+            code: 'RG3',
+            name: 'C Region',
+          },
+          {
+            code: 'RG2',
+            name: 'B Region',
+          },
+        ],
+      },
+    })
+  },
 }

@@ -65,6 +65,22 @@ const getCheckBoxes = subject => {
   })
 }
 
+const getRadios = subject => {
+  if (subject.get().length > 1) {
+    throw new Error(`Selector "${subject.selector}" returned more than 1 element.`)
+  }
+
+  const radioElement = subject.get()[0]
+  return [...radioElement.querySelectorAll('.govuk-radios__item')].map(row => {
+    const inputValue = row.querySelector('.govuk-radios__input').getAttribute('value')
+    const labelValue = row
+      .querySelector('.govuk-radios__label')
+      .textContent.trim()
+      .replace(/\s{2,}/g, ' ')
+    return { inputValue, labelValue }
+  })
+}
+
 const trimTextContent = subject => {
   if (subject.get().length > 1) {
     throw new Error(`Selector "${subject.selector}" returned more than 1 element.`)
@@ -78,4 +94,5 @@ const trimTextContent = subject => {
 Cypress.Commands.add('getTable', { prevSubject: true }, getTable)
 Cypress.Commands.add('getSummaryList', { prevSubject: true }, getSummaryList)
 Cypress.Commands.add('getCheckBoxes', { prevSubject: true }, getCheckBoxes)
+Cypress.Commands.add('getRadios', { prevSubject: true }, getRadios)
 Cypress.Commands.add('trimTextContent', { prevSubject: true }, trimTextContent)

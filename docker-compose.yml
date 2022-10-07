@@ -88,7 +88,7 @@ services:
       - POSTGRES_USER=root
 
   wiremock:
-    image: rodolpheche/wiremock
+    image: wiremock/wiremock
     networks:
       - hmpps
     container_name:  manage-a-workforce-wiremock

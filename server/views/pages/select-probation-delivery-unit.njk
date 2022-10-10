@@ -52,11 +52,12 @@
             errorMessage: { text: "Select a Probation Delivery Unit"} if error,
             items: radioItems
         })}}
-
+        <div class="govuk-button-group">
         {{ govukButton({
             text: "Continue"
         }) }}
         <a class="govuk-link" href="{{ '/regions' }}">Cancel</a>
+        </div>
         </form>
     </div>
 </div>

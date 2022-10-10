@@ -12,7 +12,7 @@ export default defineConfig({
   },
   screenshotsFolder: 'integration_tests/screenshots',
   e2e: {
-    baseUrl: 'http://localhost:3007',
+    baseUrl: 'http://127.0.0.1:3007',
     specPattern: 'integration_tests/integration/*.spec.ts',
     setupNodeEvents: plugins,
     supportFile: 'integration_tests/support/index.ts',

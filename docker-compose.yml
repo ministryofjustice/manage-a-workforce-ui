@@ -64,7 +64,7 @@ services:
         - "localstack"
 
   workload-postgres:
-    image: postgres:11
+    image: postgres:14
     networks:
       - hmpps
     container_name: workload-postgres
@@ -76,7 +76,7 @@ services:
       - POSTGRES_USER=root
 
   allocations-postgres:
-    image: postgres:11
+    image: postgres:14
     networks:
       - hmpps
     container_name: allocations-postgres

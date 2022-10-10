@@ -39,10 +39,10 @@ const wiremock = (url: string) => {
   return { stubFor, getRequests, resetStubs, verifyRequest }
 }
 
-const probationUrl = 'http://localhost:9093/__admin'
-const allocationUrl = 'http://localhost:9091/__admin'
-const workloadUrl = 'http://localhost:9092/__admin'
-const userPreferenceUrl = 'http://localhost:9094/__admin'
+const probationUrl = 'http://127.0.0.1:9093/__admin'
+const allocationUrl = 'http://127.0.0.1:9091/__admin'
+const workloadUrl = 'http://127.0.0.1:9092/__admin'
+const userPreferenceUrl = 'http://127.0.0.1:9094/__admin'
 
 const {
   stubFor: stubForProbationEstate,

@@ -100,7 +100,7 @@ services:
       - $PWD/wiremock:/home/wiremock:rw
 
   localstack:
-    image: localstack/localstack:0.14.4
+    image: localstack/localstack:1.2.0
     networks:
       - hmpps
     container_name: manage-a-workforce-localstack

@@ -20,6 +20,8 @@ export default class ProbationEstateController {
       title: `Select your teams | Manage a workforce`,
       data: response.sort((a, b) => a.name.localeCompare(b.name)),
       error,
+      pduName: 'North Wales',
+      regionName: 'Wales',
     })
   }
 

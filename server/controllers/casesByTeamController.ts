@@ -13,7 +13,7 @@ export default class CasesByTeamController {
     const { token } = res.locals.user
     const unallocatedCasesByTeam = await this.allocationsService.getUnallocatedCasesByTeam(token, teamCode)
     const teamOverview = await this.probationEstateService.getTeamByCode(token, teamCode)
-
+    // TODO: get pdu name and code from user preferences
     const unallocatedCases = unallocatedCasesByTeam.map(
       value =>
         new UnallocatedCase(

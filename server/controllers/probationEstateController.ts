@@ -3,6 +3,7 @@ import EstateTeam from '../models/EstateTeam'
 import EstateRegion from '../models/EstateRegion'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
+import RegionDetails from '../models/RegionDetails'
 
 export default class ProbationEstateController {
   constructor(
@@ -63,5 +64,26 @@ export default class ProbationEstateController {
       return res.redirect(`/region/${region}/probationDeliveryUnits`)
     }
     return this.getRegions(req, res, true)
+  }
+
+  async getProbationDeliveryUnitsByRegionCode(req: Request, res: Response, regionCode, error = false) {
+    const response: RegionDetails = await this.probationEstateService.getRegionByCode(res.locals.user.token, regionCode)
+    res.render('pages/select-probation-delivery-unit', {
+      title: `Select your PDU | Manage a workforce`,
+      data: response,
+      probationDeliveryUnits: response.probationDeliveryUnits.sort((a, b) => a.name.localeCompare(b.name)),
+      error,
+    })
+  }
+
+  async selectProbationDeliveryUnit(req: Request, res: Response, regionCode) {
+    const {
+      body: { probationDeliveryUnit },
+    } = req
+    if (probationDeliveryUnit) {
+      // eslint-disable-next-line security-node/detect-dangerous-redirects
+      return res.redirect(`/probationDeliveryUnit/${probationDeliveryUnit}/select-teams`)
+    }
+    return this.getProbationDeliveryUnitsByRegionCode(req, res, regionCode, true)
   }
 }

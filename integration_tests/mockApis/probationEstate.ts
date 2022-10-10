@@ -97,4 +97,38 @@ export default {
       },
     })
   },
+  stubGetRegionByCode: (): SuperAgentRequest => {
+    return stubForProbationEstate({
+      request: {
+        method: 'GET',
+        urlPattern: `/region/RG1`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          code: 'RG1',
+          name: 'A Region',
+          probationDeliveryUnits: [
+            {
+              code: 'PDU1',
+              name: 'A Probation Delivery Unit',
+            },
+            {
+              code: 'PDU4',
+              name: 'D Probation Delivery Unit',
+            },
+            {
+              code: 'PDU3',
+              name: 'C Probation Delivery Unit',
+            },
+            {
+              code: 'PDU2',
+              name: 'B Probation Delivery Unit',
+            },
+          ],
+        },
+      },
+    })
+  },
 }

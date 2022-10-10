@@ -46,6 +46,8 @@ export default class AllocateCasesController {
       title: 'Allocate cases by team | Manage a workforce',
       teams: caseInformationByTeam,
       pduCode,
+      pduName: 'North Wales',
+      regionName: 'Wales',
     })
   }
 }

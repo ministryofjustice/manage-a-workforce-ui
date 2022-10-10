@@ -40,6 +40,7 @@ context('Select teams and show allocate cases by team', () => {
         ],
       })
       cy.task('stubPutUserPreferenceTeams', ['TM1'])
+      cy.task('stubPutUserPreferencePDU', ['PDU1'])
       cy.task('stubUserPreferenceTeams', ['TM1'])
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/select-teams')
@@ -51,6 +52,10 @@ context('Select teams and show allocate cases by team', () => {
 
     it('Team selection saved as user preference', () => {
       cy.task('verifyPutUserPreferenceTeams', ['TM1'])
+    })
+
+    it('PDU selection saved as user preference', () => {
+      cy.task('verifyPutUserPreferencePDU', ['PDU1'])
     })
   })
 
@@ -101,6 +106,7 @@ context('Select teams and show allocate cases by team', () => {
         ],
       })
       cy.task('stubPutUserPreferenceTeams', ['TM1', 'TM2'])
+      cy.task('stubPutUserPreferencePDU', ['PDU1'])
       cy.task('stubUserPreferenceTeams', ['TM1', 'TM2'])
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/select-teams')
@@ -140,6 +146,10 @@ context('Select teams and show allocate cases by team', () => {
 
     it('Team selection saved as user preference', () => {
       cy.task('verifyPutUserPreferenceTeams', ['TM1', 'TM2'])
+    })
+
+    it('PDU selection saved as user preference', () => {
+      cy.task('verifyPutUserPreferencePDU', ['PDU1'])
     })
 
     it('link to edit team list must exist', () => {

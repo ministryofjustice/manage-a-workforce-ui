@@ -20,6 +20,8 @@ export default class ProbationEstateController {
       title: `Select your teams | Manage a workforce`,
       data: response.sort((a, b) => a.name.localeCompare(b.name)),
       error,
+      pduName: 'North Wales',
+      regionName: 'Wales',
     })
   }
 
@@ -34,6 +36,7 @@ export default class ProbationEstateController {
         res.locals.user.username,
         teamCodes
       )
+      await this.userPreferenceService.savePduUserPreference(res.locals.user.token, res.locals.user.username, pduCode)
 
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       return res.redirect(`/probationDeliveryUnit/${pduCode}/teams`)

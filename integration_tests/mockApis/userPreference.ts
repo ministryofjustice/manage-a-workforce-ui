@@ -37,12 +37,41 @@ export default {
       },
     })
   },
+  stubPutUserPreferencePDU: (pdus: string[]): SuperAgentRequest => {
+    return stubForUserPreference({
+      request: {
+        method: 'PUT',
+        urlPattern: `/users/USER1/preferences/allocation-pdu`,
+        bodyPatterns: [
+          {
+            equalToJson: `{ "items": ${JSON.stringify(pdus)}}`,
+          },
+        ],
+      },
+      response: {
+        status: 201,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          items: ['TM1', 'TM2'],
+        },
+      },
+    })
+  },
   verifyPutUserPreferenceTeams: (teams: string[]) =>
     verifyRequestForUserPreference({
       requestUrlPattern: `/users/USER1/preferences/allocation-teams`,
       method: 'PUT',
       body: {
         items: teams,
+      },
+    }),
+
+  verifyPutUserPreferencePDU: (pdus: string[]) =>
+    verifyRequestForUserPreference({
+      requestUrlPattern: `/users/USER1/preferences/allocation-pdu`,
+      method: 'PUT',
+      body: {
+        items: pdus,
       },
     }),
 }

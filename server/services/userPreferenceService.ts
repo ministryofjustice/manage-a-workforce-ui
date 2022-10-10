@@ -29,4 +29,14 @@ export default class UserPreferenceService {
       },
     })) as UserPreference
   }
+
+  async savePduUserPreference(token: string, username: string, pduCode: string): Promise<UserPreference> {
+    return (await this.restClient(token).put({
+      path: `/users/${username}/preferences/allocation-pdu`,
+      headers: { Accept: 'application/json' },
+      data: {
+        items: [pduCode],
+      },
+    })) as UserPreference
+  }
 }

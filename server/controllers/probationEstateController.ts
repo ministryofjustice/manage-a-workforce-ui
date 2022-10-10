@@ -36,6 +36,7 @@ export default class ProbationEstateController {
         res.locals.user.username,
         teamCodes
       )
+      await this.userPreferenceService.savePduUserPreference(res.locals.user.token, res.locals.user.username, pduCode)
 
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       return res.redirect(`/probationDeliveryUnit/${pduCode}/teams`)

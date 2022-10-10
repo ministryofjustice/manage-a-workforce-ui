@@ -52,6 +52,10 @@ context('Select teams and show allocate cases by team', () => {
     it('Team selection saved as user preference', () => {
       cy.task('verifyPutUserPreferenceTeams', ['TM1'])
     })
+
+    it('PDU selection saved as user preference', () => {
+      cy.task('verifyPutUserPreferencePDU', ['PDU1'])
+    })
   })
 
   context('Multiple teams', () => {
@@ -140,6 +144,10 @@ context('Select teams and show allocate cases by team', () => {
 
     it('Team selection saved as user preference', () => {
       cy.task('verifyPutUserPreferenceTeams', ['TM1', 'TM2'])
+    })
+
+    it('PDU selection saved as user preference', () => {
+      cy.task('verifyPutUserPreferencePDU', ['PDU1'])
     })
 
     it('link to edit team list must exist', () => {

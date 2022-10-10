@@ -45,4 +45,13 @@ export default {
         items: teams,
       },
     }),
+
+  verifyPutUserPreferencePDU: (pdus: string[]) =>
+    verifyRequestForUserPreference({
+      requestUrlPattern: `/users/USER1/preferences/allocation-pdu`,
+      method: 'PUT',
+      body: {
+        items: pdus,
+      },
+    }),
 }

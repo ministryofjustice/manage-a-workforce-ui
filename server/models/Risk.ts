@@ -1,4 +1,5 @@
 import Registration from './Registration'
+import RoshRisk from './RoshRisk'
 
 export default interface Risk {
   name: string
@@ -7,4 +8,5 @@ export default interface Risk {
   active: Registration[]
   previous: Registration[]
   convictionId: number
+  roshRisk: RoshRisk
 }

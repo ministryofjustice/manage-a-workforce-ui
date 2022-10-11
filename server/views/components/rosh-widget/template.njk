@@ -22,14 +22,45 @@ Low
 {% endif %}
 {% endmacro %}
 
-{% if params.rosh %}
-<div class="rosh-widget {{ getOverallRiskLevelClass(params.rosh.level) }}">
-    <h3 class="govuk-heading-m"><strong>{{ getRiskLevelText(params.rosh.level) }}</strong> RoSH</h3>
-    <p class="govuk-body-m">Risk of serious harm<br><span class="govuk-body-s govuk-hint">Last updated: {{ params.rosh.lastUpdatedOn | dateFormat | default("Not known") }}</span></p>
+{% macro getRiskLevelClass(level, overall) %}
+{% if level == overall %}
+    {% if level == 'VERY_HIGH' %}
+    rosh--very-high
+    {% elif level == 'HIGH' %}
+    rosh--high
+    {% elif level == 'MEDIUM' %}
+    rosh--medium
+    {% elif level == 'LOW' %}
+    rosh--low
+    {% endif %}
+{% endif %} 
+{% endmacro %}
+
+{% if params.roshRisk %}
+<div class="rosh-widget {{ getOverallRiskLevelClass(params.roshRisk.overallRisk) }}">
+    <h3 class="govuk-heading-m"><strong>{{ getRiskLevelText(params.roshRisk.overallRisk) }}</strong> RoSH</h3>
+    <p class="govuk-body-m">Risk of serious harm<br><span class="govuk-body-s govuk-hint">Last updated: {{ params.roshRisk.assessedOn | dateFormat | default("Not known") }}</span></p>
+    <table class="govuk-table rosh-widget__table">
+      <caption class="govuk-visually-hidden">Risk of serious harm in Community</caption>
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header">Risk to</th>
+        <th class="govuk-table__header">Community</th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      {% for key, value in params.roshRisk.riskInCommunity | dictsort %}
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header">{{ key | capitalize }}</th>
+        <td class="govuk-table__cell {{ getRiskLevelClass(value, params.roshRisk.overallRisk) }}">{{ getRiskLevelText(value) | default("No data") }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
 </div>
 {% else %}
 <div class="rosh-widget rosh-widget--none">
-    <h3 class="govuk-heading-m"> RoSH</h3>
+    <h3 class="govuk-heading-m">RoSH</h3>
     <p class="govuk-body-m">Risk of serious harm<br><span class="govuk-body-s govuk-hint">Score unavailable</span></p>
 </div>
 {% endif %}

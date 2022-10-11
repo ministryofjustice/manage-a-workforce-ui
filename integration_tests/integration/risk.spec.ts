@@ -103,7 +103,19 @@ context('Risk', () => {
     riskPage
       .roshWidget()
       .trimTextContent()
-      .should('equal', 'High RoSH Risk of serious harmLast updated: 2 February 2022')
+      .should(
+        'equal',
+        'Very high RoSH Risk of serious harmLast updated: 7 October 2022 Risk of serious harm in Community Risk to Community Children Low Known adult Medium Public High Staff Very high'
+      )
+    riskPage
+      .roshDetail()
+      .find('td')
+      .then($data => {
+        expect($data.get(0).className).not.to.contain('rosh--low')
+        expect($data.get(1).className).not.to.contain('rosh--medium')
+        expect($data.get(2).className).not.to.contain('rosh--high')
+        expect($data.get(3).className).to.contain('rosh--very-high')
+      })
     riskPage
       .rsrWidget()
       .trimTextContent()

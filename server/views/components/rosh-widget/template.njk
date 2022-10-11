@@ -49,9 +49,9 @@ Low
       </tr>
       </thead>
       <tbody class="govuk-table__body">
-      {% for key, value in params.roshRisk.riskInCommunity %}
+      {% for key, value in params.roshRisk.riskInCommunity | dictsort %}
       <tr class="govuk-table__row">
-        <th class="govuk-table__header">{{ key }}</th>
+        <th class="govuk-table__header">{{ key | capitalize }}</th>
         <td class="govuk-table__cell {{ getRiskLevelClass(value, params.roshRisk.overallRisk) }}">{{ getRiskLevelText(value) | default("No data") }}</td>
       </tr>
       {% endfor %}

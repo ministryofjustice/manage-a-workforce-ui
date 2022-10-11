@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
-import EstateTeam from '../models/EstateTeam'
 import EstateRegion from '../models/EstateRegion'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 import RegionDetails from '../models/RegionDetails'
+import ProbationDeliveryUnitDetails from '../models/ProbationDeliveryUnitDetails'
 
 export default class ProbationEstateController {
   constructor(
@@ -12,17 +12,17 @@ export default class ProbationEstateController {
   ) {}
 
   async getPduTeams(req: Request, res: Response, pduCode) {
-    const response: EstateTeam[] = await this.probationEstateService.getProbationDeliveryUnitTeams(
+    const response: ProbationDeliveryUnitDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(
       res.locals.user.token,
       pduCode
     )
     const error = req.query.error === 'true'
     res.render('pages/select-teams', {
       title: `Select your teams | Manage a workforce`,
-      data: response.sort((a, b) => a.name.localeCompare(b.name)),
+      data: response.teams.sort((a, b) => a.name.localeCompare(b.name)),
       error,
-      pduName: 'North Wales',
-      regionName: 'Wales',
+      pduName: response.name,
+      regionName: response.region.name,
     })
   }
 

@@ -73,10 +73,10 @@ context('Select Probation Delivery Unit', () => {
   })
 
   it('selecting PDU and clicking continue goes to select Team page', () => {
-    cy.task('stubGetTeamsByPdu', 'PDU1')
+    cy.task('stubGetPduDetails', 'PDU1')
     const probationDeliveryUnitPage = Page.verifyOnPageTitle(ProbationDeliveryUnitPage, 'A Region')
     probationDeliveryUnitPage.radio('PDU1').click()
     probationDeliveryUnitPage.button().click()
-    Page.verifyOnPage(SelectTeamsPage)
+    Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
   })
 })

@@ -1,9 +1,9 @@
 import RestClient from '../data/restClient'
-import logger from '../../logger'
 import { ApiConfig } from '../config'
 import EstateTeam from '../models/EstateTeam'
 import EstateRegion from '../models/EstateRegion'
 import RegionDetails from '../models/RegionDetails'
+import ProbationDeliveryUnitDetails from '../models/ProbationDeliveryUnitDetails'
 
 export default class ProbationEstateService {
   config: ApiConfig
@@ -16,12 +16,11 @@ export default class ProbationEstateService {
     return new RestClient('Probation Estate Service API Client', this.config, token)
   }
 
-  async getProbationDeliveryUnitTeams(token: string, pduCode: string): Promise<EstateTeam[]> {
-    logger.info(`Getting Teams for PDU ${pduCode}`)
+  async getProbationDeliveryUnitDetails(token: string, pduCode: string): Promise<ProbationDeliveryUnitDetails> {
     return (await this.restClient(token).get({
-      path: `/probationDeliveryUnit/${pduCode}/teams`,
+      path: `/probationDeliveryUnit/${pduCode}`,
       headers: { Accept: 'application/json' },
-    })) as EstateTeam[]
+    })) as ProbationDeliveryUnitDetails
   }
 
   async getTeamsByCode(token: string, teamCodes: string[]): Promise<EstateTeam[]> {

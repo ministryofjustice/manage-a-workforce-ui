@@ -73,6 +73,7 @@ export default (on: (string, Record) => void): void => {
           code: 'TM1',
           name: 'Wrexham - Team 1',
         }),
+        probationEstate.stubGetPduDetails('WPTNWS'),
       ]),
 
     ...auth,

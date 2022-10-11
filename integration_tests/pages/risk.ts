@@ -17,6 +17,8 @@ export default class RiskPage extends Page {
 
   roshWidget = (): PageElement => cy.get('.rosh-widget').eq(0)
 
+  roshDetail = (): PageElement => cy.get('.rosh-widget__table').eq(0)
+
   rsrWidget = (): PageElement => cy.get('.rosh-widget').eq(1)
 
   ogrsWidget = (): PageElement => cy.get('.rosh-widget').eq(2)

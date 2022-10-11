@@ -1,5 +1,6 @@
 import Page from '../pages/page'
 import RegionPage from '../pages/region'
+import ProbationDeliveryUnitPage from '../pages/probation-delivery-unit'
 
 context('Select region', () => {
   beforeEach(() => {
@@ -65,5 +66,13 @@ context('Select region', () => {
     const regionPage = Page.verifyOnPage(RegionPage)
     regionPage.button().click()
     regionPage.errorSummary().trimTextContent().should('equal', 'There is a problem Select a region')
+  })
+
+  it('selecting region and clicking continue goes to select PDU page', () => {
+    cy.task('stubGetRegionDetails')
+    const regionPage = Page.verifyOnPage(RegionPage)
+    regionPage.radio('RG1').click()
+    regionPage.button().click()
+    Page.verifyOnPageTitle(ProbationDeliveryUnitPage, 'A Region')
   })
 })

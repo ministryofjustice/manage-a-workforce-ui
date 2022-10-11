@@ -125,5 +125,15 @@ export default function routes(services: Services): Router {
   post('/regions', async (req, res) => {
     await probationEstateController.selectRegion(req, res)
   })
+
+  get('/region/:regionCode/probationDeliveryUnits', async (req, res) => {
+    const { regionCode } = req.params
+    await probationEstateController.getProbationDeliveryUnitsByRegionCode(req, res, regionCode)
+  })
+
+  post('/region/:regionCode/probationDeliveryUnits', async (req, res) => {
+    const { regionCode } = req.params
+    await probationEstateController.selectProbationDeliveryUnit(req, res, regionCode)
+  })
   return router
 }

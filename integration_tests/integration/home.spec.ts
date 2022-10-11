@@ -1,5 +1,6 @@
 import AllocateCasesByTeamPage from '../pages/allocate-cases-by-team'
 import AuthSignInPage from '../pages/authSignIn'
+import Page from '../pages/page'
 
 context('Unallocated', () => {
   beforeEach(() => {
@@ -20,7 +21,7 @@ context('Unallocated', () => {
 
   it('User can log out', () => {
     cy.signIn()
-    const allocateCasesByTeamPage = new AllocateCasesByTeamPage()
+    const allocateCasesByTeamPage = Page.verifyOnPageTitle(AllocateCasesByTeamPage, 'A Probation Delivery Unit')
     allocateCasesByTeamPage.signOut().click()
     const authPage = new AuthSignInPage()
     authPage.checkOnPage()
@@ -28,13 +29,13 @@ context('Unallocated', () => {
 
   it('User name visible in header', () => {
     cy.signIn()
-    const allocateCasesByTeamPage = new AllocateCasesByTeamPage()
+    const allocateCasesByTeamPage = Page.verifyOnPageTitle(AllocateCasesByTeamPage, 'A Probation Delivery Unit')
     allocateCasesByTeamPage.headerUserName().should('contain.text', 'J. Smith')
   })
 
   it('Feedback link goes to Manage a Workforce mailbox', () => {
     cy.signIn()
-    const allocateCasesByTeamPage = new AllocateCasesByTeamPage()
+    const allocateCasesByTeamPage = Page.verifyOnPageTitle(AllocateCasesByTeamPage, 'A Probation Delivery Unit')
     allocateCasesByTeamPage
       .feedbackLink()
       .should('have.attr', 'href')
@@ -43,7 +44,7 @@ context('Unallocated', () => {
 
   it('Footer visible on page', () => {
     cy.signIn()
-    const allocateCasesByTeamPage = new AllocateCasesByTeamPage()
+    const allocateCasesByTeamPage = Page.verifyOnPageTitle(AllocateCasesByTeamPage, 'A Probation Delivery Unit')
     allocateCasesByTeamPage
       .footer()
       .should('contain', 'Accessibility statement')

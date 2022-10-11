@@ -14,7 +14,11 @@ export default class AllocateCasesController {
 
   async getDataByTeams(req: Request, res: Response, pduCode: string) {
     const { token, username } = res.locals.user
-    const teamCodes = (await this.userPreferenceService.getTeamsUserPreference(token, username)).items
+    const [teamsUserPreference, probationDeliveryUnitDetails] = await Promise.all([
+      this.userPreferenceService.getTeamsUserPreference(token, username),
+      this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode),
+    ])
+    const teamCodes = teamsUserPreference.items
     let caseInformationByTeam = []
     if (teamCodes.length) {
       const [allocationCasesByTeam, workloadByTeam, probationEstateTeams] = await Promise.all([
@@ -46,8 +50,8 @@ export default class AllocateCasesController {
       title: 'Allocate cases by team | Manage a workforce',
       teams: caseInformationByTeam,
       pduCode,
-      pduName: 'North Wales',
-      regionName: 'Wales',
+      pduName: probationDeliveryUnitDetails.name,
+      regionName: probationDeliveryUnitDetails.region.name,
     })
   }
 }

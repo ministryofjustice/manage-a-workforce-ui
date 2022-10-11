@@ -47,7 +47,7 @@ context('Select teams and show allocate cases by team', () => {
       const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
       selectTeamsPage.checkbox('team').click()
       selectTeamsPage.button().click()
-      allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
+      allocateCasesByTeamPage = Page.verifyOnPageTitle(AllocateCasesByTeamPage, 'A Probation Delivery Unit')
     })
 
     it('Team selection saved as user preference', () => {
@@ -114,11 +114,11 @@ context('Select teams and show allocate cases by team', () => {
       selectTeamsPage.checkbox('team').click()
       selectTeamsPage.checkbox('team-2').click()
       selectTeamsPage.button().click()
-      allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
+      allocateCasesByTeamPage = Page.verifyOnPageTitle(AllocateCasesByTeamPage, 'A Probation Delivery Unit')
     })
 
     it('Caption text visible on page', () => {
-      allocateCasesByTeamPage.captionText().should('contain', 'Wales')
+      allocateCasesByTeamPage.captionText().should('contain', 'A Region')
     })
 
     it('Table caption visible on page', () => {

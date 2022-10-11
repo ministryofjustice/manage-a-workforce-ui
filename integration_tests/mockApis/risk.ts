@@ -54,6 +54,16 @@ export default {
             level: 'HIGH',
             lastUpdatedOn: '2022-02-02',
           },
+          roshRisk: {
+            overallRisk: 'VERY_HIGH',
+            assessedOn: '2022-10-07T13:11:50',
+            riskInCommunity: {
+              Children: 'LOW',
+              'Known Adult': 'MEDIUM',
+              Public: 'HIGH',
+              Staff: 'VERY_HIGH',
+            },
+          },
           rsr: {
             level: 'MEDIUM',
             lastUpdatedOn: '2019-02-12',

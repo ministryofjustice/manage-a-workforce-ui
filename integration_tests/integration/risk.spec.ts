@@ -103,7 +103,10 @@ context('Risk', () => {
     riskPage
       .roshWidget()
       .trimTextContent()
-      .should('equal', 'High RoSH Risk of serious harmLast updated: 2 February 2022')
+      .should(
+        'equal',
+        'Very high RoSH Risk of serious harmLast updated: 7 October 2022 Risk of serious harm in Community Risk to Community Children Low Known Adult Medium Public High Staff Very high'
+      )
     riskPage
       .rsrWidget()
       .trimTextContent()

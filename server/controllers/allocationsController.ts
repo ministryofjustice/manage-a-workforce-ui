@@ -97,7 +97,7 @@ export default class AllocationsController {
     })
   }
 
-  async getRisk(req: Request, res: Response, crn, convictionId, teamCode) {
+  async getRisk(_, res: Response, crn: string, convictionId, teamCode: string) {
     const response: Risk = await this.allocationsService.getRisk(res.locals.user.token, crn, convictionId)
     res.render('pages/risk', {
       title: `${response.name} | Risk | Manage a workforce`,

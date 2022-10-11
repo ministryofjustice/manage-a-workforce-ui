@@ -95,7 +95,7 @@ context('Allocate', () => {
         {
           Name: 'Ben Doe',
           Grade: 'POProbation Officer',
-          Capacity: '50%',
+          'Workload %': '50%',
           'Cases in past 7 days': '0',
           'Community cases': '15',
           'Custody cases': '20',
@@ -105,7 +105,7 @@ context('Allocate', () => {
         {
           Name: 'John Smith',
           Grade: 'POProbation Officer',
-          Capacity: '10%',
+          'Workload %': '10%',
           'Cases in past 7 days': '3',
           'Community cases': '25',
           'Custody cases': '15',
@@ -115,7 +115,7 @@ context('Allocate', () => {
         {
           Name: 'Sally Smith',
           Grade: 'PSOProbation Service Officer',
-          Capacity: '80%',
+          'Workload %': '80%',
           'Cases in past 7 days': '6',
           'Community cases': '25',
           'Custody cases': '28',

@@ -70,7 +70,7 @@ export default class ProbationEstateController {
     const response: RegionDetails = await this.probationEstateService.getRegionByCode(res.locals.user.token, regionCode)
     res.render('pages/select-probation-delivery-unit', {
       title: `Select your PDU | Manage a workforce`,
-      data: response,
+      regionName: response.name,
       probationDeliveryUnits: response.probationDeliveryUnits.sort((a, b) => a.name.localeCompare(b.name)),
       error,
     })

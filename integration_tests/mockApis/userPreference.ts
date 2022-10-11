@@ -52,7 +52,7 @@ export default {
         status: 201,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          items: ['TM1', 'TM2'],
+          items: pdus,
         },
       },
     })

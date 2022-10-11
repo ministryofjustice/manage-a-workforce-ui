@@ -11,12 +11,11 @@ export default class ProbationEstateController {
     private readonly userPreferenceService: UserPreferenceService
   ) {}
 
-  async getPduTeams(req: Request, res: Response, pduCode) {
+  async getPduTeams(req: Request, res: Response, pduCode, error = false) {
     const response: ProbationDeliveryUnitDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(
       res.locals.user.token,
       pduCode
     )
-    const error = req.query.error === 'true'
     res.render('pages/select-teams', {
       title: `Select your teams | Manage a workforce`,
       data: response.teams.sort((a, b) => a.name.localeCompare(b.name)),
@@ -42,8 +41,7 @@ export default class ProbationEstateController {
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       return res.redirect(`/probationDeliveryUnit/${pduCode}/teams`)
     }
-    req.query.error = 'true'
-    return this.getPduTeams(req, res, pduCode)
+    return this.getPduTeams(req, res, pduCode, true)
   }
 
   async getRegions(req: Request, res: Response, error = false) {

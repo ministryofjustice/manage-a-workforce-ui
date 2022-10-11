@@ -45,7 +45,7 @@ export default class ProbationEstateService {
     })) as EstateRegion[]
   }
 
-  async getRegionByCode(token: string, regionCode: string): Promise<RegionDetails> {
+  async getRegionDetails(token: string, regionCode: string): Promise<RegionDetails> {
     return (await this.restClient(token).get({
       path: `/region/${regionCode}`,
       headers: { Accept: 'application/json' },

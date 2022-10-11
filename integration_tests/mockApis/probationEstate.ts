@@ -97,7 +97,7 @@ export default {
       },
     })
   },
-  stubGetRegionByCode: (): SuperAgentRequest => {
+  stubGetRegionDetails: (): SuperAgentRequest => {
     return stubForProbationEstate({
       request: {
         method: 'GET',

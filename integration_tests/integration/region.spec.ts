@@ -69,7 +69,7 @@ context('Select region', () => {
   })
 
   it('selecting region and clicking continue goes to select PDU page', () => {
-    cy.task('stubGetRegionByCode')
+    cy.task('stubGetRegionDetails')
     const regionPage = Page.verifyOnPage(RegionPage)
     regionPage.radio('RG1').click()
     regionPage.button().click()

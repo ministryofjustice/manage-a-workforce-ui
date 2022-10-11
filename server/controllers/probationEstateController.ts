@@ -67,7 +67,10 @@ export default class ProbationEstateController {
   }
 
   async getProbationDeliveryUnitsByRegionCode(req: Request, res: Response, regionCode, error = false) {
-    const response: RegionDetails = await this.probationEstateService.getRegionByCode(res.locals.user.token, regionCode)
+    const response: RegionDetails = await this.probationEstateService.getRegionDetails(
+      res.locals.user.token,
+      regionCode
+    )
     res.render('pages/select-probation-delivery-unit', {
       title: `Select your PDU | Manage a workforce`,
       regionName: response.name,

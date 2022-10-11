@@ -7,7 +7,7 @@ context('Select Probation Delivery Unit', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
-    cy.task('stubGetRegionByCode')
+    cy.task('stubGetRegionDetails')
     cy.signIn()
     cy.visit('/region/RG1/probationDeliveryUnits')
   })

@@ -12,4 +12,6 @@ export default class ProbationDeliveryUnitPage extends Page {
   button = (): PageElement => cy.get('.govuk-button')
 
   cancelLink = (): PageElement => cy.get(`a[href*="/regions"]`)
+
+  radio = (value: string): PageElement => cy.get(`input[value*="${value}"]`)
 }

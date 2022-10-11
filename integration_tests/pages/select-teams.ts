@@ -1,8 +1,8 @@
 import Page, { PageElement } from './page'
 
 export default class SelectTeamsPage extends Page {
-  constructor() {
-    super('North Wales')
+  constructor(title: string) {
+    super(title)
   }
 
   legendHeading = (): PageElement => cy.get('.govuk-fieldset__heading')

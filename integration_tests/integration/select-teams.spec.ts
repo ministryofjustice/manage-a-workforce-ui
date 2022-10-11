@@ -5,24 +5,23 @@ context('Select teams', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
-    cy.task('stubUserPreferenceTeams', [])
-    cy.task('stubGetTeamsByPdu', 'WPTNWS')
+    cy.task('stubGetPduDetails', 'PDU1')
     cy.signIn()
-    cy.visit('/probationDeliveryUnit/WPTNWS/select-teams')
+    cy.visit('/probationDeliveryUnit/PDU1/select-teams')
   })
 
   it('Caption text visible on page', () => {
-    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
-    selectTeamsPage.captionText().should('contain', 'Wales')
+    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+    selectTeamsPage.captionText().should('contain', 'A Region')
   })
 
   it('Legend heading visible on page', () => {
-    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
     selectTeamsPage.legendHeading().trimTextContent().should('equal', 'Select your teams')
   })
 
   it('hint visible on page', () => {
-    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
     selectTeamsPage
       .hint()
       .should(
@@ -33,7 +32,7 @@ context('Select teams', () => {
   })
 
   it('teams in alphabetical order', () => {
-    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
     selectTeamsPage
       .checkboxes()
       .getCheckBoxes()
@@ -58,12 +57,12 @@ context('Select teams', () => {
   })
 
   it('continue button exists', () => {
-    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
     selectTeamsPage.button().trimTextContent().should('equal', 'Continue')
   })
 
   it('selecting no teams and continuing causes error', () => {
-    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
     selectTeamsPage.button().click()
     selectTeamsPage
       .errorSummary()

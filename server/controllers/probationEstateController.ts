@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
-import EstateTeam from '../models/EstateTeam'
 import EstateRegion from '../models/EstateRegion'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 import RegionDetails from '../models/RegionDetails'
+import ProbationDeliveryUnitDetails from '../models/ProbationDeliveryUnitDetails'
 
 export default class ProbationEstateController {
   constructor(
@@ -11,18 +11,17 @@ export default class ProbationEstateController {
     private readonly userPreferenceService: UserPreferenceService
   ) {}
 
-  async getPduTeams(req: Request, res: Response, pduCode) {
-    const response: EstateTeam[] = await this.probationEstateService.getProbationDeliveryUnitTeams(
+  async getPduTeams(req: Request, res: Response, pduCode, error = false) {
+    const response: ProbationDeliveryUnitDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(
       res.locals.user.token,
       pduCode
     )
-    const error = req.query.error === 'true'
     res.render('pages/select-teams', {
       title: `Select your teams | Manage a workforce`,
-      data: response.sort((a, b) => a.name.localeCompare(b.name)),
+      data: response.teams.sort((a, b) => a.name.localeCompare(b.name)),
       error,
-      pduName: 'North Wales',
-      regionName: 'Wales',
+      pduName: response.name,
+      regionName: response.region.name,
     })
   }
 
@@ -42,8 +41,7 @@ export default class ProbationEstateController {
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       return res.redirect(`/probationDeliveryUnit/${pduCode}/teams`)
     }
-    req.query.error = 'true'
-    return this.getPduTeams(req, res, pduCode)
+    return this.getPduTeams(req, res, pduCode, true)
   }
 
   async getRegions(req: Request, res: Response, error = false) {

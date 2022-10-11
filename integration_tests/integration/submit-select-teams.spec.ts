@@ -9,7 +9,7 @@ context('Select teams and show allocate cases by team', () => {
     beforeEach(() => {
       cy.task('reset')
       cy.task('stubSetup')
-      cy.task('stubGetTeamsByPdu')
+      cy.task('stubGetPduDetails')
       cy.task('stubUserPreferenceTeams')
       cy.task('stubGetUnallocatedCasesByTeams', {
         teamCodes: 'TM1',
@@ -44,7 +44,7 @@ context('Select teams and show allocate cases by team', () => {
       cy.task('stubUserPreferenceTeams', ['TM1'])
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/select-teams')
-      const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+      const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
       selectTeamsPage.checkbox('team').click()
       selectTeamsPage.button().click()
       allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
@@ -63,7 +63,7 @@ context('Select teams and show allocate cases by team', () => {
     beforeEach(() => {
       cy.task('reset')
       cy.task('stubSetup')
-      cy.task('stubGetTeamsByPdu')
+      cy.task('stubGetPduDetails')
       cy.task('stubGetUnallocatedCasesByTeams', {
         teamCodes: 'TM1,TM2',
         response: [
@@ -110,7 +110,7 @@ context('Select teams and show allocate cases by team', () => {
       cy.task('stubUserPreferenceTeams', ['TM1', 'TM2'])
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/select-teams')
-      const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+      const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
       selectTeamsPage.checkbox('team').click()
       selectTeamsPage.checkbox('team-2').click()
       selectTeamsPage.button().click()

@@ -37,33 +37,41 @@ export default {
       },
     })
   },
-  stubGetTeamsByPdu: (pduCode = 'PDU1'): SuperAgentRequest => {
+  stubGetPduDetails: (pduCode = 'PDU1'): SuperAgentRequest => {
     return stubForProbationEstate({
       request: {
         method: 'GET',
-        urlPattern: `/probationDeliveryUnit/${pduCode}/teams`,
+        urlPattern: `/probationDeliveryUnit/${pduCode}`,
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: [
-          {
-            code: 'TM1',
-            name: 'A Team',
+        jsonBody: {
+          code: pduCode,
+          name: 'A Probation Delivery Unit',
+          region: {
+            code: 'RG1',
+            name: 'A Region',
           },
-          {
-            code: 'TM4',
-            name: 'D Team',
-          },
-          {
-            code: 'TM3',
-            name: 'C Team',
-          },
-          {
-            code: 'TM2',
-            name: 'B Team',
-          },
-        ],
+          teams: [
+            {
+              code: 'TM1',
+              name: 'A Team',
+            },
+            {
+              code: 'TM4',
+              name: 'D Team',
+            },
+            {
+              code: 'TM3',
+              name: 'C Team',
+            },
+            {
+              code: 'TM2',
+              name: 'B Team',
+            },
+          ],
+        },
       },
     })
   },

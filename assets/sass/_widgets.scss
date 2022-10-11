@@ -40,6 +40,10 @@ $mappa-colour: #4c2c92;
   }
 }
 
+.rosh--low {
+  color: $low-score-colour;
+}
+
 .rosh-widget--medium,
 .risk-badge--medium {
   border: 2px solid $medium-score-border-colour;
@@ -47,6 +51,10 @@ $mappa-colour: #4c2c92;
   & h3 {
     color: $medium-score-colour;
   }
+}
+
+.rosh--medium {
+  color: $medium-score-colour;
 }
 
 .rosh-widget--high,
@@ -58,6 +66,10 @@ $mappa-colour: #4c2c92;
   }
 }
 
+.rosh--high {
+  color: $high-score-colour;
+}
+
 .rosh-widget--very-high,
 .risk-badge--very-high {
   border: 2px solid $very-high-score-border-colour;
@@ -65,6 +77,10 @@ $mappa-colour: #4c2c92;
   & h3 {
     color: $very-high-score-colour;
   }
+}
+
+.rosh--very-high {
+  color: $very-high-score-colour;
 }
 
 .rosh-widget__table {

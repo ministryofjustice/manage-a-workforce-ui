@@ -22,6 +22,20 @@ Low
 {% endif %}
 {% endmacro %}
 
+{% macro getRiskLevelClass(level, overall) %}
+{% if level == overall %}
+    {% if level == 'VERY_HIGH' %}
+    rosh--very-high
+    {% elif level == 'HIGH' %}
+    rosh--high
+    {% elif level == 'MEDIUM' %}
+    rosh--medium
+    {% elif level == 'LOW' %}
+    rosh--low
+    {% endif %}
+{% endif %} 
+{% endmacro %}
+
 {% if params.roshRisk %}
 <div class="rosh-widget {{ getOverallRiskLevelClass(params.roshRisk.overallRisk) }}">
     <h3 class="govuk-heading-m"><strong>{{ getRiskLevelText(params.roshRisk.overallRisk) }}</strong> RoSH</h3>
@@ -38,7 +52,7 @@ Low
       {% for key, value in params.roshRisk.riskInCommunity %}
       <tr class="govuk-table__row">
         <th class="govuk-table__header">{{ key }}</th>
-        <td class="govuk-table__cell {{ getOverallRiskLevelClass(value) }}">{{ getRiskLevelText(value) | default("No data") }}</td>
+        <td class="govuk-table__cell {{ getRiskLevelClass(value, params.roshRisk.overallRisk) }}">{{ getRiskLevelText(value) | default("No data") }}</td>
       </tr>
       {% endfor %}
       </tbody>

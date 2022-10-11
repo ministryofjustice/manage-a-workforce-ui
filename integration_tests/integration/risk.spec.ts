@@ -108,6 +108,15 @@ context('Risk', () => {
         'Very high RoSH Risk of serious harmLast updated: 7 October 2022 Risk of serious harm in Community Risk to Community Children Low Known Adult Medium Public High Staff Very high'
       )
     riskPage
+      .roshDetail()
+      .find('td')
+      .then($data => {
+        expect($data.get(0).className).not.to.contain('rosh--low')
+        expect($data.get(1).className).not.to.contain('rosh--medium')
+        expect($data.get(2).className).not.to.contain('rosh--high')
+        expect($data.get(3).className).to.contain('rosh--very-high')
+      })
+    riskPage
       .rsrWidget()
       .trimTextContent()
       .should('equal', 'Medium RSR 3.8% Risk of serious recidivismLast updated: 12 February 2019')

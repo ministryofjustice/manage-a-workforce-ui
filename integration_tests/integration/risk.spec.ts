@@ -105,7 +105,7 @@ context('Risk', () => {
       .trimTextContent()
       .should(
         'equal',
-        'Very high RoSH Risk of serious harmLast updated: 7 October 2022 Risk of serious harm in Community Risk to Community Children Low Known Adult Medium Public High Staff Very high'
+        'Very high RoSH Risk of serious harmLast updated: 7 October 2022 Risk of serious harm in Community Risk to Community Children Low Known adult Medium Public High Staff Very high'
       )
     riskPage
       .roshDetail()

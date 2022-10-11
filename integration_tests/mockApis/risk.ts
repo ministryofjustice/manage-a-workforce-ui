@@ -58,10 +58,10 @@ export default {
             overallRisk: 'VERY_HIGH',
             assessedOn: '2022-10-07T13:11:50',
             riskInCommunity: {
+              Staff: 'VERY_HIGH',
+              Public: 'HIGH',
               Children: 'LOW',
               'Known Adult': 'MEDIUM',
-              Public: 'HIGH',
-              Staff: 'VERY_HIGH',
             },
           },
           rsr: {

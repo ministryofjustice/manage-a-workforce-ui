@@ -12,8 +12,7 @@ export default class CasesByTeamController {
   async getAllocationsByTeam(req: Request, res: Response, teamCode: string): Promise<void> {
     const { token } = res.locals.user
     const unallocatedCasesByTeam = await this.allocationsService.getUnallocatedCasesByTeam(token, teamCode)
-    const teamOverview = await this.probationEstateService.getTeamByCode(token, teamCode)
-    // TODO: get pdu name and code from user preferences
+    const teamDetails = await this.probationEstateService.getTeamByCode(token, teamCode)
     const unallocatedCases = unallocatedCasesByTeam.map(
       value =>
         new UnallocatedCase(
@@ -31,9 +30,9 @@ export default class CasesByTeamController {
         )
     )
     res.render('pages/unallocated-cases-by-team', {
-      pduCode: 'WPTNWS',
-      pduName: 'North Wales',
-      teamName: teamOverview.name,
+      pduCode: teamDetails.probationDeliveryUnit.code,
+      pduName: teamDetails.probationDeliveryUnit.name,
+      teamName: teamDetails.name,
       teamCode,
       unallocatedCases,
       casesLength: unallocatedCasesByTeam.length,

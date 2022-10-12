@@ -6,7 +6,7 @@ context('Allocate', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
-    cy.task('stubGetTeamByCode', {
+    cy.task('stubGetTeamDetails', {
       code: 'TM1',
       name: 'Wrexham Team 1',
     })

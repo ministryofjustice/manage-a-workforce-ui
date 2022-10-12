@@ -9,7 +9,7 @@ context('Unallocated cases by team', () => {
     cy.task('stubSetup')
     cy.signIn()
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
-    cy.task('stubGetTeamByCode', {
+    cy.task('stubGetTeamDetails', {
       code: 'TM1',
       name: 'Team Name',
     })
@@ -18,7 +18,7 @@ context('Unallocated cases by team', () => {
   })
 
   it('Probation Delivery Unit visible on page', () => {
-    unallocatedPage.probationDeliveryUnit().should('contain.text', 'North Wales')
+    unallocatedPage.probationDeliveryUnit().should('contain.text', 'A Probation Delivery Unit')
   })
 
   it('Primary nav visible on page', () => {
@@ -219,6 +219,6 @@ context('Unallocated cases by team', () => {
   })
 
   it('Shows link to Manage my teams', () => {
-    unallocatedPage.manageMyTeamsLink().should('equal', '/probationDeliveryUnit/WPTNWS/select-teams')
+    unallocatedPage.manageMyTeamsLink().should('equal', '/probationDeliveryUnit/PDU1/select-teams')
   })
 })

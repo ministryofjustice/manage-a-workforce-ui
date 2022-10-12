@@ -21,7 +21,7 @@ export default {
       },
     })
   },
-  stubGetTeamByCode: ({ code, name }: { code: string; name: string }): SuperAgentRequest => {
+  stubGetTeamDetails: ({ code, name }: { code: string; name: string }): SuperAgentRequest => {
     return stubForProbationEstate({
       request: {
         method: 'GET',
@@ -33,6 +33,10 @@ export default {
         jsonBody: {
           code,
           name,
+          probationDeliveryUnit: {
+            code: 'PDU1',
+            name: 'A Probation Delivery Unit',
+          },
         },
       },
     })

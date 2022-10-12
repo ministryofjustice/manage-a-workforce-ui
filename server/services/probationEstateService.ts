@@ -4,6 +4,7 @@ import EstateTeam from '../models/EstateTeam'
 import EstateRegion from '../models/EstateRegion'
 import RegionDetails from '../models/RegionDetails'
 import ProbationDeliveryUnitDetails from '../models/ProbationDeliveryUnitDetails'
+import TeamDetails from '../models/TeamDetails'
 
 export default class ProbationEstateService {
   config: ApiConfig
@@ -30,11 +31,11 @@ export default class ProbationEstateService {
     })) as EstateTeam[]
   }
 
-  async getTeamByCode(token: string, teamCode: string): Promise<EstateTeam> {
+  async getTeamByCode(token: string, teamCode: string): Promise<TeamDetails> {
     return (await this.restClient(token).get({
       path: `/team/${teamCode}`,
       headers: { Accept: 'application/json' },
-    })) as EstateTeam
+    })) as TeamDetails
   }
 
   async getRegions(token: string): Promise<EstateRegion[]> {

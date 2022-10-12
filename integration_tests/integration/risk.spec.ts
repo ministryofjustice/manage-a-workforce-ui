@@ -136,7 +136,7 @@ context('Risk', () => {
       .trimTextContent()
       .should(
         'equal',
-        "UNKNOWN LEVEL RoSH Risk of serious harmA RoSH summary has not been completed for this individual. Check OASys for this person's current assessment status."
+        'UNKNOWN LEVEL RoSH Risk of serious harmA RoSH summary has not been completed for this person. Check OASys for their current assessment status.'
       )
     riskPage.rsrWidget().trimTextContent().should('equal', 'RSR Risk of serious recidivismScore unavailable')
     riskPage.ogrsWidget().trimTextContent().should('equal', 'OGRS Offender group reconviction scaleScore unavailable')

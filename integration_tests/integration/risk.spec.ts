@@ -131,7 +131,13 @@ context('Risk', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
-    riskPage.roshWidget().trimTextContent().should('equal', 'RoSH Risk of serious harmScore unavailable')
+    riskPage
+      .roshWidget()
+      .trimTextContent()
+      .should(
+        'equal',
+        "UNKNOWN LEVEL RoSH Risk of serious harmA RoSH summary has not been completed for this individual. Check OASys for this person's current assessment status."
+      )
     riskPage.rsrWidget().trimTextContent().should('equal', 'RSR Risk of serious recidivismScore unavailable')
     riskPage.ogrsWidget().trimTextContent().should('equal', 'OGRS Offender group reconviction scaleScore unavailable')
   })

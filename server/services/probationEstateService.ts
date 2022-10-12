@@ -31,7 +31,7 @@ export default class ProbationEstateService {
     })) as EstateTeam[]
   }
 
-  async getTeamByCode(token: string, teamCode: string): Promise<TeamDetails> {
+  async getTeamDetailsByCode(token: string, teamCode: string): Promise<TeamDetails> {
     return (await this.restClient(token).get({
       path: `/team/${teamCode}`,
       headers: { Accept: 'application/json' },

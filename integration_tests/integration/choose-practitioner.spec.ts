@@ -1,8 +1,8 @@
 import Page from '../pages/page'
-import AllocatePage from '../pages/allocate'
+import ChoosePractitionerPage from '../pages/choose-practitioner'
 import SummaryPage from '../pages/summary'
 
-context('Allocate', () => {
+context('Choose Practitioner', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
@@ -17,8 +17,8 @@ context('Allocate', () => {
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
 
   it('navigate to allocate page through case view', () => {
@@ -28,67 +28,71 @@ context('Allocate', () => {
     cy.visit('/team/TM1/J678910/convictions/123456789/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.allocateCaseButton('J678910', '123456789', 'TM1').click()
-    Page.verifyOnPage(AllocatePage)
+    Page.verifyOnPage(ChoosePractitionerPage)
   })
 
   it('Section break is visible on page', () => {
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.sectionBreak().should('exist')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.sectionBreak().should('exist')
   })
 
   it('Sub heading is visible on page', () => {
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.subHeading().should('contain', 'Allocate to a probation practitioner in Wrexham Team 1')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.subHeading().should('contain', 'Allocate to a probation practitioner in Wrexham Team 1')
   })
 
   it('Warning is visible on page if probation status is currently managed', () => {
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.warningText().should('contain', 'Dylan Adam Armstrong is currently managed by Antonio LoSardo (SPO)')
-    allocatePage.warningIcon().should('exist')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage
+      .warningText()
+      .should('contain', 'Dylan Adam Armstrong is currently managed by Antonio LoSardo (SPO)')
+    choosePractitionerPage.warningIcon().should('exist')
   })
 
   it('Warning is not visible on page if no offender manager details', () => {
     cy.task('stubGetCurrentlyManagedNoOffenderManagerCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.warningText().should('not.exist')
-    allocatePage.warningIcon().should('not.exist')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.warningText().should('not.exist')
+    choosePractitionerPage.warningIcon().should('not.exist')
   })
 
   it('Warning is visible on page if probation status is Previously managed', () => {
     cy.task('stubGetPreviouslyManagedCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.warningText().should('contain', 'Dylan Adam Armstrong was previously managed by Sofia Micheals (PO)')
-    allocatePage.warningIcon().should('exist')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage
+      .warningText()
+      .should('contain', 'Dylan Adam Armstrong was previously managed by Sofia Micheals (PO)')
+    choosePractitionerPage.warningIcon().should('exist')
   })
 
   it('Warning is not visible on page if probation status is New to probation', () => {
     cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.warningText().should('not.exist')
-    allocatePage.warningIcon().should('not.exist')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.warningText().should('not.exist')
+    choosePractitionerPage.warningIcon().should('not.exist')
   })
 
   it('Officer table visible on page', () => {
     cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage
       .table()
       .getTable()
       .should('deep.equal', [
@@ -129,8 +133,8 @@ context('Allocate', () => {
     cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage
       .breadCrumbs()
       .should('contain', 'Home')
       .and('contain', 'Unallocated cases')
@@ -141,30 +145,33 @@ context('Allocate', () => {
     cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.radioButtons().first().check()
-    allocatePage.checkedRadioButton().should('have.value', 'OM1')
-    allocatePage.radioButtons().last().check()
-    allocatePage.checkedRadioButton().should('have.value', 'OM2')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.radioButtons().first().check()
+    choosePractitionerPage.checkedRadioButton().should('have.value', 'OM1')
+    choosePractitionerPage.radioButtons().last().check()
+    choosePractitionerPage.checkedRadioButton().should('have.value', 'OM2')
   })
 
   it('should display error when no offender managers selected and allocate case button clicked', () => {
     cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.allocateCaseButton().click()
-    allocatePage.errorSummary().trimTextContent().should('equal', 'There is a problem Select a probation practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.allocateCaseButton().click()
+    choosePractitionerPage
+      .errorSummary()
+      .trimTextContent()
+      .should('equal', 'There is a problem Select a probation practitioner')
   })
 
   it('should clear selection when clicking on Clear selection', () => {
     cy.task('stubGetNewToProbationCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
-    const allocatePage = Page.verifyOnPage(AllocatePage)
-    allocatePage.radioButtons().first().check()
-    allocatePage.checkedRadioButton().should('have.value', 'OM1')
-    allocatePage.clearSelectionButton().click()
-    allocatePage.checkedRadioButton().should('not.exist')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.radioButtons().first().check()
+    choosePractitionerPage.checkedRadioButton().should('have.value', 'OM1')
+    choosePractitionerPage.clearSelectionButton().click()
+    choosePractitionerPage.checkedRadioButton().should('not.exist')
   })
 })

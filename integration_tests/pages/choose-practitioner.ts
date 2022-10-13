@@ -1,6 +1,6 @@
 import Page, { PageElement } from './page'
 
-export default class AllocatePage extends Page {
+export default class ChoosePractitionerPage extends Page {
   constructor() {
     super('Dylan Adam Armstrong')
   }

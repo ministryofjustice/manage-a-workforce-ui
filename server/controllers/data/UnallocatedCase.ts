@@ -4,6 +4,7 @@ import config from '../../config'
 import OffenderManager from '../../models/OffenderManager'
 import tierOrder from './TierOrder'
 
+// remove unused variables from here
 export default class UnallocatedCase {
   name: string
 

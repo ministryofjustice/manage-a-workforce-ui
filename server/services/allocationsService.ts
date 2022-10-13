@@ -19,7 +19,6 @@ export default class AllocationsService {
   }
 
   async getUnallocatedCasesByTeam(token: string, teamCode: string): Promise<Allocation[]> {
-    logger.info(`Getting unallocated cases by team`)
     return (await this.restClient(token).get({
       path: `/team/${teamCode}/cases/unallocated`,
       headers: { Accept: 'application/json' },
@@ -49,6 +48,9 @@ export default class AllocationsService {
     })) as Risk
   }
 
+  // this is called 4 times, not all info returned is used
+  // look at splitting into different calls which just return what is needed
+  // new endpoint in hmpps-allocations which does not return the offender manager if the case is previously managed by Staff Unallocated
   async getCaseOverview(token: string, crn, convictionId): Promise<Allocation> {
     logger.info(`Getting case overview for crn ${crn}`)
     return (await this.restClient(token).get({

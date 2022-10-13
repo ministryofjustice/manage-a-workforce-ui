@@ -6,6 +6,7 @@ import ProbationRecord from '../models/ProbationRecord'
 import Risk from '../models/Risk'
 import FileDownload from '../models/FileDownload'
 import UnallocatedCaseCountByTeam from '../models/UnallocatedCaseCountByTeam'
+import CaseForChoosePractitioner from '../models/CaseForChoosePractitioner'
 
 export default class AllocationsService {
   config: ApiConfig
@@ -48,9 +49,6 @@ export default class AllocationsService {
     })) as Risk
   }
 
-  // this is called 4 times, not all info returned is used
-  // look at splitting into different calls which just return what is needed
-  // new endpoint in hmpps-allocations which does not return the offender manager if the case is previously managed by Staff Unallocated
   async getCaseOverview(token: string, crn, convictionId): Promise<Allocation> {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/overview`,
@@ -58,11 +56,11 @@ export default class AllocationsService {
     })) as Allocation
   }
 
-  async getCaseForChoosePractitioner(token: string, crn, convictionId): Promise<Allocation> {
+  async getCaseForChoosePractitioner(token: string, crn, convictionId): Promise<CaseForChoosePractitioner> {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/choosePractitioner`,
       headers: { Accept: 'application/json' },
-    })) as Allocation
+    })) as CaseForChoosePractitioner
   }
 
   getDocument(token: string, crn, convictionId, documentId): Promise<FileDownload> {

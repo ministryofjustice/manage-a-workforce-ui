@@ -58,7 +58,7 @@ export default class AllocationsService {
 
   async getCaseForChoosePractitioner(token: string, crn, convictionId): Promise<CaseForChoosePractitioner> {
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/convictions/${convictionId}/choosePractitioner`,
+      path: `/cases/unallocated/${crn}/convictions/${convictionId}/practitionerCase`,
       headers: { Accept: 'application/json' },
     })) as CaseForChoosePractitioner
   }

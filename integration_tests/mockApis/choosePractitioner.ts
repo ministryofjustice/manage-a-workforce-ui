@@ -6,7 +6,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/choosePractitioner`,
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789/practitionerCase`,
       },
       response: {
         status: 200,
@@ -31,7 +31,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/choosePractitioner`,
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789/practitionerCase`,
       },
       response: {
         status: 200,
@@ -51,7 +51,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/choosePractitioner`,
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789/practitionerCase`,
       },
       response: {
         status: 200,
@@ -71,7 +71,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/choosePractitioner`,
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789/practitionerCase`,
       },
       response: {
         status: 200,
@@ -96,7 +96,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/choosePractitioner`,
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789/practitionerCase`,
       },
       response: {
         status: 200,

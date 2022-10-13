@@ -15,8 +15,6 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          sentenceDate: '2021-09-01',
-          initialAppointment: '2021-09-01',
           status: 'Currently managed',
           offenderManager: {
             forenames: 'Antonio',
@@ -24,7 +22,6 @@ export default {
             grade: 'SPO',
           },
           convictionId: 123456789,
-          caseType: 'COMMUNITY',
         },
       },
     })
@@ -43,8 +40,6 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          sentenceDate: '2021-09-01',
-          initialAppointment: '',
           status: 'Currently managed',
           offenderManager: {
             forenames: 'Antonio',
@@ -52,7 +47,6 @@ export default {
             grade: 'SPO',
           },
           convictionId: 123456789,
-          caseType: 'COMMUNITY',
         },
       },
     })
@@ -71,8 +65,6 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          sentenceDate: '2021-09-01',
-          initialAppointment: '',
           status: 'Currently managed',
           offenderManager: {
             forenames: 'Antonio',
@@ -80,7 +72,6 @@ export default {
             grade: 'SPO',
           },
           convictionId: 123456789,
-          caseType: 'CUSTODY',
         },
       },
     })
@@ -99,11 +90,8 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          sentenceDate: '2021-09-01',
-          initialAppointment: '2021-09-01',
           status: 'Currently managed',
           convictionId: 123456789,
-          caseType: 'COMMUNITY',
         },
       },
     })
@@ -122,11 +110,8 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          sentenceDate: '2021-09-01',
-          initialAppointment: '2021-09-01',
           status: 'Previously managed',
           convictionId: 123456789,
-          caseType: 'COMMUNITY',
         },
       },
     })
@@ -145,8 +130,6 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          sentenceDate: '2021-09-01',
-          initialAppointment: '2021-09-01',
           status: 'Previously managed',
           offenderManager: {
             forenames: 'Sofia',
@@ -154,7 +137,6 @@ export default {
             grade: 'PO',
           },
           convictionId: 123456789,
-          caseType: 'COMMUNITY',
         },
       },
     })
@@ -173,11 +155,8 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          sentenceDate: '2021-09-01',
-          initialAppointment: '2021-09-01',
           status: 'New to probation',
           convictionId: 123456789,
-          caseType: 'COMMUNITY',
         },
       },
     })

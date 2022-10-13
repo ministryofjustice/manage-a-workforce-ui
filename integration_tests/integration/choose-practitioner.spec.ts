@@ -67,6 +67,15 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.warningIcon().should('not.exist')
   })
 
+  it('Warning is visible on page if no offender manager details for previously managed', () => {
+    cy.task('stubGetPreviouslyManagedNoOffenderManagerCaseOverview')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.warningText().should('contain', 'Dylan Adam Armstrong was previously managed.')
+    choosePractitionerPage.warningIcon().should('exist')
+  })
+
   it('Warning is visible on page if probation status is Previously managed', () => {
     cy.task('stubGetPreviouslyManagedCaseOverview')
     cy.signIn()

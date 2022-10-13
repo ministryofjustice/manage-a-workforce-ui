@@ -109,6 +109,29 @@ export default {
     })
   },
 
+  stubGetPreviouslyManagedNoOffenderManagerCaseOverview: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910/convictions/123456789/overview`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          sentenceDate: '2021-09-01',
+          initialAppointment: '2021-09-01',
+          status: 'Previously managed',
+          convictionId: 123456789,
+          caseType: 'COMMUNITY',
+        },
+      },
+    })
+  },
+
   stubGetPreviouslyManagedCaseOverview: (): SuperAgentRequest => {
     return stubForAllocation({
       request: {

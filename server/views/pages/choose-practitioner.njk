@@ -95,9 +95,7 @@
 
 {% endfor %}
 
-{# only do this if offenderManager exists #}
-
-{% set offenderManagerDetails = ' by ' + offenderManager.forenames + ' ' + offenderManager.surname + (' (' + offenderManager.grade + ')' if offenderManager.grade) %}
+{% set offenderManagerDetails = ' by ' + offenderManager.forenames + ' ' + offenderManager.surname + (' (' + offenderManager.grade + ')' if offenderManager.grade) if offenderManager%}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -143,28 +141,19 @@
 
     <h2 class="govuk-heading-l">Allocate to a probation practitioner <br>in {{ teamName }}</h2>
 
-
-{# todo reduce duplication here #}
-    {% if probationStatus == 'Currently managed' and offenderManager %}
+    {% if (probationStatus == 'Currently managed' and offenderManagerDetails) or probationStatus == 'Previously managed' %}
         <div class="govuk-warning-text">
             <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
             <strong class="govuk-warning-text__text">
                 <span class="govuk-warning-text__assistive">Warning</span>
-                {{ name }} is currently managed{{ offenderManagerDetails }}.
-            </strong>
-        </div>
-    {% endif %}
-
-    {% if probationStatus == 'Previously managed' and offenderManager  %}
-        <div class="govuk-warning-text">
-            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-            <strong class="govuk-warning-text__text">
-                <span class="govuk-warning-text__assistive">Warning</span>
+                {% if probationStatus == 'Previously managed' %}
                 {{ name }} was previously managed{{ offenderManagerDetails }}.
+                {% else %}
+                {{ name }} is currently managed{{ offenderManagerDetails }}.
+                {% endif %}
             </strong>
         </div>
     {% endif %}
-
 
     {% if error %}
         <div class="govuk-form-group govuk-form-group--error">

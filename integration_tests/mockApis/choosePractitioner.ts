@@ -27,56 +27,6 @@ export default {
     })
   },
 
-  stubGetCaseOverviewNoInitialAppointment: (): SuperAgentRequest => {
-    return stubForAllocation({
-      request: {
-        method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/overview`,
-      },
-      response: {
-        status: 200,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          status: 'Currently managed',
-          offenderManager: {
-            forenames: 'Antonio',
-            surname: 'LoSardo',
-            grade: 'SPO',
-          },
-          convictionId: 123456789,
-        },
-      },
-    })
-  },
-
-  stubGetCaseOverviewCustodyCase: (): SuperAgentRequest => {
-    return stubForAllocation({
-      request: {
-        method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/overview`,
-      },
-      response: {
-        status: 200,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          status: 'Currently managed',
-          offenderManager: {
-            forenames: 'Antonio',
-            surname: 'LoSardo',
-            grade: 'SPO',
-          },
-          convictionId: 123456789,
-        },
-      },
-    })
-  },
-
   stubGetCurrentlyManagedNoOffenderManagerCaseForChoosePractitioner: (): SuperAgentRequest => {
     return stubForAllocation({
       request: {

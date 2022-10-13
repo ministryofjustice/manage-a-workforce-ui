@@ -5,6 +5,6 @@ export default interface CaseForChoosePractitioner {
   crn: string
   tier: string
   status: string
-  offenderManager: OffenderManager
+  offenderManager?: OffenderManager
   convictionId: number
 }

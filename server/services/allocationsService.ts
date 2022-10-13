@@ -52,9 +52,15 @@ export default class AllocationsService {
   // look at splitting into different calls which just return what is needed
   // new endpoint in hmpps-allocations which does not return the offender manager if the case is previously managed by Staff Unallocated
   async getCaseOverview(token: string, crn, convictionId): Promise<Allocation> {
-    logger.info(`Getting case overview for crn ${crn}`)
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/overview`,
+      headers: { Accept: 'application/json' },
+    })) as Allocation
+  }
+
+  async getCaseForChoosePractitioner(token: string, crn, convictionId): Promise<Allocation> {
+    return (await this.restClient(token).get({
+      path: `/cases/unallocated/${crn}/convictions/${convictionId}/choosePractitioner`,
       headers: { Accept: 'application/json' },
     })) as Allocation
   }

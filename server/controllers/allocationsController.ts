@@ -135,7 +135,7 @@ export default class AllocationsController {
         return b.gradeOrder - a.gradeOrder
       })
 
-    const response: Allocation = await this.allocationsService.getCaseOverview(token, crn, convictionId)
+    const response: Allocation = await this.allocationsService.getCaseForChoosePractitioner(token, crn, convictionId)
     const error = req.query.error === 'true'
     res.render('pages/choose-practitioner', {
       title: `${response.name} | Choose practitioner | Manage a workforce`,

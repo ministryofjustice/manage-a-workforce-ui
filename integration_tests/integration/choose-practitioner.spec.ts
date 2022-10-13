@@ -14,7 +14,7 @@ context('Choose Practitioner', () => {
   })
 
   it('Offender details visible on page', () => {
-    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -22,7 +22,7 @@ context('Choose Practitioner', () => {
   })
 
   it('navigate to allocate page through case view', () => {
-    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/case-view')
@@ -32,7 +32,7 @@ context('Choose Practitioner', () => {
   })
 
   it('Section break is visible on page', () => {
-    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -40,7 +40,7 @@ context('Choose Practitioner', () => {
   })
 
   it('Sub heading is visible on page', () => {
-    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -48,7 +48,7 @@ context('Choose Practitioner', () => {
   })
 
   it('Warning is visible on page if probation status is currently managed', () => {
-    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -59,7 +59,7 @@ context('Choose Practitioner', () => {
   })
 
   it('Warning is not visible on page if no offender manager details', () => {
-    cy.task('stubGetCurrentlyManagedNoOffenderManagerCaseOverview')
+    cy.task('stubGetCurrentlyManagedNoOffenderManagerCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -68,7 +68,7 @@ context('Choose Practitioner', () => {
   })
 
   it('Warning is visible on page if no offender manager details for previously managed', () => {
-    cy.task('stubGetPreviouslyManagedNoOffenderManagerCaseOverview')
+    cy.task('stubGetPreviouslyManagedNoOffenderManagerCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -77,7 +77,7 @@ context('Choose Practitioner', () => {
   })
 
   it('Warning is visible on page if probation status is Previously managed', () => {
-    cy.task('stubGetPreviouslyManagedCaseOverview')
+    cy.task('stubGetPreviouslyManagedCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -88,7 +88,7 @@ context('Choose Practitioner', () => {
   })
 
   it('Warning is not visible on page if probation status is New to probation', () => {
-    cy.task('stubGetNewToProbationCaseOverview')
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -97,7 +97,7 @@ context('Choose Practitioner', () => {
   })
 
   it('Officer table visible on page', () => {
-    cy.task('stubGetNewToProbationCaseOverview')
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -139,7 +139,7 @@ context('Choose Practitioner', () => {
   })
 
   it('Breadcrumbs visible on page', () => {
-    cy.task('stubGetNewToProbationCaseOverview')
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -151,7 +151,7 @@ context('Choose Practitioner', () => {
   })
 
   it('should only be able to select one offender manager at a time', () => {
-    cy.task('stubGetNewToProbationCaseOverview')
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -162,7 +162,7 @@ context('Choose Practitioner', () => {
   })
 
   it('should display error when no offender managers selected and allocate case button clicked', () => {
-    cy.task('stubGetNewToProbationCaseOverview')
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -174,7 +174,7 @@ context('Choose Practitioner', () => {
   })
 
   it('should clear selection when clicking on Clear selection', () => {
-    cy.task('stubGetNewToProbationCaseOverview')
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)

@@ -12,6 +12,7 @@ import allocations from '../mockApis/allocations'
 import probationRecord from '../mockApis/probationRecord'
 import risk from '../mockApis/risk'
 import allocateOffenderManagers from '../mockApis/allocateOffenderManagers'
+import choosePractitioner from '../mockApis/choosePractitioner'
 import allocationConfirm from '../mockApis/allocationConfirm'
 import workload from '../mockApis/workload'
 import overview from '../mockApis/overview'
@@ -92,5 +93,6 @@ export default (on: (string, Record) => void): void => {
     ...overview,
     ...probationEstate,
     ...userPreference,
+    ...choosePractitioner,
   })
 }

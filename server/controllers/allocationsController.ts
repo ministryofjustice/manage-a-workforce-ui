@@ -137,7 +137,7 @@ export default class AllocationsController {
 
     const response: Allocation = await this.allocationsService.getCaseOverview(token, crn, convictionId)
     const error = req.query.error === 'true'
-    res.render('pages/allocate', {
+    res.render('pages/choose-practitioner', {
       title: `${response.name} | Choose practitioner | Manage a workforce`,
       name: response.name,
       crn: response.crn,

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import AllocationsService from '../services/allocationsService'
 import ProbationEstateService from '../services/probationEstateService'
 import UnallocatedCase from './data/UnallocatedCase'
@@ -9,7 +9,7 @@ export default class CasesByTeamController {
     private readonly probationEstateService: ProbationEstateService
   ) {}
 
-  async getAllocationsByTeam(req: Request, res: Response, teamCode: string): Promise<void> {
+  async getAllocationsByTeam(_, res: Response, teamCode: string): Promise<void> {
     const { token } = res.locals.user
     const unallocatedCasesByTeam = await this.allocationsService.getUnallocatedCasesByTeam(token, teamCode)
     const teamDetails = await this.probationEstateService.getTeamDetailsByCode(token, teamCode)
@@ -22,7 +22,6 @@ export default class CasesByTeamController {
           value.sentenceDate,
           value.initialAppointment,
           value.status,
-          value.previousConvictionEndDate,
           value.offenderManager,
           value.convictionId,
           value.caseType,

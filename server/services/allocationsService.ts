@@ -6,6 +6,7 @@ import ProbationRecord from '../models/ProbationRecord'
 import Risk from '../models/Risk'
 import FileDownload from '../models/FileDownload'
 import UnallocatedCaseCountByTeam from '../models/UnallocatedCaseCountByTeam'
+import CaseForChoosePractitioner from '../models/CaseForChoosePractitioner'
 
 export default class AllocationsService {
   config: ApiConfig
@@ -19,7 +20,6 @@ export default class AllocationsService {
   }
 
   async getUnallocatedCasesByTeam(token: string, teamCode: string): Promise<Allocation[]> {
-    logger.info(`Getting unallocated cases by team`)
     return (await this.restClient(token).get({
       path: `/team/${teamCode}/cases/unallocated`,
       headers: { Accept: 'application/json' },
@@ -50,11 +50,17 @@ export default class AllocationsService {
   }
 
   async getCaseOverview(token: string, crn, convictionId): Promise<Allocation> {
-    logger.info(`Getting case overview for crn ${crn}`)
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/overview`,
       headers: { Accept: 'application/json' },
     })) as Allocation
+  }
+
+  async getCaseForChoosePractitioner(token: string, crn, convictionId): Promise<CaseForChoosePractitioner> {
+    return (await this.restClient(token).get({
+      path: `/cases/unallocated/${crn}/convictions/${convictionId}/practitionerCase`,
+      headers: { Accept: 'application/json' },
+    })) as CaseForChoosePractitioner
   }
 
   getDocument(token: string, crn, convictionId, documentId): Promise<FileDownload> {

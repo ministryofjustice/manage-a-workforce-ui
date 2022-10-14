@@ -32,7 +32,6 @@ export default class UnallocatedCase {
     sentenceDate: string,
     initialAppointment: string,
     primaryStatus: string,
-    previousConvictionEndDate: string,
     offenderManager: OffenderManager,
     convictionId: number,
     caseType: string,
@@ -43,7 +42,7 @@ export default class UnallocatedCase {
     this.tier = tier
     this.tierOrder = tierOrder.get(tier) ?? 0
     this.sentenceDate = sentenceDate
-    this.setInitialAppointment(initialAppointment, sentenceDate, caseType, sentenceLength)
+    this.setInitialAppointment(initialAppointment, caseType, sentenceLength)
     this.primaryStatus = primaryStatus
     if (primaryStatus === 'Currently managed' && offenderManager) {
       const grade = offenderManager.grade ? `, ${offenderManager.grade}` : ''
@@ -52,12 +51,7 @@ export default class UnallocatedCase {
     this.convictionId = convictionId
   }
 
-  setInitialAppointment(
-    initialAppointment: string,
-    sentenceDate: string,
-    caseType: string,
-    sentenceLength: string
-  ): void {
+  setInitialAppointment(initialAppointment: string, caseType: string, sentenceLength: string): void {
     if (caseType === 'CUSTODY') {
       this.primaryInitialAppointment = 'Not needed'
       this.secondaryInitialAppointment = 'Custody case'

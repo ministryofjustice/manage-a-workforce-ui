@@ -27,7 +27,6 @@ export default {
         sentenceDate: '2021-09-01',
         initialAppointment: null,
         status: 'Previously managed',
-        previousConvictionEndDate: '2019-12-13',
         convictionId: 56789,
         caseType: 'CUSTODY',
         sentenceLength: '32 Years',

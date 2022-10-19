@@ -202,6 +202,12 @@ export default {
             town: 'Reading',
             county: 'Berkshire',
             postcode: 'RG22 3EF',
+            noFixedAbode: false,
+            typeVerified: true,
+            type: {
+              description: 'Rental accommodation',
+            },
+            from: '2022-08-25',
           },
         },
       },
@@ -527,6 +533,14 @@ export default {
           pncNumber: 'A/8404713BA',
           convictionId: 56789,
           caseType: 'COMMUNITY',
+          address: {
+            type: {
+              description: 'Homeless - rough sleeping',
+            },
+            from: '2022-02-03',
+            noFixedAbode: true,
+            typeVerified: false,
+          },
         },
       },
     })

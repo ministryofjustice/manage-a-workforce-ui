@@ -5,4 +5,10 @@ export default interface Address {
   town: string
   county: string
   postcode: string
+  noFixedAbode: boolean
+  typeVerified: boolean
+  from: string
+  type: {
+    description: string
+  }
 }

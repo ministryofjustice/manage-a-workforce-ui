@@ -40,11 +40,12 @@ context('Summary', () => {
       Gender: 'Male',
       'Date of birth': '27 September 1984 (37 years old)',
       PNC: 'D/9874483AB',
-      'Main address': '5A The Building The StreetReadingBerkshireRG22 3EF',
+      'Main address':
+        '5A The Building The StreetReadingBerkshireRG22 3EFType of address: Rental accommodation (verified)Start date: 25 August 2022',
     })
   })
 
-  it('Personal details no address visible on page', () => {
+  it('Personal details no fixed abode address visible on page', () => {
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -54,7 +55,7 @@ context('Summary', () => {
       Gender: 'Female',
       'Date of birth': '17 November 1994 (27 years old)',
       PNC: 'A/8404713BA',
-      'Main address': 'No address found',
+      'Main address': 'No fixed abode: Homeless - rough sleepingStart date: 3 February 2022',
     })
   })
 

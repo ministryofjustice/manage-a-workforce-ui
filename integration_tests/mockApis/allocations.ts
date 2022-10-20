@@ -537,6 +537,7 @@ export default {
             type: {
               description: 'Homeless - rough sleeping',
             },
+            postcode: 'NF1 1NF',
             from: '2022-02-03',
             noFixedAbode: true,
             typeVerified: false,

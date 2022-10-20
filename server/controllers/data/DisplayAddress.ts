@@ -14,7 +14,9 @@ export default class DisplayAddress {
     this.rows.push(line1)
     this.rows.push(address?.town)
     this.rows.push(address?.county)
-    this.rows.push(address?.postcode)
+    if (address?.postcode !== 'NF1 1NF') {
+      this.rows.push(address?.postcode)
+    }
     this.rows.push(this.getAddressType(address))
     this.rows.push(this.getStartDate(address?.from))
     this.rows = this.rows.flatMap(row => (row ? [row] : []))

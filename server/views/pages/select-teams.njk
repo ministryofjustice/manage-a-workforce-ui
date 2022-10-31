@@ -57,9 +57,12 @@
             items: checkboxItems
         })}}
 
-        {{ govukButton({
-            text: "Continue"
-        }) }}
+        <div class="govuk-button-group">
+            {{ govukButton({
+                text: "Continue"
+            }) }}
+            <a class="govuk-link" href="{{ '/regions' }}">Cancel</a>
+        </div>
         </form>
     </div>
 </div>

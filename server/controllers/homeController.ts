@@ -1,19 +1,18 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 
 import UserPreferenceService from '../services/userPreferenceService'
 
 export default class HomeController {
   constructor(private readonly userPreferenceService: UserPreferenceService) {}
 
-  async redirectUser(req: Request, res: Response): Promise<void> {
+  async redirectUser(_, res: Response): Promise<void> {
     const { token, username } = res.locals.user
-    const { items: teamSelection } = await this.userPreferenceService.getTeamsUserPreference(token, username)
-    // TODO: get pdu code from user preferences
-    if (teamSelection.length) {
-      res.redirect('/probationdeliveryunit/WPTNWS/teams')
+    const { items: pduSelection } = await this.userPreferenceService.getPduUserPreference(token, username)
+    if (pduSelection.length) {
+      // eslint-disable-next-line security-node/detect-dangerous-redirects
+      res.redirect(`/probationdeliveryunit/${pduSelection[0]}/teams`)
     } else {
-      // TODO: Change to redirect to regions screen
-      res.redirect('/probationDeliveryUnit/WPTNWS/select-teams')
+      res.redirect('/regions')
     }
   }
 }

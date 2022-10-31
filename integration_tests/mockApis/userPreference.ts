@@ -57,6 +57,21 @@ export default {
       },
     })
   },
+  stubUserPreferencePDU: (pdus = ['PDU1']): SuperAgentRequest => {
+    return stubForUserPreference({
+      request: {
+        method: 'GET',
+        urlPattern: `/users/USER1/preferences/allocation-pdu`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          items: pdus,
+        },
+      },
+    })
+  },
   verifyPutUserPreferenceTeams: (teams: string[]) =>
     verifyRequestForUserPreference({
       requestUrlPattern: `/users/USER1/preferences/allocation-teams`,

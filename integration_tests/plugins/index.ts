@@ -40,6 +40,7 @@ export default (on: (string, Record) => void): void => {
       Promise.all([
         auth.stubSignIn(),
         auth.stubAuthUser(),
+        userPreference.stubUserPreferencePDU(),
         userPreference.stubUserPreferenceTeams(),
         allocations.stubGetUnallocatedCasesByTeams({
           teamCodes: 'TM1',
@@ -74,7 +75,7 @@ export default (on: (string, Record) => void): void => {
           code: 'TM1',
           name: 'Wrexham - Team 1',
         }),
-        probationEstate.stubGetPduDetails('WPTNWS'),
+        probationEstate.stubGetPduDetails(),
       ]),
 
     ...auth,

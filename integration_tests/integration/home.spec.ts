@@ -14,9 +14,9 @@ context('Unallocated', () => {
     authPage.checkOnPage()
   })
 
-  it('redirects to North Wales Allocate cases by team', () => {
+  it('redirects to User preference selected PDU Allocate cases by team', () => {
     cy.signIn()
-    cy.url().should('include', '/probationdeliveryunit/WPTNWS/teams')
+    cy.url().should('include', '/probationdeliveryunit/PDU1/teams')
   })
 
   it('User can log out', () => {

@@ -1,11 +1,11 @@
 import Page from '../pages/page'
 import SelectTeamsPage from '../pages/select-teams'
+import RegionPage from '../pages/region'
 
 context('Select teams', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
-    cy.task('stubGetPduDetails', 'PDU1')
     cy.signIn()
     cy.visit('/probationDeliveryUnit/PDU1/select-teams')
   })
@@ -68,5 +68,12 @@ context('Select teams', () => {
       .errorSummary()
       .trimTextContent()
       .should('equal', 'There is a problem Select the teams you allocate to')
+  })
+
+  it('selecting cancel link goes to select region screen', () => {
+    cy.task('stubGetAllRegions')
+    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+    selectTeamsPage.cancelLink().click()
+    Page.verifyOnPage(RegionPage)
   })
 })

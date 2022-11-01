@@ -72,7 +72,7 @@ export default function routes(services: Services): Router {
 
   get('/team/:teamCode/:crn/convictions/:convictionId/allocate/:staffCode/confirm', async (req, res) => {
     const { crn, convictionId, staffCode, teamCode } = req.params
-    await allocationsController.getAllocationImpact(req, res, crn, staffCode, convictionId, teamCode)
+    await allocationsController.getAllocateToPractitioner(req, res, crn, staffCode, convictionId, teamCode)
   })
 
   get('/team/:teamCode/:crn/convictions/:convictionId/allocate/:staffCode/instructions', async (req, res) => {

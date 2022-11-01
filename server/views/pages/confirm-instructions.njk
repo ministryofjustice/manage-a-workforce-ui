@@ -3,6 +3,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {%- from "govuk/components/fieldset/macro.njk" import govukFieldset -%}
 {% from "../components/instructions/macro.njk" import instructions %}
+{% from "../components/pop/macro.njk" import pop %}
 {%- from "govuk/components/input/macro.njk" import govukInput -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
@@ -37,14 +38,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ data.name or name }}
-                <span class="govuk-caption-xl">Tier: {{ data.tier or tier }}</span>
-                <span class="govuk-caption-xl">CRN: {{ data.crn or crn }}</span>
-            </h1>
-        </div>
-    </div>
+    {{ pop({name: name, crn: crn, tier: tier}) }}
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 

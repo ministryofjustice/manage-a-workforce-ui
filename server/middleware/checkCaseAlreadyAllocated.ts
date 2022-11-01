@@ -11,8 +11,9 @@ export default function checkCaseAlreadyAllocated(workloadService: WorkloadServi
         return res.status(error.status).render('pages/case-already-allocated', {
           title: 'Case Unavailable | Manage a workforce',
           crn,
+          tier: eventManagerDetails.tier,
+          name: `${eventManagerDetails.personOnProbationFirstName} ${eventManagerDetails.personOnProbationSurname}`,
           teamCode,
-          data: eventManagerDetails,
         })
       } catch (callError) {
         return next(callError)

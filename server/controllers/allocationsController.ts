@@ -163,16 +163,16 @@ export default class AllocationsController {
 
   async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionId, teamCode) {
     const {
-      body: { allocatedOfficer },
+      body: { allocatedOfficer: staffCode },
     } = req
-    if (allocatedOfficer) {
-      return this.getAllocateToPractitioner(req, res, crn, allocatedOfficer, convictionId, teamCode)
+    if (staffCode) {
+      res.redirect(`/team/${teamCode}/${crn}/convictions/${convictionId}/allocate/${staffCode}/confirm`)
     }
     req.query.error = 'true'
     return this.getAllocate(req, res, crn, convictionId, teamCode)
   }
 
-  async getAllocateToPractitioner(req: Request, res: Response, crn, staffCode, convictionId, teamCode) {
+  async getAllocateToPractitioner(_, res: Response, crn, staffCode, convictionId, teamCode) {
     const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,

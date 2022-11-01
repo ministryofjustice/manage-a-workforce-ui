@@ -113,7 +113,7 @@ export default class AllocationsController {
     })
   }
 
-  async getAllocate(req: Request, res: Response, crn, convictionId, teamCode) {
+  async choosePractitioner(req: Request, res: Response, crn, convictionId, teamCode) {
     const { token } = res.locals.user
     const { offenderManagers } = await this.workloadService.getOffenderManagersToAllocate(token, teamCode)
     const { name: teamName } = await this.probationEstateService.getTeamDetailsByCode(token, teamCode)
@@ -172,7 +172,7 @@ export default class AllocationsController {
       )
     }
     req.query.error = 'true'
-    return this.getAllocate(req, res, crn, convictionId, teamCode)
+    return this.choosePractitioner(req, res, crn, convictionId, teamCode)
   }
 
   async getAllocateToPractitioner(_, res: Response, crn, staffCode, convictionId, teamCode) {

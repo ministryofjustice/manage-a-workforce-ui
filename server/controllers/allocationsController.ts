@@ -181,7 +181,7 @@ export default class AllocationsController {
       teamCode
     )
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
-    res.render('pages/confirm-allocation', {
+    res.render('pages/allocate-to-practitioner', {
       title: `${caseOverview.name} | Allocate to practitioner | Manage a workforce`,
       data: response,
       name: caseOverview.name,

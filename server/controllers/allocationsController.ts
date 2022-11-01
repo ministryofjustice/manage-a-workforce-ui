@@ -166,7 +166,7 @@ export default class AllocationsController {
       body: { allocatedOfficer: staffCode },
     } = req
     if (staffCode) {
-      res.redirect(
+      return res.redirect(
         // eslint-disable-next-line security-node/detect-dangerous-redirects
         `/team/${teamCode}/${crn}/convictions/${convictionId}/allocate/${staffCode}/allocate-to-practitioner`
       )

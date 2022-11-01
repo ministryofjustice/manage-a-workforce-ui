@@ -1,12 +1,30 @@
 import Page from '../pages/page'
 import AllocateToPractitionerPage from '../pages/allocate-to-practitioner'
+import ChoosePractitionerPage from '../pages/choose-practitioner'
 
-context('Allocate Confirmation', () => {
+context('Allocate to Practitioner', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSetup')
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.task('stubGetCurrentlyManagedCaseOverview')
+  })
+
+  it('can navigate to Allocate to Practitioner page from Choose Practitioner', () => {
+    cy.task('stubGetTeamDetails', {
+      code: 'TM1',
+      name: 'Wrexham Team 1',
+    })
+    cy.task('stubGetAllocateOffenderManagers', 'TM1')
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
+
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.radioButtons().first().click()
+    choosePractitionerPage.allocateCaseButton().click()
+    const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
+    allocatePage.subHeading().should('have.text', "You're allocating this case to probation practitioner John Doe (PO)")
   })
 
   it('Offender details visible on page', () => {

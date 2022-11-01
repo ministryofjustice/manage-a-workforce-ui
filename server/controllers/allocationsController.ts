@@ -166,7 +166,10 @@ export default class AllocationsController {
       body: { allocatedOfficer: staffCode },
     } = req
     if (staffCode) {
-      res.redirect(`/team/${teamCode}/${crn}/convictions/${convictionId}/allocate/${staffCode}/confirm`)
+      // eslint-disable-next-line security-node/detect-dangerous-redirects
+      res.redirect(
+        `/team/${teamCode}/${crn}/convictions/${convictionId}/allocate/${staffCode}/allocate-to-practitioner`
+      )
     }
     req.query.error = 'true'
     return this.getAllocate(req, res, crn, convictionId, teamCode)

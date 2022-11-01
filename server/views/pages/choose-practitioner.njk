@@ -4,6 +4,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "../components/pop/macro.njk" import pop %}
 
 {% set tableData = {
     attributes: {
@@ -127,15 +128,9 @@
 {% endblock %}
 
 {% block content %}
+    {{ pop({name: name, crn: crn, tier: tier}) }}
+    
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ name }}
-                <span class="govuk-caption-xl">Tier: {{ tier }}</span>
-                <span class="govuk-caption-xl">CRN: {{ crn }}</span>
-            </h1>
-        </div>
-    </div>
 
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 

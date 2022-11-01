@@ -28,5 +28,5 @@ export default class InstructionsConfirmPage extends Page {
   inputTexts = (): PageElement => cy.get('input.govuk-input')
 
   cancelLink = (crn, convictionId, teamCode): PageElement =>
-    cy.get(`a[href*="/team/${teamCode}/${crn}/convictions/${convictionId}/allocate"]`).eq(1)
+    cy.get(`a[href*="/team/${teamCode}/${crn}/convictions/${convictionId}/choose-practitioner"]`).eq(1)
 }

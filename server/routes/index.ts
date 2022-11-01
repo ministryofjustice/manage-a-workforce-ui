@@ -60,12 +60,12 @@ export default function routes(services: Services): Router {
     await allocationsController.getRisk(req, res, crn, convictionId, teamCode)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionId/allocate', async (req, res) => {
+  get('/team/:teamCode/:crn/convictions/:convictionId/choose-practitioner', async (req, res) => {
     const { crn, convictionId, teamCode } = req.params
     await allocationsController.choosePractitioner(req, res, crn, convictionId, teamCode)
   })
 
-  post('/team/:teamCode/:crn/convictions/:convictionId/allocate', async (req, res) => {
+  post('/team/:teamCode/:crn/convictions/:convictionId/choose-practitioner', async (req, res) => {
     const { crn, convictionId, teamCode } = req.params
     await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionId, teamCode)
   })

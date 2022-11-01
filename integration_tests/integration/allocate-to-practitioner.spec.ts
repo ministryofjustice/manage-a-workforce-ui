@@ -19,7 +19,7 @@ context('Allocate to Practitioner', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
 
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate')
+    cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.radioButtons().first().click()
     choosePractitionerPage.allocateCaseButton().click()
@@ -72,7 +72,10 @@ context('Allocate to Practitioner', () => {
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/allocate-to-practitioner')
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
     allocatePage.link().should('exist').and('contain', 'Choose a different probation practitioner')
-    allocatePage.link().should('have.attr', 'href').and('include', '/team/TM1/J678910/convictions/123456789/allocate')
+    allocatePage
+      .link()
+      .should('have.attr', 'href')
+      .and('include', '/team/TM1/J678910/convictions/123456789/choose-practitioner')
   })
 
   it('Displays current and potential capacity', () => {

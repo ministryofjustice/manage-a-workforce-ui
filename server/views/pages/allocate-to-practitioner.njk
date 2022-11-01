@@ -21,7 +21,7 @@
             },
             {
                text: "Allocate to probation practitioner",
-                href: "/team/" + teamCode + "/" + crn + "/convictions/" + convictionId + "/allocate"
+                href: "/team/" + teamCode + "/" + crn + "/convictions/" + convictionId + "/choose-practitioner"
             }
         ]
     }) }}
@@ -42,7 +42,7 @@
     <div class="govuk-form-group govuk-!-margin-top-9">
         <div class="govuk-button-group">
           <a class="govuk-button" href="{{ '/team/' + teamCode + '/' + crn + '/convictions/' + convictionId + '/allocate/' + staffCode +  '/instructions' }}">Continue</a>
-          <a class="govuk-link govuk-link--no-visited-state" href="{{ '/team/' + teamCode + '/' + crn + '/convictions/' + convictionId + '/allocate' }}">Choose a different probation practitioner</a>
+          <a class="govuk-link govuk-link--no-visited-state" href="{{ '/team/' + teamCode + '/' + crn + '/convictions/' + convictionId + '/choose-practitioner' }}">Choose a different probation practitioner</a>
         </div>
       </div>
 {% endblock %}

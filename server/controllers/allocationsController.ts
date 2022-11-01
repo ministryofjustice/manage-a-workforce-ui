@@ -42,6 +42,8 @@ export default class AllocationsController {
       data: response,
       address,
       crn: response.crn,
+      tier: response.tier,
+      name: response.name,
       convictionId: response.convictionId,
       title: `${response.name} | Summary | Manage a workforce`,
       teamCode,
@@ -104,6 +106,8 @@ export default class AllocationsController {
       title: `${response.name} | Risk | Manage a workforce`,
       data: response,
       crn: response.crn,
+      tier: response.tier,
+      name: response.name,
       convictionId: response.convictionId,
       teamCode,
     })

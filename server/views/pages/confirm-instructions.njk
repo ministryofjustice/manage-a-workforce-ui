@@ -56,9 +56,8 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <div class="govuk-form-group" data-module="moj-add-another">
-
       <form action="{{ '/team/' + teamCode + '/' + crn + '/convictions/' + convictionId + '/allocate/' + staffCode + '/confirm-allocation' }}" method="POST">
+        <div class="govuk-form-group">
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             {{
             instructions({
@@ -71,6 +70,8 @@
             })
             }}
             <p id='copyText'>You can send a copy of these notes to another recipient, for example a case admin officer.</p>
+        </div>
+        <div class="govuk-form-group" data-module="moj-add-another">   
         {% if confirmInstructionForm.person.length === 0 %}
         {% call govukFieldset({
               classes: 'moj-add-another__item',
@@ -170,4 +171,3 @@
 </div>
 
 {% endblock %}
-

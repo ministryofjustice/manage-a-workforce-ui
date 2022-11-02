@@ -44,7 +44,7 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <div data-module="moj-add-another">
+      <div class="govuk-form-group" data-module="moj-add-another">
 
       <form action="{{ '/team/' + teamCode + '/' + crn + '/convictions/' + convictionId + '/allocate/' + staffCode + '/confirm-allocation' }}" method="POST">
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
@@ -132,7 +132,7 @@
                     text: 'Add another person',
                     name: 'action',
                     value: 'add-another-person',
-                    classes: 'govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4'
+                    classes: 'govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4 govuk-!-margin-top-3'
                   }) }}
             </div>
 

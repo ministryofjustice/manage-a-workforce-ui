@@ -9,8 +9,6 @@ export default class SummaryPage extends Page {
 
   summaryHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
-  button = (): PageElement => cy.get('.govuk-button')
-
   personalDetailsTitle = (): PageElement => cy.get('#personal-details > header > h2 ')
 
   sentenceTitle = (): PageElement => cy.get('#sentence > header > h2 ')

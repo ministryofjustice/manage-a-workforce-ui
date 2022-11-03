@@ -12,6 +12,4 @@ export default class RegionPage extends Page {
   radios = (): PageElement => cy.get('.govuk-radios')
 
   radio = (value: string): PageElement => cy.get(`input[value*="${value}"]`)
-
-  button = (): PageElement => cy.get('.govuk-button')
 }

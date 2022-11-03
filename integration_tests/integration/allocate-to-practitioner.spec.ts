@@ -64,7 +64,7 @@ context('Allocate to Practitioner', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/allocate-to-practitioner')
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
-    allocatePage.continueButton().should('exist').and('have.text', 'Continue')
+    allocatePage.button().should('exist').and('have.text', 'Continue')
   })
 
   it('Choose different probation practitioner visible on page', () => {

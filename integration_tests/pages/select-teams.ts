@@ -13,7 +13,5 @@ export default class SelectTeamsPage extends Page {
 
   checkbox = (id: string): PageElement => cy.get(`#${id}`)
 
-  button = (): PageElement => cy.get('.govuk-button')
-
   cancelLink = (): PageElement => cy.get(`a[href*="/regions"]`)
 }

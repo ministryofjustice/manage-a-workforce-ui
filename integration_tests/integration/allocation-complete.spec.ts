@@ -1,5 +1,6 @@
 import Page from '../pages/page'
 import AllocationCompletePage from '../pages/allocation-complete'
+import InstructionsConfirmPage from '../pages/instructions-confirm'
 
 context('Allocate Complete', () => {
   beforeEach(() => {
@@ -13,7 +14,8 @@ context('Allocate Complete', () => {
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
-    cy.get('#instructions').type('Test')
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
     cy.task('stubGetPersonById')
     cy.get('.allocate').click()
@@ -29,7 +31,8 @@ context('Allocate Complete', () => {
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
-    cy.get('#instructions').type('Test')
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
     cy.task('stubGetPersonById')
     cy.get('.allocate').click()
@@ -45,9 +48,11 @@ context('Allocate Complete', () => {
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
-    cy.get('#instructions').type('Test')
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    instructionsConfirmPage.checkbox().check()
     cy.get('#person\\[0\\]\\[email\\]').type('example.admin@justice.gov.uk')
-    cy.get('.moj-add-another__add-button').click()
+    instructionsConfirmPage.addAnotherPersonButton().click()
     cy.get('#person\\[1\\]\\[email\\]').type('example.admin@justice.gov.uk')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails')
     cy.task('stubGetPersonById')
@@ -72,7 +77,9 @@ context('Allocate Complete', () => {
     cy.task('stubGetCaseOverviewNoInitialAppointment')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
-    cy.get('#instructions').type('Test')
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    instructionsConfirmPage.checkbox().check()
     cy.get('#person\\[0\\]\\[email\\]').type('example.admin@justice.gov.uk')
     cy.get('.moj-add-another__add-button').click()
     cy.get('#person\\[1\\]\\[email\\]').type('example.admin@justice.gov.uk')
@@ -91,7 +98,8 @@ context('Allocate Complete', () => {
     cy.task('stubGetCaseOverviewCustodyCase')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
-    cy.get('#instructions').type('Test')
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
     cy.task('stubGetPersonById')
     cy.task('stubGetUnallocatedCase')

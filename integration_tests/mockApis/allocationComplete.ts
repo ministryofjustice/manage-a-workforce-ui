@@ -9,7 +9,8 @@ export default {
         urlPattern: `/team/${teamCode}/offenderManager/OM1/case`,
         bodyPatterns: [
           {
-            equalToJson: '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "emailTo": []}',
+            equalToJson:
+              '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": false, "emailTo": []}',
           },
         ],
       },
@@ -33,7 +34,7 @@ export default {
         bodyPatterns: [
           {
             equalToJson:
-              '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "emailTo": ["example.admin@justice.gov.uk", "example.admin@justice.gov.uk"]}',
+              '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": true, "emailTo": ["example.admin@justice.gov.uk", "example.admin@justice.gov.uk"]}',
           },
         ],
       },

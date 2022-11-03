@@ -38,4 +38,10 @@ export default abstract class Page {
   captionText = (): PageElement => cy.get('.govuk-caption-xl')
 
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
+
+  breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
+
+  button = (): PageElement => cy.get('.govuk-button')
+
+  sectionBreak = (): PageElement => cy.get('.govuk-section-break')
 }

@@ -9,8 +9,6 @@ export default class SummaryPage extends Page {
 
   summaryHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
-  button = (): PageElement => cy.get('.govuk-button')
-
   personalDetailsTitle = (): PageElement => cy.get('#personal-details > header > h2 ')
 
   sentenceTitle = (): PageElement => cy.get('#sentence > header > h2 ')
@@ -19,8 +17,6 @@ export default class SummaryPage extends Page {
     cy.get(`a[href*="/${crn}/convictions/${convictionId}/documents/${documentId}"]`)
 
   caseDetailsTitle = (): PageElement => cy.get('#case-details > header > h2 ')
-
-  breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
 
   allocateCaseButton = (crn, convictionId, teamCode): PageElement =>
     cy.get(`a[href*="/team/${teamCode}/${crn}/convictions/${convictionId}/choose-practitioner"]`)

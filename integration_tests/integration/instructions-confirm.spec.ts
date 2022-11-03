@@ -77,8 +77,12 @@ context('Instructions Confirmation', () => {
     instructionsPage.subHeading().should('contain', 'Review allocation instructions')
     instructionsPage
       .label()
-      .should('contain', 'These notes will automatically be sent to John Doe (john.doe@test.justice.gov.uk)')
+      .should(
+        'contain',
+        "We'll send a copy of these notes automatically to you and John Doe (john.doe@test.justice.gov.uk). Tick the box if you do not want to receive a copy."
+      )
     instructionsPage.hint().should('contain', 'Review your notes for the probation practitioner.')
+    instructionsPage.checkboxText().should('contain', 'I do not want a copy of these notes')
   })
 
   it('another copy text should be visible on page', () => {

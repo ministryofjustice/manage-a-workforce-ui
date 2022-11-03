@@ -129,7 +129,6 @@
     "@types/connect-redis": "0.0.19",
     "@types/cookie-session": "2.0.44",
     "@types/csurf": "1.11.2",
-    "@types/express-request-id": "1.4.3",
     "@types/express-session": "1.17.5",
     "@types/http-errors": "2.0.1",
     "@types/jest": "29.2.1",

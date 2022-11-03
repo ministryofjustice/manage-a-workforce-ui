@@ -9,8 +9,6 @@ export default class AllocateToPractitionerPage extends Page {
 
   subHeading = (): PageElement => cy.get('.govuk-heading-l')
 
-  breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
-
   continueButton = (): PageElement => cy.get('.govuk-button')
 
   link = (): PageElement => cy.get('.govuk-button-group .govuk-link')

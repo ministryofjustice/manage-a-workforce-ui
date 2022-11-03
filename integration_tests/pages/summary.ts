@@ -20,8 +20,6 @@ export default class SummaryPage extends Page {
 
   caseDetailsTitle = (): PageElement => cy.get('#case-details > header > h2 ')
 
-  breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
-
   allocateCaseButton = (crn, convictionId, teamCode): PageElement =>
     cy.get(`a[href*="/team/${teamCode}/${crn}/convictions/${convictionId}/choose-practitioner"]`)
 

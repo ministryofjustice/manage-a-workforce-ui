@@ -288,7 +288,7 @@ export default class AllocationsController {
       teamCode,
       form.instructions,
       form.person.map(person => person.email).filter(email => email),
-      !!form.emailCopy
+      !form.emailCopy
     )
     const personDetails: PersonManager = await this.workloadService.getPersonById(
       res.locals.user.token,

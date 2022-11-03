@@ -12,13 +12,13 @@
 
 {% set emailCheckbox %}
 {{ govukCheckboxes({
-                          name: 'emailCopy',
-                          items: [{
-                              value: 'no',
-                              text: 'I do not want a copy of these notes'
-                          }],
-                          classes: 'govuk-checkboxes--small'
-                      })}}
+    name: 'emailCopy',
+    items: [{
+        value: 'no',
+        text: 'I do not want a copy of these notes'
+    }],
+    classes: 'govuk-checkboxes--small'
+})}}
 {% endset %}
 
 {% block beforeContent %}

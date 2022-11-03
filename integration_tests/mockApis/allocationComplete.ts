@@ -10,7 +10,7 @@ export default {
         bodyPatterns: [
           {
             equalToJson:
-              '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": false, "emailTo": []}',
+              '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": true, "emailTo": []}',
           },
         ],
       },
@@ -34,7 +34,7 @@ export default {
         bodyPatterns: [
           {
             equalToJson:
-              '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": true, "emailTo": ["example.admin@justice.gov.uk", "example.admin@justice.gov.uk"]}',
+              '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": false, "emailTo": ["example.admin@justice.gov.uk", "example.admin@justice.gov.uk"]}',
           },
         ],
       },

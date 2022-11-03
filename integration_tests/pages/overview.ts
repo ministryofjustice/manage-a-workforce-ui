@@ -30,7 +30,5 @@ export default class OverviewPage extends Page {
   totalCasesLink = (): PageElement =>
     cy.get('a[href*="/team/TM1/J678910/convictions/123456789/allocate/OM2/active-cases"]')
 
-  sectionBreak = (): PageElement => cy.get('.govuk-section-break')
-
   tierTable = (): PageElement => cy.get('.govuk-table')
 }

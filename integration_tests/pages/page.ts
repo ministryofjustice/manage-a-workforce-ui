@@ -42,4 +42,6 @@ export default abstract class Page {
   breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
 
   button = (): PageElement => cy.get('.govuk-button')
+
+  sectionBreak = (): PageElement => cy.get('.govuk-section-break')
 }

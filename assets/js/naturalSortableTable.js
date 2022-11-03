@@ -40,9 +40,9 @@ MOJFrontend.NaturalSortableTable.prototype.setNaturalOrder = function () {
   this.naturalSortDirection = 'ascending'
   for (var i = 0; i < headings.length; i++) {
     heading = $(headings[i])
-    if (heading.attr('aria-sort-natual')) {
+    if (heading.attr('aria-sort-natural')) {
       this.naturalSortColumn = i
-      this.naturalSortDirection = heading.attr('aria-sort-natual')
+      this.naturalSortDirection = heading.attr('aria-sort-natural')
       break
     }
   }

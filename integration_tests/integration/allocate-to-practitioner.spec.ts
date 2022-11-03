@@ -21,7 +21,7 @@ context('Allocate to Practitioner', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.radioButtons().first().click()
+    choosePractitionerPage.radio('OM1').click()
     choosePractitionerPage.allocateCaseButton().click()
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
     allocatePage.subHeading().should('have.text', "You're allocating this case to probation practitioner John Doe (PO)")

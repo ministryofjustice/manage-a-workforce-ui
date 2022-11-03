@@ -135,7 +135,7 @@ export default class AllocationsController {
       )
       .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => {
         if (b.gradeOrder === a.gradeOrder) {
-          return b.capacity - a.capacity
+          return a.capacity - b.capacity
         }
         return b.gradeOrder - a.gradeOrder
       })

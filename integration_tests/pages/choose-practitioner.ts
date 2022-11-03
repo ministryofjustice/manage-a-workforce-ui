@@ -17,6 +17,8 @@ export default class ChoosePractitionerPage extends Page {
 
   radioButtons = (): PageElement => cy.get('[type="radio"]')
 
+  radio = (value: string): PageElement => cy.get(`input[value*="${value}"]`)
+
   allocateCaseButton = (): PageElement => cy.get('form > div > button.govuk-button')
 
   clearSelectionButton = (): PageElement => cy.get(`.govuk-button--secondary`)

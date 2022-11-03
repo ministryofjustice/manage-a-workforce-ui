@@ -106,22 +106,22 @@ context('Choose Practitioner', () => {
       .getTable()
       .should('deep.equal', [
         {
-          Name: 'Ben Doe',
-          Grade: 'POProbation Officer',
-          'Workload %': '50%',
-          'Cases in past 7 days': '0',
-          'Community cases': '15',
-          'Custody cases': '20',
-          'Workload details': 'View',
-          Select: '',
-        },
-        {
           Name: 'John Smith',
           Grade: 'POProbation Officer',
           'Workload %': '10%',
           'Cases in past 7 days': '3',
           'Community cases': '25',
           'Custody cases': '15',
+          'Workload details': 'View',
+          Select: '',
+        },
+        {
+          Name: 'Ben Doe',
+          Grade: 'POProbation Officer',
+          'Workload %': '50%',
+          'Cases in past 7 days': '0',
+          'Community cases': '15',
+          'Custody cases': '20',
           'Workload details': 'View',
           Select: '',
         },
@@ -156,7 +156,7 @@ context('Choose Practitioner', () => {
     cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.radioButtons().first().check()
-    choosePractitionerPage.checkedRadioButton().should('have.value', 'OM1')
+    choosePractitionerPage.checkedRadioButton().should('have.value', 'OM3')
     choosePractitionerPage.radioButtons().last().check()
     choosePractitionerPage.checkedRadioButton().should('have.value', 'OM2')
   })
@@ -179,7 +179,7 @@ context('Choose Practitioner', () => {
     cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.radioButtons().first().check()
-    choosePractitionerPage.checkedRadioButton().should('have.value', 'OM1')
+    choosePractitionerPage.checkedRadioButton().should('have.value', 'OM3')
     choosePractitionerPage.clearSelectionButton().click()
     choosePractitionerPage.checkedRadioButton().should('not.exist')
   })

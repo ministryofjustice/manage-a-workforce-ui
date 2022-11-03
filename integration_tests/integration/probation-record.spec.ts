@@ -74,7 +74,7 @@ context('Probation record', () => {
           Sentence: 'ORA Community Order (18 Months)',
           Offence: 'Common assault and battery - 10501',
           'Start date': '5 November 2020',
-          'Probation practitioner': 'Faraz Haynes (PO)',
+          'Probation practitioner': 'Unknown',
         },
         {
           Sentence: 'Adult Custody < 12m (6 Months)',
@@ -116,7 +116,7 @@ context('Probation record', () => {
           Sentence: 'ORA Community Order (18 Months)',
           Offence: 'Common assault and battery - 10501',
           'End date': '5 November 2020',
-          'Probation practitioner': 'Faraz Haynes (PO)',
+          'Probation practitioner': 'Unknown',
         },
         {
           Sentence: 'Fine',

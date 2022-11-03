@@ -38,10 +38,6 @@ export default {
               length: 18,
               lengthUnit: 'Months',
               startDate: '2020-11-05',
-              offenderManager: {
-                name: 'Faraz Haynes',
-                grade: 'PO',
-              },
               offences: [
                 {
                   description: 'Common assault and battery - 10501',
@@ -71,10 +67,6 @@ export default {
               length: 18,
               lengthUnit: 'Months',
               endDate: '2020-11-05',
-              offenderManager: {
-                name: 'Faraz Haynes',
-                grade: 'PO',
-              },
               offences: [
                 {
                   description: 'Common assault and battery - 10501',

@@ -31,6 +31,8 @@ export default class Order {
     if (offenderManager) {
       const grade = offenderManager.grade ? ` (${offenderManager.grade})` : ''
       this.probationPractitioner = `${offenderManager.name}${grade}`
+    } else {
+      this.probationPractitioner = 'Unknown'
     }
   }
 }

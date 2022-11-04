@@ -1,6 +1,6 @@
 import Page from '../pages/page'
 import RegionPage from '../pages/region'
-import ProbationDeliveryUnitPage from '../pages/probation-delivery-unit'
+import ProbationDeliveryUnitPage from '../pages/probationDeliveryUnit'
 
 context('Select region', () => {
   beforeEach(() => {

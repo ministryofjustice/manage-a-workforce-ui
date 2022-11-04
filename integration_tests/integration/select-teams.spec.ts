@@ -1,5 +1,5 @@
 import Page from '../pages/page'
-import SelectTeamsPage from '../pages/select-teams'
+import SelectTeamsPage from '../pages/teams'
 import RegionPage from '../pages/region'
 
 context('Select teams', () => {

@@ -50,9 +50,9 @@ context('Allocate Complete', () => {
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     instructionsConfirmPage.checkbox().check()
-    cy.get('#person\\[0\\]\\[email\\]').type('example.admin@justice.gov.uk')
+    cy.get('#person\\[0\\]\\[email\\]').type('example.one@justice.gov.uk')
     instructionsConfirmPage.addAnotherPersonButton().click()
-    cy.get('#person\\[1\\]\\[email\\]').type('example.admin@justice.gov.uk')
+    cy.get('#person\\[1\\]\\[email\\]').type('example.two@justice.gov.uk')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails')
     cy.task('stubGetPersonById')
     cy.task('stubGetUnallocatedCase')
@@ -66,7 +66,7 @@ context('Allocate Complete', () => {
       .and('contain', "you'll need to create a Management Oversight contact separately")
       .and(
         'contain',
-        'John Doe (john.doe@test.justice.gov.uk) has been notified, and we have sent a copy of your allocation instructions to example.admin@justice.gov.uk, example.admin@justice.gov.uk'
+        'John Doe (john.doe@test.justice.gov.uk) has been notified, and we have sent a copy of your allocation instructions to example.one@justice.gov.uk, example.two@justice.gov.uk'
       )
       .and('contain', 'the initial appointment is scheduled for 1 September 2021')
   })
@@ -78,11 +78,7 @@ context('Allocate Complete', () => {
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
-    instructionsConfirmPage.checkbox().check()
-    cy.get('#person\\[0\\]\\[email\\]').type('example.admin@justice.gov.uk')
-    cy.get('.moj-add-another__add-button').click()
-    cy.get('#person\\[1\\]\\[email\\]').type('example.admin@justice.gov.uk')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails')
+    cy.task('stubAllocateOffenderManagerToCase')
     cy.task('stubGetPersonById')
     cy.task('stubGetUnallocatedCase')
     cy.get('.allocate').click()

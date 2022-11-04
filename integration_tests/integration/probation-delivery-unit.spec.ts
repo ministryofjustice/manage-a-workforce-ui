@@ -5,7 +5,6 @@ import SelectTeamsPage from '../pages/teams'
 
 context('Select Probation Delivery Unit', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
     cy.task('stubGetRegionDetails')
     cy.signIn()

@@ -5,7 +5,6 @@ import config from '../../server/config'
 context('Unallocated cases by team', () => {
   let unallocatedPage
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
     cy.signIn()
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })

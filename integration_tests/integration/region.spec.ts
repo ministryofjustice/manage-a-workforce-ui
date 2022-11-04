@@ -4,7 +4,6 @@ import ProbationDeliveryUnitPage from '../pages/probationDeliveryUnit'
 
 context('Select region', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
     cy.task('stubGetAllRegions')
     cy.signIn()

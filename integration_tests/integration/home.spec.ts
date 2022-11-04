@@ -4,7 +4,6 @@ import Page from '../pages/page'
 
 context('Unallocated', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
   })
 

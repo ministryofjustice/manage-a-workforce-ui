@@ -4,7 +4,6 @@ import NotFoundPage from '../pages/notFound'
 
 context('Case Already Allocated', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
     cy.task('stubNotFoundUnallocatedCase')
     cy.task('stubGetEventManagerDetails')

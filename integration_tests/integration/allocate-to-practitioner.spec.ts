@@ -4,7 +4,6 @@ import ChoosePractitionerPage from '../pages/choosePractitioner'
 
 context('Allocate to Practitioner', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
     cy.task('stubGetPotentialOffenderManagerWorkload')
     cy.task('stubGetCurrentlyManagedCaseOverview')

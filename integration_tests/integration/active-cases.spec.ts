@@ -3,7 +3,6 @@ import ActiveCasesPage from '../pages/activeCases'
 
 context('Active Cases', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
   })
 

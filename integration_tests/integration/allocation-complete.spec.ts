@@ -4,7 +4,6 @@ import InstructionsConfirmPage from '../pages/confirmInstructions'
 
 context('Allocate Complete', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
   })
 

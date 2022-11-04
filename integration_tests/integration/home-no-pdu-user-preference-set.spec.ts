@@ -3,7 +3,6 @@ import Page from '../pages/page'
 
 context('No PDU user preference set', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
     cy.task('stubUserPreferencePDU', [])
     cy.task('stubGetAllRegions')

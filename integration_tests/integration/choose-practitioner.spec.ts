@@ -4,7 +4,6 @@ import SummaryPage from '../pages/summary'
 
 context('Choose Practitioner', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
     cy.task('stubGetTeamDetails', {
       code: 'TM1',

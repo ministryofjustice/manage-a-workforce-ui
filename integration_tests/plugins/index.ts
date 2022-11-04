@@ -25,19 +25,14 @@ import probationEstate from '../mockApis/probationEstate'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
-    reset: async () => {
-      return Promise.all([
+    stubSetup: async () => {
+      await Promise.all([
         resetAllocationStubs(),
         resetWorkloadStubs(),
         resetProbationEstateStubs(),
         resetUserPreferenceStubs(),
       ])
-    },
-
-    getSignInUrl: auth.getSignInUrl,
-
-    stubSetup: () =>
-      Promise.all([
+      return Promise.all([
         auth.stubSignIn(),
         auth.stubAuthUser(),
         userPreference.stubUserPreferencePDU(),
@@ -76,7 +71,8 @@ export default (on: (string, Record) => void): void => {
           name: 'Wrexham - Team 1',
         }),
         probationEstate.stubGetPduDetails(),
-      ]),
+      ])
+    },
 
     ...auth,
     ...tokenVerification,

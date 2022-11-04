@@ -3,7 +3,6 @@ import InstructionsConfirmPage from '../pages/confirmInstructions'
 
 context('Instructions Confirmation', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
   })
 

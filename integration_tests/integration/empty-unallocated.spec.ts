@@ -2,7 +2,6 @@ import UnallocatedPage from '../pages/unallocatedCasesByTeam'
 
 context('No unallocated cases', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1', response: [] })
     cy.signIn()

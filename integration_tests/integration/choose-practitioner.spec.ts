@@ -1,5 +1,5 @@
 import Page from '../pages/page'
-import ChoosePractitionerPage from '../pages/choose-practitioner'
+import ChoosePractitionerPage from '../pages/choosePractitioner'
 import SummaryPage from '../pages/summary'
 
 context('Choose Practitioner', () => {

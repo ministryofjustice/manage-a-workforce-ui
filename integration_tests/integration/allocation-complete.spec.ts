@@ -1,6 +1,6 @@
 import Page from '../pages/page'
-import AllocationCompletePage from '../pages/allocation-complete'
-import InstructionsConfirmPage from '../pages/instructions-confirm'
+import AllocationCompletePage from '../pages/allocationComplete'
+import InstructionsConfirmPage from '../pages/confirmInstructions'
 
 context('Allocate Complete', () => {
   beforeEach(() => {

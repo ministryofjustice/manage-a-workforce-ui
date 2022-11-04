@@ -1,4 +1,4 @@
-import UnallocatedPage from '../pages/unallocated-by-team'
+import UnallocatedPage from '../pages/unallocatedCasesByTeam'
 
 context('No unallocated cases', () => {
   beforeEach(() => {

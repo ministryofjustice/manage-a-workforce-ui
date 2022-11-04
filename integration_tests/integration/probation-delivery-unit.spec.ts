@@ -1,7 +1,7 @@
 import Page from '../pages/page'
 import RegionPage from '../pages/region'
-import ProbationDeliveryUnitPage from '../pages/probation-delivery-unit'
-import SelectTeamsPage from '../pages/select-teams'
+import ProbationDeliveryUnitPage from '../pages/probationDeliveryUnit'
+import SelectTeamsPage from '../pages/teams'
 
 context('Select Probation Delivery Unit', () => {
   beforeEach(() => {

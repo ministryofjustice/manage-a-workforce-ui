@@ -1,6 +1,6 @@
-import AllocateCasesByTeamPage from '../pages/allocate-cases-by-team'
+import AllocateCasesByTeamPage from '../pages/allocateCasesByTeam'
 import Page from '../pages/page'
-import SelectTeamsPage from '../pages/select-teams'
+import SelectTeamsPage from '../pages/teams'
 
 context('Select teams and show allocate cases by team', () => {
   let allocateCasesByTeamPage

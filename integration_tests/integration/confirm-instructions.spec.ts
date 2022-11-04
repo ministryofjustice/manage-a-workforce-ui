@@ -1,5 +1,5 @@
 import Page from '../pages/page'
-import InstructionsConfirmPage from '../pages/instructions-confirm'
+import InstructionsConfirmPage from '../pages/confirmInstructions'
 
 context('Instructions Confirmation', () => {
   beforeEach(() => {

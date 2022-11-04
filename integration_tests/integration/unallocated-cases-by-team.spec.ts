@@ -1,4 +1,4 @@
-import UnallocatedByTeamPage from '../pages/unallocated-by-team'
+import UnallocatedByTeamPage from '../pages/unallocatedCasesByTeam'
 
 import config from '../../server/config'
 

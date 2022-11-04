@@ -1,6 +1,6 @@
 import Page from '../pages/page'
-import AllocateToPractitionerPage from '../pages/allocate-to-practitioner'
-import ChoosePractitionerPage from '../pages/choose-practitioner'
+import AllocateToPractitionerPage from '../pages/allocateToPractitioner'
+import ChoosePractitionerPage from '../pages/choosePractitioner'
 
 context('Allocate to Practitioner', () => {
   beforeEach(() => {

@@ -13,8 +13,6 @@ export default class OverviewPage extends Page {
 
   mediumHeading = (): PageElement => cy.get('h3.govuk-heading-m')
 
-  subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
-
   summaryText = (): PageElement => cy.get('.govuk-details__summary-text')
 
   overCapacityCard = (): PageElement => cy.get('.over-capacity')

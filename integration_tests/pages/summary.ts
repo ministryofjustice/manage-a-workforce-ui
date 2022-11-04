@@ -5,8 +5,6 @@ export default class SummaryPage extends Page {
     super('Dylan Adam Armstrong')
   }
 
-  subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
-
   summaryHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
   personalDetailsTitle = (): PageElement => cy.get('#personal-details > header > h2 ')
@@ -20,6 +18,4 @@ export default class SummaryPage extends Page {
 
   allocateCaseButton = (crn, convictionId, teamCode): PageElement =>
     cy.get(`a[href*="/team/${teamCode}/${crn}/convictions/${convictionId}/choose-practitioner"]`)
-
-  instructionsTextArea = (): PageElement => cy.get(`#instructions`)
 }

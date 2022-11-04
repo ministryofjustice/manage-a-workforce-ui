@@ -31,6 +31,10 @@ export default abstract class Page {
 
   signOut = (): PageElement => cy.get("[href='/sign-out']")
 
+  subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
+
+  subHeading = (): PageElement => cy.get('.govuk-heading-l')
+
   highlightedTab = (): PageElement => cy.get('a[aria-current*="page"]')
 
   errorSummary = (): PageElement => cy.get('.govuk-error-summary')
@@ -44,4 +48,6 @@ export default abstract class Page {
   button = (): PageElement => cy.get('.govuk-button')
 
   sectionBreak = (): PageElement => cy.get('.govuk-section-break')
+
+  instructionsTextArea = (): PageElement => cy.get(`#instructions`)
 }

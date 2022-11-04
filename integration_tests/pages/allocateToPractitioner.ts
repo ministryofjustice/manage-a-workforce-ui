@@ -5,8 +5,6 @@ export default class AllocateToPractitionerPage extends Page {
     super('Dylan Adam Armstrong')
   }
 
-  subHeading = (): PageElement => cy.get('.govuk-heading-l')
-
   link = (): PageElement => cy.get('.govuk-button-group .govuk-link')
 
   capacityImpactStatement = (): PageElement => cy.get('#impact-statement')

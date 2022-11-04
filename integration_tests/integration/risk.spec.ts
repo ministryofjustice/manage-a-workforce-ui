@@ -5,7 +5,6 @@ import ProbationRecordPage from '../pages/probationRecord'
 
 context('Risk', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
   })
 

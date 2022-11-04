@@ -4,7 +4,6 @@ import RegionPage from '../pages/region'
 
 context('Select teams', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
     cy.signIn()
     cy.visit('/probationDeliveryUnit/PDU1/select-teams')

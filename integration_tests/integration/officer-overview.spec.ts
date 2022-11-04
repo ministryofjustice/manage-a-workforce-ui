@@ -3,7 +3,6 @@ import OverviewPage from '../pages/overview'
 
 context('Overview', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
     cy.task('stubGetOverview')
   })

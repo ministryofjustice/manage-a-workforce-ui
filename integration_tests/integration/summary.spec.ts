@@ -5,7 +5,6 @@ import RiskPage from '../pages/risk'
 
 context('Summary', () => {
   beforeEach(() => {
-    cy.task('reset')
     cy.task('stubSetup')
     cy.task('stubGetUnallocatedCase')
     cy.signIn()

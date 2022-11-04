@@ -7,7 +7,6 @@ context('Select teams and show allocate cases by team', () => {
 
   context('Single teams', () => {
     beforeEach(() => {
-      cy.task('reset')
       cy.task('stubSetup')
       cy.task('stubGetPduDetails')
       cy.task('stubUserPreferenceTeams')
@@ -61,7 +60,6 @@ context('Select teams and show allocate cases by team', () => {
 
   context('Multiple teams', () => {
     beforeEach(() => {
-      cy.task('reset')
       cy.task('stubSetup')
       cy.task('stubGetPduDetails')
       cy.task('stubGetUnallocatedCasesByTeams', {

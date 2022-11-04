@@ -42,7 +42,7 @@ context('Allocate Complete', () => {
       .should('have.text', '\n    Dylan Adam Armstrong (J678910) has been allocated to John Doe (PO)\n  ')
   })
 
-  it('What happens next content visible on page', () => {
+  it('What happens next with multiple emails supplied, opting out of copy content visible on page', () => {
     cy.task('stubGetStaffByCode')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
@@ -53,7 +53,7 @@ context('Allocate Complete', () => {
     cy.get('#person\\[0\\]\\[email\\]').type('example.one@justice.gov.uk')
     instructionsConfirmPage.addAnotherPersonButton().click()
     cy.get('#person\\[1\\]\\[email\\]').type('example.two@justice.gov.uk')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails')
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
     cy.task('stubGetPersonById')
     cy.task('stubGetUnallocatedCase')
     cy.get('.allocate').click()
@@ -69,6 +69,65 @@ context('Allocate Complete', () => {
         'John Doe (john.doe@test.justice.gov.uk) has been notified, and we have sent a copy of your allocation instructions to example.one@justice.gov.uk, example.two@justice.gov.uk'
       )
       .and('contain', 'the initial appointment is scheduled for 1 September 2021')
+  })
+
+  it('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
+    cy.task('stubGetStaffByCode')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    cy.get('#person\\[0\\]\\[email\\]').type('example.one@justice.gov.uk')
+    instructionsConfirmPage.addAnotherPersonButton().click()
+    cy.get('#person\\[1\\]\\[email\\]').type('example.two@justice.gov.uk')
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', true)
+    cy.task('stubGetPersonById')
+    cy.task('stubGetUnallocatedCase')
+    cy.get('.allocate').click()
+    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
+    allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')
+    allocationCompletePage.mediumHeading().should('have.text', 'What happens next')
+    allocationCompletePage
+      .bulletedList()
+      .should(
+        'contain',
+        'John Doe (john.doe@test.justice.gov.uk) has been notified, and we have sent a copy of your allocation instructions to you and example.one@justice.gov.uk, example.two@justice.gov.uk'
+      )
+  })
+
+  it('What happens next with no additional emails supplied, opting in of copy content visible on page', () => {
+    cy.task('stubGetStaffByCode')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    cy.task('stubAllocateOffenderManagerToCase')
+    cy.task('stubGetPersonById')
+    cy.get('.allocate').click()
+    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
+    allocationCompletePage
+      .bulletedList()
+      .should(
+        'contain',
+        "John Doe (john.doe@test.justice.gov.uk) has been notified, and we've sent you a copy of your allocation instructions"
+      )
+  })
+
+  it('What happens next with no additional emails supplied, opting out of copy content visible on page', () => {
+    cy.task('stubGetStaffByCode')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.checkbox().check()
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    cy.task('stubAllocateOffenderManagerToCase', false)
+    cy.task('stubGetPersonById')
+    cy.get('.allocate').click()
+    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
+    allocationCompletePage.bulletedList().should('contain', 'John Doe (john.doe@test.justice.gov.uk) has been notified')
   })
 
   it('When no Initial appointment date booked, Initial appointment date due by date visible on page', () => {

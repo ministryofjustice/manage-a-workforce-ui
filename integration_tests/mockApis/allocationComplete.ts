@@ -2,15 +2,14 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForWorkload } from './wiremock'
 
 export default {
-  stubAllocateOffenderManagerToCase: (teamCode = 'TM1'): SuperAgentRequest => {
+  stubAllocateOffenderManagerToCase: (sendCopy = true): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/${teamCode}/offenderManager/OM1/case`,
+        urlPattern: `/team/TM1/offenderManager/OM1/case`,
         bodyPatterns: [
           {
-            equalToJson:
-              '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": true, "emailTo": []}',
+            equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": ${sendCopy}, "emailTo": []}`,
           },
         ],
       },
@@ -26,15 +25,14 @@ export default {
     })
   },
 
-  stubAllocateOffenderManagerToCaseMultipleEmails: (teamCode = 'TM1'): SuperAgentRequest => {
+  stubAllocateOffenderManagerToCaseMultipleEmails: (sendCopy = false): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/${teamCode}/offenderManager/OM1/case`,
+        urlPattern: '/team/TM1/offenderManager/OM1/case',
         bodyPatterns: [
           {
-            equalToJson:
-              '{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": false, "emailTo": ["example.one@justice.gov.uk", "example.two@justice.gov.uk"]}',
+            equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": ${sendCopy}, "emailTo": ["example.one@justice.gov.uk", "example.two@justice.gov.uk"]}`,
           },
         ],
       },

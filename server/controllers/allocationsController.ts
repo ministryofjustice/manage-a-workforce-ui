@@ -280,6 +280,8 @@ export default class AllocationsController {
       req.flash('errors', errors)
       return this.getConfirmInstructions(req, res, crn, staffCode, convictionId, teamCode)
     }
+    const sendEmailCopyToAllocatingOfficer = !form.emailCopy
+    const otherEmails = form.person.map(person => person.email).filter(email => email)
     const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
       crn,
@@ -287,8 +289,8 @@ export default class AllocationsController {
       convictionId,
       teamCode,
       form.instructions,
-      form.person.map(person => person.email).filter(email => email),
-      !form.emailCopy
+      otherEmails,
+      sendEmailCopyToAllocatingOfficer
     )
     const personDetails: PersonManager = await this.workloadService.getPersonById(
       res.locals.user.token,
@@ -311,11 +313,12 @@ export default class AllocationsController {
       crn,
       convictionId,
       personDetails,
-      addAnotherEmail: form.person,
+      otherEmails,
       initialAppointment: caseOverview.initialAppointment,
       initialAppointmentDue: caseOverview.initialAppointmentDue,
       caseType: caseOverviewResponse.caseType,
       teamCode,
+      sendEmailCopyToAllocatingOfficer,
     })
   }
 }

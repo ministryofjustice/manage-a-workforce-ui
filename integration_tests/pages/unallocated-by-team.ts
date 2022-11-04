@@ -21,8 +21,6 @@ export default class UnallocatedByTeamPage extends Page {
 
   otherCasesHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
-  footer = (): PageElement => cy.get('.govuk-footer ')
-
   secondaryText = (): PageElement => cy.get('.maw-secondary')
 
   warningIcon = (): PageElement => cy.get('.govuk-warning-text__icon')

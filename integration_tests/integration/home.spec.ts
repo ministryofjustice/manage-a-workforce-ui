@@ -1,4 +1,4 @@
-import AllocateCasesByTeamPage from '../pages/allocate-cases-by-team'
+import AllocateCasesByTeamPage from '../pages/allocateCasesByTeam'
 import AuthSignInPage from '../pages/authSignIn'
 import Page from '../pages/page'
 

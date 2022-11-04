@@ -1,5 +1,5 @@
 import Page from '../pages/page'
-import AllocateToPractitionerPage from '../pages/allocate-to-practitioner'
+import AllocateToPractitionerPage from '../pages/allocateToPractitioner'
 import ChoosePractitionerPage from '../pages/choose-practitioner'
 
 context('Allocate to Practitioner', () => {

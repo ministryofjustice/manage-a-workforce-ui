@@ -1,4 +1,4 @@
-import AllocateCasesByTeamPage from '../pages/allocate-cases-by-team'
+import AllocateCasesByTeamPage from '../pages/allocateCasesByTeam'
 import Page from '../pages/page'
 import SelectTeamsPage from '../pages/select-teams'
 

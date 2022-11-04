@@ -31,6 +31,8 @@ export default abstract class Page {
 
   signOut = (): PageElement => cy.get("[href='/sign-out']")
 
+  subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
+
   highlightedTab = (): PageElement => cy.get('a[aria-current*="page"]')
 
   errorSummary = (): PageElement => cy.get('.govuk-error-summary')

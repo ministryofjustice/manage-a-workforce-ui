@@ -9,8 +9,6 @@ export default class UnallocatedByTeamPage extends Page {
 
   primaryNav = (): PageElement => cy.get('ul.moj-primary-navigation__list').children()
 
-  subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
-
   navLink = (linkId: string): PageElement => cy.get(`#${linkId}`).invoke('attr', 'href')
 
   subNavLink = (): PageElement => cy.get('a.moj-sub-navigation__link')

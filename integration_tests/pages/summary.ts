@@ -5,8 +5,6 @@ export default class SummaryPage extends Page {
     super('Dylan Adam Armstrong')
   }
 
-  subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
-
   summaryHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
   personalDetailsTitle = (): PageElement => cy.get('#personal-details > header > h2 ')

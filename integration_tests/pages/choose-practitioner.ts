@@ -5,8 +5,6 @@ export default class ChoosePractitionerPage extends Page {
     super('Dylan Adam Armstrong')
   }
 
-  subHeading = (): PageElement => cy.get('.govuk-heading-l')
-
   warningText = (): PageElement => cy.get('.govuk-warning-text')
 
   warningIcon = (): PageElement => cy.get('.govuk-warning-text__icon')

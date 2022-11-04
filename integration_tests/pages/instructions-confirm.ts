@@ -5,8 +5,6 @@ export default class InstructionsConfirmPage extends Page {
     super('Dylan Adam Armstrong')
   }
 
-  subHeading = (): PageElement => cy.get('.govuk-heading-l')
-
   continueButton = (convictionId): PageElement => cy.get(`#${convictionId}`)
 
   label = (): PageElement => cy.get('.govuk-label')

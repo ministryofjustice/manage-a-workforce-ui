@@ -33,6 +33,8 @@ export default abstract class Page {
 
   subNav = (): PageElement => cy.get('ul.moj-sub-navigation__list').children()
 
+  subHeading = (): PageElement => cy.get('.govuk-heading-l')
+
   highlightedTab = (): PageElement => cy.get('a[aria-current*="page"]')
 
   errorSummary = (): PageElement => cy.get('.govuk-error-summary')

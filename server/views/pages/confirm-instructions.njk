@@ -15,7 +15,7 @@
     name: 'emailCopy',
     items: [{
         value: 'no',
-        text: 'I do not want a copy of these notes'
+        text: 'Tick the box if you do not want to receive a copy.'
     }],
     classes: 'govuk-checkboxes--small'
 })}}
@@ -62,14 +62,14 @@
             {{
             instructions({
                 titleText: "Review allocation instructions",
-                html: ('<p>We\'ll send a copy of these notes automatically to you and <br><strong>' + data.forename +  ' ' + data.surname + '</strong> (<em>' + data.email + '</em>). Tick the box if you do not want to receive a copy.</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
+                html: ('<p>We\'ll send a copy of these notes to you and <br><strong>' + data.forename +  ' ' + data.surname + '</strong> (<em>' + data.email + '</em>). Tick the box if you do not want to receive a copy.</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
                 hintText: "Review your notes for the probation practitioner.",
                 convictionId: convictionId,
                 inGridRow: false,
                 rows: 20
             })
             }}
-            <p id='copyText'>You can send a copy of these notes to another recipient, for example a case admin officer.</p>
+            <p id='copyText'>You can send a copy of these notes to another person, for example a case admin officer.</p>
         </div>
         <div class="govuk-form-group" data-module="moj-add-another">   
         {% if confirmInstructionForm.person.length === 0 %}

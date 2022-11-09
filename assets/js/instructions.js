@@ -10,7 +10,7 @@ $(document).ready(function () {
     document.getElementById(`instructions`).value = localStorage.getItem(`instructions-save-${convictionId}`)
   }
 
-  if ($('.allocate').click) {
+  $('.allocate').click(function () {
     localStorage.removeItem(`instructions-save-${convictionId}`)
-  }
+  })
 })

@@ -39,3 +39,9 @@
     </div>
 {% endblock %}
 
+
+{% block javascripts %}
+    <script>
+        localStorage.removeItem('instructions-save-{{ convictionId }}')
+    </script>
+{% endblock %}

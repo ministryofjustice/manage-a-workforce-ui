@@ -5,14 +5,15 @@ import InstructionsConfirmPage from '../pages/confirmInstructions'
 context('Allocate Complete', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubGetStaffByCode')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
   })
 
   it('return to unallocated cases of team link exists', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetPotentialOffenderManagerWorkload')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
+
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
@@ -26,10 +27,6 @@ context('Allocate Complete', () => {
   })
 
   it('panel visible on page with correct information', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
@@ -43,16 +40,12 @@ context('Allocate Complete', () => {
   })
 
   it('What happens next with multiple emails supplied, opting out of copy content visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     instructionsConfirmPage.checkbox().check()
-    cy.get('#person\\[0\\]\\[email\\]').type('example.one@justice.gov.uk')
+    instructionsConfirmPage.emailInput(0).type('example.one@justice.gov.uk')
     instructionsConfirmPage.addAnotherPersonButton().click()
-    cy.get('#person\\[1\\]\\[email\\]').type('example.two@justice.gov.uk')
+    instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
     cy.task('stubGetPersonById')
     cy.task('stubGetUnallocatedCase')
@@ -72,15 +65,11 @@ context('Allocate Complete', () => {
   })
 
   it('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
-    cy.get('#person\\[0\\]\\[email\\]').type('example.one@justice.gov.uk')
+    instructionsConfirmPage.emailInput(0).type('example.one@justice.gov.uk')
     instructionsConfirmPage.addAnotherPersonButton().click()
-    cy.get('#person\\[1\\]\\[email\\]').type('example.two@justice.gov.uk')
+    instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', true)
     cy.task('stubGetPersonById')
     cy.task('stubGetUnallocatedCase')
@@ -97,10 +86,6 @@ context('Allocate Complete', () => {
   })
 
   it('What happens next with no additional emails supplied, opting in of copy content visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
@@ -116,10 +101,6 @@ context('Allocate Complete', () => {
   })
 
   it('What happens next with no additional emails supplied, opting out of copy content visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.checkbox().check()
     instructionsConfirmPage.instructionsTextArea().type('Test')
@@ -131,10 +112,8 @@ context('Allocate Complete', () => {
   })
 
   it('When no Initial appointment date booked, Initial appointment date due by date visible on page', () => {
-    cy.task('stubGetStaffByCode')
     cy.task('stubGetCaseOverviewNoInitialAppointment')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
+    cy.reload()
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
@@ -148,10 +127,8 @@ context('Allocate Complete', () => {
   })
 
   it('When a custody case, Initial appointment date not needed visible on page', () => {
-    cy.task('stubGetStaffByCode')
     cy.task('stubGetCaseOverviewCustodyCase')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
+    cy.reload()
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')

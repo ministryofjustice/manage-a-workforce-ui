@@ -25,6 +25,24 @@ export default {
     })
   },
 
+  stubErrorAllocateOffenderManagerToCase: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'POST',
+        urlPattern: `/team/TM1/offenderManager/OM1/case`,
+        bodyPatterns: [
+          {
+            equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": true, "emailTo": []}`,
+          },
+        ],
+      },
+      response: {
+        status: 500,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      },
+    })
+  },
+
   stubAllocateOffenderManagerToCaseMultipleEmails: (sendCopy = false): SuperAgentRequest => {
     return stubForWorkload({
       request: {

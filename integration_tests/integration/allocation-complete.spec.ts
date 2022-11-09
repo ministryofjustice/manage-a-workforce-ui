@@ -1,6 +1,8 @@
 import Page from '../pages/page'
 import AllocationCompletePage from '../pages/allocationComplete'
 import InstructionsConfirmPage from '../pages/confirmInstructions'
+import ErrorPage from '../pages/error'
+import SummaryPage from '../pages/summary'
 
 context('Allocate Complete', () => {
   beforeEach(() => {
@@ -140,5 +142,17 @@ context('Allocate Complete', () => {
       .bulletedList()
       .should('contain', 'no initial appointment needed (custody case)')
       .and('contain', 'John Doe (john.doe@test.justice.gov.uk) has been notified')
+  })
+
+  it('must keep instruction text after an errored allocation', () => {
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    cy.task('stubErrorAllocateOffenderManagerToCase')
+    cy.get('.allocate').click()
+    Page.verifyOnPage(ErrorPage)
+    cy.task('stubGetUnallocatedCase')
+    cy.visit('/team/TM1/J678910/convictions/123456789/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.instructionsTextArea().should('have.value', 'Test')
   })
 })

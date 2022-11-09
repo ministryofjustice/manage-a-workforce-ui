@@ -25,4 +25,6 @@ export default class InstructionsConfirmPage extends Page {
   checkboxText = (): PageElement => cy.get('.govuk-checkboxes__label')
 
   checkbox = (): PageElement => cy.get('#emailCopy')
+
+  emailInput = (index): PageElement => cy.get(`#person\\[${index}\\]\\[email\\]`)
 }

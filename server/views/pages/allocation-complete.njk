@@ -29,7 +29,7 @@
                 {% elseif initialAppointment %}
                     <li>the initial appointment is scheduled for <strong>{{ initialAppointment | dateFormat }}</strong></li>
                 {% else %}
-                    <li>the initial appointment needs to be scheduled by <strong>{{ initialAppointmentDue }}</strong></li>
+                    <li>no date found for the initial appointment, please check with your team</li>
                 {% endif %}
             </ul>
 

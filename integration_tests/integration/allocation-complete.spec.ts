@@ -115,7 +115,7 @@ context('Allocate Complete', () => {
     expect(localStorage.getItem('instructions-save-123456789')).to.be.null
   })
 
-  it('When no Initial appointment date booked, Initial appointment date due by date visible on page', () => {
+  it('When no Initial appointment date booked, Initial check with your team visible on page', () => {
     cy.task('stubGetCaseOverviewNoInitialAppointment')
     cy.reload()
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -127,7 +127,7 @@ context('Allocate Complete', () => {
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
       .bulletedList()
-      .should('contain', 'the initial appointment needs to be scheduled by 8 September 2021')
+      .should('contain', 'no date found for the initial appointment, please check with your team')
   })
 
   it('When a custody case, Initial appointment date not needed visible on page', () => {

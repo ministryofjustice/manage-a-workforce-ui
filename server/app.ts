@@ -17,7 +17,6 @@ import setUpWebSecurity from './middleware/setUpWebSecurity'
 import setUpWebSession from './middleware/setUpWebSession'
 
 import unauthenticatedRoutes from './routes/unauthenticated'
-import applyBankHols from './utils/bankHolidays'
 
 import routes from './routes'
 import type { Services } from './services'
@@ -43,8 +42,6 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
   app.use(getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService))
-
-  applyBankHols()
 
   app.use(routes(services))
 

@@ -1,5 +1,3 @@
-import moment from 'moment-business-days'
-
 const production = process.env.NODE_ENV === 'production'
 
 function get<T>(name: string, fallback: T, options = { requireInProduction: false }): T | string {
@@ -105,6 +103,5 @@ export default {
   },
   domain: get('INGRESS_URL', 'http://127.0.0.1:3000', requiredInProduction),
   dateFormat: 'D MMMM YYYY',
-  currentDate: () => get('CURRENT_DATE', moment().format('YYYY-MM-DD')),
   googleAnalyticsKey: get('GOOGLE_ANALYTICS_KEY', null),
 }

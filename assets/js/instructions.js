@@ -1,12 +1,10 @@
 $(document).ready(function () {
   const convictionId = $('.allocate').attr('id')
+  const instructionsItem = `instructions-save-${convictionId}`
   window.onbeforeunload = function () {
-    const instructions = $(`#instructions`).val()
-    if ($.trim(instructions) !== '') {
-      localStorage.setItem(`instructions-save-${convictionId}`, instructions)
-    }
+    localStorage.setItem(instructionsItem, document.getElementById(`instructions`).value)
   }
-  if (localStorage[`instructions-save-${convictionId}`]) {
-    document.getElementById(`instructions`).value = localStorage.getItem(`instructions-save-${convictionId}`)
+  if (localStorage[instructionsItem]) {
+    document.getElementById(`instructions`).value = localStorage.getItem(instructionsItem)
   }
 })

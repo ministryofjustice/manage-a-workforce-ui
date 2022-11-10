@@ -41,7 +41,7 @@
 
 
 {% block javascripts %}
-    <script>
+    <script nonce="{{ cspNonce }}">
         localStorage.removeItem('instructions-save-{{ convictionId }}')
     </script>
 {% endblock %}

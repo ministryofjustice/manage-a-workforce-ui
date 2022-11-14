@@ -12,7 +12,6 @@ export default interface Allocation {
   sentenceDate: string
   initialAppointment: string
   status: string
-  previousConvictionEndDate: string
   offenderManager: OffenderManager
   gender: string
   dateOfBirth: string

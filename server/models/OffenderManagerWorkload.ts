@@ -8,4 +8,5 @@ export default interface OffenderManagerWorkload {
   code: string
   staffId: number
   totalCasesInLastWeek: number
+  email: string
 }

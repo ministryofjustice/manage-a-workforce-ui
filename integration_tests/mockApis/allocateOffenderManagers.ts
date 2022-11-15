@@ -28,6 +28,7 @@ export default {
               code: 'OM3',
               staffId: 123455423,
               totalCasesInLastWeek: 3,
+              email: 'john@email.com',
             },
             {
               forename: 'Ben',
@@ -50,6 +51,7 @@ export default {
               code: 'OM2',
               staffId: 6789,
               totalCasesInLastWeek: 6,
+              email: 'sally@email.com',
             },
           ],
         },

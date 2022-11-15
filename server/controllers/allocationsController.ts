@@ -129,7 +129,8 @@ export default class AllocationsController {
             om.totalCustodyCases,
             om.code,
             om.staffId,
-            om.totalCasesInLastWeek
+            om.totalCasesInLastWeek,
+            om.email
           )
       )
       .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => {

@@ -90,7 +90,7 @@
         },
         { text: ('<a href="/team/'+ teamCode +'/' + crn + '/convictions/' + convictionId + '/allocate/' + item.code + '/officer-view" class="govuk-link--no-visited-state" aria-label="View">' + "View" + '</a>' ) | safe, classes: "govuk-!-text-align-centre"},
         { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + item.code + '" name="allocatedOfficer" type="radio" value="' + item.code + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + item.code + '"></label></div></div>')
-        }
+        if item.email}
     ] -%}
     {{ tableData.rows.push(tableRow) }}
 

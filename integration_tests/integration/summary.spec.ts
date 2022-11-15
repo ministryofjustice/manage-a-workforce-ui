@@ -96,15 +96,15 @@ context('Summary', () => {
 
   it('Case details visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.caseDetailsTitle().should('have.text', 'Case information')
+    summaryPage.caseDetailsTitle().should('have.text', 'Associated documents')
     summaryPage.downloadLink('J678910', '123456789', '00000000-0000-0000-0000-000000000000').should('exist')
     summaryPage.downloadLink('J678910', '123456789', '11111111-1111-1111-1111-111111111111').should('exist')
     summaryPage.downloadLink('J678910', '123456789', '22222222-2222-2222-2222-222222222222').should('exist')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
-      'CPS pack': '27 February 2022 Download pack',
-      'Pre-convictions': '27 March 2022 Download document',
-      'Pre-sentence reportFast': '27 January 2022 Download report',
-      'Last OASys assessmentOASys Assessment Layer 3': '27 January 2022',
+      'CPS pack': 'Download CPS pack Uploaded 27 February 2022',
+      'Pre-convictions': 'Download Pre-convictions document Uploaded 27 March 2022',
+      'Pre-sentence report': 'Download Pre-Sentence Report - Fast Uploaded 27 January 2022',
+      OASys: 'CHECK OASYSUploaded 27 January 2022',
     })
   })
 
@@ -112,12 +112,12 @@ context('Summary', () => {
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.caseDetailsTitle().should('have.text', 'Case information')
+    summaryPage.caseDetailsTitle().should('have.text', 'Associated documents')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       'CPS pack': 'No pack created',
       'Pre-convictions': 'No document created',
       'Pre-sentence report': 'No report created',
-      'Last OASys assessment': 'No assessment created',
+      OASys: 'CHECK OASYS',
     })
   })
 

@@ -140,6 +140,7 @@ export default class AllocationsController {
         return b.gradeOrder - a.gradeOrder
       })
 
+    const missingEmail = offenderManagersToAllocate.some(i => !i.email)
     const response: CaseForChoosePractitioner = await this.allocationsService.getCaseForChoosePractitioner(
       token,
       crn,
@@ -158,6 +159,7 @@ export default class AllocationsController {
       error,
       teamCode,
       teamName,
+      missingEmail,
     })
   }
 

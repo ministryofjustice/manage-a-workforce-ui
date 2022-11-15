@@ -9,6 +9,8 @@ export default class ChoosePractitionerPage extends Page {
 
   warningIcon = (): PageElement => cy.get('.govuk-warning-text__icon')
 
+  notificationBanner = (): PageElement => cy.get('.govuk-notification-banner')
+
   table = (): PageElement => cy.get('table')
 
   checkedRadioButton = (): PageElement => cy.get('input[type="radio"]:checked')

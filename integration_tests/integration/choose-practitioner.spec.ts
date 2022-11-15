@@ -12,6 +12,28 @@ context('Choose Practitioner', () => {
     cy.task('stubGetAllocateOffenderManagers', 'TM1')
   })
 
+  it('notification banner visible on page', () => {
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
+    const regionPage = Page.verifyOnPage(ChoosePractitionerPage)
+    regionPage
+      .notificationBanner()
+      .should(
+        'contain',
+        "If you cannot select a probation practitioner, they'll need to update their email address in NDelius by contacting Service Desk."
+      )
+  })
+
+  it('notification banner is not visible on page if all practitioner have email addresses', () => {
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
+    cy.task('stubGetAllocateOffenderManagersWithEmails')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
+    const regionPage = Page.verifyOnPage(ChoosePractitionerPage)
+    regionPage.notificationBanner().should('not.exist')
+  })
+
   it('Offender details visible on page', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()

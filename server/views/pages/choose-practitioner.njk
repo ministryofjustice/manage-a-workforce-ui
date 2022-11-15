@@ -5,6 +5,7 @@
 {% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "../components/pop/macro.njk" import pop %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set tableData = {
     attributes: {
@@ -127,7 +128,17 @@
     {% endif %}
 {% endblock %}
 
-{% block content %}
+    {% block content %}
+    {% if missingEmail%}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+             {{ govukNotificationBanner({
+                 text: 'If you cannot select a probation practitioner, they\'ll need to update their email address in NDelius by contacting Service Desk.'
+             }) }}
+        </div>
+    </div>
+    {% endif %}
+
     {{ pop({name: name, crn: crn, tier: tier}) }}
     
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">

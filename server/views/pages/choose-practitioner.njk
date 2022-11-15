@@ -52,45 +52,45 @@
     rows: []
 } %}
 
-{% for item in offenderManagersToAllocate %}
+{% for offenderManager in offenderManagersToAllocate %}
     {%- set tableRow = [
         { html: govukLabel({
-            text: item.name,
-            for: ('allocated-officer-' + item.code)
+            text: offenderManager.name,
+            for: ('allocated-officer-' + offenderManager.code)
           }),
             attributes: {
-                "data-sort-value": item.name
+                "data-sort-value": offenderManager.name
                 }
         },
-        { html: ('<div class="tooltip">' + item.grade + '<span class="tooltiptext">' + item.gradeTip + '</span></div>'),
+        { html: ('<div class="tooltip">' + offenderManager.grade + '<span class="tooltiptext">' + offenderManager.gradeTip + '</span></div>'),
             attributes: {
-                "data-sort-value": item.gradeOrder
+                "data-sort-value": offenderManager.gradeOrder
             }
         },
-        { text: ((item.capacity | round(1)) + '%'),format: "numeric",
-        classes: ('percentage-extra-over' if item.capacity > 100),
+        { text: ((offenderManager.capacity | round(1)) + '%'),format: "numeric",
+        classes: ('percentage-extra-over' if offenderManager.capacity > 100),
             attributes: {
-                "data-sort-value": item.capacity
+                "data-sort-value": offenderManager.capacity
             }
         },
-        { text: item.totalCasesInLastWeek, format: "numeric",
+        { text: offenderManager.totalCasesInLastWeek, format: "numeric",
             attributes: {
-                "data-sort-value": item.totalCasesInLastWeek
+                "data-sort-value": offenderManager.totalCasesInLastWeek
             }
         },
-        { text: item.communityCases, format: "numeric",
+        { text: offenderManager.communityCases, format: "numeric",
             attributes: {
-                "data-sort-value": item.communityCases
+                "data-sort-value": offenderManager.communityCases
             }
         },
-        { text: item.custodyCases, format: "numeric",
+        { text: offenderManager.custodyCases, format: "numeric",
             attributes: {
-                "data-sort-value": item.custodyCases
+                "data-sort-value": offenderManager.custodyCases
             }
         },
-        { text: ('<a href="/team/'+ teamCode +'/' + crn + '/convictions/' + convictionId + '/allocate/' + item.code + '/officer-view" class="govuk-link--no-visited-state" aria-label="View">' + "View" + '</a>' ) | safe, classes: "govuk-!-text-align-centre"},
-        { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + item.code + '" name="allocatedOfficer" type="radio" value="' + item.code + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + item.code + '"></label></div></div>')
-        if item.email}
+        { text: ('<a href="/team/'+ teamCode +'/' + crn + '/convictions/' + convictionId + '/allocate/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" aria-label="View">' + "View" + '</a>' ) | safe, classes: "govuk-!-text-align-centre"},
+        { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.code + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"></label></div></div>')
+        if offenderManager.email}
     ] -%}
     {{ tableData.rows.push(tableRow) }}
 

@@ -1,6 +1,7 @@
 {% extends "partials/case-view.njk" %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "../components/instructions/macro.njk" import instructions %}
+{% from "../components/documentCell/macro.njk" import documentCell %}
 {% set offenceData = data.offences %}
 {%- set offences = [] -%}
 {%- for offence in offenceData  if offenceData %}
@@ -129,7 +130,7 @@
                         text: "CPS pack"
                     },
                         value: {
-                        html: (data.cpsPack.completedDate | dateFormat + '<br><a class="govuk-link--no-visited-state" href="/' + crn + '/convictions/' + convictionId + '/documents/' + data.cpsPack.documentId + '">Download pack</a>' if data.cpsPack.completedDate else '<strong class="govuk-tag govuk-tag--grey">No pack created</strong>' )
+                        html: documentCell(crn, convictionId, data.cpsPack.documentId, data.cpsPack.completedDate, 'Download pack', 'No pack created')
                     }
                     },
                     {
@@ -137,7 +138,7 @@
                         text: "Pre-convictions"
                     },
                         value: {
-                        html: (data.preConvictionDocument.completedDate | dateFormat + '<br><a class="govuk-link--no-visited-state" href="/' + crn + '/convictions/' + convictionId + '/documents/' + data.preConvictionDocument.documentId + '">Download document</a>' if data.preConvictionDocument.completedDate else '<strong class="govuk-tag govuk-tag--grey">No document created</strong>' )
+                        html: documentCell(crn, convictionId, data.preConvictionDocument.documentId, data.preConvictionDocument.completedDate, 'Download document', 'No document created')
                     }
                     },
                     {
@@ -145,7 +146,7 @@
                         html: 'Pre-sentence report' + ('<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + data.courtReport.description + '</span>' if data.courtReport.description)
                     },
                         value: {
-                        html: (data.courtReport.completedDate | dateFormat + '<br><a class="govuk-link--no-visited-state" href="/' + crn + '/convictions/' + convictionId + '/documents/' + data.courtReport.documentId + '">Download report</a>' if data.courtReport.completedDate else '<strong class="govuk-tag govuk-tag--grey">No report created</strong>' )
+                        html: documentCell(crn, convictionId,data.courtReport.documentId, data.courtReport.completedDate, 'Download report', 'No report created')
                     }
                     },
                     {

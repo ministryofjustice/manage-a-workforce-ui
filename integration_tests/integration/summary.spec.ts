@@ -101,9 +101,9 @@ context('Summary', () => {
     summaryPage.downloadLink('J678910', '123456789', '11111111-1111-1111-1111-111111111111').should('exist')
     summaryPage.downloadLink('J678910', '123456789', '22222222-2222-2222-2222-222222222222').should('exist')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
-      'CPS pack': '27 February 2022Download pack',
-      'Pre-convictions': '27 March 2022Download document',
-      'Pre-sentence reportFast': '27 January 2022Download report',
+      'CPS pack': '27 February 2022 Download pack',
+      'Pre-convictions': '27 March 2022 Download document',
+      'Pre-sentence reportFast': '27 January 2022 Download report',
       'Last OASys assessmentOASys Assessment Layer 3': '27 January 2022',
     })
   })

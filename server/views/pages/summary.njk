@@ -2,6 +2,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "../components/instructions/macro.njk" import instructions %}
 {% from "../components/documentCell/macro.njk" import documentCell %}
+{% from "../components/doubleCell/macro.njk" import doubleCell %}
 {% set offenceData = data.offences %}
 {%- set offences = [] -%}
 {%- for offence in offenceData  if offenceData %}
@@ -120,7 +121,7 @@
 
     <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id ="case-details">
         <header class="app-summary-card__header">
-            <h2 class="app-summary-card__title">Case information</h2>
+            <h2 class="app-summary-card__title">Associated documents</h2>
         </header>
         <div class="app-summary-card__body">
             {{ govukSummaryList({
@@ -130,7 +131,7 @@
                         text: "CPS pack"
                     },
                         value: {
-                        html: documentCell(crn, convictionId, data.cpsPack.documentId, data.cpsPack.completedDate, 'Download pack', 'No pack created')
+                        html: documentCell(crn, convictionId, data.cpsPack.documentId, data.cpsPack.completedDate, 'Download CPS pack', 'No pack created')
                     }
                     },
                     {
@@ -138,23 +139,23 @@
                         text: "Pre-convictions"
                     },
                         value: {
-                        html: documentCell(crn, convictionId, data.preConvictionDocument.documentId, data.preConvictionDocument.completedDate, 'Download document', 'No document created')
+                        html: documentCell(crn, convictionId, data.preConvictionDocument.documentId, data.preConvictionDocument.completedDate, 'Download Pre-convictions document', 'No document created')
                     }
                     },
                     {
                         key: {
-                        html: 'Pre-sentence report' + ('<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + data.courtReport.description + '</span>' if data.courtReport.description)
+                        html: 'Pre-sentence report'
                     },
                         value: {
-                        html: documentCell(crn, convictionId,data.courtReport.documentId, data.courtReport.completedDate, 'Download report', 'No report created')
+                        html: documentCell(crn, convictionId,data.courtReport.documentId, data.courtReport.completedDate, '	Download Pre-Sentence Report - ' + data.courtReport.description , 'No report created')
                     }
                     },
                     {
                         key: {
-                        html: 'Last OASys assessment' + ('<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">OASys Assessment ' + data.assessment.type | capitalize | replace("_", " ")  + '</span>' if data.assessment.type)
+                        html: 'OASys'
                     },
                         value: {
-                        text: (data.assessment.lastAssessedOn | dateFormat if data.assessment.lastAssessedOn else '<strong class="govuk-tag govuk-tag--grey">No assessment created</strong>' | safe )
+                        text: doubleCell('<strong class="govuk-tag">CHECK OASYS</strong>', 'Uploaded ' + data.assessment.lastAssessedOn | dateFormat if data.assessment.lastAssessedOn)
                     }
                     }
                 ]

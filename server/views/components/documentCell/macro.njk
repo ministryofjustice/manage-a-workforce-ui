@@ -2,6 +2,6 @@
 
 {% macro documentCell(crn, convictionId, documentId, completedDate, linkText, noText ) -%}
 
-{{ doubleCell(completedDate | dateFormat if completedDate else '<strong class="govuk-tag govuk-tag--grey">' + noText +'</strong>','<a class="govuk-link--no-visited-state" href="/' + crn + '/convictions/' + convictionId + '/documents/' + documentId + '">'+ linkText +'</a>' if completedDate) }}
+{{ doubleCell('<a class="govuk-link--no-visited-state" href="/' + crn + '/convictions/' + convictionId + '/documents/' + documentId + '">'+ linkText +'</a>' if completedDate else '<strong class="govuk-tag govuk-tag--grey">' + noText +'</strong>','Uploaded ' + completedDate | dateFormat if completedDate) }}
 
 {%- endmacro %}

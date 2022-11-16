@@ -129,7 +129,8 @@ export default class AllocationsController {
             om.totalCustodyCases,
             om.code,
             om.staffId,
-            om.totalCasesInLastWeek
+            om.totalCasesInLastWeek,
+            om.email
           )
       )
       .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => {
@@ -139,6 +140,7 @@ export default class AllocationsController {
         return b.gradeOrder - a.gradeOrder
       })
 
+    const missingEmail = offenderManagersToAllocate.some(i => !i.email)
     const response: CaseForChoosePractitioner = await this.allocationsService.getCaseForChoosePractitioner(
       token,
       crn,
@@ -157,6 +159,7 @@ export default class AllocationsController {
       error,
       teamCode,
       teamName,
+      missingEmail,
     })
   }
 
@@ -212,14 +215,14 @@ export default class AllocationsController {
     })
   }
 
-  async getOverview(req: Request, res: Response, crn, offenderManagerCode, convictionId, teamCode) {
+  async getOverview(_, res: Response, crn, offenderManagerCode, convictionId, teamCode) {
     const response: OffenderManagerOverview = await this.workloadService.getOffenderManagerOverview(
       res.locals.user.token,
       offenderManagerCode,
       teamCode
     )
     const data: OfficerView = new OfficerView(response)
-    res.render('pages/overview', {
+    res.render('pages/officer-overview', {
       title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
       data,
       crn,

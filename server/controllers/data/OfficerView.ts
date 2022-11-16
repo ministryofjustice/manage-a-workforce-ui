@@ -42,9 +42,12 @@ export default class OfficerView {
 
   lastCaseAllocated: string
 
+  email: string
+
   constructor(offenderManagerOverview: OffenderManagerOverview) {
     this.forename = offenderManagerOverview.forename
     this.surname = offenderManagerOverview.surname
+    this.email = offenderManagerOverview.email
     this.grade = offenderManagerOverview.grade
     this.capacity = offenderManagerOverview.capacity
     this.code = offenderManagerOverview.code

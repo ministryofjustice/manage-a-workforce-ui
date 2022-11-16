@@ -4,6 +4,7 @@ import LastAllocatedEvent from './LastAllocatedEvent'
 export default interface OffenderManagerOverview {
   forename: string
   surname: string
+  email: string
   grade: string
   capacity: number
   code: string

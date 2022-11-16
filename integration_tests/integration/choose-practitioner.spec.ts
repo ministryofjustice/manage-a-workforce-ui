@@ -12,6 +12,28 @@ context('Choose Practitioner', () => {
     cy.task('stubGetAllocateOffenderManagers', 'TM1')
   })
 
+  it('notification banner visible on page', () => {
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
+    const regionPage = Page.verifyOnPage(ChoosePractitionerPage)
+    regionPage
+      .notificationBanner()
+      .should(
+        'contain',
+        'If a probation practitioner does not have an email address in NDelius, you cannot allocate cases to them through the Allocations tool.'
+      )
+  })
+
+  it('notification banner is not visible on page if all practitioner have email addresses', () => {
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
+    cy.task('stubGetAllocateOffenderManagersWithEmails')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
+    const regionPage = Page.verifyOnPage(ChoosePractitionerPage)
+    regionPage.notificationBanner().should('not.exist')
+  })
+
   it('Offender details visible on page', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()
@@ -154,9 +176,9 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.radioButtons().first().check()
+    choosePractitionerPage.radio('OM3').check()
     choosePractitionerPage.checkedRadioButton().should('have.value', 'OM3')
-    choosePractitionerPage.radioButtons().last().check()
+    choosePractitionerPage.radio('OM2').check()
     choosePractitionerPage.checkedRadioButton().should('have.value', 'OM2')
   })
 
@@ -177,9 +199,17 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.radioButtons().first().check()
+    choosePractitionerPage.radio('OM3').check()
     choosePractitionerPage.checkedRadioButton().should('have.value', 'OM3')
     choosePractitionerPage.clearSelectionButton().click()
     choosePractitionerPage.checkedRadioButton().should('not.exist')
+  })
+
+  it('should not show selection radio when there is no email', () => {
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.radio('OM1').should('not.exist')
   })
 })

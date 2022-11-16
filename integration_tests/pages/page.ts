@@ -43,6 +43,8 @@ export default abstract class Page {
 
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 
+  notificationBanner = (): PageElement => cy.get('.govuk-notification-banner')
+
   breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
 
   button = (): PageElement => cy.get('.govuk-button')

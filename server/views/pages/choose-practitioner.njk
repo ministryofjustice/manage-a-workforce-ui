@@ -134,7 +134,9 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
              {{ govukNotificationBanner({
-                 text: 'If you cannot select a probation practitioner, they\'ll need to update their email address in NDelius by contacting Service Desk.'
+                         html: '
+                     <p class="govuk-notification-banner__heading">If a probation practitioner does not have an email address in NDelius, you cannot allocate cases to them through the Allocations tool.</p>
+                     <p class="govuk-notification-banner__heading">You can ask for their NDelius account to be updated by raising a ticket in the Tech Portal.</p>'
              }) }}
         </div>
     </div>

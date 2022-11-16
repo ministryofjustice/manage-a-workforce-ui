@@ -21,7 +21,7 @@ context('Choose Practitioner', () => {
       .notificationBanner()
       .should(
         'contain',
-        "If you cannot select a probation practitioner, they'll need to update their email address in NDelius by contacting Service Desk."
+        'If a probation practitioner does not have an email address in NDelius, you cannot allocate cases to them through the Allocations tool.'
       )
   })
 

@@ -222,7 +222,7 @@ export default class AllocationsController {
       teamCode
     )
     const data: OfficerView = new OfficerView(response)
-    res.render('pages/overview', {
+    res.render('pages/officer-overview', {
       title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
       data,
       crn,

@@ -2,47 +2,45 @@ import Page from '../pages/page'
 import ActiveCasesPage from '../pages/activeCases'
 
 context('Active Cases', () => {
+  let activeCasesPage
   beforeEach(() => {
     cy.task('stubSetup')
-  })
-
-  it('Officer details visible on page', () => {
     cy.task('stubGetOffenderManagerCases')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/active-cases')
-    const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
+    activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
+  })
+
+  it('Officer details visible on page', () => {
     activeCasesPage.captionText().should('contain', 'Wrexham - Team 1')
     activeCasesPage.secondaryText().should('contain', 'PO')
   })
 
   it('Back link is visible on page', () => {
-    cy.task('stubGetOffenderManagerCases')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/active-cases')
-    const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
     activeCasesPage.backLink().should('contain', 'Back')
   })
 
+  it('notification banner is not visible when officer has an email', () => {
+    activeCasesPage.notificationBanner().should('not.exist')
+  })
+
+  it('notification banner is visible when officer has no email', () => {
+    cy.task('stubGetOffenderManagerCasesNoEmail')
+    cy.reload()
+    activeCasesPage
+      .notificationBanner()
+      .should('contain', 'This officer will need to update their email address in NDelius by contacting Service Desk')
+  })
+
   it('Heading is visible on page', () => {
-    cy.task('stubGetOffenderManagerCases')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/active-cases')
-    const activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
     activeCasesPage.heading().should('contain', 'Active cases')
   })
 
   it('Active cases tab is highlighted', () => {
-    cy.task('stubGetOffenderManagerCases')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/active-cases')
-    const overviewPage = Page.verifyOnPage(ActiveCasesPage)
-    overviewPage.highlightedTab().should('contain.text', 'Active cases').and('not.contain.text', 'Overview')
+    activeCasesPage.highlightedTab().should('contain.text', 'Active cases').and('not.contain.text', 'Overview')
   })
 
   it('Table visible on page', () => {
-    cy.task('stubGetOffenderManagerCases')
-    cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM2/active-cases')
     cy.get('table')
       .getTable()
       .should('deep.equal', [

@@ -20,6 +20,18 @@ context('Overview', () => {
     overviewPage.backLink().should('contain', 'Back')
   })
 
+  it('notification banner is not visible when officer has an email', () => {
+    overviewPage.notificationBanner().should('not.exist')
+  })
+
+  it('notification banner is visible when officer has no email', () => {
+    cy.task('stubGetOverviewWithLastAllocatedEvent')
+    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM6/officer-view')
+    overviewPage
+      .notificationBanner()
+      .should('contain', 'This officer will need to update their email address in NDelius by contacting Service Desk')
+  })
+
   it('Heading is visible on page', () => {
     overviewPage.heading().should('contain', 'Workload')
   })

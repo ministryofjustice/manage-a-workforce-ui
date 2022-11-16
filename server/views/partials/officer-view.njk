@@ -1,5 +1,6 @@
 {% extends "partials/layout.njk" %}
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% block beforeContent %}
@@ -10,6 +11,15 @@
 {% endblock %}
 
 {% block content %}
+    {% if not data.email %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+             {{ govukNotificationBanner({
+                 text: 'This officer will need to update their email address in NDelius by contacting Service Desk.'
+             }) }}
+        </div>
+    </div>
+    {% endif %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <span class="govuk-caption-xl">{{ data.teamName }}</span>

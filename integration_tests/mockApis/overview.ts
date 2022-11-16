@@ -14,6 +14,7 @@ export default {
         jsonBody: {
           forename: 'John',
           surname: 'Doe',
+          email: 'some.email@justice.gov.uk',
           grade: 'PO',
           capacity: 126,
           code: 'OM2',

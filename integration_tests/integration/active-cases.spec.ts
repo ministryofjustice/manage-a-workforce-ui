@@ -29,7 +29,10 @@ context('Active Cases', () => {
     cy.reload()
     activeCasesPage
       .notificationBanner()
-      .should('contain', 'This officer will need to update their email address in NDelius by contacting Service Desk')
+      .should(
+        'contain',
+        'You cannot allocate cases to John Doe through the Allocations tool because they do not have an email address associated with their NDelius account.'
+      )
   })
 
   it('Heading is visible on page', () => {

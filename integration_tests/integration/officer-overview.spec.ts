@@ -29,7 +29,10 @@ context('Overview', () => {
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM6/officer-view')
     overviewPage
       .notificationBanner()
-      .should('contain', 'This officer will need to update their email address in NDelius by contacting Service Desk')
+      .should(
+        'contain',
+        'You cannot allocate cases to John Doe through the Allocations tool because they do not have an email address associated with their NDelius account.'
+      )
   })
 
   it('Heading is visible on page', () => {

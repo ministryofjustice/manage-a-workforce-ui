@@ -6,7 +6,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/${teamCode}/offenderManager/OM1/impact`,
+        urlPattern: `/team/${teamCode}/offenderManager/OM2/impact`,
         bodyPatterns: [
           {
             equalToJson: '{"crn":"J678910", "convictionId": 123456789}',
@@ -21,7 +21,7 @@ export default {
           surname: 'Doe',
           grade: 'PO',
           capacity: 50.4,
-          code: 'OM1',
+          code: 'OM2',
           potentialCapacity: 64.8,
         },
       },
@@ -31,7 +31,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/${teamCode}/offenderManager/OM1/impact`,
+        urlPattern: `/team/${teamCode}/offenderManager/OM2/impact`,
         bodyPatterns: [
           {
             equalToJson: '{"crn":"J678910", "convictionId": 123456789}',
@@ -46,7 +46,7 @@ export default {
           surname: 'Doe',
           grade: 'PO',
           capacity: 100.2,
-          code: 'OM1',
+          code: 'OM2',
           potentialCapacity: 108.6,
         },
       },
@@ -56,7 +56,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/${teamCode}/offenderManager/OM1/impact`,
+        urlPattern: `/team/${teamCode}/offenderManager/OM2/impact`,
         bodyPatterns: [
           {
             equalToJson: '{"crn":"J678910", "convictionId": 123456789}',
@@ -71,7 +71,7 @@ export default {
           surname: 'Doe',
           grade: 'PO',
           capacity: 50.4,
-          code: 'OM1',
+          code: 'OM2',
           potentialCapacity: 50.4,
         },
       },

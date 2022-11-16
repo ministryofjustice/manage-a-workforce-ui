@@ -176,8 +176,7 @@ export default {
           ],
           pncNumber: 'D/9874483AB',
           courtReport: {
-            code: 'CJF',
-            description: 'Fast',
+            description: 'Pre-Sentence Report - Fast',
             completedDate: '2022-01-27T10:54:32.868Z',
             documentId: '00000000-0000-0000-0000-000000000000',
           },

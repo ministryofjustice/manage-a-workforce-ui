@@ -5,6 +5,6 @@
 {%- set noDocumentElement='<strong class="govuk-tag govuk-tag--grey">' + noText +'</strong>' -%}
 {%- set uploadedDate = 'Uploaded ' + completedDate | dateFormat-%}
 
-{{ doubleCell(documentDownloadLink(crn, convictionId, documentId, linkText, 'govuk-link--no-visited-state') if completedDate else noDocumentElement, uploadedDate if completedDate) }}
+{{ doubleCell(downloadDocumentLink(crn, convictionId, documentId, linkText, 'govuk-link--no-visited-state') if completedDate else noDocumentElement, uploadedDate if completedDate) }}
 
 {%- endmacro %}

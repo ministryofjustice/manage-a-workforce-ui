@@ -1,7 +1,5 @@
 import Page from '../pages/page'
 import SummaryPage from '../pages/summary'
-import ProbationRecordPage from '../pages/probationRecord'
-import RiskPage from '../pages/risk'
 
 context('Summary', () => {
   beforeEach(() => {
@@ -129,25 +127,5 @@ context('Summary', () => {
   it('Instructions textArea should be visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().should('exist')
-  })
-
-  it('Instructions text should save and display on probation record page', () => {
-    const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.instructionsTextArea().should('exist')
-    summaryPage.instructionsTextArea().type('Test')
-    cy.task('stubGetProbationRecord')
-    cy.visit('/team/TM1/J678910/convictions/123456789/probation-record')
-    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.instructionsTextArea().should('have.value', 'Test')
-  })
-
-  it('Instructions text should save and display on risk page', () => {
-    const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.instructionsTextArea().should('exist')
-    summaryPage.instructionsTextArea().type(' - this is a test')
-    cy.task('stubGetRisk')
-    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
-    const riskPage = Page.verifyOnPage(RiskPage)
-    riskPage.instructionsTextArea().should('have.value', 'Test - this is a test')
   })
 })

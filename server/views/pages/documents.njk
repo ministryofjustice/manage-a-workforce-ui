@@ -35,7 +35,7 @@
 
 {% for document in documents%}
     {%- set tableRow = [
-        { html: doubleCell(downloadDocumentLink(crn, convictionId, document.id,document.nameFirstLine), document.nameSecondLine, 'govuk-!-font-size-16 govuk-!-font-weight-regular') + ('<br><strong class="govuk-tag--orange">' + document.nameThirdLine + '</strong>' if document.nameThirdLine)},
+        { html: doubleCell(downloadDocumentLink(crn, convictionId, document.id,document.nameFirstLine), document.nameSecondLine, 'govuk-!-font-size-16 govuk-!-font-weight-regular') + ('<br><strong class="govuk-tag--orange">SENSITIVE</strong>' if document.displaySensitive)},
         { text: document.type },
         { html: doubleCell(document.eventFirstLine, document.eventSecondLine)},
         { text:  document.dateCreated, attributes: {

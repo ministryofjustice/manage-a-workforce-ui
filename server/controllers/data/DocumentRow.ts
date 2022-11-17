@@ -10,7 +10,7 @@ export default class DocumentRow {
 
   nameSecondLine: string
 
-  nameThirdLine: string
+  displaySensitive: boolean
 
   type: string
 
@@ -26,9 +26,7 @@ export default class DocumentRow {
     this.id = documentDetails.id
     this.nameFirstLine = documentDetails.name
     this.nameSecondLine = documentDetails.relatedTo.description
-    if (documentDetails.sensitive) {
-      this.nameThirdLine = 'SENSITIVE'
-    }
+    this.displaySensitive = documentDetails.sensitive
     this.type = documentDetails.relatedTo.name
     if (documentDetails.relatedTo.event) {
       this.eventFirstLine = this.capitalise(documentDetails.relatedTo.event.eventType)

@@ -21,7 +21,17 @@ context('Summary', () => {
 
   it('Sub nav visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.subNav().should('contain', 'Summary').and('contain', 'Probation record').and('contain', 'Risk')
+    summaryPage
+      .subNav()
+      .should('contain', 'Summary')
+      .and('contain', 'Probation record')
+      .and('contain', 'Risk')
+      .and('contain', 'Documents')
+  })
+
+  it('Summary tab is highlighted', () => {
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.highlightedTab().should('contain.text', 'Summary')
   })
 
   it('Continue button visible on page', () => {

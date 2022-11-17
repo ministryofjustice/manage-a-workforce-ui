@@ -20,6 +20,21 @@ context('Documents', () => {
     documentsPage.documentsHeading().should('contain', 'Documents')
   })
 
+  it('Sub nav visible on page', () => {
+    const documentsPage = Page.verifyOnPage(DocumentsPage)
+    documentsPage
+      .subNav()
+      .should('contain', 'Summary')
+      .and('contain', 'Probation record')
+      .and('contain', 'Risk')
+      .and('contain', 'Documents')
+  })
+
+  it('Documents tab is highlighted', () => {
+    const documentsPage = Page.verifyOnPage(DocumentsPage)
+    documentsPage.highlightedTab().should('contain.text', 'Documents')
+  })
+
   it('Continue button visible on page', () => {
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.button().should('contain', 'Continue')

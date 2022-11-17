@@ -22,6 +22,21 @@ context('Risk', () => {
     riskPage.riskHeading().should('contain', 'Risk')
   })
 
+  it('Sub nav visible on page', () => {
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage
+      .subNav()
+      .should('contain', 'Summary')
+      .and('contain', 'Probation record')
+      .and('contain', 'Risk')
+      .and('contain', 'Documents')
+  })
+
+  it('Risk tab is highlighted', () => {
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.highlightedTab().should('contain.text', 'Risk')
+  })
+
   it('Continue button visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()

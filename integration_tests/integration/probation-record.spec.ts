@@ -22,6 +22,21 @@ context('Probation record', () => {
     probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
   })
 
+  it('Sub nav visible on page', () => {
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage
+      .subNav()
+      .should('contain', 'Summary')
+      .and('contain', 'Probation record')
+      .and('contain', 'Risk')
+      .and('contain', 'Documents')
+  })
+
+  it('Probation record tab is highlighted', () => {
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.highlightedTab().should('contain.text', 'Probation record')
+  })
+
   it('navigate to probation record through case summary', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetProbationRecord')

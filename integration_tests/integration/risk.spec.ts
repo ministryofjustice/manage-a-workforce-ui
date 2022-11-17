@@ -1,7 +1,5 @@
 import Page from '../pages/page'
 import RiskPage from '../pages/risk'
-import SummaryPage from '../pages/summary'
-import ProbationRecordPage from '../pages/probationRecord'
 
 context('Risk', () => {
   beforeEach(() => {

@@ -2,7 +2,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
-{% set documentTabHref = "/team/{{ teamCode }}/{{ crn }}/convictions/{{ convictionId }}/documents" %}
+{% set documentTabHref = '/team/' + teamCode+ '/' + crn + '/convictions/' + convictionId + '/documents' %}
 {% set offenceData = data.offences %}
 {%- set offences = [] -%}
 {%- for offence in offenceData  if offenceData %}

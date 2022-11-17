@@ -2,6 +2,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
+{% set documentTabHref = "/team/{{ teamCode }}/{{ crn }}/convictions/{{ convictionId }}/documents" %}
 {% set offenceData = data.offences %}
 {%- set offences = [] -%}
 {%- for offence in offenceData  if offenceData %}
@@ -131,7 +132,7 @@
                         text: "CPS pack"
                     },
                         value: {
-                        html: documentCell(crn, convictionId, data.cpsPack.documentId, data.cpsPack.completedDate, 'Download CPS pack', 'Check Documents screen')
+                        html: documentCell(crn, convictionId, data.cpsPack.documentId, data.cpsPack.completedDate, 'Download CPS pack', documentTabHref)
                     }
                     },
                     {
@@ -139,7 +140,7 @@
                         text: "Pre-convictions"
                     },
                         value: {
-                        html: documentCell(crn, convictionId, data.preConvictionDocument.documentId, data.preConvictionDocument.completedDate, 'Download Pre-convictions document', 'Check Documents screen')
+                        html: documentCell(crn, convictionId, data.preConvictionDocument.documentId, data.preConvictionDocument.completedDate, 'Download Pre-convictions document', documentTabHref)
                     }
                     },
                     {
@@ -147,7 +148,7 @@
                         html: 'Pre-sentence report'
                     },
                         value: {
-                        html: documentCell(crn, convictionId,data.courtReport.documentId, data.courtReport.completedDate, '	Download ' + data.courtReport.description , 'Check Documents screen')
+                        html: documentCell(crn, convictionId,data.courtReport.documentId, data.courtReport.completedDate, '	Download ' + data.courtReport.description, documentTabHref )
                     }
                     },
                     {

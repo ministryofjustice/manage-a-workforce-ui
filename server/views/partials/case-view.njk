@@ -2,6 +2,7 @@
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "../components/pop/macro.njk" import pop %}
+{% from "../components/instructions/macro.njk" import instructions %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -50,7 +51,7 @@
         </div>
     </div>
 
-    {% block instructions %}{% endblock %}
+    {{ instructions({convictionId: convictionId, inGridRow: true }) }}
 
 {% endblock %}
 

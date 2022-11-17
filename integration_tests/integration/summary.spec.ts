@@ -104,7 +104,7 @@ context('Summary', () => {
 
   it('Case details visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.caseDetailsTitle().should('have.text', 'Associated documents')
+    summaryPage.associatedDocumentsTitle().should('have.text', 'Associated documents')
     summaryPage.downloadLink('J678910', '123456789', '00000000-0000-0000-0000-000000000000').should('exist')
     summaryPage.downloadLink('J678910', '123456789', '11111111-1111-1111-1111-111111111111').should('exist')
     summaryPage.downloadLink('J678910', '123456789', '22222222-2222-2222-2222-222222222222').should('exist')
@@ -120,7 +120,7 @@ context('Summary', () => {
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.caseDetailsTitle().should('have.text', 'Associated documents')
+    summaryPage.associatedDocumentsTitle().should('have.text', 'Associated documents')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       'CPS pack': 'No pack created',
       'Pre-convictions': 'No document created',
@@ -137,5 +137,10 @@ context('Summary', () => {
   it('Instructions textArea should be visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().should('exist')
+  })
+
+  it('Documents page link exists', () => {
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.associatedDocumentsLink().should('exist')
   })
 })

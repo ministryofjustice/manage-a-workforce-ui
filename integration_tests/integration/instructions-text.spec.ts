@@ -60,6 +60,7 @@ context('Instructions text', () => {
     summaryPage.instructionsTextArea().clear()
     summaryPage.instructionsTextArea().type('Test Documents')
     cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.task('stubGetDocuments')
     cy.visit('/team/TM1/J678910/convictions/123456789/documents')
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.instructionsTextArea().should('have.value', 'Test Documents')

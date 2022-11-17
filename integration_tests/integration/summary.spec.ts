@@ -122,9 +122,9 @@ context('Summary', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedDocumentsTitle().should('have.text', 'Associated documents')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
-      'CPS pack': 'No pack created',
-      'Pre-convictions': 'No document created',
-      'Pre-sentence report': 'No report created',
+      'CPS pack': 'Check Documents screen',
+      'Pre-convictions': 'Check Documents screen',
+      'Pre-sentence report': 'Check Documents screen',
       OASys: 'CHECK OASYS',
     })
   })

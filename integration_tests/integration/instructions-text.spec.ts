@@ -1,3 +1,4 @@
+import DocumentsPage from '../pages/documents'
 import Page from '../pages/page'
 import SummaryPage from '../pages/summary'
 import ProbationRecordPage from '../pages/probationRecord'
@@ -48,5 +49,19 @@ context('Instructions text', () => {
     cy.visit('/team/TM1/J678910/convictions/123456789/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.instructionsTextArea().should('have.value', 'Test Risk')
+  })
+
+  it('Instructions text should save and display when switching to documents page', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/123456789/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.instructionsTextArea().should('exist')
+    summaryPage.instructionsTextArea().clear()
+    summaryPage.instructionsTextArea().type('Test Documents')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.visit('/team/TM1/J678910/convictions/123456789/documents')
+    const documentsPage = Page.verifyOnPage(DocumentsPage)
+    documentsPage.instructionsTextArea().should('have.value', 'Test Documents')
   })
 })

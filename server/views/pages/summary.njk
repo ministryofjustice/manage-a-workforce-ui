@@ -1,6 +1,5 @@
 {% extends "partials/case-view.njk" %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "../components/instructions/macro.njk" import instructions %}
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
 {% set offenceData = data.offences %}
@@ -166,8 +165,5 @@
 
 {% endblock %}
 
-{% block instructions %}
-    {{ instructions({convictionId: convictionId, inGridRow: true }) }}
-{% endblock %}
 
 

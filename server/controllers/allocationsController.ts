@@ -112,6 +112,18 @@ export default class AllocationsController {
     })
   }
 
+  async getDocuments(_, res: Response, crn: string, convictionId, teamCode: string) {
+    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
+    res.render('pages/documents', {
+      title: `${caseOverview.name} | Documents | Manage a workforce`,
+      crn: caseOverview.crn,
+      tier: caseOverview.tier,
+      name: caseOverview.name,
+      convictionId: caseOverview.convictionId,
+      teamCode,
+    })
+  }
+
   async choosePractitioner(req: Request, res: Response, crn, convictionId, teamCode) {
     const { token } = res.locals.user
     const { offenderManagers } = await this.workloadService.getOffenderManagersToAllocate(token, teamCode)

@@ -1,6 +1,7 @@
 {% extends "partials/case-view.njk" %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {%- from "../components/doubleCell/macro.njk" import doubleCell -%}
+{%- from "../components/downloadDocumentLink/macro.njk" import downloadDocumentLink -%}
 
 {% set tableData = {
     attributes: {
@@ -34,7 +35,7 @@
 
 {% for document in documents%}
     {%- set tableRow = [
-        { html: doubleCell('<a href="/' + crn + '/convictions/' + convictionId +'/documents/' + document.id +'">' + document.nameFirstLine + '</a>', document.nameSecondLine, 'govuk-!-font-size-16 govuk-!-font-weight-regular') + ('<br><strong class="govuk-tag--orange">' + document.nameThirdLine + '</strong>' if document.nameThirdLine)},
+        { html: doubleCell(downloadDocumentLink(crn, convictionId, document.id,document.nameFirstLine), document.nameSecondLine, 'govuk-!-font-size-16 govuk-!-font-weight-regular') + ('<br><strong class="govuk-tag--orange">' + document.nameThirdLine + '</strong>' if document.nameThirdLine)},
         { text: document.type },
         { html: doubleCell(document.eventFirstLine, document.eventSecondLine)},
         { text:  document.dateCreated, attributes: {

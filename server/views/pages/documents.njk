@@ -1,7 +1,54 @@
 {% extends "partials/case-view.njk" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{%- from "../components/doubleCell/macro.njk" import doubleCell -%}
+{%- from "../components/downloadDocumentLink/macro.njk" import downloadDocumentLink -%}
+
+{% set tableData = {
+    attributes: {
+    'data-module': 'moj-sortable-table'
+    },
+    head: [
+        { text: 'Name',
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Type',
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Event',
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        { text: 'Date created',
+            format: "numeric",
+            attributes: {
+                "aria-sort": "descending"
+            }
+        }
+    ],
+    rows: []
+} %}
+
+{% for document in documents%}
+    {%- set tableRow = [
+        { html: doubleCell(downloadDocumentLink(crn, convictionId, document.id,document.nameFirstLine), document.nameSecondLine, 'govuk-!-font-size-16 govuk-!-font-weight-regular') + ('<br><strong class="govuk-tag--orange">SENSITIVE</strong>' if document.displaySensitive)},
+        { text: document.type },
+        { html: doubleCell(document.eventFirstLine, document.eventSecondLine)},
+        { text:  document.dateCreated, attributes: {
+            "data-sort-value": document.dateSortValue
+        } }
+    ] -%}
+    {{ tableData.rows.push(tableRow) }}
+{% endfor %}
 
 
 {% block caseContent %}
     <h2 class="govuk-heading-l">Documents</h2>
+
+    {{ govukTable(tableData) }}
 {% endblock %}
 

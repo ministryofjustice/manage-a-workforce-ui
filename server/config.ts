@@ -103,5 +103,6 @@ export default {
   },
   domain: get('INGRESS_URL', 'http://127.0.0.1:3000', requiredInProduction),
   dateFormat: 'D MMMM YYYY',
+  dateShortFormat: 'D MMM YYYY',
   googleAnalyticsKey: get('GOOGLE_ANALYTICS_KEY', null),
 }

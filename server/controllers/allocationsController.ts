@@ -22,6 +22,7 @@ import OfficerView from './data/OfficerView'
 import DisplayAddress from './data/DisplayAddress'
 import ProbationEstateService from '../services/probationEstateService'
 import CaseForChoosePractitioner from '../models/CaseForChoosePractitioner'
+import DocumentRow from './data/DocumentRow'
 
 export default class AllocationsController {
   constructor(
@@ -114,6 +115,8 @@ export default class AllocationsController {
 
   async getDocuments(_, res: Response, crn: string, convictionId, teamCode: string) {
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
+    const documents = await this.allocationsService.getDocuments(res.locals.user.token, crn)
+    const documentRows = documents.map(document => new DocumentRow(document))
     res.render('pages/documents', {
       title: `${caseOverview.name} | Documents | Manage a workforce`,
       crn: caseOverview.crn,
@@ -121,6 +124,7 @@ export default class AllocationsController {
       name: caseOverview.name,
       convictionId: caseOverview.convictionId,
       teamCode,
+      documents: documentRows,
     })
   }
 

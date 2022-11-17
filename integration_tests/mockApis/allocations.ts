@@ -570,4 +570,62 @@ export default {
       },
     })
   },
+
+  stubGetDocuments: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910/documents`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: [
+          {
+            id: 'efb7a4e8-3f4a-449c-bf6f-b1fc8def3410',
+            name: 'cps.pdf',
+            relatedTo: {
+              type: 'CPSPACK',
+              name: 'SA2020 Suspended Sentence Order',
+              event: {
+                eventType: 'PREVIOUS',
+                eventNumber: '2',
+                mainOffence: 'Common assault and battery - 10501',
+              },
+              description: 'Crown Prosecution Service case pack',
+            },
+            dateCreated: '2021-10-16T15:15:00+01:00',
+            sensitive: true,
+          },
+          {
+            id: '6c50048a-c647-4598-8fae-0b84c69ef31a',
+            name: 'doc.pdf',
+            relatedTo: {
+              type: 'COURT_REPORT',
+              name: 'Pre-Sentence Report - Fast',
+              event: {
+                eventType: 'CURRENT',
+                eventNumber: '1',
+                mainOffence: 'Attempt/Common/Assault of an Emergency Worker   (Act 2018) 00873',
+              },
+              description: 'Court Report',
+            },
+            dateCreated: '2021-12-07T15:24:43+01:00',
+            sensitive: false,
+          },
+          {
+            id: '626aa1d1-71c6-4b76-92a1-bf2f9250c143',
+            name: 'Pre Cons.pdf',
+            relatedTo: {
+              type: 'PRECONS',
+              name: 'Pre Cons',
+              description: 'PNC previous convictions',
+            },
+            dateCreated: '2021-11-17T10:30:00+01:00',
+            sensitive: false,
+          },
+        ],
+      },
+    })
+  },
 }

@@ -2,8 +2,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: manage-a-workforce-ui-ingress-alerts-test
-  labels:
-    {{- include "generic-prometheus-alerts.labels" . | nindent 4 }}
 spec:
   groups:
     - name: manage-a-workforce-ui-ingress-alerts-test

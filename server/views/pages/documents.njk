@@ -11,7 +11,8 @@
         { text: 'Name',
             attributes: {
                 "aria-sort": "none"
-            }
+            },
+            classes: "govuk-!-width-one-third"
         },
         { text: 'Type',
             attributes: {
@@ -36,7 +37,7 @@
     {%- set tableRow = [
         { html: doubleCell(downloadDocumentLink(crn, convictionId, document.id,document.nameFirstLine), document.nameSecondLine, 'govuk-!-font-size-16 govuk-!-font-weight-regular') + ('<br><strong class="govuk-tag--orange">SENSITIVE</strong>' if document.displaySensitive)},
         { text: document.type },
-        { html: doubleCell(document.eventFirstLine, document.eventSecondLine)},
+        { html: doubleCell(document.eventFirstLine, document.eventSecondLine, 'govuk-!-font-size-16 govuk-!-font-weight-regular')},
         { text:  document.dateCreated, attributes: {
             "data-sort-value": document.dateSortValue
         } }

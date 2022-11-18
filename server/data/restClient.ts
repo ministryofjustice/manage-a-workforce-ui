@@ -59,7 +59,6 @@ export default class RestClient {
   }
 
   async get({ path = null, query = '', headers = {}, responseType = '', raw = false }: GetRequest): Promise<unknown> {
-    logger.info(`Get using user credentials: calling ${this.name}: ${path} ${query}`)
     try {
       const result = await superagent
         .get(`${this.apiUrl()}${path}`)
@@ -68,6 +67,10 @@ export default class RestClient {
         .auth(this.token, { type: 'bearer' })
         .set(headers)
         .responseType(responseType)
+        .retry(this.config.retries, (err, res) => {
+          if (err) logger.info(`Retry handler found API error with ${err.code} ${err.message} when calling ${path}`)
+          return undefined // retry handler only for logging retries, not to influence retry logic
+        })
         .timeout(this.timeoutConfig())
 
       return raw ? result : result.body

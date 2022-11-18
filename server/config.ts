@@ -27,6 +27,7 @@ export interface ApiConfig {
     deadline: number
   }
   agent: AgentConfig
+  retries?: number
 }
 
 export default {
@@ -85,6 +86,7 @@ export default {
         deadline: 5000,
       },
       agent: new AgentConfig(5000),
+      retries: 2,
     },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://127.0.0.1:8100', requiredInProduction),

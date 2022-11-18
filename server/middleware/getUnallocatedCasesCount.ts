@@ -7,7 +7,7 @@ export default function getUnallocatedCasesCount(
   userPreferenceService: UserPreferenceService,
   allocationsService: AllocationsService
 ): RequestHandler {
-  return async (req, res, next) => {
+  return async (_, res, next) => {
     try {
       if (res.locals.user) {
         const { token, username } = res.locals.user
@@ -19,10 +19,10 @@ export default function getUnallocatedCasesCount(
             .reduce((first, second) => first + second, 0)
         }
       }
-      next()
     } catch (error) {
       logger.error(error, 'Failed to retrieve unallocated case count')
-      next(error)
+      res.locals.unallocatedCaseCount = '+'
     }
+    next()
   }
 }

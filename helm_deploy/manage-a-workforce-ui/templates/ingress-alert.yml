@@ -17,4 +17,4 @@ spec:
             avg(rate(nginx_ingress_controller_requests{exported_namespace=~"workforce-management-dev", ingress=~"manage-a-workforce-ui-v1-2", status=~"5.*"}[4m]) * 60 > 0) by (ingress, exported_namespace)
           for: 1m
           labels:
-            severity: {{ .Values.alertSeverity }}
+            severity: hmpps-tier

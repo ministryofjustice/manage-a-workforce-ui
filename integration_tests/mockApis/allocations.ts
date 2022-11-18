@@ -624,6 +624,22 @@ export default {
             dateCreated: '2021-11-17T10:30:00+01:00',
             sensitive: false,
           },
+          {
+            id: 'd3cb4b29-e2ce-4a9a-af3c-bc89d5e56f6c',
+            name: 'OfficeVisitDocument.DOC',
+            relatedTo: {
+              type: 'CONTACT',
+              name: 'Planned Office Visit (NS)',
+              event: {
+                eventType: 'PREVIOUS',
+                eventNumber: '2',
+                mainOffence: 'Common assault and battery - 10501',
+              },
+              description: 'Contact',
+            },
+            dateCreated: null,
+            sensitive: false,
+          },
         ],
       },
     })

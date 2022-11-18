@@ -67,6 +67,12 @@ context('Documents', () => {
           Event: 'PreviousCommon assault and battery - 10501',
           'Date created': '16 Oct 2021',
         },
+        {
+          Name: 'OfficeVisitDocument.DOCContact',
+          Type: 'Planned Office Visit (NS)',
+          Event: 'PreviousCommon assault and battery - 10501',
+          'Date created': '',
+        },
       ])
   })
 })

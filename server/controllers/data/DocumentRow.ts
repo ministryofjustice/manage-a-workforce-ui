@@ -34,8 +34,12 @@ export default class DocumentRow {
     } else {
       this.eventFirstLine = 'Not attached to an event'
     }
-    this.dateCreated = dayjs(documentDetails.dateCreated).format(config.dateShortFormat)
-    this.dateSortValue = documentDetails.dateCreated
+    if (documentDetails.dateCreated) {
+      this.dateCreated = dayjs(documentDetails.dateCreated).format(config.dateShortFormat)
+      this.dateSortValue = documentDetails.dateCreated
+    } else {
+      this.dateSortValue = dayjs(new Date(-8640000000000000)).toISOString()
+    }
   }
 
   capitalise(value: string): string {

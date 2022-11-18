@@ -21,7 +21,7 @@ export default function getUnallocatedCasesCount(
       }
     } catch (error) {
       logger.error(error, 'Failed to retrieve unallocated case count')
-      res.locals.unallocatedCaseCount = 1
+      res.locals.unallocatedCaseCount = '+'
     }
     next()
   }

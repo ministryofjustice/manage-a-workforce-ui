@@ -50,11 +50,11 @@ context('Unallocated', () => {
     unallocatedPage.notificationsBadge().should('not.exist')
   })
 
-  it('must show 1 when erroring retrieving unallocated case count', () => {
+  it('must show + when erroring retrieving unallocated case count', () => {
     cy.task('stubUserPreferenceTeamsError')
     cy.task('stubGetUnallocatedCase')
     cy.visit('/team/TM1/J678910/convictions/123456789/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.notificationsBadge().should('contain.text', '1')
+    summaryPage.notificationsBadge().should('contain.text', '+')
   })
 })

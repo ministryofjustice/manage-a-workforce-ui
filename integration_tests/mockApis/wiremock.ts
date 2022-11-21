@@ -1,17 +1,20 @@
-import { map } from 'cypress/types/bluebird'
 import superagent, { SuperAgentRequest, Response } from 'superagent'
 
 const wiremock = (url: string) => {
   const stubFor = (mapping: Record<string, unknown>): SuperAgentRequest =>
     superagent.post(`${url}/mappings`).send(mapping)
 
-  const stubForMapping = (mappings): SuperAgentRequest => 
-    mappings.map(mapping => superagent.post(`${url}/mappings`).send(mapping))
-  
+  const stubForMapping = (mappings): Promise<Array<Response>> =>
+    Promise.all(mappings.map(mapping => superagent.post(`${url}/mappings`).send(mapping)))
+
   const getRequests = (): SuperAgentRequest => superagent.get(`${url}/requests`)
 
   const resetStubs = (): Promise<Array<Response>> =>
-    Promise.all([superagent.delete(`${url}/mappings`), superagent.delete(`${url}/requests`)])
+    Promise.all([
+      superagent.delete(`${url}/mappings`),
+      superagent.delete(`${url}/requests`),
+      superagent.post(`${url}/scenarios/reset`),
+    ])
 
   const verifyRequest = ({
     requestUrl,
@@ -48,10 +51,7 @@ const allocationUrl = 'http://127.0.0.1:9091/__admin'
 const workloadUrl = 'http://127.0.0.1:9092/__admin'
 const userPreferenceUrl = 'http://127.0.0.1:9094/__admin'
 
-const {
-  stubFor: stubForProbationEstate,
-  resetStubs: resetProbationEstateStubs,
-} = wiremock(probationUrl)
+const { stubFor: stubForProbationEstate, resetStubs: resetProbationEstateStubs } = wiremock(probationUrl)
 export { stubForProbationEstate, resetProbationEstateStubs }
 
 const {
@@ -61,10 +61,7 @@ const {
 } = wiremock(allocationUrl)
 export { stubForAllocation, getAllocationRequests, resetAllocationStubs }
 
-const {
-  stubFor: stubForWorkload,
-  resetStubs: resetWorkloadStubs,
-} = wiremock(workloadUrl)
+const { stubFor: stubForWorkload, resetStubs: resetWorkloadStubs } = wiremock(workloadUrl)
 export { stubForWorkload, resetWorkloadStubs }
 
 const {
@@ -72,6 +69,12 @@ const {
   getRequests: getUserPreferenceRequests,
   resetStubs: resetUserPreferenceStubs,
   verifyRequest: verifyRequestForUserPreference,
-  stubForMapping: stubForUserPreferenceMapping
+  stubForMapping: stubForUserPreferenceMapping,
 } = wiremock(userPreferenceUrl)
-export { stubForUserPreference, getUserPreferenceRequests, resetUserPreferenceStubs, verifyRequestForUserPreference, stubForUserPreferenceMapping }
+export {
+  stubForUserPreference,
+  getUserPreferenceRequests,
+  resetUserPreferenceStubs,
+  verifyRequestForUserPreference,
+  stubForUserPreferenceMapping,
+}

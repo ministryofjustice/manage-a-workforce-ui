@@ -1,4 +1,4 @@
-import { SuperAgentRequest } from 'superagent'
+import { SuperAgentRequest, Response } from 'superagent'
 import { stubForUserPreference, stubForUserPreferenceMapping, verifyRequestForUserPreference } from './wiremock'
 
 export default {
@@ -17,7 +17,7 @@ export default {
       },
     })
   },
-  
+
   stubPutUserPreferenceTeams: (teams: string[]): SuperAgentRequest => {
     return stubForUserPreference({
       request: {
@@ -73,37 +73,40 @@ export default {
       },
     })
   },
-  stubUserPreferencePDUErrorThenSuccess: (pdus = ['PDU1']): SuperAgentRequest => {
-    return stubForUserPreferenceMapping([{
-      scenarioName: "user preference fails once",
-      requiredScenarioState: "Started",
-      newScenarioState: "failed",
-      request: {
-        method: 'GET',
-        urlPattern: `/users/USER1/preferences/allocation-pdu`,
-      },
-      response: {
-        status: 500,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {},
-      }
-    },{
-      scenarioName: "user preference fails once",
-      requiredScenarioState: "failed",
-      request: {
-        method: 'GET',
-        urlPattern: `/users/USER1/preferences/allocation-pdu`,
-      },
-      response: {
-        status: 200,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          items: [],
+  stubUserPreferencePDUErrorThenSuccess: (): Promise<Array<Response>> => {
+    return stubForUserPreferenceMapping([
+      {
+        scenarioName: 'user preference fails once',
+        requiredScenarioState: 'Started',
+        newScenarioState: 'failed',
+        request: {
+          method: 'GET',
+          urlPattern: `/users/USER1/preferences/allocation-pdu`,
+        },
+        response: {
+          status: 500,
+          headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+          jsonBody: {},
         },
       },
-    }])
+      {
+        scenarioName: 'user preference fails once',
+        requiredScenarioState: 'failed',
+        request: {
+          method: 'GET',
+          urlPattern: `/users/USER1/preferences/allocation-pdu`,
+        },
+        response: {
+          status: 200,
+          headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+          jsonBody: {
+            items: [],
+          },
+        },
+      },
+    ])
   },
-  
+
   verifyPutUserPreferenceTeams: (teams: string[]) =>
     verifyRequestForUserPreference({
       requestUrlPattern: `/users/USER1/preferences/allocation-teams`,

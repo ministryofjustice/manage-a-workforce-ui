@@ -27,6 +27,11 @@ export default {
         sentenceDate: '2021-09-01',
         initialAppointment: null,
         status: 'Previously managed',
+        offenderManager: {
+          forenames: 'John',
+          surname: 'Agard',
+          grade: 'PO',
+        },
         convictionId: 56789,
         caseType: 'CUSTODY',
         sentenceLength: '32 Years',

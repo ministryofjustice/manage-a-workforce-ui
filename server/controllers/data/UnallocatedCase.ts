@@ -44,8 +44,11 @@ export default class UnallocatedCase {
     this.sentenceDate = sentenceDate
     this.setInitialAppointment(initialAppointment, caseType, sentenceLength)
     this.primaryStatus = primaryStatus
-    if (primaryStatus === 'Currently managed' && offenderManager) {
-      const grade = offenderManager.grade ? `, ${offenderManager.grade}` : ''
+    if ((primaryStatus === 'Currently managed' || primaryStatus === 'Previously managed') && offenderManager) {
+      let grade = ''
+      if (primaryStatus === 'Currently managed') {
+        grade = offenderManager.grade ? `, ${offenderManager.grade}` : ''
+      }
       this.secondaryStatus = `(${offenderManager.forenames} ${offenderManager.surname}${grade})`
     }
     this.convictionId = convictionId

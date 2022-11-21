@@ -68,13 +68,16 @@ export default class RestClient {
         .set(headers)
         .responseType(responseType)
         .retry(this.config.retries, (err, res) => {
+          console.log(`Retrying ${this.apiUrl()} with `, err)
+  
           if (err) logger.info(`Retry handler found API error with ${err.code} ${err.message} when calling ${path}`)
-          return undefined // retry handler only for logging retries, not to influence retry logic
+          return true 
         })
         .timeout(this.timeoutConfig())
 
       return raw ? result : result.body
     } catch (error) {
+      console.log('oops')
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError, query }, `Error calling ${this.name}, path: '${path}', verb: 'GET'`)
       throw sanitisedError

@@ -1,9 +1,13 @@
+import { map } from 'cypress/types/bluebird'
 import superagent, { SuperAgentRequest, Response } from 'superagent'
 
 const wiremock = (url: string) => {
   const stubFor = (mapping: Record<string, unknown>): SuperAgentRequest =>
     superagent.post(`${url}/mappings`).send(mapping)
 
+  const stubForMapping = (mappings): SuperAgentRequest => 
+    mappings.map(mapping => superagent.post(`${url}/mappings`).send(mapping))
+  
   const getRequests = (): SuperAgentRequest => superagent.get(`${url}/requests`)
 
   const resetStubs = (): Promise<Array<Response>> =>
@@ -36,7 +40,7 @@ const wiremock = (url: string) => {
     })
   }
 
-  return { stubFor, getRequests, resetStubs, verifyRequest }
+  return { stubFor, getRequests, resetStubs, verifyRequest, stubForMapping }
 }
 
 const probationUrl = 'http://127.0.0.1:9093/__admin'
@@ -46,10 +50,9 @@ const userPreferenceUrl = 'http://127.0.0.1:9094/__admin'
 
 const {
   stubFor: stubForProbationEstate,
-  getRequests: getProbationEstateRequests,
   resetStubs: resetProbationEstateStubs,
 } = wiremock(probationUrl)
-export { stubForProbationEstate, getProbationEstateRequests, resetProbationEstateStubs }
+export { stubForProbationEstate, resetProbationEstateStubs }
 
 const {
   stubFor: stubForAllocation,
@@ -60,15 +63,15 @@ export { stubForAllocation, getAllocationRequests, resetAllocationStubs }
 
 const {
   stubFor: stubForWorkload,
-  getRequests: getWorkloadRequests,
   resetStubs: resetWorkloadStubs,
 } = wiremock(workloadUrl)
-export { stubForWorkload, getWorkloadRequests, resetWorkloadStubs }
+export { stubForWorkload, resetWorkloadStubs }
 
 const {
   stubFor: stubForUserPreference,
   getRequests: getUserPreferenceRequests,
   resetStubs: resetUserPreferenceStubs,
   verifyRequest: verifyRequestForUserPreference,
+  stubForMapping: stubForUserPreferenceMapping
 } = wiremock(userPreferenceUrl)
-export { stubForUserPreference, getUserPreferenceRequests, resetUserPreferenceStubs, verifyRequestForUserPreference }
+export { stubForUserPreference, getUserPreferenceRequests, resetUserPreferenceStubs, verifyRequestForUserPreference, stubForUserPreferenceMapping }

@@ -280,7 +280,7 @@ export default class AllocationsController {
       res.setHeader(key, value)
     })
     response.data.pipe(res)
-    response.data.on('end', next)
+    return response.data.on('end', next)
   }
 
   async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffCode, convictionId, form, teamCode) {

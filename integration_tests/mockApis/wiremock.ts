@@ -4,7 +4,7 @@ const wiremock = (url: string) => {
   const stubFor = (mapping: Record<string, unknown>): SuperAgentRequest =>
     superagent.post(`${url}/mappings`).send(mapping)
 
-  const stubForMapping = (mappings): Promise<Array<Response>> =>
+  const stubForScenario = (mappings): Promise<Array<Response>> =>
     Promise.all(mappings.map(mapping => superagent.post(`${url}/mappings`).send(mapping)))
 
   const getRequests = (): SuperAgentRequest => superagent.get(`${url}/requests`)
@@ -43,7 +43,7 @@ const wiremock = (url: string) => {
     })
   }
 
-  return { stubFor, getRequests, resetStubs, verifyRequest, stubForMapping }
+  return { stubFor, getRequests, resetStubs, verifyRequest, stubForScenario }
 }
 
 const probationUrl = 'http://127.0.0.1:9093/__admin'
@@ -69,12 +69,12 @@ const {
   getRequests: getUserPreferenceRequests,
   resetStubs: resetUserPreferenceStubs,
   verifyRequest: verifyRequestForUserPreference,
-  stubForMapping: stubForUserPreferenceMapping,
+  stubForScenario: stubForUserPreferenceScenario,
 } = wiremock(userPreferenceUrl)
 export {
   stubForUserPreference,
   getUserPreferenceRequests,
   resetUserPreferenceStubs,
   verifyRequestForUserPreference,
-  stubForUserPreferenceMapping,
+  stubForUserPreferenceScenario,
 }

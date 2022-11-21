@@ -1,5 +1,5 @@
 import { SuperAgentRequest, Response } from 'superagent'
-import { stubForUserPreference, stubForUserPreferenceMapping, verifyRequestForUserPreference } from './wiremock'
+import { stubForUserPreference, stubForUserPreferenceScenario, verifyRequestForUserPreference } from './wiremock'
 
 export default {
   stubUserPreferenceTeams: (teams = ['TM1']): SuperAgentRequest => {
@@ -17,7 +17,19 @@ export default {
       },
     })
   },
-
+  stubUserPreferenceTeamsError: (): SuperAgentRequest => {
+    return stubForUserPreference({
+      request: {
+        method: 'GET',
+        urlPattern: `/users/USER1/preferences/allocation-teams`,
+      },
+      response: {
+        status: 500,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {},
+      },
+    })
+  },
   stubPutUserPreferenceTeams: (teams: string[]): SuperAgentRequest => {
     return stubForUserPreference({
       request: {
@@ -74,7 +86,7 @@ export default {
     })
   },
   stubUserPreferencePDUErrorThenSuccess: (): Promise<Array<Response>> => {
-    return stubForUserPreferenceMapping([
+    return stubForUserPreferenceScenario([
       {
         scenarioName: 'user preference fails once',
         requiredScenarioState: 'Started',

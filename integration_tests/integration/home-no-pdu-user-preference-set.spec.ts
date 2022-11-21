@@ -14,4 +14,11 @@ context('No PDU user preference set', () => {
     const regionPage = Page.verifyOnPage(RegionPage)
     regionPage.legendHeading().trimTextContent().should('equal', 'Select your region')
   })
+
+  it('retries if user preferences not found', () => {
+    cy.task('stubUserPreferencePDUErrorThenSuccess')
+    cy.visit('/')
+    const regionPage = Page.verifyOnPage(RegionPage)
+    regionPage.legendHeading().trimTextContent().should('equal', 'Select your region')
+  })
 })

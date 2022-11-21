@@ -4,10 +4,17 @@ const wiremock = (url: string) => {
   const stubFor = (mapping: Record<string, unknown>): SuperAgentRequest =>
     superagent.post(`${url}/mappings`).send(mapping)
 
+  const stubForScenario = (mappings): Promise<Array<Response>> =>
+    Promise.all(mappings.map(mapping => superagent.post(`${url}/mappings`).send(mapping)))
+
   const getRequests = (): SuperAgentRequest => superagent.get(`${url}/requests`)
 
   const resetStubs = (): Promise<Array<Response>> =>
-    Promise.all([superagent.delete(`${url}/mappings`), superagent.delete(`${url}/requests`)])
+    Promise.all([
+      superagent.delete(`${url}/mappings`),
+      superagent.delete(`${url}/requests`),
+      superagent.post(`${url}/scenarios/reset`),
+    ])
 
   const verifyRequest = ({
     requestUrl,
@@ -36,7 +43,7 @@ const wiremock = (url: string) => {
     })
   }
 
-  return { stubFor, getRequests, resetStubs, verifyRequest }
+  return { stubFor, getRequests, resetStubs, verifyRequest, stubForScenario }
 }
 
 const probationUrl = 'http://127.0.0.1:9093/__admin'
@@ -44,12 +51,8 @@ const allocationUrl = 'http://127.0.0.1:9091/__admin'
 const workloadUrl = 'http://127.0.0.1:9092/__admin'
 const userPreferenceUrl = 'http://127.0.0.1:9094/__admin'
 
-const {
-  stubFor: stubForProbationEstate,
-  getRequests: getProbationEstateRequests,
-  resetStubs: resetProbationEstateStubs,
-} = wiremock(probationUrl)
-export { stubForProbationEstate, getProbationEstateRequests, resetProbationEstateStubs }
+const { stubFor: stubForProbationEstate, resetStubs: resetProbationEstateStubs } = wiremock(probationUrl)
+export { stubForProbationEstate, resetProbationEstateStubs }
 
 const {
   stubFor: stubForAllocation,
@@ -58,17 +61,20 @@ const {
 } = wiremock(allocationUrl)
 export { stubForAllocation, getAllocationRequests, resetAllocationStubs }
 
-const {
-  stubFor: stubForWorkload,
-  getRequests: getWorkloadRequests,
-  resetStubs: resetWorkloadStubs,
-} = wiremock(workloadUrl)
-export { stubForWorkload, getWorkloadRequests, resetWorkloadStubs }
+const { stubFor: stubForWorkload, resetStubs: resetWorkloadStubs } = wiremock(workloadUrl)
+export { stubForWorkload, resetWorkloadStubs }
 
 const {
   stubFor: stubForUserPreference,
   getRequests: getUserPreferenceRequests,
   resetStubs: resetUserPreferenceStubs,
   verifyRequest: verifyRequestForUserPreference,
+  stubForScenario: stubForUserPreferenceScenario,
 } = wiremock(userPreferenceUrl)
-export { stubForUserPreference, getUserPreferenceRequests, resetUserPreferenceStubs, verifyRequestForUserPreference }
+export {
+  stubForUserPreference,
+  getUserPreferenceRequests,
+  resetUserPreferenceStubs,
+  verifyRequestForUserPreference,
+  stubForUserPreferenceScenario,
+}

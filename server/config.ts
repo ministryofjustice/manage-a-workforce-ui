@@ -27,6 +27,7 @@ export interface ApiConfig {
     deadline: number
   }
   agent: AgentConfig
+  retries?: number
 }
 
 export default {
@@ -81,10 +82,11 @@ export default {
     userPreferenceService: {
       url: get('USER_PREFERENCE_SERVICE_URL', 'http://127.0.0.1:9094', requiredInProduction),
       timeout: {
-        response: 5000,
-        deadline: 5000,
+        response: 1000,
+        deadline: 1000,
       },
-      agent: new AgentConfig(5000),
+      agent: new AgentConfig(1000),
+      retries: 2,
     },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://127.0.0.1:8100', requiredInProduction),

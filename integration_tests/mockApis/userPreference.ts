@@ -1,5 +1,5 @@
-import { SuperAgentRequest } from 'superagent'
-import { stubForUserPreference, verifyRequestForUserPreference } from './wiremock'
+import { SuperAgentRequest, Response } from 'superagent'
+import { stubForUserPreference, stubForUserPreferenceScenario, verifyRequestForUserPreference } from './wiremock'
 
 export default {
   stubUserPreferenceTeams: (teams = ['TM1']): SuperAgentRequest => {
@@ -85,6 +85,40 @@ export default {
       },
     })
   },
+  stubUserPreferencePDUErrorThenSuccess: (): Promise<Array<Response>> => {
+    return stubForUserPreferenceScenario([
+      {
+        scenarioName: 'user preference fails once',
+        requiredScenarioState: 'Started',
+        newScenarioState: 'failed',
+        request: {
+          method: 'GET',
+          urlPattern: `/users/USER1/preferences/allocation-pdu`,
+        },
+        response: {
+          status: 500,
+          headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+          jsonBody: {},
+        },
+      },
+      {
+        scenarioName: 'user preference fails once',
+        requiredScenarioState: 'failed',
+        request: {
+          method: 'GET',
+          urlPattern: `/users/USER1/preferences/allocation-pdu`,
+        },
+        response: {
+          status: 200,
+          headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+          jsonBody: {
+            items: [],
+          },
+        },
+      },
+    ])
+  },
+
   verifyPutUserPreferenceTeams: (teams: string[]) =>
     verifyRequestForUserPreference({
       requestUrlPattern: `/users/USER1/preferences/allocation-teams`,

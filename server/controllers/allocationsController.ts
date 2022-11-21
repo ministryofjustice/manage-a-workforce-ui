@@ -269,7 +269,7 @@ export default class AllocationsController {
     })
   }
 
-  async getDocument(req: Request, res: Response, next: NextFunction, crn, convictionId, documentId, documentName) {
+  async getDocument(res: Response, crn, convictionId, documentId, documentName) {
     const response: FileDownload = await this.allocationsService.getDocument(
       res.locals.user.token,
       crn,
@@ -278,7 +278,6 @@ export default class AllocationsController {
     )
     res.attachment(documentName)
     response.data.pipe(res)
-    return response.data.on('end', next)
   }
 
   async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffCode, convictionId, form, teamCode) {

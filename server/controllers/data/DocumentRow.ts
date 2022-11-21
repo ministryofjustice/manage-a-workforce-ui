@@ -10,6 +10,8 @@ export default class DocumentRow {
 
   nameSecondLine: string
 
+  fileName: string
+
   displaySensitive: boolean
 
   type: string
@@ -26,6 +28,7 @@ export default class DocumentRow {
     this.id = documentDetails.id
     this.nameFirstLine = documentDetails.name
     this.nameSecondLine = documentDetails.relatedTo.description
+    this.fileName = documentDetails.name
     this.displaySensitive = documentDetails.sensitive
     this.type = documentDetails.relatedTo.name
     if (documentDetails.relatedTo.event) {

@@ -1,10 +1,10 @@
 {%- from "../doubleCell/macro.njk" import doubleCell  -%}
 {%- from "../downloadDocumentLink/macro.njk" import downloadDocumentLink -%}
 
-{% macro documentCell(crn, convictionId, documentId, completedDate, linkText, documentTabHref ) -%}
+{% macro documentCell(crn, convictionId, documentId, completedDate, linkText, documentTabHref, documentName ) -%}
 {%- set noDocumentElement='<a href="' + documentTabHref + '">Check Documents screen</a>'-%}
 {%- set uploadedDate = 'Uploaded ' + completedDate | dateFormat-%}
 
-{{ doubleCell(downloadDocumentLink(crn, convictionId, documentId, linkText, 'govuk-link--no-visited-state') if completedDate else noDocumentElement, uploadedDate if completedDate) }}
+{{ doubleCell(downloadDocumentLink(crn, convictionId, documentId, linkText, 'govuk-link--no-visited-state', documentName) if completedDate else noDocumentElement, uploadedDate if completedDate) }}
 
 {%- endmacro %}

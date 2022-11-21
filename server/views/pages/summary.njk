@@ -132,7 +132,7 @@
                         text: "CPS pack"
                     },
                         value: {
-                        html: documentCell(crn, convictionId, data.cpsPack.documentId, data.cpsPack.completedDate, 'Download CPS pack', documentTabHref)
+                        html: documentCell(crn, convictionId, data.cpsPack.documentId, data.cpsPack.completedDate, 'Download CPS pack', documentTabHref, data.cpsPack.name)
                     }
                     },
                     {
@@ -140,7 +140,7 @@
                         text: "Pre-convictions"
                     },
                         value: {
-                        html: documentCell(crn, convictionId, data.preConvictionDocument.documentId, data.preConvictionDocument.completedDate, 'Download Pre-convictions document', documentTabHref)
+                        html: documentCell(crn, convictionId, data.preConvictionDocument.documentId, data.preConvictionDocument.completedDate, 'Download Pre-convictions document', documentTabHref, data.preConvictionDocument.name)
                     }
                     },
                     {
@@ -148,7 +148,7 @@
                         html: 'Pre-sentence report'
                     },
                         value: {
-                        html: documentCell(crn, convictionId,data.courtReport.documentId, data.courtReport.completedDate, '	Download ' + data.courtReport.description, documentTabHref )
+                        html: documentCell(crn, convictionId,data.courtReport.documentId, data.courtReport.completedDate, '	Download ' + data.courtReport.description, documentTabHref, data.courtReport.name )
                     }
                     },
                     {

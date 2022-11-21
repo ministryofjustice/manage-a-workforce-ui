@@ -179,14 +179,17 @@ export default {
             description: 'Pre-Sentence Report - Fast',
             completedDate: '2022-01-27T10:54:32.868Z',
             documentId: '00000000-0000-0000-0000-000000000000',
+            name: 'courtFile.pdf',
           },
           cpsPack: {
             completedDate: '2022-02-27T10:54:32.868Z',
             documentId: '11111111-1111-1111-1111-111111111111',
+            name: 'cpsPackFile.pdf',
           },
           preConvictionDocument: {
             completedDate: '2022-03-27T10:54:32.868Z',
             documentId: '22222222-2222-2222-2222-222222222222',
+            name: 'preConsFile.pdf',
           },
           assessment: {
             lastAssessedOn: '2022-01-27T10:54:32.869Z',

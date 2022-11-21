@@ -11,9 +11,6 @@ export default class SummaryPage extends Page {
 
   sentenceTitle = (): PageElement => cy.get('#sentence > header > h2 ')
 
-  downloadLink = (crn, convictionId, documentId): PageElement =>
-    cy.get(`a[href*="/${crn}/convictions/${convictionId}/documents/${documentId}"]`)
-
   associatedDocumentsTitle = (): PageElement => cy.get('#case-details > header > h2 ')
 
   associatedDocumentsLink = (): PageElement => cy.get('#case-details > header > a ')

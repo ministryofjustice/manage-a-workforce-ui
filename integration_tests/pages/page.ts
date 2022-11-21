@@ -52,4 +52,7 @@ export default abstract class Page {
   sectionBreak = (): PageElement => cy.get('.govuk-section-break')
 
   instructionsTextArea = (): PageElement => cy.get(`#instructions`)
+
+  downloadDocumentLink = (crn, convictionId, documentId, fileName): PageElement =>
+    cy.get(`a[href*="/${crn}/convictions/${convictionId}/documents/${documentId}/${fileName}"]`)
 }

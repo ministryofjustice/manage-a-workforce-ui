@@ -102,12 +102,18 @@ context('Summary', () => {
     })
   })
 
-  it('Case details visible on page', () => {
+  it('Associated Documents visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedDocumentsTitle().should('have.text', 'Associated documents')
-    summaryPage.downloadLink('J678910', '123456789', '00000000-0000-0000-0000-000000000000').should('exist')
-    summaryPage.downloadLink('J678910', '123456789', '11111111-1111-1111-1111-111111111111').should('exist')
-    summaryPage.downloadLink('J678910', '123456789', '22222222-2222-2222-2222-222222222222').should('exist')
+    summaryPage
+      .downloadDocumentLink('J678910', '123456789', '00000000-0000-0000-0000-000000000000', 'courtFile.pdf')
+      .should('exist')
+    summaryPage
+      .downloadDocumentLink('J678910', '123456789', '11111111-1111-1111-1111-111111111111', 'cpsPackFile.pdf')
+      .should('exist')
+    summaryPage
+      .downloadDocumentLink('J678910', '123456789', '22222222-2222-2222-2222-222222222222', 'preConsFile.pdf')
+      .should('exist')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       'CPS pack': 'Download CPS pack Uploaded 27 February 2022',
       'Pre-convictions': 'Download Pre-convictions document Uploaded 27 March 2022',
@@ -116,7 +122,7 @@ context('Summary', () => {
     })
   })
 
-  it('Case details visible on page with no reports or assessments', () => {
+  it('Associated Documents visible on page with no reports or assessments', () => {
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)

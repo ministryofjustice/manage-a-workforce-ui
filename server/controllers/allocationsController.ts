@@ -269,16 +269,14 @@ export default class AllocationsController {
     })
   }
 
-  async getDocument(req: Request, res: Response, next: NextFunction, crn, convictionId, documentId) {
+  async getDocument(req: Request, res: Response, next: NextFunction, crn, convictionId, documentId, documentName) {
     const response: FileDownload = await this.allocationsService.getDocument(
       res.locals.user.token,
       crn,
       convictionId,
       documentId
     )
-    response.headers.forEach((value, key) => {
-      res.setHeader(key, value)
-    })
+    res.attachment(documentName)
     response.data.pipe(res)
     return response.data.on('end', next)
   }

@@ -4,120 +4,40 @@ services:
   redis:
     image: 'bitnami/redis:7.0'
     networks:
-      - hmpps
-    container_name: redis
+      - hmpps_int
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
       - '6379:6379'
 
-  hmpps-auth:
-    image: quay.io/hmpps/hmpps-auth:latest
-    networks:
-      - hmpps
-    container_name: hmpps-auth
-    ports:
-      - "9090:8080"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/auth/health"]
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - APPLICATION_AUTHENTICATION_UI_ALLOWLIST=0.0.0.0/0
-      - DELIUS_ENABLED=true
-      - DELIUS_ENDPOINT_URL=http://wiremock:8099
-
-  allocations-service:
-    image: quay.io/hmpps/hmpps-allocations
-    networks:
-      - hmpps
-    container_name: manage-a-workforce-allocations
-    ports:
-      - "8091:8080"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/auth/health" ]
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev,docker
-      - DATABASE_ENDPOINT=allocations-postgres:5432
-      - HMPPS_SQS_LOCALSTACK_URL=http://localstack:4566
-      - OAUTH_ENDPOINT_URL=http://host.docker.internal:9090/auth
-    depends_on:
-      - "allocations-postgres"
-      - "localstack"
-
-  hmpps-workload:
-    image: quay.io/hmpps/hmpps-workload:latest
-    networks:
-      - hmpps
-    container_name: manage-a-workforce-hmpps-workload
-    ports:
-      - "8081:8080"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health/ping"]
-    environment:
-      - SERVER_PORT=8080
-      - SPRING_PROFILES_ACTIVE=dev,docker
-      - DATABASE_ENDPOINT=workload-postgres:5432
-      - HMPPS_SQS_LOCALSTACK_URL=http://localstack:4566
-    entrypoint: ["/bin/sh", "-c" , "sleep 10 && java -javaagent:/app/agent.jar -jar /app/app.jar"]
-    depends_on:
-        - "workload-postgres"
-        - "localstack"
-
-  workload-postgres:
-    image: postgres:15
-    networks:
-      - hmpps
-    container_name: workload-postgres
-    restart: always
-    ports:
-      - '5433:5432'
-    environment:
-      - POSTGRES_PASSWORD=dev
-      - POSTGRES_USER=root
-
-  allocations-postgres:
-    image: postgres:15
-    networks:
-      - hmpps
-    container_name: allocations-postgres
-    restart: always
-    ports:
-      - '5432:5432'
-    environment:
-      - POSTGRES_PASSWORD=dev
-      - POSTGRES_USER=root
-
-  wiremock:
+  allocation-wiremock:
     image: wiremock/wiremock
     networks:
-      - hmpps
-    container_name:  manage-a-workforce-wiremock
+    - hmpps_int
     restart: always
     ports:
-      - "8099:8099"
-    command: ["--port","8099","--global-response-templating"]
-    volumes:
-      - $PWD/wiremock:/home/wiremock:rw
-
-  localstack:
-    image: localstack/localstack:1.2.0
+      - "9091:8080"
+  workload-wiremock:
+    image: wiremock/wiremock
     networks:
-      - hmpps
-    container_name: manage-a-workforce-localstack
+    - hmpps_int
+    restart: always
     ports:
-      - 4566:4566
-      - 8999:8080
-    environment:
-      - SERVICES=sns,sqs
-      - DEBUG=${DEBUG- }
-      - DOCKER_HOST=unix:///var/run/docker.sock
-      - DEFAULT_REGION=eu-west-2
-    healthcheck:
-      test: ["CMD","sh","-c", "awslocal sqs list-queues"]
-      interval: 5s
-      timeout: 10s
-      start_period: 10s
-    volumes:
-      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "9092:8080"
+  probation-estate-wiremock:
+    image: wiremock/wiremock
+    networks:
+    - hmpps_int
+    restart: always
+    ports:
+      - "9093:8080"
+  user-preference-wiremock:
+    image: wiremock/wiremock
+    networks:
+    - hmpps_int
+    restart: always
+    ports:
+      - "9094:8080"
+
 networks:
-  hmpps:
+  hmpps_int:

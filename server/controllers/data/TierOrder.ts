@@ -17,4 +17,4 @@ const tierOrderMap = new Map<string, number>([
   ['D0', 1],
 ])
 
-export default tierOrderMap
+export default (tier: string) => tierOrderMap.get(tier) ?? 0

@@ -72,7 +72,7 @@ context('Unallocated cases by team', () => {
           Tier: 'C1',
           'Sentence date': '1 September 2021',
           'Initial appointment date': 'Not neededCustody case (32 Years)',
-          'Probation status': 'Previously managed',
+          'Probation status': 'Previously managed(John Agard)',
           Action: 'Review case',
         },
         {
@@ -167,7 +167,7 @@ context('Unallocated cases by team', () => {
           Tier: 'C1',
           'Sentence date': '1 September 2021',
           'Initial appointment date': 'Not neededCustody case (32 Years)',
-          'Probation status': 'Previously managed',
+          'Probation status': 'Previously managed(John Agard)',
           Action: 'Review case',
         },
         {

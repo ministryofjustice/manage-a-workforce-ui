@@ -15,7 +15,7 @@ export default class Case {
     this.name = `${forename} ${surname}`
     this.crn = crn
     this.tier = tier
-    this.tierOrder = tierOrder.get(tier) ?? 0
+    this.tierOrder = tierOrder(tier)
     this.caseCategory = caseCategory
   }
 }

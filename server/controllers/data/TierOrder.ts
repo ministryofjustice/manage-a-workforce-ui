@@ -1,20 +1,3 @@
-const tierOrderMap = new Map<string, number>([
-  ['A3', 16],
-  ['A2', 15],
-  ['A1', 14],
-  ['A0', 13],
-  ['B3', 12],
-  ['B2', 11],
-  ['B1', 10],
-  ['B0', 9],
-  ['C3', 8],
-  ['C2', 7],
-  ['C1', 6],
-  ['C0', 5],
-  ['D3', 4],
-  ['D2', 3],
-  ['D1', 2],
-  ['D0', 1],
-])
+const tierOrder = ['D0', 'D1', 'D2', 'D3', 'C0', 'C1', 'C2', 'C3', 'B0', 'B1', 'B2', 'B3', 'A0', 'A1', 'A2', 'A3']
 
-export default tierOrderMap
+export default (tier: string) => tierOrder.indexOf(tier)

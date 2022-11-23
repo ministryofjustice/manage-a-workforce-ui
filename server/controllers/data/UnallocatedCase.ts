@@ -40,7 +40,7 @@ export default class UnallocatedCase {
     this.name = name
     this.crn = crn
     this.tier = tier
-    this.tierOrder = tierOrder.get(tier) ?? 0
+    this.tierOrder = tierOrder(tier)
     this.sentenceDate = sentenceDate
     this.setInitialAppointment(initialAppointment, caseType, sentenceLength)
     this.primaryStatus = primaryStatus

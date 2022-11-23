@@ -12,12 +12,12 @@ context('Select Probation Delivery Unit', () => {
   })
 
   it('Caption text visible on page', () => {
-    const probationDeliveryUnitPage = Page.verifyOnPageTitle(ProbationDeliveryUnitPage, 'A Region')
+    const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
     probationDeliveryUnitPage.captionText().should('contain', 'HMPPS')
   })
 
   it('Legend heading visible on page', () => {
-    const probationDeliveryUnitPage = Page.verifyOnPageTitle(ProbationDeliveryUnitPage, 'A Region')
+    const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
     probationDeliveryUnitPage
       .legendHeading()
       .trimTextContent()
@@ -25,7 +25,7 @@ context('Select Probation Delivery Unit', () => {
   })
 
   it('PDUs in alphabetical order', () => {
-    const probationDeliveryUnitPage = Page.verifyOnPageTitle(ProbationDeliveryUnitPage, 'A Region')
+    const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
     probationDeliveryUnitPage
       .radios()
       .getRadios()
@@ -50,20 +50,20 @@ context('Select Probation Delivery Unit', () => {
   })
 
   it('continue button exists', () => {
-    const probationDeliveryUnitPage = Page.verifyOnPageTitle(ProbationDeliveryUnitPage, 'A Region')
+    const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
     probationDeliveryUnitPage.button().trimTextContent().should('equal', 'Continue')
   })
 
   it('cancel link goes back to region screen', () => {
     cy.task('stubGetAllRegions')
-    const probationDeliveryUnitPage = Page.verifyOnPageTitle(ProbationDeliveryUnitPage, 'A Region')
+    const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
     probationDeliveryUnitPage.cancelLink().trimTextContent().should('equal', 'Cancel')
     probationDeliveryUnitPage.cancelLink().click()
     Page.verifyOnPage(RegionPage)
   })
 
   it('selecting no PDU and continuing causes error', () => {
-    const probationDeliveryUnitPage = Page.verifyOnPageTitle(ProbationDeliveryUnitPage, 'A Region')
+    const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
     probationDeliveryUnitPage.button().click()
     probationDeliveryUnitPage
       .errorSummary()
@@ -73,9 +73,9 @@ context('Select Probation Delivery Unit', () => {
 
   it('selecting PDU and clicking continue goes to select Team page', () => {
     cy.task('stubGetPduDetails', 'PDU1')
-    const probationDeliveryUnitPage = Page.verifyOnPageTitle(ProbationDeliveryUnitPage, 'A Region')
+    const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
     probationDeliveryUnitPage.radio('PDU1').click()
     probationDeliveryUnitPage.button().click()
-    Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+    Page.verifyOnPage(SelectTeamsPage)
   })
 })

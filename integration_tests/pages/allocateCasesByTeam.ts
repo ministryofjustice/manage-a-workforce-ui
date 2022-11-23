@@ -1,8 +1,8 @@
 import Page, { PageElement } from './page'
 
 export default class AllocateCasesByTeamPage extends Page {
-  constructor(title) {
-    super(title)
+  constructor() {
+    super('Allocate cases by team')
   }
 
   tableCaption = (): PageElement => cy.get('.govuk-table__caption')

@@ -2,7 +2,7 @@ import Page, { PageElement } from './page'
 
 export default class InstructionsConfirmPage extends Page {
   constructor() {
-    super('Dylan Adam Armstrong')
+    super('Review allocation instructions')
   }
 
   continueButton = (convictionId): PageElement => cy.get(`#${convictionId}`)

@@ -72,6 +72,6 @@ context('Select region', () => {
     const regionPage = Page.verifyOnPage(RegionPage)
     regionPage.radio('RG1').click()
     regionPage.button().click()
-    Page.verifyOnPageTitle(ProbationDeliveryUnitPage, 'A Region')
+    Page.verifyOnPage(ProbationDeliveryUnitPage)
   })
 })

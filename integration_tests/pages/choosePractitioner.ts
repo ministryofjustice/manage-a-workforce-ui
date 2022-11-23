@@ -2,7 +2,7 @@ import Page, { PageElement } from './page'
 
 export default class ChoosePractitionerPage extends Page {
   constructor() {
-    super('Dylan Adam Armstrong')
+    super('Choose practitioner')
   }
 
   warningText = (): PageElement => cy.get('.govuk-warning-text')

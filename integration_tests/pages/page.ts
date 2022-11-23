@@ -15,7 +15,7 @@ export default abstract class Page {
   }
 
   checkOnPage(): void {
-    cy.get('h1').contains(this.title)
+    cy.get('title').contains(this.title)
   }
 
   headerUserName = (): PageElement => cy.get('a.moj-header__navigation-link')

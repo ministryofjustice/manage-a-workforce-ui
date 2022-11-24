@@ -1,8 +1,8 @@
 import Page, { PageElement } from './page'
 
 export default class ProbationDeliveryUnitPage extends Page {
-  constructor(regionName: string) {
-    super(regionName)
+  constructor() {
+    super('Select your PDU')
   }
 
   legendHeading = (): PageElement => cy.get('.govuk-fieldset__heading')

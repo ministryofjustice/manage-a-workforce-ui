@@ -1,8 +1,8 @@
 import Page, { PageElement } from './page'
 
 export default class UnallocatedByTeamPage extends Page {
-  constructor(teamName: string) {
-    super(teamName)
+  constructor() {
+    super('Unallocated cases')
   }
 
   probationDeliveryUnit = (): PageElement => cy.get('.govuk-caption-xl')

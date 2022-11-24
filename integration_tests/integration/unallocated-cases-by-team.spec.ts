@@ -1,4 +1,5 @@
 import UnallocatedByTeamPage from '../pages/unallocatedCasesByTeam'
+import Page from '../pages/page'
 
 import config from '../../server/config'
 
@@ -13,7 +14,7 @@ context('Unallocated cases by team', () => {
       name: 'Team Name',
     })
     cy.visit('/team/TM1/cases/unallocated')
-    unallocatedPage = new UnallocatedByTeamPage('Team Name')
+    unallocatedPage = Page.verifyOnPage(UnallocatedByTeamPage)
   })
 
   it('Probation Delivery Unit visible on page', () => {

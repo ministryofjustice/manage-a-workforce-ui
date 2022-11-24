@@ -2,7 +2,7 @@ import Page, { PageElement } from './page'
 
 export default class ActiveCasesPage extends Page {
   constructor() {
-    super('John Doe')
+    super('Active cases')
   }
 
   backLink = (): PageElement => cy.get('.govuk-back-link')

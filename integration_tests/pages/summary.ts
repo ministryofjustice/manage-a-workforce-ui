@@ -2,7 +2,7 @@ import Page, { PageElement } from './page'
 
 export default class SummaryPage extends Page {
   constructor() {
-    super('Dylan Adam Armstrong')
+    super('Summary')
   }
 
   summaryHeading = (): PageElement => cy.get('h2.govuk-heading-l')

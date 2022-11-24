@@ -10,17 +10,17 @@ context('Select teams', () => {
   })
 
   it('Caption text visible on page', () => {
-    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.captionText().should('contain', 'A Region')
   })
 
   it('Legend heading visible on page', () => {
-    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.legendHeading().trimTextContent().should('equal', 'Select your teams')
   })
 
   it('hint visible on page', () => {
-    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage
       .hint()
       .should(
@@ -31,7 +31,7 @@ context('Select teams', () => {
   })
 
   it('teams in alphabetical order', () => {
-    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage
       .checkboxes()
       .getCheckBoxes()
@@ -56,12 +56,12 @@ context('Select teams', () => {
   })
 
   it('continue button exists', () => {
-    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.button().trimTextContent().should('equal', 'Continue')
   })
 
   it('selecting no teams and continuing causes error', () => {
-    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.button().click()
     selectTeamsPage
       .errorSummary()
@@ -71,7 +71,7 @@ context('Select teams', () => {
 
   it('selecting cancel link goes to select region screen', () => {
     cy.task('stubGetAllRegions')
-    const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+    const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.cancelLink().click()
     Page.verifyOnPage(RegionPage)
   })

@@ -9,7 +9,7 @@ export default function checkCaseAlreadyAllocated(workloadService: WorkloadServi
         const { crn, convictionId, teamCode } = req.params
         const eventManagerDetails = await workloadService.getEventManagerDetails(res.locals.user.token, convictionId)
         return res.status(error.status).render('pages/case-already-allocated', {
-          title: 'Case Unavailable | Manage a workforce',
+          title: 'Case unavailable | Manage a workforce',
           crn,
           tier: eventManagerDetails.tier,
           name: `${eventManagerDetails.personOnProbationFirstName} ${eventManagerDetails.personOnProbationSurname}`,

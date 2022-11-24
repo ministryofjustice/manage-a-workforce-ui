@@ -1,8 +1,8 @@
 import Page, { PageElement } from './page'
 
-export default class AllocationConfirmPage extends Page {
+export default class AllocationCompletePage extends Page {
   constructor() {
-    super('Allocation complete')
+    super('Case allocated')
   }
 
   returnToUnallocatedLink = (): PageElement => cy.get('.govuk-link--no-visited-state')

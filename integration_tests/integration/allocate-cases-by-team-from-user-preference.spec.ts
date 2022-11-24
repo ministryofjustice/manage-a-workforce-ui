@@ -38,7 +38,7 @@ context('Show allocate cases by team based on user preferences', () => {
       cy.task('stubGetPduDetails')
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/teams')
-      allocateCasesByTeamPage = Page.verifyOnPageTitle(AllocateCasesByTeamPage, 'A Probation Delivery Unit')
+      allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     })
 
     it('team data displayed in table', () => {

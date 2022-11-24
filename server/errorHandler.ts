@@ -15,7 +15,7 @@ export default function createErrorHandler() {
     switch (status) {
       case 404:
         return res.status(status).render('pages/error-notfound', {
-          title: 'Not Found | Manage a workforce',
+          title: 'Not found | Manage a workforce',
         })
       case 503:
         return res.status(status).render('pages/error-unavailable', {

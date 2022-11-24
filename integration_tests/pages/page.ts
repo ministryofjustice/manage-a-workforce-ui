@@ -5,17 +5,13 @@ export default abstract class Page {
     return new constructor()
   }
 
-  static verifyOnPageTitle<T>(constructor: new (title) => T, title: string): T {
-    return new constructor(title)
-  }
-
   constructor(private readonly title: string) {
     this.checkOnPage()
     this.checkBetaOnPage()
   }
 
   checkOnPage(): void {
-    cy.get('h1').contains(this.title)
+    cy.get('title').contains(this.title)
   }
 
   headerUserName = (): PageElement => cy.get('a.moj-header__navigation-link')

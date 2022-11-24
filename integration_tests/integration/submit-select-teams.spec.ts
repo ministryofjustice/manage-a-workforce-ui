@@ -43,10 +43,10 @@ context('Select teams and show allocate cases by team', () => {
       cy.task('stubUserPreferenceTeams', ['TM1'])
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/select-teams')
-      const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+      const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
       selectTeamsPage.checkbox('team').click()
       selectTeamsPage.button().click()
-      allocateCasesByTeamPage = Page.verifyOnPageTitle(AllocateCasesByTeamPage, 'A Probation Delivery Unit')
+      allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     })
 
     it('Team selection saved as user preference', () => {
@@ -108,11 +108,11 @@ context('Select teams and show allocate cases by team', () => {
       cy.task('stubUserPreferenceTeams', ['TM1', 'TM2'])
       cy.signIn()
       cy.visit('/probationDeliveryUnit/PDU1/select-teams')
-      const selectTeamsPage = Page.verifyOnPageTitle(SelectTeamsPage, 'A Probation Delivery Unit')
+      const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
       selectTeamsPage.checkbox('team').click()
       selectTeamsPage.checkbox('team-2').click()
       selectTeamsPage.button().click()
-      allocateCasesByTeamPage = Page.verifyOnPageTitle(AllocateCasesByTeamPage, 'A Probation Delivery Unit')
+      allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     })
 
     it('Caption text visible on page', () => {

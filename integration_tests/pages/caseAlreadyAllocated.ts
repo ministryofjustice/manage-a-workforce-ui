@@ -2,7 +2,7 @@ import Page, { PageElement } from './page'
 
 export default class CaseAlreadyAllocated extends Page {
   constructor() {
-    super('Sally Smith')
+    super('Case unavailable')
   }
 
   bodyText = (): PageElement => cy.get('h2.govuk-heading-l')

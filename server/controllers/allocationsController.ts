@@ -297,6 +297,8 @@ export default class AllocationsController {
     }
     const sendEmailCopyToAllocatingOfficer = !form.emailCopy
     const otherEmails = form.person.map(person => person.email).filter(email => email)
+    const caseOverviewResponse = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
+
     const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
       crn,
@@ -311,7 +313,6 @@ export default class AllocationsController {
       res.locals.user.token,
       response.personManagerId
     )
-    const caseOverviewResponse = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
 
     return res.render('pages/allocation-complete', {
       title: `${caseOverviewResponse.name} | Case allocated | Manage a workforce`,

@@ -30,7 +30,6 @@ export default {
         offenderManager: {
           forenames: 'John',
           surname: 'Agard',
-          grade: 'PO',
         },
         convictionId: 56789,
         caseType: 'CUSTODY',

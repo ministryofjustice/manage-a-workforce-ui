@@ -106,10 +106,10 @@ export default class RestClient {
     }
   }
 
-  async put({ path = null, headers = {}, data = {} }: PutRequest = {}): Promise<unknown> {
+  async put({ path = null, data = {} }: PutRequest = {}): Promise<unknown> {
     try {
       return this.axiosClient.put(path, data, {
-        headers: { ...headers, Authorization: `Bearer ${this.token}` },
+        headers: { Accept: 'application/json', Authorization: `Bearer ${this.token}` },
       })
     } catch (error) {
       const sanitisedError = sanitiseError(error)

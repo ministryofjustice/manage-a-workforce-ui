@@ -14,7 +14,7 @@ async function getApiClientToken(token: string) {
       path: '/token/verify',
     })) as TokenVerifyResponse
 
-    return active
+    return Boolean(active)
   } catch (error) {
     return false
   }

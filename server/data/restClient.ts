@@ -1,5 +1,4 @@
 /* eslint-disable dot-notation */
-import superagent from 'superagent'
 import Agent, { HttpsAgent } from 'agentkeepalive'
 import axios, { AxiosInstance } from 'axios'
 import axiosRetry from 'axios-retry'
@@ -75,25 +74,12 @@ export default class RestClient {
     }
   }
 
-  async post({
-    path = null,
-    headers = {},
-    responseType = '',
-    data = {},
-    raw = false,
-  }: PostRequest = {}): Promise<unknown> {
-    logger.info(`Post using user credentials: calling ${this.name}: ${path}`)
+  async post({ path, data }: PostRequest = {}): Promise<unknown> {
     try {
-      const result = await superagent
-        .post(`${this.apiUrl()}${path}`)
-        .send(data)
-        .agent(this.agent)
-        .auth(this.token, { type: 'bearer' })
-        .set(headers)
-        .responseType(responseType)
-        .timeout(this.timeoutConfig())
-
-      return raw ? result : result.body
+      const result = await this.axiosClient.post(`${this.apiUrl()}${path}`, data, {
+        headers: { 'Accept-Encoding': 'application/json', Authorization: `Bearer ${this.token}` },
+      })
+      return result.data
     } catch (error) {
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'POST'`)
@@ -104,7 +90,7 @@ export default class RestClient {
   async put({ path = null, data = {} }: PutRequest = {}): Promise<unknown> {
     try {
       return this.axiosClient.put(path, data, {
-        headers: { Accept: 'application/json', Authorization: `Bearer ${this.token}` },
+        headers: { 'Accept-Encoding': 'application/json', Authorization: `Bearer ${this.token}` },
       })
     } catch (error) {
       const sanitisedError = sanitiseError(error)

@@ -119,6 +119,92 @@ export default {
     ])
   },
 
+  stubPutUserPreferenceTeamsErrorThenSuccess: (teams: []): Promise<Array<Response>> => {
+    return stubForUserPreferenceScenario([
+      {
+        scenarioName: 'put team user preference fails once',
+        requiredScenarioState: 'Started',
+        newScenarioState: 'failed',
+        request: {
+          method: 'PUT',
+          urlPattern: `/users/USER1/preferences/allocation-teams`,
+          bodyPatterns: [
+            {
+              equalToJson: `{ "items": ${JSON.stringify(teams)}}`,
+            },
+          ],
+        },
+        response: {
+          status: 500,
+          headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        },
+      },
+      {
+        scenarioName: 'put team user preference fails once',
+        requiredScenarioState: 'failed',
+        request: {
+          method: 'PUT',
+          urlPattern: `/users/USER1/preferences/allocation-teams`,
+          bodyPatterns: [
+            {
+              equalToJson: `{ "items": ${JSON.stringify(teams)}}`,
+            },
+          ],
+        },
+        response: {
+          status: 201,
+          headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+          jsonBody: {
+            items: ['TM1', 'TM2'],
+          },
+        },
+      },
+    ])
+  },
+
+  stubPutUserPreferencePDUErrorThenSuccess: (pdus: []): Promise<Array<Response>> => {
+    return stubForUserPreferenceScenario([
+      {
+        scenarioName: 'put pdu user preference fails once',
+        requiredScenarioState: 'Started',
+        newScenarioState: 'failed',
+        request: {
+          method: 'PUT',
+          urlPattern: `/users/USER1/preferences/allocation-pdu`,
+          bodyPatterns: [
+            {
+              equalToJson: `{ "items": ${JSON.stringify(pdus)}}`,
+            },
+          ],
+        },
+        response: {
+          status: 500,
+          headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        },
+      },
+      {
+        scenarioName: 'put pdu user preference fails once',
+        requiredScenarioState: 'failed',
+        request: {
+          method: 'PUT',
+          urlPattern: `/users/USER1/preferences/allocation-pdu`,
+          bodyPatterns: [
+            {
+              equalToJson: `{ "items": ${JSON.stringify(pdus)}}`,
+            },
+          ],
+        },
+        response: {
+          status: 201,
+          headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+          jsonBody: {
+            items: pdus,
+          },
+        },
+      },
+    ])
+  },
+
   verifyPutUserPreferenceTeams: (teams: string[]) =>
     verifyRequestForUserPreference({
       requestUrlPattern: `/users/USER1/preferences/allocation-teams`,

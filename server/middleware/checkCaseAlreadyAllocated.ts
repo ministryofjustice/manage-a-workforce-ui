@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express'
-import { HTTPError } from 'superagent'
+import { SanitisedError } from '../sanitisedError'
 import WorkloadService from '../services/workloadService'
 
 export default function checkCaseAlreadyAllocated(workloadService: WorkloadService) {
-  return async (error: HTTPError, req: Request, res: Response, next: NextFunction): Promise<void> => {
+  return async (error: SanitisedError, req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (error.status === 404) {
       try {
         const { crn, convictionId, teamCode } = req.params

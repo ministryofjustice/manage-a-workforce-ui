@@ -56,10 +56,6 @@ export default class RestClient {
     return this.config.url
   }
 
-  private timeoutConfig() {
-    return this.config.timeout
-  }
-
   async get({ path }: GetRequest): Promise<unknown> {
     try {
       const result = await this.axiosClient.get(`${this.apiUrl()}${path}`, {

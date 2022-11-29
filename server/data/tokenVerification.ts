@@ -1,4 +1,4 @@
-import superagent from 'superagent'
+import axios from 'axios'
 import type { Request } from 'express'
 import getSanitisedError from '../sanitisedError'
 import config from '../config'
@@ -6,11 +6,11 @@ import logger from '../../logger'
 
 async function getApiClientToken(token: string) {
   try {
-    const { body } = await superagent
-      .post(`${config.apis.tokenVerification.url}/token/verify`)
-      .auth(token, { type: 'bearer' })
-      .timeout(config.apis.tokenVerification.timeout)
-    return Boolean(body && body.active)
+    const { data } = await axios.post(`${config.apis.tokenVerification.url}/token/verify`, null, {
+      headers: { 'Accept-Encoding': 'application/json', Authorization: `Bearer ${token}` },
+      timeout: config.apis.tokenVerification.timeout.response,
+    })
+    return Boolean(data && data.active)
   } catch (error) {
     logger.error(getSanitisedError(error), 'Error calling tokenVerificationApi')
     return false

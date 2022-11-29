@@ -5,7 +5,7 @@ export default function setUpHealthChecks(): Router {
 
   router.get('/health', (_, res) => {
     res.send({
-      status: 'UP',
+      healthy: true,
     })
   })
 

@@ -60,19 +60,19 @@ export default class RestClient {
     return this.config.timeout
   }
 
-  async get({ path = null, query = '', headers = {}, responseType = '', raw = false }: GetRequest): Promise<unknown> {
+  async get({ path = null, query = '', responseType = '' }: GetRequest): Promise<unknown> {
     try {
       const result = await superagent
         .get(`${this.apiUrl()}${path}`)
         .agent(this.agent)
         .query(query)
         .auth(this.token, { type: 'bearer' })
-        .set(headers)
+        .set({ Accept: 'application/json' })
         .responseType(responseType)
         .retry(this.config.retries)
         .timeout(this.timeoutConfig())
 
-      return raw ? result : result.body
+      return result.body
     } catch (error) {
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError, query }, `Error calling ${this.name}, path: '${path}', verb: 'GET'`)

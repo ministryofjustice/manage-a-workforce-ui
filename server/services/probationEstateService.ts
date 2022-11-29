@@ -20,35 +20,30 @@ export default class ProbationEstateService {
   async getProbationDeliveryUnitDetails(token: string, pduCode: string): Promise<ProbationDeliveryUnitDetails> {
     return (await this.restClient(token).get({
       path: `/probationDeliveryUnit/${pduCode}`,
-      headers: { Accept: 'application/json' },
     })) as ProbationDeliveryUnitDetails
   }
 
   async getTeamsByCode(token: string, teamCodes: string[]): Promise<EstateTeam[]> {
     return (await this.restClient(token).get({
       path: `/team/search?codes=${teamCodes.join(',')}`,
-      headers: { Accept: 'application/json' },
     })) as EstateTeam[]
   }
 
   async getTeamDetailsByCode(token: string, teamCode: string): Promise<TeamDetails> {
     return (await this.restClient(token).get({
       path: `/team/${teamCode}`,
-      headers: { Accept: 'application/json' },
     })) as TeamDetails
   }
 
   async getRegions(token: string): Promise<EstateRegion[]> {
     return (await this.restClient(token).get({
       path: `/regions`,
-      headers: { Accept: 'application/json' },
     })) as EstateRegion[]
   }
 
   async getRegionDetails(token: string, regionCode: string): Promise<RegionDetails> {
     return (await this.restClient(token).get({
       path: `/region/${regionCode}`,
-      headers: { Accept: 'application/json' },
     })) as RegionDetails
   }
 }

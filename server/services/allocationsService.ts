@@ -23,7 +23,6 @@ export default class AllocationsService {
   async getUnallocatedCasesByTeam(token: string, teamCode: string): Promise<Allocation[]> {
     return (await this.restClient(token).get({
       path: `/team/${teamCode}/cases/unallocated`,
-      headers: { Accept: 'application/json' },
     })) as Allocation[]
   }
 
@@ -31,7 +30,6 @@ export default class AllocationsService {
     logger.info(`Getting unallocated case for crn ${crn}`)
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}`,
-      headers: { Accept: 'application/json' },
     })) as Allocation
   }
 
@@ -39,35 +37,30 @@ export default class AllocationsService {
     logger.info(`Getting probation record for crn ${crn}`)
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions?excludeConvictionId=${convictionId}`,
-      headers: { Accept: 'application/json' },
     })) as ProbationRecord
   }
 
   async getRisk(token: string, crn, convictionId): Promise<Risk> {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/risks`,
-      headers: { Accept: 'application/json' },
     })) as Risk
   }
 
   async getDocuments(token: string, crn: string): Promise<DocumentDetails[]> {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/documents`,
-      headers: { Accept: 'application/json' },
     })) as DocumentDetails[]
   }
 
   async getCaseOverview(token: string, crn, convictionId): Promise<Allocation> {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/overview`,
-      headers: { Accept: 'application/json' },
     })) as Allocation
   }
 
   async getCaseForChoosePractitioner(token: string, crn, convictionId): Promise<CaseForChoosePractitioner> {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionId}/practitionerCase`,
-      headers: { Accept: 'application/json' },
     })) as CaseForChoosePractitioner
   }
 
@@ -81,7 +74,6 @@ export default class AllocationsService {
   async getCaseCountByTeamCodes(token: string, teamCodes: string[]): Promise<UnallocatedCaseCountByTeam[]> {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/teamCount?teams=${teamCodes.join(',')}`,
-      headers: { Accept: 'application/json' },
     })) as UnallocatedCaseCountByTeam[]
   }
 }

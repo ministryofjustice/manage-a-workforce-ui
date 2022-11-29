@@ -16,14 +16,13 @@ export default class UserPreferenceService {
   async getTeamsUserPreference(token: string, username: string): Promise<UserPreference> {
     return (await this.restClient(token).get({
       path: `/users/${username}/preferences/allocation-teams`,
-      headers: { Accept: 'application/json' },
     })) as UserPreference
   }
 
   async saveTeamsUserPreference(token: string, username: string, items: string[]): Promise<UserPreference> {
     return (await this.restClient(token).put({
       path: `/users/${username}/preferences/allocation-teams`,
-      headers: { Accept: 'application/json' },
+
       data: {
         items,
       },
@@ -33,7 +32,7 @@ export default class UserPreferenceService {
   async savePduUserPreference(token: string, username: string, pduCode: string): Promise<UserPreference> {
     return (await this.restClient(token).put({
       path: `/users/${username}/preferences/allocation-pdu`,
-      headers: { Accept: 'application/json' },
+
       data: {
         items: [pduCode],
       },
@@ -43,7 +42,6 @@ export default class UserPreferenceService {
   async getPduUserPreference(token: string, username: string): Promise<UserPreference> {
     return (await this.restClient(token).get({
       path: `/users/${username}/preferences/allocation-pdu`,
-      headers: { Accept: 'application/json' },
     })) as UserPreference
   }
 }

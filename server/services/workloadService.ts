@@ -26,7 +26,6 @@ export default class WorkloadService {
     return (await this.restClient(token).get({
       path: `/team/${teamCode}/offenderManagers`,
       query: 'grades=PSO,PQiP,PO',
-      headers: { Accept: 'application/json' },
     })) as AllocateOffenderManagers
   }
 
@@ -43,14 +42,12 @@ export default class WorkloadService {
         crn,
         convictionId: parseInt(convictionId, 10),
       },
-      headers: { Accept: 'application/json' },
     })) as OffenderManagerPotentialWorkload
   }
 
   async getOffenderManagerCases(token: string, offenderManagerCode, teamCode: string): Promise<OffenderManagerCases> {
     return (await this.restClient(token).get({
       path: `/team/${teamCode}/offenderManagers/${offenderManagerCode}/cases`,
-      headers: { Accept: 'application/json' },
     })) as OffenderManagerCases
   }
 
@@ -61,14 +58,12 @@ export default class WorkloadService {
   ): Promise<OffenderManagerOverview> {
     return (await this.restClient(token).get({
       path: `/team/${teamCode}/offenderManagers/${offenderManagerCode}`,
-      headers: { Accept: 'application/json' },
     })) as OffenderManagerOverview
   }
 
   async getStaffByCode(token: string, staffCode): Promise<StaffSummary> {
     return (await this.restClient(token).get({
       path: `/staff/code/${staffCode}`,
-      headers: { Accept: 'application/json' },
     })) as StaffSummary
   }
 
@@ -76,7 +71,6 @@ export default class WorkloadService {
     logger.info(`Getting person by ID ${personManagerId}`)
     return (await this.restClient(token).get({
       path: `/allocation/person/${personManagerId}`,
-      headers: { Accept: 'application/json' },
     })) as PersonManager
   }
 
@@ -99,21 +93,18 @@ export default class WorkloadService {
         emailTo,
         sendEmailCopyToAllocatingOfficer,
       },
-      headers: { Accept: 'application/json' },
     })) as OffenderManagerAllocatedCase
   }
 
   async getWorkloadByTeams(token: string, teamCodes: string[]): Promise<WorkloadByTeam[]> {
     return (await this.restClient(token).get({
       path: `/team/workloadcases?teams=${teamCodes.join(',')}`,
-      headers: { Accept: 'application/json' },
     })) as WorkloadByTeam[]
   }
 
   async getEventManagerDetails(token: string, eventId): Promise<EventManagerDetails> {
     return (await this.restClient(token).get({
       path: `/allocation/event/eventId/${eventId}/details`,
-      headers: { Accept: 'application/json' },
     })) as EventManagerDetails
   }
 }

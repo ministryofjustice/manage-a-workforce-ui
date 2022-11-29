@@ -1,18 +1,21 @@
-import axios from 'axios'
 import type { Request } from 'express'
-import getSanitisedError from '../sanitisedError'
 import config from '../config'
 import logger from '../../logger'
+import RestClient from './restClient'
+import TokenVerifyResponse from '../models/TokenVerifyResponse'
 
 async function getApiClientToken(token: string) {
   try {
-    const { data } = await axios.post(`${config.apis.tokenVerification.url}/token/verify`, null, {
-      headers: { 'Accept-Encoding': 'application/json', Authorization: `Bearer ${token}` },
-      timeout: config.apis.tokenVerification.timeout.response,
-    })
-    return Boolean(data && data.active)
+    const { active } = (await new RestClient(
+      'Token Verification API Client',
+      config.apis.tokenVerification,
+      token
+    ).post({
+      path: '/token/verify',
+    })) as TokenVerifyResponse
+
+    return active
   } catch (error) {
-    logger.error(getSanitisedError(error), 'Error calling tokenVerificationApi')
     return false
   }
 }

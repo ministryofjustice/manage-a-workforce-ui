@@ -3,7 +3,6 @@ import Agent, { HttpsAgent } from 'agentkeepalive'
 import axios, { AxiosInstance } from 'axios'
 import axiosRetry from 'axios-retry'
 
-import logger from '../../logger'
 import sanitiseError, { UnsanitisedError } from '../sanitisedError'
 import { ApiConfig } from '../config'
 import FileDownload from '../models/FileDownload'
@@ -63,9 +62,7 @@ export default class RestClient {
       })
       return result.data
     } catch (error) {
-      const sanitisedError = sanitiseError(error)
-      logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'GET'`)
-      throw sanitisedError
+      throw sanitiseError(error)
     }
   }
 
@@ -76,9 +73,7 @@ export default class RestClient {
       })
       return result.data
     } catch (error) {
-      const sanitisedError = sanitiseError(error)
-      logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'POST'`)
-      throw sanitisedError
+      throw sanitiseError(error)
     }
   }
 
@@ -88,18 +83,16 @@ export default class RestClient {
         headers: { 'Accept-Encoding': 'application/json', Authorization: `Bearer ${this.token}` },
       })
     } catch (error) {
-      const sanitisedError = sanitiseError(error)
-      logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'PUT'`)
-      throw sanitisedError
+      throw sanitiseError(error)
     }
   }
 
   stream({ path = null, headers = {} }: StreamRequest = {}): Promise<FileDownload> {
-    logger.info(`Get using user credentials: calling ${this.name}: ${path}`)
     return this.axiosClient
       .get(path, {
         headers: { ...headers, Authorization: `Bearer ${this.token}` },
         responseType: 'stream',
+        timeout: 15000,
       })
       .then(response => {
         return new FileDownload(response.data, new Map(Object.entries(response.headers)))

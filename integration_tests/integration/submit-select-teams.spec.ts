@@ -158,4 +158,57 @@ context('Select teams and show allocate cases by team', () => {
         .and('include', '/PDU1')
     })
   })
+
+  context('errors', () => {
+    beforeEach(() => {
+      cy.task('stubSetup')
+      cy.task('stubGetPduDetails')
+      cy.task('stubUserPreferenceTeams')
+      cy.task('stubGetUnallocatedCasesByTeams', {
+        teamCodes: 'TM1',
+        response: [
+          {
+            teamCode: 'TM1',
+            caseCount: 1,
+          },
+        ],
+      })
+      cy.task('stubWorkloadCases', {
+        teamCodes: 'TM1',
+        response: [
+          {
+            teamCode: 'TM1',
+            totalCases: 3,
+            workload: 77,
+          },
+        ],
+      })
+      cy.task('stubGetTeamsByCodes', {
+        codes: 'TM1',
+        response: [
+          {
+            code: 'TM2',
+            name: 'Team 2',
+          },
+        ],
+      })
+      cy.task('stubPutUserPreferenceTeamsErrorThenSuccess', ['TM1'])
+      cy.task('stubPutUserPreferencePDUErrorThenSuccess', ['PDU1'])
+      cy.task('stubUserPreferenceTeams', ['TM1'])
+      cy.signIn()
+      cy.visit('/probationDeliveryUnit/PDU1/select-teams')
+      const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
+      selectTeamsPage.checkbox('team').click()
+      selectTeamsPage.button().click()
+      allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
+    })
+
+    it('Team selection saved as user preference', () => {
+      cy.task('verifyPutUserPreferenceTeams', ['TM1'])
+    })
+
+    it('PDU selection saved as user preference', () => {
+      cy.task('verifyPutUserPreferencePDU', ['PDU1'])
+    })
+  })
 })

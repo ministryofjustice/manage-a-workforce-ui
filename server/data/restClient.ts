@@ -2,6 +2,7 @@
 import superagent from 'superagent'
 import Agent, { HttpsAgent } from 'agentkeepalive'
 import axios, { AxiosInstance } from 'axios'
+import axiosRetry from 'axios-retry'
 
 import logger from '../../logger'
 import sanitiseError from '../sanitisedError'
@@ -48,6 +49,7 @@ export default class RestClient {
       baseURL: config.url,
       timeout: config.timeout.response,
     })
+    axiosRetry(this.axiosClient, { retries: config.retries })
   }
 
   private apiUrl() {
@@ -106,10 +108,8 @@ export default class RestClient {
 
   async put({ path = null, headers = {}, data = {} }: PutRequest = {}): Promise<unknown> {
     try {
-      return axios.put(path, data, {
-        baseURL: this.apiUrl(),
+      return this.axiosClient.put(path, data, {
         headers: { ...headers, Authorization: `Bearer ${this.token}` },
-        timeout: this.timeoutConfig().response,
       })
     } catch (error) {
       const sanitisedError = sanitiseError(error)
@@ -120,11 +120,9 @@ export default class RestClient {
 
   stream({ path = null, headers = {} }: StreamRequest = {}): Promise<FileDownload> {
     logger.info(`Get using user credentials: calling ${this.name}: ${path}`)
-    return axios
+    return this.axiosClient
       .get(path, {
-        baseURL: this.apiUrl(),
         headers: { ...headers, Authorization: `Bearer ${this.token}` },
-        timeout: this.timeoutConfig().response,
         responseType: 'stream',
       })
       .then(response => {

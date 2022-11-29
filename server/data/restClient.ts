@@ -4,9 +4,8 @@ import axios, { AxiosInstance } from 'axios'
 import axiosRetry from 'axios-retry'
 
 import logger from '../../logger'
-import sanitiseError from '../sanitisedError'
+import sanitiseError, { UnsanitisedError } from '../sanitisedError'
 import { ApiConfig } from '../config'
-import type { UnsanitisedError } from '../sanitisedError'
 import FileDownload from '../models/FileDownload'
 
 interface GetRequest {

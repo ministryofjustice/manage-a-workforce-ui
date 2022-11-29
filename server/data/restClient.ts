@@ -48,6 +48,8 @@ export default class RestClient {
     this.axiosClient = axios.create({
       baseURL: config.url,
       timeout: config.timeout.response,
+      httpsAgent: this.agent,
+      httpAgent: this.agent,
     })
     axiosRetry(this.axiosClient, { retries: config.retries })
   }
@@ -60,22 +62,15 @@ export default class RestClient {
     return this.config.timeout
   }
 
-  async get({ path = null, query = '', responseType = '' }: GetRequest): Promise<unknown> {
+  async get({ path }: GetRequest): Promise<unknown> {
     try {
-      const result = await superagent
-        .get(`${this.apiUrl()}${path}`)
-        .agent(this.agent)
-        .query(query)
-        .auth(this.token, { type: 'bearer' })
-        .set({ Accept: 'application/json' })
-        .responseType(responseType)
-        .retry(this.config.retries)
-        .timeout(this.timeoutConfig())
-
-      return result.body
+      const result = await this.axiosClient.get(`${this.apiUrl()}${path}`, {
+        headers: { 'Accept-Encoding': 'application/json', Authorization: `Bearer ${this.token}` },
+      })
+      return result.data
     } catch (error) {
       const sanitisedError = sanitiseError(error)
-      logger.warn({ ...sanitisedError, query }, `Error calling ${this.name}, path: '${path}', verb: 'GET'`)
+      logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'GET'`)
       throw sanitisedError
     }
   }

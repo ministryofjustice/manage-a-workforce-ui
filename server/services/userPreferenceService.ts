@@ -22,7 +22,6 @@ export default class UserPreferenceService {
   async saveTeamsUserPreference(token: string, username: string, items: string[]): Promise<UserPreference> {
     return (await this.restClient(token).put({
       path: `/users/${username}/preferences/allocation-teams`,
-
       data: {
         items,
       },

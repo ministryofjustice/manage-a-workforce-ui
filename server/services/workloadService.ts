@@ -24,8 +24,7 @@ export default class WorkloadService {
 
   async getOffenderManagersToAllocate(token: string, teamCode: string): Promise<AllocateOffenderManagers> {
     return (await this.restClient(token).get({
-      path: `/team/${teamCode}/offenderManagers`,
-      query: 'grades=PSO,PQiP,PO',
+      path: `/team/${teamCode}/offenderManagers?grades=PSO,PQiP,PO`,
     })) as AllocateOffenderManagers
   }
 
@@ -97,6 +96,7 @@ export default class WorkloadService {
   }
 
   async getWorkloadByTeams(token: string, teamCodes: string[]): Promise<WorkloadByTeam[]> {
+    // TODO convert to params?
     return (await this.restClient(token).get({
       path: `/team/workloadcases?teams=${teamCodes.join(',')}`,
     })) as WorkloadByTeam[]

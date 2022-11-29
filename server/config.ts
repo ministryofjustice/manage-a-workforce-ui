@@ -15,7 +15,7 @@ const requiredInProduction = { requireInProduction: true }
 export class AgentConfig {
   timeout: number
 
-  constructor(timeout = 8000) {
+  constructor(timeout) {
     this.timeout = timeout
   }
 }
@@ -49,7 +49,7 @@ export default {
       timeout: {
         response: Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 10000)),
       },
-      agent: new AgentConfig(),
+      agent: new AgentConfig(10000),
       apiClientId: get('API_CLIENT_ID', 'manage-a-workforce-ui', requiredInProduction),
       apiClientSecret: get('API_CLIENT_SECRET', 'clientsecret', requiredInProduction),
     },
@@ -77,17 +77,17 @@ export default {
     userPreferenceService: {
       url: get('USER_PREFERENCE_SERVICE_URL', 'http://127.0.0.1:9094', requiredInProduction),
       timeout: {
-        response: 1000,
+        response: 2000,
       },
-      agent: new AgentConfig(1000),
+      agent: new AgentConfig(2000),
       retries: 2,
     },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://127.0.0.1:8100', requiredInProduction),
       timeout: {
-        response: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 5000)),
+        response: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 8000)),
       },
-      agent: new AgentConfig(),
+      agent: new AgentConfig(8000),
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
   },

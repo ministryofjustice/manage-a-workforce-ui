@@ -1,7 +1,7 @@
 /* eslint-disable dot-notation */
 import Agent, { HttpsAgent } from 'agentkeepalive'
 import axios, { AxiosInstance } from 'axios'
-import axiosRetry from 'axios-retry'
+import axiosRetry, { isNetworkOrIdempotentRequestError } from 'axios-retry'
 
 import sanitiseError, { UnsanitisedError } from '../sanitisedError'
 import { ApiConfig } from '../config'
@@ -48,7 +48,14 @@ export default class RestClient {
       httpsAgent: this.agent,
       httpAgent: this.agent,
     })
-    axiosRetry(this.axiosClient, { retries: config.retries })
+    axiosRetry(this.axiosClient, {
+      retries: config.retries,
+      retryCondition: error => {
+        return (
+          isNetworkOrIdempotentRequestError(error) || (error.config.method !== 'post' && error.code === 'ECONNABORTED')
+        )
+      },
+    })
   }
 
   private apiUrl() {

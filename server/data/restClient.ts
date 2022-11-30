@@ -51,7 +51,9 @@ export default class RestClient {
     axiosRetry(this.axiosClient, {
       retries: config.retries,
       retryCondition: error => {
-        return isNetworkOrIdempotentRequestError(error) || error.code === 'ECONNABORTED'
+        return (
+          isNetworkOrIdempotentRequestError(error) || (error.config.method !== 'post' && error.code === 'ECONNABORTED')
+        )
       },
     })
   }

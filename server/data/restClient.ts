@@ -55,6 +55,7 @@ export default class RestClient {
           isNetworkOrIdempotentRequestError(error) || (error.config.method !== 'post' && error.code === 'ECONNABORTED')
         )
       },
+      shouldResetTimeout: true,
     })
   }
 

@@ -71,9 +71,10 @@ export default {
     probationEstateService: {
       url: get('PROBATION_ESTATE_SERVICE_URL', 'http://127.0.0.1:9093', requiredInProduction),
       timeout: {
-        response: 15000,
+        response: 3000,
       },
-      agent: new AgentConfig(15000),
+      agent: new AgentConfig(3000),
+      retries: 2,
     },
     userPreferenceService: {
       url: get('USER_PREFERENCE_SERVICE_URL', 'http://127.0.0.1:9094', requiredInProduction),

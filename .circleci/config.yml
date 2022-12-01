@@ -166,6 +166,10 @@ workflows:
             - hmpps-common-vars
             - manage-a-workforce-ui-preprod
           helm_timeout: 5m
+          filters:
+            branches:
+              only:
+                - main
           requires:
             - helm_lint
             - unit_test

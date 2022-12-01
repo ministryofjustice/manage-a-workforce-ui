@@ -67,7 +67,7 @@ export default class AllocationsService {
   getDocument(token: string, crn, convictionId, documentId): Promise<FileDownload> {
     logger.info(`Getting document for crn ${crn}`)
     return this.restClient(token).stream({
-      path: `/cases/unallocated/${crn}/convictions/${convictionId}/documents/${documentId}`,
+      path: `/cases/unallocated/${crn}/documents/${documentId}`,
     })
   }
 

@@ -269,13 +269,8 @@ export default class AllocationsController {
     })
   }
 
-  async getDocument(res: Response, crn, convictionId, documentId, documentName) {
-    const response: FileDownload = await this.allocationsService.getDocument(
-      res.locals.user.token,
-      crn,
-      convictionId,
-      documentId
-    )
+  async getDocument(res: Response, crn, documentId, documentName) {
+    const response: FileDownload = await this.allocationsService.getDocument(res.locals.user.token, crn, documentId)
     res.attachment(documentName)
     response.data.pipe(res)
   }

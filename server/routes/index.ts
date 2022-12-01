@@ -45,9 +45,9 @@ export default function routes(services: Services): Router {
     await allocationsController.getUnallocatedCase(req, res, crn, convictionId, teamCode)
   })
 
-  get('/:crn/convictions/:convictionId/documents/:documentId/:documentName', async (req, res) => {
-    const { crn, convictionId, documentId, documentName } = req.params
-    await allocationsController.getDocument(res, crn, convictionId, documentId, documentName)
+  get('/:crn/documents/:documentId/:documentName', async (req, res) => {
+    const { crn, documentId, documentName } = req.params
+    await allocationsController.getDocument(res, crn, documentId, documentName)
   })
 
   get('/team/:teamCode/:crn/convictions/:convictionId/probation-record', async (req, res) => {

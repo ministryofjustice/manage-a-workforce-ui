@@ -1,5 +1,5 @@
 
 
-{% macro downloadDocumentLink(crn, convictionId, documentId, linkText, linkStyle, documentName) -%}
+{% macro downloadDocumentLink(crn, documentId, linkText, linkStyle, documentName) -%}
 <a class="{{ linkStyle }}" href="/{{crn}}/documents/{{documentId}}/{{documentName}}">{{ linkText }}</a>
 {%- endmacro %}

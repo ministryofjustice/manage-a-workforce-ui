@@ -9,7 +9,7 @@ export default {
         urlPattern: `/team/TM1/offenderManager/OM1/case`,
         bodyPatterns: [
           {
-            equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": ${sendCopy}, "emailTo": []}`,
+            equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": ${sendCopy}, "emailTo": [], "eventNumber": 1}`,
           },
         ],
       },
@@ -32,7 +32,7 @@ export default {
         urlPattern: `/team/TM1/offenderManager/OM1/case`,
         bodyPatterns: [
           {
-            equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": true, "emailTo": []}`,
+            equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": true, "emailTo": [], "eventNumber": 1}`,
           },
         ],
       },
@@ -50,7 +50,7 @@ export default {
         urlPattern: '/team/TM1/offenderManager/OM1/case',
         bodyPatterns: [
           {
-            equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": ${sendCopy}, "emailTo": ["example.one@justice.gov.uk", "example.two@justice.gov.uk"]}`,
+            equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": ${sendCopy}, "emailTo": ["example.one@justice.gov.uk", "example.two@justice.gov.uk"], "eventNumber": 1}`,
           },
         ],
       },

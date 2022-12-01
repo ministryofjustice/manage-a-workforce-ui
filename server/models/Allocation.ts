@@ -28,4 +28,5 @@ export default interface Allocation {
   preConvictionDocument: Document
   address: Address
   sentenceLength: string
+  convictionNumber: number
 }

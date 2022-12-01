@@ -307,7 +307,8 @@ export default class AllocationsController {
       teamCode,
       form.instructions,
       otherEmails,
-      sendEmailCopyToAllocatingOfficer
+      sendEmailCopyToAllocatingOfficer,
+      caseOverviewResponse.convictionNumber
     )
     const personDetails: PersonManager = await this.workloadService.getPersonById(
       res.locals.user.token,

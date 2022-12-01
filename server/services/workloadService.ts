@@ -81,7 +81,8 @@ export default class WorkloadService {
     teamCode,
     instructions,
     emailTo,
-    sendEmailCopyToAllocatingOfficer
+    sendEmailCopyToAllocatingOfficer,
+    eventNumber
   ): Promise<OffenderManagerAllocatedCase> {
     return (await this.restClient(token).post({
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,
@@ -91,6 +92,7 @@ export default class WorkloadService {
         instructions,
         emailTo,
         sendEmailCopyToAllocatingOfficer,
+        eventNumber,
       },
     })) as OffenderManagerAllocatedCase
   }

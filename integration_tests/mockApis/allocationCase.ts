@@ -25,6 +25,7 @@ export default {
           },
           convictionId: 123456789,
           caseType: 'COMMUNITY',
+          convictionNumber: 1,
         },
       },
     })
@@ -53,6 +54,7 @@ export default {
           },
           convictionId: 123456789,
           caseType: 'COMMUNITY',
+          convictionNumber: 1,
         },
       },
     })
@@ -81,6 +83,7 @@ export default {
           },
           convictionId: 123456789,
           caseType: 'CUSTODY',
+          convictionNumber: 1,
         },
       },
     })

@@ -202,7 +202,6 @@ export default class AllocationsController {
       res.locals.user.token,
       crn,
       staffCode,
-      convictionId,
       teamCode
     )
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)

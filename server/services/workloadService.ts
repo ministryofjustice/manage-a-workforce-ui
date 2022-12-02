@@ -28,19 +28,9 @@ export default class WorkloadService {
     })) as AllocateOffenderManagers
   }
 
-  async getCaseAllocationImpact(
-    token: string,
-    crn,
-    staffCode,
-    convictionId,
-    teamCode
-  ): Promise<OffenderManagerPotentialWorkload> {
-    return (await this.restClient(token).post({
-      path: `/team/${teamCode}/offenderManager/${staffCode}/impact`,
-      data: {
-        crn,
-        convictionId: parseInt(convictionId, 10),
-      },
+  async getCaseAllocationImpact(token: string, crn, staffCode, teamCode): Promise<OffenderManagerPotentialWorkload> {
+    return (await this.restClient(token).get({
+      path: `/team/${teamCode}/offenderManager/${staffCode}/impact/person/${crn}`,
     })) as OffenderManagerPotentialWorkload
   }
 

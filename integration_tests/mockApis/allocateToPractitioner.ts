@@ -5,13 +5,8 @@ export default {
   stubGetPotentialOffenderManagerWorkload: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
-        method: 'POST',
-        urlPattern: `/team/${teamCode}/offenderManager/OM2/impact`,
-        bodyPatterns: [
-          {
-            equalToJson: '{"crn":"J678910", "convictionId": 123456789}',
-          },
-        ],
+        method: 'GET',
+        urlPattern: `/team/${teamCode}/offenderManager/OM2/impact/person/J678910`,
       },
       response: {
         status: 200,
@@ -30,13 +25,8 @@ export default {
   stubGetPotentialOffenderManagerWorkloadOverCapacity: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
-        method: 'POST',
-        urlPattern: `/team/${teamCode}/offenderManager/OM2/impact`,
-        bodyPatterns: [
-          {
-            equalToJson: '{"crn":"J678910", "convictionId": 123456789}',
-          },
-        ],
+        method: 'GET',
+        urlPattern: `/team/${teamCode}/offenderManager/OM2/impact/person/J678910`,
       },
       response: {
         status: 200,
@@ -55,13 +45,8 @@ export default {
   stubGetPotentialOffenderManagerWorkloadOverCapacitySamePoP: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
-        method: 'POST',
-        urlPattern: `/team/${teamCode}/offenderManager/OM2/impact`,
-        bodyPatterns: [
-          {
-            equalToJson: '{"crn":"J678910", "convictionId": 123456789}',
-          },
-        ],
+        method: 'GET',
+        urlPattern: `/team/${teamCode}/offenderManager/OM2/impact/person/J678910`,
       },
       response: {
         status: 200,

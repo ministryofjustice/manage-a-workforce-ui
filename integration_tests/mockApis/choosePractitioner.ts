@@ -2,11 +2,11 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForAllocation } from './wiremock'
 
 export default {
-  stubGetCurrentlyManagedCaseForChoosePractitioner: (convictionId = '123456789'): SuperAgentRequest => {
+  stubGetCurrentlyManagedCaseForChoosePractitioner: (): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/${convictionId}/practitionerCase`,
+        urlPattern: `/cases/unallocated/J678910/convictions/1/practitionerCase`,
       },
       response: {
         status: 200,
@@ -22,6 +22,7 @@ export default {
             grade: 'SPO',
           },
           convictionId: 123456789,
+          convictionNumber: 1,
         },
       },
     })
@@ -31,7 +32,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/practitionerCase`,
+        urlPattern: `/cases/unallocated/J678910/convictions/1/practitionerCase`,
       },
       response: {
         status: 200,
@@ -42,6 +43,7 @@ export default {
           tier: 'C1',
           status: 'Currently managed',
           convictionId: 123456789,
+          convictionNumber: 1,
         },
       },
     })
@@ -51,7 +53,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/practitionerCase`,
+        urlPattern: `/cases/unallocated/J678910/convictions/1/practitionerCase`,
       },
       response: {
         status: 200,
@@ -62,6 +64,7 @@ export default {
           tier: 'C1',
           status: 'Previously managed',
           convictionId: 123456789,
+          convictionNumber: 1,
         },
       },
     })
@@ -71,7 +74,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/practitionerCase`,
+        urlPattern: `/cases/unallocated/J678910/convictions/1/practitionerCase`,
       },
       response: {
         status: 200,
@@ -87,6 +90,7 @@ export default {
             grade: 'PO',
           },
           convictionId: 123456789,
+          convictionNumber: 1,
         },
       },
     })
@@ -96,7 +100,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/practitionerCase`,
+        urlPattern: `/cases/unallocated/J678910/convictions/1/practitionerCase`,
       },
       response: {
         status: 200,
@@ -107,6 +111,7 @@ export default {
           tier: 'C1',
           status: 'New to probation',
           convictionId: 123456789,
+          convictionNumber: 1,
         },
       },
     })

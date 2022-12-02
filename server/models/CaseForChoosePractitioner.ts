@@ -6,5 +6,5 @@ export default interface CaseForChoosePractitioner {
   tier: string
   status: string
   offenderManager?: OffenderManager
-  convictionId: number
+  convictionNumber: number
 }

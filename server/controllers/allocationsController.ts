@@ -172,7 +172,7 @@ export default class AllocationsController {
       name: response.name,
       crn: response.crn,
       tier: response.tier,
-      convictionId: response.convictionId,
+      convictionNumber: response.convictionNumber,
       probationStatus: response.status,
       offenderManager: response.offenderManager,
       offenderManagersToAllocate,

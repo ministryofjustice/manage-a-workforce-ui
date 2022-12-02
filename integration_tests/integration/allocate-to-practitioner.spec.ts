@@ -16,9 +16,10 @@ context('Allocate to Practitioner', () => {
     })
     cy.task('stubGetAllocateOffenderManagers', 'TM1')
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
+    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
 
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/choose-practitioner')
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.radio('OM2').click()
     choosePractitionerPage.allocateCaseButton().click()

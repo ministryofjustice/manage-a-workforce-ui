@@ -211,7 +211,7 @@ export default class AllocationsController {
       name: caseOverview.name,
       crn: caseOverview.crn,
       tier: caseOverview.tier,
-      convictionId: caseOverview.convictionId,
+      convictionNumber: caseOverview.convictionNumber,
       staffCode,
       teamCode,
     })

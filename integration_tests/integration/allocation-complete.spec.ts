@@ -8,9 +8,9 @@ context('Allocate Complete', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
+    cy.visit('/team/TM1/J678910/convictions/1/allocate/OM1/instructions')
   })
 
   it('return to unallocated cases of team link exists', () => {

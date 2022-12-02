@@ -93,9 +93,9 @@ export default class WorkloadService {
     })) as WorkloadByTeam[]
   }
 
-  async getEventManagerDetails(token: string, eventId): Promise<EventManagerDetails> {
+  async getEventManagerDetails(token: string, crn, convictionNumber): Promise<EventManagerDetails> {
     return (await this.restClient(token).get({
-      path: `/allocation/event/eventId/${eventId}/details`,
+      path: `/allocation/person/${crn}/event/${convictionNumber}/details`,
     })) as EventManagerDetails
   }
 }

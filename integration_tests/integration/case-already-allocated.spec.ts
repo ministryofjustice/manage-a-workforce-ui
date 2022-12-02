@@ -8,7 +8,7 @@ context('Case Already Allocated', () => {
     cy.task('stubNotFoundUnallocatedCase')
     cy.task('stubGetEventManagerDetails')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/case-view', { failOnStatusCode: false })
+    cy.visit('/team/TM1/J678910/convictions/1/case-view', { failOnStatusCode: false })
   })
   it('Caption Text visible on page', () => {
     const caseAlreadyAllocated = Page.verifyOnPage(CaseAlreadyAllocated)

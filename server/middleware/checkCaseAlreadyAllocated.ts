@@ -9,6 +9,7 @@ export default function checkCaseAlreadyAllocated(workloadService: WorkloadServi
         const { crn, convictionNumber, teamCode } = req.params
         const eventManagerDetails = await workloadService.getEventManagerDetails(
           res.locals.user.token,
+          crn,
           convictionNumber
         )
         return res.status(error.status).render('pages/case-already-allocated', {

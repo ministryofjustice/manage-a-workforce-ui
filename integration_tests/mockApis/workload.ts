@@ -25,7 +25,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: '/allocation/event/eventId/123456789/details',
+        urlPattern: '/allocation/person/J678910/event/1/details',
       },
       response: {
         status: 200,
@@ -42,7 +42,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: '/allocation/event/eventId/123456789/details',
+        urlPattern: '/allocation/person/J678910/event/1/details',
       },
       response: {
         status: 404,

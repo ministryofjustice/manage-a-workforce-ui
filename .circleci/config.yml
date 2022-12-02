@@ -179,6 +179,7 @@ workflows:
           type: approval
           requires:
             - deploy_preprod
+            - deploy_dev
       - hmpps/deploy_env:
           name: deploy_prod
           env: "prod"

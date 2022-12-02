@@ -31,11 +31,11 @@ export default class AllocationsController {
     private readonly probationEstateService: ProbationEstateService
   ) {}
 
-  async getUnallocatedCase(req: Request, res: Response, crn, convictionId, teamCode): Promise<void> {
+  async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, teamCode): Promise<void> {
     const response: Allocation = await this.allocationsService.getUnallocatedCase(
       res.locals.user.token,
       crn,
-      convictionId
+      convictionNumber
     )
     const address = new DisplayAddress(response.address)
     res.render('pages/summary', {
@@ -51,11 +51,11 @@ export default class AllocationsController {
     })
   }
 
-  async getProbationRecord(req: Request, res: Response, crn, convictionId, teamCode): Promise<void> {
+  async getProbationRecord(req: Request, res: Response, crn, convictionNumber, teamCode): Promise<void> {
     const response: ProbationRecord = await this.allocationsService.getProbationRecord(
       res.locals.user.token,
       crn,
-      convictionId
+      convictionNumber
     )
     const totalPreviousCount = response.previous.length
     const viewAll = totalPreviousCount <= 3 ? true : req.query.viewAll
@@ -102,8 +102,8 @@ export default class AllocationsController {
     })
   }
 
-  async getRisk(_, res: Response, crn: string, convictionId, teamCode: string) {
-    const response: Risk = await this.allocationsService.getRisk(res.locals.user.token, crn, convictionId)
+  async getRisk(_, res: Response, crn: string, convictionNumber, teamCode: string) {
+    const response: Risk = await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber)
     res.render('pages/risk', {
       title: `${response.name} | Risk | Manage a workforce`,
       data: response,
@@ -116,8 +116,8 @@ export default class AllocationsController {
     })
   }
 
-  async getDocuments(_, res: Response, crn: string, convictionId, teamCode: string) {
-    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
+  async getDocuments(_, res: Response, crn: string, convictionNumber, teamCode: string) {
+    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
     const documents = await this.allocationsService.getDocuments(res.locals.user.token, crn)
     const documentRows = documents.map(document => new DocumentRow(document))
     res.render('pages/documents', {
@@ -132,7 +132,7 @@ export default class AllocationsController {
     })
   }
 
-  async choosePractitioner(req: Request, res: Response, crn, convictionId, teamCode) {
+  async choosePractitioner(req: Request, res: Response, crn, convictionNumber, teamCode) {
     const { token } = res.locals.user
     const { offenderManagers } = await this.workloadService.getOffenderManagersToAllocate(token, teamCode)
     const { name: teamName } = await this.probationEstateService.getTeamDetailsByCode(token, teamCode)
@@ -164,7 +164,7 @@ export default class AllocationsController {
     const response: CaseForChoosePractitioner = await this.allocationsService.getCaseForChoosePractitioner(
       token,
       crn,
-      convictionId
+      convictionNumber
     )
     const error = req.query.error === 'true'
     res.render('pages/choose-practitioner', {
@@ -183,28 +183,28 @@ export default class AllocationsController {
     })
   }
 
-  async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionId, teamCode) {
+  async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionNumber, teamCode) {
     const {
       body: { allocatedOfficer: staffCode },
     } = req
     if (staffCode) {
       return res.redirect(
         // eslint-disable-next-line security-node/detect-dangerous-redirects
-        `/team/${teamCode}/${crn}/convictions/${convictionId}/allocate/${staffCode}/allocate-to-practitioner`
+        `/team/${teamCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/allocate-to-practitioner`
       )
     }
     req.query.error = 'true'
-    return this.choosePractitioner(req, res, crn, convictionId, teamCode)
+    return this.choosePractitioner(req, res, crn, convictionNumber, teamCode)
   }
 
-  async getAllocateToPractitioner(_, res: Response, crn, staffCode, convictionId, teamCode) {
+  async getAllocateToPractitioner(_, res: Response, crn, staffCode, convictionNumber, teamCode) {
     const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,
       staffCode,
       teamCode
     )
-    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
+    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
     res.render('pages/allocate-to-practitioner', {
       title: `${caseOverview.name} | Allocate to practitioner | Manage a workforce`,
       data: response,
@@ -217,9 +217,9 @@ export default class AllocationsController {
     })
   }
 
-  async getConfirmInstructions(req: Request, res: Response, crn, staffCode, convictionId, teamCode) {
+  async getConfirmInstructions(req: Request, res: Response, crn, staffCode, convictionNumber, teamCode) {
     const response: StaffSummary = await this.workloadService.getStaffByCode(res.locals.user.token, staffCode)
-    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
+    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
     res.render('pages/confirm-instructions', {
       title: `${caseOverview.name} | Review allocation instructions | Manage a workforce`,
       data: response,
@@ -235,7 +235,7 @@ export default class AllocationsController {
     })
   }
 
-  async getOverview(_, res: Response, crn, offenderManagerCode, convictionId, teamCode) {
+  async getOverview(_, res: Response, crn, offenderManagerCode, convictionNumber, teamCode) {
     const response: OffenderManagerOverview = await this.workloadService.getOffenderManagerOverview(
       res.locals.user.token,
       offenderManagerCode,
@@ -246,13 +246,13 @@ export default class AllocationsController {
       title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
       data,
       crn,
-      convictionId,
+      convictionNumber,
       isOverview: true,
       teamCode,
     })
   }
 
-  async getActiveCases(req: Request, res: Response, crn, offenderManagerCode, convictionId, teamCode) {
+  async getActiveCases(req: Request, res: Response, crn, offenderManagerCode, convictionNumber, teamCode) {
     const response: OffenderManagerCases = await this.workloadService.getOffenderManagerCases(
       res.locals.user.token,
       offenderManagerCode,
@@ -267,7 +267,7 @@ export default class AllocationsController {
       data: response,
       cases,
       crn,
-      convictionId,
+      convictionNumber,
       isActiveCases: true,
       teamCode,
     })
@@ -279,7 +279,7 @@ export default class AllocationsController {
     response.data.pipe(res)
   }
 
-  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffCode, convictionId, form, teamCode) {
+  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffCode, convictionNumber, form, teamCode) {
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
       confirmInstructionForm,
@@ -292,11 +292,15 @@ export default class AllocationsController {
     if (errors.length > 0) {
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
-      return this.getConfirmInstructions(req, res, crn, staffCode, convictionId, teamCode)
+      return this.getConfirmInstructions(req, res, crn, staffCode, convictionNumber, teamCode)
     }
     const sendEmailCopyToAllocatingOfficer = !form.emailCopy
     const otherEmails = form.person.map(person => person.email).filter(email => email)
-    const caseOverviewResponse = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionId)
+    const caseOverviewResponse = await this.allocationsService.getCaseOverview(
+      res.locals.user.token,
+      crn,
+      convictionNumber
+    )
 
     const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,

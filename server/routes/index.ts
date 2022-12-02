@@ -40,9 +40,9 @@ export default function routes(services: Services): Router {
     await casesByTeamController.getAllocationsByTeam(req, res, teamCode)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionId/case-view', async (req, res) => {
-    const { crn, convictionId, teamCode } = req.params
-    await allocationsController.getUnallocatedCase(req, res, crn, convictionId, teamCode)
+  get('/team/:teamCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
+    const { crn, convictionNumber, teamCode } = req.params
+    await allocationsController.getUnallocatedCase(req, res, crn, convictionNumber, teamCode)
   })
 
   get('/:crn/documents/:documentId/:documentName', async (req, res) => {
@@ -50,66 +50,75 @@ export default function routes(services: Services): Router {
     await allocationsController.getDocument(res, crn, documentId, documentName)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionId/probation-record', async (req, res) => {
-    const { crn, convictionId, teamCode } = req.params
-    await allocationsController.getProbationRecord(req, res, crn, convictionId, teamCode)
+  get('/team/:teamCode/:crn/convictions/:convictionNumber/probation-record', async (req, res) => {
+    const { crn, convictionNumber, teamCode } = req.params
+    await allocationsController.getProbationRecord(req, res, crn, convictionNumber, teamCode)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionId/risk', async (req, res) => {
-    const { crn, convictionId, teamCode } = req.params
-    await allocationsController.getRisk(req, res, crn, convictionId, teamCode)
+  get('/team/:teamCode/:crn/convictions/:convictionNumber/risk', async (req, res) => {
+    const { crn, convictionNumber, teamCode } = req.params
+    await allocationsController.getRisk(req, res, crn, convictionNumber, teamCode)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionId/documents', async (req, res) => {
-    const { crn, convictionId, teamCode } = req.params
-    await allocationsController.getDocuments(req, res, crn, convictionId, teamCode)
+  get('/team/:teamCode/:crn/convictions/:convictionNumber/documents', async (req, res) => {
+    const { crn, convictionNumber, teamCode } = req.params
+    await allocationsController.getDocuments(req, res, crn, convictionNumber, teamCode)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionId/choose-practitioner', async (req, res) => {
-    const { crn, convictionId, teamCode } = req.params
-    await allocationsController.choosePractitioner(req, res, crn, convictionId, teamCode)
+  get('/team/:teamCode/:crn/convictions/:convictionNumber/choose-practitioner', async (req, res) => {
+    const { crn, convictionNumber, teamCode } = req.params
+    await allocationsController.choosePractitioner(req, res, crn, convictionNumber, teamCode)
   })
 
-  post('/team/:teamCode/:crn/convictions/:convictionId/choose-practitioner', async (req, res) => {
-    const { crn, convictionId, teamCode } = req.params
-    await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionId, teamCode)
+  post('/team/:teamCode/:crn/convictions/:convictionNumber/choose-practitioner', async (req, res) => {
+    const { crn, convictionNumber, teamCode } = req.params
+    await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionNumber, teamCode)
   })
 
   get(
-    '/team/:teamCode/:crn/convictions/:convictionId/allocate/:staffCode/allocate-to-practitioner',
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffCode/allocate-to-practitioner',
     async (req, res) => {
-      const { crn, convictionId, staffCode, teamCode } = req.params
-      await allocationsController.getAllocateToPractitioner(req, res, crn, staffCode, convictionId, teamCode)
+      const { crn, convictionNumber, staffCode, teamCode } = req.params
+      await allocationsController.getAllocateToPractitioner(req, res, crn, staffCode, convictionNumber, teamCode)
     }
   )
 
-  get('/team/:teamCode/:crn/convictions/:convictionId/allocate/:staffCode/instructions', async (req, res) => {
-    const { crn, convictionId, staffCode, teamCode } = req.params
-    await allocationsController.getConfirmInstructions(req, res, crn, staffCode, convictionId, teamCode)
+  get('/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffCode/instructions', async (req, res) => {
+    const { crn, convictionNumber, staffCode, teamCode } = req.params
+    await allocationsController.getConfirmInstructions(req, res, crn, staffCode, convictionNumber, teamCode)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionId/allocate/:offenderManagerCode/officer-view', async (req, res) => {
-    const { crn, convictionId, offenderManagerCode, teamCode } = req.params
-    await allocationsController.getOverview(req, res, crn, offenderManagerCode, convictionId, teamCode)
-  })
+  get(
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerCode/officer-view',
+    async (req, res) => {
+      const { crn, convictionNumber, offenderManagerCode, teamCode } = req.params
+      await allocationsController.getOverview(req, res, crn, offenderManagerCode, convictionNumber, teamCode)
+    }
+  )
 
-  get('/team/:teamCode/:crn/convictions/:convictionId/allocate/:offenderManagerCode/active-cases', async (req, res) => {
-    const { crn, convictionId, offenderManagerCode, teamCode } = req.params
-    await allocationsController.getActiveCases(req, res, crn, offenderManagerCode, convictionId, teamCode)
-  })
+  get(
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerCode/active-cases',
+    async (req, res) => {
+      const { crn, convictionNumber, offenderManagerCode, teamCode } = req.params
+      await allocationsController.getActiveCases(req, res, crn, offenderManagerCode, convictionNumber, teamCode)
+    }
+  )
 
-  post('/team/:teamCode/:crn/convictions/:convictionId/allocate/:staffCode/confirm-allocation', async (req, res) => {
-    const { crn, convictionId, staffCode, teamCode } = req.params
-    await allocationsController.allocateCaseToOffenderManager(
-      req,
-      res,
-      crn,
-      staffCode,
-      convictionId,
-      req.body,
-      teamCode
-    )
-  })
+  post(
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffCode/confirm-allocation',
+    async (req, res) => {
+      const { crn, convictionNumber, staffCode, teamCode } = req.params
+      await allocationsController.allocateCaseToOffenderManager(
+        req,
+        res,
+        crn,
+        staffCode,
+        convictionNumber,
+        req.body,
+        teamCode
+      )
+    }
+  )
 
   get('/probationDeliveryUnit/:pduCode/select-teams', async (req, res) => {
     const { pduCode } = req.params

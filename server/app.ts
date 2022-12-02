@@ -46,7 +46,7 @@ export default function createApp(services: Services): express.Application {
   app.use(routes(services))
 
   app.use((req, res, next) => next(createError(404, 'Not found')))
-  app.use('/team/:teamCode/:crn/convictions/:convictionId/', checkCaseAlreadyAllocated(services.workloadService))
+  app.use('/team/:teamCode/:crn/convictions/:convictionNumber/', checkCaseAlreadyAllocated(services.workloadService))
   app.use(errorHandler())
 
   return app

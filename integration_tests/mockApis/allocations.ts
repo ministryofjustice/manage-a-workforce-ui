@@ -144,11 +144,11 @@ export default {
       },
     })
   },
-  stubGetUnallocatedCase: (): SuperAgentRequest => {
+  stubGetUnallocatedCase: (convictionId = '123456789'): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789`,
+        urlPattern: `/cases/unallocated/J678910/convictions/${convictionId}`,
       },
       response: {
         status: 200,

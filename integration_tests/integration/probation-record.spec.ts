@@ -38,11 +38,11 @@ context('Probation record', () => {
   })
 
   it('navigate to probation record through case summary', () => {
-    cy.task('stubGetUnallocatedCase')
+    cy.task('stubGetUnallocatedCase', '1')
     cy.task('stubGetProbationRecord')
     cy.signIn()
     cy.get('a[href*="team/TM1/cases/unallocated"]').click()
-    cy.get('a[href*="team/TM1/J678910/convictions/123456789/case-view"]').click()
+    cy.get('a[href*="team/TM1/J678910/convictions/1/case-view"]').click()
     cy.get('a[href*="team/TM1/J678910/convictions/123456789/probation-record"]').click()
     Page.verifyOnPage(ProbationRecordPage)
   })

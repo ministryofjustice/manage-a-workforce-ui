@@ -129,3 +129,4 @@ integration_tests/screenshots/
 **/Chart.lock
 *.iml
 .DS_Store
+cypress

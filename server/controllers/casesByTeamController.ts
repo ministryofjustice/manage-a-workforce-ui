@@ -23,7 +23,7 @@ export default class CasesByTeamController {
           value.initialAppointment,
           value.status,
           value.offenderManager,
-          value.convictionId,
+          value.convictionNumber,
           value.caseType,
           value.sentenceLength
         )

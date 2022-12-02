@@ -50,7 +50,7 @@
         } },
         { text: doubleCell(item.primaryInitialAppointment,item.secondaryInitialAppointment, 'maw-secondary' )},
         { text: doubleCell(item.primaryStatus, item.secondaryStatus, 'govuk-body-s')},
-        { text: ('<a href="/team/' + teamCode +'/' + item.crn + '/convictions/' + item.convictionId +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.convictionId +'"">' + "Review case" + '</a>' ) | safe}
+        { text: ('<a href="/team/' + teamCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' + "Review case" + '</a>' ) | safe}
     ] -%}
     {{ tableData.rows.push(tableRow) }}
 

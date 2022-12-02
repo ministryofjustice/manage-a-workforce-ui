@@ -23,7 +23,7 @@ export default class UnallocatedCase {
 
   secondaryStatus: string
 
-  convictionId: number
+  convictionNumber: number
 
   constructor(
     name: string,
@@ -33,7 +33,7 @@ export default class UnallocatedCase {
     initialAppointment: string,
     primaryStatus: string,
     offenderManager: OffenderManager,
-    convictionId: number,
+    convictionNumber: number,
     caseType: string,
     sentenceLength: string
   ) {
@@ -49,7 +49,7 @@ export default class UnallocatedCase {
         offenderManager.grade
       )})`
     }
-    this.convictionId = convictionId
+    this.convictionNumber = convictionNumber
   }
 
   getGrade(grade: string): string {

@@ -215,7 +215,7 @@ context('Unallocated cases by team', () => {
   })
 
   it('link to case overview in table', () => {
-    unallocatedPage.tableLink('123456789').should('equal', '/team/TM1/J678910/convictions/123456789/case-view')
+    unallocatedPage.tableLink('J678910', '1').should('equal', '/team/TM1/J678910/convictions/1/case-view')
   })
 
   it('Shows link to Manage my teams', () => {

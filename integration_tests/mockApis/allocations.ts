@@ -18,6 +18,7 @@ export default {
           grade: 'SPO',
         },
         convictionId: 123456789,
+        convictionNumber: 1,
         caseType: 'COMMUNITY',
       },
       {
@@ -32,6 +33,7 @@ export default {
           surname: 'Agard',
         },
         convictionId: 56789,
+        convictionNumber: 2,
         caseType: 'CUSTODY',
         sentenceLength: '32 Years',
       },
@@ -43,6 +45,7 @@ export default {
         initialAppointment: '2021-08-17',
         status: 'New to probation',
         convictionId: 74534,
+        convictionNumber: 3,
         caseType: 'COMMUNITY',
       },
       {
@@ -53,6 +56,7 @@ export default {
         initialAppointment: '2021-09-02',
         status: 'New to probation',
         convictionId: 268452,
+        convictionNumber: 4,
         caseType: 'COMMUNITY',
       },
       {
@@ -63,6 +67,7 @@ export default {
         initialAppointment: '2021-09-03',
         status: 'Previously managed',
         convictionId: 7314214,
+        convictionNumber: 5,
         caseType: 'COMMUNITY',
       },
       {
@@ -83,6 +88,7 @@ export default {
         initialAppointment: null,
         status: 'Previously managed',
         convictionId: 24436547,
+        convictionNumber: 6,
         caseType: 'COMMUNITY',
       },
       {
@@ -97,6 +103,7 @@ export default {
           surname: 'Moore',
         },
         convictionId: 7362532,
+        convictionNumber: 7,
         caseType: 'COMMUNITY',
       },
     ],
@@ -122,6 +129,7 @@ export default {
       initialAppointment: '2021-10-22',
       status: 'Currently managed',
       convictionId: 123456789,
+      convictionNumber: 1,
       caseType: 'COMMUNITY',
     }))
     return stubForAllocation({
@@ -200,6 +208,7 @@ export default {
             type: 'LAYER_3',
           },
           convictionId: 123456789,
+          convictionNumber: 1,
           caseType: 'COMMUNITY',
           address: {
             addressNumber: '5A',
@@ -292,6 +301,7 @@ export default {
             type: 'LAYER_3',
           },
           convictionId: 123456789,
+          convictionNumber: 1,
           caseType: 'COMMUNITY',
           address: {
             addressNumber: '5A',
@@ -355,6 +365,7 @@ export default {
             type: 'LAYER_3',
           },
           convictionId: 123456789,
+          convictionNumber: 1,
           caseType: 'COMMUNITY',
         },
       },
@@ -410,6 +421,7 @@ export default {
             type: 'LAYER_3',
           },
           convictionId: 123456789,
+          convictionNumber: 1,
           caseType: 'COMMUNITY',
         },
       },
@@ -470,6 +482,7 @@ export default {
           },
         },
         convictionId: 123456789,
+        convictionNumber: 1,
         caseType: 'COMMUNITY',
       },
     })

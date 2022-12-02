@@ -29,5 +29,6 @@ export default class UnallocatedByTeamPage extends Page {
 
   tierSortButton = (): PageElement => cy.get('button[data-index="1"]')
 
-  tableLink = (convictionId: string): PageElement => cy.get(`[data-qa-link="${convictionId}"]`).invoke('attr', 'href')
+  tableLink = (crn: string, convictionNumber: string): PageElement =>
+    cy.get(`[data-qa-link="${crn}-${convictionNumber}"]`).invoke('attr', 'href')
 }

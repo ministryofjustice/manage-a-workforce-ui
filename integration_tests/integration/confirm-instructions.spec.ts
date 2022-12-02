@@ -92,13 +92,13 @@ context('Instructions Confirmation', () => {
       .should('contain', 'You can send a copy of these notes to another person, for example a case admin officer.')
   })
 
-  it('add a recipient should be visible on page', () => {
+  it('add another recipient should be visible on page', () => {
     cy.task('stubGetStaffByCode')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/123456789/allocate/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsPage.addRecipientHeader().should('contain', 'Add a recipient')
+    instructionsPage.addRecipientHeader().should('contain', 'Add another recipient')
   })
 
   it('adding another person adds more email address inputs', () => {

@@ -2,7 +2,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
-{% set documentTabHref = '/team/' + teamCode+ '/' + crn + '/convictions/' + convictionId + '/documents' %}
+{% set documentTabHref = '/team/' + teamCode+ '/' + crn + '/convictions/' + convictionNumber + '/documents' %}
 {% set offenceData = data.offences %}
 {%- set offences = [] -%}
 {%- for offence in offenceData  if offenceData %}
@@ -122,7 +122,7 @@
     <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id ="case-details">
         <header class="app-summary-card__header">
             <h2 class="app-summary-card__title">Associated documents</h2>
-            <a class="govuk-link" href="/team/{{ teamCode }}/{{ crn }}/convictions/{{ convictionId }}/documents">View all documents</a>
+            <a class="govuk-link" href="/team/{{ teamCode }}/{{ crn }}/convictions/{{ convictionNumber }}/documents">View all documents</a>
         </header>
         <div class="app-summary-card__body">
             {{ govukSummaryList({

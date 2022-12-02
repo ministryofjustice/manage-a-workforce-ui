@@ -9,4 +9,5 @@ export default interface Risk {
   previous: Registration[]
   convictionId: number
   roshRisk: RoshRisk
+  convictionNumber: number
 }

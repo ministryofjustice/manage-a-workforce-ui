@@ -6,7 +6,7 @@ context('Summary', () => {
     cy.task('stubSetup')
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/case-view')
+    cy.visit('/team/TM1/J678910/convictions/1/case-view')
   })
 
   it('Caption text visible on page', () => {

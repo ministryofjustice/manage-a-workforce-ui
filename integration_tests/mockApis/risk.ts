@@ -6,7 +6,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/risks`,
+        urlPattern: `/cases/unallocated/J678910/convictions/1/risks`,
       },
       response: {
         status: 200,
@@ -73,7 +73,8 @@ export default {
             lastUpdatedOn: '2018-11-17',
             score: 85,
           },
-          convictionId: '123456789',
+          convictionId: 123456789,
+          convictionNumber: 1,
         },
       },
     })
@@ -82,7 +83,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/123456789/risks`,
+        urlPattern: `/cases/unallocated/J678910/convictions/1/risks`,
       },
       response: {
         status: 200,
@@ -94,6 +95,8 @@ export default {
           caseType: 'COMMUNITY',
           activeRegistrations: [],
           inActiveRegistrations: [],
+          convictionId: 123456789,
+          convictionNumber: 1,
         },
       },
     })

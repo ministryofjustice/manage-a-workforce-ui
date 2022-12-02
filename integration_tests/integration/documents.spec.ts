@@ -4,10 +4,10 @@ import DocumentsPage from '../pages/documents'
 context('Documents', () => {
   beforeEach(() => {
     cy.task('stubSetup')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
     cy.task('stubGetDocuments')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/documents')
+    cy.visit('/team/TM1/J678910/convictions/1/documents')
   })
 
   it('Caption text visible on page', () => {

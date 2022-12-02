@@ -43,12 +43,12 @@ context('Choose Practitioner', () => {
   })
 
   it('navigate to allocate page through case view', () => {
-    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner', '1')
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/case-view')
+    cy.visit('/team/TM1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.allocateCaseButton('J678910', '123456789', 'TM1').click()
+    summaryPage.allocateCaseButton('J678910', '1', 'TM1').click()
     Page.verifyOnPage(ChoosePractitionerPage)
   })
 

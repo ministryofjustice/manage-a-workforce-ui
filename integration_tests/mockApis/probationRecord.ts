@@ -6,7 +6,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,
+        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=1`,
       },
       response: {
         status: 200,
@@ -16,6 +16,8 @@ export default {
           crn: 'J678910',
           tier: 'C1',
           caseType: 'COMMUNITY',
+          convictionId: 123456789,
+          convictionNumber: 1,
           active: [
             {
               description: 'Adult Custody < 12m',
@@ -83,7 +85,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,
+        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=1`,
       },
       response: {
         status: 200,
@@ -93,6 +95,8 @@ export default {
           crn: 'J678910',
           tier: 'C1',
           caseType: 'COMMUNITY',
+          convictionId: 123456789,
+          convictionNumber: 1,
           active: [],
           previous: [],
         },
@@ -103,7 +107,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,
+        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=1`,
       },
       response: {
         status: 200,
@@ -113,6 +117,8 @@ export default {
           crn: 'J678910',
           tier: 'C1',
           caseType: 'COMMUNITY',
+          convictionId: 123456789,
+          convictionNumber: 1,
           active: [
             {
               description: 'Adult Custody < 12m',
@@ -185,7 +191,7 @@ export default {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=123456789`,
+        urlPattern: `/cases/unallocated/J678910/convictions\\?excludeConvictionId=1`,
       },
       response: {
         status: 200,
@@ -195,6 +201,8 @@ export default {
           crn: 'J678910',
           tier: 'C1',
           caseType: 'COMMUNITY',
+          convictionId: 123456789,
+          convictionNumber: 1,
           active: [
             {
               description: 'Adult Custody < 12m',

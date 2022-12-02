@@ -20,7 +20,7 @@
 
 {% block content %}
     
-    {{ pop({name: name, crn: crn, tier: tier, convictionId: convictionId, teamCode: teamCode}) }}
+    {{ pop({name: name, crn: crn, tier: tier, convictionNumber: convictionNumber, teamCode: teamCode}) }}
         
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
@@ -29,22 +29,22 @@
                 items: [
                     {
                         text: 'Summary',
-                        href: '/team/' + teamCode + '/' + crn + '/convictions/' + convictionId + '/case-view',
+                        href: '/team/' + teamCode + '/' + crn + '/convictions/' + convictionNumber + '/case-view',
                         active: 'Summary' in title
                     },
                     {
                         text: 'Probation record',
-                        href: '/team/' + teamCode + '/' + crn + '/convictions/' + convictionId + '/probation-record',
+                        href: '/team/' + teamCode + '/' + crn + '/convictions/' + convictionNumber + '/probation-record',
                         active: 'Probation record' in title
                     },
                     {
                         text: 'Risk',
-                        href: '/team/' + teamCode + '/' + crn + '/convictions/' + convictionId + '/risk',
+                        href: '/team/' + teamCode + '/' + crn + '/convictions/' + convictionNumber + '/risk',
                         active: 'Risk' in title
                     },
                     {
                         text: 'Documents',
-                        href: '/team/' + teamCode + '/' + crn + '/convictions/' + convictionId + '/documents',
+                        href: '/team/' + teamCode + '/' + crn + '/convictions/' + convictionNumber + '/documents',
                         active: 'Documents' in title
                     }
                 ]

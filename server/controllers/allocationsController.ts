@@ -45,6 +45,7 @@ export default class AllocationsController {
       tier: response.tier,
       name: response.name,
       convictionId: response.convictionId,
+      convictionNumber: response.convictionNumber,
       title: `${response.name} | Summary | Manage a workforce`,
       teamCode,
     })
@@ -94,7 +95,8 @@ export default class AllocationsController {
       previousOrders,
       viewAll,
       totalPreviousCount,
-      convictionId,
+      convictionId: response.convictionId,
+      convictionNumber: response.convictionNumber,
       title: `${response.name} | Probation record | Manage a workforce`,
       teamCode,
     })
@@ -109,6 +111,7 @@ export default class AllocationsController {
       tier: response.tier,
       name: response.name,
       convictionId: response.convictionId,
+      convictionNumber: response.convictionNumber,
       teamCode,
     })
   }
@@ -123,6 +126,7 @@ export default class AllocationsController {
       tier: caseOverview.tier,
       name: caseOverview.name,
       convictionId: caseOverview.convictionId,
+      convictionNumber: caseOverview.convictionNumber,
       teamCode,
       documents: documentRows,
     })

@@ -9,7 +9,7 @@ context('Risk', () => {
   it('Caption text visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
@@ -17,7 +17,7 @@ context('Risk', () => {
   it('Risk header visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.riskHeading().should('contain', 'Risk')
   })
@@ -40,7 +40,7 @@ context('Risk', () => {
   it('Continue button visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.button().should('contain', 'Continue')
   })
@@ -48,7 +48,7 @@ context('Risk', () => {
   it('Active registrations visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage
       .activeRegistrationsTable()
@@ -75,7 +75,7 @@ context('Risk', () => {
   it('Inactive registrations visible on page', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage
       .inactiveRegistrationsTable()
@@ -99,7 +99,7 @@ context('Risk', () => {
   it('Display text when no registrations on the page', () => {
     cy.task('stubGetRiskNoRegistrations')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.bodyText().contains('There are no active registrations.')
     riskPage.bodyText().contains('There are no inactive registrations.')
@@ -110,7 +110,7 @@ context('Risk', () => {
   it('Displays Assessments when returned', () => {
     cy.task('stubGetRisk')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage
       .roshWidget()
@@ -141,7 +141,7 @@ context('Risk', () => {
   it('Displays score unavailable when no assessments returned', () => {
     cy.task('stubGetRiskNoRegistrations')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/123456789/risk')
+    cy.visit('/team/TM1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage
       .roshWidget()

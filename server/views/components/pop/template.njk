@@ -5,9 +5,9 @@
             <span class="govuk-caption-xl">CRN: {{ params.crn }}</span>
         </h1>
     </div>
-    {% if params.convictionId %}
+    {% if params.convictionNumber %}
         <div class="govuk-grid-column-one-third">
-            <a id="{{ params.convictionId }}" class="govuk-!-margin-top-8 govuk-button allocate" href="/team/{{ params.teamCode }}/{{ params.crn }}/convictions/{{ params.convictionId }}/choose-practitioner" role="button" draggable="false"
+            <a id="{{ params.convictionNumber }}" class="govuk-!-margin-top-8 govuk-button allocate" href="/team/{{ params.teamCode }}/{{ params.crn }}/convictions/{{ params.convictionNumber }}/choose-practitioner" role="button" draggable="false"
                data-module="govuk-button">Continue</a>
         </div>
     {% endif %}

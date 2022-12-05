@@ -110,9 +110,13 @@ context('Allocate Complete', () => {
     cy.task('stubGetPersonById')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
-    allocationCompletePage.bulletedList().should('contain', 'John Doe (john.doe@test.justice.gov.uk) has been notified')
-    // eslint-disable-next-line no-unused-expressions
-    expect(localStorage.getItem('instructions-save-123456789')).to.be.null
+    allocationCompletePage
+      .bulletedList()
+      .should('contain', 'John Doe (john.doe@test.justice.gov.uk) has been notified')
+      .then(() => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(localStorage.getItem('instructions-save-J678910-1')).to.be.null
+      })
   })
 
   it('When no Initial appointment date booked, Initial check with your team visible on page', () => {

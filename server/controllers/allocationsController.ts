@@ -322,7 +322,7 @@ export default class AllocationsController {
       title: `${caseOverviewResponse.name} | Case allocated | Manage a workforce`,
       data: response,
       crn,
-      convictionId: caseOverviewResponse.convictionId,
+      convictionNumber: caseOverviewResponse.convictionNumber,
       personDetails,
       otherEmails,
       initialAppointment: caseOverviewResponse.initialAppointment,

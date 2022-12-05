@@ -13,7 +13,7 @@
             <div id="more-detail-hint" class="govuk-hint">
               {{ params.hintText | safe if params.hintText else "Enter any instructions/information you want to pass on. This is saved automatically, and you can review it later when selecting the recipients." }}
             </div>
-              <textarea class="govuk-textarea" data-conviction-id="{{ params.convictionId }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint"></textarea>
+              <textarea class="govuk-textarea" data-conviction-id="{{ params.convictionId }}" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}"  id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint"></textarea>
       </label>
     </div>
     {% if params.inGridRow %}

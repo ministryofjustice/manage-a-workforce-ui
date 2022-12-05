@@ -42,6 +42,6 @@
 
 {% block javascripts %}
     <script nonce="{{ cspNonce }}">
-        localStorage.removeItem('instructions-save-{{ convictionId }}')
+        localStorage.removeItem('instructions-save-{{ crn }}-{{ convictionNumber }}')
     </script>
 {% endblock %}

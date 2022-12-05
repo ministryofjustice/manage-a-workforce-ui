@@ -65,4 +65,23 @@ context('Instructions text', () => {
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.instructionsTextArea().should('have.value', 'Test Documents')
   })
+
+  it('Instructions identifier switch to using crn conviction number combination', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn().then(() => {
+      localStorage.removeItem('instructions-save-J678910-1')
+      localStorage.setItem('instructions-save-123456789', 'Some instructions text')
+    })
+    cy.visit('/team/TM1/J678910/convictions/1/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.instructionsTextArea().should('exist')
+    summaryPage
+      .instructionsTextArea()
+      .should('have.value', 'Some instructions text')
+      .then(() => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(localStorage.getItem('instructions-save-123456789')).to.be.null
+        expect(localStorage.getItem('instructions-save-J678910-1')).to.eq('Some instructions text')
+      })
+  })
 })

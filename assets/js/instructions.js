@@ -8,12 +8,12 @@ window.onload = function () {
   window.onbeforeunload = function () {
     localStorage.setItem(newInstructionsItem, textArea.value)
   }
-  if (localStorage[oldInstructionsItem]) {
+  if (localStorage[newInstructionsItem]) {
+    textArea.value = localStorage.getItem(newInstructionsItem)
+  } else if (localStorage[oldInstructionsItem]) {
     const currentValue = localStorage.getItem(oldInstructionsItem)
     textArea.value = currentValue
     localStorage.setItem(newInstructionsItem, currentValue)
-  }
-  if (localStorage[newInstructionsItem]) {
-    textArea.value = localStorage.getItem(newInstructionsItem)
+    localStorage.removeItem(oldInstructionsItem)
   }
 }

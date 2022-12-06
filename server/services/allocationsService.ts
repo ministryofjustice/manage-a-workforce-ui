@@ -8,6 +8,7 @@ import FileDownload from '../models/FileDownload'
 import UnallocatedCaseCountByTeam from '../models/UnallocatedCaseCountByTeam'
 import CaseForChoosePractitioner from '../models/CaseForChoosePractitioner'
 import DocumentDetails from '../models/DocumentDetails'
+import UnallocatedCase from '../models/UnallocatedCase'
 import CaseOverview from '../models/CaseOverview'
 
 export default class AllocationsService {
@@ -21,10 +22,10 @@ export default class AllocationsService {
     return new RestClient('Allocations Service API Client', this.config, token)
   }
 
-  async getUnallocatedCasesByTeam(token: string, teamCode: string): Promise<Allocation[]> {
+  async getUnallocatedCasesByTeam(token: string, teamCode: string): Promise<UnallocatedCase[]> {
     return (await this.restClient(token).get({
       path: `/team/${teamCode}/cases/unallocated`,
-    })) as Allocation[]
+    })) as UnallocatedCase[]
   }
 
   async getUnallocatedCase(token: string, crn, convictionId): Promise<Allocation> {

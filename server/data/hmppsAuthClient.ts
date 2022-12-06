@@ -15,12 +15,7 @@ export default class HmppsAuthClient {
     return new RestClient('HMPPS Auth Client', config.apis.hmppsAuth, token)
   }
 
-  getUser(token: string): Promise<User> {
+  async getUser(token: string): Promise<User> {
     return HmppsAuthClient.restClient(token).get({ path: '/api/user/me' }) as Promise<User>
-  }
-
-  async getUserRoles(token: string): Promise<string[]> {
-    const roles = await HmppsAuthClient.restClient(token).get({ path: '/api/user/me/roles' })
-    return (<UserRole[]>roles).map(role => role.roleCode)
   }
 }

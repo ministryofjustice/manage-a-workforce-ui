@@ -47,9 +47,10 @@ export default {
       url: get('HMPPS_AUTH_URL', 'http://127.0.0.1:9090/auth', requiredInProduction),
       externalUrl: get('HMPPS_AUTH_EXTERNAL_URL', get('HMPPS_AUTH_URL', 'http://127.0.0.1:9090/auth')),
       timeout: {
-        response: Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 10000)),
+        response: Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 1000)),
       },
-      agent: new AgentConfig(10000),
+      agent: new AgentConfig(1000),
+      retries: 2,
       apiClientId: get('API_CLIENT_ID', 'manage-a-workforce-ui', requiredInProduction),
       apiClientSecret: get('API_CLIENT_SECRET', 'clientsecret', requiredInProduction),
     },

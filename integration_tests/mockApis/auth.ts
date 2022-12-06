@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { Response } from 'superagent'
+import { Response, SuperAgentRequest } from 'superagent'
 
 import { stubForAllocation, getAllocationRequests } from './wiremock'
 import tokenVerification from './tokenVerification'
@@ -132,26 +132,11 @@ const stubUser = () =>
     },
   })
 
-const stubUserRoles = () =>
-  stubForAllocation({
-    request: {
-      method: 'GET',
-      urlPattern: '/auth/api/user/me/roles',
-    },
-    response: {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-      },
-      jsonBody: [{ roleId: 'ROLE_MANAGE_A_WORKFORCE_ALLOCATE' }],
-    },
-  })
-
 export default {
   getSignInUrl,
   stubAuthPing: (): Promise<[Response, Response]> =>
     Promise.all([ping(), tokenVerification.stubTokenVerificationPing()]),
   stubSignIn: (): Promise<[Response, Response, Response, Response, Response]> =>
     Promise.all([favicon(), redirect(), signOut(), token(), tokenVerification.stubVerifyToken()]),
-  stubAuthUser: (): Promise<[Response, Response]> => Promise.all([stubUser(), stubUserRoles()]),
+  stubAuthUser: (): SuperAgentRequest => stubUser(),
 }

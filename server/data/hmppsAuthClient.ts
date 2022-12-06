@@ -6,10 +6,6 @@ export interface User {
   activeCaseLoadId: string
 }
 
-export interface UserRole {
-  roleCode: string
-}
-
 export default class HmppsAuthClient {
   private static restClient(token: string): RestClient {
     return new RestClient('HMPPS Auth Client', config.apis.hmppsAuth, token)

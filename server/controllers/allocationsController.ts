@@ -323,6 +323,7 @@ export default class AllocationsController {
       data: response,
       crn,
       convictionNumber: caseOverviewResponse.convictionNumber,
+      personName: caseOverviewResponse.name,
       personDetails,
       otherEmails,
       initialAppointment: caseOverviewResponse.initialAppointment,

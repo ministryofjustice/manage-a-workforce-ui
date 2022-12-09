@@ -4,11 +4,11 @@ import ProbationRecordPage from '../pages/probationRecord'
 context('Probation record', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.signIn()
   })
 
   it('Caption text visible on page', () => {
     cy.task('stubGetProbationRecord')
-    cy.signIn()
     cy.visit('team/TM1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
@@ -16,13 +16,14 @@ context('Probation record', () => {
 
   it('Probation record header visible on page', () => {
     cy.task('stubGetProbationRecord')
-    cy.signIn()
     cy.visit('team/TM1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
   })
 
   it('Sub nav visible on page', () => {
+    cy.task('stubGetProbationRecord')
+    cy.visit('team/TM1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage
       .subNav()
@@ -33,6 +34,8 @@ context('Probation record', () => {
   })
 
   it('Probation record tab is highlighted', () => {
+    cy.task('stubGetProbationRecord')
+    cy.visit('team/TM1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.highlightedTab().should('contain.text', 'Probation record')
   })
@@ -40,7 +43,6 @@ context('Probation record', () => {
   it('navigate to probation record through case summary', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetProbationRecord')
-    cy.signIn()
     cy.get('a[href*="team/TM1/cases/unallocated"]').click()
     cy.get('a[href*="team/TM1/J678910/convictions/1/case-view"]').click()
     cy.get('a[href*="team/TM1/J678910/convictions/1/probation-record"]').click()
@@ -49,7 +51,6 @@ context('Probation record', () => {
 
   it('Continue button visible on page', () => {
     cy.task('stubGetProbationRecord')
-    cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.button().should('contain', 'Continue')
@@ -57,7 +58,6 @@ context('Probation record', () => {
 
   it('Current order sub-heading visible on page with body text', () => {
     cy.task('stubGetProbationRecordNoConvictions')
-    cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.subHeading().should('contain', 'Current order')
@@ -66,7 +66,6 @@ context('Probation record', () => {
 
   it('Previous orders sub-heading visible on page with body text', () => {
     cy.task('stubGetProbationRecordNoConvictions')
-    cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.subHeading().should('contain', 'Previous orders')
@@ -75,7 +74,6 @@ context('Probation record', () => {
 
   it('Current Order table displayed on page when active convictions exist', () => {
     cy.task('stubGetProbationRecord')
-    cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage
@@ -99,7 +97,6 @@ context('Probation record', () => {
 
   it('Current Order table displays multiple offences as numbered list', () => {
     cy.task('stubGetProbationRecordMultipleOffences')
-    cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage
@@ -117,7 +114,6 @@ context('Probation record', () => {
 
   it('Previous Order table displays when inactive convictions exist', () => {
     cy.task('stubGetProbationRecord')
-    cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage
@@ -142,7 +138,6 @@ context('Probation record', () => {
 
   it('more than 3 previous orders should display first three orders and view all link', () => {
     cy.task('stubGetManyPreviousProbationRecord')
-    cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.previousOrderTable().getTable().should('have.length', 3)
@@ -151,7 +146,6 @@ context('Probation record', () => {
 
   it('more than 3 previous orders with view all as true should display all orders and not view all link', () => {
     cy.task('stubGetManyPreviousProbationRecord')
-    cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/probation-record?viewAll=true')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.previousOrderTable().getTable().should('have.length', 100)

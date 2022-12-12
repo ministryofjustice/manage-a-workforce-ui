@@ -30,7 +30,7 @@ export default function setUpWebSecurity(): Router {
             "'sha256-xseXYIyJf+ofw4QIbNxoWnzeuWkO8antz0n3bwjWrMk='",
             (req, res) => `'nonce-${(res as unknown as Response).locals.cspNonce}'`,
           ],
-          styleSrc: ["'self'", 'code.jquery.com'],
+          styleSrc: ["'self'", (req, res) => `'nonce-${(res as unknown as Response).locals.cspNonce}'`],
           fontSrc: ["'self'"],
           imgSrc: [
             "'self'",

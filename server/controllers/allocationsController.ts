@@ -44,7 +44,6 @@ export default class AllocationsController {
       crn: response.crn,
       tier: response.tier,
       name: response.name,
-      convictionId: response.convictionId,
       convictionNumber: response.convictionNumber,
       title: `${response.name} | Summary | Manage a workforce`,
       teamCode,

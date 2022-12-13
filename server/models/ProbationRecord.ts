@@ -6,6 +6,5 @@ export default interface ProbationRecord {
   tier: string
   active: Conviction[]
   previous: Conviction[]
-  convictionId: number
   convictionNumber: number
 }

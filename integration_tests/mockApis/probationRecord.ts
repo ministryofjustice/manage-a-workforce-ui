@@ -16,7 +16,6 @@ export default {
           crn: 'J678910',
           tier: 'C1',
           caseType: 'COMMUNITY',
-          convictionId: 123456789,
           convictionNumber: 1,
           active: [
             {
@@ -95,7 +94,6 @@ export default {
           crn: 'J678910',
           tier: 'C1',
           caseType: 'COMMUNITY',
-          convictionId: 123456789,
           convictionNumber: 1,
           active: [],
           previous: [],
@@ -117,7 +115,6 @@ export default {
           crn: 'J678910',
           tier: 'C1',
           caseType: 'COMMUNITY',
-          convictionId: 123456789,
           convictionNumber: 1,
           active: [
             {
@@ -201,7 +198,6 @@ export default {
           crn: 'J678910',
           tier: 'C1',
           caseType: 'COMMUNITY',
-          convictionId: 123456789,
           convictionNumber: 1,
           active: [
             {

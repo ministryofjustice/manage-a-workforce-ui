@@ -95,7 +95,6 @@ export default class AllocationsController {
       previousOrders,
       viewAll,
       totalPreviousCount,
-      convictionId: response.convictionId,
       convictionNumber: response.convictionNumber,
       title: `${response.name} | Probation record | Manage a workforce`,
       teamCode,

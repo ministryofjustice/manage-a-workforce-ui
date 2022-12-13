@@ -6,7 +6,6 @@ export default interface OffenderManagerWorkload {
   totalCustodyCases: number
   capacity: number
   code: string
-  staffId: number
   totalCasesInLastWeek: number
   email: string
 }

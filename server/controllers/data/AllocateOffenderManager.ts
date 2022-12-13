@@ -28,8 +28,6 @@ export default class AllocateOffenderManager {
 
   code: string
 
-  staffId: number
-
   totalCasesInLastWeek: number
 
   email: string
@@ -42,7 +40,6 @@ export default class AllocateOffenderManager {
     communityCases: number,
     custodyCases: number,
     code: string,
-    staffId: number,
     totalCasesInLastWeek: number,
     email: string
   ) {
@@ -54,7 +51,6 @@ export default class AllocateOffenderManager {
     this.communityCases = communityCases
     this.custodyCases = custodyCases
     this.code = code
-    this.staffId = staffId
     this.totalCasesInLastWeek = totalCasesInLastWeek
     this.email = email
   }

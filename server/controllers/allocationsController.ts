@@ -147,7 +147,6 @@ export default class AllocationsController {
             om.totalCommunityCases,
             om.totalCustodyCases,
             om.code,
-            om.staffId,
             om.totalCasesInLastWeek,
             om.email
           )

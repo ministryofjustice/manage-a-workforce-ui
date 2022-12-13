@@ -1,11 +1,11 @@
-import express, { Router } from 'express'
+import express, { Router, Request, Response, NextFunction } from 'express'
 import helmet from 'helmet'
 import crypto from 'crypto'
 
 export default function setUpWebSecurity(): Router {
   const router = express.Router()
 
-  router.use((req, res, next) => {
+  router.use((_, res: Response, next: NextFunction) => {
     res.locals.cspNonce = crypto.randomBytes(16).toString('base64')
     next()
   })
@@ -28,9 +28,9 @@ export default function setUpWebSecurity(): Router {
             'https://www.googletagmanager.com',
             "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
             "'sha256-xseXYIyJf+ofw4QIbNxoWnzeuWkO8antz0n3bwjWrMk='",
-            (req, res) => `'nonce-${(res as unknown as Response).locals.cspNonce}'`,
+            (_, res: Response) => `'nonce-${res.locals.cspNonce}'`,
           ],
-          styleSrc: ["'self'", (req, res) => `'nonce-${(res as unknown as Response).locals.cspNonce}'`],
+          styleSrc: ["'self'", (_, res: Response) => `'nonce-${res.locals.cspNonce}'`],
           fontSrc: ["'self'"],
           imgSrc: [
             "'self'",
@@ -38,6 +38,7 @@ export default function setUpWebSecurity(): Router {
             'www.google-analytics.com',
             '*.analytics.google.com',
             '*.google-analytics.com',
+            '*.googletagmanager.com',
           ],
           connectSrc: [
             "'self'",
@@ -49,6 +50,7 @@ export default function setUpWebSecurity(): Router {
           ],
         },
       },
+      crossOriginEmbedderPolicy: true,
       referrerPolicy: {
         policy: 'strict-origin-when-cross-origin',
       },

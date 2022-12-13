@@ -5,7 +5,7 @@ export default class InstructionsConfirmPage extends Page {
     super('Review allocation instructions')
   }
 
-  continueButton = (convictionId): PageElement => cy.get(`#${convictionId}`)
+  continueButton = (convictionNumber): PageElement => cy.get(`#${convictionNumber}`)
 
   label = (): PageElement => cy.get('.govuk-label')
 
@@ -19,8 +19,8 @@ export default class InstructionsConfirmPage extends Page {
 
   inputTexts = (): PageElement => cy.get('input.govuk-input')
 
-  cancelLink = (crn, convictionId, teamCode): PageElement =>
-    cy.get(`a[href*="/team/${teamCode}/${crn}/convictions/${convictionId}/choose-practitioner"]`).eq(1)
+  cancelLink = (crn, convictionNumber, teamCode): PageElement =>
+    cy.get(`a[href*="/team/${teamCode}/${crn}/convictions/${convictionNumber}/choose-practitioner"]`).eq(1)
 
   checkboxText = (): PageElement => cy.get('.govuk-checkboxes__label')
 

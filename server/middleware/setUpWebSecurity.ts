@@ -1,4 +1,4 @@
-import express, { Router, Request, Response, NextFunction } from 'express'
+import express, { Router, Response, NextFunction } from 'express'
 import helmet from 'helmet'
 import crypto from 'crypto'
 

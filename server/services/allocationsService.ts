@@ -28,23 +28,23 @@ export default class AllocationsService {
     })) as UnallocatedCase[]
   }
 
-  async getUnallocatedCase(token: string, crn, convictionId): Promise<Allocation> {
+  async getUnallocatedCase(token: string, crn, convictionNumber): Promise<Allocation> {
     logger.info(`Getting unallocated case for crn ${crn}`)
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/convictions/${convictionId}`,
+      path: `/cases/unallocated/${crn}/convictions/${convictionNumber}`,
     })) as Allocation
   }
 
-  async getProbationRecord(token: string, crn, convictionId): Promise<ProbationRecord> {
+  async getProbationRecord(token: string, crn, convictionNumber): Promise<ProbationRecord> {
     logger.info(`Getting probation record for crn ${crn}`)
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/convictions?excludeConvictionId=${convictionId}`,
+      path: `/cases/unallocated/${crn}/convictions?excludeConvictionId=${convictionNumber}`,
     })) as ProbationRecord
   }
 
-  async getRisk(token: string, crn, convictionId): Promise<Risk> {
+  async getRisk(token: string, crn, convictionNumber): Promise<Risk> {
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/convictions/${convictionId}/risks`,
+      path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/risks`,
     })) as Risk
   }
 
@@ -54,15 +54,15 @@ export default class AllocationsService {
     })) as DocumentDetails[]
   }
 
-  async getCaseOverview(token: string, crn, convictionId): Promise<CaseOverview> {
+  async getCaseOverview(token: string, crn, convictionNumber): Promise<CaseOverview> {
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/convictions/${convictionId}/overview`,
+      path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/overview`,
     })) as CaseOverview
   }
 
-  async getCaseForChoosePractitioner(token: string, crn, convictionId): Promise<CaseForChoosePractitioner> {
+  async getCaseForChoosePractitioner(token: string, crn, convictionNumber): Promise<CaseForChoosePractitioner> {
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/convictions/${convictionId}/practitionerCase`,
+      path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/practitionerCase`,
     })) as CaseForChoosePractitioner
   }
 

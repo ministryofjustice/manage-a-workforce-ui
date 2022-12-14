@@ -105,14 +105,12 @@ context('Summary', () => {
   it('Associated Documents visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedDocumentsTitle().should('have.text', 'Associated documents')
+    summaryPage.downloadDocumentLink('J678910', '00000000-0000-0000-0000-000000000000', 'courtFile.pdf').should('exist')
     summaryPage
-      .downloadDocumentLink('J678910', '123456789', '00000000-0000-0000-0000-000000000000', 'courtFile.pdf')
+      .downloadDocumentLink('J678910', '11111111-1111-1111-1111-111111111111', 'cpsPackFile.pdf')
       .should('exist')
     summaryPage
-      .downloadDocumentLink('J678910', '123456789', '11111111-1111-1111-1111-111111111111', 'cpsPackFile.pdf')
-      .should('exist')
-    summaryPage
-      .downloadDocumentLink('J678910', '123456789', '22222222-2222-2222-2222-222222222222', 'preConsFile.pdf')
+      .downloadDocumentLink('J678910', '22222222-2222-2222-2222-222222222222', 'preConsFile.pdf')
       .should('exist')
     cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
       'CPS pack': 'Download CPS pack Uploaded 27 February 2022',

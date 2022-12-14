@@ -49,6 +49,6 @@ export default abstract class Page {
 
   instructionsTextArea = (): PageElement => cy.get(`#instructions`)
 
-  downloadDocumentLink = (crn, convictionId, documentId, fileName): PageElement =>
+  downloadDocumentLink = (crn, documentId, fileName): PageElement =>
     cy.get(`a[href*="/${crn}/documents/${documentId}/${fileName}"]`)
 }

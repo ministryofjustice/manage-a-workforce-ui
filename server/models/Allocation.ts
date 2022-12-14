@@ -23,7 +23,6 @@ export default interface Allocation {
   courtReport: Document
   cpsPack: Document
   assessment: Assessment
-  convictionId: number
   caseType: string
   preConvictionDocument: Document
   address: Address

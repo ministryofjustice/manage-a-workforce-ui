@@ -78,17 +78,13 @@ context('Documents', () => {
 
   it('Download document links exist', () => {
     const documentsPage = Page.verifyOnPage(DocumentsPage)
+    documentsPage.downloadDocumentLink('J678910', 'efb7a4e8-3f4a-449c-bf6f-b1fc8def3410', 'cps.pdf').should('exist')
+    documentsPage.downloadDocumentLink('J678910', '6c50048a-c647-4598-8fae-0b84c69ef31a', 'doc.pdf').should('exist')
     documentsPage
-      .downloadDocumentLink('J678910', '123456789', 'efb7a4e8-3f4a-449c-bf6f-b1fc8def3410', 'cps.pdf')
+      .downloadDocumentLink('J678910', '626aa1d1-71c6-4b76-92a1-bf2f9250c143', 'Pre Cons.pdf')
       .should('exist')
     documentsPage
-      .downloadDocumentLink('J678910', '123456789', '6c50048a-c647-4598-8fae-0b84c69ef31a', 'doc.pdf')
-      .should('exist')
-    documentsPage
-      .downloadDocumentLink('J678910', '123456789', '626aa1d1-71c6-4b76-92a1-bf2f9250c143', 'Pre Cons.pdf')
-      .should('exist')
-    documentsPage
-      .downloadDocumentLink('J678910', '123456789', 'd3cb4b29-e2ce-4a9a-af3c-bc89d5e56f6c', 'OfficeVisitDocument.DOC')
+      .downloadDocumentLink('J678910', 'd3cb4b29-e2ce-4a9a-af3c-bc89d5e56f6c', 'OfficeVisitDocument.DOC')
       .should('exist')
   })
 })

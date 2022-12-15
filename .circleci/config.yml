@@ -85,6 +85,10 @@ jobs:
           name: Get wiremock
           command: curl -o wiremock.jar https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-standalone/2.27.1/wiremock-standalone-2.27.1.jar
       - run:
+          name: Run auth wiremock
+          command: java -jar wiremock.jar --port 9090
+          background: true
+      - run:
           name: Run allocation wiremock
           command: java -jar wiremock.jar --port 9091
           background: true

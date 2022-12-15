@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { Response, SuperAgentRequest } from 'superagent'
 
-import { stubForAllocation, getAllocationRequests } from './wiremock'
+import { stubForAuth, getAuthRequests } from './wiremock'
 import tokenVerification from './tokenVerification'
 
 const createToken = () => {
@@ -32,12 +32,12 @@ const getSignInUrl = async (): Promise<string> => {
         },
       ],
     },
-  } = await getAllocationRequests()
+  } = await getAuthRequests()
   return `/sign-in/callback?code=codexxxx&state=${stateParam}`
 }
 
 const favicon = () =>
-  stubForAllocation({
+  stubForAuth({
     request: {
       method: 'GET',
       urlPattern: '/favicon.ico',
@@ -48,7 +48,7 @@ const favicon = () =>
   })
 
 const ping = () =>
-  stubForAllocation({
+  stubForAuth({
     request: {
       method: 'GET',
       urlPattern: '/auth/health/ping',
@@ -59,7 +59,7 @@ const ping = () =>
   })
 
 const redirect = () =>
-  stubForAllocation({
+  stubForAuth({
     request: {
       method: 'GET',
       urlPattern: '/auth/oauth/authorize\\?response_type=code&redirect_uri=.+?&state=.+?&client_id=clientid',
@@ -75,7 +75,7 @@ const redirect = () =>
   })
 
 const signOut = () =>
-  stubForAllocation({
+  stubForAuth({
     request: {
       method: 'GET',
       urlPattern: '/auth/sign-out.*',
@@ -90,7 +90,7 @@ const signOut = () =>
   })
 
 const token = () =>
-  stubForAllocation({
+  stubForAuth({
     request: {
       method: 'POST',
       urlPattern: '/auth/oauth/token',
@@ -113,7 +113,7 @@ const token = () =>
   })
 
 const stubUser = () =>
-  stubForAllocation({
+  stubForAuth({
     request: {
       method: 'GET',
       urlPattern: '/auth/api/user/me',

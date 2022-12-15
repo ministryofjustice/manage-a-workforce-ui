@@ -46,10 +46,14 @@ const wiremock = (url: string) => {
   return { stubFor, getRequests, resetStubs, verifyRequest, stubForScenario }
 }
 
+const authUrl = 'http://127.0.0.1:9090/__admin'
 const probationUrl = 'http://127.0.0.1:9093/__admin'
 const allocationUrl = 'http://127.0.0.1:9091/__admin'
 const workloadUrl = 'http://127.0.0.1:9092/__admin'
 const userPreferenceUrl = 'http://127.0.0.1:9094/__admin'
+
+const { stubFor: stubForAuth, getRequests: getAuthRequests } = wiremock(authUrl)
+export { stubForAuth, getAuthRequests }
 
 const { stubFor: stubForProbationEstate, resetStubs: resetProbationEstateStubs } = wiremock(probationUrl)
 export { stubForProbationEstate, resetProbationEstateStubs }

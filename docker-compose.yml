@@ -10,6 +10,13 @@ services:
     ports:
       - '6379:6379'
 
+  auth-wiremock:
+    image: wiremock/wiremock
+    networks:
+    - hmpps_int
+    restart: always
+    ports:
+      - "9090:8080"
   allocation-wiremock:
     image: wiremock/wiremock
     networks:

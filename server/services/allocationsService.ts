@@ -38,7 +38,7 @@ export default class AllocationsService {
   async getProbationRecord(token: string, crn, convictionNumber): Promise<ProbationRecord> {
     logger.info(`Getting probation record for crn ${crn}`)
     return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/convictions?excludeConvictionId=${convictionNumber}`,
+      path: `/cases/unallocated/${crn}/record/exclude-conviction/${convictionNumber}`,
     })) as ProbationRecord
   }
 

@@ -73,6 +73,12 @@ context('Documents', () => {
           Event: 'PreviousCommon assault and battery - 10501',
           'Date created': '',
         },
+        {
+          Name: 'documentWithoutId.pdfContact',
+          Type: 'Planned Office Visit (NS)',
+          Event: 'PreviousCommon assault and battery - 10501',
+          'Date created': '',
+        },
       ])
   })
 
@@ -86,5 +92,10 @@ context('Documents', () => {
     documentsPage
       .downloadDocumentLink('J678910', 'd3cb4b29-e2ce-4a9a-af3c-bc89d5e56f6c', 'OfficeVisitDocument.DOC')
       .should('exist')
+  })
+
+  it('Download document link does not exist for document without id', () => {
+    const documentsPage = Page.verifyOnPage(DocumentsPage)
+    documentsPage.downloadDocumentLink('J678910', '', 'documentWithoutId.pdf').should('not.exist')
   })
 })

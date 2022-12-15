@@ -646,6 +646,21 @@ export default {
             dateCreated: null,
             sensitive: false,
           },
+          {
+            name: 'documentWithoutId.pdf',
+            relatedTo: {
+              type: 'CONTACT',
+              name: 'Planned Office Visit (NS)',
+              event: {
+                eventType: 'PREVIOUS',
+                eventNumber: '2',
+                mainOffence: 'Common assault and battery - 10501',
+              },
+              description: 'Contact',
+            },
+            dateCreated: null,
+            sensitive: false,
+          },
         ],
       },
     })

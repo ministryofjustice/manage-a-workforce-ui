@@ -151,7 +151,6 @@ export default {
           tier: 'C1',
           sentenceDate: '2021-09-01',
           initialAppointment: '2021-09-01',
-          status: 'Currently managed',
           offenderManager: {
             forenames: 'Antonio',
             surname: 'LoSardo',
@@ -245,7 +244,6 @@ export default {
           tier: 'C1',
           sentenceDate: '2021-09-01',
           initialAppointment: '2021-09-01',
-          status: 'Currently managed',
           offenderManager: {
             forenames: 'Antonio',
             surname: 'LoSardo',
@@ -319,7 +317,6 @@ export default {
           tier: 'C1',
           sentenceDate: '2021-09-01',
           initialAppointment: '2021-09-01',
-          status: 'Previously managed',
           gender: 'Male',
           dateOfBirth: '1984-09-27',
           age: 37,
@@ -373,7 +370,6 @@ export default {
           tier: 'C1',
           sentenceDate: '2021-09-01',
           initialAppointment: '2021-09-01',
-          status: 'New to probation',
           gender: 'Male',
           dateOfBirth: '1984-09-27',
           age: 37,
@@ -427,7 +423,6 @@ export default {
           tier: 'C1',
           sentenceDate: '2021-09-01',
           initialAppointment: '2021-09-01',
-          status: 'Currently managed',
           gender: 'Male',
           dateOfBirth: '1984-09-27',
           age: 37,
@@ -485,7 +480,6 @@ export default {
           tier: 'C1',
           sentenceDate: '2021-09-02',
           initialAppointment: '2021-09-01',
-          status: 'Previously managed',
           offenderManager: {
             forenames: 'Sarah',
             surname: 'Banks',

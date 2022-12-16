@@ -15,7 +15,6 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          caseType: 'COMMUNITY',
           activeRegistrations: [
             {
               type: 'Suicide/self-harm',
@@ -91,7 +90,6 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          caseType: 'COMMUNITY',
           activeRegistrations: [],
           inActiveRegistrations: [],
           convictionNumber: 1,

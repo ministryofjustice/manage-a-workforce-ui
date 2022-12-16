@@ -200,7 +200,6 @@ export default {
             type: 'LAYER_3',
           },
           convictionNumber: 1,
-          caseType: 'COMMUNITY',
           address: {
             addressNumber: '5A',
             buildingName: 'The Building',
@@ -292,7 +291,6 @@ export default {
             type: 'LAYER_3',
           },
           convictionNumber: 1,
-          caseType: 'COMMUNITY',
           address: {
             addressNumber: '5A',
             buildingName: 'The Building',
@@ -355,7 +353,6 @@ export default {
             type: 'LAYER_3',
           },
           convictionNumber: 1,
-          caseType: 'COMMUNITY',
         },
       },
     })
@@ -410,7 +407,6 @@ export default {
             type: 'LAYER_3',
           },
           convictionNumber: 1,
-          caseType: 'COMMUNITY',
         },
       },
     })
@@ -470,7 +466,6 @@ export default {
           },
         },
         convictionNumber: 1,
-        caseType: 'COMMUNITY',
       },
     })
   },
@@ -537,7 +532,6 @@ export default {
             },
           ],
           pncNumber: 'A/8404713BA',
-          caseType: 'COMMUNITY',
           address: {
             type: {
               description: 'Homeless - rough sleeping',

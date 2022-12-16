@@ -15,7 +15,6 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          caseType: 'COMMUNITY',
           convictionNumber: 1,
           active: [
             {
@@ -93,7 +92,6 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          caseType: 'COMMUNITY',
           convictionNumber: 1,
           active: [],
           previous: [],
@@ -114,7 +112,6 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          caseType: 'COMMUNITY',
           convictionNumber: 1,
           active: [
             {
@@ -197,7 +194,6 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
-          caseType: 'COMMUNITY',
           convictionNumber: 1,
           active: [
             {

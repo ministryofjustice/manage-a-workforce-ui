@@ -141,7 +141,7 @@
     "@types/supertest": "2.0.12",
     "@typescript-eslint/eslint-plugin": "5.46.1",
     "@typescript-eslint/parser": "5.46.1",
-    "audit-ci": "6.4.0",
+    "audit-ci": "6.4.1",
     "concurrently": "7.6.0",
     "cypress": "12.1.0",
     "cypress-multi-reporters": "1.6.2",

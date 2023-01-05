@@ -66,7 +66,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': '1 September 2021',
           'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Sofia MitchellL786545',
@@ -74,7 +73,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': 'Not neededCustody case (32 Years)',
           'Probation status': 'Previously managed(John Agard)',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'John SmithP125643',
@@ -82,7 +80,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '23 July 2021',
           'Initial appointment date': '17 August 2021',
           'Probation status': 'New to probation',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Kacey RayE124321',
@@ -90,7 +87,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': '2 September 2021',
           'Probation status': 'New to probation',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Andrew WilliamsP567654',
@@ -98,7 +94,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': '3 September 2021',
           'Probation status': 'Previously managed',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Sarah SiddallC567654',
@@ -106,7 +101,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': '4 September 2021',
           'Probation status': 'Previously managed',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Mick JonesC234432',
@@ -114,7 +108,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '25 August 2021',
           'Initial appointment date': 'Not foundCheck with your team',
           'Probation status': 'Previously managed',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Bill TurnerF5635632',
@@ -122,7 +115,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': '1 September 2021',
           'Probation status': 'Currently managed(Richard Moore)',
-          Action: 'Review case',
         },
       ])
   })
@@ -153,7 +145,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': '1 September 2021',
           'Probation status': 'Currently managed(Richard Moore)',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Dylan Adam ArmstrongJ678910',
@@ -161,7 +152,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': '1 September 2021',
           'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Sofia MitchellL786545',
@@ -169,7 +159,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': 'Not neededCustody case (32 Years)',
           'Probation status': 'Previously managed(John Agard)',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Andrew WilliamsP567654',
@@ -177,7 +166,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': '3 September 2021',
           'Probation status': 'Previously managed',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Mick JonesC234432',
@@ -185,7 +173,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '25 August 2021',
           'Initial appointment date': 'Not foundCheck with your team',
           'Probation status': 'Previously managed',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Kacey RayE124321',
@@ -193,7 +180,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': '2 September 2021',
           'Probation status': 'New to probation',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'Sarah SiddallC567654',
@@ -201,7 +187,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '1 September 2021',
           'Initial appointment date': '4 September 2021',
           'Probation status': 'Previously managed',
-          Action: 'Review case',
         },
         {
           'Name / CRN': 'John SmithP125643',
@@ -209,7 +194,6 @@ context('Unallocated cases by team', () => {
           'Sentence date': '23 July 2021',
           'Initial appointment date': '17 August 2021',
           'Probation status': 'New to probation',
-          Action: 'Review case',
         },
       ])
   })

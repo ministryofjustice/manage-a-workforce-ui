@@ -35,22 +35,20 @@
             attributes: {
                 "aria-sort": "none"
             }
-        },
-        { text: 'Action' }
+        }
     ],
     rows: []
 } %}
 
 {% for item in unallocatedCases %}
     {%- set tableRow = [
-        { text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' )},
+        { text: doubleCell('<a href="/team/' + teamCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' +  item.name + '</a>', item.crn, 'govuk-body-s' )},
         { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
         { text: (item.sentenceDate | dateFormat), attributes: {
             "data-sort-value": item.sentenceDate
         } },
         { text: doubleCell(item.primaryInitialAppointment,item.secondaryInitialAppointment, 'maw-secondary' )},
-        { text: doubleCell(item.primaryStatus, item.secondaryStatus, 'govuk-body-s')},
-        { text: ('<a href="/team/' + teamCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' + "Review case" + '</a>' ) | safe}
+        { text: doubleCell(item.primaryStatus, item.secondaryStatus, 'govuk-body-s')}
     ] -%}
     {{ tableData.rows.push(tableRow) }}
 

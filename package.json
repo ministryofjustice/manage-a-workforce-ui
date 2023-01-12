@@ -93,7 +93,7 @@
   "dependencies": {
     "@ministryofjustice/frontend": "1.6.3",
     "agentkeepalive": "4.2.1",
-    "applicationinsights": "2.3.6",
+    "applicationinsights": "2.4.0",
     "axios": "1.2.2",
     "axios-retry": "3.3.1",
     "body-parser": "1.20.1",
@@ -167,7 +167,7 @@
     "sass": "1.57.1",
     "superagent": "8.0.6",
     "supertest": "6.3.3",
-    "ts-jest": "29.0.4",
+    "ts-jest": "29.0.3",
     "typescript": "4.9.4"
   }
 }

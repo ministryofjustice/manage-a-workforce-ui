@@ -10,7 +10,9 @@ context('Choose Practitioner', () => {
       name: 'Wrexham Team 1',
     })
     cy.task('stubGetAllocateOffenderManagers', 'TM1')
-    cy.task('stubChoosePractitioners')
+    // TODO - Can we change all this so it works? ATM we cannot change teams as somethin is hard-coded to use TM1
+    cy.task('stubUserPreferenceTeams', ['TM1'])
+    cy.task('stubChoosePractitioners', ['TM1'])
   })
 
   it('notification banner visible on page', () => {

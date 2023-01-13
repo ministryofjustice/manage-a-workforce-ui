@@ -24,11 +24,13 @@ import ProbationEstateService from '../services/probationEstateService'
 import CaseForChoosePractitioner from '../models/CaseForChoosePractitioner'
 import DocumentRow from './data/DocumentRow'
 import ChoosePractitionerData, { Practitioner } from '../models/ChoosePractitionerData'
+import UserPreferenceService from '../services/userPreferenceService'
 
 export default class AllocationsController {
   constructor(
     private readonly allocationsService: AllocationsService,
     private readonly workloadService: WorkloadService,
+    private readonly userPreferenceService: UserPreferenceService,
     private readonly probationEstateService: ProbationEstateService
   ) {}
 
@@ -131,14 +133,16 @@ export default class AllocationsController {
 
   // eslint-disable-next-line consistent-return
   async choosePractitioner(req: Request, res: Response, crn, convictionNumber, teamCode) {
-    const { token } = res.locals.user
+    const { token, username } = res.locals.user
 
     if (req.query.doTabs === 'true') {
+      const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
       // TODO - get team names from user prefs
-      const allocationInformationByTeam = await this.workloadService.getChoosePractitionerData(token, crn, [
-        'N03F01',
-        'N03F02',
-      ])
+      const allocationInformationByTeam = await this.workloadService.getChoosePractitionerData(
+        token,
+        crn,
+        teamCodesPreferences.items
+      )
       const offenderManagersToAllocatePerTeam = getChoosePractitionerDataByTeam(allocationInformationByTeam)
       const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(allocationInformationByTeam)
 

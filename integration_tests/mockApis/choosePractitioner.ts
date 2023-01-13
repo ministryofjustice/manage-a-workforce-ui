@@ -111,7 +111,7 @@ export default {
       },
     })
   },
-  stubChoosePractitioners: (crn = 'J678910', teamCodes = ['N03F01', 'N03F02']): SuperAgentRequest => {
+  stubChoosePractitioners: (teamCodes = ['N03F01', 'N03F02'], crn = 'J678910'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',

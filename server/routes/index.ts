@@ -15,6 +15,7 @@ export default function routes(services: Services): Router {
   const allocationsController = new AllocationsController(
     services.allocationsService,
     services.workloadService,
+    services.userPreferenceService,
     services.probationEstateService
   )
   const probationEstateController = new ProbationEstateController(

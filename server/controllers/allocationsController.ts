@@ -413,6 +413,7 @@ function getChoosePractitionerDataByTeam(
     const practitionersInTeam = (teamCodeAndPractitioner[1] as Practitioner[]).map(practitioner => {
       return mapPractitioner(practitioner)
     })
+    practitionersInTeam.sort(sortPractitionersByGrade)
     practitionerTeams.push({
       teamCode: teamCodeAndPractitioner[0],
       offenderManagersToAllocate: practitionersInTeam,
@@ -435,6 +436,7 @@ function getChoosePractitionerDataAllTeams(
       })
     })
   })
+  practitionersAllTeams.sort(sortPractitionersByGrade)
   return practitionersAllTeams
 }
 
@@ -443,7 +445,6 @@ function mapPractitioner(practitionerData): OffenderManagerToAllocate {
     name: `${practitionerData.name?.forename} ${practitionerData.name?.surname}`,
     code: practitionerData.code,
     grade: practitionerData.grade,
-    // TODO - Check these work - do we need to sort before diaplaying?
     gradeTip: gradeTips.get(practitionerData.grade),
     gradeOrder: gradeOrder.get(practitionerData.grade) || 0,
     capacity: practitionerData.workload,
@@ -452,6 +453,13 @@ function mapPractitioner(practitionerData): OffenderManagerToAllocate {
     custodyCases: practitionerData.custodyCases,
     email: practitionerData.email,
   }
+}
+
+function sortPractitionersByGrade(a, b) {
+  if (b.gradeOrder === a.gradeOrder) {
+    return a.capacity - b.capacity
+  }
+  return b.gradeOrder - a.gradeOrder
 }
 
 function enrichTeamDataWithTeamName(

@@ -166,9 +166,9 @@ context('Choose Practitioner', () => {
           Select: '',
         },
         {
-          Name: 'Sam Smam',
+          Name: 'Jim Jam',
           Team: 'Team 2',
-          Grade: 'SPOSenior Probation Officer',
+          Grade: 'POProbation Officer',
           'Workload %': '32%',
           'Cases in past 7 days': '5',
           'Community cases': '0',
@@ -177,9 +177,9 @@ context('Choose Practitioner', () => {
           Select: '',
         },
         {
-          Name: 'Jim Jam',
+          Name: 'Sam Smam',
           Team: 'Team 2',
-          Grade: 'POProbation Officer',
+          Grade: 'SPOSenior Probation Officer',
           'Workload %': '32%',
           'Cases in past 7 days': '5',
           'Community cases': '0',
@@ -195,17 +195,27 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.tab('N03F01').click()
+    choosePractitionerPage.tab('N03F02').click()
     choosePractitionerPage
-      .tabtable('N03F01')
+      .tabtable('N03F02')
       .getTable()
       .should('deep.equal', [
         {
-          Name: 'Jane Doe',
+          Name: 'Jim Jam',
           Grade: 'POProbation Officer',
-          'Workload %': '19%',
-          'Cases in past 7 days': '2',
-          'Community cases': '3',
+          'Workload %': '32%',
+          'Cases in past 7 days': '5',
+          'Community cases': '0',
+          'Custody cases': '5',
+          'Workload details': 'View',
+          Select: '',
+        },
+        {
+          Name: 'Sam Smam',
+          Grade: 'SPOSenior Probation Officer',
+          'Workload %': '32%',
+          'Cases in past 7 days': '5',
+          'Community cases': '0',
           'Custody cases': '5',
           'Workload details': 'View',
           Select: '',

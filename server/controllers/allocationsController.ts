@@ -6,7 +6,7 @@ import ProbationRecord from '../models/ProbationRecord'
 import Risk from '../models/Risk'
 import Order from './data/Order'
 import Conviction from '../models/Conviction'
-import AllocateOffenderManager from './data/AllocateOffenderManager'
+import AllocateOffenderManager, { gradeOrder, gradeTips } from './data/AllocateOffenderManager'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerOverview from '../models/OffenderManagerOverview'
 import FileDownload from '../models/FileDownload'
@@ -157,24 +157,29 @@ export default class AllocationsController {
         teamNamesByCode
       )
 
-      // TODO - remove this call
+      // TODO - Only needed for conviction number
       const response: CaseForChoosePractitioner = await this.allocationsService.getCaseForChoosePractitioner(
         token,
         crn,
         convictionNumber
       )
 
+      const name = `${allocationInformationByTeam.name.forename} ${allocationInformationByTeam.name.surname}`
+      const offenderManager = {
+        forenames: allocationInformationByTeam.communityPersonManager.name.forename,
+        surname: allocationInformationByTeam.communityPersonManager.name.surname,
+      }
       const missingEmail = offenderManagersToAllocateAllTeams.some(i => !i.email)
       const error = req.query.error === 'true'
       return res.render('pages/choose-practitioner', {
         doTabs: true,
-        title: `${response.name} | Choose practitioner | Manage a workforce`,
-        name: response.name,
-        crn: response.crn,
-        tier: response.tier,
+        title: `${name} | Choose practitioner | Manage a workforce`,
+        name,
+        crn: allocationInformationByTeam.crn,
+        tier: allocationInformationByTeam.tier,
         convictionNumber: response.convictionNumber,
-        probationStatus: response.status,
-        offenderManager: response.offenderManager,
+        probationStatus: allocationInformationByTeam.probationStatus.description,
+        offenderManager,
         offenderManagersToAllocatePerTeam: offenderManagersToAllocatePerTeamWithTeamName,
         offenderManagersToAllocate: offenderManagersToAllocateAllTeamsWithTeamName,
         error,
@@ -437,12 +442,10 @@ function mapPractitioner(practitionerData): OffenderManagerToAllocate {
   return {
     name: `${practitionerData.name?.forename} ${practitionerData.name?.surname}`,
     code: practitionerData.code,
-    // TODO - Grade needs to add description
     grade: practitionerData.grade,
-    // TODO - All these
-    gradeOrder: 0,
-    gradeTip: 'Unknown',
-    // TODO -Is this workload percent?
+    // TODO - Check these work - do we need to sort before diaplaying?
+    gradeTip: gradeTips.get(practitionerData.grade),
+    gradeOrder: gradeOrder.get(practitionerData.grade) || 0,
     capacity: practitionerData.workload,
     totalCasesInLastWeek: practitionerData.casesPastWeek,
     communityCases: practitionerData.communityCases,

@@ -157,7 +157,7 @@ context('Choose Practitioner', () => {
         {
           Name: 'Jane Doe',
           Team: 'Team 1',
-          Grade: 'POUnknown',
+          Grade: 'POProbation Officer',
           'Workload %': '19%',
           'Cases in past 7 days': '2',
           'Community cases': '3',
@@ -168,7 +168,7 @@ context('Choose Practitioner', () => {
         {
           Name: 'Sam Smam',
           Team: 'Team 2',
-          Grade: 'SPOUnknown',
+          Grade: 'SPOSenior Probation Officer',
           'Workload %': '32%',
           'Cases in past 7 days': '5',
           'Community cases': '0',
@@ -179,7 +179,7 @@ context('Choose Practitioner', () => {
         {
           Name: 'Jim Jam',
           Team: 'Team 2',
-          Grade: 'POUnknown',
+          Grade: 'POProbation Officer',
           'Workload %': '32%',
           'Cases in past 7 days': '5',
           'Community cases': '0',
@@ -202,7 +202,7 @@ context('Choose Practitioner', () => {
       .should('deep.equal', [
         {
           Name: 'Jane Doe',
-          Grade: 'POUnknown',
+          Grade: 'POProbation Officer',
           'Workload %': '19%',
           'Cases in past 7 days': '2',
           'Community cases': '3',

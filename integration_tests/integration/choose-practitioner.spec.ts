@@ -10,6 +10,7 @@ context('Choose Practitioner', () => {
       name: 'Wrexham Team 1',
     })
     cy.task('stubGetAllocateOffenderManagers', 'TM1')
+    cy.task('stubChoosePractitioners')
   })
 
   it('notification banner visible on page', () => {
@@ -115,6 +116,86 @@ context('Choose Practitioner', () => {
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.warningText().should('not.exist')
     choosePractitionerPage.warningIcon().should('not.exist')
+  })
+
+  it('Team tabs visible on page', () => {
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.tabs().find('.govuk-tabs__tab').should('have.length', 3)
+    choosePractitionerPage.tab('allteams').should('contain', 'All teams')
+    choosePractitionerPage.tab('N03F01').should('contain', 'Unknown')
+    choosePractitionerPage.tab('N03F02').should('contain', 'Unknown')
+  })
+
+  it('All teams visible on page by default', () => {
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage
+      .tabtable('allteams')
+      .should('not.have.attr', 'class', 'govuk-tabs__panel--hidden')
+      .getTable()
+      .should('deep.equal', [
+        {
+          Name: 'Jane Doe',
+          Team: 'Unknown',
+          Grade: 'POUnknown',
+          'Workload %': '0%',
+          'Cases in past 7 days': '0',
+          'Community cases': '0',
+          'Custody cases': '0',
+          'Workload details': 'View',
+          Select: '',
+        },
+        {
+          Name: 'Sam Smam',
+          Team: 'Unknown',
+          Grade: 'SPOUnknown',
+          'Workload %': '0%',
+          'Cases in past 7 days': '0',
+          'Community cases': '0',
+          'Custody cases': '0',
+          'Workload details': 'View',
+          Select: '',
+        },
+        {
+          Name: 'Jim Jam',
+          Team: 'Unknown',
+          Grade: 'POUnknown',
+          'Workload %': '0%',
+          'Cases in past 7 days': '0',
+          'Community cases': '0',
+          'Custody cases': '0',
+          'Workload details': 'View',
+          Select: '',
+        },
+      ])
+  })
+
+  it('Individual team visible on page when selected', () => {
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.tab('N03F01').click()
+    choosePractitionerPage
+      .tabtable('N03F01')
+      .getTable()
+      .should('deep.equal', [
+        {
+          Name: 'Jane Doe',
+          Grade: 'POUnknown',
+          'Workload %': '0%',
+          'Cases in past 7 days': '0',
+          'Community cases': '0',
+          'Custody cases': '0',
+          'Workload details': 'View',
+          Select: '',
+        },
+      ])
   })
 
   it('Officer table visible on page', () => {

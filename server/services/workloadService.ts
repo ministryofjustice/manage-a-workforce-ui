@@ -10,6 +10,7 @@ import PersonManager from '../models/PersonManager'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 import WorkloadByTeam from '../models/workloadByTeam'
 import EventManagerDetails from '../models/EventManagerDetails'
+import ChoosePractitionerData from '../models/ChoosePractitionerData'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -20,6 +21,13 @@ export default class WorkloadService {
 
   private restClient(token: string): RestClient {
     return new RestClient('Workload Service API Client', this.config, token)
+  }
+
+  async getChoosePractitionerData(token: string, crn: string, teamCodes: string[]): Promise<ChoosePractitionerData> {
+    return (await this.restClient(token).get({
+      // TODO - Actual endpoint name!
+      path: `/whatever/${crn}/doit?grades=PSO,PQiP,PO&teams=${teamCodes.join(',')}`,
+    })) as ChoosePractitionerData
   }
 
   async getOffenderManagersToAllocate(token: string, teamCode: string): Promise<AllocateOffenderManagers> {

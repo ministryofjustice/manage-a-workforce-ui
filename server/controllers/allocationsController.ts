@@ -23,6 +23,7 @@ import DisplayAddress from './data/DisplayAddress'
 import ProbationEstateService from '../services/probationEstateService'
 import CaseForChoosePractitioner from '../models/CaseForChoosePractitioner'
 import DocumentRow from './data/DocumentRow'
+import ChoosePractitionerData, { Practitioner } from '../models/ChoosePractitionerData'
 
 export default class AllocationsController {
   constructor(
@@ -128,8 +129,44 @@ export default class AllocationsController {
     })
   }
 
+  // eslint-disable-next-line consistent-return
   async choosePractitioner(req: Request, res: Response, crn, convictionNumber, teamCode) {
     const { token } = res.locals.user
+
+    if (req.query.doTabs === 'true') {
+      // TODO - get team names from user prefs
+      const allocationInformationByTeam = await this.workloadService.getChoosePractitionerData(token, crn, [
+        'N03F01',
+        'N03F02',
+      ])
+      const offenderManagersToAllocatePerTeam = getChoosePractitionerDataByTeam(allocationInformationByTeam)
+      const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(allocationInformationByTeam)
+
+      // TODO - remove this call
+      const response: CaseForChoosePractitioner = await this.allocationsService.getCaseForChoosePractitioner(
+        token,
+        crn,
+        convictionNumber
+      )
+
+      const missingEmail = offenderManagersToAllocateAllTeams.some(i => !i.email)
+      const error = req.query.error === 'true'
+      return res.render('pages/choose-practitioner', {
+        doTabs: true,
+        title: `${response.name} | Choose practitioner | Manage a workforce`,
+        name: response.name,
+        crn: response.crn,
+        tier: response.tier,
+        convictionNumber: response.convictionNumber,
+        probationStatus: response.status,
+        offenderManager: response.offenderManager,
+        offenderManagersToAllocatePerTeam,
+        offenderManagersToAllocate: offenderManagersToAllocateAllTeams,
+        error,
+        missingEmail,
+      })
+    }
+
     const { offenderManagers } = await this.workloadService.getOffenderManagersToAllocate(token, teamCode)
     const { name: teamName } = await this.probationEstateService.getTeamDetailsByCode(token, teamCode)
 
@@ -346,4 +383,81 @@ function toArrayNotation(href: string) {
 
 function fixupArrayNotation({ text, href }: { text: string; href: string }) {
   return { text, href: toArrayNotation(href) }
+}
+
+function getChoosePractitionerDataByTeam(
+  allocationInformationByTeam: ChoosePractitionerData
+): TeamOffenderManagersToAllocate[] {
+  const practitionerTeams = new Array<TeamOffenderManagersToAllocate>()
+  Object.entries(allocationInformationByTeam.teams).forEach(teamCodeAndPractitioner => {
+    const practitionersInTeam = (teamCodeAndPractitioner[1] as Practitioner[]).map(prac => {
+      return mapPractitioner(prac)
+    })
+    practitionerTeams.push({
+      teamCode: teamCodeAndPractitioner[0],
+      teamName: 'Unknown',
+      offenderManagersToAllocate: practitionersInTeam,
+    })
+  })
+  return practitionerTeams
+}
+
+function getChoosePractitionerDataAllTeams(
+  allocationInformationByTeam: ChoosePractitionerData
+): OffenderManagersToAllocateWithTeam[] {
+  const practitionersAllTeams = new Array<OffenderManagersToAllocateWithTeam>()
+  Object.entries(allocationInformationByTeam.teams).forEach(teamCodeAndPractitioner => {
+    const allPractitioners = teamCodeAndPractitioner[1] as Practitioner[]
+    allPractitioners.forEach(prac => {
+      const practitionerData = mapPractitioner(prac)
+      practitionersAllTeams.push({
+        ...practitionerData,
+        teamCode: teamCodeAndPractitioner[0],
+        // TODO - has to be enriched
+        teamName: 'Unknown',
+      })
+    })
+  })
+  return practitionersAllTeams
+}
+
+function mapPractitioner(prac): OffenderManagerToAllocate {
+  return {
+    name: `${prac.name?.forename} ${prac.name?.surname}`,
+    code: prac.code,
+    // TODO - Grade needs to add description
+    grade: prac.grade,
+    // TODO - All these
+    gradeOrder: 0,
+    gradeTip: 'Unknown',
+    capacity: 0,
+    totalCasesInLastWeek: 0,
+    communityCases: 0,
+    custodyCases: 0,
+    email: prac.email,
+  }
+}
+
+type TeamOffenderManagersToAllocate = {
+  teamName: string
+  teamCode: string
+  offenderManagersToAllocate: OffenderManagerToAllocate[]
+}
+
+type OffenderManagerToAllocate = {
+  name: string
+  code: string
+  grade: string
+  gradeOrder: number
+  gradeTip: string
+  capacity: number
+  totalCasesInLastWeek: number
+  communityCases: number
+  custodyCases: number
+  email?: string
+}
+
+type OffenderManagersToAllocateWithTeam = OffenderManagerToAllocate & {
+  teamName: string
+  teamCode: string
 }

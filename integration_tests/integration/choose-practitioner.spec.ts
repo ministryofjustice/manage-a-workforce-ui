@@ -13,6 +13,19 @@ context('Choose Practitioner', () => {
     // TODO - Can we change all this so it works? ATM we cannot change teams as somethin is hard-coded to use TM1
     cy.task('stubUserPreferenceTeams', ['TM1'])
     cy.task('stubChoosePractitioners', ['TM1'])
+    cy.task('stubGetTeamsByCodes', {
+      codes: 'N03F01,N03F02',
+      response: [
+        {
+          code: 'N03F01',
+          name: 'Team 1',
+        },
+        {
+          code: 'N03F02',
+          name: 'Team 2',
+        },
+      ],
+    })
   })
 
   it('notification banner visible on page', () => {
@@ -127,8 +140,8 @@ context('Choose Practitioner', () => {
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tabs().find('.govuk-tabs__tab').should('have.length', 3)
     choosePractitionerPage.tab('allteams').should('contain', 'All teams')
-    choosePractitionerPage.tab('N03F01').should('contain', 'Unknown')
-    choosePractitionerPage.tab('N03F02').should('contain', 'Unknown')
+    choosePractitionerPage.tab('N03F01').should('contain', 'Team 1')
+    choosePractitionerPage.tab('N03F02').should('contain', 'Team 2')
   })
 
   it('All teams visible on page by default', () => {
@@ -143,7 +156,7 @@ context('Choose Practitioner', () => {
       .should('deep.equal', [
         {
           Name: 'Jane Doe',
-          Team: 'Unknown',
+          Team: 'Team 1',
           Grade: 'POUnknown',
           'Workload %': '0%',
           'Cases in past 7 days': '0',
@@ -154,7 +167,7 @@ context('Choose Practitioner', () => {
         },
         {
           Name: 'Sam Smam',
-          Team: 'Unknown',
+          Team: 'Team 2',
           Grade: 'SPOUnknown',
           'Workload %': '0%',
           'Cases in past 7 days': '0',
@@ -165,7 +178,7 @@ context('Choose Practitioner', () => {
         },
         {
           Name: 'Jim Jam',
-          Team: 'Unknown',
+          Team: 'Team 2',
           Grade: 'POUnknown',
           'Workload %': '0%',
           'Cases in past 7 days': '0',

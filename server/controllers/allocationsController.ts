@@ -137,7 +137,6 @@ export default class AllocationsController {
 
     if (req.query.doTabs === 'true') {
       const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
-      // TODO - get team names from user prefs
       const allocationInformationByTeam = await this.workloadService.getChoosePractitionerData(
         token,
         crn,
@@ -145,6 +144,18 @@ export default class AllocationsController {
       )
       const offenderManagersToAllocatePerTeam = getChoosePractitionerDataByTeam(allocationInformationByTeam)
       const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(allocationInformationByTeam)
+
+      const allTeamCodes = Object.keys(allocationInformationByTeam.teams)
+      const allTeamDetails = await this.probationEstateService.getTeamsByCode(token, allTeamCodes)
+      const teamNamesByCode = new Map(allTeamDetails.map(obj => [obj.code, obj.name]))
+      const offenderManagersToAllocatePerTeamWithTeamName = enrichTeamDataWithTeamName(
+        offenderManagersToAllocatePerTeam,
+        teamNamesByCode
+      )
+      const offenderManagersToAllocateAllTeamsWithTeamName = enrichAllTeamsDataWithTeamName(
+        offenderManagersToAllocateAllTeams,
+        teamNamesByCode
+      )
 
       // TODO - remove this call
       const response: CaseForChoosePractitioner = await this.allocationsService.getCaseForChoosePractitioner(
@@ -164,8 +175,8 @@ export default class AllocationsController {
         convictionNumber: response.convictionNumber,
         probationStatus: response.status,
         offenderManager: response.offenderManager,
-        offenderManagersToAllocatePerTeam,
-        offenderManagersToAllocate: offenderManagersToAllocateAllTeams,
+        offenderManagersToAllocatePerTeam: offenderManagersToAllocatePerTeamWithTeamName,
+        offenderManagersToAllocate: offenderManagersToAllocateAllTeamsWithTeamName,
         error,
         missingEmail,
       })
@@ -399,7 +410,6 @@ function getChoosePractitionerDataByTeam(
     })
     practitionerTeams.push({
       teamCode: teamCodeAndPractitioner[0],
-      teamName: 'Unknown',
       offenderManagersToAllocate: practitionersInTeam,
     })
   })
@@ -417,8 +427,6 @@ function getChoosePractitionerDataAllTeams(
       practitionersAllTeams.push({
         ...practitionerData,
         teamCode: teamCodeAndPractitioner[0],
-        // TODO - has to be enriched
-        teamName: 'Unknown',
       })
     })
   })
@@ -442,8 +450,31 @@ function mapPractitioner(prac): OffenderManagerToAllocate {
   }
 }
 
+function enrichTeamDataWithTeamName(
+  offenderManagersToAllocatePerTeam: TeamOffenderManagersToAllocate[],
+  teamNamesByCode: Map<string, string>
+): TeamOffenderManagersToAllocateWithTeamName[] {
+  return offenderManagersToAllocatePerTeam.map(offMans => {
+    return {
+      ...offMans,
+      teamName: teamNamesByCode.get(offMans.teamCode),
+    }
+  })
+}
+
+function enrichAllTeamsDataWithTeamName(
+  offenderManagersToAllocatePerTeam: OffenderManagersToAllocateWithTeam[],
+  teamNamesByCode: Map<string, string>
+): OffenderManagersToAllocateWithTeamName[] {
+  return offenderManagersToAllocatePerTeam.map(offMans => {
+    return {
+      ...offMans,
+      teamName: teamNamesByCode.get(offMans.teamCode),
+    }
+  })
+}
+
 type TeamOffenderManagersToAllocate = {
-  teamName: string
   teamCode: string
   offenderManagersToAllocate: OffenderManagerToAllocate[]
 }
@@ -462,6 +493,13 @@ type OffenderManagerToAllocate = {
 }
 
 type OffenderManagersToAllocateWithTeam = OffenderManagerToAllocate & {
-  teamName: string
   teamCode: string
+}
+
+type TeamOffenderManagersToAllocateWithTeamName = TeamOffenderManagersToAllocate & {
+  teamName: string
+}
+
+type OffenderManagersToAllocateWithTeamName = OffenderManagersToAllocateWithTeam & {
+  teamName: string
 }

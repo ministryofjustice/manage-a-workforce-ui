@@ -405,8 +405,8 @@ function getChoosePractitionerDataByTeam(
 ): TeamOffenderManagersToAllocate[] {
   const practitionerTeams = new Array<TeamOffenderManagersToAllocate>()
   Object.entries(allocationInformationByTeam.teams).forEach(teamCodeAndPractitioner => {
-    const practitionersInTeam = (teamCodeAndPractitioner[1] as Practitioner[]).map(prac => {
-      return mapPractitioner(prac)
+    const practitionersInTeam = (teamCodeAndPractitioner[1] as Practitioner[]).map(practitioner => {
+      return mapPractitioner(practitioner)
     })
     practitionerTeams.push({
       teamCode: teamCodeAndPractitioner[0],
@@ -422,8 +422,8 @@ function getChoosePractitionerDataAllTeams(
   const practitionersAllTeams = new Array<OffenderManagersToAllocateWithTeam>()
   Object.entries(allocationInformationByTeam.teams).forEach(teamCodeAndPractitioner => {
     const allPractitioners = teamCodeAndPractitioner[1] as Practitioner[]
-    allPractitioners.forEach(prac => {
-      const practitionerData = mapPractitioner(prac)
+    allPractitioners.forEach(practitioner => {
+      const practitionerData = mapPractitioner(practitioner)
       practitionersAllTeams.push({
         ...practitionerData,
         teamCode: teamCodeAndPractitioner[0],
@@ -433,20 +433,21 @@ function getChoosePractitionerDataAllTeams(
   return practitionersAllTeams
 }
 
-function mapPractitioner(prac): OffenderManagerToAllocate {
+function mapPractitioner(practitionerData): OffenderManagerToAllocate {
   return {
-    name: `${prac.name?.forename} ${prac.name?.surname}`,
-    code: prac.code,
+    name: `${practitionerData.name?.forename} ${practitionerData.name?.surname}`,
+    code: practitionerData.code,
     // TODO - Grade needs to add description
-    grade: prac.grade,
+    grade: practitionerData.grade,
     // TODO - All these
     gradeOrder: 0,
     gradeTip: 'Unknown',
-    capacity: 0,
-    totalCasesInLastWeek: 0,
-    communityCases: 0,
-    custodyCases: 0,
-    email: prac.email,
+    // TODO -Is this workload percent?
+    capacity: practitionerData.workload,
+    totalCasesInLastWeek: practitionerData.casesPastWeek,
+    communityCases: practitionerData.communityCases,
+    custodyCases: practitionerData.custodyCases,
+    email: practitionerData.email,
   }
 }
 

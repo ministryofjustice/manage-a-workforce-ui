@@ -111,12 +111,18 @@ export default {
       },
     })
   },
-  stubChoosePractitioners: (/* crn = 'J678910', teamCodes = ['N03F01', 'N03F02'] */): SuperAgentRequest => {
+  stubChoosePractitioners: (crn = 'J678910', teamCodes = ['N03F01', 'N03F02']): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPath: `/whatever/J678910/doit`,
+        urlPath: `/team/choose-practitioner`,
         queryParameters: {
+          crn: {
+            equalTo: crn,
+          },
+          teamCodes: {
+            equalTo: teamCodes.join(','),
+          },
           grades: {
             equalTo: 'PSO,PQiP,PO',
           },
@@ -126,12 +132,13 @@ export default {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          crn: 'X595589',
+          crn,
           name: {
             forename: 'Don',
             middleName: '',
             surname: 'Cole',
           },
+          tier: 'C1',
           probationStatus: {
             status: 'PREVIOUSLY_MANAGED',
             description: 'Previously managed',

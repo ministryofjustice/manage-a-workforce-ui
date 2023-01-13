@@ -13,7 +13,7 @@ interface CommunityPersonManager {
   code: string
   name: PersonName
   teamCode: string
-  grade: string
+  grade?: string
 }
 
 export interface Practitioner {
@@ -30,6 +30,7 @@ export interface Practitioner {
 export default interface ChoosePractitionerData {
   crn: string
   name: PersonName
+  tier: string
   probationStatus: ProbationStatus
   communityPersonManager: CommunityPersonManager
   teams: Record<string, Practitioner[]>

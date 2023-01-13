@@ -25,8 +25,7 @@ export default class WorkloadService {
 
   async getChoosePractitionerData(token: string, crn: string, teamCodes: string[]): Promise<ChoosePractitionerData> {
     return (await this.restClient(token).get({
-      // TODO - Actual endpoint name!
-      path: `/whatever/${crn}/doit?grades=PSO,PQiP,PO&teams=${teamCodes.join(',')}`,
+      path: `/team/choose-practitioner?grades=PSO,PQiP,PO&crn=${crn}&teamCodes=${teamCodes.join(',')}`,
     })) as ChoosePractitionerData
   }
 

@@ -1,0 +1,31 @@
+{% extends "../partials/layout.njk" %}
+{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+
+{% block content %}
+
+        <div class="govuk-!-padding-bottom-5">
+            <span class="govuk-caption-xl">Unallocated Cases</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">{{ pduDetails.region.name }}</h1>
+            <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/probationDeliveryUnit/{{pduDetails.code}}/select-teams">Edit my teams list</a>
+        </div>
+
+        {{ mojSubNavigation({
+          label: 'Sub navigation',
+          items: [{
+            text: 'Unallocated community cases',
+            href: '#',
+            active: true
+          }]
+        }) }}
+
+            <h2 class="govuk-heading-l">Other types of cases</h2>
+            {{ govukWarningText({
+               text: "You must also check NDelius for any other cases that need to be allocated.",
+               iconFallbackText: "Warning"
+            }) }}
+
+
+{% endblock %}
+

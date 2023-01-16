@@ -5,6 +5,7 @@ import AllocationsController from '../controllers/allocationsController'
 import ProbationEstateController from '../controllers/probationEstateController'
 import AllocateCasesController from '../controllers/allocateCasesController'
 import CasesByTeamController from '../controllers/casesByTeamController'
+import FindUnallocatedCasesController from '../controllers/findUnallocatedCasesController'
 import type { Services } from '../services'
 import HomeController from '../controllers/homeController'
 
@@ -31,6 +32,8 @@ export default function routes(services: Services): Router {
 
   const homeController = new HomeController(services.userPreferenceService)
 
+  const findUnallocatedCasesController = new FindUnallocatedCasesController(services.probationEstateService)
+
   get('/', async (req, res) => {
     await homeController.redirectUser(req, res)
   })
@@ -38,6 +41,11 @@ export default function routes(services: Services): Router {
   get('/team/:teamCode/cases/unallocated', async (req, res) => {
     const { teamCode } = req.params
     await casesByTeamController.getAllocationsByTeam(req, res, teamCode)
+  })
+
+  get('/probationDeliveryUnit/:pduCode/find-unallocated', async (req, res) => {
+    const { pduCode } = req.params
+    await findUnallocatedCasesController.findUnallocatedCases(req, res, pduCode)
   })
 
   get('/team/:teamCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {

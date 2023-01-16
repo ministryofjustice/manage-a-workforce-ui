@@ -137,31 +137,24 @@ export default class AllocationsController {
 
     if (req.query.doTabs === 'true') {
       const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
-      const allocationInformationByTeam = await this.workloadService.getChoosePractitionerData(
-        token,
-        crn,
-        teamCodesPreferences.items
-      )
-      const offenderManagersToAllocatePerTeam = getChoosePractitionerDataByTeam(allocationInformationByTeam)
-      const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(allocationInformationByTeam)
 
-      const allTeamCodes = Object.keys(allocationInformationByTeam.teams)
-      const allTeamDetails = await this.probationEstateService.getTeamsByCode(token, allTeamCodes)
+      const [allocationInformationByTeam, allTeamDetails] = await Promise.all([
+        await this.workloadService.getChoosePractitionerData(token, crn, teamCodesPreferences.items),
+        await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
+      ])
+
       const teamNamesByCode = new Map(allTeamDetails.map(obj => [obj.code, obj.name]))
-      const offenderManagersToAllocatePerTeamWithTeamName = enrichTeamDataWithTeamName(
-        offenderManagersToAllocatePerTeam,
-        teamNamesByCode
-      )
-      const offenderManagersToAllocateAllTeamsWithTeamName = enrichAllTeamsDataWithTeamName(
-        offenderManagersToAllocateAllTeams,
-        teamNamesByCode
-      )
 
-      // TODO - Only needed for conviction number
-      const response: CaseForChoosePractitioner = await this.allocationsService.getCaseForChoosePractitioner(
-        token,
-        crn,
-        convictionNumber
+      const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(
+        allocationInformationByTeam,
+        teamNamesByCode
+      )
+      const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
+        allocationInformationByTeam,
+        teamNamesByCode
+      )
+      const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams].concat(
+        offenderManagersToAllocateByTeam
       )
 
       const name = `${allocationInformationByTeam.name.forename} ${allocationInformationByTeam.name.surname}`
@@ -169,7 +162,7 @@ export default class AllocationsController {
         forenames: allocationInformationByTeam.communityPersonManager.name.forename,
         surname: allocationInformationByTeam.communityPersonManager.name.surname,
       }
-      const missingEmail = offenderManagersToAllocateAllTeams.some(i => !i.email)
+      const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
       const error = req.query.error === 'true'
       return res.render('pages/choose-practitioner', {
         doTabs: true,
@@ -177,11 +170,10 @@ export default class AllocationsController {
         name,
         crn: allocationInformationByTeam.crn,
         tier: allocationInformationByTeam.tier,
-        convictionNumber: response.convictionNumber,
+        convictionNumber,
         probationStatus: allocationInformationByTeam.probationStatus.description,
         offenderManager,
-        offenderManagersToAllocatePerTeam: offenderManagersToAllocatePerTeamWithTeamName,
-        offenderManagersToAllocate: offenderManagersToAllocateAllTeamsWithTeamName,
+        offenderManagersToAllocatePerTeam,
         error,
         missingEmail,
       })
@@ -406,16 +398,25 @@ function fixupArrayNotation({ text, href }: { text: string; href: string }) {
 }
 
 function getChoosePractitionerDataByTeam(
-  allocationInformationByTeam: ChoosePractitionerData
+  allocationInformationByTeam: ChoosePractitionerData,
+  teamNamesByCode: Map<string, string>
 ): TeamOffenderManagersToAllocate[] {
   const practitionerTeams = new Array<TeamOffenderManagersToAllocate>()
   Object.entries(allocationInformationByTeam.teams).forEach(teamCodeAndPractitioner => {
+    const teamCode = teamCodeAndPractitioner[0]
     const practitionersInTeam = (teamCodeAndPractitioner[1] as Practitioner[]).map(practitioner => {
-      return mapPractitioner(practitioner)
+      const practitionerData = mapPractitioner(practitioner)
+      return {
+        ...practitionerData,
+        teamCode,
+        teamName: teamNamesByCode.get(teamCode),
+      }
     })
     practitionersInTeam.sort(sortPractitionersByGrade)
     practitionerTeams.push({
-      teamCode: teamCodeAndPractitioner[0],
+      isPerTeam: true,
+      teamCode,
+      teamName: teamNamesByCode.get(teamCode),
       offenderManagersToAllocate: practitionersInTeam,
     })
   })
@@ -423,21 +424,29 @@ function getChoosePractitionerDataByTeam(
 }
 
 function getChoosePractitionerDataAllTeams(
-  allocationInformationByTeam: ChoosePractitionerData
-): OffenderManagersToAllocateWithTeam[] {
-  const practitionersAllTeams = new Array<OffenderManagersToAllocateWithTeam>()
+  allocationInformationByTeam: ChoosePractitionerData,
+  teamNamesByCode: Map<string, string>
+): TeamOffenderManagersToAllocate {
+  const practitionersAllTeams = new Array<OffenderManagerToAllocateWithTeam>()
   Object.entries(allocationInformationByTeam.teams).forEach(teamCodeAndPractitioner => {
+    const teamCode = teamCodeAndPractitioner[0]
     const allPractitioners = teamCodeAndPractitioner[1] as Practitioner[]
     allPractitioners.forEach(practitioner => {
       const practitionerData = mapPractitioner(practitioner)
       practitionersAllTeams.push({
         ...practitionerData,
-        teamCode: teamCodeAndPractitioner[0],
+        teamCode,
+        teamName: teamNamesByCode.get(teamCode),
       })
     })
   })
   practitionersAllTeams.sort(sortPractitionersByGrade)
-  return practitionersAllTeams
+  return {
+    isPerTeam: false,
+    teamCode: 'all-teams',
+    teamName: 'All teams',
+    offenderManagersToAllocate: practitionersAllTeams,
+  }
 }
 
 function mapPractitioner(practitionerData): OffenderManagerToAllocate {
@@ -462,33 +471,11 @@ function sortPractitionersByGrade(a, b) {
   return b.gradeOrder - a.gradeOrder
 }
 
-function enrichTeamDataWithTeamName(
-  offenderManagersToAllocatePerTeam: TeamOffenderManagersToAllocate[],
-  teamNamesByCode: Map<string, string>
-): TeamOffenderManagersToAllocateWithTeamName[] {
-  return offenderManagersToAllocatePerTeam.map(offMans => {
-    return {
-      ...offMans,
-      teamName: teamNamesByCode.get(offMans.teamCode),
-    }
-  })
-}
-
-function enrichAllTeamsDataWithTeamName(
-  offenderManagersToAllocatePerTeam: OffenderManagersToAllocateWithTeam[],
-  teamNamesByCode: Map<string, string>
-): OffenderManagersToAllocateWithTeamName[] {
-  return offenderManagersToAllocatePerTeam.map(offMans => {
-    return {
-      ...offMans,
-      teamName: teamNamesByCode.get(offMans.teamCode),
-    }
-  })
-}
-
 type TeamOffenderManagersToAllocate = {
+  isPerTeam: boolean
   teamCode: string
-  offenderManagersToAllocate: OffenderManagerToAllocate[]
+  teamName: string
+  offenderManagersToAllocate: OffenderManagerToAllocateWithTeam[]
 }
 
 type OffenderManagerToAllocate = {
@@ -504,14 +491,7 @@ type OffenderManagerToAllocate = {
   email?: string
 }
 
-type OffenderManagersToAllocateWithTeam = OffenderManagerToAllocate & {
+type OffenderManagerToAllocateWithTeam = OffenderManagerToAllocate & {
   teamCode: string
-}
-
-type TeamOffenderManagersToAllocateWithTeamName = TeamOffenderManagersToAllocate & {
-  teamName: string
-}
-
-type OffenderManagersToAllocateWithTeamName = OffenderManagersToAllocateWithTeam & {
   teamName: string
 }

@@ -9,102 +9,6 @@
 
 {% from "../components/pop/macro.njk" import pop %}
 
-{% set allTeamsTableData = {
-    attributes: {
-    'data-module': 'moj-natural-sortable-table'
-    },
-    head: [
-        { text: 'Name',
-            attributes: {
-                "aria-sort": "none"
-            }
-        },
-        { text: 'Team',
-            attributes: {
-                "aria-sort": "none"
-            }
-        },
-        { text: 'Grade',
-            attributes: {
-                "aria-sort": "descending"
-            }
-        },
-        { text: 'Workload %',
-            format: "numeric",
-            attributes: {
-                "aria-sort": "none",
-                "aria-sort-natural": "ascending"
-            }
-        },
-        { text: 'Cases in past 7 days',
-            format: "numeric",
-            attributes: {
-                "aria-sort": "none"
-            }
-        },
-        { text: 'Community cases',
-            format: "numeric",
-            attributes: {
-                "aria-sort": "none"
-            }
-        },
-        { text: 'Custody cases',
-            format: "numeric",
-            attributes: {
-                "aria-sort": "none"
-            }
-        },
-        { text: 'Workload details' },
-        { text: 'Select' }
-    ],
-    rows: []
-} %}
-
-{% for offenderManager in offenderManagersToAllocate %}
-    {%- set tableRow = [
-        { html: govukLabel({
-            text: offenderManager.name,
-            for: ('allocated-officer-' + offenderManager.code)
-          }),
-            attributes: {
-                "data-sort-value": offenderManager.name
-                }
-        },
-        { text: offenderManager.teamName},
-        { html: ('<div class="tooltip">' + offenderManager.grade + '<span class="tooltiptext">' + offenderManager.gradeTip + '</span></div>'),
-            attributes: {
-                "data-sort-value": offenderManager.gradeOrder
-            }
-        },
-        { text: ((offenderManager.capacity | round(1)) + '%'),format: "numeric",
-        classes: ('percentage-extra-over' if offenderManager.capacity > 100),
-            attributes: {
-                "data-sort-value": offenderManager.capacity
-            }
-        },
-        { text: offenderManager.totalCasesInLastWeek, format: "numeric",
-            attributes: {
-                "data-sort-value": offenderManager.totalCasesInLastWeek
-            }
-        },
-        { text: offenderManager.communityCases, format: "numeric",
-            attributes: {
-                "data-sort-value": offenderManager.communityCases
-            }
-        },
-        { text: offenderManager.custodyCases, format: "numeric",
-            attributes: {
-                "data-sort-value": offenderManager.custodyCases
-            }
-        },
-        { text: ('<a href="/team/'+ offenderManager.teamCode +'/' + crn + '/convictions/' + convictionNumber + '/allocate/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" aria-label="View">' + "View" + '</a>' ) | safe, classes: "govuk-!-text-align-centre"},
-        { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.code + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"></label></div></div>')
-        if offenderManager.email}
-    ] -%}
-    {{ allTeamsTableData.rows.push(tableRow) }}
-
-{% endfor %}
-
 {% set perTeamsTableData = [] %}
 
 {% for teamData in offenderManagersToAllocatePerTeam %}
@@ -114,6 +18,12 @@
         },
         head: [
             { text: 'Name',
+                attributes: {
+                    "aria-sort": "none"
+                }
+            },
+            { text: 'Team',
+                classes: 'govuk-visually-hidden' if teamData.isPerTeam,
                 attributes: {
                     "aria-sort": "none"
                 }
@@ -160,9 +70,12 @@
                 text: offenderManager.name,
                 for: ('allocated-officer-' + offenderManager.code)
             }),
-            attributes: {
-                "data-sort-value": offenderManager.name
-            }
+                attributes: {
+                    "data-sort-value": offenderManager.name
+                }
+            },
+            { text: offenderManager.teamName,
+                classes: 'govuk-visually-hidden' if teamData.isPerTeam
             },
             { html: ('<div class="tooltip">' + offenderManager.grade + '<span class="tooltiptext">' + offenderManager.gradeTip + '</span></div>'),
                 attributes: {
@@ -190,7 +103,7 @@
                     "data-sort-value": offenderManager.custodyCases
                 }
             },
-            { text: ('<a href="/team/'+ teamData.teamCode +'/' + crn + '/convictions/' + convictionNumber + '/allocate/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" aria-label="View">' + "View" + '</a>' ) | safe, classes: "govuk-!-text-align-centre"},
+            { text: ('<a href="/team/'+ offenderManager.teamCode +'/' + crn + '/convictions/' + convictionNumber + '/allocate/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '" aria-label="View">' + "View" + '</a>' ) | safe, classes: "govuk-!-text-align-centre"},
             { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.code + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"></label></div></div>')
                 if offenderManager.email}
         ] -%}
@@ -207,18 +120,6 @@
 {% endfor %}
 
 {%- set govukTabItems = [] -%}
-
-{% set allTeamsTableHtml %}
-    {{ govukTable(allTeamsTableData) }}
-{% endset -%}
-{%- set allTeamsTabItem = {
-    label: 'All teams',
-    id: 'allteams',
-    panel: {
-        html: allTeamsTableHtml
-    }
-} -%}
-{{ govukTabItems.push(allTeamsTabItem) }}
 
 {% for teamDetails in perTeamsTableData %}
     {% set perTeamsTableHtml %}

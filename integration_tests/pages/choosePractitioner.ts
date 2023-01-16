@@ -15,6 +15,8 @@ export default class ChoosePractitionerPage extends Page {
 
   tabtable = (id: string): PageElement => cy.get(`[id="${id}"]`).find('table')
 
+  officerLink = (id: string): PageElement => cy.get(`[data-qa-link="${id}"]`)
+
   table = (): PageElement => cy.get('table')
 
   checkedRadioButton = (): PageElement => cy.get('input[type="radio"]:checked')

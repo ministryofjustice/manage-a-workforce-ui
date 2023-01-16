@@ -10,9 +10,35 @@ context('Choose Practitioner', () => {
       name: 'Wrexham Team 1',
     })
     cy.task('stubGetAllocateOffenderManagers', 'TM1')
-    // TODO - Can we change all this so it works? ATM we cannot change teams as somethin is hard-coded to use TM1
-    cy.task('stubUserPreferenceTeams', ['TM1'])
-    cy.task('stubChoosePractitioners', ['TM1'])
+    cy.task('stubUserPreferenceTeams', ['N03F01', 'N03F02'])
+    cy.task('stubGetUnallocatedCasesByTeams', {
+      teamCodes: 'N03F01,N03F02',
+      response: [
+        {
+          teamCode: 'N03F01',
+          caseCount: 4,
+        },
+        {
+          teamCode: 'N03F02',
+          caseCount: 6,
+        },
+      ],
+    })
+    cy.task('stubWorkloadCases', {
+      teamCodes: 'N03F01,N03F02',
+      response: [
+        {
+          teamCode: 'N03F01',
+          totalCases: 3,
+          workload: 77,
+        },
+        {
+          teamCode: 'N03F02',
+          totalCases: 3,
+          workload: 77,
+        },
+      ],
+    })
     cy.task('stubGetTeamsByCodes', {
       codes: 'N03F01,N03F02',
       response: [
@@ -26,6 +52,7 @@ context('Choose Practitioner', () => {
         },
       ],
     })
+    cy.task('stubChoosePractitioners')
   })
 
   it('notification banner visible on page', () => {
@@ -139,7 +166,7 @@ context('Choose Practitioner', () => {
     cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tabs().find('.govuk-tabs__tab').should('have.length', 3)
-    choosePractitionerPage.tab('allteams').should('contain', 'All teams')
+    choosePractitionerPage.tab('all-teams').should('contain', 'All teams')
     choosePractitionerPage.tab('N03F01').should('contain', 'Team 1')
     choosePractitionerPage.tab('N03F02').should('contain', 'Team 2')
   })
@@ -150,7 +177,7 @@ context('Choose Practitioner', () => {
     cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage
-      .tabtable('allteams')
+      .tabtable('all-teams')
       .should('not.have.attr', 'class', 'govuk-tabs__panel--hidden')
       .getTable()
       .should('deep.equal', [
@@ -190,6 +217,18 @@ context('Choose Practitioner', () => {
       ])
   })
 
+  it.only('All teams view link is correct', () => {
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.tab('N03F02').click()
+    choosePractitionerPage
+      .officerLink('OM2')
+      .should('have.attr', 'href')
+      .and('include', 'team/N03F02/J678910/convictions/1/allocate/OM2/officer-view')
+  })
+
   it('Individual team visible on page when selected', () => {
     cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
@@ -202,6 +241,7 @@ context('Choose Practitioner', () => {
       .should('deep.equal', [
         {
           Name: 'Jim Jam',
+          Team: 'Team 2',
           Grade: 'POProbation Officer',
           'Workload %': '32%',
           'Cases in past 7 days': '5',
@@ -212,6 +252,7 @@ context('Choose Practitioner', () => {
         },
         {
           Name: 'Sam Smam',
+          Team: 'Team 2',
           Grade: 'SPOSenior Probation Officer',
           'Workload %': '32%',
           'Cases in past 7 days': '5',
@@ -221,6 +262,18 @@ context('Choose Practitioner', () => {
           Select: '',
         },
       ])
+  })
+
+  it.only('Individual team view link is correct', () => {
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.tab('N03F02').click()
+    choosePractitionerPage
+      .officerLink('OM2')
+      .should('have.attr', 'href')
+      .and('include', 'team/N03F02/J678910/convictions/1/allocate/OM2/officer-view')
   })
 
   it('Officer table visible on page', () => {

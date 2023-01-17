@@ -51,4 +51,18 @@ export default class UserPreferenceService {
     })) as UserPreference
     return result.items.at(0) ? JSON.parse(result.items.at(0)) : { pdu: '', ldu: '', team: '' }
   }
+
+  async saveAllocationDemandPreference(
+    token: string,
+    username: string,
+    allocationDemandSelected: AllocationDemandSelected
+  ): Promise<UserPreference> {
+    return (await this.restClient(token).put({
+      path: `/users/${username}/preferences/allocation-demand`,
+
+      data: {
+        items: [JSON.stringify(allocationDemandSelected)],
+      },
+    })) as UserPreference
+  }
 }

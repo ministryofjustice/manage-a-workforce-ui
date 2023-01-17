@@ -106,4 +106,14 @@ context('Submit find Unallocated cases', () => {
         },
       ])
   })
+
+  it('selecting all options and saving stores in user preference', () => {
+    cy.task('stubPutUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    findUnallocatedCasesPage.select('pdu').select('PDU1')
+    findUnallocatedCasesPage.select('ldu').select('LDU1')
+    findUnallocatedCasesPage.select('team').select('TM1')
+    findUnallocatedCasesPage.button().click()
+    cy.task('verifyPutUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    Page.verifyOnPage(FindUnallocatedPage)
+  })
 })

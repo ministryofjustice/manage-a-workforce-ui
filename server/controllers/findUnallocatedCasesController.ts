@@ -16,9 +16,11 @@ export default class FindUnallocatedCasesController {
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
     const { token, username } = res.locals.user
-    const pduDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)
+    const [pduDetails, allocationDemandTeamSelection] = await Promise.all([
+      this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode),
+      this.userPreferenceService.getAllocationDemandSelection(token, username),
+    ])
     const allEstate = await this.probationEstateService.getAllEstateByRegionCode(token, pduDetails.region.code)
-    const allocationDemandTeamSelection = await this.userPreferenceService.getAllocationDemandSelection(token, username)
     const pduOptions = getPduOptions(allEstate, allocationDemandTeamSelection)
 
     const lduOptions = getLduOptions(allEstate, allocationDemandTeamSelection)

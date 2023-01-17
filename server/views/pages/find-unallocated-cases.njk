@@ -1,31 +1,109 @@
 {% extends "../partials/layout.njk" %}
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
-{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-
+{%- from "govuk/components/warning-text/macro.njk" import govukWarningText -%}
+{%- from "govuk/components/select/macro.njk" import govukSelect -%}
 
 {% block content %}
 
-        <div class="govuk-!-padding-bottom-5">
+        <div class="govuk-grid-row govuk-!-padding-bottom-5">
+          <div class="govuk-grid-column-full">
             <span class="govuk-caption-xl">Unallocated Cases</span>
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">{{ pduDetails.region.name }}</h1>
             <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/probationDeliveryUnit/{{pduDetails.code}}/select-teams">Edit my teams list</a>
+          </div>
         </div>
 
-        {{ mojSubNavigation({
-          label: 'Sub navigation',
-          items: [{
-            text: 'Unallocated community cases',
-            href: '#',
-            active: true
-          }]
-        }) }}
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            {{ mojSubNavigation({
+              label: 'Sub navigation',
+              items: [{
+                text: 'Unallocated community cases',
+                href: '#',
+                active: true
+              }]
+            }) }}
+          </div>
+        </div>
 
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <h2 class="govuk-heading-l">Unallocated community cases</h2>
+        
+            <div class="govuk-filter-background govuk-!-margin-bottom-7">
+              <div class="moj-filter__selected-heading">
+                <div class="moj-filter__heading-title">
+                  <h2 class="govuk-heading-m">Select a team to view unallocated cases</h2>
+                </div>
+              </div>
+
+              {{ govukSelect({
+                id: "pdu",
+                name: "pdu",
+                classes: "govuk-select--overflow",
+                formGroup: {
+                  classes: "govuk-select--inline"
+                },
+                label: {
+                  text: "Probation delivery unit (PDU)"
+                },
+                items: [{
+                  text: "Select PDU",
+                  selected: true,
+                  disabled: true
+                }]
+              })
+              }}
+
+              {{ govukSelect({
+                id: "ldu",
+                name: "ldu",
+                classes: "govuk-select--overflow",
+                formGroup: {
+                  classes: "govuk-select--inline"
+                },
+                label: {
+                  text: "Local delivery unit (LDU)"
+                },
+                items: [{
+                  text: "Select LDU",
+                  selected: true,
+                  disabled: true
+                }]
+              })
+              }}
+
+              {{ govukSelect({
+                id: "team",
+                name: "team",
+                classes: "govuk-select--overflow",
+                formGroup: {
+                  classes: "govuk-select--inline"
+                },
+                label: {
+                  text: "Team"
+                },
+                items: [{
+                  text: "Select team",
+                  selected: true,
+                  disabled: true
+                }]
+              })
+              }}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
             <h2 class="govuk-heading-l">Other types of cases</h2>
             {{ govukWarningText({
                text: "You must also check NDelius for any other cases that need to be allocated.",
                iconFallbackText: "Warning"
             }) }}
-
+          </div>
+        </div>
 
 {% endblock %}
 

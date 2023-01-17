@@ -31,4 +31,12 @@ export default class FindUnallocatedPage extends Page {
 
   tableLink = (crn: string, convictionNumber: string): PageElement =>
     cy.get(`[data-qa-link="${crn}-${convictionNumber}"]`).invoke('attr', 'href')
+
+  largeHeading = (): PageElement => cy.get('.govuk-heading-l')
+
+  filterHeading = (): PageElement => cy.get('.govuk-heading-m')
+
+  select = (id): PageElement => cy.get(`select#${id}`)
+
+  selectLabel = (id): PageElement => cy.get(`label[for="${id}"]`)
 }

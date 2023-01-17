@@ -46,4 +46,27 @@ context('Unallocated cases by team', () => {
   it('Shows link to Edit my teams list', () => {
     findUnallocatedCasesPage.manageMyTeamsLink().should('equal', '/probationDeliveryUnit/PDU1/select-teams')
   })
+
+  it('large heading visible on page', () => {
+    findUnallocatedCasesPage.largeHeading().should('contain', 'Unallocated community cases')
+  })
+
+  it('filter heading visible on page', () => {
+    findUnallocatedCasesPage.filterHeading().should('contain', 'Select a team to view unallocated case')
+  })
+
+  it('select pdu visible on page', () => {
+    findUnallocatedCasesPage.selectLabel('pdu').should('contain', 'Probation delivery unit (PDU)')
+    findUnallocatedCasesPage.select('pdu').find(':selected').contains('Select PDU')
+  })
+
+  it('select ldu visible on page', () => {
+    findUnallocatedCasesPage.selectLabel('ldu').should('contain', 'Local delivery unit (LDU)')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('Select LDU')
+  })
+
+  it('select team visible on page', () => {
+    findUnallocatedCasesPage.selectLabel('team').should('contain', 'Team')
+    findUnallocatedCasesPage.select('team').find(':selected').contains('Select team')
+  })
 })

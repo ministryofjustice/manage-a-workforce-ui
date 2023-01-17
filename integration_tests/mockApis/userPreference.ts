@@ -86,7 +86,15 @@ export default {
     })
   },
 
-  stubUserPreferenceAllocationDemand: (): SuperAgentRequest => {
+  stubUserPreferenceAllocationDemand: ({
+    pduCode,
+    lduCode,
+    teamCode,
+  }: {
+    pduCode: string
+    lduCode: string
+    teamCode: string
+  }): SuperAgentRequest => {
     return stubForUserPreference({
       request: {
         method: 'GET',
@@ -96,7 +104,7 @@ export default {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          items: ['{"pdu": "PDU1", "ldu": "LDU1", "team": "TM1"}'],
+          items: [`{"pdu": "${pduCode}", "ldu": "${lduCode}", "team": "${teamCode}"}`],
         },
       },
     })

@@ -136,18 +136,20 @@
           pduSelect.onchange = function() {
             lduSelect.length = 1
             teamSelect.length = 1
-            var ldus = Object.entries(dropDownSelectionData[this.value].ldus).sort(([aKey,aValue],[bKey,bValue]) => aValue.name >= bValue.name ? 1 : 0)
-            for (const [key, value] of ldus) {
-              lduSelect.options[lduSelect.options.length] = new Option(value.name, key)
+            if(this.value) {
+              Object.entries(dropDownSelectionData[this.value].ldus)
+              .sort(([aKey,aValue],[bKey,bValue]) => aValue.name >= bValue.name ? 1 : 0)
+              .forEach(([key, value]) => lduSelect.options[lduSelect.options.length] = new Option(value.name, key))
             }
           }
 
           lduSelect.onchange = function() {
             teamSelect.length = 1
-            var teams = dropDownSelectionData[pduSelect.value].ldus[this.value].teams
-            .sort((a,b) => a.name >= b.name ? 1 : 0)
-            .forEach(team => teamSelect.options[teamSelect.options.length] = new Option(team.name, team.code))
-
+            if(this.value) {
+              dropDownSelectionData[pduSelect.value].ldus[this.value].teams
+              .sort((a,b) => a.name >= b.name ? 1 : 0)
+              .forEach(team => teamSelect.options[teamSelect.options.length] = new Option(team.name, team.code))
+            }
           }
 
 

@@ -64,4 +64,29 @@ context('Submit find Unallocated cases', () => {
         },
       ])
   })
+
+  it('unselecting PDU clears LDU and team', () => {
+    findUnallocatedCasesPage.select('pdu').select('PDU1')
+    findUnallocatedCasesPage.select('ldu').select('LDU1')
+    findUnallocatedCasesPage.select('team').select('TM1')
+    findUnallocatedCasesPage.select('pdu').select(0)
+    findUnallocatedCasesPage
+      .select('ldu')
+      .getOptions()
+      .should('deep.equal', [
+        {
+          optionValue: '',
+          optionContent: 'Select LDU',
+        },
+      ])
+    findUnallocatedCasesPage
+      .select('team')
+      .getOptions()
+      .should('deep.equal', [
+        {
+          optionValue: '',
+          optionContent: 'Select team',
+        },
+      ])
+  })
 })

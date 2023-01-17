@@ -128,6 +128,30 @@
 {% block javascripts %}
     <script nonce="{{ cspNonce }}">
         var allEstate = {{ allEstate | safe }}
+        window.onload = function() {
+          var pduSelect = document.getElementById("pdu")
+          var lduSelect = document.getElementById("ldu")
+          var teamSelect = document.getElementById("team")
+
+          pduSelect.onchange = function() {
+            lduSelect.length = 1
+            teamSelect.length = 1
+            var ldus = Object.entries(allEstate[this.value].ldus).sort(([aKey,aValue],[bKey,bValue]) => aValue.name >= bValue.name ? 1 : 0)
+            for (const [key, value] of ldus) {
+              lduSelect.options[lduSelect.options.length] = new Option(value.name, key)
+            }
+          }
+
+          lduSelect.onchange = function() {
+            teamSelect.length = 1
+            var teams = allEstate[pduSelect.value].ldus[this.value].teams
+            .sort((a,b) => a.name >= b.name ? 1 : 0)
+            .forEach(team => teamSelect.options[teamSelect.options.length] = new Option(team.name, team.code))
+
+          }
+
+
+        }
     </script>
 {% endblock %}
 

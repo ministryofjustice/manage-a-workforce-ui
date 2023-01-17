@@ -38,6 +38,8 @@ export default class FindUnallocatedPage extends Page {
 
   select = (id): PageElement => cy.get(`select#${id}`)
 
+  option = (value): PageElement => cy.get(`option[value="${value}"]`)
+
   selectLabel = (id): PageElement => cy.get(`label[for="${id}"]`)
 
   saveViewButton = (): PageElement => cy.get('button')

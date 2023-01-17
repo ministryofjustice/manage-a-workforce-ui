@@ -23,7 +23,7 @@ export default class FindUnallocatedCasesController {
       pduDetails,
       title: 'Unallocated cases | Manage a workforce',
       errors: req.flash('errors') || [],
-      allEstate: JSON.stringify(allEstate),
+      dropDownSelectionData: JSON.stringify(allEstate),
       pduOptions,
     })
   }

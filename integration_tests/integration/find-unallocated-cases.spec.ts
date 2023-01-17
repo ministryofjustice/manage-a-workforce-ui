@@ -7,6 +7,7 @@ context('Find Unallocated cases', () => {
   let findUnallocatedCasesPage: FindUnallocatedPage
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubAllEstateByRegionCode')
     cy.signIn()
     cy.visit('/probationDeliveryUnit/PDU1/find-unallocated')
     findUnallocatedCasesPage = Page.verifyOnPage(FindUnallocatedPage)
@@ -76,5 +77,25 @@ context('Find Unallocated cases', () => {
 
   it('clear link visible', () => {
     findUnallocatedCasesPage.clearLink().should('contain', 'Clear')
+  })
+
+  it('all options exist for PDUs', () => {
+    findUnallocatedCasesPage
+      .select('pdu')
+      .getOptions()
+      .should('deep.equal', [
+        {
+          optionValue: '',
+          optionContent: 'Select PDU',
+        },
+        {
+          optionValue: 'PDU1',
+          optionContent: 'First Probation Delivery Unit',
+        },
+        {
+          optionValue: 'PDU2',
+          optionContent: 'Second Probation Delivery Unit',
+        },
+      ])
   })
 })

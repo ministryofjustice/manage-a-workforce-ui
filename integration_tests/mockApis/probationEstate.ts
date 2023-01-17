@@ -143,4 +143,80 @@ export default {
       },
     })
   },
+  stubAllEstateByRegionCode: (): SuperAgentRequest => {
+    return stubForProbationEstate({
+      request: {
+        method: 'GET',
+        urlPattern: `/all/region/RG1`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          PDU1: {
+            name: 'First Probation Delivery Unit',
+            ldus: {
+              LDU1: {
+                name: 'First Local Delivery Unit',
+                teams: [
+                  {
+                    code: 'TM1',
+                    name: 'First Team',
+                  },
+                  {
+                    code: 'TM2',
+                    name: 'Second Team',
+                  },
+                ],
+              },
+              LDU2: {
+                name: 'Second Local Delivery Unit',
+                teams: [
+                  {
+                    code: 'TM3',
+                    name: 'Third Team',
+                  },
+                  {
+                    code: 'TM4',
+                    name: 'Fourth Team',
+                  },
+                ],
+              },
+            },
+          },
+          PDU2: {
+            name: 'Second Probation Delivery Unit',
+            ldus: {
+              LDU3: {
+                name: 'Third Local Delivery Unit',
+                teams: [
+                  {
+                    code: 'TM5',
+                    name: 'Fifth Team',
+                  },
+                  {
+                    code: 'TM6',
+                    name: 'Sixth Team',
+                  },
+                ],
+              },
+              LDU4: {
+                name: 'Fourth Local Delivery Unit',
+                teams: [
+                  {
+                    code: 'TM7',
+                    name: 'Seventh Team',
+                  },
+                  {
+                    code: 'TM8',
+                    name: 'Eighth Team',
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+    })
+  },
 }

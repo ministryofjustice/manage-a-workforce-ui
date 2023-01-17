@@ -5,6 +5,7 @@ context('Submit find Unallocated cases', () => {
   let findUnallocatedCasesPage: FindUnallocatedPage
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubAllEstateByRegionCode')
     cy.signIn()
     cy.visit('/probationDeliveryUnit/PDU1/find-unallocated')
     findUnallocatedCasesPage = Page.verifyOnPage(FindUnallocatedPage)

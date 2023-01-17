@@ -7,11 +7,14 @@ import UserPreferenceService from '../services/userPreferenceService'
 import AllProbationDeliveryUnit from '../models/AllProbationDeliveryUnit'
 import AllocationDemandSelected from '../models/AllocationDemandSelected'
 import AllLocalDeliveryUnit from '../models/AllLocalDeliveryUnit'
+import AllocationsService from '../services/allocationsService'
+import UnallocatedCase from './data/UnallocatedCase'
 
 export default class FindUnallocatedCasesController {
   constructor(
     private readonly probationEstateService: ProbationEstateService,
-    private readonly userPreferenceService: UserPreferenceService
+    private readonly userPreferenceService: UserPreferenceService,
+    private readonly allocationsService: AllocationsService
   ) {}
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
@@ -22,10 +25,28 @@ export default class FindUnallocatedCasesController {
     ])
     const allEstate = await this.probationEstateService.getAllEstateByRegionCode(token, pduDetails.region.code)
     const userSelectionInEstate = selectionInEstate(allEstate, allocationDemandTeamSelection)
+    const unallocatedCasesByTeam = userSelectionInEstate
+      ? await this.allocationsService.getUnallocatedCasesByTeam(token, allocationDemandTeamSelection.team)
+      : []
+
+    const unallocatedCases = unallocatedCasesByTeam.map(
+      value =>
+        new UnallocatedCase(
+          value.name,
+          value.crn,
+          value.tier,
+          value.sentenceDate,
+          value.initialAppointment,
+          value.status,
+          value.offenderManager,
+          value.convictionNumber,
+          value.caseType,
+          value.sentenceLength
+        )
+    )
+
     const pduOptions = getPduOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
-
     const lduOptions = getLduOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
-
     const teamOptions = getTeamOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
 
     res.render('pages/find-unallocated-cases', {
@@ -36,6 +57,9 @@ export default class FindUnallocatedCasesController {
       pduOptions,
       lduOptions,
       teamOptions,
+      unallocatedCases,
+      casesLength: unallocatedCases.length,
+      teamCode: allocationDemandTeamSelection.team,
     })
   }
 

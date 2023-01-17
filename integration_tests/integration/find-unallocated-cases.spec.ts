@@ -102,6 +102,7 @@ context('Find Unallocated cases', () => {
 
   it('already having allocation demand saved selects the correct PDU, LDU, and team from drop downs', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
     cy.reload()
     findUnallocatedCasesPage.select('pdu').find(':selected').contains('First Probation Delivery Unit')
     findUnallocatedCasesPage.select('ldu').find(':selected').contains('First Local Delivery Unit')
@@ -114,5 +115,71 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage.select('pdu').find(':selected').contains('Select PDU')
     findUnallocatedCasesPage.select('ldu').find(':selected').contains('Select LDU')
     findUnallocatedCasesPage.select('team').find(':selected').contains('Select team')
+  })
+
+  it('retrieve allocation demand for team saved in user preference allocation demand', () => {
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
+    cy.reload()
+    cy.get('table')
+      .getTable()
+      .should('deep.equal', [
+        {
+          'Name / CRN': 'Dylan Adam ArmstrongJ678910',
+          Tier: 'C1',
+          'Sentence date': '1 September 2021',
+          'Initial appointment date': '1 September 2021',
+          'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
+        },
+        {
+          'Name / CRN': 'Sofia MitchellL786545',
+          Tier: 'C1',
+          'Sentence date': '1 September 2021',
+          'Initial appointment date': 'Not neededCustody case (32 Years)',
+          'Probation status': 'Previously managed(John Agard)',
+        },
+        {
+          'Name / CRN': 'John SmithP125643',
+          Tier: 'C3',
+          'Sentence date': '23 July 2021',
+          'Initial appointment date': '17 August 2021',
+          'Probation status': 'New to probation',
+        },
+        {
+          'Name / CRN': 'Kacey RayE124321',
+          Tier: 'C2',
+          'Sentence date': '1 September 2021',
+          'Initial appointment date': '2 September 2021',
+          'Probation status': 'New to probation',
+        },
+        {
+          'Name / CRN': 'Andrew WilliamsP567654',
+          Tier: 'C1',
+          'Sentence date': '1 September 2021',
+          'Initial appointment date': '3 September 2021',
+          'Probation status': 'Previously managed',
+        },
+        {
+          'Name / CRN': 'Sarah SiddallC567654',
+          Tier: 'C2',
+          'Sentence date': '1 September 2021',
+          'Initial appointment date': '4 September 2021',
+          'Probation status': 'Previously managed',
+        },
+        {
+          'Name / CRN': 'Mick JonesC234432',
+          Tier: 'C1',
+          'Sentence date': '25 August 2021',
+          'Initial appointment date': 'Not foundCheck with your team',
+          'Probation status': 'Previously managed',
+        },
+        {
+          'Name / CRN': 'Bill TurnerF5635632',
+          Tier: 'D1',
+          'Sentence date': '1 September 2021',
+          'Initial appointment date': '1 September 2021',
+          'Probation status': 'Currently managed(Richard Moore)',
+        },
+      ])
   })
 })

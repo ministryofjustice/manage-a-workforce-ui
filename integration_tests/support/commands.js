@@ -82,6 +82,19 @@ const getRadios = subject => {
   })
 }
 
+const getOptions = subject => {
+  if (subject.get().length > 1) {
+    throw new Error(`Selector "${subject.selector}" returned more than 1 element.`)
+  }
+
+  const radioElement = subject.get()[0]
+  return [...radioElement.querySelectorAll('option')].map(row => {
+    const optionValue = row.getAttribute('value')
+    const optionContent = row.textContent.trim().replace(/\s{2,}/g, ' ')
+    return { optionValue, optionContent }
+  })
+}
+
 const trimTextContent = subject => {
   if (subject.get().length > 1) {
     throw new Error(`Selector "${subject.selector}" returned more than 1 element.`)
@@ -96,4 +109,5 @@ Cypress.Commands.add('getTable', { prevSubject: true }, getTable)
 Cypress.Commands.add('getSummaryList', { prevSubject: true }, getSummaryList)
 Cypress.Commands.add('getCheckBoxes', { prevSubject: true }, getCheckBoxes)
 Cypress.Commands.add('getRadios', { prevSubject: true }, getRadios)
+Cypress.Commands.add('getOptions', { prevSubject: true }, getOptions)
 Cypress.Commands.add('trimTextContent', { prevSubject: true }, trimTextContent)

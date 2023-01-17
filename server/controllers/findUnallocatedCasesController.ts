@@ -3,6 +3,7 @@ import type { FindUnallocatedCasesForm } from 'forms'
 import ProbationEstateService from '../services/probationEstateService'
 import validate from '../validation/validation'
 import trimForm from '../utils/trim'
+import AllProbationDeliveryUnit from '../models/AllProbationDeliveryUnit'
 
 export default class FindUnallocatedCasesController {
   constructor(private readonly probationEstateService: ProbationEstateService) {}
@@ -10,10 +11,21 @@ export default class FindUnallocatedCasesController {
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
     const { token } = res.locals.user
     const pduDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)
+    const allEstate = await this.probationEstateService.getAllEstateByRegionCode(token, pduDetails.region.code)
+
+    const pduOptions = [{ value: '', text: 'Select PDU', selected: true }].concat(
+      Array.from(Object.entries(allEstate))
+        .map(entry => {
+          return { value: entry[0], text: entry[1].name, selected: false }
+        })
+        .sort((a, b) => (a.text >= b.text ? 1 : -1))
+    )
     res.render('pages/find-unallocated-cases', {
       pduDetails,
       title: 'Unallocated cases | Manage a workforce',
       errors: req.flash('errors') || [],
+      allEstate: JSON.stringify(allEstate),
+      pduOptions,
     })
   }
 

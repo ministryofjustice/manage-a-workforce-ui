@@ -59,10 +59,7 @@
                   label: {
                     text: "Probation delivery unit (PDU)"
                   },
-                  items: [{
-                    text: "Select PDU",
-                    selected: true
-                  }],
+                  items: pduOptions,
                   errorMessage: errors | findError('pdu')
                 })
                 }}
@@ -125,5 +122,12 @@
           </div>
         </div>
 
+{% endblock %}
+
+
+{% block javascripts %}
+    <script nonce="{{ cspNonce }}">
+        var allEstate = {{ allEstate | safe }}
+    </script>
 {% endblock %}
 

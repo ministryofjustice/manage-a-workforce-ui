@@ -75,7 +75,7 @@ export default class FindUnallocatedCasesController {
         'required.team': 'Select a team',
       }
     )
-    if (errors) {
+    if (errors.length) {
       req.flash('errors', errors)
     } else {
       await this.userPreferenceService.saveAllocationDemandPreference(token, username, {

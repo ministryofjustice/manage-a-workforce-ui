@@ -48,6 +48,11 @@ export default function routes(services: Services): Router {
     await findUnallocatedCasesController.findUnallocatedCases(req, res, pduCode)
   })
 
+  post('/probationDeliveryUnit/:pduCode/find-unallocated', async (req, res) => {
+    const { pduCode } = req.params
+    await findUnallocatedCasesController.submitFindUnallocatedCases(req, res, pduCode, req.body)
+  })
+
   get('/team/:teamCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
     const { crn, convictionNumber, teamCode } = req.params
     await allocationsController.getUnallocatedCase(req, res, crn, convictionNumber, teamCode)

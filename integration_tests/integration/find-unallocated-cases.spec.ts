@@ -3,7 +3,7 @@ import Page from '../pages/page'
 
 import config from '../../server/config'
 
-context('Unallocated cases by team', () => {
+context('Find Unallocated cases', () => {
   let findUnallocatedCasesPage: FindUnallocatedPage
   beforeEach(() => {
     cy.task('stubSetup')
@@ -68,5 +68,13 @@ context('Unallocated cases by team', () => {
   it('select team visible on page', () => {
     findUnallocatedCasesPage.selectLabel('team').should('contain', 'Team')
     findUnallocatedCasesPage.select('team').find(':selected').contains('Select team')
+  })
+
+  it('save and view selection button visible', () => {
+    findUnallocatedCasesPage.saveViewButton().should('contain', 'Save and view selection')
+  })
+
+  it('clear link visible', () => {
+    findUnallocatedCasesPage.clearLink().should('contain', 'Clear')
   })
 })

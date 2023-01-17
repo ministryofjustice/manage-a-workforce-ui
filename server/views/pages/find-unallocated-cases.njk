@@ -2,8 +2,17 @@
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {%- from "govuk/components/warning-text/macro.njk" import govukWarningText -%}
 {%- from "govuk/components/select/macro.njk" import govukSelect -%}
+{%- from "govuk/components/button/macro.njk" import govukButton -%}
+{%- from "govuk/components/error-summary/macro.njk" import govukErrorSummary -%}
 
 {% block content %}
+
+        {% if errors | length > 0 %}
+                {{ govukErrorSummary({
+                    titleText: "There is a problem",
+                    errorList: errors
+                }) }}
+        {% endif %}
 
         <div class="govuk-grid-row govuk-!-padding-bottom-5">
           <div class="govuk-grid-column-full">
@@ -37,59 +46,70 @@
                 </div>
               </div>
 
-              {{ govukSelect({
-                id: "pdu",
-                name: "pdu",
-                classes: "govuk-select--overflow",
-                formGroup: {
-                  classes: "govuk-select--inline"
-                },
-                label: {
-                  text: "Probation delivery unit (PDU)"
-                },
-                items: [{
-                  text: "Select PDU",
-                  selected: true,
-                  disabled: true
-                }]
-              })
-              }}
+              <form method="post">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-              {{ govukSelect({
-                id: "ldu",
-                name: "ldu",
-                classes: "govuk-select--overflow",
-                formGroup: {
-                  classes: "govuk-select--inline"
-                },
-                label: {
-                  text: "Local delivery unit (LDU)"
-                },
-                items: [{
-                  text: "Select LDU",
-                  selected: true,
-                  disabled: true
-                }]
-              })
-              }}
+                {{ govukSelect({
+                  id: "pdu",
+                  name: "pdu",
+                  classes: "govuk-select--overflow",
+                  formGroup: {
+                    classes: "govuk-select--inline"
+                  },
+                  label: {
+                    text: "Probation delivery unit (PDU)"
+                  },
+                  items: [{
+                    text: "Select PDU",
+                    selected: true
+                  }],
+                  errorMessage: errors | findError('pdu')
+                })
+                }}
 
-              {{ govukSelect({
-                id: "team",
-                name: "team",
-                classes: "govuk-select--overflow",
-                formGroup: {
-                  classes: "govuk-select--inline"
-                },
-                label: {
-                  text: "Team"
-                },
-                items: [{
-                  text: "Select team",
-                  selected: true,
-                  disabled: true
-                }]
-              })
-              }}
+                {{ govukSelect({
+                  id: "ldu",
+                  name: "ldu",
+                  classes: "govuk-select--overflow",
+                  formGroup: {
+                    classes: "govuk-select--inline"
+                  },
+                  label: {
+                    text: "Local delivery unit (LDU)"
+                  },
+                  items: [{
+                    text: "Select LDU",
+                    selected: true
+                  }],
+                  errorMessage: errors | findError('ldu')
+                })
+                }}
+
+                {{ govukSelect({
+                  id: "team",
+                  name: "team",
+                  classes: "govuk-select--overflow",
+                  formGroup: {
+                    classes: "govuk-select--inline"
+                  },
+                  label: {
+                    text: "Team"
+                  },
+                  items: [{
+                    text: "Select team",
+                    selected: true
+                  }],
+                  errorMessage: errors | findError('team')
+                })
+                }}
+
+                <div class="govuk-button-group">
+                  {{ govukButton({
+                      text: "Save and view selection"
+                  }) }}
+                  <a class="govuk-link" href="{{ '/clear-find-unallocated' }}">Clear</a>
+                </div>
+        </form>
 
             </div>
           </div>

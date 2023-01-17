@@ -5,4 +5,9 @@ declare module 'forms' {
       email?: string
     }[]
   }
+  export interface FindUnallocatedCasesForm {
+    pdu?: string
+    ldu?: string
+    team?: string
+  }
 }

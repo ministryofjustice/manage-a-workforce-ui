@@ -3,7 +3,6 @@ import type { FindUnallocatedCasesForm } from 'forms'
 import ProbationEstateService from '../services/probationEstateService'
 import validate from '../validation/validation'
 import trimForm from '../utils/trim'
-import AllProbationDeliveryUnit from '../models/AllProbationDeliveryUnit'
 
 export default class FindUnallocatedCasesController {
   constructor(private readonly probationEstateService: ProbationEstateService) {}

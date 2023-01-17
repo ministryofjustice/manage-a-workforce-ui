@@ -49,10 +49,6 @@ export default class UserPreferenceService {
     const result = (await this.restClient(token).get({
       path: `/users/${username}/preferences/allocation-demand`,
     })) as UserPreference
-    const item = result.items.at(0)
-    if (item) {
-      return JSON.parse(item)
-    }
-    return { pdu: '', ldu: '', team: '' }
+    return result.items.at(0) ? JSON.parse(result.items.at(0)) : { pdu: '', ldu: '', team: '' }
   }
 }

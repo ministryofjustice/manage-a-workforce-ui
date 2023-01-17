@@ -89,4 +89,20 @@ context('Submit find Unallocated cases', () => {
         },
       ])
   })
+
+  it('unselecting LDU clears team', () => {
+    findUnallocatedCasesPage.select('pdu').select('PDU1')
+    findUnallocatedCasesPage.select('ldu').select('LDU1')
+    findUnallocatedCasesPage.select('team').select('TM1')
+    findUnallocatedCasesPage.select('ldu').select(0)
+    findUnallocatedCasesPage
+      .select('team')
+      .getOptions()
+      .should('deep.equal', [
+        {
+          optionValue: '',
+          optionContent: 'Select team',
+        },
+      ])
+  })
 })

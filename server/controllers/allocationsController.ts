@@ -6,7 +6,7 @@ import ProbationRecord from '../models/ProbationRecord'
 import Risk from '../models/Risk'
 import Order from './data/Order'
 import Conviction from '../models/Conviction'
-import AllocateOffenderManager, { gradeOrder, gradeTips } from './data/AllocateOffenderManager'
+import { gradeOrder, gradeTips } from './data/AllocateOffenderManager'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerOverview from '../models/OffenderManagerOverview'
 import FileDownload from '../models/FileDownload'
@@ -21,7 +21,6 @@ import trimForm from '../utils/trim'
 import OfficerView from './data/OfficerView'
 import DisplayAddress from './data/DisplayAddress'
 import ProbationEstateService from '../services/probationEstateService'
-import CaseForChoosePractitioner from '../models/CaseForChoosePractitioner'
 import DocumentRow from './data/DocumentRow'
 import ChoosePractitionerData, { Practitioner } from '../models/ChoosePractitionerData'
 import UserPreferenceService from '../services/userPreferenceService'
@@ -174,6 +173,7 @@ export default class AllocationsController {
       offenderManagersToAllocatePerTeam,
       error,
       missingEmail,
+      teamCode,
     })
   }
 

@@ -40,6 +40,7 @@ export default class FindUnallocatedCasesController {
   }
 
   async submitFindUnallocatedCases(req: Request, res: Response, pduCode: string, form): Promise<void> {
+    const { token, username } = res.locals.user
     const findUnallocatedCasesForm = trimForm<FindUnallocatedCasesForm>(form)
     const errors = validate(
       findUnallocatedCasesForm,
@@ -50,8 +51,15 @@ export default class FindUnallocatedCasesController {
         'required.team': 'Select a team',
       }
     )
-
-    req.flash('errors', errors)
+    if (errors.length) {
+      req.flash('errors', errors)
+    } else {
+      await this.userPreferenceService.saveAllocationDemandPreference(token, username, {
+        pdu: findUnallocatedCasesForm.pdu,
+        ldu: findUnallocatedCasesForm.ldu,
+        team: findUnallocatedCasesForm.team,
+      })
+    }
     // eslint-disable-next-line security-node/detect-dangerous-redirects
     res.redirect(`/probationDeliveryUnit/${pduCode}/find-unallocated`)
   }

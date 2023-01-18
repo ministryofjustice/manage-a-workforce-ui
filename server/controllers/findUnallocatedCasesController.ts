@@ -115,18 +115,22 @@ export default class FindUnallocatedCasesController {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getDropDownItems(options: [string, any][], defaultText: string, selectedValue: string): DropDownItem[] {
-  return [{ value: '', text: defaultText }]
+function getDropDownItems(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  items: [string, any][],
+  defaultDropDownItemText: string,
+  selectedItemValue: string
+): DropDownItem[] {
+  return [{ value: '', text: defaultDropDownItemText }]
     .concat(
-      options
+      items
         .map(([value, details]) => {
           return { value, text: details.name }
         })
         .sort((a, b) => (a.text >= b.text ? 1 : -1))
     )
     .map(dropDownOption => {
-      return { ...dropDownOption, selected: dropDownOption.value === selectedValue }
+      return { ...dropDownOption, selected: dropDownOption.value === selectedItemValue }
     })
 }
 

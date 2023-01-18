@@ -37,6 +37,17 @@ context('Submit find Unallocated cases', () => {
     findUnallocatedCasesPage.select('ldu').find(':selected').contains('First Local Delivery Unit')
   })
 
+  it('must favour form submission over saved selection', () => {
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
+    cy.reload()
+    findUnallocatedCasesPage.select('pdu').select(0)
+    findUnallocatedCasesPage.saveViewButton().click()
+    findUnallocatedCasesPage.select('pdu').find(':selected').contains('Select PDU')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('Select LDU')
+    findUnallocatedCasesPage.select('team').find(':selected').contains('Select team')
+  })
+
   it('selecting PDU populates LDU with correct options', () => {
     findUnallocatedCasesPage.select('pdu').select('PDU1')
     findUnallocatedCasesPage

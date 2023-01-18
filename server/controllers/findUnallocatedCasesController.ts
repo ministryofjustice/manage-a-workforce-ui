@@ -37,8 +37,7 @@ export default class FindUnallocatedCasesController {
       savedAllocationDemandSelection,
       allEstate
     )
-    const allocationDemandSelectionInEstate = selectionInEstate(allEstate, allocationDemandSelection)
-    const unallocatedCasesByTeam = allocationDemandSelectionInEstate
+    const unallocatedCasesByTeam = allocationDemandSelection.team
       ? await this.allocationsService.getUnallocatedCasesByTeam(token, allocationDemandSelection.team)
       : []
 
@@ -152,19 +151,6 @@ function getAllocationDemandSelected(
     ldu: lduSelected,
     team: teamSelected,
   }
-}
-
-function selectionInEstate(
-  allEstate: Map<string, AllProbationDeliveryUnit>,
-  allocationDemandTeamSelection: AllocationDemandSelected
-): boolean {
-  return (
-    allEstate[allocationDemandTeamSelection.pdu] &&
-    allEstate[allocationDemandTeamSelection.pdu].ldus[allocationDemandTeamSelection.ldu] &&
-    allEstate[allocationDemandTeamSelection.pdu].ldus[allocationDemandTeamSelection.ldu].teams.some(
-      team => team.code === allocationDemandTeamSelection.team
-    )
-  )
 }
 
 type DropDownItem = {

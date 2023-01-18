@@ -212,7 +212,7 @@ function getTeamOptions(
 
 function getSelectionValue(formSubmitted, formKey: string, savedValue: string, savedValueInEstate: boolean): string {
   if (formSubmitted) {
-    return formSubmitted.at(formKey) ? formSubmitted.at(formKey) : ''
+    return formSubmitted[formKey] ? formSubmitted[formKey] : ''
   }
   return savedValueInEstate ? savedValue : ''
 }

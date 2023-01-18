@@ -19,15 +19,22 @@ export default class FindUnallocatedCasesController {
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
     const { token, username } = res.locals.user
-    const [pduDetails, allocationDemandTeamSelection] = await Promise.all([
+    const [pduDetails, savedAllocationDemandSelection] = await Promise.all([
       this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode),
       this.userPreferenceService.getAllocationDemandSelection(token, username),
     ])
     const allEstate = await this.probationEstateService.getAllEstateByRegionCode(token, pduDetails.region.code)
-    const userSelectionInEstate = selectionInEstate(allEstate, allocationDemandTeamSelection)
+    const userSelectionInEstate = selectionInEstate(allEstate, savedAllocationDemandSelection)
     const unallocatedCasesByTeam = userSelectionInEstate
-      ? await this.allocationsService.getUnallocatedCasesByTeam(token, allocationDemandTeamSelection.team)
+      ? await this.allocationsService.getUnallocatedCasesByTeam(token, savedAllocationDemandSelection.team)
       : []
+
+    const flashAllocationDemandSelected = req.flash('allocationDemandSelected')
+
+    const formAllocationDemandSelected =
+      flashAllocationDemandSelected != null && flashAllocationDemandSelected.length > 0
+        ? (flashAllocationDemandSelected[0] as unknown as AllocationDemandSelected)
+        : null
 
     const unallocatedCases = unallocatedCasesByTeam.map(
       value =>
@@ -45,9 +52,24 @@ export default class FindUnallocatedCasesController {
         )
     )
 
-    const pduOptions = getPduOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
-    const lduOptions = getLduOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
-    const teamOptions = getTeamOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
+    const pduOptions = getPduOptions(
+      allEstate,
+      savedAllocationDemandSelection,
+      userSelectionInEstate,
+      formAllocationDemandSelected
+    )
+    const lduOptions = getLduOptions(
+      allEstate,
+      savedAllocationDemandSelection,
+      userSelectionInEstate,
+      formAllocationDemandSelected
+    )
+    const teamOptions = getTeamOptions(
+      allEstate,
+      savedAllocationDemandSelection,
+      userSelectionInEstate,
+      formAllocationDemandSelected
+    )
 
     res.render('pages/find-unallocated-cases', {
       pduDetails,
@@ -59,7 +81,7 @@ export default class FindUnallocatedCasesController {
       teamOptions,
       unallocatedCases,
       casesLength: unallocatedCases.length,
-      teamCode: allocationDemandTeamSelection.team,
+      teamCode: savedAllocationDemandSelection.team,
     })
   }
 
@@ -75,14 +97,16 @@ export default class FindUnallocatedCasesController {
         'required.team': 'Select a team',
       }
     )
+    const allocationDemandSelected = {
+      pdu: findUnallocatedCasesForm.pdu,
+      ldu: findUnallocatedCasesForm.ldu,
+      team: findUnallocatedCasesForm.team,
+    }
     if (errors.length) {
       req.flash('errors', errors)
+      req.flash('allocationDemandSelected', [allocationDemandSelected])
     } else {
-      await this.userPreferenceService.saveAllocationDemandPreference(token, username, {
-        pdu: findUnallocatedCasesForm.pdu,
-        ldu: findUnallocatedCasesForm.ldu,
-        team: findUnallocatedCasesForm.team,
-      })
+      await this.userPreferenceService.saveAllocationDemandPreference(token, username, allocationDemandSelected)
     }
     // eslint-disable-next-line security-node/detect-dangerous-redirects
     res.redirect(`/probationDeliveryUnit/${pduCode}/find-unallocated`)
@@ -91,10 +115,16 @@ export default class FindUnallocatedCasesController {
 
 function getPduOptions(
   allEstate: Map<string, AllProbationDeliveryUnit>,
-  allocationDemandTeamSelection: AllocationDemandSelected,
-  userSelectionInEstate: boolean
+  savedAllocationDemandSelection: AllocationDemandSelected,
+  userSelectionInEstate: boolean,
+  formAllocationDemandSelected: AllocationDemandSelected
 ): Option[] {
-  const pduSelected = userSelectionInEstate ? allocationDemandTeamSelection.pdu : ''
+  const pduSelected = getSelectionValue(
+    formAllocationDemandSelected,
+    'pdu',
+    savedAllocationDemandSelection.pdu,
+    userSelectionInEstate
+  )
   return [{ value: '', text: 'Select PDU' }]
     .concat(
       Array.from(Object.entries(allEstate))
@@ -110,14 +140,26 @@ function getPduOptions(
 
 function getLduOptions(
   allEstate: Map<string, AllProbationDeliveryUnit>,
-  allocationDemandTeamSelection: AllocationDemandSelected,
-  userSelectionInEstate: boolean
+  savedAllocationDemandSelection: AllocationDemandSelected,
+  userSelectionInEstate: boolean,
+  formAllocationDemandSelected: AllocationDemandSelected
 ): Option[] {
-  const lduSelected = userSelectionInEstate ? allocationDemandTeamSelection.ldu : ''
+  const pduSelected = getSelectionValue(
+    formAllocationDemandSelected,
+    'pdu',
+    savedAllocationDemandSelection.pdu,
+    userSelectionInEstate
+  )
+  const lduSelected = getSelectionValue(
+    formAllocationDemandSelected,
+    'ldu',
+    savedAllocationDemandSelection.ldu,
+    userSelectionInEstate
+  )
   return [{ value: '', text: 'Select LDU' }]
     .concat(
-      userSelectionInEstate
-        ? Object.entries<AllLocalDeliveryUnit>(allEstate[allocationDemandTeamSelection.pdu].ldus)
+      userSelectionInEstate || pduSelected
+        ? Object.entries<AllLocalDeliveryUnit>(allEstate[pduSelected].ldus)
             .map(([lduCode, lduDetails]) => {
               return { value: lduCode, text: lduDetails.name }
             })
@@ -131,14 +173,32 @@ function getLduOptions(
 
 function getTeamOptions(
   allEstate: Map<string, AllProbationDeliveryUnit>,
-  allocationDemandTeamSelection: AllocationDemandSelected,
-  userSelectionInEstate: boolean
+  savedAllocationDemandSelection: AllocationDemandSelected,
+  userSelectionInEstate: boolean,
+  formAllocationDemandSelected: AllocationDemandSelected
 ): Option[] {
-  const teamSelected = userSelectionInEstate ? allocationDemandTeamSelection.team : ''
+  const pduSelected = getSelectionValue(
+    formAllocationDemandSelected,
+    'pdu',
+    savedAllocationDemandSelection.pdu,
+    userSelectionInEstate
+  )
+  const lduSelected = getSelectionValue(
+    formAllocationDemandSelected,
+    'ldu',
+    savedAllocationDemandSelection.ldu,
+    userSelectionInEstate
+  )
+  const teamSelected = getSelectionValue(
+    formAllocationDemandSelected,
+    'team',
+    savedAllocationDemandSelection.team,
+    userSelectionInEstate
+  )
   return [{ value: '', text: 'Select team' }]
     .concat(
-      userSelectionInEstate
-        ? allEstate[allocationDemandTeamSelection.pdu].ldus[allocationDemandTeamSelection.ldu].teams
+      userSelectionInEstate || lduSelected
+        ? allEstate[pduSelected].ldus[lduSelected].teams
             .map(team => {
               return { value: team.code, text: team.name }
             })
@@ -150,12 +210,18 @@ function getTeamOptions(
     })
 }
 
+function getSelectionValue(formSubmitted, formKey: string, savedValue: string, savedValueInEstate: boolean): string {
+  if (formSubmitted) {
+    return formSubmitted[formKey] ? formSubmitted[formKey] : ''
+  }
+  return savedValueInEstate ? savedValue : ''
+}
+
 function selectionInEstate(
   allEstate: Map<string, AllProbationDeliveryUnit>,
   allocationDemandTeamSelection: AllocationDemandSelected
 ): boolean {
   return (
-    allocationDemandTeamSelection.ldu &&
     allEstate[allocationDemandTeamSelection.pdu] &&
     allEstate[allocationDemandTeamSelection.pdu].ldus[allocationDemandTeamSelection.ldu] &&
     allEstate[allocationDemandTeamSelection.pdu].ldus[allocationDemandTeamSelection.ldu].teams.some(

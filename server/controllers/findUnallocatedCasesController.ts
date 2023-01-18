@@ -129,8 +129,8 @@ function getDropDownItems(
         })
         .sort((a, b) => (a.text >= b.text ? 1 : -1))
     )
-    .map(dropDownOption => {
-      return { ...dropDownOption, selected: dropDownOption.value === selectedItemValue }
+    .map(dropDownItem => {
+      return { ...dropDownItem, selected: dropDownItem.value === selectedItemValue }
     })
 }
 

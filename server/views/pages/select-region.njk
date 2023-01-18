@@ -37,13 +37,6 @@
 </div>
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        
-        {{ govukNotificationBanner({
-            html: '
-        <p class="govuk-notification-banner__heading">As this is your first time signing in to Allocations, you need to select the teams you allocate cases to.</p>
-        <p class="govuk-notification-banner__heading">You can edit your team list at any time.</p>'
-        }) }}
-
         <form method="post">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         {{ govukRadios({

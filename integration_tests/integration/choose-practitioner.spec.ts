@@ -2,6 +2,7 @@ import Page from '../pages/page'
 import ChoosePractitionerPage from '../pages/choosePractitioner'
 import SummaryPage from '../pages/summary'
 
+// TODO Remove refs to old mocks (alloc/workload)
 context('Choose Practitioner', () => {
   beforeEach(() => {
     cy.task('stubSetup')

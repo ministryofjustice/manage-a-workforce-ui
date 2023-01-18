@@ -22,6 +22,30 @@ export default {
       },
     })
   },
+  stubGetPotentialOffenderManagerWorkloadTM1: (
+    teamCode = 'TM1',
+    crn = 'J678910',
+    staffCode = 'OM3'
+  ): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: `/team/${teamCode}/offenderManager/${staffCode}/impact/person/${crn}`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          forename: 'John',
+          surname: 'Doe',
+          grade: 'PO',
+          capacity: 50.4,
+          code: 'OM2',
+          potentialCapacity: 64.8,
+        },
+      },
+    })
+  },
   stubGetPotentialOffenderManagerWorkloadOverCapacity: (teamCode = 'TM1'): SuperAgentRequest => {
     return stubForWorkload({
       request: {

@@ -407,4 +407,68 @@ export default {
       },
     })
   },
+
+  stubChoosePractitionersTeamTM1: (staffCode = 'OM3', crn = 'J678910'): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPath: `/team/choose-practitioner`,
+        queryParameters: {
+          crn: {
+            equalTo: crn,
+          },
+          teamCodes: {
+            equalTo: 'TM1',
+          },
+          grades: {
+            equalTo: 'PSO,PQiP,PO',
+          },
+        },
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          crn,
+          name: {
+            forename: 'Don',
+            middleName: '',
+            surname: 'Cole',
+          },
+          tier: 'C1',
+          probationStatus: {
+            status: 'PREVIOUSLY_MANAGED',
+            description: 'Previously managed',
+          },
+          communityPersonManager: {
+            code: 'N03A019',
+            name: {
+              forename: 'Derek',
+              surname: 'Pint',
+            },
+            teamCode: 'N03F01',
+            grade: 'PO',
+          },
+          teams: {
+            TM1: [
+              {
+                code: `${staffCode}`,
+                name: {
+                  forename: 'Jane',
+                  middleName: '',
+                  surname: 'Doe',
+                },
+                email: 'j.doe@email.co.uk',
+                grade: 'PO',
+                workload: 19,
+                casesPastWeek: 2,
+                communityCases: 3,
+                custodyCases: 5,
+              },
+            ],
+          },
+        },
+      },
+    })
+  },
 }

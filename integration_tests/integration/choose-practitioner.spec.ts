@@ -276,7 +276,7 @@ context('Choose Practitioner', () => {
       .and('include', 'team/N03F02/J678910/convictions/1/allocate/OM2/officer-view')
   })
 
-  it.only('Individual team select radio button contains the correct team', () => {
+  it('Individual team select radio button contains the correct team', () => {
     cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')

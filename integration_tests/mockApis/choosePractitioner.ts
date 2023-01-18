@@ -1,116 +1,259 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubForAllocation, stubForWorkload } from './wiremock'
+import { stubForWorkload } from './wiremock'
 
 export default {
-  stubGetCurrentlyManagedCaseForChoosePractitioner: (): SuperAgentRequest => {
-    return stubForAllocation({
+  stubGetCurrentlyManagedCaseForChoosePractitioner: (
+    teamCodes = ['N03F01', 'N03F02'],
+    crn = 'J678910'
+  ): SuperAgentRequest => {
+    return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/1/practitionerCase`,
-      },
-      response: {
-        status: 200,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          status: 'Currently managed',
-          offenderManager: {
-            forenames: 'Antonio',
-            surname: 'LoSardo',
-            grade: 'SPO',
+        urlPath: `/team/choose-practitioner`,
+        queryParameters: {
+          crn: {
+            equalTo: crn,
           },
-          convictionNumber: 1,
+          teamCodes: {
+            equalTo: teamCodes.join(','),
+          },
+          grades: {
+            equalTo: 'PSO,PQiP,PO',
+          },
         },
-      },
-    })
-  },
-
-  stubGetCurrentlyManagedNoOffenderManagerCaseForChoosePractitioner: (): SuperAgentRequest => {
-    return stubForAllocation({
-      request: {
-        method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/1/practitionerCase`,
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
+          crn,
+          name: {
+            forename: 'Dylan Adam',
+            middleName: '',
+            surname: 'Armstrong',
+          },
           tier: 'C1',
-          status: 'Currently managed',
-          convictionNumber: 1,
-        },
-      },
-    })
-  },
-
-  stubGetPreviouslyManagedNoOffenderManagerCaseForChoosePractitioner: (): SuperAgentRequest => {
-    return stubForAllocation({
-      request: {
-        method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/1/practitionerCase`,
-      },
-      response: {
-        status: 200,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          status: 'Previously managed',
-          convictionNumber: 1,
-        },
-      },
-    })
-  },
-
-  stubGetPreviouslyManagedCaseForChoosePractitioner: (): SuperAgentRequest => {
-    return stubForAllocation({
-      request: {
-        method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/1/practitionerCase`,
-      },
-      response: {
-        status: 200,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
-          tier: 'C1',
-          status: 'Previously managed',
-          offenderManager: {
-            forenames: 'Sofia',
-            surname: 'Micheals',
+          probationStatus: {
+            status: 'CURRENTLY_MANAGED',
+            description: 'Currently managed',
+          },
+          communityPersonManager: {
+            code: 'N03A019',
+            name: {
+              forename: 'Derek',
+              surname: 'Pint',
+            },
+            teamCode: 'N03F01',
             grade: 'PO',
           },
-          convictionNumber: 1,
+          teams: {
+            N03F01: [
+              {
+                code: 'OM1',
+                name: {
+                  forename: 'Jane',
+                  middleName: '',
+                  surname: 'Doe',
+                },
+                email: 'j.doe@email.co.uk',
+                grade: 'PO',
+                workload: 19,
+                casesPastWeek: 2,
+                communityCases: 3,
+                custodyCases: 5,
+              },
+            ],
+          },
         },
       },
     })
   },
 
-  stubGetNewToProbationCaseForChoosePractitioner: (): SuperAgentRequest => {
-    return stubForAllocation({
+  // TODO - No offender manager?
+  stubGetCurrentlyManagedNoOffenderManagerCaseForChoosePractitioner: (
+    teamCodes = ['N03F01', 'N03F02'],
+    crn = 'J678910'
+  ): SuperAgentRequest => {
+    return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/1/practitionerCase`,
+        urlPath: `/team/choose-practitioner`,
+        queryParameters: {
+          crn: {
+            equalTo: crn,
+          },
+          teamCodes: {
+            equalTo: teamCodes.join(','),
+          },
+          grades: {
+            equalTo: 'PSO,PQiP,PO',
+          },
+        },
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          name: 'Dylan Adam Armstrong',
-          crn: 'J678910',
+          crn,
+          name: {
+            forename: 'Dylan Adam',
+            middleName: '',
+            surname: 'Armstrong',
+          },
           tier: 'C1',
-          status: 'New to probation',
-          convictionNumber: 1,
+          probationStatus: {
+            status: 'CURRENTLY_MANAGED',
+            description: 'Currently managed',
+          },
+          teams: {
+            N03F01: [
+              {
+                code: 'OM1',
+                name: {
+                  forename: 'Jane',
+                  middleName: '',
+                  surname: 'Doe',
+                },
+                email: 'j.doe@email.co.uk',
+                grade: 'PO',
+                workload: 19,
+                casesPastWeek: 2,
+                communityCases: 3,
+                custodyCases: 5,
+              },
+            ],
+          },
         },
       },
     })
   },
+
+  // TODO - No offender manager?
+  stubGetPreviouslyManagedNoOffenderManagerCaseForChoosePractitioner: (
+    teamCodes = ['N03F01', 'N03F02'],
+    crn = 'J678910'
+  ): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPath: `/team/choose-practitioner`,
+        queryParameters: {
+          crn: {
+            equalTo: crn,
+          },
+          teamCodes: {
+            equalTo: teamCodes.join(','),
+          },
+          grades: {
+            equalTo: 'PSO,PQiP,PO',
+          },
+        },
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          crn,
+          name: {
+            forename: 'Dylan Adam',
+            middleName: '',
+            surname: 'Armstrong',
+          },
+          tier: 'C1',
+          probationStatus: {
+            status: 'PREVIOUSLY_MANAGED',
+            description: 'Previously managed',
+          },
+          teams: {
+            N03F01: [
+              {
+                code: 'OM1',
+                name: {
+                  forename: 'Jane',
+                  middleName: '',
+                  surname: 'Doe',
+                },
+                email: 'j.doe@email.co.uk',
+                grade: 'PO',
+                workload: 19,
+                casesPastWeek: 2,
+                communityCases: 3,
+                custodyCases: 5,
+              },
+            ],
+          },
+        },
+      },
+    })
+  },
+
+  stubGetNewToProbationCaseForChoosePractitioner: (
+    teamCodes = ['N03F01', 'N03F02'],
+    crn = 'J678910'
+  ): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPath: `/team/choose-practitioner`,
+        queryParameters: {
+          crn: {
+            equalTo: crn,
+          },
+          teamCodes: {
+            equalTo: teamCodes.join(','),
+          },
+          grades: {
+            equalTo: 'PSO,PQiP,PO',
+          },
+        },
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          crn,
+          name: {
+            forename: 'Dylan Adam',
+            middleName: '',
+            surname: 'Armstrong',
+          },
+          tier: 'C1',
+          probationStatus: {
+            status: 'NEW_TO_PROBATION',
+            description: 'New to probation',
+          },
+          communityPersonManager: {
+            code: 'N03A019',
+            name: {
+              forename: 'Derek',
+              surname: 'Pint',
+            },
+            teamCode: 'N03F01',
+            grade: 'SPO',
+          },
+          teams: {
+            N03F01: [
+              {
+                code: 'OM1',
+                name: {
+                  forename: 'Jane',
+                  middleName: '',
+                  surname: 'Doe',
+                },
+                email: 'j.doe@email.co.uk',
+                grade: 'PO',
+                workload: 19,
+                casesPastWeek: 2,
+                communityCases: 3,
+                custodyCases: 5,
+              },
+            ],
+          },
+        },
+      },
+    })
+  },
+
   stubChoosePractitioners: (teamCodes = ['N03F01', 'N03F02'], crn = 'J678910'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
@@ -193,6 +336,69 @@ export default {
                 workload: 32,
                 casesPastWeek: 5,
                 communityCases: 0,
+                custodyCases: 5,
+              },
+            ],
+          },
+        },
+      },
+    })
+  },
+  stubChoosePractitionersWithEmails: (teamCodes = ['N03F01', 'N03F02'], crn = 'J678910'): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPath: `/team/choose-practitioner`,
+        queryParameters: {
+          crn: {
+            equalTo: crn,
+          },
+          teamCodes: {
+            equalTo: teamCodes.join(','),
+          },
+          grades: {
+            equalTo: 'PSO,PQiP,PO',
+          },
+        },
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          crn,
+          name: {
+            forename: 'Don',
+            middleName: '',
+            surname: 'Cole',
+          },
+          tier: 'C1',
+          probationStatus: {
+            status: 'PREVIOUSLY_MANAGED',
+            description: 'Previously managed',
+          },
+          communityPersonManager: {
+            code: 'N03A019',
+            name: {
+              forename: 'Derek',
+              surname: 'Pint',
+            },
+            teamCode: 'N03F01',
+            grade: 'PO',
+          },
+          teams: {
+            N03F01: [
+              {
+                code: 'OM1',
+                name: {
+                  forename: 'Jane',
+                  middleName: '',
+                  surname: 'Doe',
+                },
+                email: 'j.doe@email.co.uk',
+                grade: 'PO',
+                workload: 19,
+                casesPastWeek: 2,
+                communityCases: 3,
                 custodyCases: 5,
               },
             ],

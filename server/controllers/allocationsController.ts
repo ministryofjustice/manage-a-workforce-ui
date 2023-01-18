@@ -24,6 +24,7 @@ import ProbationEstateService from '../services/probationEstateService'
 import DocumentRow from './data/DocumentRow'
 import ChoosePractitionerData, { Practitioner } from '../models/ChoosePractitionerData'
 import UserPreferenceService from '../services/userPreferenceService'
+import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 
 export default class AllocationsController {
   constructor(
@@ -159,6 +160,7 @@ export default class AllocationsController {
     const offenderManager = {
       forenames: allocationInformationByTeam.communityPersonManager.name.forename,
       surname: allocationInformationByTeam.communityPersonManager.name.surname,
+      grade: allocationInformationByTeam.communityPersonManager.grade,
     }
     const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
     const error = req.query.error === 'true'
@@ -179,12 +181,13 @@ export default class AllocationsController {
 
   async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionNumber, teamCode) {
     const {
-      body: { allocatedOfficer: staffCode },
+      body: { allocatedOfficer: teamAndStaffCode },
     } = req
-    if (staffCode) {
+    if (teamAndStaffCode) {
+      const { teamCode: chosenStaffTeamCode, staffCode } = TeamAndStaffCode.decode(teamAndStaffCode)
       return res.redirect(
         // eslint-disable-next-line security-node/detect-dangerous-redirects
-        `/team/${teamCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/allocate-to-practitioner`
+        `/team/${chosenStaffTeamCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/allocate-to-practitioner`
       )
     }
     req.query.error = 'true'
@@ -360,6 +363,7 @@ function getChoosePractitionerDataByTeam(
         ...practitionerData,
         teamCode,
         teamName: teamNamesByCode.get(teamCode),
+        selectionCode: TeamAndStaffCode.encode(teamCode, practitioner.code),
       }
     })
     practitionersInTeam.sort(sortPractitionersByGrade)
@@ -387,6 +391,7 @@ function getChoosePractitionerDataAllTeams(
         ...practitionerData,
         teamCode,
         teamName: teamNamesByCode.get(teamCode),
+        selectionCode: TeamAndStaffCode.encode(teamCode, practitioner.code),
       })
     })
   })
@@ -444,4 +449,5 @@ type OffenderManagerToAllocate = {
 type OffenderManagerToAllocateWithTeam = OffenderManagerToAllocate & {
   teamCode: string
   teamName: string
+  selectionCode: string
 }

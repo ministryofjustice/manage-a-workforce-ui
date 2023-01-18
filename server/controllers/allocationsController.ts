@@ -135,94 +135,44 @@ export default class AllocationsController {
   async choosePractitioner(req: Request, res: Response, crn, convictionNumber, teamCode) {
     const { token, username } = res.locals.user
 
-    if (req.query.doTabs === 'true') {
-      const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
+    const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
 
-      const [allocationInformationByTeam, allTeamDetails] = await Promise.all([
-        await this.workloadService.getChoosePractitionerData(token, crn, teamCodesPreferences.items),
-        await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
-      ])
+    const [allocationInformationByTeam, allTeamDetails] = await Promise.all([
+      await this.workloadService.getChoosePractitionerData(token, crn, teamCodesPreferences.items),
+      await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
+    ])
 
-      const teamNamesByCode = new Map(allTeamDetails.map(obj => [obj.code, obj.name]))
+    const teamNamesByCode = new Map(allTeamDetails.map(obj => [obj.code, obj.name]))
 
-      const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(
-        allocationInformationByTeam,
-        teamNamesByCode
-      )
-      const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
-        allocationInformationByTeam,
-        teamNamesByCode
-      )
-      const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams].concat(
-        offenderManagersToAllocateByTeam
-      )
-
-      const name = `${allocationInformationByTeam.name.forename} ${allocationInformationByTeam.name.surname}`
-      const offenderManager = {
-        forenames: allocationInformationByTeam.communityPersonManager.name.forename,
-        surname: allocationInformationByTeam.communityPersonManager.name.surname,
-      }
-      const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
-      const error = req.query.error === 'true'
-      return res.render('pages/choose-practitioner', {
-        doTabs: true,
-        title: `${name} | Choose practitioner | Manage a workforce`,
-        name,
-        crn: allocationInformationByTeam.crn,
-        tier: allocationInformationByTeam.tier,
-        convictionNumber,
-        probationStatus: allocationInformationByTeam.probationStatus.description,
-        offenderManager,
-        offenderManagersToAllocatePerTeam,
-        error,
-        missingEmail,
-      })
-    }
-
-    const { offenderManagers } = await this.workloadService.getOffenderManagersToAllocate(token, teamCode)
-    const { name: teamName } = await this.probationEstateService.getTeamDetailsByCode(token, teamCode)
-
-    const offenderManagersToAllocate = offenderManagers
-      .map(
-        om =>
-          new AllocateOffenderManager(
-            om.forename,
-            om.surname,
-            om.grade,
-            om.capacity,
-            om.totalCommunityCases,
-            om.totalCustodyCases,
-            om.code,
-            om.totalCasesInLastWeek,
-            om.email
-          )
-      )
-      .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => {
-        if (b.gradeOrder === a.gradeOrder) {
-          return a.capacity - b.capacity
-        }
-        return b.gradeOrder - a.gradeOrder
-      })
-
-    const missingEmail = offenderManagersToAllocate.some(i => !i.email)
-    const response: CaseForChoosePractitioner = await this.allocationsService.getCaseForChoosePractitioner(
-      token,
-      crn,
-      convictionNumber
+    const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(
+      allocationInformationByTeam,
+      teamNamesByCode
     )
+    const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
+      allocationInformationByTeam,
+      teamNamesByCode
+    )
+    const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams].concat(
+      offenderManagersToAllocateByTeam
+    )
+
+    const name = `${allocationInformationByTeam.name.forename} ${allocationInformationByTeam.name.surname}`
+    const offenderManager = {
+      forenames: allocationInformationByTeam.communityPersonManager.name.forename,
+      surname: allocationInformationByTeam.communityPersonManager.name.surname,
+    }
+    const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
     const error = req.query.error === 'true'
-    res.render('pages/choose-practitioner', {
-      title: `${response.name} | Choose practitioner | Manage a workforce`,
-      name: response.name,
-      crn: response.crn,
-      tier: response.tier,
-      convictionNumber: response.convictionNumber,
-      probationStatus: response.status,
-      offenderManager: response.offenderManager,
-      offenderManagersToAllocate,
+    return res.render('pages/choose-practitioner', {
+      title: `${name} | Choose practitioner | Manage a workforce`,
+      name,
+      crn: allocationInformationByTeam.crn,
+      tier: allocationInformationByTeam.tier,
+      convictionNumber,
+      probationStatus: allocationInformationByTeam.probationStatus.description,
+      offenderManager,
+      offenderManagersToAllocatePerTeam,
       error,
-      teamCode,
-      teamName,
       missingEmail,
     })
   }

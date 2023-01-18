@@ -163,7 +163,7 @@ context('Choose Practitioner', () => {
   it('Team tabs visible on page', () => {
     cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tabs().find('.govuk-tabs__tab').should('have.length', 3)
     choosePractitionerPage.tab('all-teams').should('contain', 'All teams')
@@ -174,7 +174,7 @@ context('Choose Practitioner', () => {
   it('All teams visible on page by default', () => {
     cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage
       .tabtable('all-teams')
@@ -217,10 +217,10 @@ context('Choose Practitioner', () => {
       ])
   })
 
-  it.only('All teams view link is correct', () => {
+  it('All teams view link is correct', () => {
     cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tab('N03F02').click()
     choosePractitionerPage
@@ -232,7 +232,7 @@ context('Choose Practitioner', () => {
   it('Individual team visible on page when selected', () => {
     cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tab('N03F02').click()
     choosePractitionerPage
@@ -264,16 +264,27 @@ context('Choose Practitioner', () => {
       ])
   })
 
-  it.only('Individual team view link is correct', () => {
+  it('Individual team view link is correct', () => {
     cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner?doTabs=true')
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tab('N03F02').click()
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
       .and('include', 'team/N03F02/J678910/convictions/1/allocate/OM2/officer-view')
+  })
+
+  it.only('Individual team select radio button contains the correct team', () => {
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
+    cy.signIn()
+    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.tab('N03F02').click()
+    choosePractitionerPage.tabtable('N03F02').within(() => {
+      cy.get('input:first').should('have.value', 'OM3')
+    })
   })
 
   it('Officer table visible on page', () => {

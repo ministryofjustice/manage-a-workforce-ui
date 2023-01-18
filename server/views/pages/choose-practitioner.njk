@@ -135,96 +135,6 @@
     {{ govukTabItems.push(perTeamTabItem) }}
 {% endfor %}
 
-{% set tableData = {
-    attributes: {
-    'data-module': 'moj-natural-sortable-table'
-    },
-    head: [
-        { text: 'Name',
-            attributes: {
-                "aria-sort": "none"
-            }
-        },
-        { text: 'Grade',
-            attributes: {
-                "aria-sort": "descending"
-            }
-        },
-        { text: 'Workload %',
-            format: "numeric",
-            attributes: {
-                "aria-sort": "none",
-                "aria-sort-natural": "ascending"
-            }
-        },
-        { text: 'Cases in past 7 days',
-            format: "numeric",
-            attributes: {
-                "aria-sort": "none"
-            }
-        },
-        { text: 'Community cases',
-            format: "numeric",
-            attributes: {
-                "aria-sort": "none"
-            }
-        },
-        { text: 'Custody cases',
-            format: "numeric",
-            attributes: {
-                "aria-sort": "none"
-            }
-        },
-        { text: 'Workload details' },
-        { text: 'Select' }
-    ],
-    rows: []
-} %}
-
-{% for offenderManager in offenderManagersToAllocate %}
-    {%- set tableRow = [
-        { html: govukLabel({
-            text: offenderManager.name,
-            for: ('allocated-officer-' + offenderManager.code)
-          }),
-            attributes: {
-                "data-sort-value": offenderManager.name
-                }
-        },
-        { html: ('<div class="tooltip">' + offenderManager.grade + '<span class="tooltiptext">' + offenderManager.gradeTip + '</span></div>'),
-            attributes: {
-                "data-sort-value": offenderManager.gradeOrder
-            }
-        },
-        { text: ((offenderManager.capacity | round(1)) + '%'),format: "numeric",
-        classes: ('percentage-extra-over' if offenderManager.capacity > 100),
-            attributes: {
-                "data-sort-value": offenderManager.capacity
-            }
-        },
-        { text: offenderManager.totalCasesInLastWeek, format: "numeric",
-            attributes: {
-                "data-sort-value": offenderManager.totalCasesInLastWeek
-            }
-        },
-        { text: offenderManager.communityCases, format: "numeric",
-            attributes: {
-                "data-sort-value": offenderManager.communityCases
-            }
-        },
-        { text: offenderManager.custodyCases, format: "numeric",
-            attributes: {
-                "data-sort-value": offenderManager.custodyCases
-            }
-        },
-        { text: ('<a href="/team/'+ teamCode +'/' + crn + '/convictions/' + convictionNumber + '/allocate/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" aria-label="View">' + "View" + '</a>' ) | safe, classes: "govuk-!-text-align-centre"},
-        { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.code + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"></label></div></div>')
-        if offenderManager.email}
-    ] -%}
-    {{ tableData.rows.push(tableRow) }}
-
-{% endfor %}
-
 {% set offenderManagerDetails = ' by ' + offenderManager.forenames + ' ' + offenderManager.surname + (' (' + offenderManager.grade + ')' if offenderManager.grade) if offenderManager%}
 
 {% block beforeContent %}
@@ -273,11 +183,7 @@
     
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
-    {% if doTabs %}
-        <h2 class="govuk-heading-l">Allocate to a probation practitioner</h2>
-    {% else %}
-        <h2 class="govuk-heading-l">Allocate to a probation practitioner <br>in {{ teamName }}</h2>
-    {% endif %}
+    <h2 class="govuk-heading-l">Allocate to a probation practitioner</h2>
 
     {% if (probationStatus == 'Currently managed' and offenderManagerDetails) or probationStatus == 'Previously managed' %}
         <div class="govuk-warning-text">
@@ -301,13 +207,9 @@
     {% endif %}
     <form method="post">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        {% if doTabs %}
-            {{ govukTabs({
-                items: govukTabItems
-            }) }}
-        {% else %}
-            {{ govukTable(tableData) }}
-        {% endif %}
+        {{ govukTabs({
+            items: govukTabItems
+        }) }}
         <div class="govuk-button-group">
             {{ govukButton({
                 text: 'Continue'

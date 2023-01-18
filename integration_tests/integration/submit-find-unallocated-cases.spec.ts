@@ -23,6 +23,20 @@ context('Submit find Unallocated cases', () => {
       )
   })
 
+  it('must keep pdu selection after submitting partial selection', () => {
+    findUnallocatedCasesPage.select('pdu').select('PDU1')
+    findUnallocatedCasesPage.saveViewButton().click()
+    findUnallocatedCasesPage.select('pdu').find(':selected').contains('First Probation Delivery Unit')
+  })
+
+  it('must keep ldu selection after submitting partial selection', () => {
+    findUnallocatedCasesPage.select('pdu').select('PDU1')
+    findUnallocatedCasesPage.select('ldu').select('LDU1')
+    findUnallocatedCasesPage.saveViewButton().click()
+    findUnallocatedCasesPage.select('pdu').find(':selected').contains('First Probation Delivery Unit')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('First Local Delivery Unit')
+  })
+
   it('selecting PDU populates LDU with correct options', () => {
     findUnallocatedCasesPage.select('pdu').select('PDU1')
     findUnallocatedCasesPage

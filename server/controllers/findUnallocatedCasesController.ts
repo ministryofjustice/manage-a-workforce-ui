@@ -29,6 +29,17 @@ export default class FindUnallocatedCasesController {
       ? await this.allocationsService.getUnallocatedCasesByTeam(token, allocationDemandTeamSelection.team)
       : []
 
+    const flashAllocationDemandSelected = req.flash('allocationDemandSelected')
+
+    const allocationDemandSelected = (
+      flashAllocationDemandSelected != null && flashAllocationDemandSelected.length > 0
+        ? flashAllocationDemandSelected[0]
+        : {
+            pdu: '',
+            ldu: '',
+            team: '',
+          }
+    ) as AllocationDemandSelected
     const unallocatedCases = unallocatedCasesByTeam.map(
       value =>
         new UnallocatedCase(
@@ -45,8 +56,18 @@ export default class FindUnallocatedCasesController {
         )
     )
 
-    const pduOptions = getPduOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
-    const lduOptions = getLduOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
+    const pduOptions = getPduOptions(
+      allEstate,
+      allocationDemandTeamSelection,
+      userSelectionInEstate,
+      allocationDemandSelected
+    )
+    const lduOptions = getLduOptions(
+      allEstate,
+      allocationDemandTeamSelection,
+      userSelectionInEstate,
+      allocationDemandSelected
+    )
     const teamOptions = getTeamOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
 
     res.render('pages/find-unallocated-cases', {
@@ -75,14 +96,16 @@ export default class FindUnallocatedCasesController {
         'required.team': 'Select a team',
       }
     )
+    const allocationDemandSelected = {
+      pdu: findUnallocatedCasesForm.pdu,
+      ldu: findUnallocatedCasesForm.ldu,
+      team: findUnallocatedCasesForm.team,
+    }
     if (errors.length) {
       req.flash('errors', errors)
+      req.flash('allocationDemandSelected', [allocationDemandSelected])
     } else {
-      await this.userPreferenceService.saveAllocationDemandPreference(token, username, {
-        pdu: findUnallocatedCasesForm.pdu,
-        ldu: findUnallocatedCasesForm.ldu,
-        team: findUnallocatedCasesForm.team,
-      })
+      await this.userPreferenceService.saveAllocationDemandPreference(token, username, allocationDemandSelected)
     }
     // eslint-disable-next-line security-node/detect-dangerous-redirects
     res.redirect(`/probationDeliveryUnit/${pduCode}/find-unallocated`)
@@ -92,9 +115,10 @@ export default class FindUnallocatedCasesController {
 function getPduOptions(
   allEstate: Map<string, AllProbationDeliveryUnit>,
   allocationDemandTeamSelection: AllocationDemandSelected,
-  userSelectionInEstate: boolean
+  userSelectionInEstate: boolean,
+  allocationDemandSelected: AllocationDemandSelected
 ): Option[] {
-  const pduSelected = userSelectionInEstate ? allocationDemandTeamSelection.pdu : ''
+  const pduSelected = userSelectionInEstate ? allocationDemandTeamSelection.pdu : allocationDemandSelected.pdu
   return [{ value: '', text: 'Select PDU' }]
     .concat(
       Array.from(Object.entries(allEstate))
@@ -111,13 +135,15 @@ function getPduOptions(
 function getLduOptions(
   allEstate: Map<string, AllProbationDeliveryUnit>,
   allocationDemandTeamSelection: AllocationDemandSelected,
-  userSelectionInEstate: boolean
+  userSelectionInEstate: boolean,
+  allocationDemandSelected: AllocationDemandSelected
 ): Option[] {
-  const lduSelected = userSelectionInEstate ? allocationDemandTeamSelection.ldu : ''
+  const pduSelected = userSelectionInEstate ? allocationDemandTeamSelection.pdu : allocationDemandSelected.pdu
+  const lduSelected = userSelectionInEstate ? allocationDemandTeamSelection.ldu : allocationDemandSelected.ldu
   return [{ value: '', text: 'Select LDU' }]
     .concat(
-      userSelectionInEstate
-        ? Object.entries<AllLocalDeliveryUnit>(allEstate[allocationDemandTeamSelection.pdu].ldus)
+      userSelectionInEstate || allocationDemandSelected.ldu
+        ? Object.entries<AllLocalDeliveryUnit>(allEstate[pduSelected].ldus)
             .map(([lduCode, lduDetails]) => {
               return { value: lduCode, text: lduDetails.name }
             })
@@ -155,7 +181,6 @@ function selectionInEstate(
   allocationDemandTeamSelection: AllocationDemandSelected
 ): boolean {
   return (
-    allocationDemandTeamSelection.ldu &&
     allEstate[allocationDemandTeamSelection.pdu] &&
     allEstate[allocationDemandTeamSelection.pdu].ldus[allocationDemandTeamSelection.ldu] &&
     allEstate[allocationDemandTeamSelection.pdu].ldus[allocationDemandTeamSelection.ldu].teams.some(

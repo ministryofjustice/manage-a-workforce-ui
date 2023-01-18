@@ -8,6 +8,7 @@ context('Find Unallocated cases', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubAllEstateByRegionCode')
+    cy.task('stubUserPreferenceEmptyAllocationDemand')
     cy.signIn()
     cy.visit('/probationDeliveryUnit/PDU1/find-unallocated')
     findUnallocatedCasesPage = Page.verifyOnPage(FindUnallocatedPage)
@@ -97,5 +98,21 @@ context('Find Unallocated cases', () => {
           optionContent: 'Second Probation Delivery Unit',
         },
       ])
+  })
+
+  it('already having allocation demand saved selects the correct PDU, LDU, and team from drop downs', () => {
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.reload()
+    findUnallocatedCasesPage.select('pdu').find(':selected').contains('First Probation Delivery Unit')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('First Local Delivery Unit')
+    findUnallocatedCasesPage.select('team').find(':selected').contains('First Team')
+  })
+
+  it('allocation demand selection in different estate has default options selected', () => {
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU3', lduCode: 'LDU5', teamCode: 'TM9' })
+    cy.reload()
+    findUnallocatedCasesPage.select('pdu').find(':selected').contains('Select PDU')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('Select LDU')
+    findUnallocatedCasesPage.select('team').find(':selected').contains('Select team')
   })
 })

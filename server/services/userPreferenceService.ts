@@ -1,6 +1,7 @@
 import RestClient from '../data/restClient'
 import { ApiConfig } from '../config'
 import UserPreference from '../models/UserPreference'
+import AllocationDemandSelected from '../models/AllocationDemandSelected'
 
 export default class UserPreferenceService {
   config: ApiConfig
@@ -42,5 +43,12 @@ export default class UserPreferenceService {
     return (await this.restClient(token).get({
       path: `/users/${username}/preferences/allocation-pdu`,
     })) as UserPreference
+  }
+
+  async getAllocationDemandSelection(token: string, username: string): Promise<AllocationDemandSelected> {
+    const result = (await this.restClient(token).get({
+      path: `/users/${username}/preferences/allocation-demand`,
+    })) as UserPreference
+    return result.items.at(0) ? JSON.parse(result.items.at(0)) : { pdu: '', ldu: '', team: '' }
   }
 }

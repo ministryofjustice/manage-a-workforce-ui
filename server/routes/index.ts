@@ -32,7 +32,10 @@ export default function routes(services: Services): Router {
 
   const homeController = new HomeController(services.userPreferenceService)
 
-  const findUnallocatedCasesController = new FindUnallocatedCasesController(services.probationEstateService)
+  const findUnallocatedCasesController = new FindUnallocatedCasesController(
+    services.probationEstateService,
+    services.userPreferenceService
+  )
 
   get('/', async (req, res) => {
     await homeController.redirectUser(req, res)

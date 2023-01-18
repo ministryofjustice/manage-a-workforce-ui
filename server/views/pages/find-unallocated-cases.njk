@@ -74,10 +74,7 @@
                   label: {
                     text: "Local delivery unit (LDU)"
                   },
-                  items: [{
-                    text: "Select LDU",
-                    selected: true
-                  }],
+                  items: lduOptions,
                   errorMessage: errors | findError('ldu')
                 })
                 }}
@@ -92,10 +89,7 @@
                   label: {
                     text: "Team"
                   },
-                  items: [{
-                    text: "Select team",
-                    selected: true
-                  }],
+                  items: teamOptions,
                   errorMessage: errors | findError('team')
                 })
                 }}

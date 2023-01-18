@@ -85,6 +85,46 @@ export default {
       },
     })
   },
+
+  stubUserPreferenceAllocationDemand: ({
+    pduCode,
+    lduCode,
+    teamCode,
+  }: {
+    pduCode: string
+    lduCode: string
+    teamCode: string
+  }): SuperAgentRequest => {
+    return stubForUserPreference({
+      request: {
+        method: 'GET',
+        urlPattern: `/users/USER1/preferences/allocation-demand`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          items: [`{"pdu": "${pduCode}", "ldu": "${lduCode}", "team": "${teamCode}"}`],
+        },
+      },
+    })
+  },
+  stubUserPreferenceEmptyAllocationDemand: (): SuperAgentRequest => {
+    return stubForUserPreference({
+      request: {
+        method: 'GET',
+        urlPattern: `/users/USER1/preferences/allocation-demand`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          items: [],
+        },
+      },
+    })
+  },
+
   stubUserPreferencePDUErrorThenSuccess: (): Promise<Array<Response>> => {
     return stubForUserPreferenceScenario([
       {

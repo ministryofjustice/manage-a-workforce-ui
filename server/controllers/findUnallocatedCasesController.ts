@@ -3,28 +3,39 @@ import type { FindUnallocatedCasesForm } from 'forms'
 import ProbationEstateService from '../services/probationEstateService'
 import validate from '../validation/validation'
 import trimForm from '../utils/trim'
+import UserPreferenceService from '../services/userPreferenceService'
+import AllProbationDeliveryUnit from '../models/AllProbationDeliveryUnit'
+import AllocationDemandSelected from '../models/AllocationDemandSelected'
+import AllLocalDeliveryUnit from '../models/AllLocalDeliveryUnit'
 
 export default class FindUnallocatedCasesController {
-  constructor(private readonly probationEstateService: ProbationEstateService) {}
+  constructor(
+    private readonly probationEstateService: ProbationEstateService,
+    private readonly userPreferenceService: UserPreferenceService
+  ) {}
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
-    const { token } = res.locals.user
-    const pduDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)
+    const { token, username } = res.locals.user
+    const [pduDetails, allocationDemandTeamSelection] = await Promise.all([
+      this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode),
+      this.userPreferenceService.getAllocationDemandSelection(token, username),
+    ])
     const allEstate = await this.probationEstateService.getAllEstateByRegionCode(token, pduDetails.region.code)
+    const userSelectionInEstate = selectionInEstate(allEstate, allocationDemandTeamSelection)
+    const pduOptions = getPduOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
 
-    const pduOptions = [{ value: '', text: 'Select PDU', selected: true }].concat(
-      Array.from(Object.entries(allEstate))
-        .map(entry => {
-          return { value: entry[0], text: entry[1].name, selected: false }
-        })
-        .sort((a, b) => (a.text >= b.text ? 1 : -1))
-    )
+    const lduOptions = getLduOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
+
+    const teamOptions = getTeamOptions(allEstate, allocationDemandTeamSelection, userSelectionInEstate)
+
     res.render('pages/find-unallocated-cases', {
       pduDetails,
       title: 'Unallocated cases | Manage a workforce',
       errors: req.flash('errors') || [],
       dropDownSelectionData: JSON.stringify(allEstate),
       pduOptions,
+      lduOptions,
+      teamOptions,
     })
   }
 
@@ -44,4 +55,84 @@ export default class FindUnallocatedCasesController {
     // eslint-disable-next-line security-node/detect-dangerous-redirects
     res.redirect(`/probationDeliveryUnit/${pduCode}/find-unallocated`)
   }
+}
+
+function getPduOptions(
+  allEstate: Map<string, AllProbationDeliveryUnit>,
+  allocationDemandTeamSelection: AllocationDemandSelected,
+  userSelectionInEstate: boolean
+): Option[] {
+  const pduSelected = userSelectionInEstate ? allocationDemandTeamSelection.pdu : ''
+  return [{ value: '', text: 'Select PDU' }]
+    .concat(
+      Array.from(Object.entries(allEstate))
+        .map(([allPduCode, allPduDetails]) => {
+          return { value: allPduCode, text: allPduDetails.name }
+        })
+        .sort((a, b) => (a.text >= b.text ? 1 : -1))
+    )
+    .map(pduOption => {
+      return { ...pduOption, selected: pduOption.value === pduSelected }
+    })
+}
+
+function getLduOptions(
+  allEstate: Map<string, AllProbationDeliveryUnit>,
+  allocationDemandTeamSelection: AllocationDemandSelected,
+  userSelectionInEstate: boolean
+): Option[] {
+  const lduSelected = userSelectionInEstate ? allocationDemandTeamSelection.ldu : ''
+  return [{ value: '', text: 'Select LDU' }]
+    .concat(
+      userSelectionInEstate
+        ? Object.entries<AllLocalDeliveryUnit>(allEstate[allocationDemandTeamSelection.pdu].ldus)
+            .map(([lduCode, lduDetails]) => {
+              return { value: lduCode, text: lduDetails.name }
+            })
+            .sort((a, b) => (a.text >= b.text ? 1 : -1))
+        : []
+    )
+    .map(lduOption => {
+      return { ...lduOption, selected: lduOption.value === lduSelected }
+    })
+}
+
+function getTeamOptions(
+  allEstate: Map<string, AllProbationDeliveryUnit>,
+  allocationDemandTeamSelection: AllocationDemandSelected,
+  userSelectionInEstate: boolean
+): Option[] {
+  const teamSelected = userSelectionInEstate ? allocationDemandTeamSelection.team : ''
+  return [{ value: '', text: 'Select team' }]
+    .concat(
+      userSelectionInEstate
+        ? allEstate[allocationDemandTeamSelection.pdu].ldus[allocationDemandTeamSelection.ldu].teams
+            .map(team => {
+              return { value: team.code, text: team.name }
+            })
+            .sort((a, b) => (a.text >= b.text ? 1 : -1))
+        : []
+    )
+    .map(teamOption => {
+      return { ...teamOption, selected: teamOption.value === teamSelected }
+    })
+}
+
+function selectionInEstate(
+  allEstate: Map<string, AllProbationDeliveryUnit>,
+  allocationDemandTeamSelection: AllocationDemandSelected
+): boolean {
+  return (
+    allocationDemandTeamSelection.ldu &&
+    allEstate[allocationDemandTeamSelection.pdu] &&
+    allEstate[allocationDemandTeamSelection.pdu].ldus[allocationDemandTeamSelection.ldu] &&
+    allEstate[allocationDemandTeamSelection.pdu].ldus[allocationDemandTeamSelection.ldu].teams.some(
+      team => team.code === allocationDemandTeamSelection.team
+    )
+  )
+}
+
+type Option = {
+  value: string
+  text: string
 }

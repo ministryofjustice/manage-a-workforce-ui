@@ -113,6 +113,13 @@ export default class FindUnallocatedCasesController {
     // eslint-disable-next-line security-node/detect-dangerous-redirects
     res.redirect(`/probationDeliveryUnit/${pduCode}/find-unallocated`)
   }
+
+  async clearFindUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
+    const { token, username } = res.locals.user
+    await this.userPreferenceService.clearAllocationDemandPreference(token, username)
+    // eslint-disable-next-line security-node/detect-dangerous-redirects
+    res.redirect(`/probationDeliveryUnit/${pduCode}/find-unallocated`)
+  }
 }
 
 function getDropDownItems(

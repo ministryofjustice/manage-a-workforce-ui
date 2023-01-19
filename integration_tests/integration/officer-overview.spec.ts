@@ -7,7 +7,7 @@ context('Overview', () => {
     cy.task('stubSetup')
     cy.task('stubGetOverview')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/allocate/OM2/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/1/allocate/TM2/OM2/officer-view')
     overviewPage = Page.verifyOnPage(OverviewPage)
   })
 
@@ -26,7 +26,7 @@ context('Overview', () => {
 
   it('notification banner is visible when officer has no email', () => {
     cy.task('stubGetOverviewWithLastAllocatedEvent')
-    cy.visit('/team/TM1/J678910/convictions/1/allocate/OM6/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/1/allocate/TM2/OM6/officer-view')
     overviewPage
       .notificationBanner()
       .should(
@@ -137,7 +137,7 @@ context('Overview', () => {
 
   it('must show last allocated event information in Last Case Allocated', () => {
     cy.task('stubGetOverviewWithLastAllocatedEvent')
-    cy.visit('/team/TM1/J678910/convictions/1/allocate/OM6/officer-view')
+    cy.visit('/team/TM1/J678910/convictions/1/allocate/TM2/OM6/officer-view')
     cy.get('.availability').getSummaryList().should('deep.equal', {
       'Weekly hours': '22.5',
       Reductions: '10 hours until 3 November 2022',

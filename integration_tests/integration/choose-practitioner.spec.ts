@@ -2,10 +2,11 @@ import Page from '../pages/page'
 import ChoosePractitionerPage from '../pages/choosePractitioner'
 import SummaryPage from '../pages/summary'
 
-// TODO Remove refs to old mocks (alloc/workload)
+// TODO - Remove refs to old mocks (alloc/workload) and check old API calls are used
 context('Choose Practitioner', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    // TODO - Delete
     cy.task('stubGetTeamDetails', {
       code: 'TM1',
       name: 'Wrexham Team 1',
@@ -89,6 +90,7 @@ context('Choose Practitioner', () => {
 
   it('navigate to allocate page through case view', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
+    // TODO - Needed?
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/case-view')
@@ -124,7 +126,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.warningIcon().should('exist')
   })
 
-  // TODO
+  // TODO - Workload says there will always be an off man?
   it.skip('Warning is not visible on page if no offender manager details', () => {
     cy.task('stubGetCurrentlyManagedNoOffenderManagerCaseForChoosePractitioner')
     cy.signIn()
@@ -134,7 +136,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.warningIcon().should('not.exist')
   })
 
-  // TODO
+  // TODO - Workload says there will always be an off man?
   it.skip('Warning is visible on page if no offender manager details for previously managed', () => {
     cy.task('stubGetPreviouslyManagedNoOffenderManagerCaseForChoosePractitioner')
     cy.signIn()
@@ -224,7 +226,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', 'team/N03F02/J678910/convictions/1/allocate/OM2/officer-view')
+      .and('include', 'team/TM1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
   })
 
   it('Individual team visible on page when selected', () => {
@@ -269,10 +271,10 @@ context('Choose Practitioner', () => {
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', 'team/N03F02/J678910/convictions/1/allocate/OM2/officer-view')
+      .and('include', 'team/TM1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
   })
 
-  it.only('Individual team select radio button contains the correct team', () => {
+  it('Individual team select radio button contains the correct team', () => {
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)

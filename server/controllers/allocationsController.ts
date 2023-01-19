@@ -234,16 +234,17 @@ export default class AllocationsController {
     })
   }
 
-  async getOverview(_, res: Response, crn, offenderManagerCode, convictionNumber, teamCode) {
+  async getOverview(_, res: Response, crn, offenderManagerTeamCode, offenderManagerCode, convictionNumber, teamCode) {
     const response: OffenderManagerOverview = await this.workloadService.getOffenderManagerOverview(
       res.locals.user.token,
       offenderManagerCode,
-      teamCode
+      offenderManagerTeamCode
     )
     const data: OfficerView = new OfficerView(response)
     res.render('pages/officer-overview', {
       title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
       data,
+      officerTeamCode: offenderManagerTeamCode,
       crn,
       convictionNumber,
       isOverview: true,

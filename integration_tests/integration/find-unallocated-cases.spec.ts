@@ -182,4 +182,9 @@ context('Find Unallocated cases', () => {
         },
       ])
   })
+  it('clicking clear link removes user preference', () => {
+    cy.task('stubPutEmptyUserPreferenceAllocationDemand')
+    findUnallocatedCasesPage.clearLink().click()
+    cy.task('verifyClearUserPreferenceAllocationDemand')
+  })
 })

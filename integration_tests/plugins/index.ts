@@ -78,7 +78,6 @@ export default (on: (string, Record) => void): void => {
     ...probationRecord,
     ...risk,
     ...allocations,
-    ...allocateOffenderManagers,
     ...allocateToPractitioner,
     ...workload,
     ...offenderManagerCases,

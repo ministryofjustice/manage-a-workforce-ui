@@ -2,7 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForWorkload } from './wiremock'
 
 export default {
-  stubGetOffenderManagerCases: (teamCode = 'TM1'): SuperAgentRequest => {
+  stubGetOffenderManagerCases: (teamCode = 'TM2'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
@@ -43,7 +43,7 @@ export default {
       },
     })
   },
-  stubGetOffenderManagerCasesNoEmail: (teamCode = 'TM1'): SuperAgentRequest => {
+  stubGetOffenderManagerCasesNoEmail: (teamCode = 'TM2'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',

@@ -81,7 +81,7 @@ context('Overview', () => {
     overviewPage
       .totalCasesLink()
       .should('have.attr', 'href')
-      .and('include', '/team/TM1/J678910/convictions/1/allocate/OM2/active-cases')
+      .and('include', '/team/TM1/J678910/convictions/1/allocate/TM2/OM2/active-cases')
   })
 
   it('Section break visible on page', () => {

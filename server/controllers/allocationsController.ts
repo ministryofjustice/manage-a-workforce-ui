@@ -252,11 +252,19 @@ export default class AllocationsController {
     })
   }
 
-  async getActiveCases(req: Request, res: Response, crn, offenderManagerCode, convictionNumber, teamCode) {
+  async getActiveCases(
+    req: Request,
+    res: Response,
+    crn,
+    offenderManagerTeamCode,
+    offenderManagerCode,
+    convictionNumber,
+    teamCode
+  ) {
     const response: OffenderManagerCases = await this.workloadService.getOffenderManagerCases(
       res.locals.user.token,
       offenderManagerCode,
-      teamCode
+      offenderManagerTeamCode
     )
     const cases = response.activeCases.map(
       activeCase =>
@@ -265,6 +273,7 @@ export default class AllocationsController {
     res.render('pages/active-cases', {
       title: `${response.forename} ${response.surname} | Active cases | Manage a workforce`,
       data: response,
+      officerTeamCode: offenderManagerTeamCode,
       cases,
       crn,
       convictionNumber,

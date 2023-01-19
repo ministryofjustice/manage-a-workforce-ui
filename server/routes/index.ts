@@ -126,10 +126,18 @@ export default function routes(services: Services): Router {
 
   // TODO -staffTeamCode
   get(
-    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerCode/active-cases',
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/active-cases',
     async (req, res) => {
-      const { crn, convictionNumber, offenderManagerCode, teamCode } = req.params
-      await allocationsController.getActiveCases(req, res, crn, offenderManagerCode, convictionNumber, teamCode)
+      const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, teamCode } = req.params
+      await allocationsController.getActiveCases(
+        req,
+        res,
+        crn,
+        offenderManagerTeamCode,
+        offenderManagerCode,
+        convictionNumber,
+        teamCode
+      )
     }
   )
 

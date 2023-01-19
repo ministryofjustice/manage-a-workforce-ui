@@ -7,7 +7,7 @@ context('Active Cases', () => {
     cy.task('stubSetup')
     cy.task('stubGetOffenderManagerCases')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/allocate/OM2/active-cases')
+    cy.visit('/team/TM1/J678910/convictions/1/allocate/TM2/OM2/active-cases')
     activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
   })
 

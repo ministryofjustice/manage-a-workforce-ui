@@ -18,7 +18,6 @@ context('Allocate to Practitioner', () => {
       code: 'TM1',
       name: 'Wrexham Team 1',
     })
-    cy.task('stubGetAllocateOffenderManagers', 'TM1')
     cy.task('stubChoosePractitionersTeamTM2Only')
     cy.task('stubGetPotentialOffenderManagerWorkloadTM2')
 

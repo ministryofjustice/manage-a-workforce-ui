@@ -186,7 +186,6 @@ export default class AllocationsController {
     if (teamAndStaffCode) {
       const { teamCode: chosenStaffTeamCode, staffCode } = TeamAndStaffCode.decode(teamAndStaffCode)
       return res.redirect(
-        // TODO - Test works
         // eslint-disable-next-line security-node/detect-dangerous-redirects
         `/team/${teamCode}/${crn}/convictions/${convictionNumber}/allocate/${chosenStaffTeamCode}/${staffCode}/allocate-to-practitioner`
       )

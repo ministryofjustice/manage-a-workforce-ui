@@ -11,7 +11,6 @@ context('Choose Practitioner', () => {
       code: 'TM1',
       name: 'Wrexham Team 1',
     })
-    cy.task('stubGetAllocateOffenderManagers', 'TM1')
     cy.task('stubUserPreferenceTeams', ['N03F01', 'N03F02'])
     cy.task('stubGetUnallocatedCasesByTeams', {
       teamCodes: 'N03F01,N03F02',

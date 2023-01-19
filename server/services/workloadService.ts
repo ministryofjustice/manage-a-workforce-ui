@@ -29,12 +29,6 @@ export default class WorkloadService {
     })) as ChoosePractitionerData
   }
 
-  async getOffenderManagersToAllocate(token: string, teamCode: string): Promise<AllocateOffenderManagers> {
-    return (await this.restClient(token).get({
-      path: `/team/${teamCode}/offenderManagers?grades=PSO,PQiP,PO`,
-    })) as AllocateOffenderManagers
-  }
-
   async getCaseAllocationImpact(token: string, crn, staffCode, teamCode): Promise<OffenderManagerPotentialWorkload> {
     return (await this.restClient(token).get({
       path: `/team/${teamCode}/offenderManager/${staffCode}/impact/person/${crn}`,

@@ -60,12 +60,6 @@ export default class AllocationsService {
     })) as CaseOverview
   }
 
-  async getCaseForChoosePractitioner(token: string, crn, convictionNumber): Promise<CaseForChoosePractitioner> {
-    return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/practitionerCase`,
-    })) as CaseForChoosePractitioner
-  }
-
   getDocument(token: string, crn, documentId): Promise<FileDownload> {
     logger.info(`Getting document for crn ${crn}`)
     return this.restClient(token).stream({

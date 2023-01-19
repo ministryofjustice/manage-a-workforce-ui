@@ -124,7 +124,6 @@ export default function routes(services: Services): Router {
     }
   )
 
-  // TODO -staffTeamCode
   get(
     '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/active-cases',
     async (req, res) => {

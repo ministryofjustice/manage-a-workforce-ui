@@ -115,8 +115,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.warningIcon().should('exist')
   })
 
-  // TODO - Workload says there will always be an off man?
-  it.skip('Warning is not visible on page if no offender manager details', () => {
+  it('Warning is not visible on page if no offender manager details', () => {
     cy.task('stubGetCurrentlyManagedNoOffenderManagerCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
@@ -125,8 +124,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.warningIcon().should('not.exist')
   })
 
-  // TODO - Workload says there will always be an off man?
-  it.skip('Warning is visible on page if no offender manager details for previously managed', () => {
+  it('Warning is visible on page if no offender manager details for previously managed', () => {
     cy.task('stubGetPreviouslyManagedNoOffenderManagerCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')

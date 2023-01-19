@@ -157,7 +157,7 @@ export default class AllocationsController {
     )
 
     const name = `${allocationInformationByTeam.name.forename} ${allocationInformationByTeam.name.surname}`
-    const offenderManager = {
+    const offenderManager = allocationInformationByTeam.communityPersonManager && {
       forenames: allocationInformationByTeam.communityPersonManager.name.forename,
       surname: allocationInformationByTeam.communityPersonManager.name.surname,
       grade: allocationInformationByTeam.communityPersonManager.grade,

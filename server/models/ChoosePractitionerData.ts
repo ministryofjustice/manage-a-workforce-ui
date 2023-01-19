@@ -32,6 +32,6 @@ export default interface ChoosePractitionerData {
   name: PersonName
   tier: string
   probationStatus: ProbationStatus
-  communityPersonManager: CommunityPersonManager
+  communityPersonManager?: CommunityPersonManager
   teams: Record<string, Practitioner[]>
 }

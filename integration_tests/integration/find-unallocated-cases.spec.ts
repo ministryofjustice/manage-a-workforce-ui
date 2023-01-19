@@ -187,4 +187,18 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage.clearLink().click()
     cy.task('verifyClearUserPreferenceAllocationDemand')
   })
+
+  it('Sub nav visible on page with case count', () => {
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
+    cy.reload()
+    findUnallocatedCasesPage.subNav().should('contain', 'Unallocated community cases (8)')
+  })
+
+  it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.task('stubOverOneHundredAllocationsByTeam', 'TM1')
+    cy.reload()
+    findUnallocatedCasesPage.subNavLink().should('contain.text', 'Unallocated community cases (99+)')
+  })
 })

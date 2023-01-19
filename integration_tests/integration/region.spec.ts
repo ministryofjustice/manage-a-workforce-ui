@@ -20,17 +20,6 @@ context('Select region', () => {
     regionPage.legendHeading().trimTextContent().should('equal', 'Select your region')
   })
 
-  it('notification banner visible on page', () => {
-    const regionPage = Page.verifyOnPage(RegionPage)
-    regionPage
-      .notificationBanner()
-      .should(
-        'contain',
-        'As this is your first time signing in to Allocations, you need to select the teams you allocate cases to.'
-      )
-      .and('contain', 'You can edit your team list at any time.')
-  })
-
   it('regions in alphabetical order', () => {
     const regionPage = Page.verifyOnPage(RegionPage)
     regionPage

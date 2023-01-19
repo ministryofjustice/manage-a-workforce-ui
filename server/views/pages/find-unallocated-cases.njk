@@ -77,7 +77,7 @@
             {{ mojSubNavigation({
               label: 'Sub navigation',
               items: [{
-                text: 'Unallocated community cases',
+                text: 'Unallocated community cases' +  (' (' + casesLength | getCaseCount + ')' if casesLength) ,
                 href: '#',
                 active: true
               }]

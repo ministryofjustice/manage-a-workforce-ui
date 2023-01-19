@@ -2,7 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForWorkload } from './wiremock'
 
 export default {
-  stubGetPotentialOffenderManagerWorkload: (teamCode = 'TM1'): SuperAgentRequest => {
+  stubGetPotentialOffenderManagerWorkload: (teamCode = 'TM2'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
@@ -23,14 +23,14 @@ export default {
     })
   },
   stubGetPotentialOffenderManagerWorkloadTM2: (
-    teamCode = 'TM2',
     crn = 'J678910',
+    staffTeamCode = 'TM2',
     staffCode = 'OM3'
   ): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/team/${teamCode}/offenderManager/${staffCode}/impact/person/${crn}`,
+        urlPattern: `/team/${staffTeamCode}/offenderManager/${staffCode}/impact/person/${crn}`,
       },
       response: {
         status: 200,
@@ -46,11 +46,11 @@ export default {
       },
     })
   },
-  stubGetPotentialOffenderManagerWorkloadOverCapacity: (teamCode = 'TM1'): SuperAgentRequest => {
+  stubGetPotentialOffenderManagerWorkloadOverCapacity: (): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/team/${teamCode}/offenderManager/OM2/impact/person/J678910`,
+        urlPattern: `/team/TM2/offenderManager/OM2/impact/person/J678910`,
       },
       response: {
         status: 200,
@@ -66,11 +66,11 @@ export default {
       },
     })
   },
-  stubGetPotentialOffenderManagerWorkloadOverCapacitySamePoP: (teamCode = 'TM1'): SuperAgentRequest => {
+  stubGetPotentialOffenderManagerWorkloadOverCapacitySamePoP: (): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/team/${teamCode}/offenderManager/OM2/impact/person/J678910`,
+        urlPattern: `/team/TM2/offenderManager/OM2/impact/person/J678910`,
       },
       response: {
         status: 200,

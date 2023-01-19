@@ -186,20 +186,21 @@ export default class AllocationsController {
     if (teamAndStaffCode) {
       const { teamCode: chosenStaffTeamCode, staffCode } = TeamAndStaffCode.decode(teamAndStaffCode)
       return res.redirect(
+        // TODO - Test works
         // eslint-disable-next-line security-node/detect-dangerous-redirects
-        `/team/${chosenStaffTeamCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/allocate-to-practitioner`
+        `/team/${teamCode}/${crn}/convictions/${convictionNumber}/allocate/${chosenStaffTeamCode}/${staffCode}/allocate-to-practitioner`
       )
     }
     req.query.error = 'true'
     return this.choosePractitioner(req, res, crn, convictionNumber, teamCode)
   }
 
-  async getAllocateToPractitioner(_, res: Response, crn, staffCode, convictionNumber, teamCode) {
+  async getAllocateToPractitioner(_, res: Response, crn, staffTeamCode, staffCode, convictionNumber, teamCode) {
     const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,
       staffCode,
-      teamCode
+      staffTeamCode
     )
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
     res.render('pages/allocate-to-practitioner', {

@@ -406,11 +406,7 @@ export default {
     })
   },
 
-  stubChoosePractitionersTeamTM2Only: (
-    allocatorTeamCode = 'TM1',
-    staffCode = 'OM3',
-    crn = 'J678910'
-  ): SuperAgentRequest => {
+  stubChoosePractitionersTeamTM2Only: (teamCode = 'TM1', staffCode = 'OM3', crn = 'J678910'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
@@ -420,7 +416,7 @@ export default {
             equalTo: crn,
           },
           teamCodes: {
-            equalTo: allocatorTeamCode,
+            equalTo: teamCode,
           },
           grades: {
             equalTo: 'PSO,PQiP,PO',

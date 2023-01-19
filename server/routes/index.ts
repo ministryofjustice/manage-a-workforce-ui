@@ -76,7 +76,6 @@ export default function routes(services: Services): Router {
     await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionNumber, teamCode)
   })
 
-  // TODO -staffTeamCode
   get(
     '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/allocate-to-practitioner',
     async (req, res) => {
@@ -93,11 +92,21 @@ export default function routes(services: Services): Router {
     }
   )
 
-  // TODO -staffTeamCode
-  get('/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffCode/instructions', async (req, res) => {
-    const { crn, convictionNumber, staffCode, teamCode } = req.params
-    await allocationsController.getConfirmInstructions(req, res, crn, staffCode, convictionNumber, teamCode)
-  })
+  get(
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/instructions',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, teamCode } = req.params
+      await allocationsController.getConfirmInstructions(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        convictionNumber,
+        teamCode
+      )
+    }
+  )
 
   // TODO -staffTeamCode
   get(

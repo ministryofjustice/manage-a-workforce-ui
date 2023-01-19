@@ -211,11 +211,12 @@ export default class AllocationsController {
       tier: caseOverview.tier,
       convictionNumber: caseOverview.convictionNumber,
       staffCode,
+      staffTeamCode,
       teamCode,
     })
   }
 
-  async getConfirmInstructions(req: Request, res: Response, crn, staffCode, convictionNumber, teamCode) {
+  async getConfirmInstructions(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, teamCode) {
     const response: StaffSummary = await this.workloadService.getStaffByCode(res.locals.user.token, staffCode)
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
     res.render('pages/confirm-instructions', {
@@ -225,6 +226,7 @@ export default class AllocationsController {
       crn: caseOverview.crn,
       tier: caseOverview.tier,
       staffCode,
+      staffTeamCode,
       convictionNumber: caseOverview.convictionNumber,
       errors: req.flash('errors') || [],
       confirmInstructionForm: req.session.confirmInstructionForm || { person: [] },
@@ -289,7 +291,8 @@ export default class AllocationsController {
     if (errors.length > 0) {
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
-      return this.getConfirmInstructions(req, res, crn, staffCode, convictionNumber, teamCode)
+      // TODO - Use staffTeamCode
+      return this.getConfirmInstructions(req, res, crn, teamCode, staffCode, convictionNumber, teamCode)
     }
     const sendEmailCopyToAllocatingOfficer = !form.emailCopy
     const otherEmails = form.person.map(person => person.email).filter(email => email)

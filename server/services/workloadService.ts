@@ -1,7 +1,6 @@
 import RestClient from '../data/restClient'
 import logger from '../../logger'
 import { ApiConfig } from '../config'
-import AllocateOffenderManagers from '../models/AllocateOffenderManagers'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerCases from '../models/OffenderManagerCases'
 import OffenderManagerOverview from '../models/OffenderManagerOverview'

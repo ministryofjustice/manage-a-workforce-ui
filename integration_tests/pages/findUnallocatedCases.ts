@@ -42,7 +42,7 @@ export default class FindUnallocatedPage extends Page {
 
   selectLabel = (id): PageElement => cy.get(`label[for="${id}"]`)
 
-  saveViewButton = (): PageElement => cy.get('button')
+  saveViewButton = (): PageElement => cy.get('form button')
 
   clearLink = (): PageElement => cy.get('a[href="/probationDeliveryUnit/PDU1/clear-find-unallocated"]')
 }

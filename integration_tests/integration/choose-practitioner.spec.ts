@@ -2,15 +2,9 @@ import Page from '../pages/page'
 import ChoosePractitionerPage from '../pages/choosePractitioner'
 import SummaryPage from '../pages/summary'
 
-// TODO - Remove refs to old mocks (alloc/workload) and check old API calls are used
 context('Choose Practitioner', () => {
   beforeEach(() => {
     cy.task('stubSetup')
-    // TODO - Delete
-    cy.task('stubGetTeamDetails', {
-      code: 'TM1',
-      name: 'Wrexham Team 1',
-    })
     cy.task('stubUserPreferenceTeams', ['N03F01', 'N03F02'])
     cy.task('stubGetUnallocatedCasesByTeams', {
       teamCodes: 'N03F01,N03F02',
@@ -69,9 +63,6 @@ context('Choose Practitioner', () => {
   })
 
   it('notification banner is not visible on page if all practitioner have email addresses', () => {
-    // TODO - Delete these
-    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
-    cy.task('stubGetAllocateOffenderManagersWithEmails')
     cy.task('stubChoosePractitionersWithEmails')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
@@ -89,7 +80,6 @@ context('Choose Practitioner', () => {
 
   it('navigate to allocate page through case view', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
-    // TODO - Needed?
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/case-view')

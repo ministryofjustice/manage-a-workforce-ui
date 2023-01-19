@@ -69,7 +69,6 @@ export default {
     })
   },
 
-  // TODO - No offender manager?
   stubGetCurrentlyManagedNoOffenderManagerCaseForChoosePractitioner: (
     teamCodes = ['N03F01', 'N03F02'],
     crn = 'J678910'
@@ -128,7 +127,6 @@ export default {
     })
   },
 
-  // TODO - No offender manager?
   stubGetPreviouslyManagedNoOffenderManagerCaseForChoosePractitioner: (
     teamCodes = ['N03F01', 'N03F02'],
     crn = 'J678910'
@@ -408,7 +406,11 @@ export default {
     })
   },
 
-  stubChoosePractitionersTeamTM1: (staffCode = 'OM3', crn = 'J678910'): SuperAgentRequest => {
+  stubChoosePractitionersTeamTM2Only: (
+    allocatorTeamCode = 'TM1',
+    staffCode = 'OM3',
+    crn = 'J678910'
+  ): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
@@ -418,7 +420,7 @@ export default {
             equalTo: crn,
           },
           teamCodes: {
-            equalTo: 'TM1',
+            equalTo: allocatorTeamCode,
           },
           grades: {
             equalTo: 'PSO,PQiP,PO',
@@ -450,7 +452,7 @@ export default {
             grade: 'PO',
           },
           teams: {
-            TM1: [
+            TM2: [
               {
                 code: `${staffCode}`,
                 name: {

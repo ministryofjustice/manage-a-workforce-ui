@@ -19,18 +19,21 @@ context('Allocate to Practitioner', () => {
       name: 'Wrexham Team 1',
     })
     cy.task('stubGetAllocateOffenderManagers', 'TM1')
-    cy.task('stubChoosePractitionersTeamTM1')
-    cy.task('stubGetPotentialOffenderManagerWorkloadTM1')
+    cy.task('stubChoosePractitionersTeamTM2Only')
+    cy.task('stubGetPotentialOffenderManagerWorkloadTM2')
 
     cy.signIn()
     cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tabtable('all-teams').within(() => {
-      choosePractitionerPage.radio('TM1::OM3').click()
+      choosePractitionerPage.radio('TM2::OM3').click()
     })
     choosePractitionerPage.allocateCaseButton().click()
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
     allocatePage.subHeading().should('have.text', "You're allocating this case to probation practitioner John Doe (PO)")
+    allocatePage.breadCrumbsSection().within(() => {
+      cy.get('li>a').first().should('have.attr', 'href').and('include', 'TM1')
+    })
   })
 
   it('Offender details visible on page', () => {

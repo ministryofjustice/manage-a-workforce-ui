@@ -22,8 +22,8 @@ export default {
       },
     })
   },
-  stubGetPotentialOffenderManagerWorkloadTM1: (
-    teamCode = 'TM1',
+  stubGetPotentialOffenderManagerWorkloadTM2: (
+    teamCode = 'TM2',
     crn = 'J678910',
     staffCode = 'OM3'
   ): SuperAgentRequest => {

@@ -290,8 +290,8 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.tabtable('all-teams').within(() => {
       choosePractitionerPage.radio('N03F01::OM1').check()
       choosePractitionerPage.checkedRadioButton().should('have.value', 'N03F01::OM1')
-      choosePractitionerPage.radio('N03F01::OM1').check()
-      choosePractitionerPage.checkedRadioButton().should('have.value', 'N03F01::OM1')
+      choosePractitionerPage.radio('N03F02::OM3').check()
+      choosePractitionerPage.checkedRadioButton().should('have.value', 'N03F02::OM3')
     })
   })
 

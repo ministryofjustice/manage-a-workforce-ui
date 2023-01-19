@@ -6,7 +6,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/TM1/offenderManager/OM1/case`,
+        urlPattern: `/team/TM2/offenderManager/OM1/case`,
         bodyPatterns: [
           {
             equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": ${sendCopy}, "emailTo": [], "eventNumber": 1}`,
@@ -29,7 +29,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: `/team/TM1/offenderManager/OM1/case`,
+        urlPattern: `/team/TM2/offenderManager/OM1/case`,
         bodyPatterns: [
           {
             equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": true, "emailTo": [], "eventNumber": 1}`,
@@ -47,7 +47,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'POST',
-        urlPattern: '/team/TM1/offenderManager/OM1/case',
+        urlPattern: '/team/TM2/offenderManager/OM1/case',
         bodyPatterns: [
           {
             equalToJson: `{"crn":"J678910", "eventId": 123456789, "instructions": "Test", "sendEmailCopyToAllocatingOfficer": ${sendCopy}, "emailTo": ["example.one@justice.gov.uk", "example.two@justice.gov.uk"], "eventNumber": 1}`,

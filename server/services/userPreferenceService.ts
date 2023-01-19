@@ -65,4 +65,14 @@ export default class UserPreferenceService {
       },
     })) as UserPreference
   }
+
+  async clearAllocationDemandPreference(token: string, username: string): Promise<UserPreference> {
+    return (await this.restClient(token).put({
+      path: `/users/${username}/preferences/allocation-demand`,
+
+      data: {
+        items: [],
+      },
+    })) as UserPreference
+  }
 }

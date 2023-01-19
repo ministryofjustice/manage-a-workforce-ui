@@ -54,7 +54,7 @@ context('Instructions Confirmation', () => {
     cy.visit('/team/TM1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.continueButton('1').click()
-    cy.url().should('include', '/team/TM1/J678910/convictions/1/allocate/OM1/confirm-allocation')
+    cy.url().should('include', '/team/TM1/J678910/convictions/1/allocate/TM2/OM1/confirm-allocation')
   })
 
   it('Cancel link visible on page', () => {

@@ -278,7 +278,16 @@ export default class AllocationsController {
     response.data.pipe(res)
   }
 
-  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffCode, convictionNumber, form, teamCode) {
+  async allocateCaseToOffenderManager(
+    req: Request,
+    res: Response,
+    crn,
+    staffTeamCode,
+    staffCode,
+    convictionNumber,
+    form,
+    teamCode
+  ) {
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
       confirmInstructionForm,
@@ -291,8 +300,7 @@ export default class AllocationsController {
     if (errors.length > 0) {
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
-      // TODO - Use staffTeamCode
-      return this.getConfirmInstructions(req, res, crn, teamCode, staffCode, convictionNumber, teamCode)
+      return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, teamCode)
     }
     const sendEmailCopyToAllocatingOfficer = !form.emailCopy
     const otherEmails = form.person.map(person => person.email).filter(email => email)
@@ -307,7 +315,7 @@ export default class AllocationsController {
       crn,
       staffCode,
       caseOverviewResponse.convictionId,
-      teamCode,
+      staffTeamCode,
       form.instructions,
       otherEmails,
       sendEmailCopyToAllocatingOfficer,

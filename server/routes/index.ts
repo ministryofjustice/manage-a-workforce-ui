@@ -126,15 +126,15 @@ export default function routes(services: Services): Router {
     }
   )
 
-  // TODO -staffTeamCode
   post(
-    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffCode/confirm-allocation',
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-allocation',
     async (req, res) => {
-      const { crn, convictionNumber, staffCode, teamCode } = req.params
+      const { crn, convictionNumber, staffTeamCode, staffCode, teamCode } = req.params
       await allocationsController.allocateCaseToOffenderManager(
         req,
         res,
         crn,
+        staffTeamCode,
         staffCode,
         convictionNumber,
         req.body,

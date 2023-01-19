@@ -1,4 +1,3 @@
-import OffenderManager from './OffenderManager'
 import Offence from './Offence'
 import Requirement from './Requirement'
 import Document from './Document'
@@ -12,7 +11,6 @@ export default interface Allocation {
   sentenceDate: string
   initialAppointment: string
   status: string
-  offenderManager: OffenderManager
   gender: string
   dateOfBirth: string
   age: number

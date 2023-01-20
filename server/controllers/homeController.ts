@@ -12,7 +12,7 @@ export default class HomeController {
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       res.redirect(`/probationdeliveryunit/${pduSelection[0]}/teams`)
     } else {
-      res.redirect('/regions')
+      res.redirect('/before-you-start')
     }
   }
 

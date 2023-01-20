@@ -1,5 +1,5 @@
 import Page from '../pages/page'
-import RegionPage from '../pages/region'
+import BeforeYouStartPage from '../pages/beforeYouStart'
 import ProbationDeliveryUnitPage from '../pages/probationDeliveryUnit'
 import SelectTeamsPage from '../pages/teams'
 
@@ -54,12 +54,11 @@ context('Select Probation Delivery Unit', () => {
     probationDeliveryUnitPage.button().trimTextContent().should('equal', 'Continue')
   })
 
-  it('cancel link goes back to region screen', () => {
-    cy.task('stubGetAllRegions')
+  it('cancel link goes back to before you start screen', () => {
     const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
     probationDeliveryUnitPage.cancelLink().trimTextContent().should('equal', 'Cancel')
     probationDeliveryUnitPage.cancelLink().click()
-    Page.verifyOnPage(RegionPage)
+    Page.verifyOnPage(BeforeYouStartPage)
   })
 
   it('selecting no PDU and continuing causes error', () => {

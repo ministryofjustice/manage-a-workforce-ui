@@ -1,4 +1,4 @@
-import RegionPage from '../pages/region'
+import BeforeYouStartPage from '../pages/beforeYouStart'
 import Page from '../pages/page'
 
 context('No PDU user preference set', () => {
@@ -10,15 +10,15 @@ context('No PDU user preference set', () => {
     cy.visit('/')
   })
 
-  it('redirects to region selection page', () => {
-    const regionPage = Page.verifyOnPage(RegionPage)
-    regionPage.legendHeading().trimTextContent().should('equal', 'Select your region')
+  it('redirects to before you start page', () => {
+    const beforeYouStartPage = Page.verifyOnPage(BeforeYouStartPage)
+    beforeYouStartPage.headingText().trimTextContent().should('equal', 'Before you start')
   })
 
   it('retries if user preferences not found', () => {
     cy.task('stubUserPreferencePDUErrorThenSuccess')
     cy.visit('/')
-    const regionPage = Page.verifyOnPage(RegionPage)
-    regionPage.legendHeading().trimTextContent().should('equal', 'Select your region')
+    const beforeYouStartPage = Page.verifyOnPage(BeforeYouStartPage)
+    beforeYouStartPage.headingText().trimTextContent().should('equal', 'Before you start')
   })
 })

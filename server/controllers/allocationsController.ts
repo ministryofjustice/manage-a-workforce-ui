@@ -144,14 +144,11 @@ export default class AllocationsController {
 
     const teamNamesByCode = new Map(allTeamDetails.map(obj => [obj.code, obj.name]))
 
-    const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(
-      allocationInformationByTeam,
-      teamNamesByCode
-    )
     const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
       allocationInformationByTeam,
       teamNamesByCode
     )
+    const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(offenderManagersToAllocateByTeam)
     const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams].concat(
       offenderManagersToAllocateByTeam
     )
@@ -399,29 +396,17 @@ function getChoosePractitionerDataByTeam(
 }
 
 function getChoosePractitionerDataAllTeams(
-  allocationInformationByTeam: ChoosePractitionerData,
-  teamNamesByCode: Map<string, string>
+  offenderManagersToAllocateByTeam: TeamOffenderManagersToAllocate[]
 ): TeamOffenderManagersToAllocate {
-  const practitionersAllTeams = new Array<OffenderManagerToAllocateWithTeam>()
-  Object.entries(allocationInformationByTeam.teams).forEach(teamCodeAndPractitioner => {
-    const teamCode = teamCodeAndPractitioner[0]
-    const allPractitioners = teamCodeAndPractitioner[1] as Practitioner[]
-    allPractitioners.forEach(practitioner => {
-      const practitionerData = mapPractitioner(practitioner)
-      practitionersAllTeams.push({
-        ...practitionerData,
-        teamCode,
-        teamName: teamNamesByCode.get(teamCode),
-        selectionCode: TeamAndStaffCode.encode(teamCode, practitioner.code),
-      })
-    })
-  })
-  practitionersAllTeams.sort(sortPractitionersByGrade)
+  const allOffenderManagers = offenderManagersToAllocateByTeam.reduce(
+    (accumulator, currentValue) => accumulator.concat(currentValue.offenderManagersToAllocate),
+    new Array<OffenderManagerToAllocateWithTeam>()
+  )
   return {
     isPerTeam: false,
     teamCode: 'all-teams',
     teamName: 'All teams',
-    offenderManagersToAllocate: practitionersAllTeams,
+    offenderManagersToAllocate: allOffenderManagers,
   }
 }
 

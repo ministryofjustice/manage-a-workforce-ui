@@ -158,6 +158,10 @@
           <div class="moj-scrollable-pane__wrapper">
             {% if casesLength %}
               {{ govukTable(tableData) }}
+            {% elif teamSelected %}
+              <p class="govuk-body-l">
+                There are no cases currently awaiting allocation.
+              </p>
             {% endif %}
           </div>
         </div>

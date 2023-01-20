@@ -1,6 +1,6 @@
 import Page from '../pages/page'
 import SelectTeamsPage from '../pages/teams'
-import RegionPage from '../pages/region'
+import BeforeYouStartPage from '../pages/beforeYouStart'
 
 context('Select teams', () => {
   beforeEach(() => {
@@ -70,9 +70,8 @@ context('Select teams', () => {
   })
 
   it('selecting cancel link goes to select region screen', () => {
-    cy.task('stubGetAllRegions')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.cancelLink().click()
-    Page.verifyOnPage(RegionPage)
+    Page.verifyOnPage(BeforeYouStartPage)
   })
 })

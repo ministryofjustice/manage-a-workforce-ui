@@ -107,6 +107,7 @@ export default class FindUnallocatedCasesController {
     if (errors.length) {
       req.flash('errors', errors)
       req.flash('allocationDemandSelected', [allocationDemandSelected])
+      await this.userPreferenceService.clearAllocationDemandPreference(token, username)
     } else {
       await this.userPreferenceService.saveAllocationDemandPreference(token, username, allocationDemandSelected)
     }

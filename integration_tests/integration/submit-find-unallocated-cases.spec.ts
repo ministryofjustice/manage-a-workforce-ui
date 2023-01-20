@@ -13,6 +13,7 @@ context('Submit find Unallocated cases', () => {
   })
 
   it('must show error banner when submitting no selections', () => {
+    cy.task('stubPutEmptyUserPreferenceAllocationDemand')
     findUnallocatedCasesPage.saveViewButton().click()
     findUnallocatedCasesPage
       .errorSummary()
@@ -24,12 +25,14 @@ context('Submit find Unallocated cases', () => {
   })
 
   it('must keep pdu selection after submitting partial selection', () => {
+    cy.task('stubPutEmptyUserPreferenceAllocationDemand')
     findUnallocatedCasesPage.select('pdu').select('PDU1')
     findUnallocatedCasesPage.saveViewButton().click()
     findUnallocatedCasesPage.select('pdu').find(':selected').contains('First Probation Delivery Unit')
   })
 
   it('must keep ldu selection after submitting partial selection', () => {
+    cy.task('stubPutEmptyUserPreferenceAllocationDemand')
     findUnallocatedCasesPage.select('pdu').select('PDU1')
     findUnallocatedCasesPage.select('ldu').select('LDU1')
     findUnallocatedCasesPage.saveViewButton().click()
@@ -41,8 +44,10 @@ context('Submit find Unallocated cases', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
     cy.reload()
+    cy.task('stubPutEmptyUserPreferenceAllocationDemand')
     findUnallocatedCasesPage.select('pdu').select(0)
     findUnallocatedCasesPage.saveViewButton().click()
+    cy.task('verifyClearUserPreferenceAllocationDemand')
     findUnallocatedCasesPage.select('pdu').find(':selected').contains('Select PDU')
     findUnallocatedCasesPage.select('ldu').find(':selected').contains('Select LDU')
     findUnallocatedCasesPage.select('team').find(':selected').contains('Select team')

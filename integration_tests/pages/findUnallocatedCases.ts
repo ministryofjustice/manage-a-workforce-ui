@@ -7,6 +7,8 @@ export default class FindUnallocatedPage extends Page {
 
   region = (): PageElement => cy.get('.govuk-caption-xl')
 
+  probationDeliveryUnit = (): PageElement => cy.get('.govuk-heading-xl')
+
   primaryNav = (): PageElement => cy.get('ul.moj-primary-navigation__list').children()
 
   navLink = (linkId: string): PageElement => cy.get(`#${linkId}`).invoke('attr', 'href')

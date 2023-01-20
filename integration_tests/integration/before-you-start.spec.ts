@@ -3,7 +3,7 @@ import Page from '../pages/page'
 
 import config from '../../server/config'
 
-context('Find Unallocated cases', () => {
+context('Before you start', () => {
   let beforeYouStartPage: BeforeYouStartPage
   beforeEach(() => {
     cy.task('stubSetup')

@@ -10,4 +10,6 @@ export default class AllocateToPractitionerPage extends Page {
   capacityImpactStatement = (): PageElement => cy.get('#impact-statement')
 
   redCapacities = (): PageElement => cy.get('.percentage-extra-over')
+
+  breadCrumbsSection = (): PageElement => cy.get('.govuk-breadcrumbs__list')
 }

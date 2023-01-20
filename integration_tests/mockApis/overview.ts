@@ -2,7 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForWorkload } from './wiremock'
 
 export default {
-  stubGetOverview: (teamCode = 'TM1'): SuperAgentRequest => {
+  stubGetOverview: (teamCode = 'TM2'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
@@ -42,7 +42,7 @@ export default {
     })
   },
 
-  stubGetOverviewUnderCapacity: (teamCode = 'TM1'): SuperAgentRequest => {
+  stubGetOverviewUnderCapacity: (teamCode = 'TM2'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
@@ -79,7 +79,7 @@ export default {
     })
   },
 
-  stubGetOverviewWithLastAllocatedEvent: (teamCode = 'TM1'): SuperAgentRequest => {
+  stubGetOverviewWithLastAllocatedEvent: (teamCode = 'TM2'): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',

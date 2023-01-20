@@ -1,7 +1,6 @@
 import RestClient from '../data/restClient'
 import logger from '../../logger'
 import { ApiConfig } from '../config'
-import AllocateOffenderManagers from '../models/AllocateOffenderManagers'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerCases from '../models/OffenderManagerCases'
 import OffenderManagerOverview from '../models/OffenderManagerOverview'
@@ -10,6 +9,7 @@ import PersonManager from '../models/PersonManager'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 import WorkloadByTeam from '../models/workloadByTeam'
 import EventManagerDetails from '../models/EventManagerDetails'
+import ChoosePractitionerData from '../models/ChoosePractitionerData'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -22,10 +22,10 @@ export default class WorkloadService {
     return new RestClient('Workload Service API Client', this.config, token)
   }
 
-  async getOffenderManagersToAllocate(token: string, teamCode: string): Promise<AllocateOffenderManagers> {
+  async getChoosePractitionerData(token: string, crn: string, teamCodes: string[]): Promise<ChoosePractitionerData> {
     return (await this.restClient(token).get({
-      path: `/team/${teamCode}/offenderManagers?grades=PSO,PQiP,PO`,
-    })) as AllocateOffenderManagers
+      path: `/team/choose-practitioner?grades=PSO,PQiP,PO&crn=${crn}&teamCodes=${teamCodes.join(',')}`,
+    })) as ChoosePractitionerData
   }
 
   async getCaseAllocationImpact(token: string, crn, staffCode, teamCode): Promise<OffenderManagerPotentialWorkload> {

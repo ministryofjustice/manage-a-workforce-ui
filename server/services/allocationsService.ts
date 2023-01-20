@@ -6,7 +6,6 @@ import ProbationRecord from '../models/ProbationRecord'
 import Risk from '../models/Risk'
 import FileDownload from '../models/FileDownload'
 import UnallocatedCaseCountByTeam from '../models/UnallocatedCaseCountByTeam'
-import CaseForChoosePractitioner from '../models/CaseForChoosePractitioner'
 import DocumentDetails from '../models/DocumentDetails'
 import UnallocatedCase from '../models/UnallocatedCase'
 import CaseOverview from '../models/CaseOverview'
@@ -58,12 +57,6 @@ export default class AllocationsService {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/overview`,
     })) as CaseOverview
-  }
-
-  async getCaseForChoosePractitioner(token: string, crn, convictionNumber): Promise<CaseForChoosePractitioner> {
-    return (await this.restClient(token).get({
-      path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/practitionerCase`,
-    })) as CaseForChoosePractitioner
   }
 
   getDocument(token: string, crn, documentId): Promise<FileDownload> {

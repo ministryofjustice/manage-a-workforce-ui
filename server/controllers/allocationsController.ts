@@ -6,7 +6,7 @@ import ProbationRecord from '../models/ProbationRecord'
 import Risk from '../models/Risk'
 import Order from './data/Order'
 import Conviction from '../models/Conviction'
-import AllocateOffenderManager from './data/AllocateOffenderManager'
+import { gradeOrder, gradeTips } from './data/AllocateOffenderManager'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerOverview from '../models/OffenderManagerOverview'
 import FileDownload from '../models/FileDownload'
@@ -21,13 +21,16 @@ import trimForm from '../utils/trim'
 import OfficerView from './data/OfficerView'
 import DisplayAddress from './data/DisplayAddress'
 import ProbationEstateService from '../services/probationEstateService'
-import CaseForChoosePractitioner from '../models/CaseForChoosePractitioner'
 import DocumentRow from './data/DocumentRow'
+import ChoosePractitionerData, { Practitioner } from '../models/ChoosePractitionerData'
+import UserPreferenceService from '../services/userPreferenceService'
+import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 
 export default class AllocationsController {
   constructor(
     private readonly allocationsService: AllocationsService,
     private readonly workloadService: WorkloadService,
+    private readonly userPreferenceService: UserPreferenceService,
     private readonly probationEstateService: ProbationEstateService
   ) {}
 
@@ -128,76 +131,72 @@ export default class AllocationsController {
     })
   }
 
+  // eslint-disable-next-line consistent-return
   async choosePractitioner(req: Request, res: Response, crn, convictionNumber, teamCode) {
-    const { token } = res.locals.user
-    const { offenderManagers } = await this.workloadService.getOffenderManagersToAllocate(token, teamCode)
-    const { name: teamName } = await this.probationEstateService.getTeamDetailsByCode(token, teamCode)
+    const { token, username } = res.locals.user
 
-    const offenderManagersToAllocate = offenderManagers
-      .map(
-        om =>
-          new AllocateOffenderManager(
-            om.forename,
-            om.surname,
-            om.grade,
-            om.capacity,
-            om.totalCommunityCases,
-            om.totalCustodyCases,
-            om.code,
-            om.totalCasesInLastWeek,
-            om.email
-          )
-      )
-      .sort((a: AllocateOffenderManager, b: AllocateOffenderManager) => {
-        if (b.gradeOrder === a.gradeOrder) {
-          return a.capacity - b.capacity
-        }
-        return b.gradeOrder - a.gradeOrder
-      })
+    const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
 
-    const missingEmail = offenderManagersToAllocate.some(i => !i.email)
-    const response: CaseForChoosePractitioner = await this.allocationsService.getCaseForChoosePractitioner(
-      token,
-      crn,
-      convictionNumber
+    const [allocationInformationByTeam, allTeamDetails] = await Promise.all([
+      await this.workloadService.getChoosePractitionerData(token, crn, teamCodesPreferences.items),
+      await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
+    ])
+
+    const teamNamesByCode = new Map(allTeamDetails.map(obj => [obj.code, obj.name]))
+
+    const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
+      allocationInformationByTeam,
+      teamNamesByCode
     )
+    const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(offenderManagersToAllocateByTeam)
+    const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams].concat(
+      offenderManagersToAllocateByTeam
+    )
+
+    const name = `${allocationInformationByTeam.name.forename} ${allocationInformationByTeam.name.surname}`
+    const offenderManager = allocationInformationByTeam.communityPersonManager && {
+      forenames: allocationInformationByTeam.communityPersonManager.name.forename,
+      surname: allocationInformationByTeam.communityPersonManager.name.surname,
+      grade: allocationInformationByTeam.communityPersonManager.grade,
+    }
+    const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
     const error = req.query.error === 'true'
-    res.render('pages/choose-practitioner', {
-      title: `${response.name} | Choose practitioner | Manage a workforce`,
-      name: response.name,
-      crn: response.crn,
-      tier: response.tier,
-      convictionNumber: response.convictionNumber,
-      probationStatus: response.status,
-      offenderManager: response.offenderManager,
-      offenderManagersToAllocate,
+    return res.render('pages/choose-practitioner', {
+      title: `${name} | Choose practitioner | Manage a workforce`,
+      name,
+      crn: allocationInformationByTeam.crn,
+      tier: allocationInformationByTeam.tier,
+      convictionNumber,
+      probationStatus: allocationInformationByTeam.probationStatus.description,
+      offenderManager,
+      offenderManagersToAllocatePerTeam,
       error,
-      teamCode,
-      teamName,
       missingEmail,
+      teamCode,
     })
   }
 
   async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionNumber, teamCode) {
     const {
-      body: { allocatedOfficer: staffCode },
+      body: { allocatedOfficer: teamAndStaffCode },
     } = req
-    if (staffCode) {
+    if (teamAndStaffCode) {
+      const { teamCode: chosenStaffTeamCode, staffCode } = TeamAndStaffCode.decode(teamAndStaffCode)
       return res.redirect(
         // eslint-disable-next-line security-node/detect-dangerous-redirects
-        `/team/${teamCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/allocate-to-practitioner`
+        `/team/${teamCode}/${crn}/convictions/${convictionNumber}/allocate/${chosenStaffTeamCode}/${staffCode}/allocate-to-practitioner`
       )
     }
     req.query.error = 'true'
     return this.choosePractitioner(req, res, crn, convictionNumber, teamCode)
   }
 
-  async getAllocateToPractitioner(_, res: Response, crn, staffCode, convictionNumber, teamCode) {
+  async getAllocateToPractitioner(_, res: Response, crn, staffTeamCode, staffCode, convictionNumber, teamCode) {
     const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,
       staffCode,
-      teamCode
+      staffTeamCode
     )
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
     res.render('pages/allocate-to-practitioner', {
@@ -208,11 +207,12 @@ export default class AllocationsController {
       tier: caseOverview.tier,
       convictionNumber: caseOverview.convictionNumber,
       staffCode,
+      staffTeamCode,
       teamCode,
     })
   }
 
-  async getConfirmInstructions(req: Request, res: Response, crn, staffCode, convictionNumber, teamCode) {
+  async getConfirmInstructions(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, teamCode) {
     const response: StaffSummary = await this.workloadService.getStaffByCode(res.locals.user.token, staffCode)
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
     res.render('pages/confirm-instructions', {
@@ -222,6 +222,7 @@ export default class AllocationsController {
       crn: caseOverview.crn,
       tier: caseOverview.tier,
       staffCode,
+      staffTeamCode,
       convictionNumber: caseOverview.convictionNumber,
       errors: req.flash('errors') || [],
       confirmInstructionForm: req.session.confirmInstructionForm || { person: [] },
@@ -229,16 +230,17 @@ export default class AllocationsController {
     })
   }
 
-  async getOverview(_, res: Response, crn, offenderManagerCode, convictionNumber, teamCode) {
+  async getOverview(_, res: Response, crn, offenderManagerTeamCode, offenderManagerCode, convictionNumber, teamCode) {
     const response: OffenderManagerOverview = await this.workloadService.getOffenderManagerOverview(
       res.locals.user.token,
       offenderManagerCode,
-      teamCode
+      offenderManagerTeamCode
     )
     const data: OfficerView = new OfficerView(response)
     res.render('pages/officer-overview', {
       title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
       data,
+      officerTeamCode: offenderManagerTeamCode,
       crn,
       convictionNumber,
       isOverview: true,
@@ -246,11 +248,19 @@ export default class AllocationsController {
     })
   }
 
-  async getActiveCases(req: Request, res: Response, crn, offenderManagerCode, convictionNumber, teamCode) {
+  async getActiveCases(
+    req: Request,
+    res: Response,
+    crn,
+    offenderManagerTeamCode,
+    offenderManagerCode,
+    convictionNumber,
+    teamCode
+  ) {
     const response: OffenderManagerCases = await this.workloadService.getOffenderManagerCases(
       res.locals.user.token,
       offenderManagerCode,
-      teamCode
+      offenderManagerTeamCode
     )
     const cases = response.activeCases.map(
       activeCase =>
@@ -259,6 +269,7 @@ export default class AllocationsController {
     res.render('pages/active-cases', {
       title: `${response.forename} ${response.surname} | Active cases | Manage a workforce`,
       data: response,
+      officerTeamCode: offenderManagerTeamCode,
       cases,
       crn,
       convictionNumber,
@@ -273,7 +284,16 @@ export default class AllocationsController {
     response.data.pipe(res)
   }
 
-  async allocateCaseToOffenderManager(req: Request, res: Response, crn, staffCode, convictionNumber, form, teamCode) {
+  async allocateCaseToOffenderManager(
+    req: Request,
+    res: Response,
+    crn,
+    staffTeamCode,
+    staffCode,
+    convictionNumber,
+    form,
+    teamCode
+  ) {
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
       confirmInstructionForm,
@@ -286,7 +306,7 @@ export default class AllocationsController {
     if (errors.length > 0) {
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
-      return this.getConfirmInstructions(req, res, crn, staffCode, convictionNumber, teamCode)
+      return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, teamCode)
     }
     const sendEmailCopyToAllocatingOfficer = !form.emailCopy
     const otherEmails = form.person.map(person => person.email).filter(email => email)
@@ -301,7 +321,7 @@ export default class AllocationsController {
       crn,
       staffCode,
       caseOverviewResponse.convictionId,
-      teamCode,
+      staffTeamCode,
       form.instructions,
       otherEmails,
       sendEmailCopyToAllocatingOfficer,
@@ -346,4 +366,95 @@ function toArrayNotation(href: string) {
 
 function fixupArrayNotation({ text, href }: { text: string; href: string }) {
   return { text, href: toArrayNotation(href) }
+}
+
+function getChoosePractitionerDataByTeam(
+  allocationInformationByTeam: ChoosePractitionerData,
+  teamNamesByCode: Map<string, string>
+): TeamOffenderManagersToAllocate[] {
+  const practitionerTeams = new Array<TeamOffenderManagersToAllocate>()
+  Object.entries(allocationInformationByTeam.teams).forEach(teamCodeAndPractitioner => {
+    const teamCode = teamCodeAndPractitioner[0]
+    const practitionersInTeam = (teamCodeAndPractitioner[1] as Practitioner[]).map(practitioner => {
+      const practitionerData = mapPractitioner(practitioner)
+      return {
+        ...practitionerData,
+        teamCode,
+        teamName: teamNamesByCode.get(teamCode),
+        selectionCode: TeamAndStaffCode.encode(teamCode, practitioner.code),
+      }
+    })
+    practitionersInTeam.sort(sortPractitionersByGrade)
+    practitionerTeams.push({
+      isPerTeam: true,
+      teamCode,
+      teamName: teamNamesByCode.get(teamCode),
+      offenderManagersToAllocate: practitionersInTeam,
+    })
+  })
+  return practitionerTeams
+}
+
+function getChoosePractitionerDataAllTeams(
+  offenderManagersToAllocateByTeam: TeamOffenderManagersToAllocate[]
+): TeamOffenderManagersToAllocate {
+  const practitionersInAllTeams = offenderManagersToAllocateByTeam.reduce(
+    (accumulator, currentValue) => accumulator.concat(currentValue.offenderManagersToAllocate),
+    new Array<OffenderManagerToAllocateWithTeam>()
+  )
+  practitionersInAllTeams.sort(sortPractitionersByGrade)
+  return {
+    isPerTeam: false,
+    teamCode: 'all-teams',
+    teamName: 'All teams',
+    offenderManagersToAllocate: practitionersInAllTeams,
+  }
+}
+
+function mapPractitioner(practitionerData): OffenderManagerToAllocate {
+  return {
+    name: `${practitionerData.name?.forename} ${practitionerData.name?.surname}`,
+    code: practitionerData.code,
+    grade: practitionerData.grade,
+    gradeTip: gradeTips.get(practitionerData.grade),
+    gradeOrder: gradeOrder.get(practitionerData.grade) || 0,
+    capacity: practitionerData.workload,
+    totalCasesInLastWeek: practitionerData.casesPastWeek,
+    communityCases: practitionerData.communityCases,
+    custodyCases: practitionerData.custodyCases,
+    email: practitionerData.email,
+  }
+}
+
+function sortPractitionersByGrade(a, b) {
+  if (b.gradeOrder === a.gradeOrder) {
+    return a.capacity - b.capacity
+  }
+  return b.gradeOrder - a.gradeOrder
+}
+
+type TeamOffenderManagersToAllocate = {
+  isPerTeam: boolean
+  teamCode: string
+  teamName: string
+  offenderManagersToAllocate: OffenderManagerToAllocateWithTeam[]
+}
+
+type OffenderManagerToAllocate = {
+  name: string
+  code: string
+  grade: string
+  gradeOrder: number
+  gradeTip: string
+  capacity: number
+  totalCasesInLastWeek: number
+  communityCases: number
+  custodyCases: number
+  email?: string
+}
+
+type OffenderManagerToAllocateWithTeam = OffenderManagerToAllocate & {
+  teamCode: string
+  teamName: string
+  selectionCode: string
 }

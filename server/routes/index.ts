@@ -16,6 +16,7 @@ export default function routes(services: Services): Router {
   const allocationsController = new AllocationsController(
     services.allocationsService,
     services.workloadService,
+    services.userPreferenceService,
     services.probationEstateService
   )
   const probationEstateController = new ProbationEstateController(
@@ -101,42 +102,78 @@ export default function routes(services: Services): Router {
   })
 
   get(
-    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffCode/allocate-to-practitioner',
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/allocate-to-practitioner',
     async (req, res) => {
-      const { crn, convictionNumber, staffCode, teamCode } = req.params
-      await allocationsController.getAllocateToPractitioner(req, res, crn, staffCode, convictionNumber, teamCode)
-    }
-  )
-
-  get('/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffCode/instructions', async (req, res) => {
-    const { crn, convictionNumber, staffCode, teamCode } = req.params
-    await allocationsController.getConfirmInstructions(req, res, crn, staffCode, convictionNumber, teamCode)
-  })
-
-  get(
-    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerCode/officer-view',
-    async (req, res) => {
-      const { crn, convictionNumber, offenderManagerCode, teamCode } = req.params
-      await allocationsController.getOverview(req, res, crn, offenderManagerCode, convictionNumber, teamCode)
+      const { crn, convictionNumber, staffTeamCode, staffCode, teamCode } = req.params
+      await allocationsController.getAllocateToPractitioner(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        convictionNumber,
+        teamCode
+      )
     }
   )
 
   get(
-    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerCode/active-cases',
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/instructions',
     async (req, res) => {
-      const { crn, convictionNumber, offenderManagerCode, teamCode } = req.params
-      await allocationsController.getActiveCases(req, res, crn, offenderManagerCode, convictionNumber, teamCode)
+      const { crn, convictionNumber, staffTeamCode, staffCode, teamCode } = req.params
+      await allocationsController.getConfirmInstructions(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        convictionNumber,
+        teamCode
+      )
+    }
+  )
+
+  get(
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/officer-view',
+    async (req, res) => {
+      const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, teamCode } = req.params
+      await allocationsController.getOverview(
+        req,
+        res,
+        crn,
+        offenderManagerTeamCode,
+        offenderManagerCode,
+        convictionNumber,
+        teamCode
+      )
+    }
+  )
+
+  get(
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/active-cases',
+    async (req, res) => {
+      const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, teamCode } = req.params
+      await allocationsController.getActiveCases(
+        req,
+        res,
+        crn,
+        offenderManagerTeamCode,
+        offenderManagerCode,
+        convictionNumber,
+        teamCode
+      )
     }
   )
 
   post(
-    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffCode/confirm-allocation',
+    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-allocation',
     async (req, res) => {
-      const { crn, convictionNumber, staffCode, teamCode } = req.params
+      const { crn, convictionNumber, staffTeamCode, staffCode, teamCode } = req.params
       await allocationsController.allocateCaseToOffenderManager(
         req,
         res,
         crn,
+        staffTeamCode,
         staffCode,
         convictionNumber,
         req.body,

@@ -9,6 +9,14 @@ export default class ChoosePractitionerPage extends Page {
 
   warningIcon = (): PageElement => cy.get('.govuk-warning-text__icon')
 
+  tabs = (): PageElement => cy.get('[data-module="govuk-tabs"]')
+
+  tab = (id: string): PageElement => cy.get(`[id="tab_${id}"]`)
+
+  tabtable = (id: string): PageElement => cy.get(`[id="${id}"]`).find('table')
+
+  officerLink = (id: string): PageElement => cy.get(`[data-qa-link="${id}"]`)
+
   table = (): PageElement => cy.get('table')
 
   checkedRadioButton = (): PageElement => cy.get('input[type="radio"]:checked')

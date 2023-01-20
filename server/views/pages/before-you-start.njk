@@ -1,0 +1,45 @@
+{% extends "../partials/layout.njk" %}
+{%- from "govuk/components/button/macro.njk" import govukButton -%}
+
+
+{% block content %}
+
+        <div class="govuk-grid-row govuk-!-padding-bottom-5">
+          <div class="govuk-grid-column-full">
+            <span class="govuk-caption-xl">Allocations</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">Before you start</h1>
+          </div>
+        </div>
+
+        <p class="govuk-body-l">
+            Allocate a Person Probation (Allocations) is a service that allows Senior Probation Officers to allocate a Person on Probation to a probation practitioner.
+        </p>
+
+        <p class="govuk-body">
+            As this is your first time signing in to the service, you need to select the teams you allocate cases to. This includes:
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>teams you manage</li>
+            <li>teams you allocate to when on duty</li>
+        </ul>
+        <p class="govuk-body">
+            You can edit your teams list at any time.
+        </p>
+
+        <h2 class="govuk-heading-m">Unallocated cases</h2>
+        <p class="govuk-body">
+            Once you’ve picked the teams you allocate to, you’ll be able to view cases awaiting allocation. 
+            <br>
+            Use the filters to see the unallocated cases in any team within a Probation Delivery Unit.
+        </p>
+
+        
+        {{ govukButton({
+        text: "Start now",
+        href: "/regions",
+        isStartButton: true
+        }) }}
+
+     
+{% endblock %}
+

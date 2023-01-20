@@ -38,6 +38,9 @@ export default function routes(services: Services): Router {
     services.allocationsService
   )
 
+  get('/before-you-start', async (req, res) => {
+    await homeController.beforeYouStart(req, res)
+  })
   get('/', async (req, res) => {
     await homeController.redirectUser(req, res)
   })

@@ -15,4 +15,10 @@ export default class HomeController {
       res.redirect('/regions')
     }
   }
+
+  async beforeYouStart(_, res: Response): Promise<void> {
+    return res.render('pages/before-you-start', {
+      title: 'Before you start | Manage a workforce',
+    })
+  }
 }

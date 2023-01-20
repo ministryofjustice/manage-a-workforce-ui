@@ -37,6 +37,12 @@ export default abstract class Page {
 
   captionText = (): PageElement => cy.get('.govuk-caption-xl')
 
+  headingText = (): PageElement => cy.get('.govuk-heading-xl')
+
+  primaryNav = (): PageElement => cy.get('ul.moj-primary-navigation__list').children()
+
+  navLink = (linkId: string): PageElement => cy.get(`#${linkId}`).invoke('attr', 'href')
+
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 
   notificationBanner = (): PageElement => cy.get('.govuk-notification-banner')

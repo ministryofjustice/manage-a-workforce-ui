@@ -44,5 +44,5 @@ export default class FindUnallocatedPage extends Page {
 
   clearLink = (): PageElement => cy.get('a[href="/probationDeliveryUnit/PDU1/clear-find-unallocated"]')
 
-  noCasesBody = (): PageElement => cy.get('.govuk-body-m')
+  noCasesBody = (): PageElement => cy.get('.govuk-body-l')
 }

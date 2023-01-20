@@ -69,7 +69,7 @@ context('Select teams', () => {
       .should('equal', 'There is a problem Select the teams you allocate to')
   })
 
-  it('selecting cancel link goes to select region screen', () => {
+  it('selecting cancel link goes to before you start screen', () => {
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.cancelLink().click()
     Page.verifyOnPage(BeforeYouStartPage)

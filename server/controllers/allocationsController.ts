@@ -398,15 +398,16 @@ function getChoosePractitionerDataByTeam(
 function getChoosePractitionerDataAllTeams(
   offenderManagersToAllocateByTeam: TeamOffenderManagersToAllocate[]
 ): TeamOffenderManagersToAllocate {
-  const allOffenderManagers = offenderManagersToAllocateByTeam.reduce(
+  const practitionersInAllTeams = offenderManagersToAllocateByTeam.reduce(
     (accumulator, currentValue) => accumulator.concat(currentValue.offenderManagersToAllocate),
     new Array<OffenderManagerToAllocateWithTeam>()
   )
+  practitionersInAllTeams.sort(sortPractitionersByGrade)
   return {
     isPerTeam: false,
     teamCode: 'all-teams',
     teamName: 'All teams',
-    offenderManagersToAllocate: allOffenderManagers,
+    offenderManagersToAllocate: practitionersInAllTeams,
   }
 }
 

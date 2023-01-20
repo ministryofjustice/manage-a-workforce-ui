@@ -303,7 +303,7 @@ export default {
                   surname: 'Doe',
                 },
                 email: 'j.doe@email.co.uk',
-                grade: 'PO',
+                grade: 'PQiP',
                 workload: 19,
                 casesPastWeek: 2,
                 communityCases: 3,

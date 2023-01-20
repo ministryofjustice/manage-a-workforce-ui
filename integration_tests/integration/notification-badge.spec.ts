@@ -53,7 +53,7 @@ context('Unallocated', () => {
   it('must show + when erroring retrieving unallocated case count', () => {
     cy.task('stubUserPreferenceTeamsError')
     cy.task('stubGetUnallocatedCase')
-    cy.visit('/team/TM1/J678910/convictions/1/case-view')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.notificationsBadge().should('contain.text', '+')
   })

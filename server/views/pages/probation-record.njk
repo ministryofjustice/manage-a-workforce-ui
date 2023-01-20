@@ -69,7 +69,7 @@
     {% if previousOrders | length > 0 %}
         {{ govukTable(previousOrderData) }}
         {% if not viewAll %}
-            <a href="{{ '/team/' + teamCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous orders ({{ totalPreviousCount }})</a>
+            <a href="{{ '/pdu/' + pduCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous orders ({{ totalPreviousCount }})</a>
         {% endif %}
     {% else %}
 

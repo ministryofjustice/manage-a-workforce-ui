@@ -52,7 +52,7 @@ context('Choose Practitioner', () => {
 
   it('notification banner visible on page', () => {
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const regionPage = Page.verifyOnPage(ChoosePractitionerPage)
     regionPage
       .notificationBanner()
@@ -65,7 +65,7 @@ context('Choose Practitioner', () => {
   it('notification banner is not visible on page if all practitioner have email addresses', () => {
     cy.task('stubChoosePractitionersWithEmails')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const regionPage = Page.verifyOnPage(ChoosePractitionerPage)
     regionPage.notificationBanner().should('not.exist')
   })
@@ -73,7 +73,7 @@ context('Choose Practitioner', () => {
   it('Offender details visible on page', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
@@ -82,16 +82,16 @@ context('Choose Practitioner', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/case-view')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.allocateCaseButton('J678910', '1', 'TM1').click()
+    summaryPage.allocateCaseButton('J678910', '1', 'PDU1').click()
     Page.verifyOnPage(ChoosePractitionerPage)
   })
 
   it('Section break is visible on page', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.sectionBreak().should('exist')
   })
@@ -99,7 +99,7 @@ context('Choose Practitioner', () => {
   it('Sub heading is visible on page', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.subHeading().should('contain', 'Allocate to a probation practitioner')
   })
@@ -107,7 +107,7 @@ context('Choose Practitioner', () => {
   it('Warning is visible on page if probation status is currently managed', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage
       .warningText()
@@ -118,7 +118,7 @@ context('Choose Practitioner', () => {
   it('Warning is not visible on page if no offender manager details', () => {
     cy.task('stubGetCurrentlyManagedNoOffenderManagerCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.warningText().should('not.exist')
     choosePractitionerPage.warningIcon().should('not.exist')
@@ -127,7 +127,7 @@ context('Choose Practitioner', () => {
   it('Warning is visible on page if no offender manager details for previously managed', () => {
     cy.task('stubGetPreviouslyManagedNoOffenderManagerCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.warningText().should('contain', 'Dylan Adam Armstrong was previously managed.')
     choosePractitionerPage.warningIcon().should('exist')
@@ -135,7 +135,7 @@ context('Choose Practitioner', () => {
 
   it('Warning is visible on page if probation status is Previously managed', () => {
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.warningText().should('contain', 'Don Cole was previously managed by Derek Pint (PO)')
     choosePractitionerPage.warningIcon().should('exist')
@@ -144,7 +144,7 @@ context('Choose Practitioner', () => {
   it('Warning is not visible on page if probation status is New to probation', () => {
     cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.warningText().should('not.exist')
     choosePractitionerPage.warningIcon().should('not.exist')
@@ -152,7 +152,7 @@ context('Choose Practitioner', () => {
 
   it('Team tabs visible on page', () => {
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tabs().find('.govuk-tabs__tab').should('have.length', 3)
     choosePractitionerPage.tab('all-teams').should('contain', 'All teams')
@@ -162,7 +162,7 @@ context('Choose Practitioner', () => {
 
   it('All teams visible on page by default', () => {
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage
       .tabtable('all-teams')
@@ -207,18 +207,18 @@ context('Choose Practitioner', () => {
 
   it('All teams view link is correct', () => {
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tab('N03F02').click()
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', 'team/TM1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
+      .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
   })
 
   it('Individual team visible on page when selected', () => {
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tab('N03F02').click()
     choosePractitionerPage
@@ -252,18 +252,18 @@ context('Choose Practitioner', () => {
 
   it('Individual team view link is correct', () => {
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tab('N03F02').click()
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', 'team/TM1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
+      .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
   })
 
   it('Individual team select radio button contains the correct team', () => {
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tab('N03F02').click()
     choosePractitionerPage.tabtable('N03F02').within(() => {
@@ -274,7 +274,7 @@ context('Choose Practitioner', () => {
   it('Breadcrumbs visible on page', () => {
     cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage
       .breadCrumbs()
@@ -285,7 +285,7 @@ context('Choose Practitioner', () => {
 
   it('should only be able to select one offender manager at a time', () => {
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tabtable('all-teams').within(() => {
       choosePractitionerPage.radio('N03F01::OM1').check()
@@ -298,7 +298,7 @@ context('Choose Practitioner', () => {
   it('should display error when no offender managers selected and allocate case button clicked', () => {
     cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.allocateCaseButton().click()
     choosePractitionerPage
@@ -309,7 +309,7 @@ context('Choose Practitioner', () => {
 
   it('should clear selection when clicking on Clear selection', () => {
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tab('N03F02').click()
     choosePractitionerPage.tabtable('N03F02').within(() => {
@@ -324,7 +324,7 @@ context('Choose Practitioner', () => {
 
   it('should not show selection radio when there is no email', () => {
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/choose-practitioner')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tabtable('all-teams').within(() => {
       choosePractitionerPage.radio('N03F02::OM2').should('not.exist')

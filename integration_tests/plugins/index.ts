@@ -65,10 +65,6 @@ export default (on: (string, Record) => void): void => {
             },
           ],
         }),
-        probationEstate.stubGetTeamDetails({
-          code: 'TM1',
-          name: 'Wrexham - Team 1',
-        }),
         probationEstate.stubGetPduDetails(),
       ])
     },

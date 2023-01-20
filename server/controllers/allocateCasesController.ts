@@ -21,8 +21,7 @@ export default class AllocateCasesController {
     const teamCodes = teamsUserPreference.items
     let caseInformationByTeam = []
     if (teamCodes.length) {
-      const [allocationCasesByTeam, workloadByTeam, probationEstateTeams] = await Promise.all([
-        this.allocationsService.getCaseCountByTeamCodes(token, teamCodes),
+      const [workloadByTeam, probationEstateTeams] = await Promise.all([
         this.workloadService.getWorkloadByTeams(token, teamCodes),
         this.probationEstateService.getTeamsByCode(token, teamCodes),
       ])
@@ -32,16 +31,12 @@ export default class AllocateCasesController {
             totalCases: '-',
             workload: '-',
           }
-          const teamAllocations = allocationCasesByTeam.find(uc => uc.teamCode === team.code) ?? {
-            caseCount: 0,
-          }
 
           return {
             teamCode: team.code,
             teamName: team.name,
             workload: `${teamWorkload.workload}%`,
             caseCount: teamWorkload.totalCases,
-            unallocatedCaseCount: teamAllocations.caseCount,
           }
         })
         .sort((a, b) => a.teamName.localeCompare(b.teamName))

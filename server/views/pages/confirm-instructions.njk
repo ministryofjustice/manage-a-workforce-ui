@@ -29,15 +29,15 @@
             },
             {
                 text: "Unallocated cases",
-                href: "/team/" + teamCode + "/cases/unallocated"
+                href: "/pdu/" + pduCode + "/find-unallocated"
             },
             {
                 text: "Case details",
-                href: "/team/" + teamCode + "/" + crn + "/convictions/" + convictionNumber + "/case-view"
+                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/case-view"
             },
             {
                 text: "Allocate to probation practitioner",
-                href: "/team/" + teamCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner"
+                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner"
             }
         ]
     }) }}
@@ -56,7 +56,7 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <form action="{{ '/team/' + teamCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="POST">
+      <form action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="POST">
         <div class="govuk-form-group">
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             {{
@@ -163,7 +163,7 @@
                         }
                     })
                 }}
-                <a class="govuk-link" href="{{ '/team/' + teamCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Cancel</a>
+                <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Cancel</a>
           
         </div>
       </form>

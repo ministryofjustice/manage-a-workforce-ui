@@ -20,7 +20,7 @@ context('Submit find Unallocated cases', () => {
       .trimTextContent()
       .should(
         'contain',
-        'There is a problem Select a Probation Delivery Unit Select a Local Delivery Unit Select a team'
+        'There is a problem Select a Probation Delivery Unit (PDU) Select a Local Delivery Unit (LDU) Select a team'
       )
   })
 

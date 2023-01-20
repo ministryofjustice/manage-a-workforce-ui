@@ -15,7 +15,11 @@ context('Find Unallocated cases', () => {
   })
 
   it('Region visible on page', () => {
-    findUnallocatedCasesPage.region().should('contain.text', 'Unallocated Cases')
+    findUnallocatedCasesPage.region().should('contain.text', 'A Region')
+  })
+
+  it('Probation Delivery Unit name visible on page', () => {
+    findUnallocatedCasesPage.probationDeliveryUnit().should('contain.text', 'A Probation Delivery Unit')
   })
 
   it('Primary nav visible on page', () => {

@@ -28,7 +28,7 @@ context('Show allocate cases by team based on user preferences', () => {
       })
       cy.task('stubGetPduDetails')
       cy.signIn()
-      cy.visit('/probationDeliveryUnit/PDU1/teams')
+      cy.visit('/pdu/PDU1/teams')
       allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     })
 
@@ -105,7 +105,7 @@ context('Show allocate cases by team based on user preferences', () => {
           },
         ],
       })
-      cy.visit('/probationDeliveryUnit/PDU1/teams')
+      cy.visit('/pdu/PDU1/teams')
       cy.get('table')
         .getTable()
         .should('deep.equal', [
@@ -127,13 +127,13 @@ context('Show allocate cases by team based on user preferences', () => {
         codes: 'TM1,TM2',
         response: [],
       })
-      cy.visit('/probationDeliveryUnit/PDU1/teams')
+      cy.visit('/pdu/PDU1/teams')
       cy.get('table').getTable().should('deep.equal', [])
     })
 
     it('does not display teams if no user preferences', () => {
       cy.task('stubUserPreferenceTeams', [])
-      cy.visit('/probationDeliveryUnit/PDU1/teams')
+      cy.visit('/pdu/PDU1/teams')
       cy.get('table').getTable().should('deep.equal', [])
     })
   })

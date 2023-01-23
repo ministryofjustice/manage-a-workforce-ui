@@ -10,7 +10,7 @@ export default class HomeController {
     const { items: pduSelection } = await this.userPreferenceService.getPduUserPreference(token, username)
     if (pduSelection.length) {
       // eslint-disable-next-line security-node/detect-dangerous-redirects
-      res.redirect(`/probationdeliveryunit/${pduSelection[0]}/teams`)
+      res.redirect(`/pdu/${pduSelection[0]}/teams`)
     } else {
       res.redirect('/before-you-start')
     }

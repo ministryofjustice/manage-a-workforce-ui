@@ -46,7 +46,7 @@ context('Probation record', () => {
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetProbationRecord')
-    cy.get('a[href*="/probationDeliveryUnit/PDU1/find-unallocated"]').click()
+    cy.get('a[href*="/pdu/PDU1/find-unallocated"]').click()
     cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/case-view"]').click()
     cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/probation-record"]').click()
     Page.verifyOnPage(ProbationRecordPage)

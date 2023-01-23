@@ -114,14 +114,14 @@ export default class FindUnallocatedCasesController {
       await this.userPreferenceService.saveAllocationDemandPreference(token, username, allocationDemandSelected)
     }
     // eslint-disable-next-line security-node/detect-dangerous-redirects
-    res.redirect(`/probationDeliveryUnit/${pduCode}/find-unallocated`)
+    res.redirect(`/pdu/${pduCode}/find-unallocated`)
   }
 
   async clearFindUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
     const { token, username } = res.locals.user
     await this.userPreferenceService.clearAllocationDemandPreference(token, username)
     // eslint-disable-next-line security-node/detect-dangerous-redirects
-    res.redirect(`/probationDeliveryUnit/${pduCode}/find-unallocated`)
+    res.redirect(`/pdu/${pduCode}/find-unallocated`)
   }
 }
 

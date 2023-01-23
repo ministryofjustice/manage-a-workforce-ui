@@ -44,17 +44,17 @@ export default function routes(services: Services): Router {
     await homeController.redirectUser(req, res)
   })
 
-  get('/probationDeliveryUnit/:pduCode/find-unallocated', async (req, res) => {
+  get('/pdu/:pduCode/find-unallocated', async (req, res) => {
     const { pduCode } = req.params
     await findUnallocatedCasesController.findUnallocatedCases(req, res, pduCode)
   })
 
-  post('/probationDeliveryUnit/:pduCode/find-unallocated', async (req, res) => {
+  post('/pdu/:pduCode/find-unallocated', async (req, res) => {
     const { pduCode } = req.params
     await findUnallocatedCasesController.submitFindUnallocatedCases(req, res, pduCode, req.body)
   })
 
-  get('/probationDeliveryUnit/:pduCode/clear-find-unallocated', async (req, res) => {
+  get('/pdu/:pduCode/clear-find-unallocated', async (req, res) => {
     const { pduCode } = req.params
     await findUnallocatedCasesController.clearFindUnallocatedCases(req, res, pduCode)
   })
@@ -175,17 +175,17 @@ export default function routes(services: Services): Router {
     }
   )
 
-  get('/probationDeliveryUnit/:pduCode/select-teams', async (req, res) => {
+  get('/pdu/:pduCode/select-teams', async (req, res) => {
     const { pduCode } = req.params
     await probationEstateController.getPduTeams(req, res, pduCode)
   })
 
-  post('/probationDeliveryUnit/:pduCode/select-teams', async (req, res) => {
+  post('/pdu/:pduCode/select-teams', async (req, res) => {
     const { pduCode } = req.params
     await probationEstateController.selectPduTeams(req, res, pduCode)
   })
 
-  get('/probationDeliveryUnit/:pduCode/teams', async (req, res) => {
+  get('/pdu/:pduCode/teams', async (req, res) => {
     const { pduCode } = req.params
     await allocateCasesController.getDataByTeams(req, res, pduCode)
   })

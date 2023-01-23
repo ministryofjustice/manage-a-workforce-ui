@@ -10,7 +10,7 @@ context('Find Unallocated cases', () => {
     cy.task('stubAllEstateByRegionCode')
     cy.task('stubUserPreferenceEmptyAllocationDemand')
     cy.signIn()
-    cy.visit('/probationDeliveryUnit/PDU1/find-unallocated')
+    cy.visit('/pdu/PDU1/find-unallocated')
     findUnallocatedCasesPage = Page.verifyOnPage(FindUnallocatedPage)
   })
 
@@ -50,7 +50,7 @@ context('Find Unallocated cases', () => {
   })
 
   it('Shows link to Edit my teams list', () => {
-    findUnallocatedCasesPage.manageMyTeamsLink().should('equal', '/probationDeliveryUnit/PDU1/select-teams')
+    findUnallocatedCasesPage.manageMyTeamsLink().should('equal', '/pdu/PDU1/select-teams')
   })
 
   it('large heading visible on page', () => {

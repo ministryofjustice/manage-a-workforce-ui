@@ -68,7 +68,7 @@
           <div class="govuk-grid-column-full">
             <span class="govuk-caption-xl">{{ pduDetails.region.name }}</span>
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">{{ pduDetails.name }}</h1>
-            <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/probationDeliveryUnit/{{pduDetails.code}}/select-teams">Edit my teams list</a>
+            <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{pduDetails.code}}/select-teams">Edit my teams list</a>
           </div>
         </div>
 
@@ -148,7 +148,7 @@
                   {{ govukButton({
                       text: "Save and view selection"
                   }) }}
-                  <a class="govuk-link" href="/probationDeliveryUnit/{{pduDetails.code}}/clear-find-unallocated">Clear</a>
+                  <a class="govuk-link" href="/pdu/{{pduDetails.code}}/clear-find-unallocated">Clear</a>
                 </div>
               </form>
             </div>

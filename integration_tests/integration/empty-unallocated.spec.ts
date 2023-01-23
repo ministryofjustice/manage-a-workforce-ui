@@ -9,7 +9,7 @@ context('No unallocated cases', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1', response: [] })
     cy.signIn()
-    cy.visit('/probationDeliveryUnit/PDU1/find-unallocated')
+    cy.visit('/pdu/PDU1/find-unallocated')
     findUnallocatedCasesPage = Page.verifyOnPage(FindUnallocatedPage)
   })
 

@@ -27,7 +27,7 @@ describe('GET 404', () => {
 describe('GET 500', () => {
   it('should render problem with service', () => {
     return request(appWithAllRoutes({}))
-      .get('/probationDeliveryUnit/pduCode/teams')
+      .get('/pdu/pduCode/teams')
       .expect('Content-Type', /html/)
       .expect(res => {
         expect(res.text).toContain('Sorry, the service is unavailable | Manage a workforce')
@@ -43,7 +43,7 @@ describe('GET 500', () => {
 
   it('should return 500 status', () => {
     return request(appWithAllRoutes({}))
-      .get('/probationDeliveryUnit/pduCode/teams')
+      .get('/pdu/pduCode/teams')
       .expect(res => {
         expect(res.statusCode).toEqual(500)
       })

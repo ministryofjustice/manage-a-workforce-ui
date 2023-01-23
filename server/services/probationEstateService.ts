@@ -19,7 +19,7 @@ export default class ProbationEstateService {
 
   async getProbationDeliveryUnitDetails(token: string, pduCode: string): Promise<ProbationDeliveryUnitDetails> {
     return (await this.restClient(token).get({
-      path: `/probationDeliveryUnit/${pduCode}`,
+      path: `/pdu/${pduCode}`,
     })) as ProbationDeliveryUnitDetails
   }
 

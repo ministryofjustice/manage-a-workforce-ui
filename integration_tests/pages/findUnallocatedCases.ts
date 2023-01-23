@@ -42,7 +42,7 @@ export default class FindUnallocatedPage extends Page {
 
   saveViewButton = (): PageElement => cy.get('form button')
 
-  clearLink = (): PageElement => cy.get('a[href="/probationDeliveryUnit/PDU1/clear-find-unallocated"]')
+  clearLink = (): PageElement => cy.get('a[href="/pdu/PDU1/clear-find-unallocated"]')
 
   noCasesBody = (): PageElement => cy.get('.govuk-body-l')
 }

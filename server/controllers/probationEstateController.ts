@@ -39,7 +39,7 @@ export default class ProbationEstateController {
       await this.userPreferenceService.savePduUserPreference(res.locals.user.token, res.locals.user.username, pduCode)
 
       // eslint-disable-next-line security-node/detect-dangerous-redirects
-      return res.redirect(`/probationDeliveryUnit/${pduCode}/teams`)
+      return res.redirect(`/pdu/${pduCode}/teams`)
     }
     return this.getPduTeams(req, res, pduCode, true)
   }
@@ -83,7 +83,7 @@ export default class ProbationEstateController {
     } = req
     if (probationDeliveryUnit) {
       // eslint-disable-next-line security-node/detect-dangerous-redirects
-      return res.redirect(`/probationDeliveryUnit/${probationDeliveryUnit}/select-teams`)
+      return res.redirect(`/pdu/${probationDeliveryUnit}/select-teams`)
     }
     return this.getProbationDeliveryUnitsByRegionCode(req, res, regionCode, true)
   }

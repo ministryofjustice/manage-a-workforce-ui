@@ -15,7 +15,7 @@ context('Unallocated', () => {
 
   it('redirects to User preference selected PDU Allocate cases by team', () => {
     cy.signIn()
-    cy.url().should('include', '/probationdeliveryunit/PDU1/teams')
+    cy.url().should('include', '/pdu/PDU1/teams')
   })
 
   it('User can log out', () => {

@@ -6,7 +6,7 @@ context('Select teams', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.signIn()
-    cy.visit('/probationDeliveryUnit/PDU1/select-teams')
+    cy.visit('/pdu/PDU1/select-teams')
   })
 
   it('Caption text visible on page', () => {

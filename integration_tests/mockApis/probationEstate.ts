@@ -45,7 +45,7 @@ export default {
     return stubForProbationEstate({
       request: {
         method: 'GET',
-        urlPattern: `/pdu/${pduCode}`,
+        urlPattern: `/probationDeliveryUnit/${pduCode}`,
       },
       response: {
         status: 200,

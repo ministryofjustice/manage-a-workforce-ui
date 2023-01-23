@@ -36,6 +36,11 @@ export default (on: (string, Record) => void): void => {
         auth.stubAuthUser(),
         userPreference.stubUserPreferencePDU(),
         userPreference.stubUserPreferenceTeams(),
+        userPreference.stubUserPreferenceAllocationDemand({
+          pduCode: 'PDU1',
+          lduCode: 'LDU1',
+          teamCode: 'TM1',
+        }),
         allocations.stubGetUnallocatedCasesByTeams({
           teamCodes: 'TM1',
           response: [
@@ -45,7 +50,6 @@ export default (on: (string, Record) => void): void => {
             },
           ],
         }),
-        allocations.stubGetAllocationsByTeam({ teamCode: 'TM1' }),
         probationEstate.stubGetTeamsByCodes({
           codes: 'TM1',
           response: [

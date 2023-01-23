@@ -95,7 +95,7 @@
     "agentkeepalive": "4.2.1",
     "applicationinsights": "2.4.1",
     "axios": "1.2.3",
-    "axios-retry": "3.3.1",
+    "axios-retry": "3.4.0",
     "body-parser": "1.20.1",
     "bunyan": "1.8.15",
     "bunyan-format": "0.2.1",

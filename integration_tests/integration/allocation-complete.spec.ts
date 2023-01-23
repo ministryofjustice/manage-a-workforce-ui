@@ -10,7 +10,7 @@ context('Allocate Complete', () => {
     cy.task('stubGetStaffByCode')
     cy.task('stubGetCurrentlyManagedCaseOverview', '1')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/allocate/TM2/OM1/instructions')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
   })
 
   it('return to unallocated cases of team link exists', () => {
@@ -25,7 +25,7 @@ context('Allocate Complete', () => {
     allocationCompletePage
       .returnToUnallocatedLink()
       .should('have.text', 'Return to unallocated cases')
-      .and('have.attr', 'href', '/team/TM1/cases/unallocated')
+      .and('have.attr', 'href', '/pdu/PDU1/find-unallocated')
   })
 
   it('panel visible on page with correct information', () => {
@@ -157,7 +157,7 @@ context('Allocate Complete', () => {
     cy.get('.allocate').click()
     Page.verifyOnPage(ErrorPage)
     cy.task('stubGetUnallocatedCase')
-    cy.visit('/team/TM1/J678910/convictions/1/case-view')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().should('have.value', 'Test')
   })

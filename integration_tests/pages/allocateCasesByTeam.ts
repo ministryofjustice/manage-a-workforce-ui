@@ -7,7 +7,9 @@ export default class AllocateCasesByTeamPage extends Page {
 
   tableCaption = (): PageElement => cy.get('.govuk-table__caption')
 
-  link = (): PageElement => cy.get('[data-qa-link="edit-teams"]')
+  editTeamsLink = (): PageElement => cy.get('[data-qa-link="edit-teams"]')
+
+  findUnallocatedLink = (): PageElement => cy.get('a[href="/probationDeliveryUnit/PDU1/find-unallocated"]')
 
   tableLink = (teamCode: string): PageElement => cy.get(`[data-qa-link="${teamCode}"]`).invoke('attr', 'href')
 

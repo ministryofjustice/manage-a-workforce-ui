@@ -2,20 +2,11 @@ import AllocateCasesByTeamPage from '../pages/allocateCasesByTeam'
 import Page from '../pages/page'
 
 context('Show allocate cases by team based on user preferences', () => {
-  let allocateCasesByTeamPage
+  let allocateCasesByTeamPage: AllocateCasesByTeamPage
 
   context('single team', () => {
     beforeEach(() => {
       cy.task('stubSetup')
-      cy.task('stubGetUnallocatedCasesByTeams', {
-        teamCodes: 'TM1',
-        response: [
-          {
-            teamCode: 'TM1',
-            caseCount: 1,
-          },
-        ],
-      })
       cy.task('stubWorkloadCases', {
         teamCodes: 'TM1',
         response: [
@@ -49,21 +40,20 @@ context('Show allocate cases by team based on user preferences', () => {
             Name: 'Team 1',
             Workload: '77%',
             Cases: '2',
-            Action: 'View unallocated cases (1)',
           },
         ])
     })
 
     it('link to edit team list must exist', () => {
       allocateCasesByTeamPage
-        .link()
+        .editTeamsLink()
         .should('contain', 'editing your team list')
         .should('have.attr', 'href')
         .and('include', '/PDU1')
     })
 
-    it('link to view unallocated cases must exist', () => {
-      allocateCasesByTeamPage.tableLink('TM1').should('equal', '/team/TM1/cases/unallocated')
+    it('link to find unallocated cases must exist', () => {
+      allocateCasesByTeamPage.findUnallocatedLink().should('contain.text', 'View unallocated cases')
     })
   })
 
@@ -100,19 +90,6 @@ context('Show allocate cases by team based on user preferences', () => {
           },
         ],
       })
-      cy.task('stubGetUnallocatedCasesByTeams', {
-        teamCodes: 'TM1,TM2',
-        response: [
-          {
-            teamCode: 'TM1',
-            caseCount: 1,
-          },
-          {
-            teamCode: 'TM2',
-            caseCount: 6,
-          },
-        ],
-      })
       cy.task('stubGetPduDetails')
       cy.signIn()
     })
@@ -136,42 +113,11 @@ context('Show allocate cases by team based on user preferences', () => {
             Name: 'Team 1',
             Workload: '77%',
             Cases: '3',
-            Action: 'View unallocated cases (1)',
           },
           {
             Name: 'Team 2',
             Workload: '-%',
             Cases: '-',
-            Action: 'View unallocated cases (6)',
-          },
-        ])
-    })
-
-    it('returning no allocations for team still displays it', () => {
-      cy.task('stubGetUnallocatedCasesByTeams', {
-        teamCodes: 'TM1,TM2',
-        response: [
-          {
-            teamCode: 'TM1',
-            caseCount: 1,
-          },
-        ],
-      })
-      cy.visit('/probationDeliveryUnit/PDU1/teams')
-      cy.get('table')
-        .getTable()
-        .should('deep.equal', [
-          {
-            Name: 'Team 1',
-            Workload: '77%',
-            Cases: '3',
-            Action: 'View unallocated cases (1)',
-          },
-          {
-            Name: 'Team 2',
-            Workload: '88%',
-            Cases: '4',
-            Action: 'View unallocated cases (0)',
           },
         ])
     })
@@ -187,15 +133,6 @@ context('Show allocate cases by team based on user preferences', () => {
 
     it('does not display teams if no user preferences', () => {
       cy.task('stubUserPreferenceTeams', [])
-      cy.task('stubGetUnallocatedCasesByTeams', {
-        teamCodes: 'N03F01',
-        response: [
-          {
-            teamCode: 'N03F01',
-            caseCount: 10,
-          },
-        ],
-      })
       cy.visit('/probationDeliveryUnit/PDU1/teams')
       cy.get('table').getTable().should('deep.equal', [])
     })

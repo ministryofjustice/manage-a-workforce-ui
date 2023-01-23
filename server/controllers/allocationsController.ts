@@ -34,7 +34,7 @@ export default class AllocationsController {
     private readonly probationEstateService: ProbationEstateService
   ) {}
 
-  async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, teamCode): Promise<void> {
+  async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
     const response: Allocation = await this.allocationsService.getUnallocatedCase(
       res.locals.user.token,
       crn,
@@ -49,11 +49,11 @@ export default class AllocationsController {
       name: response.name,
       convictionNumber: response.convictionNumber,
       title: `${response.name} | Summary | Manage a workforce`,
-      teamCode,
+      pduCode,
     })
   }
 
-  async getProbationRecord(req: Request, res: Response, crn, convictionNumber, teamCode): Promise<void> {
+  async getProbationRecord(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
     const response: ProbationRecord = await this.allocationsService.getProbationRecord(
       res.locals.user.token,
       crn,
@@ -99,11 +99,11 @@ export default class AllocationsController {
       totalPreviousCount,
       convictionNumber: response.convictionNumber,
       title: `${response.name} | Probation record | Manage a workforce`,
-      teamCode,
+      pduCode,
     })
   }
 
-  async getRisk(_, res: Response, crn: string, convictionNumber, teamCode: string) {
+  async getRisk(_, res: Response, crn: string, convictionNumber, pduCode: string) {
     const response: Risk = await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber)
     res.render('pages/risk', {
       title: `${response.name} | Risk | Manage a workforce`,
@@ -112,11 +112,11 @@ export default class AllocationsController {
       tier: response.tier,
       name: response.name,
       convictionNumber: response.convictionNumber,
-      teamCode,
+      pduCode,
     })
   }
 
-  async getDocuments(_, res: Response, crn: string, convictionNumber, teamCode: string) {
+  async getDocuments(_, res: Response, crn: string, convictionNumber, pduCode: string) {
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
     const documents = await this.allocationsService.getDocuments(res.locals.user.token, crn)
     const documentRows = documents.map(document => new DocumentRow(document))
@@ -126,13 +126,13 @@ export default class AllocationsController {
       tier: caseOverview.tier,
       name: caseOverview.name,
       convictionNumber: caseOverview.convictionNumber,
-      teamCode,
+      pduCode,
       documents: documentRows,
     })
   }
 
   // eslint-disable-next-line consistent-return
-  async choosePractitioner(req: Request, res: Response, crn, convictionNumber, teamCode) {
+  async choosePractitioner(req: Request, res: Response, crn, convictionNumber, pduCode) {
     const { token, username } = res.locals.user
 
     const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
@@ -172,11 +172,11 @@ export default class AllocationsController {
       offenderManagersToAllocatePerTeam,
       error,
       missingEmail,
-      teamCode,
+      pduCode,
     })
   }
 
-  async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionNumber, teamCode) {
+  async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionNumber, pduCode) {
     const {
       body: { allocatedOfficer: teamAndStaffCode },
     } = req
@@ -184,14 +184,14 @@ export default class AllocationsController {
       const { teamCode: chosenStaffTeamCode, staffCode } = TeamAndStaffCode.decode(teamAndStaffCode)
       return res.redirect(
         // eslint-disable-next-line security-node/detect-dangerous-redirects
-        `/team/${teamCode}/${crn}/convictions/${convictionNumber}/allocate/${chosenStaffTeamCode}/${staffCode}/allocate-to-practitioner`
+        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${chosenStaffTeamCode}/${staffCode}/allocate-to-practitioner`
       )
     }
     req.query.error = 'true'
-    return this.choosePractitioner(req, res, crn, convictionNumber, teamCode)
+    return this.choosePractitioner(req, res, crn, convictionNumber, pduCode)
   }
 
-  async getAllocateToPractitioner(_, res: Response, crn, staffTeamCode, staffCode, convictionNumber, teamCode) {
+  async getAllocateToPractitioner(_, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
     const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,
@@ -208,11 +208,11 @@ export default class AllocationsController {
       convictionNumber: caseOverview.convictionNumber,
       staffCode,
       staffTeamCode,
-      teamCode,
+      pduCode,
     })
   }
 
-  async getConfirmInstructions(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, teamCode) {
+  async getConfirmInstructions(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
     const response: StaffSummary = await this.workloadService.getStaffByCode(res.locals.user.token, staffCode)
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
     res.render('pages/confirm-instructions', {
@@ -226,11 +226,11 @@ export default class AllocationsController {
       convictionNumber: caseOverview.convictionNumber,
       errors: req.flash('errors') || [],
       confirmInstructionForm: req.session.confirmInstructionForm || { person: [] },
-      teamCode,
+      pduCode,
     })
   }
 
-  async getOverview(_, res: Response, crn, offenderManagerTeamCode, offenderManagerCode, convictionNumber, teamCode) {
+  async getOverview(_, res: Response, crn, offenderManagerTeamCode, offenderManagerCode, convictionNumber, pduCode) {
     const response: OffenderManagerOverview = await this.workloadService.getOffenderManagerOverview(
       res.locals.user.token,
       offenderManagerCode,
@@ -244,7 +244,7 @@ export default class AllocationsController {
       crn,
       convictionNumber,
       isOverview: true,
-      teamCode,
+      pduCode,
     })
   }
 
@@ -255,7 +255,7 @@ export default class AllocationsController {
     offenderManagerTeamCode,
     offenderManagerCode,
     convictionNumber,
-    teamCode
+    pduCode
   ) {
     const response: OffenderManagerCases = await this.workloadService.getOffenderManagerCases(
       res.locals.user.token,
@@ -274,7 +274,7 @@ export default class AllocationsController {
       crn,
       convictionNumber,
       isActiveCases: true,
-      teamCode,
+      pduCode,
     })
   }
 
@@ -292,7 +292,7 @@ export default class AllocationsController {
     staffCode,
     convictionNumber,
     form,
-    teamCode
+    pduCode
   ) {
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
@@ -306,7 +306,7 @@ export default class AllocationsController {
     if (errors.length > 0) {
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
-      return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, teamCode)
+      return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
     }
     const sendEmailCopyToAllocatingOfficer = !form.emailCopy
     const otherEmails = form.person.map(person => person.email).filter(email => email)
@@ -342,7 +342,7 @@ export default class AllocationsController {
       otherEmails,
       initialAppointment: caseOverviewResponse.initialAppointment,
       caseType: caseOverviewResponse.caseType,
-      teamCode,
+      pduCode,
       sendEmailCopyToAllocatingOfficer,
     })
   }

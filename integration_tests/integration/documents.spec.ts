@@ -7,7 +7,7 @@ context('Documents', () => {
     cy.task('stubGetCurrentlyManagedCaseOverview', '1')
     cy.task('stubGetDocuments')
     cy.signIn()
-    cy.visit('/team/TM1/J678910/convictions/1/documents')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/documents')
   })
 
   it('Caption text visible on page', () => {

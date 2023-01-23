@@ -25,7 +25,7 @@ export default class OverviewPage extends Page {
 
   lastUpdated = (): PageElement => cy.get('.govuk-body-s')
 
-  totalCasesLink = (): PageElement => cy.get('a[href*="/team/TM1/J678910/convictions/1/allocate/TM2/OM2/active-cases"]')
+  totalCasesLink = (): PageElement => cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/active-cases"]')
 
   tierTable = (): PageElement => cy.get('.govuk-table')
 }

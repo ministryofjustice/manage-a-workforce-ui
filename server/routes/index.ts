@@ -4,7 +4,6 @@ import asyncMiddleware from '../middleware/asyncMiddleware'
 import AllocationsController from '../controllers/allocationsController'
 import ProbationEstateController from '../controllers/probationEstateController'
 import AllocateCasesController from '../controllers/allocateCasesController'
-import CasesByTeamController from '../controllers/casesByTeamController'
 import FindUnallocatedCasesController from '../controllers/findUnallocatedCasesController'
 import type { Services } from '../services'
 import HomeController from '../controllers/homeController'
@@ -29,7 +28,6 @@ export default function routes(services: Services): Router {
     services.userPreferenceService,
     services.workloadService
   )
-  const casesByTeamController = new CasesByTeamController(services.allocationsService, services.probationEstateService)
 
   const homeController = new HomeController(services.userPreferenceService)
 
@@ -44,11 +42,6 @@ export default function routes(services: Services): Router {
   })
   get('/', async (req, res) => {
     await homeController.redirectUser(req, res)
-  })
-
-  get('/team/:teamCode/cases/unallocated', async (req, res) => {
-    const { teamCode } = req.params
-    await casesByTeamController.getAllocationsByTeam(req, res, teamCode)
   })
 
   get('/probationDeliveryUnit/:pduCode/find-unallocated', async (req, res) => {
@@ -66,9 +59,9 @@ export default function routes(services: Services): Router {
     await findUnallocatedCasesController.clearFindUnallocatedCases(req, res, pduCode)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
-    const { crn, convictionNumber, teamCode } = req.params
-    await allocationsController.getUnallocatedCase(req, res, crn, convictionNumber, teamCode)
+  get('/pdu/:pduCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
+    const { crn, convictionNumber, pduCode } = req.params
+    await allocationsController.getUnallocatedCase(req, res, crn, convictionNumber, pduCode)
   })
 
   get('/:crn/documents/:documentId/:documentName', async (req, res) => {
@@ -76,35 +69,35 @@ export default function routes(services: Services): Router {
     await allocationsController.getDocument(res, crn, documentId, documentName)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionNumber/probation-record', async (req, res) => {
-    const { crn, convictionNumber, teamCode } = req.params
-    await allocationsController.getProbationRecord(req, res, crn, convictionNumber, teamCode)
+  get('/pdu/:pduCode/:crn/convictions/:convictionNumber/probation-record', async (req, res) => {
+    const { crn, convictionNumber, pduCode } = req.params
+    await allocationsController.getProbationRecord(req, res, crn, convictionNumber, pduCode)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionNumber/risk', async (req, res) => {
-    const { crn, convictionNumber, teamCode } = req.params
-    await allocationsController.getRisk(req, res, crn, convictionNumber, teamCode)
+  get('/pdu/:pduCode/:crn/convictions/:convictionNumber/risk', async (req, res) => {
+    const { crn, convictionNumber, pduCode } = req.params
+    await allocationsController.getRisk(req, res, crn, convictionNumber, pduCode)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionNumber/documents', async (req, res) => {
-    const { crn, convictionNumber, teamCode } = req.params
-    await allocationsController.getDocuments(req, res, crn, convictionNumber, teamCode)
+  get('/pdu/:pduCode/:crn/convictions/:convictionNumber/documents', async (req, res) => {
+    const { crn, convictionNumber, pduCode } = req.params
+    await allocationsController.getDocuments(req, res, crn, convictionNumber, pduCode)
   })
 
-  get('/team/:teamCode/:crn/convictions/:convictionNumber/choose-practitioner', async (req, res) => {
-    const { crn, convictionNumber, teamCode } = req.params
-    await allocationsController.choosePractitioner(req, res, crn, convictionNumber, teamCode)
+  get('/pdu/:pduCode/:crn/convictions/:convictionNumber/choose-practitioner', async (req, res) => {
+    const { crn, convictionNumber, pduCode } = req.params
+    await allocationsController.choosePractitioner(req, res, crn, convictionNumber, pduCode)
   })
 
-  post('/team/:teamCode/:crn/convictions/:convictionNumber/choose-practitioner', async (req, res) => {
-    const { crn, convictionNumber, teamCode } = req.params
-    await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionNumber, teamCode)
+  post('/pdu/:pduCode/:crn/convictions/:convictionNumber/choose-practitioner', async (req, res) => {
+    const { crn, convictionNumber, pduCode } = req.params
+    await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionNumber, pduCode)
   })
 
   get(
-    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/allocate-to-practitioner',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/allocate-to-practitioner',
     async (req, res) => {
-      const { crn, convictionNumber, staffTeamCode, staffCode, teamCode } = req.params
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
       await allocationsController.getAllocateToPractitioner(
         req,
         res,
@@ -112,15 +105,15 @@ export default function routes(services: Services): Router {
         staffTeamCode,
         staffCode,
         convictionNumber,
-        teamCode
+        pduCode
       )
     }
   )
 
   get(
-    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/instructions',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/instructions',
     async (req, res) => {
-      const { crn, convictionNumber, staffTeamCode, staffCode, teamCode } = req.params
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
       await allocationsController.getConfirmInstructions(
         req,
         res,
@@ -128,15 +121,15 @@ export default function routes(services: Services): Router {
         staffTeamCode,
         staffCode,
         convictionNumber,
-        teamCode
+        pduCode
       )
     }
   )
 
   get(
-    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/officer-view',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/officer-view',
     async (req, res) => {
-      const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, teamCode } = req.params
+      const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
       await allocationsController.getOverview(
         req,
         res,
@@ -144,15 +137,15 @@ export default function routes(services: Services): Router {
         offenderManagerTeamCode,
         offenderManagerCode,
         convictionNumber,
-        teamCode
+        pduCode
       )
     }
   )
 
   get(
-    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/active-cases',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/active-cases',
     async (req, res) => {
-      const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, teamCode } = req.params
+      const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
       await allocationsController.getActiveCases(
         req,
         res,
@@ -160,15 +153,15 @@ export default function routes(services: Services): Router {
         offenderManagerTeamCode,
         offenderManagerCode,
         convictionNumber,
-        teamCode
+        pduCode
       )
     }
   )
 
   post(
-    '/team/:teamCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-allocation',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-allocation',
     async (req, res) => {
-      const { crn, convictionNumber, staffTeamCode, staffCode, teamCode } = req.params
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
       await allocationsController.allocateCaseToOffenderManager(
         req,
         res,
@@ -177,7 +170,7 @@ export default function routes(services: Services): Router {
         staffCode,
         convictionNumber,
         req.body,
-        teamCode
+        pduCode
       )
     }
   )

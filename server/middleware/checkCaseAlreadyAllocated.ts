@@ -6,7 +6,7 @@ export default function checkCaseAlreadyAllocated(workloadService: WorkloadServi
   return async (error: SanitisedError, req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (error.status === 404) {
       try {
-        const { crn, convictionNumber, teamCode } = req.params
+        const { crn, convictionNumber, pduCode } = req.params
         const eventManagerDetails = await workloadService.getEventManagerDetails(
           res.locals.user.token,
           crn,
@@ -17,7 +17,7 @@ export default function checkCaseAlreadyAllocated(workloadService: WorkloadServi
           crn,
           tier: eventManagerDetails.tier,
           name: `${eventManagerDetails.personOnProbationFirstName} ${eventManagerDetails.personOnProbationSurname}`,
-          teamCode,
+          pduCode,
         })
       } catch (callError) {
         return next(callError)

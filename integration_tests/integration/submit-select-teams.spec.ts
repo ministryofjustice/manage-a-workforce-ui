@@ -3,7 +3,7 @@ import Page from '../pages/page'
 import SelectTeamsPage from '../pages/teams'
 
 context('Select teams and show allocate cases by team', () => {
-  let allocateCasesByTeamPage
+  let allocateCasesByTeamPage: AllocateCasesByTeamPage
 
   context('Single teams', () => {
     beforeEach(() => {
@@ -131,13 +131,11 @@ context('Select teams and show allocate cases by team', () => {
             Name: 'Team 1',
             Workload: '77%',
             Cases: '3',
-            Action: 'View unallocated cases (1)',
           },
           {
             Name: 'Team 2',
             Workload: '88%',
             Cases: '4',
-            Action: 'View unallocated cases (2)',
           },
         ])
     })
@@ -152,7 +150,7 @@ context('Select teams and show allocate cases by team', () => {
 
     it('link to edit team list must exist', () => {
       allocateCasesByTeamPage
-        .link()
+        .editTeamsLink()
         .should('contain', 'editing your team list')
         .should('have.attr', 'href')
         .and('include', '/PDU1')

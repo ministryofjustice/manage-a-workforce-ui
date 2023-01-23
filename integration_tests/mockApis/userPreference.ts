@@ -17,19 +17,6 @@ export default {
       },
     })
   },
-  stubUserPreferenceTeamsError: (): SuperAgentRequest => {
-    return stubForUserPreference({
-      request: {
-        method: 'GET',
-        urlPattern: `/users/USER1/preferences/allocation-teams`,
-      },
-      response: {
-        status: 500,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {},
-      },
-    })
-  },
   stubPutUserPreferenceTeams: (teams: string[]): SuperAgentRequest => {
     return stubForUserPreference({
       request: {
@@ -106,6 +93,19 @@ export default {
         jsonBody: {
           items: [`{"pdu": "${pduCode}", "ldu": "${lduCode}", "team": "${teamCode}"}`],
         },
+      },
+    })
+  },
+  stubUserPreferenceAllocationDemandError: (): SuperAgentRequest => {
+    return stubForUserPreference({
+      request: {
+        method: 'GET',
+        urlPattern: `/users/USER1/preferences/allocation-demand`,
+      },
+      response: {
+        status: 500,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {},
       },
     })
   },

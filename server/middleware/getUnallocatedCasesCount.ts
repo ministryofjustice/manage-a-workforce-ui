@@ -11,9 +11,9 @@ export default function getUnallocatedCasesCount(
     try {
       if (res.locals.user) {
         const { token, username } = res.locals.user
-        const { items: teamSelection } = await userPreferenceService.getTeamsUserPreference(token, username)
-        if (teamSelection.length) {
-          const unallocatedCasesCountByTeams = await allocationsService.getCaseCountByTeamCodes(token, teamSelection)
+        const { team } = await userPreferenceService.getAllocationDemandSelection(token, username)
+        if (team) {
+          const unallocatedCasesCountByTeams = await allocationsService.getCaseCountByTeamCodes(token, [team])
           res.locals.unallocatedCaseCount = unallocatedCasesCountByTeams
             .map(teamCount => teamCount.caseCount)
             .reduce((first, second) => first + second, 0)

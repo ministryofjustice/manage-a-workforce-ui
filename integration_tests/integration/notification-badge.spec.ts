@@ -2,7 +2,7 @@ import SummaryPage from '../pages/summary'
 import AllocateCasesByTeamPage from '../pages/allocateCasesByTeam'
 import Page from '../pages/page'
 
-context('Unallocated', () => {
+context('Notification badge', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.signIn()
@@ -44,14 +44,14 @@ context('Unallocated', () => {
   })
 
   it('must not show notification badge when no user preference is selected', () => {
-    cy.task('stubUserPreferenceTeams', [])
+    cy.task('stubUserPreferenceEmptyAllocationDemand')
     cy.reload()
     const unallocatedPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     unallocatedPage.notificationsBadge().should('not.exist')
   })
 
   it('must show + when erroring retrieving unallocated case count', () => {
-    cy.task('stubUserPreferenceTeamsError')
+    cy.task('stubUserPreferenceAllocationDemandError')
     cy.task('stubGetUnallocatedCase')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)

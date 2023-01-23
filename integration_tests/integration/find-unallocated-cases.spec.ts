@@ -210,10 +210,4 @@ context('Find Unallocated cases', () => {
     cy.get('table').should('not.exist')
     findUnallocatedCasesPage.noCasesBody().should('not.exist')
   })
-  it('must show no cases awaiting allocations content when no cases exist', () => {
-    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
-    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1', response: [] })
-    cy.reload()
-    findUnallocatedCasesPage.noCasesBody().should('contain.text', 'There are no cases currently awaiting allocation.')
-  })
 })

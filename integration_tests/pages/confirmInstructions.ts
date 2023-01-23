@@ -19,8 +19,8 @@ export default class InstructionsConfirmPage extends Page {
 
   inputTexts = (): PageElement => cy.get('input.govuk-input')
 
-  cancelLink = (crn, convictionNumber, teamCode): PageElement =>
-    cy.get(`a[href*="/team/${teamCode}/${crn}/convictions/${convictionNumber}/choose-practitioner"]`).eq(1)
+  cancelLink = (crn, convictionNumber, pduCode): PageElement =>
+    cy.get(`a[href*="/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner"]`).eq(1)
 
   checkboxText = (): PageElement => cy.get('.govuk-checkboxes__label')
 

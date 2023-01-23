@@ -9,21 +9,21 @@ context('Probation record', () => {
 
   it('Caption text visible on page', () => {
     cy.task('stubGetProbationRecord')
-    cy.visit('team/TM1/J678910/convictions/1/probation-record')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
 
   it('Probation record header visible on page', () => {
     cy.task('stubGetProbationRecord')
-    cy.visit('team/TM1/J678910/convictions/1/probation-record')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
   })
 
   it('Sub nav visible on page', () => {
     cy.task('stubGetProbationRecord')
-    cy.visit('team/TM1/J678910/convictions/1/probation-record')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage
       .subNav()
@@ -35,17 +35,20 @@ context('Probation record', () => {
 
   it('Probation record tab is highlighted', () => {
     cy.task('stubGetProbationRecord')
-    cy.visit('team/TM1/J678910/convictions/1/probation-record')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.highlightedTab().should('contain.text', 'Probation record')
   })
 
   it('navigate to probation record through case summary', () => {
+    cy.task('stubAllEstateByRegionCode')
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetProbationRecord')
-    cy.get('a[href*="team/TM1/cases/unallocated"]').click()
-    cy.get('a[href*="team/TM1/J678910/convictions/1/case-view"]').click()
-    cy.get('a[href*="team/TM1/J678910/convictions/1/probation-record"]').click()
+    cy.get('a[href*="/probationDeliveryUnit/PDU1/find-unallocated"]').click()
+    cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/case-view"]').click()
+    cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/probation-record"]').click()
     Page.verifyOnPage(ProbationRecordPage)
   })
 

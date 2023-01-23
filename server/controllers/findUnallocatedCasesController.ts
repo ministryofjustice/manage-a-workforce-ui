@@ -85,6 +85,7 @@ export default class FindUnallocatedCasesController {
       casesLength: unallocatedCases.length,
       teamCode: savedAllocationDemandSelection.team,
       teamSelected: allocationDemandSelection.team,
+      pduCode,
     })
   }
 

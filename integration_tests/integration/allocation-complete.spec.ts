@@ -50,7 +50,6 @@ context('Allocate Complete', () => {
     instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
     cy.task('stubGetPersonById')
-    cy.task('stubGetUnallocatedCase')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')
@@ -74,7 +73,6 @@ context('Allocate Complete', () => {
     instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', true)
     cy.task('stubGetPersonById')
-    cy.task('stubGetUnallocatedCase')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')
@@ -126,7 +124,6 @@ context('Allocate Complete', () => {
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
     cy.task('stubGetPersonById')
-    cy.task('stubGetUnallocatedCase')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
@@ -141,7 +138,6 @@ context('Allocate Complete', () => {
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
     cy.task('stubGetPersonById')
-    cy.task('stubGetUnallocatedCase')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage

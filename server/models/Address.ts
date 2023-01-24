@@ -7,8 +7,6 @@ export default interface Address {
   postcode: string
   noFixedAbode: boolean
   typeVerified: boolean
-  from: string
-  type: {
-    description: string
-  }
+  startDate: string
+  typeDescription: string
 }

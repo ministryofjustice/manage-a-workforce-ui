@@ -9,7 +9,6 @@ export default interface Allocation {
   crn: string
   tier: string
   sentenceDate: string
-  initialAppointment: string
   status: string
   gender: string
   dateOfBirth: string

@@ -18,7 +18,7 @@ export default class DisplayAddress {
       this.rows.push(address?.postcode)
     }
     this.rows.push(this.getAddressType(address))
-    this.rows.push(this.getStartDate(address?.from))
+    this.rows.push(this.getStartDate(address?.startDate))
     this.rows = this.rows.flatMap(row => (row ? [row] : []))
     if (this.rows.length === 0) {
       this.rows.push('No address found')
@@ -28,7 +28,7 @@ export default class DisplayAddress {
   getAddressType(address: Address): string {
     const addressType = address?.noFixedAbode ? 'No fixed abode' : 'Type of address'
     const verified = address?.typeVerified ? ' (verified)' : ''
-    return address?.type?.description ? `${addressType}: ${address.type.description}${verified}` : ''
+    return address?.typeDescription ? `${addressType}: ${address.typeDescription}${verified}` : ''
   }
 
   getStartDate(from: string): string {

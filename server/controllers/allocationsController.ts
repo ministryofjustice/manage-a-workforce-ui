@@ -69,7 +69,6 @@ export default class AllocationsController {
           new Order(
             activeRecord.description,
             activeRecord.length,
-            activeRecord.lengthUnit,
             activeRecord.offences,
             activeRecord.startDate,
             activeRecord.offenderManager
@@ -82,7 +81,6 @@ export default class AllocationsController {
           new Order(
             activeRecord.description,
             activeRecord.length,
-            activeRecord.lengthUnit,
             activeRecord.offences,
             activeRecord.endDate,
             activeRecord.offenderManager

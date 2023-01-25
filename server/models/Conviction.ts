@@ -3,8 +3,7 @@ import ConvictionOffenderManager from './ConvictionOffenderManager'
 
 export default interface Conviction {
   description: string
-  length: number
-  lengthUnit: string
+  length: string
   offenderManager: ConvictionOffenderManager
   startDate: string
   endDate: string

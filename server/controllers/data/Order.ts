@@ -14,13 +14,12 @@ export default class Order {
 
   constructor(
     description: string,
-    length: number,
-    lengthUnit: string,
+    length: string,
     offences: Offence[],
     date: string,
     offenderManager: ConvictionOffenderManager
   ) {
-    const sentenceLength = length ? ` (${length}${lengthUnit ? ` ${lengthUnit}` : ''})` : ''
+    const sentenceLength = length ? ` (${length})` : ''
     this.sentence = `${description}${sentenceLength}`
     this.offences = offences
       .sort(value => {

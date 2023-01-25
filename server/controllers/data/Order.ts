@@ -20,7 +20,7 @@ export default class Order {
     date: string,
     offenderManager: ConvictionOffenderManager
   ) {
-    const sentenceLength = length ? ` (${length} ${lengthUnit})` : ''
+    const sentenceLength = length ? ` (${length}${lengthUnit ? ` ${lengthUnit}` : ''})` : ''
     this.sentence = `${description}${sentenceLength}`
     this.offences = offences
       .sort(value => {

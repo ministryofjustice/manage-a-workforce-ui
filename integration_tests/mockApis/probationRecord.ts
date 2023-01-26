@@ -19,8 +19,7 @@ export default {
           active: [
             {
               description: 'Adult Custody < 12m',
-              length: 6,
-              lengthUnit: 'Months',
+              length: '6 Months',
               startDate: '2019-11-17',
               offenderManager: {
                 name: 'Sheila Linda Hancock',
@@ -35,8 +34,7 @@ export default {
             },
             {
               description: 'ORA Community Order',
-              length: 18,
-              lengthUnit: 'Months',
+              length: '18 Months',
               startDate: '2020-11-05',
               offences: [
                 {
@@ -64,8 +62,7 @@ export default {
             },
             {
               description: 'ORA Community Order',
-              length: 18,
-              lengthUnit: 'Months',
+              length: '18 Months',
               endDate: '2020-11-05',
               offences: [
                 {
@@ -116,8 +113,7 @@ export default {
           active: [
             {
               description: 'Adult Custody < 12m',
-              length: 6,
-              lengthUnit: 'Months',
+              length: '6 Months',
               startDate: '2019-11-17',
               offenderManager: {
                 name: 'Sheila Linda Hancock',
@@ -138,8 +134,7 @@ export default {
           previous: [
             {
               description: 'Adult Custody < 12m',
-              length: 6,
-              lengthUnit: 'Months',
+              length: '6 Months',
               endDate: '2018-06-23',
               offenderManager: {
                 name: 'Sheila Linda Hancock',
@@ -164,8 +159,7 @@ export default {
   stubGetManyPreviousProbationRecord: (): SuperAgentRequest => {
     const previousOrders = new Array(100).fill(0).map(() => ({
       description: 'Adult Custody < 12m',
-      length: 6,
-      lengthUnit: 'Months',
+      length: '6 Months',
       endDate: '2018-06-23',
       offenderManager: {
         name: 'Sheila Linda Hancock',
@@ -198,8 +192,7 @@ export default {
           active: [
             {
               description: 'Adult Custody < 12m',
-              length: 6,
-              lengthUnit: 'Months',
+              length: '6 Months',
               startDate: '2019-11-17',
               offenderManager: {
                 name: 'Sheila Linda Hancock',

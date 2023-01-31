@@ -109,18 +109,6 @@ generic-service:
     moj-official-ark-c-vodafone: "194.33.248.0/29"
     moj-official-ark-f-vodafone: "194.33.249.0/29"
     moj-official-ark-f-expo-e: "51.149.249.32/29"
-    unilink-vpn-1: "194.75.210.216/29"
-    unilink-vpn-2: "83.98.63.176/29"
-    unilink-vpn-3: "78.33.10.50/31"
-    unilink-vpn-4: "78.33.10.52/30"
-    unilink-vpn-5: "78.33.10.56/30"
-    unilink-vpn-6: "78.33.10.60/32"
-    unilink-vpn-7: "78.33.32.99/32"
-    unilink-vpn-8: "78.33.32.100/30"
-    unilink-vpn-9: "78.33.32.104/30"
-    unilink-vpn-10: "78.33.32.108/32"
-    unilink-vpn-11: "217.138.45.109/32"
-    unilink-vpn-12: "217.138.45.110/32"
 
 generic-prometheus-alerts:
   targetApplication: manage-a-workforce-ui

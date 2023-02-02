@@ -92,6 +92,7 @@
   },
   "dependencies": {
     "@ministryofjustice/frontend": "1.6.4",
+    "accessible-autocomplete": "2.0.4",
     "agentkeepalive": "4.2.1",
     "applicationinsights": "2.4.1",
     "axios": "1.2.6",

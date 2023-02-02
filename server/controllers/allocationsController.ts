@@ -213,7 +213,9 @@ export default class AllocationsController {
   async getConfirmInstructions(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
     const response: StaffSummary = await this.workloadService.getStaffByCode(res.locals.user.token, staffCode)
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
+    const useEmailLookup = req.query.autocomplete
     res.render('pages/confirm-instructions', {
+      useEmailLookup,
       title: `${caseOverview.name} | Review allocation instructions | Manage a workforce`,
       data: response,
       name: caseOverview.name,

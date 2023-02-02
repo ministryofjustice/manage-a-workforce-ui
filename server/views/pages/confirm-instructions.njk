@@ -117,23 +117,42 @@
                   <button type="button" class="govuk-button govuk-button--secondary moj-add-another__remove-button">Remove</button>
                 {% endif %}
                 
-                {{ govukInput({
-                  id: 'person[' +loop.index0 +'][email]',
-                  name: 'person[' +loop.index0 +'][email]',
-                  label: {
-                    text: 'Email address',
-                    classes: 'govuk-!-font-weight-bold'
-                  },
-                  type: "email",
-                  autocomplete: "email",
-                  spellcheck: false,
-                  value: person.email,
-                  errorMessage: errors | findError('person[' +loop.index0 +'][email]'),
-                  attributes: {
-                    'data-name': 'person[%index%][email]',
-                    'data-id': 'person[%index%][email]'
-                  }
-                }) }}
+                {% if useEmailLookup === 'true' %}
+                  {{ govukSelect({
+                    id: 'person[' +loop.index0 +'][email]',
+                    name: 'person[' +loop.index0 +'][email]',
+                    label: {
+                      text: 'Email address',
+                      classes: 'govuk-!-font-weight-bold'
+                    },
+                    items: [],
+                    value: person.email,
+                    classes: "js-email-select",
+                    errorMessage: errors | findError('person[' +loop.index0 +'][email]'),
+                    attributes: {
+                      'data-name': 'person[%index%][email]',
+                      'data-id': 'person[%index%][email]'
+                    }
+                  }) }}
+                {% else %}
+                  {{ govukInput({
+                    id: 'person[' +loop.index0 +'][email]',
+                    name: 'person[' +loop.index0 +'][email]',
+                    label: {
+                      text: 'Email address',
+                      classes: 'govuk-!-font-weight-bold'
+                    },
+                    type: "email",
+                    autocomplete: "email",
+                    spellcheck: false,
+                    value: person.email,
+                    errorMessage: errors | findError('person[' +loop.index0 +'][email]'),
+                    attributes: {
+                      'data-name': 'person[%index%][email]',
+                      'data-id': 'person[%index%][email]'
+                    }
+                  }) }}
+                {% endif %}
 
               {% endcall %}
 
@@ -144,7 +163,7 @@
                     text: 'Add another person',
                     name: 'action',
                     value: 'add-another-person',
-                    classes: 'govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4 govuk-!-margin-top-3'
+                    classes: 'govuk-button--secondary moj-add-another__add-button js-email-submit govuk-!-margin-bottom-4 govuk-!-margin-top-3'
                   }) }}
             </div>
 
@@ -153,7 +172,7 @@
                 {{
                     govukButton({
                         text: 'Allocate case',
-                        classes: 'allocate',
+                        classes: 'allocate js-email-submit',
                         type: 'submit',
                         name: 'action',
                         value: 'continue',
@@ -172,3 +191,11 @@
 </div>
 
 {% endblock %}
+
+{% block javascripts %}
+  {% if useEmailLookup %}
+    <script src="/assets/accessible-autocomplete.min.js"></script>
+    <script src="/assets/js/autocomplete-email.js"></script>
+  {% endif %}
+{% endblock %}
+

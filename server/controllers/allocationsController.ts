@@ -8,10 +8,8 @@ import Order from './data/Order'
 import Conviction from '../models/Conviction'
 import { gradeOrder, gradeTips } from './data/AllocateOffenderManager'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
-import OffenderManagerOverview from '../models/OffenderManagerOverview'
 import FileDownload from '../models/FileDownload'
 import WorkloadService from '../services/workloadService'
-import OffenderManagerCases from '../models/OffenderManagerCases'
 import Case from './data/Case'
 import StaffSummary from '../models/StaffSummary'
 import PersonManager from '../models/PersonManager'
@@ -229,11 +227,14 @@ export default class AllocationsController {
   }
 
   async getOverview(_, res: Response, crn, offenderManagerTeamCode, offenderManagerCode, convictionNumber, pduCode) {
-    const response: OffenderManagerOverview = await this.workloadService.getOffenderManagerOverview(
-      res.locals.user.token,
-      offenderManagerCode,
-      offenderManagerTeamCode
-    )
+    const [response, teamDetails] = await Promise.all([
+      this.workloadService.getOffenderManagerOverview(
+        res.locals.user.token,
+        offenderManagerCode,
+        offenderManagerTeamCode
+      ),
+      this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
+    ])
     const data: OfficerView = new OfficerView(response)
     res.render('pages/officer-overview', {
       title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
@@ -243,23 +244,15 @@ export default class AllocationsController {
       convictionNumber,
       isOverview: true,
       pduCode,
+      teamName: teamDetails.name,
     })
   }
 
-  async getActiveCases(
-    req: Request,
-    res: Response,
-    crn,
-    offenderManagerTeamCode,
-    offenderManagerCode,
-    convictionNumber,
-    pduCode
-  ) {
-    const response: OffenderManagerCases = await this.workloadService.getOffenderManagerCases(
-      res.locals.user.token,
-      offenderManagerCode,
-      offenderManagerTeamCode
-    )
+  async getActiveCases(_, res: Response, crn, offenderManagerTeamCode, offenderManagerCode, convictionNumber, pduCode) {
+    const [response, teamDetails] = await Promise.all([
+      this.workloadService.getOffenderManagerCases(res.locals.user.token, offenderManagerCode, offenderManagerTeamCode),
+      this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
+    ])
     const cases = response.activeCases.map(
       activeCase =>
         new Case(activeCase.crn, activeCase.tier, activeCase.caseCategory, activeCase.forename, activeCase.surname)
@@ -273,6 +266,7 @@ export default class AllocationsController {
       convictionNumber,
       isActiveCases: true,
       pduCode,
+      teamName: teamDetails.name,
     })
   }
 

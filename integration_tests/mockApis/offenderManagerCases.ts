@@ -17,7 +17,6 @@ export default {
           email: 'some.email@justice.gov.uk',
           grade: 'PO',
           code: 'OM1',
-          teamName: 'Wrexham - Team 1',
           activeCases: [
             {
               forename: 'Dylan Adam',
@@ -57,7 +56,6 @@ export default {
           surname: 'Doe',
           grade: 'PO',
           code: 'OM1',
-          teamName: 'Wrexham - Team 1',
           activeCases: [
             {
               forename: 'Dylan Adam',

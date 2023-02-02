@@ -6,13 +6,14 @@ context('Overview', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetOverview')
+    cy.task('stubGetTeamDetails', { code: 'TM2', name: 'Team Name 1' })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/officer-view')
     overviewPage = Page.verifyOnPage(OverviewPage)
   })
 
   it('Officer details visible on page', () => {
-    overviewPage.captionText().should('contain', 'Wrexham - Team 1')
+    overviewPage.captionText().should('contain', 'Team Name 1')
     overviewPage.secondaryText().should('contain', 'PO')
   })
 

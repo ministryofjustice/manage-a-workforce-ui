@@ -9,7 +9,6 @@ export default interface OffenderManagerOverview {
   capacity: number
   code: string
   totalCases: number
-  teamName: string
   weeklyHours: number
   totalReductionHours: number
   pointsAvailable: number

@@ -6,13 +6,14 @@ context('Active Cases', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetOffenderManagerCases')
+    cy.task('stubGetTeamDetails', { code: 'TM2', name: 'Team Name 1' })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/active-cases')
     activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
   })
 
   it('Officer details visible on page', () => {
-    activeCasesPage.captionText().should('contain', 'Wrexham - Team 1')
+    activeCasesPage.captionText().should('contain', 'Team Name 1')
     activeCasesPage.secondaryText().should('contain', 'PO')
   })
 

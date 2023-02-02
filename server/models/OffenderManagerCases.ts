@@ -5,6 +5,5 @@ export default interface OffenderManagerCases {
   surname: string
   grade: string
   code: string
-  teamName: string
   activeCases: OffenderManagerCase[]
 }

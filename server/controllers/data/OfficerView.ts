@@ -18,8 +18,6 @@ export default class OfficerView {
 
   totalCases: number
 
-  teamName: string
-
   weeklyHours: number
 
   pointsAvailable: number
@@ -52,7 +50,6 @@ export default class OfficerView {
     this.capacity = offenderManagerOverview.capacity
     this.code = offenderManagerOverview.code
     this.totalCases = offenderManagerOverview.totalCases
-    this.teamName = offenderManagerOverview.teamName
     this.weeklyHours = offenderManagerOverview.weeklyHours
 
     this.pointsAvailable = offenderManagerOverview.pointsAvailable

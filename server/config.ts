@@ -85,6 +85,13 @@ export default {
       agent: new AgentConfig(2000),
       retries: 2,
     },
+    staffLookupService: {
+      url: get('STAFF_LOOKUP_SERVICE_URL', 'http://127.0.0.1:9095', requiredInProduction),
+      timeout: {
+        response: 2000,
+      },
+      agent: new AgentConfig(2000),
+    },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://127.0.0.1:8100', requiredInProduction),
       timeout: {

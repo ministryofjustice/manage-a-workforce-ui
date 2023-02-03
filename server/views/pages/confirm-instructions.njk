@@ -3,7 +3,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {%- from "govuk/components/fieldset/macro.njk" import govukFieldset -%}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-{%- from "govuk/components/input/macro.njk" import govukInput -%}
+{%- from "govuk/components/select/macro.njk" import govukSelect -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "../components/instructions/macro.njk" import instructions %}
@@ -84,16 +84,14 @@
               }
             }) %}
             
-            {{ govukInput({
+            {{ govukSelect({
               id: 'person[0][email]',
               name: 'person[0][email]',
+              items: [],
               label: {
                 text: 'Email address',
                 classes: 'govuk-!-font-weight-bold'
-              },
-              type: "email",
-              autocomplete: "email",
-              spellcheck: false
+              }
             }) }}
 
             {% endcall %}
@@ -120,17 +118,18 @@
                   }) }}
                 {% endif %}
                 
-                {{ govukInput({
+                {{ govukSelect({
                   id: 'person[' +loop.index0 +'][email]',
                   name: 'person[' +loop.index0 +'][email]',
                   label: {
                     text: 'Email address',
                     classes: 'govuk-!-font-weight-bold'
                   },
-                  type: "email",
-                  autocomplete: "email",
-                  spellcheck: false,
-                  value: person.email,
+                  items: [ {
+                    value: person.email,
+                    text: person.email,
+                    selected: true
+                  }],
                   errorMessage: errors | findError('person[' +loop.index0 +'][email]')
                 }) }}
 

@@ -51,7 +51,7 @@ const probationUrl = 'http://127.0.0.1:9093/__admin'
 const allocationUrl = 'http://127.0.0.1:9091/__admin'
 const workloadUrl = 'http://127.0.0.1:9092/__admin'
 const userPreferenceUrl = 'http://127.0.0.1:9094/__admin'
-const staffLookupUrl = 'http://127.0.0.1:9094/__admin'
+const staffLookupUrl = 'http://127.0.0.1:9095/__admin'
 
 const { stubFor: stubForAuth, getRequests: getAuthRequests } = wiremock(authUrl)
 export { stubForAuth, getAuthRequests }

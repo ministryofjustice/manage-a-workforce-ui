@@ -1,8 +1,10 @@
+import Name from './Name'
+import StaffMember from './StaffMember'
+
 export default interface OffenderManagerPotentialWorkload {
-  forename: string
-  surname: string
-  grade: string
   capacity: number
-  code: string
   potentialCapacity: number
+  tier: string
+  name: Name
+  staff: StaffMember
 }

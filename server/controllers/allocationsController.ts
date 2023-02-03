@@ -285,8 +285,13 @@ export default class AllocationsController {
     form,
     pduCode
   ) {
-    switch (true) {
-      case form.action === 'continue':
+    if (form.remove !== undefined) {
+      form.person.splice(form.remove, 1)
+      req.session.confirmInstructionForm = form
+      return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+    }
+    switch (form.action) {
+      case 'continue':
         return this.continueConfirmInstructions(
           req,
           res,
@@ -297,12 +302,8 @@ export default class AllocationsController {
           form,
           pduCode
         )
-      case form.action === 'add-another-person':
+      case 'add-another-person':
         form.person.push({ email: '' })
-        req.session.confirmInstructionForm = form
-        return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
-      case form.remove !== undefined:
-        form.person.splice(form.remove, 1)
         req.session.confirmInstructionForm = form
         return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
       default:

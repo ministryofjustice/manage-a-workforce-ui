@@ -10,7 +10,7 @@ function debounce(fn, delay) {
   }
 }
 
-window.onload = function () {
+window.addEventListener('load', function () {
   var emailInputs = document.getElementsByClassName('govuk-select')
   console.log('this function ran')
   for (var i = 0; i < emailInputs.length; i++) {
@@ -19,7 +19,7 @@ window.onload = function () {
     accessibleAutocomplete.enhanceSelectElement({
       defaultValue: '',
       selectElement: emailInput,
-      name: emailInput.name,
+      name: emailInput.name.replace('emailPlaceholder', 'email'),
       confirmOnBlur: false,
       minLength: 2,
       source: debounce(function (query, populateResults) {
@@ -46,4 +46,4 @@ window.onload = function () {
       }, 100),
     })
   }
-}
+})

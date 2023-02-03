@@ -6,20 +6,18 @@ export default {
     return stubForStaffLookup({
       request: {
         method: 'GET',
-        urlPath: '/staff/search',
+        urlPattern: '/staff/search?.*',
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          items: [
-            {
-              firstName: 'First',
-              lastName: 'Name',
-              email: 'first@justice.gov.uk',
-            },
-          ],
-        },
+        jsonBody: [
+          {
+            firstName: 'First',
+            lastName: 'Name',
+            email: 'first@justice.gov.uk',
+          },
+        ],
       },
     })
   },

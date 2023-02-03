@@ -86,7 +86,7 @@
             
             {{ govukSelect({
               id: 'person[0][email]',
-              name: 'person[0][email]',
+              name: 'person[0][emailPlaceholder]',
               items: [],
               label: {
                 text: 'Email address',
@@ -120,7 +120,7 @@
                 
                 {{ govukSelect({
                   id: 'person[' +loop.index0 +'][email]',
-                  name: 'person[' +loop.index0 +'][email]',
+                  name: 'person[' +loop.index0 +'][emailPlaceholder]',
                   label: {
                     text: 'Email address',
                     classes: 'govuk-!-font-weight-bold'
@@ -176,4 +176,5 @@
 {% block javascripts %}
     <script src="/assets/accessible-autocomplete.min.js"></script>
     <script src="/assets/js/autocomplete-email.js"></script>
+    <script src="/assets/instructions.js"></script>
 {% endblock %}

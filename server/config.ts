@@ -88,7 +88,7 @@ export default {
     staffLookupService: {
       url: get('STAFF_LOOKUP_SERVICE_URL', 'http://127.0.0.1:9095', requiredInProduction),
       timeout: {
-        response: 2000,
+        response: 5000,
       },
       agent: new AgentConfig(2000),
     },

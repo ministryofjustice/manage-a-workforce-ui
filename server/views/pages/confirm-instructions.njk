@@ -3,6 +3,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {%- from "govuk/components/fieldset/macro.njk" import govukFieldset -%}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{%- from "govuk/components/select/macro.njk" import govukSelect -%}
 {%- from "govuk/components/input/macro.njk" import govukInput -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
@@ -74,7 +75,7 @@
         </div>
         <div class="govuk-form-group" data-module="moj-add-another">   
         {% if confirmInstructionForm.person.length === 0 %}
-        {% call govukFieldset({
+          {% call govukFieldset({
               classes: 'moj-add-another__item',
               legend: {
                 text: 'Add another recipient',
@@ -83,106 +84,122 @@
               }
             }) %}
             
-            {{ govukInput({
-              id: 'person[0][email]',
-              name: 'person[0][email]',
-              label: {
-                text: 'Email address',
-                classes: 'govuk-!-font-weight-bold'
-              },
-              type: "email",
-              autocomplete: "email",
-              spellcheck: false,
-              attributes: {
-                'data-name': 'person[%index%][email]',
-                'data-id': 'person[%index%][email]'
-              }
-            }) }}
-
-            {% endcall %}
+            {% if useEmailLookup === 'true' %}
+              {{ govukSelect({
+                id: 'person[0][email]',
+                name: 'person[0][email]',
+                label: {
+                  text: 'Email address',
+                  classes: 'govuk-!-font-weight-bold'
+                },
+                items: [],
+                classes: "js-email-select",
+                attributes: {
+                  'data-name': 'person[%index%][email]',
+                  'data-id': 'person[%index%][email]'
+                }
+              }) }}
+            {% else %}
+              {{ govukInput({
+                id: 'person[0][email]',
+                name: 'person[0][email]',
+                label: {
+                  text: 'Email address',
+                  classes: 'govuk-!-font-weight-bold'
+                },
+                type: "email",
+                autocomplete: "email",
+                spellcheck: false,
+                attributes: {
+                  'data-name': 'person[%index%][email]',
+                  'data-id': 'person[%index%][email]'
+                }
+              }) }}
             {% endif %}
 
-            {% for person in confirmInstructionForm.person %}
+          {% endcall %}
+        {% endif %}
 
-              {% call govukFieldset({
-                classes: 'moj-add-another__item',
-                legend: {
-                  text: 'Add another recipient',
-                  classes: 'moj-add-another__title govuk-fieldset__legend--m',
-                  isPageHeading: false
+        {% for person in confirmInstructionForm.person %}
+
+          {% call govukFieldset({
+            classes: 'moj-add-another__item',
+            legend: {
+              text: 'Add another recipient',
+              classes: 'moj-add-another__title govuk-fieldset__legend--m',
+              isPageHeading: false
+            }
+          }) %}
+
+            {% if confirmInstructionForm.person.length > 1 %}
+              <button type="button" class="govuk-button govuk-button--secondary moj-add-another__remove-button">Remove</button>
+            {% endif %}
+            
+            {% if useEmailLookup === 'true' %}
+              {{ govukSelect({
+                id: 'person[' +loop.index0 +'][email]',
+                name: 'person[' +loop.index0 +'][email]',
+                label: {
+                  text: 'Email address',
+                  classes: 'govuk-!-font-weight-bold'
+                },
+                items: [],
+                value: person.email,
+                classes: "js-email-select",
+                errorMessage: errors | findError('person[' +loop.index0 +'][email]'),
+                attributes: {
+                  'data-name': 'person[%index%][email]',
+                  'data-id': 'person[%index%][email]'
                 }
-              }) %}
+              }) }}
+            {% else %}
+              {{ govukInput({
+                id: 'person[' +loop.index0 +'][email]',
+                name: 'person[' +loop.index0 +'][email]',
+                label: {
+                  text: 'Email address',
+                  classes: 'govuk-!-font-weight-bold'
+                },
+                type: "email",
+                autocomplete: "email",
+                spellcheck: false,
+                value: person.email,
+                errorMessage: errors | findError('person[' +loop.index0 +'][email]'),
+                attributes: {
+                  'data-name': 'person[%index%][email]',
+                  'data-id': 'person[%index%][email]'
+                }
+              }) }}
+            {% endif %}
 
-                {% if confirmInstructionForm.person.length > 1 %}
-                  <button type="button" class="govuk-button govuk-button--secondary moj-add-another__remove-button">Remove</button>
-                {% endif %}
-                
-                {% if useEmailLookup === 'true' %}
-                  {{ govukSelect({
-                    id: 'person[' +loop.index0 +'][email]',
-                    name: 'person[' +loop.index0 +'][email]',
-                    label: {
-                      text: 'Email address',
-                      classes: 'govuk-!-font-weight-bold'
-                    },
-                    items: [],
-                    value: person.email,
-                    classes: "js-email-select",
-                    errorMessage: errors | findError('person[' +loop.index0 +'][email]'),
-                    attributes: {
-                      'data-name': 'person[%index%][email]',
-                      'data-id': 'person[%index%][email]'
-                    }
-                  }) }}
-                {% else %}
-                  {{ govukInput({
-                    id: 'person[' +loop.index0 +'][email]',
-                    name: 'person[' +loop.index0 +'][email]',
-                    label: {
-                      text: 'Email address',
-                      classes: 'govuk-!-font-weight-bold'
-                    },
-                    type: "email",
-                    autocomplete: "email",
-                    spellcheck: false,
-                    value: person.email,
-                    errorMessage: errors | findError('person[' +loop.index0 +'][email]'),
-                    attributes: {
-                      'data-name': 'person[%index%][email]',
-                      'data-id': 'person[%index%][email]'
-                    }
-                  }) }}
-                {% endif %}
+          {% endcall %}
 
-              {% endcall %}
+        {% endfor %}
 
-            {% endfor %}
+        <div class="moj-button-action">
+              {{ govukButton({
+                text: 'Add another person',
+                name: 'action',
+                value: 'add-another-person',
+                classes: 'govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4 govuk-!-margin-top-3'
+              }) }}
+        </div>
 
-            <div class="moj-button-action">
-                  {{ govukButton({
-                    text: 'Add another person',
+        <div class="govuk-button-group">
+            {{
+                govukButton({
+                    text: 'Allocate case',
+                    classes: 'allocate',
+                    type: 'submit',
                     name: 'action',
-                    value: 'add-another-person',
-                    classes: 'govuk-button--secondary moj-add-another__add-button js-email-submit govuk-!-margin-bottom-4 govuk-!-margin-top-3'
-                  }) }}
-            </div>
-
-
-            <div class="govuk-button-group">
-                {{
-                    govukButton({
-                        text: 'Allocate case',
-                        classes: 'allocate js-email-submit',
-                        type: 'submit',
-                        name: 'action',
-                        value: 'continue',
-                        preventDoubleClick: true,
-                        attributes: {
-                            id: convictionNumber
-                        }
-                    })
-                }}
-                <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Cancel</a>
+                    value: 'continue',
+                    preventDoubleClick: true,
+                    attributes: {
+                        id: convictionNumber
+                    }
+                })
+            }}
+            <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Cancel</a>
           
         </div>
       </form>

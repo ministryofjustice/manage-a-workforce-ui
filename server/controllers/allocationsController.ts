@@ -285,6 +285,41 @@ export default class AllocationsController {
     form,
     pduCode
   ) {
+    switch (true) {
+      case form.action === 'continue':
+        return this.continueConfirmInstructions(
+          req,
+          res,
+          crn,
+          staffTeamCode,
+          staffCode,
+          convictionNumber,
+          form,
+          pduCode
+        )
+      case form.action === 'add-another-person':
+        form.person.push({ email: '' })
+        req.session.confirmInstructionForm = form
+        return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+      case form.remove !== undefined:
+        form.person.splice(form.remove, 1)
+        req.session.confirmInstructionForm = form
+        return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+      default:
+        return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+    }
+  }
+
+  async continueConfirmInstructions(
+    req: Request,
+    res: Response,
+    crn,
+    staffTeamCode,
+    staffCode,
+    convictionNumber,
+    form,
+    pduCode
+  ) {
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
       confirmInstructionForm,

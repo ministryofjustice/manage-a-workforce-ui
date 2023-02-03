@@ -15,7 +15,8 @@
     name: 'emailCopy',
     items: [{
         value: 'no',
-        text: 'Tick the box if you do not want to receive a copy.'
+        text: 'Tick the box if you do not want to receive a copy.',
+        checked: confirmInstructionForm.emailCopy
     }],
     classes: 'govuk-checkboxes--small'
 })}}
@@ -72,10 +73,10 @@
             }}
             <p id='copyText'>You can send a copy of these notes to another person, for example a case admin officer.</p>
         </div>
-        <div class="govuk-form-group" data-module="moj-add-another">   
+        <div class="govuk-form-group">   
         {% if confirmInstructionForm.person.length === 0 %}
         {% call govukFieldset({
-              classes: 'moj-add-another__item',
+          classes: 'moj-add-another__item',
               legend: {
                 text: 'Add another recipient',
                 classes: 'moj-add-another__title govuk-fieldset__legend--m',
@@ -92,11 +93,7 @@
               },
               type: "email",
               autocomplete: "email",
-              spellcheck: false,
-              attributes: {
-                'data-name': 'person[%index%][email]',
-                'data-id': 'person[%index%][email]'
-              }
+              spellcheck: false
             }) }}
 
             {% endcall %}
@@ -114,7 +111,13 @@
               }) %}
 
                 {% if confirmInstructionForm.person.length > 1 %}
-                  <button type="button" class="govuk-button govuk-button--secondary moj-add-another__remove-button">Remove</button>
+                {{ govukButton({
+                    text: 'Remove',
+                    type: 'submit',
+                    name: 'remove',
+                    value: loop.index0,
+                    classes: 'govuk-button govuk-button--secondary  moj-add-another__remove-button'
+                  }) }}
                 {% endif %}
                 
                 {{ govukInput({
@@ -128,11 +131,7 @@
                   autocomplete: "email",
                   spellcheck: false,
                   value: person.email,
-                  errorMessage: errors | findError('person[' +loop.index0 +'][email]'),
-                  attributes: {
-                    'data-name': 'person[%index%][email]',
-                    'data-id': 'person[%index%][email]'
-                  }
+                  errorMessage: errors | findError('person[' +loop.index0 +'][email]')
                 }) }}
 
               {% endcall %}
@@ -142,9 +141,10 @@
             <div class="moj-button-action">
                   {{ govukButton({
                     text: 'Add another person',
+                    type: 'submit',
                     name: 'action',
                     value: 'add-another-person',
-                    classes: 'govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-4 govuk-!-margin-top-3'
+                    classes: 'govuk-button--secondary govuk-!-margin-bottom-4 govuk-!-margin-top-3'
                   }) }}
             </div>
 

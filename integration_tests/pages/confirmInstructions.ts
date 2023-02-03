@@ -15,7 +15,7 @@ export default class InstructionsConfirmPage extends Page {
 
   addRecipientHeader = (): PageElement => cy.get('.moj-add-another__title')
 
-  addAnotherPersonButton = (): PageElement => cy.get('.moj-add-another__add-button')
+  addAnotherPersonButton = (): PageElement => cy.get('button[value*="add-another-person"]')
 
   inputTexts = (): PageElement => cy.get('input.govuk-input')
 

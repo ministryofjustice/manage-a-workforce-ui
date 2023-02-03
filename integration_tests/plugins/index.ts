@@ -4,6 +4,7 @@ import {
   resetProbationEstateStubs,
   resetUserPreferenceStubs,
   resetWorkloadStubs,
+  resetStaffLookupStubs,
 } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
@@ -30,6 +31,7 @@ export default (on: (string, Record) => void): void => {
         resetWorkloadStubs(),
         resetProbationEstateStubs(),
         resetUserPreferenceStubs(),
+        resetStaffLookupStubs(),
       ])
       return Promise.all([
         auth.stubSignIn(),

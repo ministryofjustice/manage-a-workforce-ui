@@ -12,12 +12,24 @@ export default {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          forename: 'John',
-          surname: 'Doe',
-          grade: 'PO',
           capacity: 50.4,
-          code: 'OM2',
           potentialCapacity: 64.8,
+          name: {
+            forename: 'Dylan',
+            middleName: 'Adam',
+            surname: 'Armstrong',
+            combinedName: 'Dylan Adam Armstrong',
+          },
+          staff: {
+            code: 'OM2',
+            name: {
+              forename: 'John',
+              surname: 'Doe',
+              combinedName: 'John Doe',
+            },
+            grade: 'PO',
+          },
+          tier: 'C1',
         },
       },
     })
@@ -36,12 +48,24 @@ export default {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          forename: 'John',
-          surname: 'Doe',
-          grade: 'PO',
           capacity: 50.4,
-          code: 'OM2',
           potentialCapacity: 64.8,
+          name: {
+            forename: 'Dylan',
+            middleName: 'Adam',
+            surname: 'Armstrong',
+            combinedName: 'Dylan Adam Armstrong',
+          },
+          staff: {
+            code: 'OM2',
+            name: {
+              forename: 'John',
+              surname: 'Doe',
+              combinedName: 'John Doe',
+            },
+            grade: 'PO',
+          },
+          tier: 'C1',
         },
       },
     })
@@ -56,12 +80,24 @@ export default {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          forename: 'John',
-          surname: 'Doe',
-          grade: 'PO',
           capacity: 100.2,
-          code: 'OM2',
           potentialCapacity: 108.6,
+          name: {
+            forename: 'Dylan',
+            middleName: 'Adam',
+            surname: 'Armstrong',
+            combinedName: 'Dylan Adam Armstrong',
+          },
+          staff: {
+            code: 'OM2',
+            name: {
+              forename: 'John',
+              surname: 'Doe',
+              combinedName: 'John Doe',
+            },
+            grade: 'PO',
+          },
+          tier: 'C1',
         },
       },
     })
@@ -76,12 +112,24 @@ export default {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          forename: 'John',
-          surname: 'Doe',
-          grade: 'PO',
           capacity: 50.4,
-          code: 'OM2',
           potentialCapacity: 50.4,
+          name: {
+            forename: 'Dylan',
+            middleName: 'Adam',
+            surname: 'Armstrong',
+            combinedName: 'Dylan Adam Armstrong',
+          },
+          staff: {
+            code: 'OM2',
+            name: {
+              forename: 'John',
+              surname: 'Doe',
+              combinedName: 'John Doe',
+            },
+            grade: 'PO',
+          },
+          tier: 'C1',
         },
       },
     })

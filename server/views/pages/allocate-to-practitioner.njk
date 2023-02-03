@@ -3,7 +3,7 @@
 {% from "../components/pop/macro.njk" import pop %}
 
 
-{% set offenderManagerDetails = data.forename + ' ' + data.surname + (' (' + data.grade + ')' if data.grade)  %}
+{% set offenderManagerDetails = data.staff.name.combinedName + (' (' + data.staff.grade + ')' if data.staff.grade)  %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({

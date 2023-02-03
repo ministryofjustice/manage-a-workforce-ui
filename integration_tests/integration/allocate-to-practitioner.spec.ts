@@ -6,7 +6,6 @@ context('Allocate to Practitioner', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetPotentialOffenderManagerWorkload')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
   })
 
   it('can navigate to Allocate to Practitioner page from Choose Practitioner', () => {

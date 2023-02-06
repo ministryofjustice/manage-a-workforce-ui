@@ -27,6 +27,9 @@ window.addEventListener('load', function () {
           if (result.unableToLoad) {
             return 'This function is unavailable, please try again later'
           }
+          if (typeof result === 'string') {
+            return 'Clear the selection'
+          }
           return (
             result &&
             result.email +

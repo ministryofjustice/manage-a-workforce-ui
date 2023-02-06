@@ -30,7 +30,9 @@ context('Auto Complete Email', () => {
     cy.task('stubSearchStaffError')
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.emailInput(0).type('ma')
-    instructionsConfirmPage.autoCompleteOption(0, 0).should('have.text', 'Unable to load options')
+    instructionsConfirmPage
+      .autoCompleteOption(0, 0)
+      .should('have.text', 'This function is unavailable, please try again later')
     instructionsConfirmPage.emailInput(0).type('nual@justice.gov.uk')
     instructionsConfirmPage.emailInput(0).blur()
     instructionsConfirmPage.emailInput(0).should('have.value', 'manual@justice.gov.uk')

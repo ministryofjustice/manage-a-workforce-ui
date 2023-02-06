@@ -25,7 +25,7 @@ window.addEventListener('load', function () {
         },
         suggestion: function (result) {
           if (result.unableToLoad) {
-            return 'Unable to load options'
+            return 'This function is unavailable, please try again later'
           }
           return (
             result &&

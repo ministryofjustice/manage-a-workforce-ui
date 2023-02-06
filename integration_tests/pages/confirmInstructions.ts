@@ -27,4 +27,7 @@ export default class InstructionsConfirmPage extends Page {
   checkbox = (): PageElement => cy.get('#emailCopy')
 
   emailInput = (index): PageElement => cy.get(`input[id="person\\[${index}\\]\\[email\\]"]`)
+
+  autoCompleteOption = (emailInputIndex, optionIndex): PageElement =>
+    cy.get(`#person\\[${emailInputIndex}\\]\\[email\\]__option--${optionIndex}`)
 }

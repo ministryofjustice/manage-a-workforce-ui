@@ -12,9 +12,7 @@ function debounce(fn, delay) {
 
 window.addEventListener('load', function () {
   var emailInputs = document.getElementsByClassName('govuk-select')
-  console.log('this function ran')
   for (var i = 0; i < emailInputs.length; i++) {
-    console.log('in loop at ' + i)
     var emailInput = emailInputs.item(i)
     accessibleAutocomplete.enhanceSelectElement({
       defaultValue: '',
@@ -37,7 +35,6 @@ window.addEventListener('load', function () {
               var json = JSON.parse(response)
               populateResults(json)
             } else {
-              console.log('Failed to load the search index')
               populateResults(['Unable to load options'])
             }
           }

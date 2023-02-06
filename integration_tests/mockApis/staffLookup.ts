@@ -21,4 +21,15 @@ export default {
       },
     })
   },
+  stubSearchStaffError: (): SuperAgentRequest => {
+    return stubForStaffLookup({
+      request: {
+        method: 'GET',
+        urlPattern: '/staff/search?.*',
+      },
+      response: {
+        status: 500,
+      },
+    })
+  },
 }

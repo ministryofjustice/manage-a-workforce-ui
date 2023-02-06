@@ -15,7 +15,6 @@ generic-service:
     WORKLOAD_SERVICE_URL: "https://hmpps-workload.hmpps.service.justice.gov.uk"
     PROBATION_ESTATE_SERVICE_URL: "https://hmpps-probation-estate-api.hmpps.service.justice.gov.uk"
     USER_PREFERENCE_SERVICE_URL: "https://hmpps-user-preferences.hmpps.service.justice.gov.uk"
-    STAFF_LOOKUP_SERVICE_URL: "https://hmpps-staff-lookup-service.hmpps.service.justice.gov.uk"
 
 generic-prometheus-alerts:
   ingress5xxErrorWindowMinutes: 4

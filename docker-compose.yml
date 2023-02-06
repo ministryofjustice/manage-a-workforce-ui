@@ -45,13 +45,6 @@ services:
     restart: always
     ports:
       - "9094:8080"
-  staff-lookup-wiremock:
-    image: wiremock/wiremock
-    networks:
-    - hmpps_int
-    restart: always
-    ports:
-      - "9095:8080"
 
 networks:
   hmpps_int:

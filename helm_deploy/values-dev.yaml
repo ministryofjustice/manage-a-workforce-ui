@@ -16,7 +16,6 @@ generic-service:
     WORKLOAD_SERVICE_URL: "https://hmpps-workload-dev.hmpps.service.justice.gov.uk"
     PROBATION_ESTATE_SERVICE_URL: "https://hmpps-probation-estate-api-dev.hmpps.service.justice.gov.uk"
     USER_PREFERENCE_SERVICE_URL: "https://hmpps-user-preferences-dev.hmpps.service.justice.gov.uk"
-    STAFF_LOOKUP_SERVICE_URL: "https://hmpps-staff-lookup-service-dev.hmpps.service.justice.gov.uk"
 
   allowlist:
     office: "217.33.148.210/32"

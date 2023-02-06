@@ -17,7 +17,7 @@ export default class InstructionsConfirmPage extends Page {
 
   addAnotherPersonButton = (): PageElement => cy.get('button[value*="add-another-person"]')
 
-  inputTexts = (): PageElement => cy.get('input.autocomplete__input')
+  inputTexts = (): PageElement => cy.get('input.govuk-input')
 
   cancelLink = (crn, convictionNumber, pduCode): PageElement =>
     cy.get(`a[href*="/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner"]`).eq(1)
@@ -26,11 +26,5 @@ export default class InstructionsConfirmPage extends Page {
 
   checkbox = (): PageElement => cy.get('#emailCopy')
 
-  emailInput = (index): PageElement => cy.get(`input[id="person\\[${index}\\]\\[email\\]"]`)
-
-  autoCompleteOption = (emailInputIndex, optionIndex): PageElement =>
-    cy.get(`#person\\[${emailInputIndex}\\]\\[email\\]__option--${optionIndex}`)
-
-  firstAutoCompleteOption = (emailInputIndex): PageElement =>
-    cy.get(`ul[id="person\\[${emailInputIndex}\\]\\[email\\]__listbox"]:first`)
+  emailInput = (index): PageElement => cy.get(`#person\\[${index}\\]\\[email\\]`)
 }

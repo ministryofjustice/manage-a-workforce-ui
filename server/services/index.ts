@@ -5,7 +5,6 @@ import WorkloadService from './workloadService'
 import ProbationEstateService from './probationEstateService'
 import UserPreferenceService from './userPreferenceService'
 import config from '../config'
-import StaffLookupService from './staffLookupService'
 
 export const services = () => {
   const { hmppsAuthClient } = dataAccess()
@@ -15,14 +14,12 @@ export const services = () => {
   const workloadService = new WorkloadService(config.apis.workloadService)
   const probationEstateService = new ProbationEstateService(config.apis.probationEstateService)
   const userPreferenceService = new UserPreferenceService(config.apis.userPreferenceService)
-  const staffLookupService = new StaffLookupService(config.apis.staffLookupService)
   return {
     userService,
     allocationsService,
     workloadService,
     probationEstateService,
     userPreferenceService,
-    staffLookupService,
   }
 }
 

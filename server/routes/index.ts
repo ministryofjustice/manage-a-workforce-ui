@@ -7,7 +7,6 @@ import AllocateCasesController from '../controllers/allocateCasesController'
 import FindUnallocatedCasesController from '../controllers/findUnallocatedCasesController'
 import type { Services } from '../services'
 import HomeController from '../controllers/homeController'
-import StaffController from '../controllers/staffController'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -38,18 +37,11 @@ export default function routes(services: Services): Router {
     services.allocationsService
   )
 
-  const staffController = new StaffController(services.staffLookupService)
-
   get('/before-you-start', async (req, res) => {
     await homeController.beforeYouStart(req, res)
   })
   get('/', async (req, res) => {
     await homeController.redirectUser(req, res)
-  })
-
-  get('/staff-lookup', async (req, res) => {
-    const { searchString } = req.query
-    await staffController.lookup(req, res, searchString as string)
   })
 
   get('/pdu/:pduCode/find-unallocated', async (req, res) => {

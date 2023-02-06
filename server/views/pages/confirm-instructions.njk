@@ -3,7 +3,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {%- from "govuk/components/fieldset/macro.njk" import govukFieldset -%}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-{%- from "govuk/components/select/macro.njk" import govukSelect -%}
+{%- from "govuk/components/input/macro.njk" import govukInput -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "../components/instructions/macro.njk" import instructions %}
@@ -73,7 +73,7 @@
             }}
             <p id='copyText'>You can send a copy of these notes to another person, for example a case admin officer.</p>
         </div>
-        <div class="govuk-form-group">
+        <div class="govuk-form-group">   
         {% if confirmInstructionForm.person.length === 0 %}
         {% call govukFieldset({
           classes: 'moj-add-another__item',
@@ -84,14 +84,16 @@
               }
             }) %}
             
-            {{ govukSelect({
+            {{ govukInput({
               id: 'person[0][email]',
-              name: 'person[0][emailPlaceholder]',
-              items: [],
+              name: 'person[0][email]',
               label: {
                 text: 'Email address',
                 classes: 'govuk-!-font-weight-bold'
-              }
+              },
+              type: "email",
+              autocomplete: "email",
+              spellcheck: false
             }) }}
 
             {% endcall %}
@@ -118,18 +120,17 @@
                   }) }}
                 {% endif %}
                 
-                {{ govukSelect({
+                {{ govukInput({
                   id: 'person[' +loop.index0 +'][email]',
-                  name: 'person[' +loop.index0 +'][emailPlaceholder]',
+                  name: 'person[' +loop.index0 +'][email]',
                   label: {
                     text: 'Email address',
                     classes: 'govuk-!-font-weight-bold'
                   },
-                  items: [ {
-                    value: person.email,
-                    text: person.email,
-                    selected: true
-                  }],
+                  type: "email",
+                  autocomplete: "email",
+                  spellcheck: false,
+                  value: person.email,
                   errorMessage: errors | findError('person[' +loop.index0 +'][email]')
                 }) }}
 
@@ -170,11 +171,4 @@
   </div>    
 </div>
 
-{% endblock %}
-
-
-{% block javascripts %}
-    <script src="/assets/accessible-autocomplete.min.js"></script>
-    <script src="/assets/js/autocomplete-email.js"></script>
-    <script src="/assets/instructions.js"></script>
 {% endblock %}

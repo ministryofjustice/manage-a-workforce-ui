@@ -1,4 +1,4 @@
-window.onload = function () {
+window.addEventListener('load', function () {
   const textArea = document.getElementById('instructions')
   const crn = textArea.getAttribute('data-crn')
   const convictionNumber = textArea.getAttribute('data-conviction-number')
@@ -9,4 +9,4 @@ window.onload = function () {
   if (localStorage[newInstructionsItem]) {
     textArea.value = localStorage.getItem(newInstructionsItem)
   }
-}
+})

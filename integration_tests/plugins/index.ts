@@ -4,6 +4,7 @@ import {
   resetProbationEstateStubs,
   resetUserPreferenceStubs,
   resetWorkloadStubs,
+  resetStaffLookupStubs,
 } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
@@ -21,6 +22,7 @@ import staff from '../mockApis/staff'
 import allocationComplete from '../mockApis/allocationComplete'
 import person from '../mockApis/person'
 import probationEstate from '../mockApis/probationEstate'
+import staffLookup from '../mockApis/staffLookup'
 
 export default (on: (string, Record) => void): void => {
   on('task', {
@@ -30,6 +32,7 @@ export default (on: (string, Record) => void): void => {
         resetWorkloadStubs(),
         resetProbationEstateStubs(),
         resetUserPreferenceStubs(),
+        resetStaffLookupStubs(),
       ])
       return Promise.all([
         auth.stubSignIn(),
@@ -89,5 +92,6 @@ export default (on: (string, Record) => void): void => {
     ...probationEstate,
     ...userPreference,
     ...choosePractitioner,
+    ...staffLookup,
   })
 }

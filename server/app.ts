@@ -22,6 +22,7 @@ import routes from './routes'
 import type { Services } from './services'
 import getUnallocatedCasesCount from './middleware/getUnallocatedCasesCount'
 import checkCaseAlreadyAllocated from './middleware/checkCaseAlreadyAllocated'
+import unless from './utils/middlewareUtils'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -41,7 +42,9 @@ export default function createApp(services: Services): express.Application {
   app.use(authorisationMiddleware(['ROLE_MANAGE_A_WORKFORCE_ALLOCATE']))
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
-  app.use(getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService))
+  app.use(
+    unless('/staff-lookup', getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService))
+  )
 
   app.use(routes(services))
 

@@ -30,4 +30,7 @@ export default class InstructionsConfirmPage extends Page {
 
   autoCompleteOption = (emailInputIndex, optionIndex): PageElement =>
     cy.get(`#person\\[${emailInputIndex}\\]\\[email\\]__option--${optionIndex}`)
+
+  firstAutoCompleteOption = (emailInputIndex): PageElement =>
+    cy.get(`ul[id="person\\[${emailInputIndex}\\]\\[email\\]__listbox"]:first`)
 }

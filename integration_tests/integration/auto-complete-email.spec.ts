@@ -28,4 +28,11 @@ context('Auto Complete Email', () => {
     instructionsConfirmPage.emailInput(0).blur()
     instructionsConfirmPage.emailInput(0).should('have.value', 'manual@justice.gov.uk')
   })
+
+  it('no results text shown when no results returned from search', () => {
+    cy.task('stubSearchStaffNoResults')
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.emailInput(0).type('no')
+    instructionsConfirmPage.firstAutoCompleteOption(0).should('have.text', 'No results found')
+  })
 })

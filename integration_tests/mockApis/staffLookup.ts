@@ -32,4 +32,17 @@ export default {
       },
     })
   },
+  stubSearchStaffNoResults: (): SuperAgentRequest => {
+    return stubForStaffLookup({
+      request: {
+        method: 'GET',
+        urlPattern: '/staff/search?.*',
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: [],
+      },
+    })
+  },
 }

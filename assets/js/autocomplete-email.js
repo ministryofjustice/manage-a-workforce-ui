@@ -19,9 +19,27 @@ window.addEventListener('load', function () {
       selectElement: emailInput,
       name: emailInput.name.replace('emailPlaceholder', 'email'),
       confirmOnBlur: false,
+      templates: {
+        inputValue: function (result) {
+          return (result && result.email) ?? ''
+        },
+        suggestion: function (result) {
+          if (result.unableToLoad) {
+            return 'Unable to load options'
+          }
+          return (
+            result &&
+            result.email +
+              ' - ' +
+              result.firstName +
+              ' ' +
+              result.lastName +
+              (result.jobTitle ? ' ' + result.jobTitle : '')
+          )
+        },
+      },
       minLength: 2,
       source: debounce(function (query, populateResults) {
-        populateResults(['Loading'])
         var request = new XMLHttpRequest()
         request.open('GET', '/staff-lookup?searchString=' + query, true)
         // Time to wait before giving up fetching the search index
@@ -35,7 +53,7 @@ window.addEventListener('load', function () {
               var json = JSON.parse(response)
               populateResults(json)
             } else {
-              populateResults(['Unable to load options'])
+              populateResults([{ unableToLoad: true }])
             }
           }
         }

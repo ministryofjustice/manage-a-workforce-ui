@@ -6,7 +6,6 @@ export default class StaffController {
 
   async lookup(_, res: Response, searchString: string): Promise<void> {
     const lookupResponse = await this.staffLookupService.lookup(res.locals.user.token, searchString)
-    const lookupStrings = lookupResponse.map(s => s.email)
-    res.status(200).send(lookupStrings)
+    res.status(200).send(lookupResponse)
   }
 }

@@ -10,6 +10,10 @@ function debounce(fn, delay) {
   }
 }
 
+function govukFont(text) {
+  return '<span class="govuk-body">' + text + '</span>'
+}
+
 window.addEventListener('load', function () {
   var emailInputs = document.getElementsByClassName('govuk-select')
   for (var i = 0; i < emailInputs.length; i++) {
@@ -25,19 +29,21 @@ window.addEventListener('load', function () {
         },
         suggestion: function (result) {
           if (result.unableToLoad) {
-            return 'This function is unavailable, please try again later'
+            return govukFont('This function is unavailable, please try again later')
           }
           if (typeof result === 'string') {
-            return 'Clear the selection'
+            return govukFont('Clear the selection')
           }
           return (
             result &&
-            result.email +
-              ' - ' +
-              result.firstName +
-              ' ' +
-              result.lastName +
-              (result.jobTitle ? ' ' + result.jobTitle : '')
+            govukFont(
+              result.email +
+                ' - ' +
+                result.firstName +
+                ' ' +
+                result.lastName +
+                (result.jobTitle ? ' ' + result.jobTitle : '')
+            )
           )
         },
       },

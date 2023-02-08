@@ -70,4 +70,11 @@ window.addEventListener('load', function () {
       }, 100),
     })
   }
+  if (document.getElementById('autocomplete-script').dataset.scrollToBottom) {
+    var autoCompleteInputs = document.getElementsByClassName('autocomplete__input')
+    autoCompleteInputs.item(autoCompleteInputs.length - 1).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
+  }
 })

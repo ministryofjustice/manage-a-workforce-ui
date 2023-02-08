@@ -17,6 +17,8 @@ export default class InstructionsConfirmPage extends Page {
 
   addAnotherPersonButton = (): PageElement => cy.get('button[value*="add-another-person"]')
 
+  removeButton = (index): PageElement => cy.get(`button[value*="${index}"]`)
+
   inputTexts = (): PageElement => cy.get('input.autocomplete__input')
 
   cancelLink = (crn, convictionNumber, pduCode): PageElement =>

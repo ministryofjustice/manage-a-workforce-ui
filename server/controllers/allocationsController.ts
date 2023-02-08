@@ -207,7 +207,16 @@ export default class AllocationsController {
     })
   }
 
-  async getConfirmInstructions(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
+  async getConfirmInstructions(
+    req: Request,
+    res: Response,
+    crn,
+    staffTeamCode,
+    staffCode,
+    convictionNumber,
+    pduCode,
+    scrollToBottom = false
+  ) {
     const response: StaffSummary = await this.workloadService.getStaffByCode(res.locals.user.token, staffCode)
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
     res.render('pages/confirm-instructions', {
@@ -222,6 +231,7 @@ export default class AllocationsController {
       errors: req.flash('errors') || [],
       confirmInstructionForm: req.session.confirmInstructionForm || { person: [] },
       pduCode,
+      scrollToBottom,
     })
   }
 
@@ -288,7 +298,7 @@ export default class AllocationsController {
     if (form.remove !== undefined) {
       form.person.splice(form.remove, 1)
       req.session.confirmInstructionForm = form
-      return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+      return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode, true)
     }
     switch (form.action) {
       case 'continue':
@@ -305,7 +315,7 @@ export default class AllocationsController {
       case 'add-another-person':
         form.person.push({ email: '' })
         req.session.confirmInstructionForm = form
-        return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+        return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode, true)
       default:
         return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
     }

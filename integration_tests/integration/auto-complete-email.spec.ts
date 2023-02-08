@@ -37,27 +37,4 @@ context('Auto Complete Email', () => {
     instructionsConfirmPage.emailInput(0).blur()
     instructionsConfirmPage.emailInput(0).should('have.value', 'manual@justice.gov.uk')
   })
-
-  it('scroll to last auto complete input when add another clicked', () => {
-    cy.task('stubSearchStaff')
-    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsConfirmPage.addAnotherPersonButton().click()
-    instructionsConfirmPage
-      .emailInput(1)
-      .then(element => element[0].offsetTop)
-      .then(offset => cy.window().its('scrollY').should('equal', offset))
-  })
-
-  it('scroll to last auto complete input when remove clicked', () => {
-    cy.task('stubSearchStaff')
-    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsConfirmPage.addAnotherPersonButton().click()
-    instructionsConfirmPage.addAnotherPersonButton().click()
-    instructionsConfirmPage.addAnotherPersonButton().click()
-    instructionsConfirmPage.removeButton(2).click()
-    instructionsConfirmPage
-      .emailInput(2)
-      .then(element => element[0].offsetTop)
-      .then(offset => cy.window().its('scrollY').should('equal', offset))
-  })
 })

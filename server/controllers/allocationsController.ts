@@ -215,7 +215,7 @@ export default class AllocationsController {
     staffCode,
     convictionNumber,
     pduCode,
-    scrollToBottom = undefined
+    scrollToBottom = false
   ) {
     const response: StaffSummary = await this.workloadService.getStaffByCode(res.locals.user.token, staffCode)
     const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)

@@ -20,7 +20,6 @@ import allocationCase from '../mockApis/allocationCase'
 import offenderManagerCases from '../mockApis/offenderManagerCases'
 import staff from '../mockApis/staff'
 import allocationComplete from '../mockApis/allocationComplete'
-import person from '../mockApis/person'
 import probationEstate from '../mockApis/probationEstate'
 import staffLookup from '../mockApis/staffLookup'
 
@@ -86,7 +85,6 @@ export default (on: (string, Record) => void): void => {
     ...offenderManagerCases,
     ...staff,
     ...allocationComplete,
-    ...person,
     ...allocationCase,
     ...overview,
     ...probationEstate,

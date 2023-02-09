@@ -20,7 +20,7 @@ context('Allocate Complete', () => {
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
-    cy.task('stubGetPersonById')
+    cy.task('stubGetAllocationCompleteDetails')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
@@ -33,7 +33,7 @@ context('Allocate Complete', () => {
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
-    cy.task('stubGetPersonById')
+    cy.task('stubGetAllocationCompleteDetails')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')
@@ -50,7 +50,7 @@ context('Allocate Complete', () => {
     instructionsConfirmPage.addAnotherPersonButton().click()
     instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
-    cy.task('stubGetPersonById')
+    cy.task('stubGetAllocationCompleteDetails')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')
@@ -73,7 +73,7 @@ context('Allocate Complete', () => {
     instructionsConfirmPage.addAnotherPersonButton().click()
     instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', true)
-    cy.task('stubGetPersonById')
+    cy.task('stubGetAllocationCompleteDetails')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')
@@ -90,7 +90,7 @@ context('Allocate Complete', () => {
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
-    cy.task('stubGetPersonById')
+    cy.task('stubGetAllocationCompleteDetails')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
@@ -106,7 +106,7 @@ context('Allocate Complete', () => {
     instructionsConfirmPage.checkbox().check()
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase', false)
-    cy.task('stubGetPersonById')
+    cy.task('stubGetAllocationCompleteDetails')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
@@ -119,12 +119,11 @@ context('Allocate Complete', () => {
   })
 
   it('When no Initial appointment date booked, Initial check with your team visible on page', () => {
-    cy.task('stubGetCaseOverviewNoInitialAppointment')
     cy.reload()
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
-    cy.task('stubGetPersonById')
+    cy.task('stubGetAllocationCompleteDetailsNoInitialAppointment')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
@@ -133,12 +132,10 @@ context('Allocate Complete', () => {
   })
 
   it('When a custody case, Initial appointment date not needed visible on page', () => {
-    cy.task('stubGetCaseOverviewCustodyCase')
-    cy.reload()
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
-    cy.task('stubGetPersonById')
+    cy.task('stubGetAllocationCompleteDetailsCustody')
     cy.get('.allocate').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage

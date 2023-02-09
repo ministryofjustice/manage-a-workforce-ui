@@ -1,15 +1,14 @@
 import RestClient from '../data/restClient'
-import logger from '../../logger'
 import { ApiConfig } from '../config'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerCases from '../models/OffenderManagerCases'
 import OffenderManagerOverview from '../models/OffenderManagerOverview'
 import StaffSummary from '../models/StaffSummary'
-import PersonManager from '../models/PersonManager'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 import WorkloadByTeam from '../models/workloadByTeam'
 import EventManagerDetails from '../models/EventManagerDetails'
 import ChoosePractitionerData from '../models/ChoosePractitionerData'
+import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -56,13 +55,6 @@ export default class WorkloadService {
     })) as StaffSummary
   }
 
-  async getPersonById(token: string, personManagerId): Promise<PersonManager> {
-    logger.info(`Getting person by ID ${personManagerId}`)
-    return (await this.restClient(token).get({
-      path: `/allocation/person/${personManagerId}`,
-    })) as PersonManager
-  }
-
   async allocateCaseToOffenderManager(
     token: string,
     crn,
@@ -97,5 +89,11 @@ export default class WorkloadService {
     return (await this.restClient(token).get({
       path: `/allocation/person/${crn}/event/${convictionNumber}/details`,
     })) as EventManagerDetails
+  }
+
+  async getAllocationCompleteDetails(token: string, crn, convictionNumber): Promise<AllocationCompleteDetails> {
+    return (await this.restClient(token).get({
+      path: `/allocation/person/${crn}/event/${convictionNumber}/complete-details`,
+    })) as AllocationCompleteDetails
   }
 }

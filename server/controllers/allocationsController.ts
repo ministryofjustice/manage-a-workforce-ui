@@ -21,7 +21,6 @@ import DocumentRow from './data/DocumentRow'
 import ChoosePractitionerData, { Practitioner } from '../models/ChoosePractitionerData'
 import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
-import logger from '../../logger'
 
 export default class AllocationsController {
   constructor(

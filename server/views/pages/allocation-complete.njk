@@ -1,5 +1,4 @@
 {% extends "partials/layout.njk" %}
-{% set offenderManagerName = personDetails.staffForename + ' ' + personDetails.staffSurname %}
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 
 
@@ -13,7 +12,7 @@
         <div class="govuk-grid-column-two-thirds">
                         {{ govukPanel({
                             titleText: "Allocation complete",
-                            html: personName + " (" + crn + ") has been allocated to <strong>" + offenderManagerName + " (" + personDetails.staffGrade + ")</strong>"
+                            html: data.name.combinedName + " (" + crn + ") has been allocated to <strong>" + data.staff.name.combinedName + " (" + data.staff.grade + ")</strong>"
                         }) }}
 
             <h2 class="govuk-heading-m">What happens next</h2>
@@ -21,13 +20,13 @@
             <ul class="govuk-list govuk-list--bullet">
                 <li>this case will be updated in NDelius within 5 minutes</li>
                 <li>you'll need to create a Management Oversight contact separately</li>
-                <li><strong>{{ offenderManagerName }}</strong> (<em>{{ personDetails.staffEmail }}</em>) has been notified
+                <li><strong>{{ data.staff.name.combinedName }}</strong> (<em>{{ data.staff.email }}</em>) has been notified
                 {{- ", and we've sent you a copy of your allocation instructions" if sendEmailCopyToAllocatingOfficer and not otherEmails | length}}
                 {{- ', and we have sent a copy of your allocation instructions to ' + ('you and ' if sendEmailCopyToAllocatingOfficer) + otherEmails | join(", ")  if otherEmails | length }}</li>
-                {% if caseType === 'CUSTODY' %}
+                {% if data.type === 'CUSTODY' %}
                     <li>no initial appointment needed (custody case)</li>
-                {% elseif initialAppointment %}
-                    <li>the initial appointment is scheduled for <strong>{{ initialAppointment | dateFormat }}</strong></li>
+                {% elseif data.initialAppointment.date %}
+                    <li>the initial appointment is scheduled for <strong>{{ data.initialAppointment.date | dateFormat }}</strong></li>
                 {% else %}
                     <li>no date found for the initial appointment, please check with your team</li>
                 {% endif %}

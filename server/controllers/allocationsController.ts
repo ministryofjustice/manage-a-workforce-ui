@@ -12,8 +12,6 @@ import FileDownload from '../models/FileDownload'
 import WorkloadService from '../services/workloadService'
 import Case from './data/Case'
 import StaffSummary from '../models/StaffSummary'
-import PersonManager from '../models/PersonManager'
-import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 import validate from '../validation/validation'
 import trimForm from '../utils/trim'
 import OfficerView from './data/OfficerView'
@@ -23,6 +21,7 @@ import DocumentRow from './data/DocumentRow'
 import ChoosePractitionerData, { Practitioner } from '../models/ChoosePractitionerData'
 import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
+import logger from '../../logger'
 
 export default class AllocationsController {
   constructor(
@@ -347,13 +346,14 @@ export default class AllocationsController {
     }
     const sendEmailCopyToAllocatingOfficer = !form.emailCopy
     const otherEmails = form.person.map(person => person.email).filter(email => email)
+
     const caseOverviewResponse = await this.allocationsService.getCaseOverview(
       res.locals.user.token,
       crn,
       convictionNumber
     )
 
-    const response: OffenderManagerAllocatedCase = await this.workloadService.allocateCaseToOffenderManager(
+    await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
       crn,
       staffCode,
@@ -364,24 +364,14 @@ export default class AllocationsController {
       sendEmailCopyToAllocatingOfficer,
       caseOverviewResponse.convictionNumber
     )
-    const personDetails: PersonManager = await this.workloadService.getPersonById(
-      res.locals.user.token,
-      response.personManagerId
-    )
-
-    return res.render('pages/allocation-complete', {
-      title: `${caseOverviewResponse.name} | Case allocated | Manage a workforce`,
-      data: response,
-      crn,
-      convictionNumber: caseOverviewResponse.convictionNumber,
-      personName: caseOverviewResponse.name,
-      personDetails,
+    req.session.allocationForm = {
       otherEmails,
-      initialAppointment: caseOverviewResponse.initialAppointment,
-      caseType: caseOverviewResponse.caseType,
-      pduCode,
       sendEmailCopyToAllocatingOfficer,
-    })
+    }
+    return res.redirect(
+      // eslint-disable-next-line security-node/detect-dangerous-redirects
+      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`
+    )
   }
 }
 

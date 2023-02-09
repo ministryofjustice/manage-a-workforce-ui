@@ -14,6 +14,10 @@ declare module 'express-session' {
     offenderManager: object
     casesLength: number
     confirmInstructionForm: ConfirmInstructionForm
+    allocationForm: {
+      otherEmails: string[]
+      sendEmailCopyToAllocatingOfficer: boolean
+    }
   }
 }
 

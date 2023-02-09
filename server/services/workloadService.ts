@@ -10,6 +10,7 @@ import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase
 import WorkloadByTeam from '../models/workloadByTeam'
 import EventManagerDetails from '../models/EventManagerDetails'
 import ChoosePractitionerData from '../models/ChoosePractitionerData'
+import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -94,8 +95,15 @@ export default class WorkloadService {
   }
 
   async getEventManagerDetails(token: string, crn, convictionNumber): Promise<EventManagerDetails> {
+    logger.info('getting event manager details')
     return (await this.restClient(token).get({
       path: `/allocation/person/${crn}/event/${convictionNumber}/details`,
     })) as EventManagerDetails
+  }
+
+  async getAllocationCompleteDetails(token: string, crn, convictionNumber): Promise<AllocationCompleteDetails> {
+    return (await this.restClient(token).get({
+      path: `/allocation/person/${crn}/event/${convictionNumber}/complete-details`,
+    })) as AllocationCompleteDetails
   }
 }

@@ -8,6 +8,7 @@ import FindUnallocatedCasesController from '../controllers/findUnallocatedCasesC
 import type { Services } from '../services'
 import HomeController from '../controllers/homeController'
 import StaffController from '../controllers/staffController'
+import WorkloadController from '../controllers/workloadController'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -39,6 +40,8 @@ export default function routes(services: Services): Router {
   )
 
   const staffController = new StaffController(services.staffLookupService)
+
+  const workloadController = new WorkloadController(services.workloadService)
 
   get('/before-you-start', async (req, res) => {
     await homeController.beforeYouStart(req, res)
@@ -182,6 +185,11 @@ export default function routes(services: Services): Router {
       )
     }
   )
+
+  get('/pdu/:pduCode/:crn/convictions/:convictionNumber/allocation-complete', async (req, res) => {
+    const { crn, convictionNumber, pduCode } = req.params
+    await workloadController.allocationComplete(req, res, crn, convictionNumber, pduCode)
+  })
 
   get('/pdu/:pduCode/select-teams', async (req, res) => {
     const { pduCode } = req.params

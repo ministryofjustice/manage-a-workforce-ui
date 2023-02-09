@@ -5,7 +5,6 @@ import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotential
 import OffenderManagerCases from '../models/OffenderManagerCases'
 import OffenderManagerOverview from '../models/OffenderManagerOverview'
 import StaffSummary from '../models/StaffSummary'
-import PersonManager from '../models/PersonManager'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
 import WorkloadByTeam from '../models/workloadByTeam'
 import EventManagerDetails from '../models/EventManagerDetails'
@@ -55,13 +54,6 @@ export default class WorkloadService {
     return (await this.restClient(token).get({
       path: `/staff/code/${staffCode}`,
     })) as StaffSummary
-  }
-
-  async getPersonById(token: string, personManagerId): Promise<PersonManager> {
-    logger.info(`Getting person by ID ${personManagerId}`)
-    return (await this.restClient(token).get({
-      path: `/allocation/person/${personManagerId}`,
-    })) as PersonManager
   }
 
   async allocateCaseToOffenderManager(

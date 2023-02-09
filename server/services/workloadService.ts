@@ -1,5 +1,4 @@
 import RestClient from '../data/restClient'
-import logger from '../../logger'
 import { ApiConfig } from '../config'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
 import OffenderManagerCases from '../models/OffenderManagerCases'
@@ -87,7 +86,6 @@ export default class WorkloadService {
   }
 
   async getEventManagerDetails(token: string, crn, convictionNumber): Promise<EventManagerDetails> {
-    logger.info('getting event manager details')
     return (await this.restClient(token).get({
       path: `/allocation/person/${crn}/event/${convictionNumber}/details`,
     })) as EventManagerDetails

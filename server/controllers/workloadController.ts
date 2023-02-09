@@ -12,7 +12,10 @@ export default class WorkloadController {
       convictionNumber
     )
 
-    const { otherEmails, sendEmailCopyToAllocatingOfficer } = req.session.allocationForm
+    const { otherEmails, sendEmailCopyToAllocatingOfficer } = req.session.allocationForm || {
+      otherEmails: [],
+      sendEmailCopyToAllocatingOfficer: false,
+    }
     delete req.session.allocationForm
 
     return res.render('pages/allocation-complete', {

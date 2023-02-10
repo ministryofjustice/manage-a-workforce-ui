@@ -4,6 +4,7 @@
 {%- from "govuk/components/fieldset/macro.njk" import govukFieldset -%}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {%- from "govuk/components/select/macro.njk" import govukSelect -%}
+{%- from "govuk/components/input/macro.njk" import govukInput -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "../components/instructions/macro.njk" import instructions %}
@@ -83,11 +84,24 @@
                 isPageHeading: false
               }
             }) %}
-            
+            <noscript>
+              {{ govukInput({
+              id: 'person[0][email]',
+              name: 'person[0][email]',
+              label: {
+                text: 'Email address',
+                classes: 'govuk-!-font-weight-bold'
+              },
+              type: "email",
+              autocomplete: "email",
+              spellcheck: false
+            }) }}
+            </noscript>
             {{ govukSelect({
               id: 'person[0][email]',
               name: 'person[0][emailPlaceholder]',
               items: [],
+              classes: 'hidden',
               label: {
                 text: 'Email address',
                 classes: 'govuk-!-font-weight-bold'
@@ -117,9 +131,26 @@
                   }) }}
                 {% endif %}
                 
+                <noscript>
+                  {{ govukInput({
+                  id: 'person[' +loop.index0 +'][email]',
+                  name: 'person[' +loop.index0 +'][email]',
+                  label: {
+                    text: 'Email address',
+                    classes: 'govuk-!-font-weight-bold'
+                  },
+                  type: "email",
+                  autocomplete: "email",
+                  spellcheck: false,
+                  value: person.email,
+                  errorMessage: errors | findError('person[' +loop.index0 +'][email]')
+                }) }}
+                </noscript>
+
                 {{ govukSelect({
                   id: 'person[' +loop.index0 +'][email]',
                   name: 'person[' +loop.index0 +'][emailPlaceholder]',
+                  classes: 'hidden',
                   label: {
                     text: 'Email address',
                     classes: 'govuk-!-font-weight-bold'

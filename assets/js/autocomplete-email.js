@@ -14,7 +14,17 @@ function govukFont(text) {
   return '<span class="govuk-body">' + text + '</span>'
 }
 
+function removeNoScriptElements() {
+  var noScriptElements = document.getElementsByTagName('noscript')
+  for (var i = 0; i < noScriptElements.length; i++) {
+    var noScriptElement = noScriptElements.item(i)
+    noScriptElement.parentNode.removeChild(noScriptElement)
+  }
+}
+
 window.addEventListener('load', function () {
+  removeNoScriptElements()
+
   var emailInputs = document.getElementsByClassName('govuk-select')
   for (var i = 0; i < emailInputs.length; i++) {
     var emailInput = emailInputs.item(i)

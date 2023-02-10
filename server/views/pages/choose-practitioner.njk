@@ -58,7 +58,6 @@
                     "aria-sort": "none"
                 }
             },
-            { text: 'Workload details' },
             { text: 'Select' }
         ],
         rows: []
@@ -67,7 +66,7 @@
     {% for offenderManager in teamData.offenderManagersToAllocate %}
         {%- set tableRow = [
             { html: govukLabel({
-                text: offenderManager.name,
+                text: ('<a href="/pdu/'+ pduCode +'/' + crn + '/convictions/' + convictionNumber + '/allocate/' + offenderManager.teamCode + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '" aria-label="View">' + offenderManager.name + '</a>' ) | safe,
                 for: ('allocated-officer-' + offenderManager.code)
             }),
                 attributes: {
@@ -103,7 +102,6 @@
                     "data-sort-value": offenderManager.custodyCases
                 }
             },
-            { text: ('<a href="/pdu/'+ pduCode +'/' + crn + '/convictions/' + convictionNumber + '/allocate/' + offenderManager.teamCode + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '" aria-label="View">' + "View" + '</a>' ) | safe, classes: "govuk-!-text-align-centre"},
             { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.selectionCode + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"></label></div></div>')
                 if offenderManager.email}
         ] -%}

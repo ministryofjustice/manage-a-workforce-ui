@@ -177,7 +177,6 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          'Workload details': 'View',
           Select: '',
         },
         {
@@ -188,7 +187,6 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '2',
           'Community cases': '3',
           'Custody cases': '5',
-          'Workload details': 'View',
           Select: '',
         },
         {
@@ -199,7 +197,6 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          'Workload details': 'View',
           Select: '',
         },
       ])
@@ -233,7 +230,6 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          'Workload details': 'View',
           Select: '',
         },
         {
@@ -244,7 +240,6 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          'Workload details': 'View',
           Select: '',
         },
       ])

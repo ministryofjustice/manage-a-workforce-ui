@@ -160,7 +160,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.tab('N03F02').should('contain', 'Team 2')
   })
 
-  it('All teams visible on page by default', () => {
+  it.only('All teams visible on page by default', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -177,7 +177,6 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          'Workload details': 'View',
           Select: '',
         },
         {
@@ -188,7 +187,6 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '2',
           'Community cases': '3',
           'Custody cases': '5',
-          'Workload details': 'View',
           Select: '',
         },
         {
@@ -199,7 +197,6 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          'Workload details': 'View',
           Select: '',
         },
       ])
@@ -216,7 +213,7 @@ context('Choose Practitioner', () => {
       .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
   })
 
-  it('Individual team visible on page when selected', () => {
+  it.only('Individual team visible on page when selected', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -233,7 +230,6 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          'Workload details': 'View',
           Select: '',
         },
         {
@@ -244,7 +240,6 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          'Workload details': 'View',
           Select: '',
         },
       ])

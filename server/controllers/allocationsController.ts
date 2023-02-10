@@ -261,11 +261,10 @@ export default class AllocationsController {
       this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
     ])
     const cases = response.activeCases.map(
-      activeCase =>
-        new Case(activeCase.crn, activeCase.tier, activeCase.caseCategory, activeCase.forename, activeCase.surname)
+      activeCase => new Case(activeCase.crn, activeCase.tier, activeCase.type, activeCase.name.combinedName)
     )
     res.render('pages/active-cases', {
-      title: `${response.forename} ${response.surname} | Active cases | Manage a workforce`,
+      title: `${response.name.combinedName} | Active cases | Manage a workforce`,
       data: response,
       officerTeamCode: offenderManagerTeamCode,
       cases,

@@ -1,8 +1,8 @@
+import Name from './Name'
 import OffenderManagerCase from './OffenderManagerCase'
 
 export default interface OffenderManagerCases {
-  forename: string
-  surname: string
+  name: Name
   grade: string
   code: string
   activeCases: OffenderManagerCase[]

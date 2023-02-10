@@ -1,7 +1,8 @@
+import Name from './Name'
+
 export default interface OffenderManagerCase {
-  forename: string
-  surname: string
+  name: Name
   crn: string
   tier: string
-  caseCategory: string
+  type: string
 }

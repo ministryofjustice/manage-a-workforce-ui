@@ -9,13 +9,13 @@ export default class Case {
 
   tierOrder: number
 
-  caseCategory: string
+  type: string
 
-  constructor(crn: string, tier: string, caseCategory: string, forename = '', surname = '') {
-    this.name = `${forename} ${surname}`
+  constructor(crn: string, tier: string, type: string, name: string) {
+    this.name = name
     this.crn = crn
     this.tier = tier
     this.tierOrder = tierOrder(tier)
-    this.caseCategory = caseCategory
+    this.type = type
   }
 }

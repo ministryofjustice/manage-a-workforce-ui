@@ -18,6 +18,7 @@ window.addEventListener('load', function () {
   var emailInputs = document.getElementsByClassName('govuk-select')
   for (var i = 0; i < emailInputs.length; i++) {
     var emailInput = emailInputs.item(i)
+    emailInput.setAttribute('name', emailInput.name.replace('email', 'emailPlaceholder'))
     accessibleAutocomplete.enhanceSelectElement({
       defaultValue: '',
       selectElement: emailInput,

@@ -86,7 +86,7 @@
             
             {{ govukSelect({
               id: 'person[0][email]',
-              name: 'person[0][emailPlaceholder]',
+              name: 'person[0][email]',
               items: [],
               label: {
                 text: 'Email address',
@@ -119,7 +119,7 @@
                 
                 {{ govukSelect({
                   id: 'person[' +loop.index0 +'][email]',
-                  name: 'person[' +loop.index0 +'][emailPlaceholder]',
+                  name: 'person[' +loop.index0 +'][email]',
                   label: {
                     text: 'Email address',
                     classes: 'govuk-!-font-weight-bold'

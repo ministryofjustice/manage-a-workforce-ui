@@ -42,30 +42,6 @@ context('Allocate Complete', () => {
       .should('have.text', '\n    Dylan Adam Armstrong (J678910) has been allocated to John Doe (PO)\n  ')
   })
 
-  it('What happens next with multiple emails supplied, opting out of copy content visible on page', () => {
-    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsConfirmPage.instructionsTextArea().type('Test')
-    instructionsConfirmPage.checkbox().check()
-    instructionsConfirmPage.emailInput(0).type('example.one@justice.gov.uk')
-    instructionsConfirmPage.addAnotherPersonButton().click()
-    instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
-    cy.task('stubGetAllocationCompleteDetails')
-    cy.get('.allocate').click()
-    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
-    allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')
-    allocationCompletePage.mediumHeading().should('have.text', 'What happens next')
-    allocationCompletePage
-      .bulletedList()
-      .should('contain', 'this case will be updated in NDelius within 5 minutes')
-      .and('contain', "you'll need to create a Management Oversight contact separately")
-      .and(
-        'contain',
-        'John Doe (john.doe@test.justice.gov.uk) has been notified, and we have sent a copy of your allocation instructions to example.one@justice.gov.uk, example.two@justice.gov.uk'
-      )
-      .and('contain', 'the initial appointment is scheduled for 1 September 2021')
-  })
-
   it('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
@@ -154,5 +130,29 @@ context('Allocate Complete', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().should('have.value', 'Test')
+  })
+
+  it('What happens next with multiple emails supplied, opting out of copy content visible on page', () => {
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    instructionsConfirmPage.checkbox().check()
+    instructionsConfirmPage.emailInput(0).type('example.one@justice.gov.uk')
+    instructionsConfirmPage.addAnotherPersonButton().click()
+    instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
+    cy.task('stubGetAllocationCompleteDetails')
+    cy.get('.allocate').click()
+    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
+    allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')
+    allocationCompletePage.mediumHeading().should('have.text', 'What happens next')
+    allocationCompletePage
+      .bulletedList()
+      .should('contain', 'this case will be updated in NDelius within 5 minutes')
+      .and('contain', "you'll need to create a Management Oversight contact separately")
+      .and(
+        'contain',
+        'John Doe (john.doe@test.justice.gov.uk) has been notified, and we have sent a copy of your allocation instructions to example.one@justice.gov.uk, example.two@justice.gov.uk'
+      )
+      .and('contain', 'the initial appointment is scheduled for 1 September 2021')
   })
 })

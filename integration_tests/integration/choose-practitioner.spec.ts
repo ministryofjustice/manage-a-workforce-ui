@@ -160,7 +160,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.tab('N03F02').should('contain', 'Team 2')
   })
 
-  it.only('All teams visible on page by default', () => {
+  it('All teams visible on page by default', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
@@ -213,7 +213,7 @@ context('Choose Practitioner', () => {
       .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
   })
 
-  it.only('Individual team visible on page when selected', () => {
+  it('Individual team visible on page when selected', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)

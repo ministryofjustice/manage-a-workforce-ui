@@ -9,6 +9,7 @@ import type { Services } from '../services'
 import HomeController from '../controllers/homeController'
 import StaffController from '../controllers/staffController'
 import WorkloadController from '../controllers/workloadController'
+import TechnicalUpdatesController from '../controllers/technicalUpdatesController'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -42,6 +43,8 @@ export default function routes(services: Services): Router {
   const staffController = new StaffController(services.staffLookupService)
 
   const workloadController = new WorkloadController(services.workloadService)
+
+  const technicalUpdatesController = new TechnicalUpdatesController()
 
   get('/before-you-start', async (req, res) => {
     await homeController.beforeYouStart(req, res)
@@ -222,6 +225,10 @@ export default function routes(services: Services): Router {
   post('/region/:regionCode/probationDeliveryUnits', async (req, res) => {
     const { regionCode } = req.params
     await probationEstateController.selectProbationDeliveryUnit(req, res, regionCode)
+  })
+
+  get('/technical-updates', async (req, res) => {
+    await technicalUpdatesController.getTechnicalUpdates(req, res)
   })
   return router
 }

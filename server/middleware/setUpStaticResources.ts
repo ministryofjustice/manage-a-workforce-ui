@@ -22,7 +22,8 @@ export default function setUpStaticResources(): Router {
     '/node_modules/@ministryofjustice/frontend/moj/assets',
     '/node_modules/@ministryofjustice/frontend',
     '/node_modules/jquery/dist',
-    '/node_modules/accessible-autocomplete/dist'
+    '/node_modules/accessible-autocomplete/dist',
+    '/node_modules/jquery-ui/dist'
   ).forEach(dir => {
     router.use('/assets', express.static(path.join(process.cwd(), dir), cacheControl))
   })

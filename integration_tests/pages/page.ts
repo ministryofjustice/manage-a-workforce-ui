@@ -55,6 +55,8 @@ export default abstract class Page {
 
   instructionsTextArea = (): PageElement => cy.get(`#instructions`)
 
+  technicalUpdatesBanner = (): PageElement => cy.get(`#technical-updates-banner`)
+
   downloadDocumentLink = (crn, documentId, fileName): PageElement =>
     cy.get(`a[href*="/${crn}/documents/${documentId}/${fileName}"]`)
 }

@@ -9,6 +9,7 @@ import errorHandler from '../../errorHandler'
 import * as auth from '../../authentication/auth'
 import { Services } from '../../services'
 import unauthenticatedRoutes from '../unauthenticated'
+import TechnicalUpdatesService from '../../services/technicalUpdatesService'
 
 export const user = {
   name: 'john smith',
@@ -49,7 +50,7 @@ function appSetup(services: Services, userSupplier: () => Express.User): Express
 }
 
 export function appWithAllRoutes({
-  services = {},
+  services = { technicalUpdatesService: new TechnicalUpdatesService() },
   userSupplier = () => user,
 }: {
   services?: Partial<Services>

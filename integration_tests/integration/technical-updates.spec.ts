@@ -29,6 +29,6 @@ context('Technical Updates', () => {
 
   it('technical updates banner not visible on page', () => {
     const technicalUpdatesPage = Page.verifyOnPage(TechnicalUpdatesPage)
-    technicalUpdatesPage.technicalUpdatesBanner().should('not.be.visible')
+    technicalUpdatesPage.technicalUpdatesBanner().should('have.class', 'moj-hidden')
   })
 })

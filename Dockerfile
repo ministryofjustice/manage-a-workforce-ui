@@ -46,6 +46,7 @@ FROM base
 COPY --from=build --chown=appuser:appgroup \
         /app/package.json \
         /app/package-lock.json \
+        /app/technicalUpdates.json \
         ./
 
 COPY --from=build --chown=appuser:appgroup \

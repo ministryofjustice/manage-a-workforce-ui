@@ -57,6 +57,26 @@
     {% include "./header.njk" %}
 {% endblock %}
 
+{% block technicalUpdatesBanner %}
+
+<div class="govuk-grid-row technical-updates-banner moj-hidden" id="technical-updates-banner" data-banner-version="{{ lastTechnicalUpdate }}">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-width-container govuk-body technical-updates-container">
+        <div class="technical-updates-content">
+        <strong class="technical-updates-whats-new">
+            What's new
+        </strong>
+        <span>
+            We've added some new functionality. <a class="govuk-link govuk-link--inverse" href="/technical-updates">See the Technical updates page for more information</a>
+        </span>
+        </div>
+        <a class="technical-updates-hide-message govuk-link govuk-link--inverse" href="#" aria-current="page">Hide message</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
 {% block phaseBanner %}
     <div class="govuk-width-container">
         {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
@@ -118,6 +138,7 @@
     <script src="/assets/moj/all.js"></script>
     <script src="/assets/naturalSortableTable.js"></script>
     <script src="/assets/mojFrontendInit.js"></script>
+    <script src="/assets/technical-updates.js"></script>
 {% endblock %}
 
 {% block javascripts %}{% endblock %}

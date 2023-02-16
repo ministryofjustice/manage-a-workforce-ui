@@ -29,7 +29,7 @@ function appSetup(services: Services, userSupplier: () => Express.User): Express
 
   app.set('view engine', 'njk')
 
-  nunjucksSetup(app, path)
+  nunjucksSetup(app, path, services)
   app.use(cookieSession({ keys: [''] }))
   app.use((req, res, next) => {
     req.user = userSupplier()

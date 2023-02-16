@@ -5,6 +5,7 @@ import dayjs from 'dayjs'
 import * as pathModule from 'path'
 import config from '../config'
 import { initialiseName } from './utils'
+import type { Services } from '../services'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -13,7 +14,7 @@ type Error = {
   text: string
 }
 
-export default function nunjucksSetup(app: express.Express, path: pathModule.PlatformPath): void {
+export default function nunjucksSetup(app: express.Express, path: pathModule.PlatformPath, services: Services): void {
   app.set('view engine', 'njk')
   app.locals.asset_path = '/assets/'
   app.locals.applicationName = 'Manage A Workforce Ui'
@@ -70,4 +71,5 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
 
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)
   njkEnv.addGlobal('googleAnalyticsKey', config.googleAnalyticsKey)
+  njkEnv.addGlobal('lastTechnicalUpdate', services.technicalUpdatesService.getLatestTechnicalUpdateHeading())
 }

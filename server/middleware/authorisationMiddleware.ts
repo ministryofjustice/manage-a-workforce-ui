@@ -13,7 +13,7 @@ export default function authorisationMiddleware(authorisedRoles: string[] = []):
         logger.warn('User is not authorised to access this')
         return res.redirect('/authError')
       }
-
+      res.locals.canAllocate = true
       return next()
     }
 

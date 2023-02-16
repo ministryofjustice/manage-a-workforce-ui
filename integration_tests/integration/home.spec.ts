@@ -59,4 +59,11 @@ context('Unallocated', () => {
     const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     allocateCasesByTeamPage.technicalUpdatesBanner().should('be.visible')
   })
+
+  it('technical updates banner no longer visible after clicking hide message', () => {
+    cy.signIn()
+    const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
+    allocateCasesByTeamPage.hideMessageLink().click()
+    allocateCasesByTeamPage.technicalUpdatesBanner().should('have.class', 'moj-hidden')
+  })
 })

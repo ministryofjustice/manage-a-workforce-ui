@@ -4,6 +4,6 @@ window.addEventListener('load', function () {
   const currentBannerVersion = technicalUpdatesBanner.dataset.bannerVersion
 
   if (technicalUpdateReadVersion !== currentBannerVersion) {
-    element.classList.remove('moj-hidden')
+    technicalUpdatesBanner.classList.remove('moj-hidden')
   }
 })

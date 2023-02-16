@@ -82,11 +82,7 @@
     </main>
 </div>
 
-{% block footer %}
-    {%- from "govuk/components/footer/macro.njk" import govukFooter -%}
-    {{ govukFooter({
-        meta: {
-            items: [
+{% set footerItems = [
                 {
                     href: "/accessibility-statement",
                     text: "Accessibility statement"
@@ -100,6 +96,16 @@
                     text: "Privacy"
                 }
             ]
+%}
+
+{%- if canAllocate -%}
+    {% set footerItems = (footerItems.push({href: "/technical-updates",text: "Technical updates"}), footerItems) %}
+{%- endif -%}
+{% block footer %}
+    {%- from "govuk/components/footer/macro.njk" import govukFooter -%}
+    {{ govukFooter({
+        meta: {
+            items: footerItems
         }
     }) }}
 {% endblock %}

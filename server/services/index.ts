@@ -6,6 +6,7 @@ import ProbationEstateService from './probationEstateService'
 import UserPreferenceService from './userPreferenceService'
 import config from '../config'
 import StaffLookupService from './staffLookupService'
+import TechnicalUpdatesService from './technicalUpdatesService'
 
 export const services = () => {
   const { hmppsAuthClient } = dataAccess()
@@ -16,6 +17,7 @@ export const services = () => {
   const probationEstateService = new ProbationEstateService(config.apis.probationEstateService)
   const userPreferenceService = new UserPreferenceService(config.apis.userPreferenceService)
   const staffLookupService = new StaffLookupService(config.apis.staffLookupService)
+  const technicalUpdatesService = new TechnicalUpdatesService()
   return {
     userService,
     allocationsService,
@@ -23,6 +25,7 @@ export const services = () => {
     probationEstateService,
     userPreferenceService,
     staffLookupService,
+    technicalUpdatesService,
   }
 }
 

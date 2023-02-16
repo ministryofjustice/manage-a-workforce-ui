@@ -44,7 +44,7 @@ export default function routes(services: Services): Router {
 
   const workloadController = new WorkloadController(services.workloadService)
 
-  const technicalUpdatesController = new TechnicalUpdatesController()
+  const technicalUpdatesController = new TechnicalUpdatesController(services.technicalUpdatesService)
 
   get('/before-you-start', async (req, res) => {
     await homeController.beforeYouStart(req, res)

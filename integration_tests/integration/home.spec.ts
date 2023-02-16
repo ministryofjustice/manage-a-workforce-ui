@@ -53,4 +53,17 @@ context('Unallocated', () => {
       .and('contain', 'Open Government Licence v3.0')
       .and('contain', '© Crown copyright')
   })
+
+  it('technical updates banner visible on page', () => {
+    cy.signIn()
+    const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
+    allocateCasesByTeamPage.technicalUpdatesBanner().should('be.visible')
+  })
+
+  it('technical updates banner no longer visible after clicking hide message', () => {
+    cy.signIn()
+    const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
+    allocateCasesByTeamPage.hideMessageLink().click()
+    allocateCasesByTeamPage.technicalUpdatesBanner().should('have.class', 'moj-hidden')
+  })
 })

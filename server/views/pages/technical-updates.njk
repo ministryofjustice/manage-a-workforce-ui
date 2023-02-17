@@ -22,7 +22,8 @@
     {% set technicalUpdateItems = (technicalUpdateItems.push({
          heading: { 
             text: technicalUpdate.heading 
-         }, 
+         },
+         expanded: loop.first, 
          content:{ 
             html: content 
             }

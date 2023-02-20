@@ -204,6 +204,10 @@ export default {
             typeDescription: 'Rental accommodation',
             startDate: '2022-08-25',
           },
+          roshOverallRisk: 'VERY HIGH',
+          rsrLevel: 'MEDIUM',
+          ogrsLevel: 'HIGH',
+          activeRiskRegistration: 'ALT Under MAPPA Arrangements, Suicide/self-harm',
         },
       },
     })

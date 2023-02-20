@@ -119,6 +119,35 @@
         </div>
     </section>
 
+    <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id ="risk">
+        <header class="app-summary-card__header">
+            <h2 class="app-summary-card__title">Risk</h2>
+            <a class="govuk-link" href="/pdu/{{ pduCode }}/{{ crn }}/convictions/{{ convictionNumber }}/case-risk">View all risk details</a>
+        </header>
+        <div class="app-summary-card__body">
+            {{ govukSummaryList({
+                rows: [
+                    {
+                        key: {
+                        text: "Risk assessment"
+                    },
+                        value: {
+                        text: data.roshOverallRisk +' '+ data.rsrLevel+' '+ data.ogrsLevel
+                    }
+                    },
+                    {
+                        key: {
+                        text: "Active risk registrations"
+                    },
+                        value: {
+                        text: data.activeRiskRegistration
+                    }
+                    }
+                ]
+            })}}
+        </div>
+    </section>
+
     <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id ="case-details">
         <header class="app-summary-card__header">
             <h2 class="app-summary-card__title">Associated documents</h2>

@@ -102,6 +102,15 @@ context('Summary', () => {
     })
   })
 
+  it('Risk visible on page', () => {
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.riskTitle().should('have.text', 'Risk')
+    cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
+      'Risk assessment': 'VERY HIGH MEDIUM HIGH',
+      'Active risk registrations': 'ALT Under MAPPA Arrangements, Suicide/self-harm',
+    })
+  })
+
   it('Associated Documents visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedDocumentsTitle().should('have.text', 'Associated documents')

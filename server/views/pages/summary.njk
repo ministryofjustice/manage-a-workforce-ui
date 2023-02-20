@@ -141,7 +141,7 @@
                         text: "Active risk registrations"
                     },
                         value: {
-                        text: data.activeRiskRegistration
+                        html: data.activeRiskRegistration if data.activeRiskRegistration else 'There are no active registrations.'
                     }
                     }
                 ]

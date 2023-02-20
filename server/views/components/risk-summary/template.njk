@@ -1,17 +1,19 @@
 {% macro getRiskScoreText(score) %}
-{% if (score < 50) %}
-LOW
+{% if (score > 0 and score < 50) %}
+    LOW
 {% elif score > 49 and score < 75 %}
-MEDIUM
+    MEDIUM
 {% elif score > 74 and score < 90 %}
-HIGH
+    HIGH
 {% elif score > 74 and score < 90 %}
-VERY HIGH
+    VERY HIGH
+{% else %}
+    UNAVAILABLE
 {% endif %}
 {% endmacro %}
 
 {% macro getRiskScoreClass(score) %}
-{% if (score < 50) %}
+{% if (score > 0 and score < 50) %}
     risk-badge--low
 {% elif score > 49 and score < 75 %}
     risk-badge--medium
@@ -19,6 +21,8 @@ VERY HIGH
     risk-badge--high
 {% elif score > 89 %}
     risk-badge--very-high
+{% else %}
+    risk-badge--none
 {% endif %}
 {% endmacro %}
 
@@ -31,6 +35,8 @@ VERY HIGH
     MEDIUM
 {% elif level == 'LOW' %}
     LOW
+{% else %}
+    UNAVAILABLE
 {% endif %}
 {% endmacro %}
 
@@ -43,6 +49,8 @@ VERY HIGH
     risk-badge--medium
 {% elif level == 'LOW' %}
     risk-badge--low
+{% else %}
+    risk-badge--none
 {% endif %}
 {% endmacro %}
 

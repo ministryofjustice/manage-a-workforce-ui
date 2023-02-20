@@ -2,6 +2,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
+{% from "../components/risk-summary/macro.njk" import riskSummaryBadge %}
 {% set documentTabHref = '/pdu/' + pduCode+ '/' + crn + '/convictions/' + convictionNumber + '/documents' %}
 {% set offenceData = data.offences %}
 {%- set offences = [] -%}
@@ -132,7 +133,7 @@
                         text: "Risk assessment"
                     },
                         value: {
-                        text: data.roshOverallRisk +' '+ data.rsrLevel+' '+ data.ogrsLevel
+                        html: riskSummaryBadge(data)
                     }
                     },
                     {

@@ -177,4 +177,9 @@ context('Summary', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedDocumentsLink().should('exist')
   })
+
+  it('Risk page link exists', () => {
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.associatedRiskLink().should('exist')
+  })
 })

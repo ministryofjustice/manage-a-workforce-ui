@@ -4,7 +4,7 @@ import DocumentsPage from '../pages/documents'
 context('Documents', () => {
   beforeEach(() => {
     cy.task('stubSetup')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetDocuments')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/documents')

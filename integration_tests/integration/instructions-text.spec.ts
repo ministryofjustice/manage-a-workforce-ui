@@ -59,7 +59,7 @@ context('Instructions text', () => {
     summaryPage.instructionsTextArea().should('exist')
     summaryPage.instructionsTextArea().clear()
     summaryPage.instructionsTextArea().type('Test Documents')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetDocuments')
     cy.visit('/pdu/PDU1/J678910/convictions/1/documents')
     const documentsPage = Page.verifyOnPage(DocumentsPage)

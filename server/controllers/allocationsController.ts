@@ -288,7 +288,7 @@ export default class AllocationsController {
     crn,
     staffTeamCode,
     staffCode,
-    convictionNumber,
+    convictionNumber: number,
     form,
     pduCode
   ) {
@@ -324,7 +324,7 @@ export default class AllocationsController {
     crn,
     staffTeamCode,
     staffCode,
-    convictionNumber,
+    convictionNumber: number,
     form,
     pduCode
   ) {
@@ -345,22 +345,15 @@ export default class AllocationsController {
     const sendEmailCopyToAllocatingOfficer = !form.emailCopy
     const otherEmails = form.person.map(person => person.email).filter(email => email)
 
-    const caseOverviewResponse = await this.allocationsService.getCaseOverview(
-      res.locals.user.token,
-      crn,
-      convictionNumber
-    )
-
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
       crn,
       staffCode,
-      caseOverviewResponse.convictionId,
       staffTeamCode,
       form.instructions,
       otherEmails,
       sendEmailCopyToAllocatingOfficer,
-      caseOverviewResponse.convictionNumber
+      convictionNumber
     )
     req.session.allocationForm = {
       otherEmails,

@@ -8,7 +8,7 @@ context('Instructions Confirmation', () => {
 
   it('Offender details visible on page', () => {
     cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -17,7 +17,7 @@ context('Instructions Confirmation', () => {
 
   it('Section break is visible on page', () => {
     cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -26,7 +26,7 @@ context('Instructions Confirmation', () => {
 
   it('Breadcrumbs visible on page', () => {
     cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -40,7 +40,7 @@ context('Instructions Confirmation', () => {
 
   it('Allocate Case button visible on page', () => {
     cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -49,7 +49,7 @@ context('Instructions Confirmation', () => {
 
   it('Continue button goes to next page', () => {
     cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -59,7 +59,7 @@ context('Instructions Confirmation', () => {
 
   it('Cancel link visible on page', () => {
     cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -68,7 +68,7 @@ context('Instructions Confirmation', () => {
 
   it('Instructions textArea should be visible on page', () => {
     cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -83,7 +83,7 @@ context('Instructions Confirmation', () => {
 
   it('another copy text should be visible on page', () => {
     cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -94,7 +94,7 @@ context('Instructions Confirmation', () => {
 
   it('add another recipient should be visible on page', () => {
     cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -103,7 +103,7 @@ context('Instructions Confirmation', () => {
 
   it('adding another person adds more email address inputs', () => {
     cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)

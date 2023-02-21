@@ -9,7 +9,7 @@ context('Allocate Complete', () => {
     cy.task('stubSetup')
     cy.task('stubGetStaffByCode')
     cy.task('stubSearchStaff')
-    cy.task('stubGetCurrentlyManagedCaseOverview', '1')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
   })

@@ -182,7 +182,7 @@ export default function routes(services: Services): Router {
         crn,
         staffTeamCode,
         staffCode,
-        convictionNumber,
+        Number(convictionNumber),
         req.body,
         pduCode
       )

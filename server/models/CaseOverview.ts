@@ -3,7 +3,6 @@ export default interface CaseOverview {
   tier: string
   name: string
   initialAppointment: string
-  convictionId: number
   caseType: string
   convictionNumber: number
 }

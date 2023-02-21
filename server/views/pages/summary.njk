@@ -2,6 +2,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
+{% from "../components/risk-summary/macro.njk" import riskSummaryBadge %}
 {% set documentTabHref = '/pdu/' + pduCode+ '/' + crn + '/convictions/' + convictionNumber + '/documents' %}
 {% set offenceData = data.offences %}
 {%- set offences = [] -%}
@@ -116,6 +117,35 @@
                     </dd>
                 </div>
             </dl>
+        </div>
+    </section>
+
+    <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id ="risk">
+        <header class="app-summary-card__header">
+            <h2 class="app-summary-card__title">Risk</h2>
+            <a class="govuk-link" href="/pdu/{{ pduCode }}/{{ crn }}/convictions/{{ convictionNumber }}/case-risk">View all risk details</a>
+        </header>
+        <div class="app-summary-card__body">
+            {{ govukSummaryList({
+                rows: [
+                    {
+                        key: {
+                        text: "Risk assessment"
+                    },
+                        value: {
+                        html: riskSummaryBadge(data)
+                    }
+                    },
+                    {
+                        key: {
+                        text: "Active risk registrations"
+                    },
+                        value: {
+                        html: data.activeRiskRegistration if data.activeRiskRegistration else 'There are no active registrations.'
+                    }
+                    }
+                ]
+            })}}
         </div>
     </section>
 

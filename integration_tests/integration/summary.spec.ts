@@ -102,6 +102,36 @@ context('Summary', () => {
     })
   })
 
+  it('Risk visible on page', () => {
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.riskTitle().should('have.text', 'Risk')
+    cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
+      'Risk assessment': 'VERY HIGH RoSH MEDIUM RSR HIGH OGRS',
+      'Active risk registrations': 'ALT Under MAPPA Arrangements, Suicide/self-harm',
+    })
+    summaryPage.riskSummaryBadge().then($data => {
+      expect($data.get(0).className).to.contain('risk-badge--very-high')
+      expect($data.get(1).className).to.contain('risk-badge--medium')
+      expect($data.get(2).className).to.contain('risk-badge--high')
+    })
+  })
+
+  it('Unavailable Risk visible on page', () => {
+    cy.task('stubGetUnallocatedCaseNoRisk')
+    cy.reload()
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.riskTitle().should('have.text', 'Risk')
+    cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
+      'Risk assessment': 'UNAVAILABLE RoSH UNAVAILABLE RSR UNAVAILABLE OGRS',
+      'Active risk registrations': 'There are no active registrations.',
+    })
+    summaryPage.riskSummaryBadge().then($data => {
+      expect($data.get(0).className).to.contain('risk-badge--none')
+      expect($data.get(1).className).to.contain('risk-badge--none')
+      expect($data.get(2).className).to.contain('risk-badge--none')
+    })
+  })
+
   it('Associated Documents visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedDocumentsTitle().should('have.text', 'Associated documents')
@@ -146,5 +176,10 @@ context('Summary', () => {
   it('Documents page link exists', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedDocumentsLink().should('exist')
+  })
+
+  it('Risk page link exists', () => {
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.associatedRiskLink().should('exist')
   })
 })

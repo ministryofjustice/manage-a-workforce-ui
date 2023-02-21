@@ -11,10 +11,16 @@ export default class SummaryPage extends Page {
 
   sentenceTitle = (): PageElement => cy.get('#sentence > header > h2 ')
 
+  riskTitle = (): PageElement => cy.get('#risk > header > h2 ')
+
   associatedDocumentsTitle = (): PageElement => cy.get('#case-details > header > h2 ')
 
   associatedDocumentsLink = (): PageElement => cy.get('#case-details > header > a ')
 
+  associatedRiskLink = (): PageElement => cy.get('#risk > header > a ')
+
   allocateCaseButton = (crn, convictionNumber, pduCode): PageElement =>
     cy.get(`a[href*="/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner"]`)
+
+  riskSummaryBadge = (): PageElement => cy.get('.risk-badge')
 }

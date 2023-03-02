@@ -36,7 +36,20 @@ Low
 {% endif %} 
 {% endmacro %}
 
-{% if params.roshRisk %}
+{% if params.roshRisk.overallRisk == 'NOT_FOUND' %}
+<div class="rosh-widget rosh-widget--none">
+    <h3 class="govuk-heading-m">Unknown RoSH</h3>
+    <p class="govuk-body-m">Risk of serious harm<br><span class="govuk-body-s govuk-hint">A RoSH summary has not been completed for this individual. Check OASys for this person's current assessment status.</span></p>
+</div>
+
+{% elif params.roshRisk.overallRisk == 'UNAVAILABLE' %}
+<div class="rosh-widget rosh-widget--unavailable">
+    <h3 class="govuk-heading-m">Unknown RoSH</h3>
+    <p class="govuk-body-m">Risk of serious harm<br><span class="govuk-body-s govuk-hint">Something went wrong. We are unable to show RoSH at this time. Try again later.</span></p>
+</div>
+
+
+{% else %}
 <div class="rosh-widget {{ getOverallRiskLevelClass(params.roshRisk.overallRisk) }}">
     <h3 class="govuk-heading-m"><strong>{{ getRiskLevelText(params.roshRisk.overallRisk) }}</strong> RoSH</h3>
     <p class="govuk-body-m">Risk of serious harm<br><span class="govuk-body-s govuk-hint">Last updated: {{ params.roshRisk.assessedOn | dateFormat | default("Not known") }}</span></p>
@@ -57,10 +70,5 @@ Low
       {% endfor %}
       </tbody>
     </table>
-</div>
-{% else %}
-<div class="rosh-widget rosh-widget--none">
-    <h3 class="govuk-heading-m">UNKNOWN LEVEL RoSH</h3>
-    <p class="govuk-body-m">Risk of serious harm<br><span class="govuk-body-s govuk-hint">A RoSH summary has not been completed for this person. Check OASys for their current assessment status.</span></p>
 </div>
 {% endif %}

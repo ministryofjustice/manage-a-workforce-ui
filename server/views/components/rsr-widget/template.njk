@@ -22,15 +22,21 @@ Low
 {% endif %}
 {% endmacro %}
 
-{% if params.rsr %}
+{% if params.rsr.level == 'NOT_FOUND' %}
+<div class="rosh-widget rosh-widget--none">
+    <h3 class="govuk-heading-m">No RSR</h3>
+    <p class="govuk-body-m">Risk of serious recidivism<br><span class="govuk-body-s govuk-hint">An RSR summary has not been completed for this individual. Check OASys for this person's current assessment status.</span></p>
+</div>
+{% elif params.rsr.level == 'UNAVAILABLE' %}
+<div class="rosh-widget rosh-widget--unavailable">
+    <h3 class="govuk-heading-m">Unknown RSR</h3>
+    <p class="govuk-body-m">Risk of serious recidivism<br><span class="govuk-body-s govuk-hint">Something went wrong. We are unable to show RSR at this time. Try again later.</span></p>
+</div>
+
+{% else %}
 <div class="rosh-widget {{ getOverallRiskLevelClass(params.rsr.level) }}">
     <h3 class="govuk-heading-m"><strong>{{ getRiskLevelText(params.rsr.level) }}</strong> RSR <span>{{ params.rsr.percentage }}%</span></h3>
     <p class="govuk-body-m">Risk of serious recidivism<br><span class="govuk-body-s govuk-hint">Last updated: {{ params.rsr.lastUpdatedOn | dateFormat | default("Not known") }}</span></p>
-</div>
-{% else %}
-<div class="rosh-widget rosh-widget--none">
-    <h3 class="govuk-heading-m"> RSR</h3>
-    <p class="govuk-body-m">Risk of serious recidivism<br><span class="govuk-body-s govuk-hint">Score unavailable</span></p>
 </div>
 {% endif %}
 

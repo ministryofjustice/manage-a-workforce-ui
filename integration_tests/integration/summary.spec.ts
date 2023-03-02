@@ -117,12 +117,28 @@ context('Summary', () => {
   })
 
   it('Unavailable Risk visible on page', () => {
-    cy.task('stubGetUnallocatedCaseNoRisk')
+    cy.task('stubGetUnallocatedCaseUnavailableRisk')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.riskTitle().should('have.text', 'Risk')
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
-      'Risk assessment': 'UNAVAILABLE RoSH UNAVAILABLE RSR UNAVAILABLE OGRS',
+      'Risk assessment': 'Unknown RoSH Unknown RSR No OGRS',
+      'Active risk registrations': 'There are no active registrations.',
+    })
+    summaryPage.riskSummaryBadge().then($data => {
+      expect($data.get(0).className).to.contain('risk-badge--unavailable')
+      expect($data.get(1).className).to.contain('risk-badge--unavailable')
+      expect($data.get(2).className).to.contain('risk-badge--none')
+    })
+  })
+
+  it('Not Found Risk visible on page', () => {
+    cy.task('stubGetUnallocatedCaseNotFoundRisk')
+    cy.reload()
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.riskTitle().should('have.text', 'Risk')
+    cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
+      'Risk assessment': 'Unknown RoSH No RSR No OGRS',
       'Active risk registrations': 'There are no active registrations.',
     })
     summaryPage.riskSummaryBadge().then($data => {

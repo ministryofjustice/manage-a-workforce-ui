@@ -8,7 +8,7 @@
 {% elif score > 74 and score < 90 %}
     VERY HIGH
 {% else %}
-    UNAVAILABLE
+    No
 {% endif %}
 {% endmacro %}
 
@@ -26,7 +26,7 @@
 {% endif %}
 {% endmacro %}
 
-{% macro getRiskLevelText(level) %}
+{% macro getRiskLevelText(level, isRosh) %}
 {% if level == 'VERY_HIGH' %}
     VERY HIGH
 {% elif level == 'HIGH' %}
@@ -35,8 +35,10 @@
     MEDIUM
 {% elif level == 'LOW' %}
     LOW
+{% elif level == 'UNAVAILABLE' or isRosh %}
+    Unknown
 {% else %}
-    UNAVAILABLE
+    No
 {% endif %}
 {% endmacro %}
 
@@ -49,13 +51,15 @@
     risk-badge--medium
 {% elif level == 'LOW' %}
     risk-badge--low
+{% elif level == 'UNAVAILABLE' %}
+    risk-badge--unavailable
 {% else %}
     risk-badge--none
 {% endif %}
 {% endmacro %}
 
   <div class="risk-badge {{ getRiskLevelClass(params.roshLevel) }}">
-    <h3 class="govuk-heading-s"><strong>{{ getRiskLevelText(params.roshLevel) }}</strong> RoSH</h3>
+    <h3 class="govuk-heading-s"><strong>{{ getRiskLevelText(params.roshLevel, true) }}</strong> RoSH</h3>
   </div>
   <div class="risk-badge {{ getRiskLevelClass(params.rsrLevel) }}">
     <h3 class="govuk-heading-s"><strong>{{ getRiskLevelText(params.rsrLevel) }}</strong> RSR</h3>

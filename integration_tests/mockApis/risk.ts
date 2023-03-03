@@ -49,10 +49,6 @@ export default {
               notes: null,
             },
           ],
-          rosh: {
-            level: 'HIGH',
-            lastUpdatedOn: '2022-02-02',
-          },
           roshRisk: {
             overallRisk: 'VERY_HIGH',
             assessedOn: '2022-10-07T13:11:50',
@@ -77,6 +73,34 @@ export default {
       },
     })
   },
+  stubGetNotFoundRisk: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910/convictions/1/risks`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          activeRegistrations: [],
+          inactiveRegistrations: [],
+          roshRisk: {
+            overallRisk: 'NOT_FOUND',
+            riskInCommunity: {},
+          },
+          rsr: {
+            level: 'NOT_FOUND',
+            percentage: -2147483648,
+          },
+          convictionNumber: 1,
+        },
+      },
+    })
+  },
   stubGetRiskNoRegistrations: (): SuperAgentRequest => {
     return stubForAllocation({
       request: {
@@ -92,6 +116,43 @@ export default {
           tier: 'C1',
           activeRegistrations: [],
           inActiveRegistrations: [],
+          roshRisk: {
+            overallRisk: 'NOT_FOUND',
+            riskInCommunity: {},
+          },
+          rsr: {
+            level: 'NOT_FOUND',
+            percentage: -2147483648,
+          },
+          convictionNumber: 1,
+        },
+      },
+    })
+  },
+
+  stubGetUnavailableRisk: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910/convictions/1/risks`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          activeRegistrations: [],
+          inActiveRegistrations: [],
+          roshRisk: {
+            overallRisk: 'UNAVAILABLE',
+            riskInCommunity: {},
+          },
+          rsr: {
+            level: 'UNAVAILABLE',
+            percentage: -2147483648,
+          },
           convictionNumber: 1,
         },
       },

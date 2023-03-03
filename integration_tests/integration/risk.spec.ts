@@ -136,18 +136,48 @@ context('Risk', () => {
       .should('equal', 'High OGRS 85% Offender group reconviction scaleLast updated: 17 November 2018')
   })
 
-  it('Displays score unavailable when no assessments returned', () => {
-    cy.task('stubGetRiskNoRegistrations')
+  it('Displays Not Found Assessment', () => {
+    cy.task('stubGetNotFoundRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.roshWidget().should('have.class', 'rosh-widget--none')
+
     riskPage
       .roshWidget()
       .trimTextContent()
       .should(
         'equal',
-        'UNKNOWN LEVEL RoSH Risk of serious harmA RoSH summary has not been completed for this person. Check OASys for their current assessment status.'
+        "Unknown RoSH Risk of serious harmA RoSH summary has not been completed for this individual. Check OASys for this person's current assessment status."
       )
-    riskPage.rsrWidget().trimTextContent().should('equal', 'RSR Risk of serious recidivismScore unavailable')
+    riskPage
+      .rsrWidget()
+      .trimTextContent()
+      .should(
+        'equal',
+        "No RSR Risk of serious recidivismAn RSR summary has not been completed for this individual. Check OASys for this person's current assessment status."
+      )
     riskPage.ogrsWidget().trimTextContent().should('equal', 'OGRS Offender group reconviction scaleScore unavailable')
+  })
+
+  it('Displays Unavailable Assessment', () => {
+    cy.task('stubGetUnavailableRisk')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.roshWidget().should('have.class', 'rosh-widget--unavailable')
+    riskPage
+      .roshWidget()
+      .trimTextContent()
+      .should(
+        'equal',
+        'Unknown RoSH Risk of serious harmSomething went wrong. We are unable to show RoSH at this time. Try again later.'
+      )
+    riskPage.rsrWidget().should('have.class', 'rosh-widget--unavailable')
+    riskPage
+      .rsrWidget()
+      .trimTextContent()
+      .should(
+        'equal',
+        'Unknown RSR Risk of serious recidivismSomething went wrong. We are unable to show RSR at this time. Try again later.'
+      )
   })
 })

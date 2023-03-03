@@ -141,8 +141,12 @@ $mappa-colour: #4c2c92;
 // MaW specific
 $no-score-colour: #505a5f;
 $no-score-border-colour: #505a5f;
-$no-score-background-colour: #f8f8f8;
+$no-score-background-colour: #ffffff;
 $predictor-score-background-colour: #f9e8bd;
+
+$unavailable-score-colour: #505a5f;
+$unavailable-score-border-colour: #ffdd00;
+$unavailable-score-background-colour: #ffffff;
 
 
 
@@ -175,4 +179,19 @@ $predictor-score-background-colour: #f9e8bd;
 .rosh-widget__risk--none,
 .risk-badge--none {
   color: $no-score-colour;
+}
+
+.rosh-widget--unavailable,
+.risk-badge--unavailable {
+  background-color: $unavailable-score-background-colour;
+  border: 2px solid $unavailable-score-border-colour;
+
+  & h3 {
+    color: $unavailable-score-colour;
+  }
+}
+
+.rosh-widget__risk--unavailable,
+.risk-badge--unavailable {
+  color: $unavailable-score-colour;
 }

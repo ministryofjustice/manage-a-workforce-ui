@@ -156,7 +156,10 @@ context('Risk', () => {
         'equal',
         "No RSR Risk of serious recidivismAn RSR summary has not been completed for this individual. Check OASys for this person's current assessment status."
       )
-    riskPage.ogrsWidget().trimTextContent().should('equal', 'OGRS Offender group reconviction scaleScore unavailable')
+    riskPage
+      .ogrsWidget()
+      .trimTextContent()
+      .should('equal', 'No OGRS Offender group reconviction scaleScore unavailable')
   })
 
   it('Displays Unavailable Assessment', () => {

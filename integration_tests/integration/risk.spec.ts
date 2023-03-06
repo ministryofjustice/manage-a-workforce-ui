@@ -159,7 +159,10 @@ context('Risk', () => {
     riskPage
       .ogrsWidget()
       .trimTextContent()
-      .should('equal', 'No OGRS Offender group reconviction scaleScore unavailable')
+      .should(
+        'equal',
+        "No OGRS Offender group reconviction scaleAn OGRS summary has not been completed for this individual. Check NDelius for this person's current assessment status."
+      )
   })
 
   it('Displays Unavailable Assessment', () => {

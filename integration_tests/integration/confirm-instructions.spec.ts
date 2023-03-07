@@ -2,34 +2,24 @@ import Page from '../pages/page'
 import InstructionsConfirmPage from '../pages/confirmInstructions'
 
 context('Instructions Confirmation', () => {
+  let instructionsPage: InstructionsConfirmPage
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubGetConfirmInstructions')
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
+    instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
   })
 
   it('Offender details visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
 
   it('Section break is visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.sectionBreak().should('exist')
   })
 
   it('Breadcrumbs visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage
       .breadCrumbs()
       .should('contain', 'Home')
@@ -39,39 +29,19 @@ context('Instructions Confirmation', () => {
   })
 
   it('Allocate Case button visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.continueButton('1').should('exist').and('have.text', '\n  Allocate case\n')
   })
 
   it('Continue button goes to next page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.continueButton('1').click()
     cy.url().should('include', '/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/confirm-allocation')
   })
 
   it('Cancel link visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.cancelLink('J678910', '1', 'PDU1').should('exist').and('have.text', 'Cancel')
   })
 
   it('Instructions textArea should be visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.instructionsTextArea().should('exist').and('have.attr', 'rows', '20')
     instructionsPage.subHeading().should('contain', 'Review allocation instructions')
     instructionsPage
@@ -82,31 +52,16 @@ context('Instructions Confirmation', () => {
   })
 
   it('another copy text should be visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage
       .copyText()
       .should('contain', 'You can send a copy of these notes to another person, for example a case admin officer.')
   })
 
   it('add another recipient should be visible on page', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.addRecipientHeader().should('contain', 'Add another recipient')
   })
 
   it('adding another person adds more email address inputs', () => {
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.inputTexts().should('have.length', 1)
     instructionsPage.addAnotherPersonButton().click()
     instructionsPage.inputTexts().should('have.length', 2)

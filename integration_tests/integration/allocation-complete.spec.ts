@@ -7,9 +7,8 @@ import SummaryPage from '../pages/summary'
 context('Allocate Complete', () => {
   beforeEach(() => {
     cy.task('stubSetup')
-    cy.task('stubGetStaffByCode')
     cy.task('stubSearchStaff')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.task('stubGetConfirmInstructions')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
   })

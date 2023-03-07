@@ -18,7 +18,6 @@ import workload from '../mockApis/workload'
 import overview from '../mockApis/overview'
 import allocationCase from '../mockApis/allocationCase'
 import offenderManagerCases from '../mockApis/offenderManagerCases'
-import staff from '../mockApis/staff'
 import allocationComplete from '../mockApis/allocationComplete'
 import probationEstate from '../mockApis/probationEstate'
 import staffLookup from '../mockApis/staffLookup'
@@ -83,7 +82,6 @@ export default (on: (string, Record) => void): void => {
     ...allocateToPractitioner,
     ...workload,
     ...offenderManagerCases,
-    ...staff,
     ...allocationComplete,
     ...allocationCase,
     ...overview,

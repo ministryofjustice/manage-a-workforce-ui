@@ -9,6 +9,7 @@ import UnallocatedCaseCountByTeam from '../models/UnallocatedCaseCountByTeam'
 import DocumentDetails from '../models/DocumentDetails'
 import UnallocatedCase from '../models/UnallocatedCase'
 import CaseOverview from '../models/CaseOverview'
+import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 
 export default class AllocationsService {
   config: ApiConfig
@@ -70,5 +71,16 @@ export default class AllocationsService {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/teamCount?teams=${teamCodes.join(',')}`,
     })) as UnallocatedCaseCountByTeam[]
+  }
+
+  async getConfirmInstructions(
+    token: string,
+    crn,
+    convictionNumber,
+    staffCode
+  ): Promise<PersonOnProbationStaffDetails> {
+    return (await this.restClient(token).get({
+      path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/confirm-instructions?staffCode=${staffCode}`,
+    })) as PersonOnProbationStaffDetails
   }
 }

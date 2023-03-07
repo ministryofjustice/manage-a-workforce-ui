@@ -11,7 +11,6 @@ import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotential
 import FileDownload from '../models/FileDownload'
 import WorkloadService from '../services/workloadService'
 import Case from './data/Case'
-import StaffSummary from '../models/StaffSummary'
 import validate from '../validation/validation'
 import trimForm from '../utils/trim'
 import OfficerView from './data/OfficerView'
@@ -21,6 +20,7 @@ import DocumentRow from './data/DocumentRow'
 import ChoosePractitionerData, { Practitioner } from '../models/ChoosePractitionerData'
 import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
+import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 
 export default class AllocationsController {
   constructor(
@@ -215,17 +215,21 @@ export default class AllocationsController {
     pduCode,
     scrollToBottom = false
   ) {
-    const response: StaffSummary = await this.workloadService.getStaffByCode(res.locals.user.token, staffCode)
-    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
+    const response: PersonOnProbationStaffDetails = await this.allocationsService.getConfirmInstructions(
+      res.locals.user.token,
+      crn,
+      convictionNumber,
+      staffCode
+    )
     res.render('pages/confirm-instructions', {
-      title: `${caseOverview.name} | Review allocation instructions | Manage a workforce`,
+      title: `${response.name.combinedName} | Review allocation instructions | Manage a workforce`,
       data: response,
-      name: caseOverview.name,
-      crn: caseOverview.crn,
-      tier: caseOverview.tier,
+      name: response.name.combinedName,
+      crn: response.crn,
+      tier: response.tier,
       staffCode,
       staffTeamCode,
-      convictionNumber: caseOverview.convictionNumber,
+      convictionNumber: response.convictionNumber,
       errors: req.flash('errors') || [],
       confirmInstructionForm: req.session.confirmInstructionForm || { person: [] },
       pduCode,

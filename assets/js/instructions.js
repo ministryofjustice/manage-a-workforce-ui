@@ -1,15 +1,8 @@
-window.addEventListener('load', function () {
-  const FOUR_WEEKS_IN_SECONDS = 4 * 7 * 24 * 3600
-  var currentTimeInSeconds = Math.floor(Date.now() / 1000)
-  removeExpiredInstructions(FOUR_WEEKS_IN_SECONDS, currentTimeInSeconds)
-  const textArea = document.getElementById('instructions')
-  const crn = textArea.getAttribute('data-crn')
-  const convictionNumber = textArea.getAttribute('data-conviction-number')
-  const newInstructionsItem = `instructions-save-${crn}-${convictionNumber}`
-  window.onbeforeunload = function () {
-    var item = { v: textArea.value, t: currentTimeInSeconds }
-    localStorage.setItem(newInstructionsItem, JSON.stringify(item))
-  }
+makeInstructionsKey = function (crn, convictionNumber) {
+  return `instructions-save-${crn}-${convictionNumber}`
+}
+
+loadInstructions = function (textArea, newInstructionsItem) {
   if (localStorage[newInstructionsItem]) {
     var storedInstructions = localStorage.getItem(newInstructionsItem)
     try {
@@ -20,7 +13,12 @@ window.addEventListener('load', function () {
       console.log(`Unable to read item ${key}`)
     }
   }
-})
+}
+
+saveInstructions = function (textArea, newInstructionsItem, currentTimeInSeconds) {
+  var item = { v: textArea.value, t: currentTimeInSeconds }
+  localStorage.setItem(newInstructionsItem, JSON.stringify(item))
+}
 
 removeExpiredInstructions = function (timeoutInSeconds, currentTimeInSeconds) {
   for (var i = 0, allStoredInstructions = Object.keys(localStorage); i < allStoredInstructions.length; i++) {

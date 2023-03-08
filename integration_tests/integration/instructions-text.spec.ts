@@ -81,8 +81,7 @@ context('Instructions text', () => {
     // Visit random non-instructions page to save instructions
     cy.task('stubGetAllRegions')
     cy.visit('/regions')
-    cy.task('stubGetStaffByCode')
-    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.task('stubGetConfirmInstructions')
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.instructionsTextArea().should('have.value', 'Test Documents')

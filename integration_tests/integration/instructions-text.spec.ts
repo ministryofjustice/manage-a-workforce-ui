@@ -3,6 +3,9 @@ import Page from '../pages/page'
 import SummaryPage from '../pages/summary'
 import ProbationRecordPage from '../pages/probationRecord'
 import RiskPage from '../pages/risk'
+import InstructionsConfirmPage from '../pages/confirmInstructions'
+
+const FOUR_WEEKS_AND_A_DAY_IN_MS = (4 * 7 + 1) * 24 * 3600 * 1000
 
 context('Instructions text', () => {
   beforeEach(() => {
@@ -64,5 +67,35 @@ context('Instructions text', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/documents')
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.instructionsTextArea().should('have.value', 'Test Documents')
+  })
+
+  it('Instructions text should be removed after TTL expired', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.clock()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.instructionsTextArea().should('exist')
+    summaryPage.instructionsTextArea().clear()
+    summaryPage.instructionsTextArea().type('Test Documents')
+    // Visit random non-instructions page to save instructions
+    cy.task('stubGetAllRegions')
+    cy.visit('/regions')
+    cy.task('stubGetStaffByCode')
+    cy.task('stubGetCurrentlyManagedCaseOverview')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
+    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsPage.instructionsTextArea().should('have.value', 'Test Documents')
+    // Must reset clock befoe changing the time
+    cy.clock().then(clock => {
+      clock.restore()
+    })
+    cy.clock(FOUR_WEEKS_AND_A_DAY_IN_MS)
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions').then(_ => {
+      // eslint-disable-next-line no-unused-expressions
+      expect(localStorage.getItem('instructions-save-J678910-1')).to.be.null
+    })
+    const instructionsPageAfterTimeout = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsPageAfterTimeout.instructionsTextArea().should('have.value', '')
   })
 })

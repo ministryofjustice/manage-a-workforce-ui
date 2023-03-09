@@ -11,9 +11,9 @@ export default class ProbationRecordPage extends Page {
 
   bodyText = (): PageElement => cy.get('p.govuk-body')
 
-  currentOrderTable = (): PageElement => cy.get('.current-order-table')
+  currentSentencesTable = (): PageElement => cy.get('.current-sentences-table')
 
-  previousOrderTable = (): PageElement => cy.get('.previous-order-table')
+  previousSentencesTable = (): PageElement => cy.get('.previous-sentences-table')
 
   viewAllLink = (): PageElement => cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/probation-record?viewAll=true"]')
 }

@@ -3,7 +3,7 @@ import Offence from '../../models/Offence'
 import config from '../../config'
 import ConvictionOffenderManager from '../../models/ConvictionOffenderManager'
 
-export default class Order {
+export default class Sentence {
   sentence: string
 
   offences: string[]

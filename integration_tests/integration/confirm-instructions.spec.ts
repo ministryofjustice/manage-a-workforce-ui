@@ -66,4 +66,10 @@ context('Instructions Confirmation', () => {
     instructionsPage.addAnotherPersonButton().click()
     instructionsPage.inputTexts().should('have.length', 2)
   })
+
+  it('technical updates banner remains hidden after loading page', () => {
+    instructionsPage.hideMessageLink().click()
+    cy.reload()
+    instructionsPage.technicalUpdatesBanner().should('have.class', 'moj-hidden')
+  })
 })

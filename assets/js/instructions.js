@@ -1,5 +1,6 @@
+const instructionKeyPrefix = 'instructions-save'
 makeInstructionsKey = function (crn, convictionNumber) {
-  return `instructions-save-${crn}-${convictionNumber}`
+  return `${instructionKeyPrefix}-${crn}-${convictionNumber}`
 }
 
 loadInstructions = function (textArea, newInstructionsItem) {
@@ -21,7 +22,8 @@ saveInstructions = function (textArea, newInstructionsItem, currentTimeInSeconds
 }
 
 removeExpiredInstructions = function (timeoutInSeconds, currentTimeInSeconds) {
-  for (var i = 0, allStoredInstructions = Object.keys(localStorage); i < allStoredInstructions.length; i++) {
+  var allStoredInstructions = Object.keys(localStorage).filter(key => key.startsWith(instructionKeyPrefix))
+  for (var i = 0; i < allStoredInstructions.length; i++) {
     var key = allStoredInstructions[i]
     var value = localStorage.getItem(key)
     try {

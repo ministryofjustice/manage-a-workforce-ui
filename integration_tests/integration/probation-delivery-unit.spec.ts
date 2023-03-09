@@ -21,7 +21,7 @@ context('Select Probation Delivery Unit', () => {
     probationDeliveryUnitPage
       .legendHeading()
       .trimTextContent()
-      .should('equal', 'Select your Probation Delivery Unit (PDU)')
+      .should('equal', 'Select your probation delivery unit (PDU)')
   })
 
   it('PDUs in alphabetical order', () => {
@@ -67,7 +67,7 @@ context('Select Probation Delivery Unit', () => {
     probationDeliveryUnitPage
       .errorSummary()
       .trimTextContent()
-      .should('equal', 'There is a problem Select a Probation Delivery Unit')
+      .should('equal', 'There is a problem Select a probation delivery unit')
   })
 
   it('selecting PDU and clicking continue goes to select Team page', () => {

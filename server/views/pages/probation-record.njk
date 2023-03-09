@@ -3,7 +3,7 @@
 
 {% set currentSentenceData = {
                 classes: 'current-sentence-table govuk-table-xl',
-                caption: 'Current sentence',
+                caption: 'Current sentences',
                 captionClasses: 'govuk-table__caption--m',
                 firstCellIsHeader: true,
                 head: [
@@ -29,7 +29,7 @@
 
 {% set previousSentenceData = {
                 classes: 'previous-sentence-table govuk-table-xl',
-                caption: 'Previous sentence',
+                caption: 'Previous sentences',
                 captionClasses: 'govuk-table__caption--m',
                 firstCellIsHeader: true,
                 head: [
@@ -61,7 +61,7 @@
             {{ govukTable(currentSentenceData) }}
         {% else %}
 
-            <h3 class="govuk-heading-m">Current sentence</h3>
+            <h3 class="govuk-heading-m">Current sentences</h3>
             <p class="govuk-body">No current sentences.</p>
             <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
         {% endif %}

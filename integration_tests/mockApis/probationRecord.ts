@@ -157,7 +157,7 @@ export default {
     })
   },
   stubGetManyPreviousProbationRecord: (): SuperAgentRequest => {
-    const previousOrders = new Array(100).fill(0).map(() => ({
+    const previousSentences = new Array(100).fill(0).map(() => ({
       description: 'Adult Custody < 12m',
       length: '6 Months',
       endDate: '2018-06-23',
@@ -210,7 +210,7 @@ export default {
               ],
             },
           ],
-          previous: previousOrders,
+          previous: previousSentences,
         },
       },
     })

@@ -59,28 +59,28 @@ context('Probation record', () => {
     probationRecordPage.button().should('contain', 'Continue')
   })
 
-  it('Current order sub-heading visible on page with body text', () => {
+  it('Current sentence sub-heading visible on page with body text', () => {
     cy.task('stubGetProbationRecordNoConvictions')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.subHeading().should('contain', 'Current order')
-    probationRecordPage.bodyText().should('contain', 'No current orders.')
+    probationRecordPage.subHeading().should('contain', 'Current sentence')
+    probationRecordPage.bodyText().should('contain', 'No current sentences.')
   })
 
-  it('Previous orders sub-heading visible on page with body text', () => {
+  it('Previous sentences sub-heading visible on page with body text', () => {
     cy.task('stubGetProbationRecordNoConvictions')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.subHeading().should('contain', 'Previous orders')
-    probationRecordPage.bodyText().should('contain', 'No previous orders.')
+    probationRecordPage.subHeading().should('contain', 'Previous sentences')
+    probationRecordPage.bodyText().should('contain', 'No previous sentences.')
   })
 
-  it('Current Order table displayed on page when active convictions exist', () => {
+  it('Current Sentence table displayed on page when active convictions exist', () => {
     cy.task('stubGetProbationRecord')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage
-      .currentOrderTable()
+      .currentSentenceTable()
       .getTable()
       .should('deep.equal', [
         {
@@ -98,12 +98,12 @@ context('Probation record', () => {
       ])
   })
 
-  it('Current Order table displays multiple offences as numbered list', () => {
+  it('Current Sentence table displays multiple offences as numbered list', () => {
     cy.task('stubGetProbationRecordMultipleOffences')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage
-      .currentOrderTable()
+      .currentSentenceTable()
       .getTable()
       .should('deep.equal', [
         {
@@ -115,12 +115,12 @@ context('Probation record', () => {
       ])
   })
 
-  it('Previous Order table displays when inactive convictions exist', () => {
+  it('Previous Sentence table displays when inactive convictions exist', () => {
     cy.task('stubGetProbationRecord')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage
-      .previousOrderTable()
+      .previousSentenceTable()
       .getTable()
       .should('deep.equal', [
         {
@@ -139,19 +139,19 @@ context('Probation record', () => {
     probationRecordPage.viewAllLink().should('not.exist')
   })
 
-  it('more than 3 previous orders should display first three orders and view all link', () => {
+  it('more than 3 previous sentences should display first three sentences and view all link', () => {
     cy.task('stubGetManyPreviousProbationRecord')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.previousOrderTable().getTable().should('have.length', 3)
+    probationRecordPage.previousSentenceTable().getTable().should('have.length', 3)
     probationRecordPage.viewAllLink().should('exist')
   })
 
-  it('more than 3 previous orders with view all as true should display all orders and not view all link', () => {
+  it('more than 3 previous sentences with view all as true should display all sentences and not view all link', () => {
     cy.task('stubGetManyPreviousProbationRecord')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record?viewAll=true')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.previousOrderTable().getTable().should('have.length', 100)
+    probationRecordPage.previousSentenceTable().getTable().should('have.length', 100)
     probationRecordPage.viewAllLink().should('not.exist')
   })
 })

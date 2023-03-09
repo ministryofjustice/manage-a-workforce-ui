@@ -172,7 +172,7 @@ context('Choose Practitioner', () => {
         {
           Name: 'Jim Jam',
           Team: 'Team 2',
-          Grade: 'POProbation Officer',
+          Grade: 'POprobation officer',
           'Workload %': '32%',
           'Cases in past 7 days': '5',
           'Community cases': '0',
@@ -182,7 +182,7 @@ context('Choose Practitioner', () => {
         {
           Name: 'Jane Doe',
           Team: 'Team 1',
-          Grade: 'PQiPTrainee Probation Officer',
+          Grade: 'PQiPtrainee probation officer',
           'Workload %': '19%',
           'Cases in past 7 days': '2',
           'Community cases': '3',
@@ -192,7 +192,7 @@ context('Choose Practitioner', () => {
         {
           Name: 'Sam Smam',
           Team: 'Team 2',
-          Grade: 'SPOSenior Probation Officer',
+          Grade: 'SPOsenior probation officer',
           'Workload %': '32%',
           'Cases in past 7 days': '5',
           'Community cases': '0',
@@ -225,7 +225,7 @@ context('Choose Practitioner', () => {
         {
           Name: 'Jim Jam',
           Team: 'Team 2',
-          Grade: 'POProbation Officer',
+          Grade: 'POprobation officer',
           'Workload %': '32%',
           'Cases in past 7 days': '5',
           'Community cases': '0',
@@ -235,7 +235,7 @@ context('Choose Practitioner', () => {
         {
           Name: 'Sam Smam',
           Team: 'Team 2',
-          Grade: 'SPOSenior Probation Officer',
+          Grade: 'SPOsenior probation officer',
           'Workload %': '32%',
           'Cases in past 7 days': '5',
           'Community cases': '0',

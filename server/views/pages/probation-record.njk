@@ -1,9 +1,9 @@
 {% extends "partials/case-view.njk" %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
-{% set currentOrderData = {
-                classes: 'current-order-table govuk-table-xl',
-                caption: 'Current order',
+{% set currentSentenceData = {
+                classes: 'current-sentence-table govuk-table-xl',
+                caption: 'Current sentence',
                 captionClasses: 'govuk-table__caption--m',
                 firstCellIsHeader: true,
                 head: [
@@ -15,21 +15,21 @@
                 rows: []
  } %}
 
- {% for currentOrder in currentOrders %}
+ {% for currentSentence in currentSentences %}
     {{
-        currentOrderData.rows.push([
-            { text: currentOrder.sentence },
-            { text: (currentOrder.offences[0] if currentOrder.offences | length == 1  else '<ol class="govuk-list govuk-list--number"><li>' +  currentOrder.offences | join("</li><li>") + '</li></ol>') | safe},
-            { text: currentOrder.date},
-            { text: currentOrder.probationPractitioner}
+        currentSentenceData.rows.push([
+            { text: currentSentence.sentence },
+            { text: (currentSentence.offences[0] if currentSentence.offences | length == 1  else '<ol class="govuk-list govuk-list--number"><li>' +  currentSentence.offences | join("</li><li>") + '</li></ol>') | safe},
+            { text: currentSentence.date},
+            { text: currentSentence.probationPractitioner}
         ])
     }}
 
 {% endfor %}
 
-{% set previousOrderData = {
-                classes: 'previous-order-table govuk-table-xl',
-                caption: 'Previous order',
+{% set previousSentenceData = {
+                classes: 'previous-sentence-table govuk-table-xl',
+                caption: 'Previous sentence',
                 captionClasses: 'govuk-table__caption--m',
                 firstCellIsHeader: true,
                 head: [
@@ -41,13 +41,13 @@
                 rows: []
  } %}
 
- {% for previousOrder in previousOrders %}
+ {% for previousSentence in previousSentences %}
     {{
-        previousOrderData.rows.push([
-            { text: previousOrder.sentence },
-            { text: (previousOrder.offences[0] if previousOrder.offences | length == 1  else '<ol class="govuk-list govuk-list--number"><li>' +  previousOrder.offences | join("</li><li>") + '</li></ol>') | safe},
-            { text: previousOrder.date},
-            { text: previousOrder.probationPractitioner}
+        previousSentenceData.rows.push([
+            { text: previousSentence.sentence },
+            { text: (previousSentence.offences[0] if previousSentence.offences | length == 1  else '<ol class="govuk-list govuk-list--number"><li>' +  previousSentence.offences | join("</li><li>") + '</li></ol>') | safe},
+            { text: previousSentence.date},
+            { text: previousSentence.probationPractitioner}
         ])
     }}
 
@@ -57,24 +57,24 @@
 
     <h2 class="govuk-heading-l">Probation record</h2>
 
-        {% if currentOrders | length > 0 %}
-            {{ govukTable(currentOrderData) }}
+        {% if currentSentences | length > 0 %}
+            {{ govukTable(currentSentenceData) }}
         {% else %}
 
-            <h3 class="govuk-heading-m">Current order</h3>
-            <p class="govuk-body">No current orders.</p>
+            <h3 class="govuk-heading-m">Current sentence</h3>
+            <p class="govuk-body">No current sentences.</p>
             <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
         {% endif %}
 
-    {% if previousOrders | length > 0 %}
-        {{ govukTable(previousOrderData) }}
+    {% if previousSentences | length > 0 %}
+        {{ govukTable(previousSentenceData) }}
         {% if not viewAll %}
-            <a href="{{ '/pdu/' + pduCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous orders ({{ totalPreviousCount }})</a>
+            <a href="{{ '/pdu/' + pduCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous sentences ({{ totalPreviousCount }})</a>
         {% endif %}
     {% else %}
 
-        <h3 class="govuk-heading-m">Previous orders</h3>
-        <p class="govuk-body">No previous orders.</p>
+        <h3 class="govuk-heading-m">Previous sentences</h3>
+        <p class="govuk-body">No previous sentences.</p>
         <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
     {% endif %}

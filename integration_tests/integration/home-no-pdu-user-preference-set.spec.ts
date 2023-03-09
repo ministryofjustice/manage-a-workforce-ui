@@ -12,13 +12,13 @@ context('No PDU user preference set', () => {
 
   it('redirects to before you start page', () => {
     const beforeYouStartPage = Page.verifyOnPage(BeforeYouStartPage)
-    beforeYouStartPage.headingText().trimTextContent().should('equal', 'Before you start')
+    beforeYouStartPage.headingText().trimTextContent().should('equal', 'Cases that need allocation')
   })
 
   it('retries if user preferences not found', () => {
     cy.task('stubUserPreferencePDUErrorThenSuccess')
     cy.visit('/')
     const beforeYouStartPage = Page.verifyOnPage(BeforeYouStartPage)
-    beforeYouStartPage.headingText().trimTextContent().should('equal', 'Before you start')
+    beforeYouStartPage.headingText().trimTextContent().should('equal', 'Cases that need allocation')
   })
 })

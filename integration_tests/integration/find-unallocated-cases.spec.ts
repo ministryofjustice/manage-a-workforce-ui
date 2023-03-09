@@ -18,7 +18,7 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage.region().should('contain.text', 'A Region')
   })
 
-  it('Probation Delivery Unit name visible on page', () => {
+  it('probation delivery unit name visible on page', () => {
     findUnallocatedCasesPage.probationDeliveryUnit().should('contain.text', 'A Probation Delivery Unit')
   })
 
@@ -62,7 +62,7 @@ context('Find Unallocated cases', () => {
   })
 
   it('select pdu visible on page', () => {
-    findUnallocatedCasesPage.selectLabel('pdu').should('contain', 'Probation delivery unit (PDU)')
+    findUnallocatedCasesPage.selectLabel('pdu').should('contain', 'probation delivery unit (PDU)')
     findUnallocatedCasesPage.select('pdu').find(':selected').contains('Select PDU')
   })
 

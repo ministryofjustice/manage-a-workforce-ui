@@ -17,7 +17,7 @@ context('Before you start', () => {
   })
 
   it('Legend heading visible on page', () => {
-    beforeYouStartPage.headingText().trimTextContent().should('equal', 'Before you start')
+    beforeYouStartPage.headingText().trimTextContent().should('equal', 'Cases that need allocation')
   })
 
   it('Primary nav visible on page', () => {

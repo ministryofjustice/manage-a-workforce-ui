@@ -4,7 +4,7 @@ import AllocationsService from '../services/allocationsService'
 import Allocation from '../models/Allocation'
 import ProbationRecord from '../models/ProbationRecord'
 import Risk from '../models/Risk'
-import Order from './data/Order'
+import Sentence from './data/Sentence'
 import Conviction from '../models/Conviction'
 import { gradeOrder, gradeTips } from './data/AllocateOffenderManager'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
@@ -58,11 +58,11 @@ export default class AllocationsController {
     const totalPreviousCount = response.previous.length
     const viewAll = totalPreviousCount <= 3 ? true : req.query.viewAll
     const amountToSlice = viewAll ? totalPreviousCount : 3
-    const currentOrders = response.active
+    const currentSentences = response.active
       .sort((a: Conviction, b: Conviction) => Date.parse(b.startDate) - Date.parse(a.startDate))
       .map(
         activeRecord =>
-          new Order(
+          new Sentence(
             activeRecord.description,
             activeRecord.length,
             activeRecord.offences,
@@ -70,11 +70,11 @@ export default class AllocationsController {
             activeRecord.offenderManager
           )
       )
-    const previousOrders = response.previous
+    const previousSentences = response.previous
       .sort((a: Conviction, b: Conviction) => Date.parse(b.endDate) - Date.parse(a.endDate))
       .map(
         activeRecord =>
-          new Order(
+          new Sentence(
             activeRecord.description,
             activeRecord.length,
             activeRecord.offences,
@@ -87,8 +87,8 @@ export default class AllocationsController {
       name: response.name,
       crn: response.crn,
       tier: response.tier,
-      currentOrders,
-      previousOrders,
+      currentSentences,
+      previousSentences,
       viewAll,
       totalPreviousCount,
       convictionNumber: response.convictionNumber,

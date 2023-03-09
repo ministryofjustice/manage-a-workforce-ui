@@ -96,7 +96,7 @@ export default class FindUnallocatedCasesController {
       findUnallocatedCasesForm,
       { pdu: 'required', ldu: 'required', team: 'required' },
       {
-        'required.pdu': 'Select a Probation Delivery Unit (PDU)',
+        'required.pdu': 'Select a probation delivery unit (PDU)',
         'required.ldu': 'Select a Local Delivery Unit (LDU)',
         'required.team': 'Select a team',
       }

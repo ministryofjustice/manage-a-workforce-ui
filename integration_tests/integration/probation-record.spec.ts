@@ -63,7 +63,7 @@ context('Probation record', () => {
     cy.task('stubGetProbationRecordNoConvictions')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.subHeading().should('contain', 'Current sentence')
+    probationRecordPage.subHeading().should('contain', 'Current sentences')
     probationRecordPage.bodyText().should('contain', 'No current sentences.')
   })
 

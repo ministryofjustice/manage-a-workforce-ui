@@ -113,6 +113,14 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage.select('team').find(':selected').contains('First Team')
   })
 
+  it('ignores old team codes selected in user preference', () => {
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'OLDTEAM1' })
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'OLDTEAM1' })
+    cy.reload()
+    findUnallocatedCasesPage.select('pdu').find(':selected').contains('First Probation Delivery Unit')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('First Local Delivery Unit')
+  })
+
   it('allocation demand selection in different estate has default options selected', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU3', lduCode: 'LDU5', teamCode: 'TM9' })
     cy.reload()

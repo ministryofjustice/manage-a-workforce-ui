@@ -47,7 +47,7 @@ context('Choose Practitioner', () => {
         },
       ],
     })
-    cy.task('stubChoosePractitioners')
+    cy.task('stubChoosePractitioners', {})
   })
 
   it('notification banner visible on page', () => {
@@ -324,5 +324,81 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.tabtable('all-teams').within(() => {
       choosePractitionerPage.radio('N03F02::OM2').should('not.exist')
     })
+  })
+
+  it('should not show old team in user preferences', () => {
+    cy.task('stubUserPreferenceTeams', ['TM1', 'OLDTEAM1'])
+    cy.task('stubGetUnallocatedCasesByTeams', {
+      teamCodes: 'TM1,OLDTEAM1',
+      response: [
+        {
+          teamCode: 'TM1',
+          caseCount: 4,
+        },
+      ],
+    })
+    cy.task('stubWorkloadCases', {
+      teamCodes: 'TM1,OLDTEAM1',
+      response: [
+        {
+          teamCode: 'TM1',
+          totalCases: 3,
+          workload: 77,
+        },
+      ],
+    })
+    cy.task('stubGetTeamsByCodes', {
+      codes: 'TM1,OLDTEAM1',
+      response: [
+        {
+          code: 'TM1',
+          name: 'Team 1',
+        },
+      ],
+    })
+    cy.task('stubChoosePractitioners', {
+      teamCodes: ['TM1', 'OLDTEAM1'],
+      crn: 'J678910',
+      teams: {
+        TM1: [
+          {
+            code: 'OM1',
+            name: {
+              forename: 'Jane',
+              middleName: '',
+              surname: 'Doe',
+            },
+            email: 'j.doe@email.co.uk',
+            grade: 'PQiP',
+            workload: 19,
+            casesPastWeek: 2,
+            communityCases: 3,
+            custodyCases: 5,
+          },
+        ],
+        OLDTEAM1: [
+          {
+            code: 'OM2',
+            name: {
+              forename: 'Sam',
+              surname: 'Smam',
+            },
+            email: 's.smam@email.co.uk',
+            grade: 'PO',
+            workload: 0,
+            casesPastWeek: 50,
+            communityCases: 0,
+            custodyCases: 0,
+          },
+        ],
+      },
+    })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.tabs().find('.govuk-tabs__tab').should('have.length', 2)
+    choosePractitionerPage.tab('all-teams').should('contain', 'All teams')
+    choosePractitionerPage.tab('TM1').should('contain', 'Team 1')
+    choosePractitionerPage.tab('OLDTEAM1').should('not.exist')
   })
 })

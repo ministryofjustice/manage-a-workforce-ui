@@ -252,7 +252,59 @@ export default {
     })
   },
 
-  stubChoosePractitioners: (teamCodes = ['N03F01', 'N03F02'], crn = 'J678910'): SuperAgentRequest => {
+  stubChoosePractitioners: ({
+    teamCodes = ['N03F01', 'N03F02'],
+    crn = 'J678910',
+    teams = {
+      N03F01: [
+        {
+          code: 'OM1',
+          name: {
+            forename: 'Jane',
+            middleName: '',
+            surname: 'Doe',
+          },
+          email: 'j.doe@email.co.uk',
+          grade: 'PQiP',
+          workload: 19,
+          casesPastWeek: 2,
+          communityCases: 3,
+          custodyCases: 5,
+        },
+      ],
+      N03F02: [
+        {
+          code: 'OM2',
+          name: {
+            forename: 'Sam',
+            surname: 'Smam',
+          },
+          grade: 'SPO',
+          workload: 32,
+          casesPastWeek: 5,
+          communityCases: 0,
+          custodyCases: 5,
+        },
+        {
+          code: 'OM3',
+          name: {
+            forename: 'Jim',
+            surname: 'Jam',
+          },
+          email: 'j.jam@email.co.uk',
+          grade: 'PO',
+          workload: 32,
+          casesPastWeek: 5,
+          communityCases: 0,
+          custodyCases: 5,
+        },
+      ],
+    },
+  }: {
+    teamCodes?: string[]
+    crn?: string
+    teams?: Record<string, unknown>
+  }): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'GET',
@@ -293,51 +345,7 @@ export default {
             teamCode: 'N03F01',
             grade: 'PO',
           },
-          teams: {
-            N03F01: [
-              {
-                code: 'OM1',
-                name: {
-                  forename: 'Jane',
-                  middleName: '',
-                  surname: 'Doe',
-                },
-                email: 'j.doe@email.co.uk',
-                grade: 'PQiP',
-                workload: 19,
-                casesPastWeek: 2,
-                communityCases: 3,
-                custodyCases: 5,
-              },
-            ],
-            N03F02: [
-              {
-                code: 'OM2',
-                name: {
-                  forename: 'Sam',
-                  surname: 'Smam',
-                },
-                grade: 'SPO',
-                workload: 32,
-                casesPastWeek: 5,
-                communityCases: 0,
-                custodyCases: 5,
-              },
-              {
-                code: 'OM3',
-                name: {
-                  forename: 'Jim',
-                  surname: 'Jam',
-                },
-                email: 'j.jam@email.co.uk',
-                grade: 'PO',
-                workload: 32,
-                casesPastWeek: 5,
-                communityCases: 0,
-                custodyCases: 5,
-              },
-            ],
-          },
+          teams,
         },
       },
     })

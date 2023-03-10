@@ -326,7 +326,7 @@ context('Choose Practitioner', () => {
     })
   })
 
-  it('should not show old team in user preferences', () => {
+  it('should not show team which does not exist in probation estate but is in user preferences', () => {
     cy.task('stubUserPreferenceTeams', ['TM1', 'OLDTEAM1'])
     cy.task('stubGetUnallocatedCasesByTeams', {
       teamCodes: 'TM1,OLDTEAM1',

@@ -14,7 +14,7 @@ context('Allocate Complete', () => {
   })
 
   it('return to unallocated cases of team link exists', () => {
-    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.task('stubGetPotentialOffenderManagerWorkload', {})
 
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')

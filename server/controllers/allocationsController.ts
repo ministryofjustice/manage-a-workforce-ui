@@ -17,10 +17,11 @@ import OfficerView from './data/OfficerView'
 import DisplayAddress from './data/DisplayAddress'
 import ProbationEstateService from '../services/probationEstateService'
 import DocumentRow from './data/DocumentRow'
-import ChoosePractitionerData, { Practitioner } from '../models/ChoosePractitionerData'
+import ChoosePractitionerData from '../models/ChoosePractitionerData'
 import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
+import EstateTeam from '../models/EstateTeam'
 
 export default class AllocationsController {
   constructor(
@@ -136,11 +137,9 @@ export default class AllocationsController {
       await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
     ])
 
-    const teamNamesByCode = new Map(allTeamDetails.map(obj => [obj.code, obj.name]))
-
     const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
       allocationInformationByTeam,
-      teamNamesByCode
+      allTeamDetails
     )
     const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(offenderManagersToAllocateByTeam)
     const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams].concat(
@@ -392,28 +391,29 @@ function fixupArrayNotation({ text, href }: { text: string; href: string }) {
 
 function getChoosePractitionerDataByTeam(
   allocationInformationByTeam: ChoosePractitionerData,
-  teamNamesByCode: Map<string, string>
+  estateTeams: EstateTeam[]
 ): TeamOffenderManagersToAllocate[] {
   const practitionerTeams = new Array<TeamOffenderManagersToAllocate>()
-  Object.entries(allocationInformationByTeam.teams).forEach(teamCodeAndPractitioner => {
-    const teamCode = teamCodeAndPractitioner[0]
-    const practitionersInTeam = (teamCodeAndPractitioner[1] as Practitioner[]).map(practitioner => {
+
+  estateTeams.forEach(estateTeam => {
+    const practitionersInTeam = (allocationInformationByTeam.teams[estateTeam.code] ?? []).map(practitioner => {
       const practitionerData = mapPractitioner(practitioner)
       return {
         ...practitionerData,
-        teamCode,
-        teamName: teamNamesByCode.get(teamCode),
-        selectionCode: TeamAndStaffCode.encode(teamCode, practitioner.code),
+        teamCode: estateTeam.code,
+        teamName: estateTeam.name,
+        selectionCode: TeamAndStaffCode.encode(estateTeam.code, practitioner.code),
       }
     })
     practitionersInTeam.sort(sortPractitionersByGrade)
     practitionerTeams.push({
       isPerTeam: true,
-      teamCode,
-      teamName: teamNamesByCode.get(teamCode),
+      teamCode: estateTeam.code,
+      teamName: estateTeam.name,
       offenderManagersToAllocate: practitionersInTeam,
     })
   })
+
   return practitionerTeams
 }
 

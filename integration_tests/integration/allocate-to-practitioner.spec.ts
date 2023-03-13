@@ -5,7 +5,7 @@ import ChoosePractitionerPage from '../pages/choosePractitioner'
 context('Allocate to Practitioner', () => {
   beforeEach(() => {
     cy.task('stubSetup')
-    cy.task('stubGetPotentialOffenderManagerWorkload')
+    cy.task('stubGetPotentialOffenderManagerWorkload', {})
   })
 
   it('can navigate to Allocate to Practitioner page from Choose Practitioner', () => {
@@ -15,16 +15,42 @@ context('Allocate to Practitioner', () => {
     })
     cy.task('stubGetTeamsByCodes', {
       code: 'TM1',
-      name: 'Wrexham Team 1',
+      response: [
+        {
+          code: 'TM1',
+          name: 'Team 1',
+        },
+      ],
     })
-    cy.task('stubChoosePractitionersTeamTM2Only')
-    cy.task('stubGetPotentialOffenderManagerWorkloadTM2')
+    cy.task('stubChoosePractitioners', {
+      teamCodes: ['TM1'],
+      crn: 'J678910',
+      teams: {
+        TM1: [
+          {
+            code: 'OM3',
+            name: {
+              forename: 'Jane',
+              middleName: '',
+              surname: 'Doe',
+            },
+            email: 'j.doe@email.co.uk',
+            grade: 'PO',
+            workload: 19,
+            casesPastWeek: 2,
+            communityCases: 3,
+            custodyCases: 5,
+          },
+        ],
+      },
+    })
+    cy.task('stubGetPotentialOffenderManagerWorkload', { teamCode: 'TM1', staffCode: 'OM3' })
 
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tabtable('all-teams').within(() => {
-      choosePractitionerPage.radio('TM2::OM3').click()
+      choosePractitionerPage.radio('TM1::OM3').click()
     })
     choosePractitionerPage.allocateCaseButton().click()
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)

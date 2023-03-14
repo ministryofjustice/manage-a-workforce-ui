@@ -15,6 +15,7 @@ export default {
           {
             firstName: 'First',
             lastName: 'Name',
+            fullName: 'First Name',
             email: 'first@justice.gov.uk',
           },
         ],

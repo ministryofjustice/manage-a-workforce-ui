@@ -45,7 +45,7 @@ window.addEventListener('load', function () {
             return govukFont('Clear the selection')
           }
           return (
-            result && govukFont(result.email + ' - ' + result.fullName(result.jobTitle ? ' ' + result.jobTitle : ''))
+            result && govukFont(result.email + ' - ' + result.fullName + (result.jobTitle ? ' ' + result.jobTitle : ''))
           )
         },
       },

@@ -1,0 +1,45 @@
+{% extends "partials/layout.njk" %}
+{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+{%- from "govuk/components/error-summary/macro.njk" import govukErrorSummary -%}
+
+{% block content %}
+
+    {% if errors | length > 0 %}
+        {{ govukErrorSummary({
+            titleText: "There is a problem",
+            errorList: errors
+        }) }}
+    {% endif %}
+
+    <div class="govuk-grid-row govuk-!-padding-bottom-5">
+        <div class="govuk-grid-column-full">
+        <span class="govuk-caption-xl">{{ pduDetails.region.name }}</span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">{{ pduDetails.name }}</h1>
+        <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{pduDetails.code}}/select-teams">Edit my teams list</a>
+        </div>
+    </div>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+        {{ mojSubNavigation({
+            label: 'Sub navigation',
+            items: [
+                {
+                    text: 'Unallocated community cases' +  (' (' + casesLength | getCaseCount + ')' if casesLength) ,
+                    href: '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + officerTeamCode + '/' + officerCode + '/find-unallocated-cases',
+                    active: isFindUnalllocatedCasesPage
+                },
+                {
+                    text: 'Cases allocated in last 30 days' +  (' (' + allocatedCasesLength | getAllocatedCaseCount + ')' if allocatedCasesLength) ,
+                    href: '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + officerTeamCode + '/' + officerCode + '/case-allocation-history',
+                    active: isCaseAllocationHistoryPage
+                }
+            ]
+        }) }}
+        </div>
+    </div>
+
+    {% block allocationContent %}{% endblock %}
+
+{% endblock %}
+

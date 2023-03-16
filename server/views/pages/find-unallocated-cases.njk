@@ -1,9 +1,7 @@
-{% extends "../partials/layout.njk" %}
-{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+{% extends "../partials/allocation-view.njk" %}
 {%- from "govuk/components/warning-text/macro.njk" import govukWarningText -%}
 {%- from "govuk/components/select/macro.njk" import govukSelect -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
-{%- from "govuk/components/error-summary/macro.njk" import govukErrorSummary -%}
 {%- from "govuk/components/table/macro.njk" import govukTable -%}
 {%- from "../components/doubleCell/macro.njk" import doubleCell -%}
 
@@ -55,35 +53,7 @@
 
 {% endfor %}
 
-{% block content %}
-
-        {% if errors | length > 0 %}
-                {{ govukErrorSummary({
-                    titleText: "There is a problem",
-                    errorList: errors
-                }) }}
-        {% endif %}
-
-        <div class="govuk-grid-row govuk-!-padding-bottom-5">
-          <div class="govuk-grid-column-full">
-            <span class="govuk-caption-xl">{{ pduDetails.region.name }}</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">{{ pduDetails.name }}</h1>
-            <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{pduDetails.code}}/select-teams">Edit my teams list</a>
-          </div>
-        </div>
-
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
-            {{ mojSubNavigation({
-              label: 'Sub navigation',
-              items: [{
-                text: 'Unallocated community cases' +  (' (' + casesLength | getCaseCount + ')' if casesLength) ,
-                href: '#',
-                active: true
-              }]
-            }) }}
-          </div>
-        </div>
+{% block allocationContent %}
 
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
@@ -177,7 +147,6 @@
         </div>
 
 {% endblock %}
-
 
 {% block javascripts %}
     <script nonce="{{ cspNonce }}">

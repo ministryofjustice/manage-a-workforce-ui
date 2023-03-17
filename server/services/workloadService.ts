@@ -91,7 +91,7 @@ export default class WorkloadService {
 
   async getAllocationHistory(token: string, sinceDate: string): Promise<AllocationHistory> {
     return (await this.restClient(token).get({
-      path: `/events/me?since=/${sinceDate}`,
+      path: `/allocation/events/me?since=${sinceDate}`,
     })) as AllocationHistory
   }
 }

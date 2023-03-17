@@ -66,8 +66,12 @@ const {
 } = wiremock(allocationUrl)
 export { stubForAllocation, getAllocationRequests, resetAllocationStubs }
 
-const { stubFor: stubForWorkload, resetStubs: resetWorkloadStubs } = wiremock(workloadUrl)
-export { stubForWorkload, resetWorkloadStubs }
+const {
+  stubFor: stubForWorkload,
+  resetStubs: resetWorkloadStubs,
+  verifyRequest: verifyRequestForWorkload,
+} = wiremock(workloadUrl)
+export { stubForWorkload, resetWorkloadStubs, verifyRequestForWorkload }
 
 const {
   stubFor: stubForUserPreference,

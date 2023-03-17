@@ -204,7 +204,11 @@ context('Find Unallocated cases', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
     cy.reload()
-    findUnallocatedCasesPage.subNav().should('contain', 'Unallocated community cases (8)')
+    findUnallocatedCasesPage
+      .subNav()
+      .should('contain', 'Unallocated community cases (8)')
+      // TODO - Add case allocation count
+      .and('contain', 'Cases allocated in last 30 days')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
@@ -214,8 +218,27 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage.subNavLink().should('contain.text', 'Unallocated community cases (99+)')
   })
 
+  it('Must show 99+ in subnav when cases allocated in last 30 days are greater than 99', () => {
+    // TODO - Add >99 unallocated cases count
+    // cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    // cy.reload()
+    // findUnallocatedCasesPage.subNavLink().should('contain.text', 'Cases allocated in last 30 days (99+)')
+  })
+
   it('no table or content exists before save', () => {
     cy.get('table').should('not.exist')
     findUnallocatedCasesPage.noCasesBody().should('not.exist')
+  })
+
+  it('This tab is highlighted', () => {
+    findUnallocatedCasesPage
+      .highlightedTab()
+      .should('contain.text', 'Unallocated community cases')
+      .and('not.contain.text', 'Cases allocated in last 30 days')
+  })
+
+  it('navigate to case history page via sub nav', () => {
+    findUnallocatedCasesPage.allocationHistorySubNavLink().click()
+    cy.url().should('contain', 'pdu/PDU1/case-allocation-history')
   })
 })

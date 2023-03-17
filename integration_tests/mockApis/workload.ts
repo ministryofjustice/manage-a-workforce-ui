@@ -1,5 +1,5 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubForWorkload } from './wiremock'
+import { stubForWorkload, verifyRequestForWorkload } from './wiremock'
 
 export default {
   stubWorkloadCases: ({
@@ -50,4 +50,115 @@ export default {
       },
     })
   },
+  stubCaseAllocationHistory: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: `/events/me\\?since=.*`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          cases: [
+            {
+              crn: 'X602047',
+              name: {
+                forename: 'Stacy',
+                middleName: '',
+                surname: 'Koepp',
+                combinedName: 'Stacy Koepp',
+              },
+              staff: {
+                code: 'N04A123',
+                name: {
+                  forename: 'Steve',
+                  surname: 'Leave',
+                  combinedName: 'Steve Leave',
+                },
+                grade: 'PO',
+              },
+              tier: 'C1',
+              allocatedOn: '2023-02-02T11:49:35.844055Z',
+            },
+            {
+              crn: 'X602070',
+              name: {
+                forename: 'Terrance',
+                middleName: '',
+                surname: 'Yundt',
+                combinedName: 'Terrance Yundt',
+              },
+              staff: {
+                code: 'N07B456',
+                name: {
+                  forename: 'Andy',
+                  surname: 'Pandy',
+                  combinedName: 'Andy Pandy',
+                },
+                grade: 'PO',
+              },
+              tier: 'D0',
+              allocatedOn: '2023-03-03T13:23:15.008829Z',
+            },
+          ],
+        },
+      },
+    })
+  },
+  stubCaseAllocationHistoryEmpty: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: `/events/me\\?since=.*`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          cases: [],
+        },
+      },
+    })
+  },
+  stubOverOneHundredCaseAllocationHistory: (): SuperAgentRequest => {
+    const cases = new Array(100).fill(0).map(() => ({
+      crn: 'X602070',
+      name: {
+        forename: 'Terrance',
+        middleName: '',
+        surname: 'Yundt',
+        combinedName: 'Terrance Yundt',
+      },
+      staff: {
+        code: 'N07B456',
+        name: {
+          forename: 'Andy',
+          surname: 'Pandy',
+          combinedName: 'Andy Pandy',
+        },
+        grade: 'PO',
+      },
+      tier: 'D0',
+      allocatedOn: '2023-03-03T13:23:15.008829Z',
+    }))
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: `/events/me\\?since=.*`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          cases,
+        },
+      },
+    })
+  },
+  verifyAllocationHistoryRequest: (sinceDate: string) =>
+    verifyRequestForWorkload({
+      requestUrlPattern: `/events/me\\?since=${sinceDate}T.*`,
+      method: 'POST',
+    }),
 }

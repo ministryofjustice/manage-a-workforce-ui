@@ -10,6 +10,7 @@ import HomeController from '../controllers/homeController'
 import StaffController from '../controllers/staffController'
 import WorkloadController from '../controllers/workloadController'
 import TechnicalUpdatesController from '../controllers/technicalUpdatesController'
+import AllocationHistoryController from '../controllers/allocationHistoryController'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -40,6 +41,11 @@ export default function routes(services: Services): Router {
     services.allocationsService
   )
 
+  const allocationHistoryController = new AllocationHistoryController(
+    services.workloadService,
+    services.probationEstateService
+  )
+
   const staffController = new StaffController(services.staffLookupService)
 
   const workloadController = new WorkloadController(services.workloadService)
@@ -61,6 +67,11 @@ export default function routes(services: Services): Router {
   get('/pdu/:pduCode/find-unallocated', async (req, res) => {
     const { pduCode } = req.params
     await findUnallocatedCasesController.findUnallocatedCases(req, res, pduCode)
+  })
+
+  get('/pdu/:pduCode/case-allocation-history', async (req, res) => {
+    const { pduCode } = req.params
+    await allocationHistoryController.getCasesAllocated(req, res, pduCode)
   })
 
   post('/pdu/:pduCode/find-unallocated', async (req, res) => {

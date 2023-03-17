@@ -8,6 +8,7 @@ import WorkloadByTeam from '../models/workloadByTeam'
 import EventManagerDetails from '../models/EventManagerDetails'
 import ChoosePractitionerData from '../models/ChoosePractitionerData'
 import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
+import AllocationHistory from '../models/AllocationHistory'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -86,5 +87,11 @@ export default class WorkloadService {
     return (await this.restClient(token).get({
       path: `/allocation/person/${crn}/event/${convictionNumber}/complete-details`,
     })) as AllocationCompleteDetails
+  }
+
+  async getAllocationHistory(token: string, sinceDate: string): Promise<AllocationHistory> {
+    return (await this.restClient(token).get({
+      path: `/events/me?since=/${sinceDate}`,
+    })) as AllocationHistory
   }
 }

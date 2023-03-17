@@ -74,6 +74,8 @@ export default class FindUnallocatedCasesController {
     const teamOptions = getDropDownItems(teams, 'Select team', allocationDemandSelection.team)
 
     res.render('pages/find-unallocated-cases', {
+      isFindUnalllocatedCasesPage: true,
+      isCaseAllocationHistoryPage: false,
       pduDetails,
       title: 'Unallocated cases | Manage a workforce',
       errors: req.flash('errors') || [],

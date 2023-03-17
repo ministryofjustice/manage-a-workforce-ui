@@ -26,12 +26,12 @@
             items: [
                 {
                     text: 'Unallocated community cases' +  (' (' + casesLength | getCaseCount + ')' if casesLength) ,
-                    href: '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + officerTeamCode + '/' + officerCode + '/find-unallocated-cases',
+                    href: '/pdu/' + pduCode + '/find-unallocated',
                     active: isFindUnalllocatedCasesPage
                 },
                 {
-                    text: 'Cases allocated in last 30 days' +  (' (' + allocatedCasesLength | getAllocatedCaseCount + ')' if allocatedCasesLength) ,
-                    href: '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + officerTeamCode + '/' + officerCode + '/case-allocation-history',
+                    text: 'Cases allocated in last 30 days' +  (' (' + allocatedCasesLength | getCaseCount + ')' if allocatedCasesLength) ,
+                    href: '/pdu/' + pduCode + '/case-allocation-history',
                     active: isCaseAllocationHistoryPage
                 }
             ]

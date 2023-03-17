@@ -54,7 +54,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/events/me\\?since=.*`,
+        urlPattern: `/allocation/events/me\\?since=.*`,
       },
       response: {
         status: 200,
@@ -110,7 +110,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/events/me\\?since=.*`,
+        urlPattern: `/allocation/events/me\\?since=.*`,
       },
       response: {
         status: 200,
@@ -145,7 +145,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: `/events/me\\?since=.*`,
+        urlPattern: `/allocation/events/me\\?since=.*`,
       },
       response: {
         status: 200,

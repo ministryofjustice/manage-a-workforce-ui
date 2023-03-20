@@ -10,5 +10,5 @@ interface AllocatedCase {
   name: Name
   staff: StaffMember
   tier: string
-  allocatedOn: Date
+  allocatedOn: string
 }

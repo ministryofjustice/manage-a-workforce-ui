@@ -17,15 +17,17 @@ export default class AllocationHistoryController {
       this.workloadService.getAllocationHistory(token, config.casesAllocatedSinceDate().toISOString()),
     ])
 
-    const caseAllocationDetails = caseAllocationHistory.cases.map(caseAllocation => {
-      return {
-        name: caseAllocation.name.combinedName,
-        crn: caseAllocation.crn,
-        tier: caseAllocation.tier,
-        allocationDate: caseAllocation.allocatedOn,
-        staffName: caseAllocation.staff?.name?.combinedName,
-      }
-    })
+    const caseAllocationDetails = caseAllocationHistory.cases
+      .map(caseAllocation => {
+        return {
+          name: caseAllocation.name.combinedName,
+          crn: caseAllocation.crn,
+          tier: caseAllocation.tier,
+          allocationDate: caseAllocation.allocatedOn,
+          staffName: caseAllocation.staff?.name?.combinedName,
+        }
+      })
+      .sort((a, b) => Date.parse(b.allocationDate) - Date.parse(a.allocationDate))
 
     res.render('pages/case-allocation-history', {
       isFindUnalllocatedCasesPage: false,

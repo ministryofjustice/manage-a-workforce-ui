@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import WorkloadService from '../services/workloadService'
 import ProbationEstateService from '../services/probationEstateService'
+import config from '../config'
 
 export default class AllocationHistoryController {
   constructor(
@@ -11,12 +12,9 @@ export default class AllocationHistoryController {
   async getCasesAllocated(req: Request, res: Response, pduCode): Promise<void> {
     const { token } = res.locals.user
 
-    const sinceDate = new Date()
-    sinceDate.setDate(sinceDate.getDate() - 30)
-
     const [pduDetails, caseAllocationHistory] = await Promise.all([
       this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode),
-      this.workloadService.getAllocationHistory(token, sinceDate.toISOString()),
+      this.workloadService.getAllocationHistory(token, config.casesAllocatedSinceDate().toISOString()),
     ])
 
     const caseAllocationDetails = caseAllocationHistory.cases.map(caseAllocation => {

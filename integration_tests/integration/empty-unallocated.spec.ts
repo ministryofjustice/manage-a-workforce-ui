@@ -8,6 +8,7 @@ context('No unallocated cases', () => {
     cy.task('stubAllEstateByRegionCode')
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1', response: [] })
+    cy.task('stubCaseAllocationHistoryCount', 20)
     cy.signIn()
     cy.visit('/pdu/PDU1/find-unallocated')
     findUnallocatedCasesPage = Page.verifyOnPage(FindUnallocatedPage)

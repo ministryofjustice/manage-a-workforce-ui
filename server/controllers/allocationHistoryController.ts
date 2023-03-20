@@ -36,7 +36,7 @@ export default class AllocationHistoryController {
       pduCode,
       pduDetails,
       casesLength: 0,
-      allocatedCasesLength: caseAllocationDetails.length,
+      allocatedCasesCount: caseAllocationDetails.length,
       allocatedCases: caseAllocationDetails,
       lastUpdatedOn: new Date(),
     })

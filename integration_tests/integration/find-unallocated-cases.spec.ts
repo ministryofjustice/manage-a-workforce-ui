@@ -9,6 +9,7 @@ context('Find Unallocated cases', () => {
     cy.task('stubSetup')
     cy.task('stubAllEstateByRegionCode')
     cy.task('stubUserPreferenceEmptyAllocationDemand')
+    cy.task('stubCaseAllocationHistoryCount', 20)
     cy.signIn()
     cy.visit('/pdu/PDU1/find-unallocated')
     findUnallocatedCasesPage = Page.verifyOnPage(FindUnallocatedPage)
@@ -216,8 +217,7 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage
       .subNav()
       .should('contain', 'Unallocated community cases (8)')
-      // TODO - Add case allocation count
-      .and('contain', 'Cases allocated in last 30 days')
+      .and('contain', 'Cases allocated in last 30 days (20)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
@@ -237,10 +237,9 @@ context('Find Unallocated cases', () => {
   })
 
   it('Must show 99+ in subnav when cases allocated in last 30 days are greater than 99', () => {
-    // TODO - Add >99 unallocated cases count
-    // cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
-    // cy.reload()
-    // findUnallocatedCasesPage.subNavLink().should('contain.text', 'Cases allocated in last 30 days (99+)')
+    cy.task('stubCaseAllocationHistoryCount', 100)
+    cy.reload()
+    findUnallocatedCasesPage.subNavLink().should('contain.text', 'Cases allocated in last 30 days (99+)')
   })
 
   it('no table or content exists before save', () => {

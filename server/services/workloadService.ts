@@ -9,6 +9,7 @@ import EventManagerDetails from '../models/EventManagerDetails'
 import ChoosePractitionerData from '../models/ChoosePractitionerData'
 import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
 import AllocationHistory from '../models/AllocationHistory'
+import AllocationHistoryCount from '../models/AllocationHistoryCount'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -93,5 +94,11 @@ export default class WorkloadService {
     return (await this.restClient(token).get({
       path: `/allocation/events/me?since=${sinceDate}`,
     })) as AllocationHistory
+  }
+
+  async getAllocationHistoryCount(token: string, sinceDate: string): Promise<AllocationHistoryCount> {
+    return (await this.restClient(token).get({
+      path: `/allocation/events/me/count?since=${sinceDate}`,
+    })) as AllocationHistoryCount
   }
 }

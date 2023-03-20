@@ -57,7 +57,7 @@ context('Case allocation history', () => {
       .subNav()
       .should('contain', 'Cases allocated in last 30 days (2)')
       // TODO - Add unallocated cases count
-      .and('contain', 'Unallocated community cases')
+      .and('contain', 'Unallocated community cases (10)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {

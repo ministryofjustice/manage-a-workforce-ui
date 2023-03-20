@@ -38,7 +38,8 @@ export default function routes(services: Services): Router {
   const findUnallocatedCasesController = new FindUnallocatedCasesController(
     services.probationEstateService,
     services.userPreferenceService,
-    services.allocationsService
+    services.allocationsService,
+    services.workloadService
   )
 
   const allocationHistoryController = new AllocationHistoryController(

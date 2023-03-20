@@ -156,6 +156,21 @@ export default {
       },
     })
   },
+  stubCaseAllocationHistoryCount: (caseCount = 8): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: `/allocation/events/me/count\\?since=.*`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          caseCount,
+        },
+      },
+    })
+  },
   verifyAllocationHistoryRequest: (sinceDate: string) =>
     verifyRequestForWorkload({
       requestUrlPattern: `/events/me\\?since=${sinceDate}T.*`,

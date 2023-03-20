@@ -30,7 +30,7 @@
                     active: isFindUnalllocatedCasesPage
                 },
                 {
-                    text: 'Cases allocated in last 30 days' +  (' (' + allocatedCasesLength | getCaseCount + ')' if allocatedCasesLength) ,
+                    text: 'Cases allocated in last 30 days' +  (' (' + allocatedCasesCount | getCaseCount + ')' if allocatedCasesCount) ,
                     href: '/pdu/' + pduCode + '/case-allocation-history',
                     active: isCaseAllocationHistoryPage
                 }

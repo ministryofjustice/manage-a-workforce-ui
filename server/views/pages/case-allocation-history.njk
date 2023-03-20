@@ -33,7 +33,7 @@
 
         <div class="moj-scrollable-pane">
           <div class="moj-scrollable-pane__wrapper">
-            {% if allocatedCasesLength > 0 %}
+            {% if allocatedCasesCount > 0 %}
               {{ govukTable(tableData) }}
             {% else %}
               <p class="govuk-body-l">

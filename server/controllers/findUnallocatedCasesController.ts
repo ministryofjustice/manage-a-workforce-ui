@@ -9,19 +9,24 @@ import AllocationDemandSelected from '../models/AllocationDemandSelected'
 import AllLocalDeliveryUnit from '../models/AllLocalDeliveryUnit'
 import AllocationsService from '../services/allocationsService'
 import UnallocatedCase from './data/UnallocatedCase'
+import WorkloadService from '../services/workloadService'
 
 export default class FindUnallocatedCasesController {
   constructor(
     private readonly probationEstateService: ProbationEstateService,
     private readonly userPreferenceService: UserPreferenceService,
-    private readonly allocationsService: AllocationsService
+    private readonly allocationsService: AllocationsService,
+    private readonly workloadService: WorkloadService
   ) {}
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
     const { token, username } = res.locals.user
-    const [pduDetails, savedAllocationDemandSelection] = await Promise.all([
+    const sinceDate = new Date()
+    sinceDate.setDate(sinceDate.getDate() - 30)
+    const [pduDetails, savedAllocationDemandSelection, allocatedCasesCount] = await Promise.all([
       this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode),
       this.userPreferenceService.getAllocationDemandSelection(token, username),
+      this.workloadService.getAllocationHistoryCount(token, sinceDate.toISOString()),
     ])
     const allEstate = await this.probationEstateService.getAllEstateByRegionCode(token, pduDetails.region.code)
 
@@ -88,6 +93,7 @@ export default class FindUnallocatedCasesController {
       teamCode: savedAllocationDemandSelection.team,
       teamSelected: allocationDemandSelection.team,
       pduCode,
+      allocatedCasesCount: allocatedCasesCount.caseCount,
     })
   }
 

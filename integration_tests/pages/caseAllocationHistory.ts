@@ -1,8 +1,8 @@
 import Page, { PageElement } from './page'
 
-export default class FindUnallocatedPage extends Page {
+export default class CaseAllocationHistoryPage extends Page {
   constructor() {
-    super('Unallocated cases')
+    super('Cases allocated in last 30 days')
   }
 
   region = (): PageElement => cy.get('.govuk-caption-xl')
@@ -32,19 +32,10 @@ export default class FindUnallocatedPage extends Page {
 
   largeHeading = (): PageElement => cy.get('.govuk-heading-l')
 
-  filterHeading = (): PageElement => cy.get('.govuk-heading-m')
-
-  select = (id): PageElement => cy.get(`select#${id}`)
-
-  option = (value): PageElement => cy.get(`option[value="${value}"]`)
-
-  selectLabel = (id): PageElement => cy.get(`label[for="${id}"]`)
-
-  saveViewButton = (): PageElement => cy.get('form button')
-
-  clearLink = (): PageElement => cy.get('a[href="/pdu/PDU1/clear-find-unallocated"]')
+  largeHeadingSecondaryText = (): PageElement => cy.get('.secondary-text-col')
 
   noCasesBody = (): PageElement => cy.get('.govuk-body-l')
 
-  allocationHistorySubNavLink = (): PageElement => cy.get('a.moj-sub-navigation__link').contains('Cases allocated')
+  unallocatedCasesSubNavLink = (): PageElement =>
+    cy.get('a.moj-sub-navigation__link').contains('Unallocated community cases')
 }

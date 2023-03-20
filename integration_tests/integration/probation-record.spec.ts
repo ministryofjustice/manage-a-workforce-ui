@@ -45,6 +45,7 @@ context('Probation record', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubCaseAllocationHistoryCount', 20)
     cy.task('stubGetProbationRecord')
     cy.get('a[href*="/pdu/PDU1/find-unallocated"]').click()
     cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/case-view"]').click()

@@ -1,0 +1,48 @@
+{% extends "../partials/allocation-view.njk" %}
+{%- from "govuk/components/table/macro.njk" import govukTable -%}
+{%- from "../components/doubleCell/macro.njk" import doubleCell -%}
+
+{% set tableData = {
+    firstCellIsHeader: true,
+    head: [
+        { text: 'Name / CRN' },
+        { text: 'Tier' },
+        { text: 'Date allocated' },
+        { text: 'Probation Practitioner' }
+    ],
+    rows: []
+} %}
+
+{% for item in allocatedCases %}
+    {%- set tableRow = [
+        { text: doubleCell(item.name, item.crn, 'govuk-body-s') },
+        { text: item.tier },
+        { text: (item.allocationDate | dateFormat) },
+        { text: item.staffName }
+    ] -%}
+    {{ tableData.rows.push(tableRow) }}
+
+{% endfor %}
+
+{% block allocationContent %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-l">Cases allocated through the Allocations tool in the last 30 days</h2>
+        <p class="govuk-body-s secondary-text-col" style="margin: -25px 0 30px;">Last updated: {{ lastUpdatedOn | dateFormat }} at {{ lastUpdatedOn | timeFormat }}</p>
+
+        <div class="moj-scrollable-pane">
+          <div class="moj-scrollable-pane__wrapper">
+            {% if allocatedCasesCount > 0 %}
+              {{ govukTable(tableData) }}
+            {% else %}
+              <p class="govuk-body-l">
+                There are no cases allocated in the past 30 days.
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

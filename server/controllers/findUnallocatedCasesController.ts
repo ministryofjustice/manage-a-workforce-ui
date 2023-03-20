@@ -9,19 +9,23 @@ import AllocationDemandSelected from '../models/AllocationDemandSelected'
 import AllLocalDeliveryUnit from '../models/AllLocalDeliveryUnit'
 import AllocationsService from '../services/allocationsService'
 import UnallocatedCase from './data/UnallocatedCase'
+import WorkloadService from '../services/workloadService'
+import config from '../config'
 
 export default class FindUnallocatedCasesController {
   constructor(
     private readonly probationEstateService: ProbationEstateService,
     private readonly userPreferenceService: UserPreferenceService,
-    private readonly allocationsService: AllocationsService
+    private readonly allocationsService: AllocationsService,
+    private readonly workloadService: WorkloadService
   ) {}
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
     const { token, username } = res.locals.user
-    const [pduDetails, savedAllocationDemandSelection] = await Promise.all([
+    const [pduDetails, savedAllocationDemandSelection, allocatedCasesCount] = await Promise.all([
       this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode),
       this.userPreferenceService.getAllocationDemandSelection(token, username),
+      this.workloadService.getAllocationHistoryCount(token, config.casesAllocatedSinceDate().toISOString()),
     ])
     const allEstate = await this.probationEstateService.getAllEstateByRegionCode(token, pduDetails.region.code)
 
@@ -74,6 +78,8 @@ export default class FindUnallocatedCasesController {
     const teamOptions = getDropDownItems(teams, 'Select team', allocationDemandSelection.team)
 
     res.render('pages/find-unallocated-cases', {
+      isFindUnalllocatedCasesPage: true,
+      isCaseAllocationHistoryPage: false,
       pduDetails,
       title: 'Unallocated cases | Manage a workforce',
       errors: req.flash('errors') || [],
@@ -86,6 +92,7 @@ export default class FindUnallocatedCasesController {
       teamCode: savedAllocationDemandSelection.team,
       teamSelected: allocationDemandSelection.team,
       pduCode,
+      allocatedCasesCount: allocatedCasesCount.caseCount,
     })
   }
 

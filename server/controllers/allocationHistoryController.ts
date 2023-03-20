@@ -25,10 +25,7 @@ export default class AllocationHistoryController {
         crn: caseAllocation.crn,
         tier: caseAllocation.tier,
         allocationDate: caseAllocation.allocatedOn,
-        offenderManager: {
-          forename: caseAllocation.staff?.name?.forename,
-          surname: caseAllocation.staff?.name?.surname,
-        },
+        staffName: caseAllocation.staff?.name?.combinedName,
       }
     })
 

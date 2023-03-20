@@ -203,6 +203,15 @@ context('Find Unallocated cases', () => {
   it('Sub nav visible on page with case count', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
+    cy.task('stubGetUnallocatedCasesByTeams', {
+      teamCodes: 'TM1',
+      response: [
+        {
+          teamCode: 'TM1',
+          caseCount: 8,
+        },
+      ],
+    })
     cy.reload()
     findUnallocatedCasesPage
       .subNav()
@@ -214,6 +223,15 @@ context('Find Unallocated cases', () => {
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     cy.task('stubOverOneHundredAllocationsByTeam', 'TM1')
+    cy.task('stubGetUnallocatedCasesByTeams', {
+      teamCodes: 'TM1',
+      response: [
+        {
+          teamCode: 'TM1',
+          caseCount: 100,
+        },
+      ],
+    })
     cy.reload()
     findUnallocatedCasesPage.subNavLink().should('contain.text', 'Unallocated community cases (99+)')
   })

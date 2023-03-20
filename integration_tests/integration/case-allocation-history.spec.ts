@@ -61,10 +61,18 @@ context('Case allocation history', () => {
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
-    // TODO - Add >99 unallocated cases count
-    // cy.task('stubOverOneHundredAllocationsByTeam', 'TM1')
-    // cy.reload()
-    // caseAllocationHistoryPage.subNavLink().should('contain.text', 'Unallocated community cases (99+)')
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.task('stubGetUnallocatedCasesByTeams', {
+      teamCodes: 'TM1',
+      response: [
+        {
+          teamCode: 'TM1',
+          caseCount: 100,
+        },
+      ],
+    })
+    cy.reload()
+    caseAllocationHistoryPage.subNavLink().should('contain.text', 'Unallocated community cases (99+)')
   })
 
   it('Must show 99+ in subnav when cases allocated in last 30 days are greater than 99', () => {
@@ -99,13 +107,13 @@ context('Case allocation history', () => {
           'Name / CRN': 'Stacy KoeppX602047',
           Tier: 'C1',
           'Date allocated': '2 February 2023',
-          'Offender manager': 'Steve Leave',
+          'Probation Practitioner': 'Steve Leave',
         },
         {
           'Name / CRN': 'Terrance YundtX602070',
           Tier: 'D0',
           'Date allocated': '3 March 2023',
-          'Offender manager': 'Andy Pandy',
+          'Probation Practitioner': 'Andy Pandy',
         },
       ])
   })

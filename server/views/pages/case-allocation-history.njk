@@ -8,7 +8,7 @@
         { text: 'Name / CRN' },
         { text: 'Tier' },
         { text: 'Date allocated' },
-        { text: 'Offender manager' }
+        { text: 'Probation Practitioner' }
     ],
     rows: []
 } %}
@@ -18,7 +18,7 @@
         { text: doubleCell(item.name, item.crn, 'govuk-body-s') },
         { text: item.tier },
         { text: (item.allocationDate | dateFormat) },
-        { text: item.offenderManager.forename + ' '  + item.offenderManager.surname }
+        { text: item.staffName }
     ] -%}
     {{ tableData.rows.push(tableRow) }}
 

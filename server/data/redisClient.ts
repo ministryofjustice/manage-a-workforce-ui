@@ -10,11 +10,10 @@ const url =
     ? `rediss://${config.redis.host}:${config.redis.port}`
     : `redis://${config.redis.host}:${config.redis.port}`
 
-export const createRedisClient = ({ legacyMode }: { legacyMode: boolean }): RedisClient => {
+export const createRedisClient = (): RedisClient => {
   const client = createClient({
     url,
     password: config.redis.password,
-    legacyMode,
     socket: {
       connectTimeout: 10000,
       reconnectStrategy: (attempts: number) => {

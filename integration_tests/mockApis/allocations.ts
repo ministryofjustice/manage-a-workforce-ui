@@ -777,6 +777,20 @@ export default {
       },
     })
   },
+  stubGetDocumentsEmpty: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910/documents`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: [],
+      },
+    })
+  },
+
   stubGetConfirmInstructions: (): SuperAgentRequest => {
     return stubForAllocation({
       request: {

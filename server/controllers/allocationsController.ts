@@ -204,6 +204,26 @@ export default class AllocationsController {
     })
   }
 
+  async getDecisionEvidencing(_, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
+    const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
+      res.locals.user.token,
+      crn,
+      staffCode,
+      staffTeamCode
+    )
+    res.render('pages/decision-evidence', {
+      title: `${response.name.combinedName} | Evidence your decision | Manage a workforce`,
+      data: response,
+      name: response.name.combinedName,
+      crn,
+      tier: response.tier,
+      convictionNumber,
+      staffCode,
+      staffTeamCode,
+      pduCode,
+    })
+  }
+
   async getConfirmInstructions(
     req: Request,
     res: Response,

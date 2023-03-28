@@ -204,6 +204,26 @@ export default class AllocationsController {
     })
   }
 
+  async getDecisionEvidencing(_, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
+    const response: PersonOnProbationStaffDetails = await this.allocationsService.getDecisionEvidencing(
+      res.locals.user.token,
+      crn,
+      convictionNumber,
+      staffCode
+    )
+    res.render('pages/decision-evidence', {
+      title: `${response.name.combinedName} | Evidence your decision | Manage a workforce`,
+      data: response,
+      name: response.name.combinedName,
+      crn,
+      tier: response.tier,
+      convictionNumber,
+      staffCode,
+      staffTeamCode,
+      pduCode,
+    })
+  }
+
   async getConfirmInstructions(
     req: Request,
     res: Response,

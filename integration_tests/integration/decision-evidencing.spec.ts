@@ -5,9 +5,9 @@ context('Decision Evidencing', () => {
   let decisionEvidencingPage: DecisionEvidencingPage
   beforeEach(() => {
     cy.task('stubSetup')
-    cy.task('stubGetPotentialOffenderManagerWorkload', {})
+    cy.task('stubGetDecisionEvidencing')
     cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/decision-evidencing')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/decision-evidencing')
     decisionEvidencingPage = Page.verifyOnPage(DecisionEvidencingPage)
   })
 

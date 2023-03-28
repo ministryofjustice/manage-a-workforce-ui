@@ -205,11 +205,11 @@ export default class AllocationsController {
   }
 
   async getDecisionEvidencing(_, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
-    const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
+    const response: PersonOnProbationStaffDetails = await this.allocationsService.getDecisionEvidencing(
       res.locals.user.token,
       crn,
-      staffCode,
-      staffTeamCode
+      convictionNumber,
+      staffCode
     )
     res.render('pages/decision-evidence', {
       title: `${response.name.combinedName} | Evidence your decision | Manage a workforce`,

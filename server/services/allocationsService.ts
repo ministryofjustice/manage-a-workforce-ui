@@ -83,4 +83,10 @@ export default class AllocationsService {
       path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/confirm-instructions?staffCode=${staffCode}`,
     })) as PersonOnProbationStaffDetails
   }
+
+  async getDecisionEvidencing(token: string, crn, convictionNumber, staffCode): Promise<PersonOnProbationStaffDetails> {
+    return (await this.restClient(token).get({
+      path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/decision-evidencing?staffCode=${staffCode}`,
+    })) as PersonOnProbationStaffDetails
+  }
 }

@@ -252,6 +252,7 @@ export default class AllocationsController {
       req.flash('errors', errors)
       return this.getDecisionEvidencing(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
     }
+    req.session.decisionEvidenceForm = {}
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`

@@ -10,4 +10,8 @@ declare module 'forms' {
     ldu?: string
     team?: string
   }
+  export interface DecisionEvidenceForm {
+    evidenceText?: string
+    isSensitive?: boolean
+  }
 }

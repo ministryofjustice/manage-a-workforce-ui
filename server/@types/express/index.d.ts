@@ -1,4 +1,4 @@
-import type { ConfirmInstructionForm } from 'forms'
+import type { ConfirmInstructionForm, DecisionEvidenceForm } from 'forms'
 
 export default {}
 
@@ -14,6 +14,7 @@ declare module 'express-session' {
     offenderManager: object
     casesLength: number
     confirmInstructionForm: ConfirmInstructionForm
+    decisionEvidenceForm: DecisionEvidenceForm
     allocationForm: {
       otherEmails: string[]
       sendEmailCopyToAllocatingOfficer: boolean

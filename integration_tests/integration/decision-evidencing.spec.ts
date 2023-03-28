@@ -44,4 +44,15 @@ context('Decision Evidencing', () => {
       .should('have.attr', 'href')
       .and('include', '/pdu/PDU1/J678910/convictions/1/choose-practitioner')
   })
+
+  it('Not filling in the form results in errors', () => {
+    decisionEvidencingPage.button().click()
+    decisionEvidencingPage
+      .errorSummary()
+      .trimTextContent()
+      .should(
+        'equal',
+        "There is a problem Enter the reasons for your allocation decision Select 'Yes' if this includes sensitive information"
+      )
+  })
 })

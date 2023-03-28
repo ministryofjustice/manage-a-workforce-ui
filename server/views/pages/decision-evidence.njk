@@ -4,6 +4,7 @@
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% set offenderManagerDetails = data.staff.name.combinedName + (' (' + data.staff.grade + ')' if data.staff.grade)  %}
 
@@ -31,6 +32,13 @@
             }
         ]
     }) }}
+
+      {% if errors | length > 0 %}
+      {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errors
+      }) }}
+      {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -51,7 +59,8 @@
                     id: "evidenceText",
                     hint: {
                         text: "Evidence your decision with details of their knowledge, skills, experience and training"
-                    }
+                    },
+                    errorMessage: errors | findError('evidenceText')
                     }) 
                 }}
 
@@ -76,7 +85,8 @@
                         value: "false",
                         text: "No, it's not sensitive"
                         }
-                    ]
+                    ],
+                    errorMessage: errors | findError('isSensitive')
                     }) 
                 }}
 

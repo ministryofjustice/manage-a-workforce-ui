@@ -223,6 +223,7 @@ export default class AllocationsController {
       staffTeamCode,
       pduCode,
       errors: req.flash('errors') || [],
+      decisionEvidenceForm: req.session.decisionEvidenceForm || {},
     })
   }
 

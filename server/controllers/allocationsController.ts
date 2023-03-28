@@ -123,6 +123,7 @@ export default class AllocationsController {
       convictionNumber: caseOverview.convictionNumber,
       pduCode,
       documents: documentRows,
+      documentsCount: documentRows.length,
     })
   }
 

@@ -82,6 +82,15 @@ context('Documents', () => {
       ])
   })
 
+  it('Shows message and table header if no data returned', () => {
+    cy.task('stubGetDocumentsEmpty')
+    cy.reload()
+    const documentsPage = Page.verifyOnPage(DocumentsPage)
+    cy.get('table').should('exist')
+    documentsPage.noDocumentsBody().should('exist')
+    documentsPage.noDocumentsBody().should('contain.text', 'There are no documents to display.')
+  })
+
   it('Download document links exist', () => {
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.downloadDocumentLink('J678910', 'efb7a4e8-3f4a-449c-bf6f-b1fc8def3410', 'cps.pdf').should('exist')

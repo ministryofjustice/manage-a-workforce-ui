@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import type { ConfirmInstructionForm } from 'forms'
+import type { ConfirmInstructionForm, DecisionEvidenceForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
 import Allocation from '../models/Allocation'
 import ProbationRecord from '../models/ProbationRecord'
@@ -205,7 +205,7 @@ export default class AllocationsController {
     })
   }
 
-  async getDecisionEvidencing(_, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
+  async getDecisionEvidencing(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
     const response: PersonOnProbationStaffDetails = await this.allocationsService.getDecisionEvidencing(
       res.locals.user.token,
       crn,
@@ -222,7 +222,39 @@ export default class AllocationsController {
       staffCode,
       staffTeamCode,
       pduCode,
+      errors: req.flash('errors') || [],
     })
+  }
+
+  async submitDecisionEvidencing(
+    req: Request,
+    res: Response,
+    crn,
+    staffTeamCode,
+    staffCode,
+    convictionNumber: string,
+    pduCode,
+    form
+  ) {
+    const decisionEvidenceForm = trimForm<DecisionEvidenceForm>(form)
+    const errors = validate(
+      decisionEvidenceForm,
+      { evidenceText: 'required', isSensitive: 'required' },
+      {
+        'required.evidenceText': 'Enter the reasons for your allocation decision',
+        'required.isSensitive': "Select 'Yes' if this includes sensitive information",
+      }
+    )
+
+    if (errors.length > 0) {
+      req.session.decisionEvidenceForm = decisionEvidenceForm
+      req.flash('errors', errors)
+      return this.getDecisionEvidencing(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+    }
+    return res.redirect(
+      // eslint-disable-next-line security-node/detect-dangerous-redirects
+      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`
+    )
   }
 
   async getConfirmInstructions(

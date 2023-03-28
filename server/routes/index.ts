@@ -152,6 +152,23 @@ export default function routes(services: Services): Router {
     }
   )
 
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/decision-evidencing',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.submitDecisionEvidencing(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        convictionNumber,
+        pduCode,
+        req.body
+      )
+    }
+  )
+
   get(
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/instructions',
     async (req, res) => {

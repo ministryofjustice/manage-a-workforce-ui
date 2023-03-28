@@ -55,4 +55,10 @@ context('Decision Evidencing', () => {
         "There is a problem Enter the reasons for your allocation decision Select 'Yes' if this includes sensitive information"
       )
   })
+
+  it('part filling in form keeps filled in parts after submission', () => {
+    decisionEvidencingPage.evidenceText().type('Some Evidences')
+    decisionEvidencingPage.button().click()
+    decisionEvidencingPage.evidenceText().should('have.text', 'Some Evidences')
+  })
 })

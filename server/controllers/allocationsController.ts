@@ -22,6 +22,7 @@ import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
+import logger from '../../logger'
 
 export default class AllocationsController {
   constructor(
@@ -223,6 +224,7 @@ export default class AllocationsController {
       staffTeamCode,
       pduCode,
       errors: req.flash('errors') || [],
+      decisionEvidenceForm: req.session.decisionEvidenceForm || {},
     })
   }
 

@@ -1,6 +1,8 @@
 import type { DecisionEvidenceForm } from 'forms'
 import { createRedisClient, RedisClient } from '../data/redisClient'
 
+const EVIDENCE_TEXT_ID = 'evidenceText'
+const IS_SENSITIVE_ID = 'isSensitive'
 export default class CacheService {
   redisClient: RedisClient
 
@@ -18,11 +20,11 @@ export default class CacheService {
   ) {
     await this.redisClient.connect()
     await this.setOrDelete(
-      this.generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, 'evidenceText'),
+      this.generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, EVIDENCE_TEXT_ID),
       decisionEvidenceForm.evidenceText
     )
     await this.setOrDelete(
-      this.generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, 'isSensitive'),
+      this.generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, IS_SENSITIVE_ID),
       decisionEvidenceForm.isSensitive
     )
     await this.redisClient.quit()
@@ -45,10 +47,10 @@ export default class CacheService {
   ): Promise<DecisionEvidenceForm> {
     await this.redisClient.connect()
     const evidenceText = await this.redisClient.get(
-      this.generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, 'evidenceText')
+      this.generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, EVIDENCE_TEXT_ID)
     )
     const isSensitive = await this.redisClient.get(
-      this.generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, 'isSensitive')
+      this.generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, IS_SENSITIVE_ID)
     )
     await this.redisClient.quit()
     return { evidenceText, isSensitive }

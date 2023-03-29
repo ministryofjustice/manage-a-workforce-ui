@@ -22,13 +22,15 @@ import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
+import AllocationStorageService from '../services/allocationStorageService'
 
 export default class AllocationsController {
   constructor(
     private readonly allocationsService: AllocationsService,
     private readonly workloadService: WorkloadService,
     private readonly userPreferenceService: UserPreferenceService,
-    private readonly probationEstateService: ProbationEstateService
+    private readonly probationEstateService: ProbationEstateService,
+    private readonly allocationStorageService: AllocationStorageService
   ) {}
 
   async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
@@ -212,6 +214,13 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
+    const decisionEvidenceForm = await this.allocationStorageService.getDecisionEvidence(
+      res.locals.user.username,
+      crn,
+      staffTeamCode,
+      staffCode,
+      convictionNumber
+    )
     res.render('pages/decision-evidence', {
       title: `${response.name.combinedName} | Evidence your decision | Manage a workforce`,
       data: response,
@@ -223,7 +232,7 @@ export default class AllocationsController {
       staffTeamCode,
       pduCode,
       errors: req.flash('errors') || [],
-      decisionEvidenceForm: req.session.decisionEvidenceForm || {},
+      decisionEvidenceForm: decisionEvidenceForm || {},
     })
   }
 
@@ -246,13 +255,18 @@ export default class AllocationsController {
         'required.isSensitive': "Select 'Yes' if this includes sensitive information",
       }
     )
-
+    await this.allocationStorageService.saveDecisionEvidence(
+      res.locals.user.username,
+      crn,
+      staffTeamCode,
+      staffCode,
+      convictionNumber,
+      decisionEvidenceForm
+    )
     if (errors.length > 0) {
-      req.session.decisionEvidenceForm = decisionEvidenceForm
       req.flash('errors', errors)
       return this.getDecisionEvidencing(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
     }
-    req.session.decisionEvidenceForm = {}
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`

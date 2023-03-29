@@ -3,6 +3,7 @@ import { createRedisClient, RedisClient } from '../data/redisClient'
 
 const EVIDENCE_TEXT_ID = 'evidenceText'
 const IS_SENSITIVE_ID = 'isSensitive'
+const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30
 export default class CacheService {
   redisClient: RedisClient
 
@@ -32,7 +33,7 @@ export default class CacheService {
 
   async setOrDelete(id, value) {
     if (value) {
-      await this.redisClient.set(id, value)
+      await this.redisClient.set(id, value, { EX: THIRTY_DAYS_IN_SECONDS })
     } else {
       await this.redisClient.del(id)
     }

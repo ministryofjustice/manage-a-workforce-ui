@@ -23,7 +23,6 @@ import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
 import CacheService from '../services/cacheService'
-import logger from '../../logger'
 
 export default class AllocationsController {
   constructor(
@@ -209,37 +208,32 @@ export default class AllocationsController {
   }
 
   async getDecisionEvidencing(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
-    try {
-      const response: PersonOnProbationStaffDetails = await this.allocationsService.getDecisionEvidencing(
-        res.locals.user.token,
-        crn,
-        convictionNumber,
-        staffCode
-      )
-      const decisionEvidenceForm = await this.cacheService.getDecisionEvidence(
-        res.locals.user.username,
-        crn,
-        staffTeamCode,
-        staffCode,
-        convictionNumber
-      )
-      res.render('pages/decision-evidence', {
-        title: `${response.name.combinedName} | Evidence your decision | Manage a workforce`,
-        data: response,
-        name: response.name.combinedName,
-        crn,
-        tier: response.tier,
-        convictionNumber,
-        staffCode,
-        staffTeamCode,
-        pduCode,
-        errors: req.flash('errors') || [],
-        decisionEvidenceForm: decisionEvidenceForm || {},
-      })
-    } catch (e) {
-      logger.error(e)
-      throw e
-    }
+    const response: PersonOnProbationStaffDetails = await this.allocationsService.getDecisionEvidencing(
+      res.locals.user.token,
+      crn,
+      convictionNumber,
+      staffCode
+    )
+    const decisionEvidenceForm = await this.cacheService.getDecisionEvidence(
+      res.locals.user.username,
+      crn,
+      staffTeamCode,
+      staffCode,
+      convictionNumber
+    )
+    res.render('pages/decision-evidence', {
+      title: `${response.name.combinedName} | Evidence your decision | Manage a workforce`,
+      data: response,
+      name: response.name.combinedName,
+      crn,
+      tier: response.tier,
+      convictionNumber,
+      staffCode,
+      staffTeamCode,
+      pduCode,
+      errors: req.flash('errors') || [],
+      decisionEvidenceForm: decisionEvidenceForm || {},
+    })
   }
 
   async submitDecisionEvidencing(

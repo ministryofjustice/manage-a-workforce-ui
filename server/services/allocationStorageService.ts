@@ -25,12 +25,12 @@ export default class AllocationStorageService {
     )
     await this.setOrDelete(
       this.generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, IS_SENSITIVE_ID),
-      decisionEvidenceForm.isSensitive
+      String(decisionEvidenceForm.isSensitive)
     )
     await this.redisClient.quit()
   }
 
-  async setOrDelete(id, value) {
+  async setOrDelete(id, value: string) {
     if (value) {
       await this.redisClient.set(id, value, { PXAT: this.getPlusOneMonthTime() })
     } else {
@@ -59,10 +59,26 @@ export default class AllocationStorageService {
       this.generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, IS_SENSITIVE_ID)
     )
     await this.redisClient.quit()
-    return { evidenceText, isSensitive }
+    return { evidenceText, isSensitive: toBoolean(isSensitive) }
   }
 
   generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, field): string {
     return `${loggedInUser}-${crn}-${convictionNumber}-${staffTeamCode}-${staffCode}-${field}`
+  }
+}
+
+function toBoolean(value?: string): boolean | undefined {
+  if (!value) {
+    return undefined
+  }
+
+  switch (value.toLocaleLowerCase()) {
+    case 'true':
+    case '1':
+    case 'on':
+    case 'yes':
+      return true
+    default:
+      return false
   }
 }

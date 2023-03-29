@@ -3,7 +3,7 @@ import { createRedisClient, RedisClient } from '../data/redisClient'
 
 const EVIDENCE_TEXT_ID = 'evidenceText'
 const IS_SENSITIVE_ID = 'isSensitive'
-export default class CacheService {
+export default class AllocationStorageService {
   redisClient: RedisClient
 
   constructor() {

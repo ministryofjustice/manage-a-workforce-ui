@@ -22,7 +22,7 @@ import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
-import CacheService from '../services/cacheService'
+import AllocationStorageService from '../services/allocationStorageService'
 
 export default class AllocationsController {
   constructor(
@@ -30,7 +30,7 @@ export default class AllocationsController {
     private readonly workloadService: WorkloadService,
     private readonly userPreferenceService: UserPreferenceService,
     private readonly probationEstateService: ProbationEstateService,
-    private readonly cacheService: CacheService
+    private readonly allocationStorageService: AllocationStorageService
   ) {}
 
   async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
@@ -214,7 +214,7 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
-    const decisionEvidenceForm = await this.cacheService.getDecisionEvidence(
+    const decisionEvidenceForm = await this.allocationStorageService.getDecisionEvidence(
       res.locals.user.username,
       crn,
       staffTeamCode,
@@ -255,7 +255,7 @@ export default class AllocationsController {
         'required.isSensitive': "Select 'Yes' if this includes sensitive information",
       }
     )
-    await this.cacheService.saveDecisionEvidence(
+    await this.allocationStorageService.saveDecisionEvidence(
       res.locals.user.username,
       crn,
       staffTeamCode,

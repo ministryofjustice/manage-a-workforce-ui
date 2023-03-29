@@ -6,7 +6,7 @@ export default class RedisService {
   async deleteAll(): Promise<string> {
     const redisClient = createRedisClient()
     await redisClient.connect()
-    const result = await redisClient.flushAll(RedisFlushModes.ASYNC)
+    const result = await redisClient.flushAll(RedisFlushModes.SYNC)
     await redisClient.quit()
     return result
   }

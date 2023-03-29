@@ -22,13 +22,16 @@ import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
+import CacheService from '../services/cacheService'
+import logger from '../../logger'
 
 export default class AllocationsController {
   constructor(
     private readonly allocationsService: AllocationsService,
     private readonly workloadService: WorkloadService,
     private readonly userPreferenceService: UserPreferenceService,
-    private readonly probationEstateService: ProbationEstateService
+    private readonly probationEstateService: ProbationEstateService,
+    private readonly cacheService: CacheService
   ) {}
 
   async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
@@ -206,25 +209,37 @@ export default class AllocationsController {
   }
 
   async getDecisionEvidencing(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
-    const response: PersonOnProbationStaffDetails = await this.allocationsService.getDecisionEvidencing(
-      res.locals.user.token,
-      crn,
-      convictionNumber,
-      staffCode
-    )
-    res.render('pages/decision-evidence', {
-      title: `${response.name.combinedName} | Evidence your decision | Manage a workforce`,
-      data: response,
-      name: response.name.combinedName,
-      crn,
-      tier: response.tier,
-      convictionNumber,
-      staffCode,
-      staffTeamCode,
-      pduCode,
-      errors: req.flash('errors') || [],
-      decisionEvidenceForm: req.session.decisionEvidenceForm || {},
-    })
+    try {
+      const response: PersonOnProbationStaffDetails = await this.allocationsService.getDecisionEvidencing(
+        res.locals.user.token,
+        crn,
+        convictionNumber,
+        staffCode
+      )
+      const decisionEvidenceForm = await this.cacheService.getDecisionEvidence(
+        res.locals.user.username,
+        crn,
+        staffTeamCode,
+        staffCode,
+        convictionNumber
+      )
+      res.render('pages/decision-evidence', {
+        title: `${response.name.combinedName} | Evidence your decision | Manage a workforce`,
+        data: response,
+        name: response.name.combinedName,
+        crn,
+        tier: response.tier,
+        convictionNumber,
+        staffCode,
+        staffTeamCode,
+        pduCode,
+        errors: req.flash('errors') || [],
+        decisionEvidenceForm: decisionEvidenceForm || {},
+      })
+    } catch (e) {
+      logger.error(e)
+      throw e
+    }
   }
 
   async submitDecisionEvidencing(
@@ -246,13 +261,18 @@ export default class AllocationsController {
         'required.isSensitive': "Select 'Yes' if this includes sensitive information",
       }
     )
-
+    await this.cacheService.saveDecisionEvidence(
+      res.locals.user.username,
+      crn,
+      staffTeamCode,
+      staffCode,
+      convictionNumber,
+      decisionEvidenceForm
+    )
     if (errors.length > 0) {
-      req.session.decisionEvidenceForm = decisionEvidenceForm
       req.flash('errors', errors)
       return this.getDecisionEvidencing(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
     }
-    req.session.decisionEvidenceForm = {}
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`

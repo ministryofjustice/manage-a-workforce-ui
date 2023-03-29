@@ -12,6 +12,6 @@ declare module 'forms' {
   }
   export interface DecisionEvidenceForm {
     evidenceText?: string
-    isSensitive?: boolean
+    isSensitive?: string
   }
 }

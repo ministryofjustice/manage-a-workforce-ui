@@ -7,6 +7,7 @@ import UserPreferenceService from './userPreferenceService'
 import config from '../config'
 import StaffLookupService from './staffLookupService'
 import TechnicalUpdatesService from './technicalUpdatesService'
+import CacheService from './cacheService'
 
 export const services = () => {
   const { hmppsAuthClient } = dataAccess()
@@ -18,6 +19,7 @@ export const services = () => {
   const userPreferenceService = new UserPreferenceService(config.apis.userPreferenceService)
   const staffLookupService = new StaffLookupService(config.apis.staffLookupService)
   const technicalUpdatesService = new TechnicalUpdatesService()
+  const cacheService = new CacheService()
   return {
     userService,
     allocationsService,
@@ -26,6 +28,7 @@ export const services = () => {
     userPreferenceService,
     staffLookupService,
     technicalUpdatesService,
+    cacheService,
   }
 }
 

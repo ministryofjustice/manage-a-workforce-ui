@@ -92,6 +92,7 @@
   },
   "dependencies": {
     "@ministryofjustice/frontend": "1.6.6",
+    "@redis/json": "^1.0.4",
     "accessible-autocomplete": "2.0.4",
     "agentkeepalive": "4.3.0",
     "applicationinsights": "2.5.1",

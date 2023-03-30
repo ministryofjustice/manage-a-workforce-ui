@@ -59,12 +59,18 @@ export default class AllocationStorageService {
       this.generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, IS_SENSITIVE_ID)
     )
     await this.redisClient.quit()
-    return { evidenceText, isSensitive: toBoolean(isSensitive) }
+    return isDefined(evidenceText) || isDefined(isSensitive)
+      ? { evidenceText, isSensitive: toBoolean(isSensitive) }
+      : undefined
   }
 
   generateCaseId(loggedInUser, crn, staffTeamCode, staffCode, convictionNumber, field): string {
     return `${loggedInUser}-${crn}-${convictionNumber}-${staffTeamCode}-${staffCode}-${field}`
   }
+}
+
+function isDefined(value) {
+  return value !== null && value !== undefined
 }
 
 function toBoolean(value?: string): boolean | undefined {

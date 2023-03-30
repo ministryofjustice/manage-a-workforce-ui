@@ -416,7 +416,13 @@ export default class AllocationsController {
     }
     const sendEmailCopyToAllocatingOfficer = !form.emailCopy
     const otherEmails = form.person.map(person => person.email).filter(email => email)
-
+    const decisionEvidence = await this.allocationStorageService.getDecisionEvidence(
+      res.locals.user.username,
+      crn,
+      staffTeamCode,
+      staffCode,
+      convictionNumber
+    )
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
       crn,
@@ -425,7 +431,8 @@ export default class AllocationsController {
       form.instructions,
       otherEmails,
       sendEmailCopyToAllocatingOfficer,
-      convictionNumber
+      convictionNumber,
+      decisionEvidence
     )
     req.session.allocationForm = {
       otherEmails,

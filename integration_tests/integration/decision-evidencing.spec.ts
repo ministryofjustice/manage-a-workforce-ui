@@ -61,4 +61,10 @@ context('Decision Evidencing', () => {
     decisionEvidencingPage.button().click()
     decisionEvidencingPage.evidenceText().should('have.text', 'Some Evidences')
   })
+
+  it('keep radio button checked after submitting form', () => {
+    decisionEvidencingPage.radioButton('true').click()
+    decisionEvidencingPage.button().click()
+    decisionEvidencingPage.radioButton('true').should('be.checked')
+  })
 })

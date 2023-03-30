@@ -169,6 +169,6 @@
     "superagent": "8.0.9",
     "supertest": "6.3.3",
     "ts-jest": "29.0.5",
-    "typescript": "5.0.2"
+    "typescript": "5.0.3"
   }
 }

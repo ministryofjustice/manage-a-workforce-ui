@@ -90,7 +90,7 @@ context('Allocate to Practitioner', () => {
       .should('contain', 'Home')
       .and('contain', 'Unallocated cases')
       .and('contain', 'Case details')
-      .and('contain', 'Allocate to probation practitioner')
+      .and('contain', 'choose practitioner')
   })
 
   it('Continue button visible on page', () => {

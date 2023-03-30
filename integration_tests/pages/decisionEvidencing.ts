@@ -10,4 +10,6 @@ export default class DecisionEvidencingPage extends Page {
   breadCrumbsSection = (): PageElement => cy.get('.govuk-breadcrumbs__list')
 
   evidenceText = (): PageElement => cy.get('#evidenceText')
+
+  radioButton = (value): PageElement => cy.get(`input[name='isSensitive'][value='${value}']`)
 }

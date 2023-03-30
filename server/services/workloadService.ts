@@ -63,7 +63,7 @@ export default class WorkloadService {
     decisionEvidence: DecisionEvidenceForm
   ): Promise<OffenderManagerAllocatedCase> {
     const evidence = decisionEvidence
-      ? { evidenceContent: decisionEvidence.evidenceText, evidenceContentSensitive: decisionEvidence.isSensitive }
+      ? { allocationJustificationNotes: decisionEvidence.evidenceText, sensitiveNotes: decisionEvidence.isSensitive }
       : {}
     return (await this.restClient(token).post({
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,

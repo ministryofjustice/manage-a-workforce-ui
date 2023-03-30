@@ -32,7 +32,7 @@ export default {
         urlPattern: `/team/TM2/offenderManager/OM1/case`,
         bodyPatterns: [
           {
-            equalToJson: `{"crn":"J678910", "instructions": "", "sendEmailCopyToAllocatingOfficer": true, "emailTo": [], "eventNumber": 1, "evidenceContent": "Some Evidences", "evidenceContentSensitive": false}`,
+            equalToJson: `{"crn":"J678910", "instructions": "", "sendEmailCopyToAllocatingOfficer": true, "emailTo": [], "eventNumber": 1, "allocationJustificationNotes": "Some Evidences", "sensitiveNotes": false}`,
           },
         ],
       },

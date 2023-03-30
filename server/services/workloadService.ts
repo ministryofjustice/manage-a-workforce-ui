@@ -1,3 +1,4 @@
+import type { DecisionEvidenceForm } from 'forms'
 import RestClient from '../data/restClient'
 import { ApiConfig } from '../config'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
@@ -58,8 +59,12 @@ export default class WorkloadService {
     instructions,
     emailTo,
     sendEmailCopyToAllocatingOfficer,
-    eventNumber: number
+    eventNumber: number,
+    decisionEvidence: DecisionEvidenceForm
   ): Promise<OffenderManagerAllocatedCase> {
+    const evidence = decisionEvidence
+      ? { evidenceContent: decisionEvidence.evidenceText, evidenceContentSensitive: decisionEvidence.isSensitive }
+      : {}
     return (await this.restClient(token).post({
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,
       data: {
@@ -68,6 +73,7 @@ export default class WorkloadService {
         emailTo,
         sendEmailCopyToAllocatingOfficer,
         eventNumber,
+        ...evidence,
       },
     })) as OffenderManagerAllocatedCase
   }

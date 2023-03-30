@@ -25,6 +25,29 @@ export default {
     })
   },
 
+  stubAllocateOffenderManagerToCaseWithEvidence: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'POST',
+        urlPattern: `/team/TM2/offenderManager/OM1/case`,
+        bodyPatterns: [
+          {
+            equalToJson: `{"crn":"J678910", "instructions": "", "sendEmailCopyToAllocatingOfficer": true, "emailTo": [], "eventNumber": 1, "evidenceContent": "Some Evidences", "evidenceContentSensitive": false}`,
+          },
+        ],
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          personManagerId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+          eventManagerId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+          requirementManagerIds: ['3fa85f64-5717-4562-b3fc-2c963f66afa6'],
+        },
+      },
+    })
+  },
+
   stubErrorAllocateOffenderManagerToCase: (): SuperAgentRequest => {
     return stubForWorkload({
       request: {

@@ -54,6 +54,8 @@ context('Decision Evidencing', () => {
         'equal',
         "There is a problem Enter the reasons for your allocation decision Select 'Yes' if this includes sensitive information"
       )
+    decisionEvidencingPage.radioButton('true').should('not.be.checked')
+    decisionEvidencingPage.radioButton('false').should('not.be.checked')
   })
 
   it('part filling in form keeps filled in parts after submission', () => {

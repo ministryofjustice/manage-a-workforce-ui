@@ -87,7 +87,7 @@
                         {
                         value: "false",
                         text: "No, it's not sensitive",
-                        checked: decisionEvidenceForm.isSensitive == false
+                        checked: (decisionEvidenceForm.isSensitive and decisionEvidenceForm.isSensitive == false)
                         }
                     ],
                     errorMessage: errors | findError('isSensitive')

@@ -31,7 +31,7 @@ export default class AllocationStorageService {
   }
 
   async setOrDelete(id, value: string) {
-    if (value) {
+    if (isDefined(value)) {
       await this.redisClient.set(id, value, { PXAT: this.getPlusOneMonthTime() })
     } else {
       await this.redisClient.del(id)

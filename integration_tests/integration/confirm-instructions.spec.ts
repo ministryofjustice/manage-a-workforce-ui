@@ -25,7 +25,8 @@ context('Instructions Confirmation', () => {
       .should('contain', 'Home')
       .and('contain', 'Unallocated cases')
       .and('contain', 'Case details')
-      .and('contain', 'Allocate to probation practitioner')
+      .and('contain', 'Choose practitioner')
+      .and('contain', 'Allocate to practitioner')
   })
 
   it('Allocate Case button visible on page', () => {

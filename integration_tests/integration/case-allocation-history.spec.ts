@@ -22,10 +22,6 @@ context('Case allocation history', () => {
     caseAllocationHistoryPage.probationDeliveryUnit().should('contain.text', 'A Probation Delivery Unit')
   })
 
-  it('Breadcrumbs visible on page', () => {
-    caseAllocationHistoryPage.breadCrumbs().should('contain', 'Home')
-  })
-
   it('Primary nav visible on page', () => {
     caseAllocationHistoryPage
       .primaryNav()

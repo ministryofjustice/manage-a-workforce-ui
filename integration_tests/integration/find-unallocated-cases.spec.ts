@@ -50,10 +50,6 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage.subNav().should('contain', 'Unallocated community cases')
   })
 
-  it('Breadcrumbs visible on page', () => {
-    findUnallocatedCasesPage.breadCrumbs().should('contain', 'Home')
-  })
-
   it('Shows link to Edit my teams list', () => {
     findUnallocatedCasesPage.manageMyTeamsLink().should('equal', '/pdu/PDU1/select-teams')
   })

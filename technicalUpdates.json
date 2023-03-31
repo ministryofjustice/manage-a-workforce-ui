@@ -1,5 +1,16 @@
 [
   {
+    "heading": "31 March 2023",
+    "whatsNew": [
+      "Shared emails: we added shared mailboxes to the email address lookup. This means you can notify a whole team of an allocation.",
+      "Cases allocated in the last 30 days: we introduced a new tab to the Unallocated cases screen, where you can see a list of the cases you’ve allocated through the service in the last 30 days.",
+      "Updated risk content: we added ‘at a glance’ risk information to the Summary screen. The person on probation’s full details are still found on the Risk screen."
+    ],
+    "technicalFixes": [
+      "We fixed an issue where the allocation demand was not updated when a case was being transferred to a different team."
+    ]
+  },
+  {
     "heading": "17 February 2023",
     "whatsNew": [
       "Email autocomplete: we added email autocomplete functionality when sending allocation instructions, so you don't have to enter email addresses manually.",

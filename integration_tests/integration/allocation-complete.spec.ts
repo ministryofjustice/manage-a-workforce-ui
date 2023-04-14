@@ -42,7 +42,7 @@ context('Allocate Complete', () => {
       .should('have.text', '\n    Dylan Adam Armstrong (J678910) has been allocated to John Doe (PO)\n  ')
   })
 
-  it.skip('What happens next with multiple emails supplied, opting out of copy content visible on page', () => {
+  it('What happens next with multiple emails supplied, opting out of copy content visible on page', () => {
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     instructionsConfirmPage.checkbox().check()
@@ -66,7 +66,7 @@ context('Allocate Complete', () => {
       .and('contain', 'the initial appointment is scheduled for 1 September 2021')
   })
 
-  it.skip('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
+  it('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     instructionsConfirmPage.emailInput(0).type('example.one@justice.gov.uk')

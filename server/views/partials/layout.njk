@@ -56,8 +56,8 @@
 {% block header %}
     {% include "./header.njk" %}
 
-        <div style="padding-top:30px; padding-left:30px; padding-right:30px;">
-            <h1 style="color:red;" class="govuk-heading-m">From 14:30 this afternoon, we’ll be doing some required backend work on the Allocation tool for important security and performance improvements. This will result in intermittent disruptions where the services may not be available. We expect that disruption will last for around 1 hour.</h1>
+        <div nonce="{{ cspNonce }}" style="padding-top:30px; padding-left:30px; padding-right:30px;">
+            <h1 nonce="{{ cspNonce }}" style="color:red;" class="govuk-heading-m">From 14:30 this afternoon, we’ll be doing some required backend work on the Allocation tool for important security and performance improvements. This will result in intermittent disruptions where the services may not be available. We expect that disruption will last for around 1 hour.</h1>
         </div>
 {% endblock %}
 

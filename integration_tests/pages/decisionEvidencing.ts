@@ -2,7 +2,7 @@ import Page, { PageElement } from './page'
 
 export default class DecisionEvidencingPage extends Page {
   constructor() {
-    super('Evidence your decision')
+    super('Explain your decision')
   }
 
   link = (): PageElement => cy.get('.govuk-button-group .govuk-link')

@@ -100,6 +100,16 @@ context('Allocate to Practitioner', () => {
     allocatePage.button().should('exist').and('have.text', 'Continue')
   })
 
+  it('Continue button links to Decision Evidencing', () => {
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
+    const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
+    allocatePage
+      .button()
+      .should('have.attr', 'href')
+      .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/decision-evidencing')
+  })
+
   it('Choose different probation practitioner visible on page', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')

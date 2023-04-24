@@ -222,7 +222,7 @@ export default class AllocationsController {
       convictionNumber
     )
     res.render('pages/decision-evidence', {
-      title: `${response.name.combinedName} | Evidence your decision | Manage a workforce`,
+      title: `${response.name.combinedName} | Explain your decision | Manage a workforce`,
       data: response,
       name: response.name.combinedName,
       crn,

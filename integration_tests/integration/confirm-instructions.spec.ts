@@ -27,7 +27,7 @@ context('Instructions Confirmation', () => {
       .and('contain', 'Case details')
       .and('contain', 'Choose practitioner')
       .and('contain', 'Allocate to practitioner')
-      .and('contain', 'Evidence your decision')
+      .and('contain', 'Explain your decision')
   })
 
   it('Allocate Case button visible on page', () => {

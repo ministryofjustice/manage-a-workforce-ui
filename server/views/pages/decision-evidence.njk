@@ -50,7 +50,7 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h2 class="govuk-heading-l">Explain why you're allocating this case to {{ offenderManagerDetails }}</h2>
-            <form method="POST" accept-charset="UTF-8">
+            <form method="POST" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
                 {{ govukTextarea({

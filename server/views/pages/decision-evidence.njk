@@ -1,7 +1,7 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "../components/pop/macro.njk" import pop %}
-{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
@@ -53,9 +53,10 @@
             <form method="POST" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-                {{ govukTextarea({
+                {{ govukCharacterCount({
                     name: "evidenceText",
                     id: "evidenceText",
+                    maxlength: 3500,
                     hint: {
                         text: "Show that this practitioner has the knowledge, skills, experience, and training to manage this case"
                     },

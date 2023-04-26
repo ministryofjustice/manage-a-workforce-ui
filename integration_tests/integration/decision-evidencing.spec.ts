@@ -69,4 +69,14 @@ context('Decision Evidencing', () => {
     decisionEvidencingPage.button().click()
     decisionEvidencingPage.radioButton('true').should('be.checked')
   })
+
+  it('Submitting evidence text greater than 3500 characters results in errors', () => {
+    decisionEvidencingPage.evidenceText().type('A'.repeat(3501))
+    decisionEvidencingPage.radioButton('true').click()
+    decisionEvidencingPage.button().click()
+    decisionEvidencingPage
+      .errorSummary()
+      .trimTextContent()
+      .should('equal', 'There is a problem Your explanation must be 3500 characters or fewer')
+  })
 })

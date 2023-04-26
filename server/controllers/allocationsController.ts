@@ -249,9 +249,10 @@ export default class AllocationsController {
     const decisionEvidenceForm = trimForm<DecisionEvidenceForm>(form)
     const errors = validate(
       decisionEvidenceForm,
-      { evidenceText: 'required', isSensitive: 'required' },
+      { evidenceText: 'required|max:3500', isSensitive: 'required' },
       {
         'required.evidenceText': 'Enter the reasons for your allocation decision',
+        'max.evidenceText': 'Your explanation must be 3500 characters or fewer',
         'required.isSensitive': "Select 'Yes' if this includes sensitive information",
       }
     )

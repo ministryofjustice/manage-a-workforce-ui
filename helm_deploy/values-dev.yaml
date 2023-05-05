@@ -18,6 +18,9 @@ generic-service:
     USER_PREFERENCE_SERVICE_URL: "https://hmpps-user-preferences-dev.hmpps.service.justice.gov.uk"
     STAFF_LOOKUP_SERVICE_URL: "https://hmpps-staff-lookup-service-dev.hmpps.service.justice.gov.uk"
 
+  scheduledDowntime:
+    enabled: true
+    
   allowlist:
     office: "217.33.148.210/32"
     health-kick: "35.177.252.195/32"

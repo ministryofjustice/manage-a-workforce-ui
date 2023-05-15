@@ -1,5 +1,5 @@
 {% extends "partials/layout.njk" %}
-
+{% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% block navigation %}{% endblock %}
 
@@ -14,8 +14,146 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-l">Cookies</h1>
-            <p class="govuk-body">Under construction.</p>
+            <h1 class="govuk-heading-l">Cookies on Allocate a Person on Probation</h1>
+            <p class="govuk-body">Cookies are files saved on your phone, tablet or computer when you visit a
+                website. </p>
+            <p class="govuk-body">We use cookies to collect and store information about how you use the Allocate a
+                Person on Probation website, such as the pages you visit.</p>
+
+            <h2 class="govuk-heading-m">Essential cookies</h2>
+            <p class="govuk-body">Essential cookies keep your information secure while you use Allocate a Person on
+                Probation. We do not need to ask permission to use them.
+            </p>
+            {{ govukTable({
+                head: [
+                    {
+                        text: "Name"
+                    },
+                    {
+                        text: "Purpose"
+                    },
+                    {
+                        text: "Expires"
+                    }
+                ],
+                rows: [
+                    [
+                        {
+                            text: "connect.sid"
+                        },
+                        {
+                            text: "Used for authentication and secure sign in"
+                        },
+                        {
+                            text: "2 hours"
+                        }
+                    ]
+                ]
+            }) }}
+
+            <h2 class="govuk-heading-m">Non-essential cookies</h2>
+            <p class="govuk-body">Non-essential cookies on Allocate a Person on Probation are used to save
+                allocation-specific data, such as your allocation instructions.
+            </p>
+            {{ govukTable({
+                head: [
+                    {
+                        text: "Name"
+                    },
+                    {
+                        text: "Purpose"
+                    },
+                    {
+                        text: "Expires"
+                    }
+                ],
+                rows: [
+                    [
+                        {
+                            text: "technicalUpdateReadVersion"
+                        },
+                        {
+                            text: "Logs the last version of the Technical Updates page you’ve seen"
+                        },
+                        {
+                            text: "Never"
+                        }
+                    ],
+                    [
+                        {
+                            text: "instructions-save-<CRN>-<event-number>"
+                        },
+                        {
+                            text: "Saves your notes during the allocation process"
+                        },
+                        {
+                            text: "Expires on allocation or after 4 weeks"
+                        }
+                    ]
+                ]
+            }) }}
+
+            <h2 class="govuk-heading-m">Analytics cookies (optional)</h2>
+            <p class="govuk-body"> With your permission, we use Google Analytics to collect data about how you use
+                Allocate a Person on Probation. This information helps us to improve our service. </p>
+            <p class="govuk-body">Google is not allowed to use or share our analytics data with anyone. You can read
+                Google’s overview of <a href="https://support.google.com/analytics/answer/6004245" class="govuk-link">data
+                    practices within Google Analytics</a>.</p>
+            <p class="govuk-body">Google Analytics stores anonymised information about: </p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>how you got to Allocate a Person on Probation</li>
+                <li>the pages you visit on the site and how long you spend on them</li>
+                <li>any errors you see while using Allocate a Person on Probation</li>
+            </ul>
+
+            {{ govukTable({
+                head: [
+                    {
+                        text: "Name"
+                    },
+                    {
+                        text: "Purpose"
+                    },
+                    {
+                        text: "Expires"
+                    }
+                ],
+                rows: [
+                    [
+                        {
+                            text: "_ga"
+                        },
+                        {
+                            text: "Checks if you’ve visited Allocate a Person on Probation before. This helps us count how many people visit our site."
+                        },
+                        {
+                            text: "2 years"
+                        }
+                    ],
+                    [
+                        {
+                            text: "_ga_<container-id>"
+                        },
+                        {
+                            text: "Checks if you’ve visited Allocate a Person on Probation before. This helps us count how many people visit our site."
+                        },
+                        {
+                            text: "2 years"
+                        }
+                    ],
+                    [
+                        {
+                            text: "_gid>"
+                        },
+                        {
+                            text: "Checks if you’ve visited Allocate a Person on Probation before. This helps us count how many people visit our site."
+                        },
+                        {
+                            text: "24 hours"
+                        }
+                    ]
+                ]
+            }) }}
         </div>
     </div>
 {% endblock %}

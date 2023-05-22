@@ -68,6 +68,18 @@ generic-service:
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:evidenceText"
+      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
+        "id:1009,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=language-php;ARGS:evidenceText"
+      SecRule REQUEST_URI "@endsWith /confirm-allocation" \
+        "id:1010,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=language-php;ARGS:instructions"
 
 
   livenessProbe:

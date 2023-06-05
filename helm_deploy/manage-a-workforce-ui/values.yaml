@@ -87,7 +87,7 @@ generic-service:
         nolog,\
         ctl:ruleRemoveTargetByTag=platform-windows;ARGS:evidenceText"
       SecRule REQUEST_URI "@endsWith /decision-evidencing" \
-        "id:1006,\
+        "id:1012,\
         phase:1,\
         pass,\
         nolog,\

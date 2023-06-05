@@ -80,6 +80,18 @@ generic-service:
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=language-php;ARGS:instructions"
+      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
+        "id:1011,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=platform-windows;ARGS:evidenceText"
+      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
+        "id:1006,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=attack-rce;ARGS:evidenceText"
 
 
   livenessProbe:

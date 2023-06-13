@@ -67,7 +67,12 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const regionPage = Page.verifyOnPage(ChoosePractitionerPage)
-    regionPage.notificationBanner().should('not.exist')
+    regionPage
+      .notificationBanner()
+      .should(
+        'not.contain',
+        'If a probation practitioner does not have an email address in NDelius, you cannot allocate cases to them through the Allocations tool.'
+      )
   })
 
   it('Offender details visible on page', () => {

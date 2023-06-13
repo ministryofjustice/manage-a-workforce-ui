@@ -22,7 +22,12 @@ context('Overview', () => {
   })
 
   it('notification banner is not visible when officer has an email', () => {
-    overviewPage.notificationBanner().should('not.exist')
+    overviewPage
+      .notificationBanner()
+      .should(
+        'not.contain',
+        'You cannot allocate cases to John Doe through the Allocations tool because they do not have an email address associated with their NDelius account.'
+      )
   })
 
   it('notification banner is visible when officer has no email', () => {

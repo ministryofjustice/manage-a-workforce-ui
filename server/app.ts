@@ -23,6 +23,7 @@ import type { Services } from './services'
 import getUnallocatedCasesCount from './middleware/getUnallocatedCasesCount'
 import checkCaseAlreadyAllocated from './middleware/checkCaseAlreadyAllocated'
 import unless from './utils/middlewareUtils'
+import config from './config'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -30,6 +31,10 @@ export default function createApp(services: Services): express.Application {
   app.set('json spaces', 2)
   app.set('trust proxy', true)
   app.set('port', process.env.PORT || 3000)
+
+  app.locals.notification = {
+    ...config.notification,
+  }
 
   app.use(setUpHealthChecks())
   app.use(setUpWebSecurity())
@@ -45,9 +50,7 @@ export default function createApp(services: Services): express.Application {
   app.use(
     unless('/staff-lookup', getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService))
   )
-
   app.use(routes(services))
-
   app.use((req, res, next) => next(createError(404, 'Not found')))
   app.use('/pdu/:pduCode/:crn/convictions/:convictionNumber/', checkCaseAlreadyAllocated(services.workloadService))
   app.use(errorHandler())

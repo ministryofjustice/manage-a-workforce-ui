@@ -22,7 +22,12 @@ context('Active Cases', () => {
   })
 
   it('notification banner is not visible when officer has an email', () => {
-    activeCasesPage.notificationBanner().should('not.exist')
+    activeCasesPage
+      .notificationBannerHeading()
+      .should(
+        'not.contain',
+        'You cannot allocate cases to John Doe through the Allocations tool because they do not have an email address associated with their NDelius account.'
+      )
   })
 
   it('notification banner is visible when officer has no email', () => {
@@ -34,6 +39,13 @@ context('Active Cases', () => {
         'contain',
         'You cannot allocate cases to John Doe through the Allocations tool because they do not have an email address associated with their NDelius account.'
       )
+  })
+
+  it('notification banner to inform of service issues is visible when toggled on', () => {
+    activeCasesPage.notificationBanner().should('exist')
+    activeCasesPage
+      .notificationBannerHeading()
+      .should('contain', 'The service is experiencing technical issues, and you may have limited access.')
   })
 
   it('Heading is visible on page', () => {

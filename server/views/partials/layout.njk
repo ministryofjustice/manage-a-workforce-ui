@@ -3,6 +3,7 @@
 <head>
 
     {%- from "components/primary-nav/macro.njk" import mawPrimaryNav -%}
+    {%- from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner -%}
 
     {% set mainTitle = "Allocations" %}
 
@@ -96,9 +97,29 @@
 
 
 <div class="govuk-width-container">
-    {% block beforeContent %}{% endblock %}
+    {% block beforeContent %}
+    {% endblock %}
+
     <main class="govuk-main-wrapper" id="main-content" role="main">
-        {% block content %}{% endblock %}
+        {% block notificationBannner %}
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+        {% if notification.active %}
+            {% set html %}
+                    <p class="govuk-notification-banner__heading">The service is experiencing technical issues, and you may have limited access.
+                    </p>
+            {% endset %}
+
+            {{ govukNotificationBanner({
+                html: html
+            }) }}
+        {% endif %}
+            </div>
+        </div>
+        {% endblock %}
+
+        {% block content %}
+        {% endblock %}
     </main>
 </div>
 

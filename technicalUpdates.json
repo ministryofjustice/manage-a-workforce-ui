@@ -1,5 +1,13 @@
 [
   {
+    "heading": "26 May 2023",
+    "whatsNew": [
+      "We added the ‘Explain your decision’ screen. The explanation will be saved to NDelius as a new contact type, called the Case Allocation Decision Evidencing (CADE) contact.",
+      "We added details about the maximum character count to the free text box on the ‘Explain your decision’ screen."
+    ],
+    "technicalFixes": ["We fixed an issue where saving the CADE content returned a 406 error."]
+  },
+  {
     "heading": "31 March 2023",
     "whatsNew": [
       "Shared emails: we added shared mailboxes to the email address lookup. This means you can notify a whole team of an allocation.",

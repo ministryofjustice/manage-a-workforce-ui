@@ -62,6 +62,36 @@ generic-service:
         nolog,\
         ctl:ruleRemoveById=921110"
       SecRuleUpdateTargetById 942440 "!ARGS:_csrf"
+      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
+        "id:1008,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:evidenceText"
+      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
+        "id:1009,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=language-php;ARGS:evidenceText"
+      SecRule REQUEST_URI "@endsWith /confirm-allocation" \
+        "id:1010,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=language-php;ARGS:instructions"
+      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
+        "id:1011,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=platform-windows;ARGS:evidenceText"
+      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
+        "id:1012,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=attack-rce;ARGS:evidenceText"
 
 
   livenessProbe:

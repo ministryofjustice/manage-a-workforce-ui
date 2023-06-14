@@ -104,7 +104,7 @@
         {% block notificationBannner %}
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-        {% if notification.active %}
+        {% if notification.active === 'true' %}
             {% set html %}
                     <p class="govuk-notification-banner__heading">The service is experiencing technical issues, and you may have limited access.
                     </p>

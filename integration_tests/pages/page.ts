@@ -1,4 +1,4 @@
-export type PageElement = Cypress.Chainable<JQuery>
+export type PageElement = Cypress.Chainable
 
 export default abstract class Page {
   static verifyOnPage<T>(constructor: new () => T): T {
@@ -46,6 +46,8 @@ export default abstract class Page {
   notificationsBadge = (): PageElement => cy.get('.moj-notification-badge')
 
   notificationBanner = (): PageElement => cy.get('.govuk-notification-banner')
+
+  notificationBannerHeading = (): PageElement => cy.get('.govuk-notification-banner__heading')
 
   breadCrumbs = (): PageElement => cy.get('.govuk-breadcrumbs__list-item')
 

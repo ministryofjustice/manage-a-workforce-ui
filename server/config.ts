@@ -116,6 +116,6 @@ export default {
   },
   googleAnalyticsKey: get('GOOGLE_ANALYTICS_KEY', null),
   notification: {
-    active: get('SHOW_NOTIFICATION', false),
+    active: get('SHOW_NOTIFICATION', 'false'),
   },
 }

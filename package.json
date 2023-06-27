@@ -165,7 +165,7 @@
     "nock": "13.3.1",
     "nodemon": "2.0.22",
     "prettier": "2.8.8",
-    "sass": "1.63.5",
+    "sass": "1.63.6",
     "superagent": "8.0.9",
     "supertest": "6.3.3",
     "ts-jest": "29.1.0",

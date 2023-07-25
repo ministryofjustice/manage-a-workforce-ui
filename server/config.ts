@@ -118,4 +118,5 @@ export default {
   notification: {
     active: get('SHOW_NOTIFICATION', 'false'),
   },
+  instrumentationKey: get('APPINSIGHTS_INSTRUMENTATIONKEY', null),
 }

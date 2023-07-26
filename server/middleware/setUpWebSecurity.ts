@@ -26,6 +26,8 @@ export default function setUpWebSecurity(): Router {
             'www.google-analytics.com',
             'https://www.google-analytics.com',
             'https://www.googletagmanager.com',
+            'js.monitor.azure.com',
+            'dc.services.visualstudio.com',
             "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
             "'sha256-xseXYIyJf+ofw4QIbNxoWnzeuWkO8antz0n3bwjWrMk='",
             (_, res: Response) => `'nonce-${res.locals.cspNonce}'`,

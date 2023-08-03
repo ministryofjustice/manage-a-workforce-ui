@@ -1,5 +1,13 @@
 [
   {
+    "heading": "3 August 2023",
+    "whatsNew": [
+      "We added a Cookies statement for the service. It can be viewed by selecting the ‘Cookies’ link at the bottom of every screen.",
+      "We added a survey that asks users about their experience of using the service."
+    ],
+    "technicalFixes": ["We fixed an error that was occurring when the user selected ‘Allocate case’."]
+  },
+  {
     "heading": "26 May 2023",
     "whatsNew": [
       "We added the ‘Explain your decision’ screen. The explanation will be saved to NDelius as a new contact type, called the Case Allocation Decision Evidencing (CADE) contact.",

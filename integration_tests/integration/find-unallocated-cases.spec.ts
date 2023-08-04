@@ -55,7 +55,7 @@ context('Find Unallocated cases', () => {
   })
 
   it('large heading visible on page', () => {
-    findUnallocatedCasesPage.largeHeading().should('contain', 'Unallocated community cases')
+    findUnallocatedCasesPage.largeHeading().should('contain', 'Unallocated cases')
   })
 
   it('filter heading visible on page', () => {

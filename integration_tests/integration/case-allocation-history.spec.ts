@@ -57,7 +57,7 @@ context('Case allocation history', () => {
       .subNav()
       .should('contain', 'Cases allocated in last 30 days (2)')
       // TODO - Add unallocated cases count
-      .and('contain', 'Unallocated community cases (10)')
+      .and('contain', 'Unallocated cases (10)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
@@ -72,7 +72,7 @@ context('Case allocation history', () => {
       ],
     })
     cy.reload()
-    caseAllocationHistoryPage.subNavLink().should('contain.text', 'Unallocated community cases (99+)')
+    caseAllocationHistoryPage.subNavLink().should('contain.text', 'Unallocated cases (99+)')
   })
 
   it('Must show 99+ in subnav when cases allocated in last 30 days are greater than 99', () => {
@@ -130,7 +130,7 @@ context('Case allocation history', () => {
     caseAllocationHistoryPage
       .highlightedTab()
       .should('contain.text', 'Cases allocated in last 30 days')
-      .and('not.contain.text', 'Unallocated community cases')
+      .and('not.contain.text', 'Unallocated cases')
   })
 
   it('navigate to find unallocated cases page via sub nav', () => {

@@ -16,6 +16,7 @@ export default defineConfig({
     specPattern: 'integration_tests/integration/*.spec.ts',
     setupNodeEvents: plugins,
     supportFile: 'integration_tests/support/index.ts',
+    experimentalRunAllSpecs: true,
   },
   videosFolder: 'integration_tests/videos',
   videoUploadOnPasses: false,

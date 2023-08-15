@@ -3,6 +3,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "../components/pop/macro.njk" import pop %}
 {% from "../components/instructions/macro.njk" import instructions %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -13,16 +14,16 @@
             },
             {
                 text: "Unallocated cases",
-                href: '/pdu/' + pduCode + '/find-unallocated' 
+                href: '/pdu/' + pduCode + '/find-unallocated'
             }
         ]
     }) }}
 {% endblock %}
 
 {% block content %}
-    
+
     {{ pop({name: name, crn: crn, tier: tier, convictionNumber: convictionNumber, pduCode: pduCode}) }}
-        
+
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             {{ mojSubNavigation({
@@ -58,6 +59,14 @@
     </div>
 
     {{ instructions({ inGridRow: true, convictionNumber: convictionNumber, crn: crn }) }}
+
+    {{ govukButton({
+        text: "Continue",
+        href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner",
+        classes: "allocate",
+        id: convictionNumber
+    }) }}
+
 
 {% endblock %}
 

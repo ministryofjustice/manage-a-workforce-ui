@@ -5,10 +5,4 @@
             <span class="govuk-caption-xl">CRN: {{ params.crn }}</span>
         </h1>
     </div>
-    {% if params.convictionNumber %}
-        <div class="govuk-grid-column-one-third">
-            <a id="{{ params.convictionNumber }}" class="govuk-!-margin-top-8 govuk-button allocate" href="/pdu/{{ params.pduCode }}/{{ params.crn }}/convictions/{{ params.convictionNumber }}/choose-practitioner" role="button" draggable="false"
-               data-module="govuk-button">Continue</a>
-        </div>
-    {% endif %}
 </div>

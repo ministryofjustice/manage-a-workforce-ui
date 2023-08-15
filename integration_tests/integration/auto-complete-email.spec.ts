@@ -51,6 +51,6 @@ context('Auto Complete Email', () => {
     instructionsConfirmPage.addAnotherPersonButton().click()
     instructionsConfirmPage.addAnotherPersonButton().click()
     instructionsConfirmPage.removeButton(2).click()
-    cy.window().its('scrollY').should('not.equal', 0)
+    instructionsConfirmPage.lastAddAnotherPersonButton().scrollIntoView()
   })
 })

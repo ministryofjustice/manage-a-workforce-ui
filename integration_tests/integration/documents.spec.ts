@@ -50,6 +50,12 @@ context('Documents', () => {
       .getTable()
       .should('deep.equal', [
         {
+          Name: 'cps.pdfCrown Prosecution Service case packSENSITIVE',
+          Type: 'SA2020 Suspended Sentence Order',
+          Event: 'PreviousCommon assault and battery - 10501',
+          'Date created': '16 Oct 2021',
+        },
+        {
           Name: 'doc.pdfCourt Report',
           Type: 'Pre-Sentence Report - Fast',
           Event: 'CurrentAttempt/Common/Assault of an Emergency Worker   (Act 2018) 00873',
@@ -60,12 +66,6 @@ context('Documents', () => {
           Type: 'Pre Cons',
           Event: 'Not attached to an event',
           'Date created': '17 Nov 2021',
-        },
-        {
-          Name: 'cps.pdfCrown Prosecution Service case packSENSITIVE',
-          Type: 'SA2020 Suspended Sentence Order',
-          Event: 'PreviousCommon assault and battery - 10501',
-          'Date created': '16 Oct 2021',
         },
         {
           Name: 'OfficeVisitDocument.DOCContact',
@@ -106,5 +106,37 @@ context('Documents', () => {
   it('Download document link does not exist for document without id', () => {
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.downloadDocumentLink('J678910', '', 'documentWithoutId.pdf').should('not.exist')
+  })
+
+  it('should show which column the table is currently sorted by', () => {
+    const headings = ['Name', 'Type', 'Event', 'Date&nbsp;created']
+    headings.forEach(heading => {
+      it(`should set headings correctly when sorting by ${heading}`, () => {
+        cy.get('table').within(() => cy.contains('button', heading).click())
+
+        // check the clicked heading is sorted and all others are not
+        cy.get('thead')
+          .find('th')
+          .each($el => {
+            const sort = $el.text() === heading ? 'ascending' : 'none'
+            cy.wrap($el).should('have.attr', { 'aria-sort': sort })
+          })
+
+        // clicking again sorts in the other direction
+        cy.get('table').within(() => cy.contains('button', heading).click())
+
+        cy.get('table').within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
+      })
+    })
+  })
+
+  it('persists sort order when refreshing the page', () => {
+    cy.get('table').within(() => cy.contains('button', 'Name').click())
+
+    cy.get('table').within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
+
+    cy.reload()
+
+    cy.get('table').within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
   })
 })

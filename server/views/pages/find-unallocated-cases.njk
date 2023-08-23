@@ -7,32 +7,38 @@
 
 {% set tableData = {
     attributes: {
-    'data-module': 'moj-sortable-table'
+        'data-module': 'moj-sortable-table',
+        'data-persistent-id': 'find-unallocated-cases'
     },
     head: [
         { text: 'Name / CRN',
             attributes: {
-                "aria-sort": "none"
+                "aria-sort": "none",
+                'data-persistent-id': 'find-unallocated-cases-name-crn'
             }
         },
         { text: 'Tier',
             attributes: {
-                "aria-sort": "none"
+                "aria-sort": "none",
+                'data-persistent-id': 'find-unallocated-cases-tier'
             }
         },
         { text: 'Sentence date',
             attributes: {
-                "aria-sort": "none"
+                "aria-sort": "none",
+                'data-persistent-id': 'find-unallocated-cases-sentence-date'
             }
         },
         { text: 'Initial appointment date',
             attributes: {
-                "aria-sort": "none"
+                "aria-sort": "none",
+                'data-persistent-id': 'find-unallocated-cases-appointment-date'
             }
         },
         { text: 'Probation status',
             attributes: {
-                "aria-sort": "none"
+                "aria-sort": "none",
+                'data-persistent-id': 'find-unallocated-cases-probation-status'
             }
         }
     ],

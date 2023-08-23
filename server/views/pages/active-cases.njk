@@ -11,23 +11,27 @@
     caption: 'Active cases',
     captionClasses: 'govuk-heading-l',
     attributes: {
-    'data-module': 'moj-sortable-table'
+        'data-module': 'moj-sortable-table',
+        'data-persistent-id': 'active-cases'
     },
     head: [
         { text: 'Name / CRN',
             attributes: {
-                "aria-sort": "none"
-            }
+            "aria-sort": "none",
+            'data-persistent-id': 'active-cases-name-crn'
+        }
         },
         { text: 'Tier',
             attributes: {
-                "aria-sort": "none"
-            }
+            "aria-sort": "none",
+            'data-persistent-id': 'active-cases-tier'
+        }
         },
         { text: 'Type of case',
             attributes: {
-                "aria-sort": "none"
-            }
+            "aria-sort": "none",
+            'data-persistent-id': 'active-cases-type-of-case'
+        }
         }
     ],
     rows: []
@@ -46,6 +50,5 @@
 
 {% block officerContent %}
     {{ govukTable(tableData) }}
-
 {% endblock %}
 

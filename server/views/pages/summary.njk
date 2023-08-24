@@ -114,6 +114,10 @@
                             <li>{{ requirement.mainCategory }}: {{ requirement.subCategory }} {{ requirement.length }}</li>
                             {% endfor -%}
                         </ul>
+                        {%- for requirement in data.requirements if data.requirements %}
+                        {% else -%}
+                        <p>There are no requirements to display.</p>
+                        {% endfor -%}
                     </dd>
                 </div>
             </dl>

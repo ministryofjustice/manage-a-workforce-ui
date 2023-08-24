@@ -76,6 +76,18 @@ context('Summary', () => {
     })
   })
 
+  it('No requirements sentence visible on page', () => {
+    cy.task('stubGetUnallocatedCaseNoRequirements')
+    cy.reload()
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.sentenceTitle().should('have.text', 'Sentence')
+    cy.get('#sentence .govuk-summary-list').getSummaryList().should('deep.equal', {
+      Offence: 'Common assault and battery Contrary to section 39 of the Criminal Justice Act 1988.',
+      Order: 'SA2020 Suspended Sentence Order (6 Months) Start date: 1 September 2021 End date: 28 September 2021',
+      Requirements: 'There are no requirements to display.',
+    })
+  })
+
   it('Sentence visible on page when invalid end date', () => {
     cy.task('stubGetUnallocatedCaseInvalidEndDate')
     cy.reload()

@@ -2,7 +2,7 @@
 {%- from "../downloadDocumentLink/macro.njk" import downloadDocumentLink -%}
 
 {% macro documentCell(crn, documentId, completedDate, linkText, documentTabHref, documentName ) -%}
-{%- set noDocumentElement='<a href="' + documentTabHref + '">Check Documents screen</a>'-%}
+{%- set noDocumentElement='<p>Check Documents screen</p>'-%}
 {%- set uploadedDate = 'Uploaded ' + completedDate | dateFormat-%}
 
 {{ doubleCell(downloadDocumentLink(crn, documentId, linkText, 'govuk-link--no-visited-state', documentName) if completedDate else noDocumentElement, uploadedDate if completedDate) }}

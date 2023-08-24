@@ -288,6 +288,56 @@ export default {
       },
     })
   },
+  stubGetUnallocatedCaseNoRequirements: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910/convictions/1`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          tier: 'C1',
+          sentenceDate: '2021-09-01',
+          gender: 'Male',
+          dateOfBirth: '1984-09-27',
+          age: 37,
+          offences: [
+            {
+              mainOffence: true,
+              mainCategory: 'Common assault and battery',
+              subCategory: 'Contrary to section 39 of the Criminal Justice Act 1988.',
+            },
+          ],
+          expectedSentenceEndDate: '2021-09-28',
+          sentenceLength: '6 Months',
+          sentenceDescription: 'SA2020 Suspended Sentence Order',
+          requirements: [],
+          pncNumber: 'D/9874483AB',
+          convictionNumber: 1,
+          address: {
+            addressNumber: '5A',
+            buildingName: 'The Building',
+            streetName: 'The Street',
+            town: 'Reading',
+            county: 'Berkshire',
+            postcode: 'RG22 3EF',
+            noFixedAbode: false,
+            typeVerified: true,
+            typeDescription: 'Rental accommodation',
+            startDate: '2022-08-25',
+          },
+          roshLevel: 'UNAVAILABLE',
+          rsrLevel: 'UNAVAILABLE',
+          ogrsScore: null,
+          activeRiskRegistration: null,
+        },
+      },
+    })
+  },
   stubGetUnallocatedCaseNotFoundRisk: (): SuperAgentRequest => {
     return stubForAllocation({
       request: {

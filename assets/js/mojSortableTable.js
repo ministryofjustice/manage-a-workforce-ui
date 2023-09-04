@@ -164,11 +164,12 @@ $(() => {
     console.warn('No tables found in document. Not setting up sortable table.')
     return
   }
-  if (tables.length > 1) {
-    console.warn('Multiple tables found in document. Not setting up sortable table.')
-    return
-  }
-  const table = tables[0]
+  // if (tables.length > 1) {
+  //   console.warn('Multiple tables found in document. Not setting up sortable table.')
+  //   return
+  // }
+  console.warn('tables', tables)
+  // const table = tables[0]
   class SortableTable extends MOJFrontend.SortableTable {
     constructor(tableElement) {
       super({ table: tableElement })
@@ -178,7 +179,9 @@ $(() => {
       return super.sort(rows, columnNumber, sortDirection)
     }
   }
-  // eslint-disable-next-line no-new
-  new SortableTable(table)
-  PersistentSortOrder.activate(table)
+
+  Array.from(tables).forEach(function (table) {
+    new SortableTable(table)
+    PersistentSortOrder.activate(table)
+  })
 })

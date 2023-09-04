@@ -141,6 +141,9 @@ generic-service:
     moj-official-ark-c-vodafone: "194.33.248.0/29"
     moj-official-ark-f-vodafone: "194.33.249.0/29"
     moj-official-ark-f-expo-e: "51.149.249.32/29"
+    cymulate-1: "54.217.50.18/32"
+    cymulate-2: "52.208.202.111/32"
+    cymulate-3: "52.49.144.209/32"
 
 generic-prometheus-alerts:
   targetApplication: manage-a-workforce-ui

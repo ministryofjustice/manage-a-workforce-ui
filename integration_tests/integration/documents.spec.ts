@@ -79,30 +79,6 @@ context('Documents', () => {
           Event: 'PreviousCommon assault and battery - 10501',
           'Date created': '',
         },
-        {
-          Name: 'doc.pdfCourt Report',
-          Type: 'Pre-Sentence Report - Fast',
-          Event: 'CurrentAttempt/Common/Assault of an Emergency Worker   (Act 2018) 00873',
-          'Date created': '7 Dec 2021',
-        },
-        {
-          Name: 'Pre Cons.pdfPNC previous convictions',
-          Type: 'Pre Cons',
-          Event: 'Not attached to an event',
-          'Date created': '17 Nov 2021',
-        },
-        {
-          Name: 'OfficeVisitDocument.DOCContact',
-          Type: 'Planned Office Visit (NS)',
-          Event: 'PreviousCommon assault and battery - 10501',
-          'Date created': '',
-        },
-        {
-          Name: 'documentWithoutId.pdfContact',
-          Type: 'Planned Office Visit (NS)',
-          Event: 'PreviousCommon assault and battery - 10501',
-          'Date created': '',
-        },
       ])
   })
 

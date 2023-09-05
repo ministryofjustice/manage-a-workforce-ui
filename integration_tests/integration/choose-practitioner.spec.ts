@@ -406,4 +406,46 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.tab('TM1').should('contain', 'Team 1')
     choosePractitionerPage.tab('OLDTEAM1').should('not.exist')
   })
+
+  it('should show which column the choose-practitioner table is currently sorted by', () => {
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const headings = ['Name', 'Team', 'Grade', 'Workload %', 'Cases in past 7 days', 'Community cases', 'Custody cases']
+    headings.forEach(heading => {
+      it(`should set headings correctly when sorting by ${heading}`, () => {
+        cy.get('table').within(() => cy.contains('button', heading).click())
+
+        // check the clicked heading is sorted and all others are not
+        cy.get('thead')
+          .find('th')
+          .each($el => {
+            const sort = $el.text() === heading ? 'ascending' : 'none'
+            cy.wrap($el).should('have.attr', { 'aria-sort': sort })
+          })
+
+        // clicking again sorts in the other direction
+        cy.get('table').within(() => cy.contains('button', heading).click())
+
+        cy.get('table').within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
+      })
+    })
+  })
+
+  it('persists the sort order of the selected column when refreshing the page', () => {
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    cy.get('table')
+      .eq(0)
+      .within(() => cy.contains('button', 'Name').click())
+
+    cy.get('table')
+      .eq(0)
+      .within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
+
+    cy.reload()
+
+    cy.get('table')
+      .eq(0)
+      .within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
+  })
 })

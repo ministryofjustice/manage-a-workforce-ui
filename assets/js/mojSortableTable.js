@@ -164,12 +164,7 @@ $(() => {
     console.warn('No tables found in document. Not setting up sortable table.')
     return
   }
-  // if (tables.length > 1) {
-  //   console.warn('Multiple tables found in document. Not setting up sortable table.')
-  //   return
-  // }
-  console.warn('tables', tables)
-  // const table = tables[0]
+
   class SortableTable extends MOJFrontend.SortableTable {
     constructor(tableElement) {
       super({ table: tableElement })

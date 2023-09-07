@@ -19,5 +19,4 @@ export default defineConfig({
     experimentalRunAllSpecs: true,
   },
   videosFolder: 'integration_tests/videos',
-  videoUploadOnPasses: false,
 })

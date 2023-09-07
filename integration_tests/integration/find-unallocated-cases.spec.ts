@@ -258,4 +258,42 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage.allocationHistorySubNavLink().click()
     cy.url().should('contain', 'pdu/PDU1/case-allocation-history')
   })
+
+  it('should show the column the table is currently sorted by', () => {
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
+    cy.reload()
+    const headings = ['Name / CRN', 'Tier', 'Sentence date', 'Initial appointment date', 'Probation status']
+    headings.forEach(heading => {
+      it(`should set headings correctly when sorting by ${heading}`, () => {
+        cy.get('table').within(() => cy.contains('button', heading).click())
+
+        // check the clicked heading is sorted and all others are not
+        cy.get('thead')
+          .find('th')
+          .each($el => {
+            const sort = $el.text() === heading ? 'ascending' : 'none'
+            cy.wrap($el).should('have.attr', { 'aria-sort': sort })
+          })
+
+        // clicking again sorts in the other direction
+        cy.get('table').within(() => cy.contains('button', heading).click())
+
+        cy.get('table').within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
+      })
+    })
+  })
+
+  it('persists sort order when refreshing the page', () => {
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
+    cy.reload()
+    cy.get('table').within(() => cy.contains('button', 'Name / CRN').click())
+
+    cy.get('table').within(() => cy.contains('button', 'Name / CRN').should('have.attr', { 'aria-sort': 'ascending' }))
+
+    cy.reload()
+
+    cy.get('table').within(() => cy.contains('button', 'Name / CRN').should('have.attr', { 'aria-sort': 'ascending' }))
+  })
 })

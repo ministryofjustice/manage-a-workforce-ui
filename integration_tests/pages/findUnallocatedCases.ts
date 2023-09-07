@@ -47,4 +47,6 @@ export default class FindUnallocatedPage extends Page {
   noCasesBody = (): PageElement => cy.get('.govuk-body-l')
 
   allocationHistorySubNavLink = (): PageElement => cy.get('a.moj-sub-navigation__link').contains('Cases allocated')
+
+  tableHeaderButton = (): PageElement => cy.get('[data-persistent-id="findUnallocatedCasesNameCrn"] button')
 }

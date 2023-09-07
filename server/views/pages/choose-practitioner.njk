@@ -14,49 +14,56 @@
 {% for teamData in offenderManagersToAllocatePerTeam %}
     {%- set teamTableData = {
         attributes: {
-          'data-module': 'moj-natural-sortable-table'
+            'data-module': 'moj-sortable-table',
+            'data-persistent-id': teamData.teamCode + '-choose-practitioner'
         },
         head: [
             { text: 'Select' },
             { text: 'Name',
                 attributes: {
-                    "aria-sort": "none"
+                    "aria-sort": "none",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-name'
                 }
             },
             { text: 'Team',
                 classes: 'govuk-visually-hidden' if teamData.isPerTeam,
                 attributes: {
-                    "aria-sort": "none"
+                    "aria-sort": "none",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-team'
                 }
             },
             { text: 'Grade',
                 attributes: {
-                    "aria-sort": "descending"
+                    "aria-sort": "descending",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-grade'
                 }
             },
             { text: 'Workload %',
                 format: "numeric",
                 attributes: {
                     "aria-sort": "none",
-                    "aria-sort-natural": "ascending"
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-workload'
                 }
             },
             { text: 'Cases in past 7 days',
                 format: "numeric",
                 attributes: {
-                    "aria-sort": "none"
+                    "aria-sort": "none",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-cases-in-past-7-days'
                 }
             },
             { text: 'Community cases',
                 format: "numeric",
                 attributes: {
-                    "aria-sort": "none"
+                    "aria-sort": "none",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-community-cases'
                 }
             },
             { text: 'Custody cases',
                 format: "numeric",
                 attributes: {
-                    "aria-sort": "none"
+                    "aria-sort": "none",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-custody-cases'
                 }
             }
         ],
@@ -179,7 +186,7 @@
     {% endif %}
 
     {{ pop({name: name, crn: crn, tier: tier}) }}
-    
+
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
     <h2 class="govuk-heading-l">Allocate to a probation practitioner</h2>

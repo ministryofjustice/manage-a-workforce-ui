@@ -41,7 +41,7 @@ context('Auto Complete Email', () => {
     cy.task('stubSearchStaff')
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.addAnotherPersonButton().click()
-    cy.window().its('scrollY').should('not.equal', 0)
+    instructionsConfirmPage.lastInputText().scrollIntoView()
   })
 
   it('scroll to last auto complete input when remove clicked', () => {

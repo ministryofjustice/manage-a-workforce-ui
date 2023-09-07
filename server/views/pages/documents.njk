@@ -5,28 +5,33 @@
 
 {% set tableData = {
     attributes: {
-    'data-module': 'moj-sortable-table'
+        'data-module': 'moj-sortable-table',
+        'data-persistent-id': 'documents'
     },
     head: [
         { text: 'Name',
             attributes: {
-                "aria-sort": "none"
+                'aria-sort': 'none',
+                'data-persistent-id': 'documents-name'
             },
             classes: "govuk-!-width-one-third"
         },
         { text: 'Type',
             attributes: {
-                "aria-sort": "none"
+                "aria-sort": "none",
+                'data-persistent-id': 'documents-type'
             }
         },
         { text: 'Event',
             attributes: {
-                "aria-sort": "none"
+                "aria-sort": "none",
+                'data-persistent-id': 'documents-event'
             }
         },
         { html: 'Date&nbsp;created',
             attributes: {
-                "aria-sort": "descending"
+                "aria-sort": "descending",
+                'data-persistent-id': 'documents-date-created'
             }
         }
     ],

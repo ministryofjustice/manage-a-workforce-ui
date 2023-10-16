@@ -58,7 +58,7 @@ context('Choose Practitioner', () => {
       .notificationBanner()
       .should(
         'contain',
-        'If a probation practitioner does not have an email address in NDelius, you cannot allocate cases to them through the Allocations tool.'
+        'If you cannot allocate to a probation practitioner, it’s because their email address is not linked to their staff code in NDelius.'
       )
   })
 
@@ -71,7 +71,7 @@ context('Choose Practitioner', () => {
       .notificationBanner()
       .should(
         'not.contain',
-        'If a probation practitioner does not have an email address in NDelius, you cannot allocate cases to them through the Allocations tool.'
+        'If you cannot allocate to a probation practitioner, it’s because their email address is not linked to their staff code in NDelius.'
       )
   })
 

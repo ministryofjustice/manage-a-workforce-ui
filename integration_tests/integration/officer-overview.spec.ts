@@ -26,7 +26,7 @@ context('Overview', () => {
       .notificationBanner()
       .should(
         'not.contain',
-        'You cannot allocate cases to John Doe through the Allocations tool because they do not have an email address associated with their NDelius account.'
+        'You cannot allocate cases to John Doe through the Allocations tool because their email address is not linked to their staff code in NDelius.'
       )
   })
 
@@ -37,7 +37,7 @@ context('Overview', () => {
       .notificationBanner()
       .should(
         'contain',
-        'You cannot allocate cases to John Doe through the Allocations tool because they do not have an email address associated with their NDelius account.'
+        'You cannot allocate cases to John Doe through the Allocations tool because their email address is not linked to their staff code in NDelius.'
       )
   })
 

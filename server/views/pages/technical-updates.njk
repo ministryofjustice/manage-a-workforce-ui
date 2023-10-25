@@ -11,21 +11,24 @@
             {% for whatsNew in technicalUpdate.whatsNew %}
                 <li>{{ whatsNew }}</li>
             {% endfor%}
+            {% if technicalUpdate.heading === "25 October 2023" %}
+                <li>Terms and conditions: We updated <a class="govuk-link" href="{{ workloadMeasurementUrl }}/terms-and-conditions">the T&Cs page for the Workload Management Tool (WMT)</a>.</li>
+            {% endif %}
          </ul>
         <h2 class="govuk-heading-s">Technical fixes</h2>
-        <ul class="govuk-list govuk-list--bullet"> 
+        <ul class="govuk-list govuk-list--bullet">
             {% for technicalFix in technicalUpdate.technicalFixes %}
                 <li>{{ technicalFix }}</li>
             {% endfor%}
         </ul>
     {% endset %}
     {% set technicalUpdateItems = (technicalUpdateItems.push({
-         heading: { 
-            text: technicalUpdate.heading 
+         heading: {
+            text: technicalUpdate.heading
          },
-         expanded: loop.first, 
-         content:{ 
-            html: content 
+         expanded: loop.first,
+         content:{
+            html: content
             }
         }), technicalUpdateItems) %}
 {% endfor %}
@@ -35,7 +38,7 @@
         {{ govukBackLink({
             text: "Back",
             href: referrer
-        }) 
+        })
         }}
     {% endif %}
 {% endblock %}
@@ -46,7 +49,7 @@
     <div class="govuk-grid-column-full">
         <span class="govuk-caption-xl">Allocations</span>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Technical updates</h1>
-    </div>    
+    </div>
 </div>
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -55,7 +58,7 @@
         {{ govukAccordion({
             id: "accordion-default",
             items: technicalUpdateItems
-           }) 
+           })
         }}
 
     </div>

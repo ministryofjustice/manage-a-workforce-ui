@@ -1,5 +1,18 @@
 [
   {
+    "heading": "25 October 2023",
+    "whatsNew": [
+      "Select a probation practitioner screen: We moved the radio buttons to the left side of the probation practitioner table, to make it easier to use. ",
+      "Case details screens: We moved the green Continue button to the bottom of the case details screens to be consistent with the buttons in the rest of the service.",
+      "Persistent data sorting in tables: We updated the data sorting in tables to be retained when you navigate away.",
+      "Notify email: We updated the data points in the email to display the correct court and sentencing data."
+    ],
+    "technicalFixes": [
+      "We fixed a bug where no practitioners or practitioner workload were being displayed for one of our Beta teams.",
+      "We fixed an issue where restricted LAO cases could be viewed through the service."
+    ]
+  },
+  {
     "heading": "3 August 2023",
     "whatsNew": [
       "We added a Cookies statement for the service. It can be viewed by selecting the ‘Cookies’ link at the bottom of every screen.",

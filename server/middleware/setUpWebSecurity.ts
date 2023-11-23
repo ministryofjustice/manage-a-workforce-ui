@@ -1,5 +1,5 @@
 import express, { Router, Response, NextFunction } from 'express'
-import helmet from 'helmet'
+import helmet, { noSniff } from 'helmet'
 import crypto from 'crypto'
 
 export default function setUpWebSecurity(): Router {
@@ -15,47 +15,11 @@ export default function setUpWebSecurity(): Router {
   // 2. https://www.npmjs.com/package/helmet
   router.use(
     helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'", 'https://www.google-analytics.com', 'www.google-analytics.com'],
-          // Hash allows inline script pulled in from https://github.com/alphagov/govuk-frontend/blob/master/src/govuk/template.njk
-          scriptSrc: [
-            "'self'",
-            'code.jquery.com',
-            'www.googletagmanager.com',
-            'www.google-analytics.com',
-            'https://www.google-analytics.com',
-            'https://www.googletagmanager.com',
-            'js.monitor.azure.com',
-            "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
-            "'sha256-xseXYIyJf+ofw4QIbNxoWnzeuWkO8antz0n3bwjWrMk='",
-            (_, res: Response) => `'nonce-${res.locals.cspNonce}'`,
-          ],
-          styleSrc: ["'self'", (_, res: Response) => `'nonce-${res.locals.cspNonce}'`],
-          fontSrc: ["'self'"],
-          imgSrc: [
-            "'self'",
-            'https://www.google-analytics.com',
-            'www.google-analytics.com',
-            '*.analytics.google.com',
-            '*.google-analytics.com',
-            '*.googletagmanager.com',
-          ],
-          connectSrc: [
-            "'self'",
-            'www.googletagmanager.com',
-            'www.google-analytics.com',
-            'https://www.google-analytics.com',
-            '*.analytics.google.com',
-            '*.google-analytics.com',
-            'js.monitor.azure.com',
-            'dc.services.visualstudio.com',
-          ],
-        },
-      },
-      crossOriginEmbedderPolicy: true,
+      noSniff: false,
+      contentSecurityPolicy: false,
+      crossOriginEmbedderPolicy: false,
       referrerPolicy: {
-        policy: 'strict-origin-when-cross-origin',
+        policy: 'unsafe-url',
       },
     })
   )

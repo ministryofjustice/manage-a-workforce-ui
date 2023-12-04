@@ -120,6 +120,7 @@ context('Summary', () => {
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Risk assessment': 'VERY HIGH RoSH MEDIUM RSR HIGH OGRS',
       'Active risk registrations': 'ALT Under MAPPA Arrangements, Suicide/self-harm',
+      OASys: 'CHECK OASYSUploaded 27 January 2022',
     })
     summaryPage.riskSummaryBadge().then($data => {
       expect($data.get(0).className).to.contain('risk-badge--very-high')
@@ -136,6 +137,7 @@ context('Summary', () => {
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Risk assessment': 'Unknown RoSH Unknown RSR No OGRS',
       'Active risk registrations': 'There are no active registrations.',
+      OASys: 'CHECK OASYSUploaded 27 January 2022',
     })
     summaryPage.riskSummaryBadge().then($data => {
       expect($data.get(0).className).to.contain('risk-badge--unavailable')
@@ -151,6 +153,7 @@ context('Summary', () => {
     summaryPage.riskTitle().should('have.text', 'Risk')
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Risk assessment': 'Unknown RoSH No RSR No OGRS',
+      OASys: 'CHECK OASYSUploaded 27 January 2022',
       'Active risk registrations': 'There are no active registrations.',
     })
     summaryPage.riskSummaryBadge().then($data => {
@@ -160,35 +163,36 @@ context('Summary', () => {
     })
   })
 
-  it('Associated Documents visible on page', () => {
+  it('Documents visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.associatedDocumentsTitle().should('have.text', 'Associated documents')
-    summaryPage.downloadDocumentLink('J678910', '00000000-0000-0000-0000-000000000000', 'courtFile.pdf').should('exist')
-    summaryPage
-      .downloadDocumentLink('J678910', '11111111-1111-1111-1111-111111111111', 'cpsPackFile.pdf')
-      .should('exist')
-    summaryPage
-      .downloadDocumentLink('J678910', '22222222-2222-2222-2222-222222222222', 'preConsFile.pdf')
-      .should('exist')
-    cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
-      'CPS pack': 'Download CPS pack Uploaded 27 February 2022',
-      'Pre-convictions': 'Download Pre-convictions document Uploaded 27 March 2022',
-      'Pre-sentence report': 'Download Pre-Sentence Report - Fast Uploaded 27 January 2022',
-      OASys: 'CHECK OASYSUploaded 27 January 2022',
-    })
+    summaryPage.associatedDocumentsTitle().should('have.text', 'Documents')
+    cy.get('#case-details .govuk-body-m')
+      .first()
+      .should(
+        'have.text',
+        'All documents related to the current and previous events are listed on\n' +
+          '                            the Documents screen.'
+      )
+    cy.get('#case-details .govuk-body-m')
+      .last()
+      .should('have.text', 'You can sort by date, event, document type, or name.')
   })
 
-  it('Associated Documents visible on page with no reports or assessments', () => {
+  it('Documents visible on page with no reports or assessments', () => {
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.associatedDocumentsTitle().should('have.text', 'Associated documents')
-    cy.get('#case-details .govuk-summary-list').getSummaryList().should('deep.equal', {
-      'CPS pack': 'Check Documents screen',
-      'Pre-convictions': 'Check Documents screen',
-      'Pre-sentence report': 'Check Documents screen',
-      OASys: 'CHECK OASYS',
-    })
+    summaryPage.associatedDocumentsTitle().should('have.text', 'Documents')
+    cy.get('#case-details .govuk-body-m')
+      .first()
+      .should(
+        'have.text',
+        'All documents related to the current and previous events are listed on\n' +
+          '                            the Documents screen.'
+      )
+    cy.get('#case-details .govuk-body-m')
+      .last()
+      .should('have.text', 'You can sort by date, event, document type, or name.')
   })
 
   it('Breadcrumbs visible on page', () => {

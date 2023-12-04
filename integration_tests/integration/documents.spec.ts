@@ -139,4 +139,9 @@ context('Documents', () => {
 
     cy.get('table').within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
   })
+
+  it('feedback prompt visible on page', () => {
+    const documentsPage = Page.verifyOnPage(DocumentsPage)
+    documentsPage.feedbackPrompt().should('contain', 'Was this page helpful?')
+  })
 })

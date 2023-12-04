@@ -15,9 +15,9 @@ export default class SummaryPage extends Page {
 
   associatedDocumentsTitle = (): PageElement => cy.get('#case-details > header > h2 ')
 
-  associatedDocumentsLink = (): PageElement => cy.get('#case-details > header > a ')
+  associatedDocumentsLink = (): PageElement => cy.get('#case-details > .app-summary-card__header > a ')
 
-  associatedRiskLink = (): PageElement => cy.get('#risk > header > a ')
+  associatedRiskLink = (): PageElement => cy.get('#risk > .app-summary-card__header > a ')
 
   allocateCaseButton = (crn, convictionNumber, pduCode): PageElement =>
     cy.get(`a[href*="/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner"]`)

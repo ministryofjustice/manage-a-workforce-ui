@@ -8,4 +8,6 @@ export default class DocumentsPage extends Page {
   documentsHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
   noDocumentsBody = (): PageElement => cy.get('.govuk-heading-m')
+
+  feedbackPrompt = (): PageElement => cy.get('.feedback-prompt')
 }

@@ -54,6 +54,8 @@
 {% block caseContent %}
     <h2 class="govuk-heading-l">Documents</h2>
 
+    <p class="govuk-body">You can sort this list by date, event, document type, or name using the blue arrows at the top of each column.</p>
+
     {{ govukTable(tableData) }}
 
     {% if documentsCount < 1 %}
@@ -62,5 +64,6 @@
         </p>
         <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"/>
     {% endif %}
+
 {% endblock %}
 

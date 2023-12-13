@@ -10,7 +10,17 @@ export default {
         crn: 'J678910',
         tier: 'C1',
         sentenceDate: '2021-09-01',
-        initialAppointment: '2021-09-01',
+        initialAppointment: {
+          date: '2021-09-01',
+          staff: {
+            name: {
+              forename: 'Unallocated',
+              middlename: null,
+              surname: 'Staff',
+              combinedName: 'Unallocated Staff',
+            },
+          },
+        },
         status: 'Currently managed',
         offenderManager: {
           forenames: 'Antonio',
@@ -40,7 +50,17 @@ export default {
         crn: 'P125643',
         tier: 'C3',
         sentenceDate: '2021-07-23',
-        initialAppointment: '2021-08-17',
+        initialAppointment: {
+          date: '2021-09-01',
+          staff: {
+            name: {
+              forename: 'Reece',
+              middlename: 'John',
+              surname: 'Spears',
+              combinedName: 'Reece John Spears',
+            },
+          },
+        },
         status: 'New to probation',
         convictionNumber: 3,
         caseType: 'COMMUNITY',
@@ -50,7 +70,17 @@ export default {
         crn: 'E124321',
         tier: 'C2',
         sentenceDate: '2021-09-01',
-        initialAppointment: '2021-09-02',
+        initialAppointment: {
+          date: '2021-09-02',
+          staff: {
+            name: {
+              forename: 'Micheala',
+              middlename: null,
+              surname: 'Smith',
+              combinedName: 'Micheala Smith',
+            },
+          },
+        },
         status: 'New to probation',
         convictionNumber: 4,
         caseType: 'COMMUNITY',
@@ -60,7 +90,17 @@ export default {
         crn: 'P567654',
         tier: 'C1',
         sentenceDate: '2021-09-01',
-        initialAppointment: '2021-09-03',
+        initialAppointment: {
+          date: '2021-09-03',
+          staff: {
+            name: {
+              forename: 'John',
+              middlename: 'Paul',
+              surname: 'Tinker',
+              combinedName: 'John Paul Tinker',
+            },
+          },
+        },
         status: 'Previously managed',
         convictionNumber: 5,
         caseType: 'COMMUNITY',
@@ -70,7 +110,17 @@ export default {
         crn: 'C567654',
         tier: 'C2',
         sentenceDate: '2021-09-01',
-        initialAppointment: '2021-09-04',
+        initialAppointment: {
+          date: '2021-09-01',
+          staff: {
+            name: {
+              forename: 'Lando',
+              middlename: null,
+              surname: 'Nickson',
+              combinedName: 'Lando Nickson',
+            },
+          },
+        },
         status: 'Previously managed',
         convictionNumber: 1,
         caseType: 'COMMUNITY',
@@ -90,7 +140,17 @@ export default {
         crn: 'F5635632',
         tier: 'D1',
         sentenceDate: '2021-09-01',
-        initialAppointment: '2021-09-01',
+        initialAppointment: {
+          date: '2021-09-01',
+          staff: {
+            name: {
+              forename: 'Emma',
+              middlename: 'Marie',
+              surname: 'Williams',
+              combinedName: 'Emma Marie Williams',
+            },
+          },
+        },
         status: 'Currently managed',
         offenderManager: {
           forenames: 'Richard',
@@ -119,7 +179,17 @@ export default {
       crn: 'J678910',
       tier: 'C1',
       sentenceDate: '2021-10-17',
-      initialAppointment: '2021-10-22',
+      initialAppointment: {
+        date: '2021-10-22',
+        staff: {
+          name: {
+            forename: 'Reece',
+            middlename: 'John',
+            surname: 'Spears',
+            combinedName: 'Reece John Spears',
+          },
+        },
+      },
       status: 'Currently managed',
       convictionNumber: 1,
       caseType: 'COMMUNITY',

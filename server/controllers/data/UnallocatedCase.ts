@@ -70,7 +70,7 @@ export default class UnallocatedCase {
       if (sentenceLength) {
         this.secondaryInitialAppointment += ` (${sentenceLength})`
       }
-    } else if (initialAppointment) {
+    } else if (initialAppointment?.date) {
       this.primaryInitialAppointment = `${dayjs(initialAppointment.date).format(config.dateFormat)}`
       if (initialAppointment.staff?.name?.combinedName !== 'Unallocated Staff') {
         this.secondaryInitialAppointment = initialAppointment.staff?.name?.combinedName

@@ -141,7 +141,7 @@ context('Find Unallocated cases', () => {
           'Name / CRN': 'Dylan Adam ArmstrongJ678910',
           Tier: 'C1',
           'Sentence date': '1 September 2021',
-          'Initial appointment date': '1 September 2021',
+          'Initial appointment date': '1 September 2021Unallocated officer',
           'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
         },
         {
@@ -155,28 +155,28 @@ context('Find Unallocated cases', () => {
           'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
           'Sentence date': '23 July 2021',
-          'Initial appointment date': '17 August 2021',
+          'Initial appointment date': '1 September 2021Reece John Spears',
           'Probation status': 'New to probation',
         },
         {
           'Name / CRN': 'Kacey RayE124321',
           Tier: 'C2',
           'Sentence date': '1 September 2021',
-          'Initial appointment date': '2 September 2021',
+          'Initial appointment date': '2 September 2021Micheala Smith',
           'Probation status': 'New to probation',
         },
         {
           'Name / CRN': 'Andrew WilliamsP567654',
           Tier: 'C1',
           'Sentence date': '1 September 2021',
-          'Initial appointment date': '3 September 2021',
+          'Initial appointment date': '3 September 2021John Paul Tinker',
           'Probation status': 'Previously managed',
         },
         {
           'Name / CRN': 'Sarah SiddallC567654',
           Tier: 'C2',
           'Sentence date': '1 September 2021',
-          'Initial appointment date': '4 September 2021',
+          'Initial appointment date': '1 September 2021Lando Nickson',
           'Probation status': 'Previously managed',
         },
         {
@@ -190,11 +190,12 @@ context('Find Unallocated cases', () => {
           'Name / CRN': 'Bill TurnerF5635632',
           Tier: 'D1',
           'Sentence date': '1 September 2021',
-          'Initial appointment date': '1 September 2021',
+          'Initial appointment date': '1 September 2021Emma Marie Williams',
           'Probation status': 'Currently managed(Richard Moore)',
         },
       ])
   })
+
   it('clicking clear link removes user preference', () => {
     cy.task('stubPutEmptyUserPreferenceAllocationDemand')
     findUnallocatedCasesPage.clearLink().click()

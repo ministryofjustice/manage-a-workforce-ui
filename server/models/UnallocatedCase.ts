@@ -12,4 +12,5 @@ export default interface UnallocatedCase {
   sentenceLength: string
   convictionNumber: number
   caseType: string
+  outOfAreaTransfer: boolean
 }

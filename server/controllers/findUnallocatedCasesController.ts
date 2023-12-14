@@ -57,7 +57,8 @@ export default class FindUnallocatedCasesController {
           value.offenderManager,
           value.convictionNumber,
           value.caseType,
-          value.sentenceLength
+          value.sentenceLength,
+          value.outOfAreaTransfer
         )
     )
 

@@ -2,7 +2,6 @@
   {
     "heading": "15 December 2023",
     "whatsNew": [
-      "Pre-sentence report: We had an issue where the wrong document was being displayed in the PSR section on the Summary screen. This is due to how documents are stored in NDelius. We’ve removed the PSR section and added a link to the main Documents screen, where <b>all documents</b> related to the current and previous events are listed. ",
       "Sorting the documents list: We’ve added help text about how to sort the documents list by date, event, document type, or name.",
       "Initial appointment: We’ve added who the initial appointment is with to the Unallocated cases table.",
       "Cannot allocate to a probation practitioner: We’ve updated the help text in the service to resolve this issue. “If you cannot allocate to a probation practitioner, it’s because their email address is not linked to their staff code in NDelius. Report the issue via Service Desk as an ‘unlinked officer code’.”"

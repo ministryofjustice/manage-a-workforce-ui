@@ -2,7 +2,7 @@
   {
     "heading": "15 December 2023",
     "whatsNew": [
-      "Pre-sentence report: We had an issue where the wrong document was being displayed in the PSR section on the Summary screen. This is due to how documents are stored in NDelius. We’ve removed the PSR section and added a link to the main Documents screen, where all documents related to the current and previous events are listed. ",
+      "Pre-sentence report: We had an issue where the wrong document was being displayed in the PSR section on the Summary screen. This is due to how documents are stored in NDelius. We’ve removed the PSR section and added a link to the main Documents screen, where <b>all documents</b> related to the current and previous events are listed. ",
       "Sorting the documents list: We’ve added help text about how to sort the documents list by date, event, document type, or name.",
       "Feedback form: We’ve added a feedback link to the bottom of the Documents screen, so you can tell us what you find useful, or what you’d like to see. <a href=\"https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2JfL5_1h2G9Gi17tzGJyJ5hURE1SU041UjMwSkQ0RFJJTE5OSzcyRDgxUy4u\">You can also send us feedback about documents here</a>.",
       "Initial appointment: We’ve added who the initial appointment is with to the Unallocated cases table.",

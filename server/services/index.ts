@@ -10,9 +10,9 @@ import TechnicalUpdatesService from './technicalUpdatesService'
 import AllocationStorageService from './allocationStorageService'
 
 export const services = () => {
-  const { hmppsAuthClient } = dataAccess()
+  const { manageUsersClient } = dataAccess()
 
-  const userService = new UserService(hmppsAuthClient)
+  const userService = new UserService(manageUsersClient)
   const allocationsService = new AllocationsService(config.apis.allocationsService)
   const workloadService = new WorkloadService(config.apis.workloadService)
   const probationEstateService = new ProbationEstateService(config.apis.probationEstateService)

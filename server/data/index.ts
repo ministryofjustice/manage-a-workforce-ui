@@ -8,14 +8,14 @@ import { initialiseAppInsights, buildAppInsightsClient } from '../utils/azureApp
 initialiseAppInsights()
 buildAppInsightsClient()
 
-import HmppsAuthClient from './hmppsAuthClient'
+import ManageUsersClient from './manageUsersClient'
 
 type RestClientBuilder<T> = (token: string) => T
 
 export const dataAccess = () => ({
-  hmppsAuthClient: new HmppsAuthClient(),
+  manageUsersClient: new ManageUsersClient(),
 })
 
 export type DataAccess = ReturnType<typeof dataAccess>
 
-export { HmppsAuthClient, RestClientBuilder }
+export { ManageUsersClient, RestClientBuilder }

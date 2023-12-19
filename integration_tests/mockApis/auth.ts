@@ -112,31 +112,10 @@ const token = () =>
     },
   })
 
-const stubUser = () =>
-  stubForAuth({
-    request: {
-      method: 'GET',
-      urlPattern: '/auth/api/user/me',
-    },
-    response: {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-      },
-      jsonBody: {
-        staffId: 231232,
-        username: 'USER1',
-        active: true,
-        name: 'john smith',
-      },
-    },
-  })
-
 export default {
   getSignInUrl,
   stubAuthPing: (): Promise<[Response, Response]> =>
     Promise.all([ping(), tokenVerification.stubTokenVerificationPing()]),
   stubSignIn: (): Promise<[Response, Response, Response, Response, Response]> =>
     Promise.all([favicon(), redirect(), signOut(), token(), tokenVerification.stubVerifyToken()]),
-  stubAuthUser: (): SuperAgentRequest => stubUser(),
 }

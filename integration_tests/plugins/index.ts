@@ -6,9 +6,11 @@ import {
   resetUserPreferenceStubs,
   resetWorkloadStubs,
   resetStaffLookupStubs,
+  resetManageUsersStubs,
 } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
+import manageUsers from '../mockApis/manageUsers'
 import tokenVerification from '../mockApis/tokenVerification'
 import allocations from '../mockApis/allocations'
 import probationRecord from '../mockApis/probationRecord'
@@ -34,11 +36,12 @@ export default (on: (string, Record) => void): void => {
         resetProbationEstateStubs(),
         resetUserPreferenceStubs(),
         resetStaffLookupStubs(),
+        resetManageUsersStubs(),
         redisService.deleteAll(),
       ])
       return Promise.all([
         auth.stubSignIn(),
-        auth.stubAuthUser(),
+        manageUsers.stubAuthUser(),
         userPreference.stubUserPreferencePDU(),
         userPreference.stubUserPreferenceTeams(),
         userPreference.stubUserPreferenceAllocationDemand({

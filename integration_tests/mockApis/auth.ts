@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { Response, SuperAgentRequest } from 'superagent'
+import { Response } from 'superagent'
 
 import { stubForAuth, getAuthRequests } from './wiremock'
 import tokenVerification from './tokenVerification'

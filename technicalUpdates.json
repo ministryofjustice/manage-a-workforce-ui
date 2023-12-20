@@ -1,5 +1,10 @@
 [
   {
+    "heading": "15 December 2023",
+    "whatsNew": [],
+    "technicalFixes": ["We’ve added the new regions that were onboarded in November to the probation estate."]
+  },
+  {
     "heading": "25 October 2023",
     "whatsNew": [
       "Select a probation practitioner screen: We moved the radio buttons to the left side of the probation practitioner table, to make it easier to use. ",

@@ -14,6 +14,13 @@
             {% if technicalUpdate.heading === "25 October 2023" %}
                 <li>Terms and conditions: We updated <a class="govuk-link" href="{{ workloadMeasurementUrl }}/terms-and-conditions">the T&Cs page for the Workload Management Tool (WMT)</a>.</li>
             {% endif %}
+            {% if technicalUpdate.heading === "15 December 2023" %}
+                <li>Pre-sentence report: We had an issue where the wrong document was being displayed in the PSR section on the Summary screen. This is due to how documents are stored in NDelius. We’ve removed the PSR section and added a link to the main Documents screen, where <b>all documents</b> related to the current and previous events are listed.</li>
+                <li>Sorting the documents list: We’ve added help text about how to sort the documents list by date, event, document type, or name.</li>
+                <li>Feedback form: We’ve added a feedback link to the bottom of the Documents screen, so you can tell us what you find useful, or what you’d like to see. <a class="govuk-link" href="https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2JfL5_1h2G9Gi17tzGJyJ5hURE1SU041UjMwSkQ0RFJJTE5OSzcyRDgxUy4u">You can also send us feedback about documents here</a>.</li>
+                <li>Initial appointment: We’ve added who the initial appointment is with to the Unallocated cases table.</li>
+                <li>Cannot allocate to a probation practitioner: We’ve updated the help text in the service to resolve this issue. “If you cannot allocate to a probation practitioner, it’s because their email address is not linked to their staff code in NDelius. Report the issue via Service Desk as an ‘unlinked officer code’.”</li>
+            {% endif %}
          </ul>
         <h2 class="govuk-heading-s">Technical fixes</h2>
         <ul class="govuk-list govuk-list--bullet">

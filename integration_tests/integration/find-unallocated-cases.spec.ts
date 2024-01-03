@@ -145,6 +145,13 @@ context('Find Unallocated cases', () => {
           'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
         },
         {
+          'Name / CRN': 'John DoeX678911  Actionrequired',
+          Tier: 'C1',
+          'Sentence date': '1 December 2023',
+          'Initial appointment date':
+            'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.',
+        },
+        {
           'Name / CRN': 'Sofia MitchellL786545',
           Tier: 'C1',
           'Sentence date': '1 September 2021',

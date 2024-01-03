@@ -1,5 +1,6 @@
 import Page from '../pages/page'
 import RiskPage from '../pages/risk'
+import outOfAreasBannerBlurb from '../constants'
 
 context('Risk', () => {
   beforeEach(() => {
@@ -8,20 +9,35 @@ context('Risk', () => {
   })
 
   it('Caption text visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
 
-  it('Risk header visible on page', () => {
+  it('Risk header visible on page and out of area transfer banner is not visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.riskHeading().should('contain', 'Risk')
+    cy.contains(outOfAreasBannerBlurb).should('not.exist')
+  })
+
+  it('Out of area transfer banner is visible on page and continue button is disabled when case is out of area transfer case', () => {
+    cy.task('stubGetUnallocatedCaseWhereIsOutOfAreaTransfer')
+    cy.task('stubGetRisk')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.riskHeading().should('contain', 'Risk')
+    riskPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
+    riskPage.button().should('contain', 'Continue')
+    riskPage.button().should('have.class', 'govuk-button--disabled')
   })
 
   it('Sub nav visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -34,20 +50,24 @@ context('Risk', () => {
   })
 
   it('Risk tab is highlighted', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.highlightedTab().should('contain.text', 'Risk')
   })
 
-  it('Continue button visible on page', () => {
+  it('Continue button enabled and visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.button().should('contain', 'Continue')
+    riskPage.button().should('not.have.class', 'govuk-button--disabled')
   })
 
   it('Active registrations visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -74,6 +94,7 @@ context('Risk', () => {
   })
 
   it('Inactive registrations visible on page', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -97,6 +118,7 @@ context('Risk', () => {
   })
 
   it('Display text when no registrations on the page', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRiskNoRegistrations')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -107,6 +129,7 @@ context('Risk', () => {
   })
 
   it('Displays Assessments when returned', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -137,6 +160,7 @@ context('Risk', () => {
   })
 
   it('Displays Not Found Assessment', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetNotFoundRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -166,6 +190,7 @@ context('Risk', () => {
   })
 
   it('Displays Unavailable Assessment', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetUnavailableRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)

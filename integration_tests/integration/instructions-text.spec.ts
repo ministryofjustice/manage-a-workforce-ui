@@ -13,6 +13,7 @@ context('Instructions text', () => {
   })
 
   it('Instructions text should save and display when switching to summary page', () => {
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')

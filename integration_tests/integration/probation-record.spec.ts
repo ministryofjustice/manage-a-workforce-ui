@@ -1,9 +1,11 @@
 import Page from '../pages/page'
 import ProbationRecordPage from '../pages/probationRecord'
+import outOfAreasBannerBlurb from '../constants'
 
 context('Probation record', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubGetUnallocatedCase')
     cy.signIn()
   })
 
@@ -19,6 +21,18 @@ context('Probation record', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
+    cy.contains(outOfAreasBannerBlurb).should('not.exist')
+  })
+
+  it('Out of area transfer banner is visible on page and continue button is disabled when case is out of area transfer case', () => {
+    cy.task('stubGetUnallocatedCaseWhereIsOutOfAreaTransfer')
+    cy.task('stubGetProbationRecord')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
+    probationRecordPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
+    probationRecordPage.button().should('contain', 'Continue')
+    probationRecordPage.button().should('have.class', 'govuk-button--disabled')
   })
 
   it('Sub nav visible on page', () => {
@@ -44,7 +58,6 @@ context('Probation record', () => {
     cy.task('stubAllEstateByRegionCode')
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
-    cy.task('stubGetUnallocatedCase')
     cy.task('stubCaseAllocationHistoryCount', 20)
     cy.task('stubGetProbationRecord')
     cy.get('a[href*="/pdu/PDU1/find-unallocated"]').click()
@@ -53,11 +66,12 @@ context('Probation record', () => {
     Page.verifyOnPage(ProbationRecordPage)
   })
 
-  it('Continue button visible on page', () => {
+  it('Continue button enabled and visible on page', () => {
     cy.task('stubGetProbationRecord')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.button().should('contain', 'Continue')
+    probationRecordPage.button().should('not.have.class', 'govuk-button--disabled')
   })
 
   it('Current sentences sub-heading visible on page with body text', () => {

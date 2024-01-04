@@ -12,13 +12,7 @@ export default class HomeController {
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       res.redirect(`/pdu/${pduSelection[0]}/teams`)
     } else {
-      res.redirect('/before-you-start')
+      res.redirect('/regions')
     }
-  }
-
-  async beforeYouStart(_, res: Response): Promise<void> {
-    return res.render('pages/before-you-start', {
-      title: 'Before you start | Manage a workforce',
-    })
   }
 }

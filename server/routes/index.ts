@@ -54,9 +54,6 @@ export default function routes(services: Services): Router {
 
   const technicalUpdatesController = new TechnicalUpdatesController(services.technicalUpdatesService)
 
-  get('/before-you-start', async (req, res) => {
-    await homeController.beforeYouStart(req, res)
-  })
   get('/', async (req, res) => {
     await homeController.redirectUser(req, res)
   })

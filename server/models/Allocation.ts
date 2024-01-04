@@ -25,4 +25,5 @@ export default interface Allocation {
   address: Address
   sentenceLength: string
   convictionNumber: number
+  outOfAreaTransfer: boolean
 }

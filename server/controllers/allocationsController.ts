@@ -2,8 +2,6 @@ import { Request, Response } from 'express'
 import type { ConfirmInstructionForm, DecisionEvidenceForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
 import Allocation from '../models/Allocation'
-import ProbationRecord from '../models/ProbationRecord'
-import Risk from '../models/Risk'
 import Sentence from './data/Sentence'
 import Conviction from '../models/Conviction'
 import { gradeOrder, gradeTips } from './data/AllocateOffenderManager'
@@ -49,19 +47,19 @@ export default class AllocationsController {
       convictionNumber: response.convictionNumber,
       title: `${response.name} | Summary | Manage a workforce`,
       pduCode,
+      outOfAreaTransfer: response.outOfAreaTransfer,
     })
   }
 
   async getProbationRecord(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
-    const response: ProbationRecord = await this.allocationsService.getProbationRecord(
-      res.locals.user.token,
-      crn,
-      convictionNumber
-    )
-    const totalPreviousCount = response.previous.length
+    const [unallocatedCase, probationRecord] = await Promise.all([
+      await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
+      await this.allocationsService.getProbationRecord(res.locals.user.token, crn, convictionNumber),
+    ])
+    const totalPreviousCount = probationRecord.previous.length
     const viewAll = totalPreviousCount <= 3 ? true : req.query.viewAll
     const amountToSlice = viewAll ? totalPreviousCount : 3
-    const currentSentences = response.active
+    const currentSentences = probationRecord.active
       .sort((a: Conviction, b: Conviction) => Date.parse(b.startDate) - Date.parse(a.startDate))
       .map(
         activeRecord =>
@@ -73,7 +71,7 @@ export default class AllocationsController {
             activeRecord.offenderManager
           )
       )
-    const previousSentences = response.previous
+    const previousSentences = probationRecord.previous
       .sort((a: Conviction, b: Conviction) => Date.parse(b.endDate) - Date.parse(a.endDate))
       .map(
         activeRecord =>
@@ -87,35 +85,43 @@ export default class AllocationsController {
       )
       .slice(0, amountToSlice)
     res.render('pages/probation-record', {
-      name: response.name,
-      crn: response.crn,
-      tier: response.tier,
+      name: probationRecord.name,
+      crn: probationRecord.crn,
+      tier: probationRecord.tier,
       currentSentences,
       previousSentences,
       viewAll,
       totalPreviousCount,
-      convictionNumber: response.convictionNumber,
-      title: `${response.name} | Probation record | Manage a workforce`,
+      convictionNumber: probationRecord.convictionNumber,
+      title: `${probationRecord.name} | Probation record | Manage a workforce`,
       pduCode,
+      outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
     })
   }
 
   async getRisk(_, res: Response, crn: string, convictionNumber, pduCode: string) {
-    const response: Risk = await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber)
+    const [unallocatedCase, risk] = await Promise.all([
+      await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
+      await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
+    ])
     res.render('pages/risk', {
-      title: `${response.name} | Risk | Manage a workforce`,
-      data: response,
-      crn: response.crn,
-      tier: response.tier,
-      name: response.name,
-      convictionNumber: response.convictionNumber,
+      title: `${risk.name} | Risk | Manage a workforce`,
+      data: risk,
+      crn: risk.crn,
+      tier: risk.tier,
+      name: risk.name,
+      convictionNumber: risk.convictionNumber,
       pduCode,
+      outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
     })
   }
 
   async getDocuments(_, res: Response, crn: string, convictionNumber, pduCode: string) {
-    const caseOverview = await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber)
-    const documents = await this.allocationsService.getDocuments(res.locals.user.token, crn)
+    const [unallocatedCase, caseOverview, documents] = await Promise.all([
+      await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
+      await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber),
+      await this.allocationsService.getDocuments(res.locals.user.token, crn),
+    ])
     const documentRows = documents.map(document => new DocumentRow(document))
     res.render('pages/documents', {
       title: `${caseOverview.name} | Documents | Manage a workforce`,
@@ -126,6 +132,7 @@ export default class AllocationsController {
       pduCode,
       documents: documentRows,
       documentsCount: documentRows.length,
+      outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
     })
   }
 

@@ -1,9 +1,11 @@
 import Page from '../pages/page'
 import DocumentsPage from '../pages/documents'
+import outOfAreasBannerBlurb from '../constants'
 
 context('Documents', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubGetUnallocatedCase')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetDocuments')
     cy.signIn()
@@ -18,6 +20,17 @@ context('Documents', () => {
   it('header visible on page', () => {
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.documentsHeading().should('contain', 'Documents')
+    cy.contains(outOfAreasBannerBlurb).should('not.exist')
+  })
+
+  it('Out of area transfer banner is visible on page and continue button is disabled when case is out of area transfer case', () => {
+    cy.task('stubGetUnallocatedCaseWhereIsOutOfAreaTransfer')
+    cy.reload()
+    const documentsPage = Page.verifyOnPage(DocumentsPage)
+    documentsPage.documentsHeading().should('contain', 'Documents')
+    documentsPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
+    documentsPage.button().should('contain', 'Continue')
+    documentsPage.button().should('have.class', 'govuk-button--disabled')
   })
 
   it('Sub nav visible on page', () => {
@@ -35,9 +48,10 @@ context('Documents', () => {
     documentsPage.highlightedTab().should('contain.text', 'Documents')
   })
 
-  it('Continue button visible on page', () => {
+  it('Continue button enabled and visible on page', () => {
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.button().should('contain', 'Continue')
+    documentsPage.button().should('not.have.class', 'govuk-button--disabled')
   })
 
   it('Instructions text should display', () => {

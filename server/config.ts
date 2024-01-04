@@ -92,6 +92,13 @@ export default {
       },
       agent: new AgentConfig(5000),
     },
+    manageUsersService: {
+      url: get('MANAGE_USERS_SERVICE_URL', 'http://127.0.0.1:9096', requiredInProduction),
+      timeout: {
+        response: 5000,
+      },
+      agent: new AgentConfig(5000),
+    },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://127.0.0.1:8100', requiredInProduction),
       timeout: {

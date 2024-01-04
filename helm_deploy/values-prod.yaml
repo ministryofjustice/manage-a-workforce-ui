@@ -10,6 +10,7 @@ generic-service:
     INGRESS_URL: "https://workforce-management.hmpps.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api.prison.service.justice.gov.uk"
+    MANAGE_USERS_SERVICE_URL: "https://manage-users-api.hmpps.service.justice.gov.uk"
     ALLOCATIONS_SERVICE_URL: "https://hmpps-allocations.hmpps.service.justice.gov.uk"
     WORKLOAD_MEASUREMENT_URL: "https://workload-measurement.hmpps.service.justice.gov.uk"
     WORKLOAD_SERVICE_URL: "https://hmpps-workload.hmpps.service.justice.gov.uk"

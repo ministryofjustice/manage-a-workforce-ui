@@ -6,12 +6,12 @@ export interface User {
   activeCaseLoadId: string
 }
 
-export default class HmppsAuthClient {
+export default class ManageUsersClient {
   private static restClient(token: string): RestClient {
-    return new RestClient('HMPPS Auth Client', config.apis.hmppsAuth, token)
+    return new RestClient('Manage Users API Client', config.apis.manageUsersService, token)
   }
 
   async getUser(token: string): Promise<User> {
-    return HmppsAuthClient.restClient(token).get({ path: '/api/user/me' }) as Promise<User>
+    return ManageUsersClient.restClient(token).get({ path: '/users/me' }) as Promise<User>
   }
 }

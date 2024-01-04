@@ -1,0 +1,10 @@
+{% macro tripleCell(first, second, secondStyle, third) -%}
+{{ first | safe}}
+{% if second -%}
+  <br><span class="{{ secondStyle }}">{{ second | safe }}
+{%- endif %}
+{% if third -%}
+  <br>
+  {{ third | safe}}
+{%- endif %}
+{%- endmacro %}

@@ -1,5 +1,6 @@
 import Page from '../pages/page'
 import SummaryPage from '../pages/summary'
+import outOfAreasBannerBlurb from '../constants'
 
 context('Summary', () => {
   beforeEach(() => {
@@ -14,9 +15,20 @@ context('Summary', () => {
     summaryPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
 
-  it('Summary header visible on page', () => {
+  it('Summary header visible on page and out of area transfer banner is not visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.summaryHeading().should('contain', 'Summary')
+    cy.contains(outOfAreasBannerBlurb).should('not.exist')
+  })
+
+  it('Out of area transfer banner is visible on page and continue button is disabled when case is out of area transfer case', () => {
+    cy.task('stubGetUnallocatedCaseWhereIsOutOfAreaTransfer')
+    cy.reload()
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.summaryHeading().should('contain', 'Summary')
+    summaryPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
+    summaryPage.button().should('contain', 'Continue')
+    summaryPage.button().should('have.class', 'govuk-button--disabled')
   })
 
   it('Sub nav visible on page', () => {
@@ -34,9 +46,10 @@ context('Summary', () => {
     summaryPage.highlightedTab().should('contain.text', 'Summary')
   })
 
-  it('Continue button visible on page', () => {
+  it('Continue button enabled and visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.button().should('contain', 'Continue')
+    summaryPage.button().should('not.have.class', 'govuk-button--disabled')
   })
 
   it('Personal details visible on page', () => {

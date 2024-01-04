@@ -28,6 +28,8 @@ export default class UnallocatedCase {
 
   convictionNumber: number
 
+  outOfAreaTransfer: boolean
+
   constructor(
     name: string,
     crn: string,
@@ -38,7 +40,8 @@ export default class UnallocatedCase {
     offenderManager: OffenderManager,
     convictionNumber: number,
     caseType: string,
-    sentenceLength: string
+    sentenceLength: string,
+    outOfAreaTransfer: boolean
   ) {
     this.name = name
     this.crn = crn
@@ -54,6 +57,7 @@ export default class UnallocatedCase {
       )})`
     }
     this.convictionNumber = convictionNumber
+    this.outOfAreaTransfer = outOfAreaTransfer
   }
 
   getGrade(grade: string): string {

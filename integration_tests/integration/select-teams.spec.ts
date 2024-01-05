@@ -1,6 +1,6 @@
 import Page from '../pages/page'
 import SelectTeamsPage from '../pages/teams'
-import BeforeYouStartPage from '../pages/beforeYouStart'
+import RegionPage from '../pages/region'
 
 context('Select teams', () => {
   beforeEach(() => {
@@ -69,9 +69,11 @@ context('Select teams', () => {
       .should('equal', 'There is a problem Select the teams you allocate to')
   })
 
-  it('selecting cancel link goes to before you start screen', () => {
+  it('selecting cancel link goes to select your region screen', () => {
+    cy.task('stubGetAllRegions')
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.cancelLink().click()
-    Page.verifyOnPage(BeforeYouStartPage)
+    const regionPage = Page.verifyOnPage(RegionPage)
+    regionPage.legendHeading().trimTextContent().should('equal', 'Select your region')
   })
 })

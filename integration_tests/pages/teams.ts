@@ -13,5 +13,5 @@ export default class SelectTeamsPage extends Page {
 
   checkbox = (id: string): PageElement => cy.get(`#${id}`)
 
-  cancelLink = (): PageElement => cy.get(`a[href*="/before-you-start"]`)
+  cancelLink = (): PageElement => cy.get(`a[href*="/regions"]`)
 }

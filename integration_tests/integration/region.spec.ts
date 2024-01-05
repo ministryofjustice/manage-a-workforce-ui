@@ -2,6 +2,8 @@ import Page from '../pages/page'
 import RegionPage from '../pages/region'
 import ProbationDeliveryUnitPage from '../pages/probationDeliveryUnit'
 
+import config from '../../server/config'
+
 context('Select region', () => {
   beforeEach(() => {
     cy.task('stubSetup')
@@ -18,6 +20,27 @@ context('Select region', () => {
   it('Legend heading visible on page', () => {
     const regionPage = Page.verifyOnPage(RegionPage)
     regionPage.legendHeading().trimTextContent().should('equal', 'Select your region')
+  })
+
+  it('Primary nav visible on page', () => {
+    const regionPage = Page.verifyOnPage(RegionPage)
+    regionPage
+      .primaryNav()
+      .should('contain', 'Allocations')
+      .and('contain', 'Offender Management')
+      .and('contain', 'OMIC')
+      .and('contain', 'Courts')
+      .and('contain', 'Search')
+  })
+
+  it('Primary nav links to wmt', () => {
+    const regionPage = Page.verifyOnPage(RegionPage)
+    regionPage
+      .navLink('offender-management-link')
+      .should('equal', `${config.nav.workloadMeasurement.url}/probation/hmpps/0`)
+    regionPage.navLink('omic-link').should('equal', `${config.nav.workloadMeasurement.url}/omic/hmpps/0`)
+    regionPage.navLink('courts-link').should('equal', `${config.nav.workloadMeasurement.url}/court-reports/hmpps/0`)
+    regionPage.navLink('search-link').should('equal', `${config.nav.workloadMeasurement.url}/officer-search`)
   })
 
   it('regions in alphabetical order', () => {

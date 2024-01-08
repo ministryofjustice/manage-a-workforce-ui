@@ -29,6 +29,14 @@
     </div>    
 </div>
 
+<div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        If you have empty teams, <a class="govuk-link--no-visited-state" href="/pdu/{{pduCode}}/select-teams" data-qa-link="edit-teams">you can remove them by editing your teams list.</a>
+    </strong>
+</div>
+
 {{ govukTable({
   caption: "Your teams",
   captionClasses: "govuk-table__caption--l",
@@ -53,7 +61,5 @@
   text: "View unallocated cases",
   href: '/pdu/' + pduCode + '/find-unallocated'
 }) }}
-
-<p class="govuk-!-margin-bottom-9">You can add and remove teams by <a class="govuk-link--no-visited-state" href="/pdu/{{pduCode}}/select-teams" data-qa-link="edit-teams">editing your team list</a>.</p>
 
 {% endblock %}

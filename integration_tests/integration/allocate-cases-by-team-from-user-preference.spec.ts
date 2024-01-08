@@ -47,9 +47,9 @@ context('Show allocate cases by team based on user preferences', () => {
     it('link to edit team list must exist', () => {
       allocateCasesByTeamPage
         .editTeamsLink()
-        .should('contain', 'editing your team list')
+        .should('contain', 'you can remove them by editing your teams list.')
         .should('have.attr', 'href')
-        .and('include', '/PDU1')
+        .and('include', '/PDU1/select-teams')
     })
 
     it('link to find unallocated cases must exist', () => {

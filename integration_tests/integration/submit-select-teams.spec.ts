@@ -151,7 +151,7 @@ context('Select teams and show allocate cases by team', () => {
     it('link to edit team list must exist', () => {
       allocateCasesByTeamPage
         .editTeamsLink()
-        .should('contain', 'editing your team list')
+        .should('contain', 'you can remove them by editing your teams list.')
         .should('have.attr', 'href')
         .and('include', '/PDU1')
     })

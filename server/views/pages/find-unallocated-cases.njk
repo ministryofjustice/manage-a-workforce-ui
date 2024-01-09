@@ -53,7 +53,7 @@
                 '<a href="/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' +  item.name + '</a>',
                 item.crn,
                 'govuk-body-s',
-                '<span><strong class="govuk-tag">Action<br>required</strong></span>'
+                '<span><strong class="action-required">Action<br>required</strong></span>'
             )},
             { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
             { text: (item.sentenceDate | dateFormat), attributes: {

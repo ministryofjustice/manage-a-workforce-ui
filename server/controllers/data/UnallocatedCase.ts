@@ -16,6 +16,8 @@ export default class UnallocatedCase {
 
   sentenceDate: string
 
+  handoverDate: string
+
   primaryInitialAppointment: string
 
   secondaryInitialAppointment: string
@@ -35,6 +37,7 @@ export default class UnallocatedCase {
     crn: string,
     tier: string,
     sentenceDate: string,
+    handoverDate: string | undefined,
     initialAppointment: InitialAppointment,
     primaryStatus: string,
     offenderManager: OffenderManager,
@@ -48,6 +51,7 @@ export default class UnallocatedCase {
     this.tier = tier
     this.tierOrder = tierOrder(tier)
     this.sentenceDate = sentenceDate
+    this.setHandoverDate(handoverDate)
     this.setInitialAppointment(initialAppointment, caseType, sentenceLength)
     this.initialAppointment = initialAppointment
     this.primaryStatus = primaryStatus
@@ -65,6 +69,29 @@ export default class UnallocatedCase {
       return `, ${grade}`
     }
     return ''
+  }
+
+  getRandomInt(max: number) {
+    return Math.floor(Math.random() * max)
+  }
+
+  addDays(days: number) {
+    const date = new Date()
+    date.setDate(date.getDate() + days)
+    return date
+  }
+
+  setHandoverDate(handoverDate: string) {
+    const zeroOrOne = this.getRandomInt(2)
+    if (zeroOrOne === 0) {
+      const addedDays = this.getRandomInt(10) * this.getRandomInt(5)
+      const randomFutureDate = this.addDays(addedDays)
+      const here = randomFutureDate.getTime() - randomFutureDate.getTimezoneOffset() * 60000
+      const dummyHandoverDateString = new Date(here).toISOString().split('T')[0]
+      this.handoverDate = `${dayjs(dummyHandoverDateString).format(config.dateFormat)}`
+    } else {
+      this.handoverDate = `${dayjs('1970-01-01').format(config.dateFormat)}`
+    }
   }
 
   setInitialAppointment(initialAppointment: InitialAppointment, caseType: string, sentenceLength: string): void {

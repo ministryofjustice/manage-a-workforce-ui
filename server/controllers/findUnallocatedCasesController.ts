@@ -52,6 +52,7 @@ export default class FindUnallocatedCasesController {
           value.crn,
           value.tier,
           value.sentenceDate,
+          value.handoverDate,
           value.initialAppointment,
           value.status,
           value.offenderManager,

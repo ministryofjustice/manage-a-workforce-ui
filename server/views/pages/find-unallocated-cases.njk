@@ -14,30 +14,45 @@
     head: [
         { text: 'Name / CRN',
             attributes: {
+                "col-number": "1",
                 "aria-sort": "none",
                 'data-persistent-id': 'find-unallocated-cases-name-crn'
             }
         },
         { text: 'Tier',
             attributes: {
+                "col-number": "2",
                 "aria-sort": "none",
                 'data-persistent-id': 'find-unallocated-cases-tier'
             }
         },
         { text: 'Sentence date',
             attributes: {
+                "col-number": "3",
                 "aria-sort": "none",
-                'data-persistent-id': 'find-unallocated-cases-sentence-date'
+                'data-persistent-id': 'find-unallocated-cases-sentence-date',
+                "date-pattern-for-sort": 'YY-MM-YYYY'
+            }
+        },
+        { text: 'COM Handover date',
+            attributes: {
+                "col-number": "4",
+                "aria-sort": "none",
+                'data-persistent-id': 'find-unallocated-cases-handover-date',
+                "date-pattern-for-sort": 'YY-MM-YYYY'
             }
         },
         { text: 'Initial appointment date',
             attributes: {
+                "col-number": "5",
                 "aria-sort": "none",
-                'data-persistent-id': 'find-unallocated-cases-appointment-date'
+                'data-persistent-id': 'find-unallocated-cases-appointment-date',
+                "date-pattern-for-sort": 'YY-MM-YYYY'
             }
         },
         { text: 'Probation status',
             attributes: {
+                "col-number": "6",
                 "aria-sort": "none",
                 'data-persistent-id': 'find-unallocated-cases-probation-status'
             }
@@ -59,6 +74,7 @@
             { text: (item.sentenceDate | dateFormat), attributes: {
                 "data-sort-value": item.sentenceDate
             } },
+            { text: item.handoverDate, attributes: { "data-sort-value": item.handoverDate } },
             {
                 colspan: "2",
                 text: 'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.', attributes: { "data-sort-value": item.tierOrder }
@@ -72,6 +88,7 @@
             { text: (item.sentenceDate | dateFormat), attributes: {
                 "data-sort-value": item.sentenceDate
             } },
+            { text: item.handoverDate, attributes: { "data-sort-value": item.handoverDate } },
             { text: doubleCell(item.primaryInitialAppointment,item.secondaryInitialAppointment, 'maw-secondary' )},
             { text: doubleCell(item.primaryStatus, item.secondaryStatus, 'govuk-body-s')}
         ] -%}

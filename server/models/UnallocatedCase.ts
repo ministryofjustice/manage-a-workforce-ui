@@ -6,6 +6,7 @@ export default interface UnallocatedCase {
   crn: string
   tier: string
   sentenceDate: string
+  handoverDate: string | undefined
   initialAppointment: InitialAppointment
   status: string
   offenderManager: OffenderManager

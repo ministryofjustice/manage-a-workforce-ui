@@ -71,24 +71,9 @@ export default class UnallocatedCase {
     return ''
   }
 
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max)
-  }
-
-  addDays(days: number) {
-    const date = new Date()
-    date.setDate(date.getDate() + days)
-    return date
-  }
-
   setHandoverDate(handoverDate: string) {
-    const zeroOrOne = this.getRandomInt(2)
-    if (zeroOrOne === 0) {
-      const addedDays = this.getRandomInt(10) * this.getRandomInt(5)
-      const randomFutureDate = this.addDays(addedDays)
-      const here = randomFutureDate.getTime() - randomFutureDate.getTimezoneOffset() * 60000
-      const dummyHandoverDateString = new Date(here).toISOString().split('T')[0]
-      this.handoverDate = `${dayjs(dummyHandoverDateString).format(config.dateFormat)}`
+    if (handoverDate) {
+      this.handoverDate = `${dayjs(handoverDate).format(config.dateFormat)}`
     } else {
       this.handoverDate = 'N/A'
     }

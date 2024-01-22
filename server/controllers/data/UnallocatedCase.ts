@@ -90,7 +90,7 @@ export default class UnallocatedCase {
       const dummyHandoverDateString = new Date(here).toISOString().split('T')[0]
       this.handoverDate = `${dayjs(dummyHandoverDateString).format(config.dateFormat)}`
     } else {
-      this.handoverDate = `${dayjs('1970-01-01').format(config.dateFormat)}`
+      this.handoverDate = 'N/A'
     }
   }
 

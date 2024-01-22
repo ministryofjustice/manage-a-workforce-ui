@@ -1,39 +1,3 @@
-const fetchSortOrderDTO = tablePersistentId => {
-  const key = this.sortOrderLocalStorageKey(tablePersistentId)
-  const serialized = window.localStorage.getItem(key)
-  if (serialized === null) {
-    return null
-  }
-  const deserialized = JSON.parse(serialized)
-  if (
-    !(
-      typeof deserialized === 'object' &&
-      deserialized !== null &&
-      'columnPersistentId' in deserialized &&
-      'order' in deserialized
-    )
-  ) {
-    return null
-  }
-  // I’m not sure why a cast is necessary; I’d have thought the compiler
-  // would allow us to assign directly to a variable of this type given
-  // the above check, but no…
-  const keyed = deserialized
-  if (!(typeof keyed.columnPersistentId === 'string')) {
-    return null
-  }
-  const withTypedValues = {
-    columnPersistentId: keyed.columnPersistentId,
-    order: this.createARIASort(keyed.order),
-    datePatternForSort: keyed.datePatternForSort,
-  }
-  if (withTypedValues.order === null) {
-    return null
-  }
-  // Ditto re “not sure why a cast is necessary”
-  return withTypedValues
-}
-
 class PersistentSortOrder {
   static activate(table) {
     const tablePersistentId = table.dataset.persistentId
@@ -41,8 +5,9 @@ class PersistentSortOrder {
       console.warn('Table has no data-persistent-id attribute; cannot set up persistent sort order.')
       return
     }
+    this.persistCurrentTablePersistentId(tablePersistentId)
     this.observeAttributeChanges(tablePersistentId)
-    const sortOrder = fetchSortOrderDTO(tablePersistentId)
+    const sortOrder = this.fetchSortOrderDTO(tablePersistentId)
     if (sortOrder !== null) {
       this.forceSortOrder(table, sortOrder)
     }
@@ -91,7 +56,6 @@ class PersistentSortOrder {
         // IE11 doesn't support `.includes`, so we're using `indexOf` here.
         if (['descending', 'ascending'].indexOf(newAriaSort) > -1) {
           this.persistSortOrder(tablePersistentId, columnPersistentId, newAriaSort, datePatternForSort, columnNumber)
-          this.persistCurrentTablePersistentId(tablePersistentId)
         }
       }
     })
@@ -105,10 +69,45 @@ class PersistentSortOrder {
     const object = { columnPersistentId, order, datePatternForSort, columnNumber }
     window.localStorage.setItem(key, JSON.stringify(object))
   }
+  static fetchSortOrderDTO(tablePersistentId) {
+    const key = this.sortOrderLocalStorageKey(tablePersistentId)
+    const serialized = window.localStorage.getItem(key)
+    if (serialized === null) {
+      return null
+    }
+    const deserialized = JSON.parse(serialized)
+    if (
+      !(
+        typeof deserialized === 'object' &&
+        deserialized !== null &&
+        'columnPersistentId' in deserialized &&
+        'order' in deserialized
+      )
+    ) {
+      return null
+    }
+    // I’m not sure why a cast is necessary; I’d have thought the compiler
+    // would allow us to assign directly to a variable of this type given
+    // the above check, but no…
+    const keyed = deserialized
+    if (!(typeof keyed.columnPersistentId === 'string')) {
+      return null
+    }
+    const withTypedValues = {
+      columnPersistentId: keyed.columnPersistentId,
+      order: this.createARIASort(keyed.order),
+      datePatternForSort: keyed.datePatternForSort,
+    }
+    if (withTypedValues.order === null) {
+      return null
+    }
+    // Ditto re “not sure why a cast is necessary”
+    return withTypedValues
+  }
 
   static persistCurrentTablePersistentId(tablePersistentId) {
     const object = { tablePersistentId }
-    window.localStorage.setItem('currentTablePersistentId', JSON.stringify(object))
+    window.localStorage.setItem('currentTable', JSON.stringify(object))
   }
 
   static forceSortOrder(table, sortOrder) {
@@ -224,20 +223,24 @@ $(() => {
     return 0
   }
 
+  function valueIsDate(value) {
+    return value !== undefined && value !== '' && value !== 'N/A'
+  }
+
   function extractAndConvertDates(date1String, date2String, datePatternForSort) {
-    const dare1Extracted = extractDateFromValue(date1String, datePatternForSort)
-    const dare2Extracted = extractDateFromValue(date2String, datePatternForSort)
+    // const dare1Extracted = extractDateFromValue(date1String, datePatternForSort)
+    // const dare2Extracted = extractDateFromValue(date2String, datePatternForSort)
     let date1
-    if (dare1Extracted) {
-      date1 = new Date(dare1Extracted)
+    if (valueIsDate(date1String)) {
+      date1 = new Date(date1String)
     } else {
-      date1 = new Date('1970-01-01')
+      date1 = new Date('3000-01-01')
     }
     let date2
-    if (dare2Extracted) {
-      date2 = new Date(dare2Extracted)
+    if (valueIsDate(date2String)) {
+      date2 = new Date(date2String)
     } else {
-      date2 = new Date('1970-01-01')
+      date2 = new Date('3000-01-01')
     }
     return {
       date1,
@@ -252,7 +255,7 @@ $(() => {
   }
 
   function fetchCurrentTablePersistentIdDTO() {
-    const key = 'currentTablePersistentId'
+    const key = 'currentTable'
     const serialized = window.localStorage.getItem(key)
     if (serialized === null) {
       return null
@@ -269,14 +272,14 @@ $(() => {
       return null
     }
     const withTypedValues = {
-      columnPersistentId: keyed.tablePersistentId,
+      tablePersistentId: keyed.tablePersistentId,
     }
     return withTypedValues
   }
 
   MOJFrontend.SortableTable.prototype.sort = function (rows, columnNumber, sortDirection) {
-    const currentTablePersistentIdDTO = fetchCurrentTablePersistentIdDTO()
-    const sortOrder = fetchSortOrderDTO(currentTablePersistentIdDTO)
+    const currentTableDTO = fetchCurrentTablePersistentIdDTO()
+    const sortOrder = PersistentSortOrder.fetchSortOrderDTO(currentTableDTO.tablePersistentId)
     var newRows = rows.sort(
       $.proxy(function (rowA, rowB) {
         var tdA = $(rowA).find('td,th').eq(columnNumber)

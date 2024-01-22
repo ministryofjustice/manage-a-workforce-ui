@@ -50,7 +50,7 @@ class PersistentSortOrder {
           console.warn('Unrecognised aria-sort attribute')
           return
         }
-        const datePatternForSort = header.getAttribute('date-pattern-for-sort')
+        const dataType = header.getAttribute('data-type')
         const columnPersistentId = header.dataset.persistentId
         if (columnPersistentId === undefined) {
           console.warn('Column has no data-persistent-id attribute; cannot persist chosen order.')
@@ -58,7 +58,7 @@ class PersistentSortOrder {
         }
         // IE11 doesn't support `.includes`, so we're using `indexOf` here.
         if (['descending', 'ascending'].indexOf(newAriaSort) > -1) {
-          this.persistSortOrder(tablePersistentId, columnPersistentId, newAriaSort, datePatternForSort)
+          this.persistSortOrder(tablePersistentId, columnPersistentId, newAriaSort, dataType)
         }
       }
     })
@@ -66,9 +66,9 @@ class PersistentSortOrder {
   static sortOrderLocalStorageKey(tablePersistentId) {
     return `sortOrder:${tablePersistentId}`
   }
-  static persistSortOrder(tablePersistentId, columnPersistentId, order, datePatternForSort) {
+  static persistSortOrder(tablePersistentId, columnPersistentId, order, dataType) {
     const key = this.sortOrderLocalStorageKey(tablePersistentId)
-    const object = { columnPersistentId, order, datePatternForSort }
+    const object = { columnPersistentId, order, dataType }
     window.localStorage.setItem(key, JSON.stringify(object))
   }
   static fetchSortOrderDTO(tablePersistentId) {
@@ -98,7 +98,7 @@ class PersistentSortOrder {
     const withTypedValues = {
       columnPersistentId: keyed.columnPersistentId,
       order: this.createARIASort(keyed.order),
-      datePatternForSort: keyed.datePatternForSort,
+      dataType: keyed.dataType,
     }
     if (withTypedValues.order === null) {
       return null
@@ -198,8 +198,8 @@ $(() => {
     return 0
   }
 
-  function sortDateAsc(date1String, date2String, datePatternForSort) {
-    const { date1, date2 } = extractAndConvertDates(date1String, date2String, datePatternForSort)
+  function sortDateAsc(date1String, date2String, dateDataType) {
+    const { date1, date2 } = extractAndConvertDates(date1String, date2String, dateDataType)
     if (date1 < date2) {
       return -1
     } else if (date1 > date2) {
@@ -208,8 +208,8 @@ $(() => {
     return 0
   }
 
-  function sortDateDesc(date1String, date2String, datePatternForSort) {
-    const { date1, date2 } = extractAndConvertDates(date1String, date2String, datePatternForSort)
+  function sortDateDesc(date1String, date2String, dateDataType) {
+    const { date1, date2 } = extractAndConvertDates(date1String, date2String, dateDataType)
     if (date2 < date1) {
       return -1
     }
@@ -219,35 +219,41 @@ $(() => {
     return 0
   }
 
-  function valueIsDate(value) {
+  function valueIsSet(value) {
     return value !== undefined && value !== '' && value !== 'N/A'
   }
 
-  function extractAndConvertDates(date1String, date2String, datePatternForSort) {
-    // const dare1Extracted = extractDateFromValue(date1String, datePatternForSort)
-    // const dare2Extracted = extractDateFromValue(date2String, datePatternForSort)
-    let date1
-    if (valueIsDate(date1String)) {
-      date1 = new Date(date1String)
-    } else {
-      date1 = new Date('3000-01-01')
-    }
-    let date2
-    if (valueIsDate(date2String)) {
-      date2 = new Date(date2String)
-    } else {
-      date2 = new Date('3000-01-01')
-    }
+  function extractAndConvertDates(date1String, date2String, dateDataType) {
     return {
-      date1,
-      date2,
+      date1: extractAndConvertDate(date1String, dateDataType),
+      date2: extractAndConvertDate(date2String, dateDataType),
     }
   }
 
-  function extractDateFromValue(value, datePatternForSort) {
-    //todo: get the date regex-pattern working for YYYY-MM-DD or consider attempting to create a Date() object from the "value" in a try and catch
-    const arr = value.match('enter regex-pattern here') || [''] //could also use null for empty value
-    return arr[0]
+  function extractAndConvertDate(dateString, dateDataType) {
+    const farInTheFutureDate = Date.parse('3000-01-01')
+    if (valueIsSet(dateString)) {
+      const extractedDateString = extractDateFromValue(dateString, dateDataType)
+      if (extractedDateString) {
+        let convertedDate = Date.parse(extractedDateString)
+        if (isNaN(convertedDate)) {
+          convertedDate = farInTheFutureDate
+        }
+        return convertedDate
+      }
+    }
+    return farInTheFutureDate
+  }
+
+  function extractDateFromValue(value, dateDataType) {
+    if (dateDataType === 'DATE_ON_FIRST_LINE') {
+      const lines = value.split('\n')
+      if (lines.length > 1) {
+        return lines[0]
+      }
+      return undefined
+    }
+    return value
   }
 
   function fetchCurrentTablePersistentIdDTO() {
@@ -273,9 +279,14 @@ $(() => {
     return withTypedValues
   }
 
+  function isSortDataTypeADate(dataType) {
+    return dataType && (dataType === 'DATE' || dataType === 'DATE_ON_FIRST_LINE')
+  }
+
   MOJFrontend.SortableTable.prototype.sort = function (rows, columnNumber, sortDirection) {
     const currentTableDTO = fetchCurrentTablePersistentIdDTO()
     const sortOrder = PersistentSortOrder.fetchSortOrderDTO(currentTableDTO.tablePersistentId)
+    const sortDataTypeIsDate = isSortDataTypeADate(sortOrder.dataType)
     var newRows = rows.sort(
       $.proxy(function (rowA, rowB) {
         var tdA = $(rowA).find('td,th').eq(columnNumber)
@@ -283,14 +294,14 @@ $(() => {
         var valueA = this.getCellValue(tdA)
         var valueB = this.getCellValue(tdB)
         if (sortDirection === 'ascending') {
-          if (sortOrder.datePatternForSort) {
-            return sortDateAsc(valueA, valueB, sortOrder.datePatternForSort)
+          if (sortDataTypeIsDate) {
+            return sortDateAsc(valueA, valueB, sortOrder.dataType)
           } else {
             return sortStringAsc(valueA, valueB)
           }
         } else {
-          if (sortOrder.datePatternForSort) {
-            return sortDateDesc(valueA, valueB, sortOrder.datePatternForSort)
+          if (sortDataTypeIsDate) {
+            return sortDateDesc(valueA, valueB, sortOrder.dataType)
           } else {
             return sortStringDesc(valueA, valueB)
           }

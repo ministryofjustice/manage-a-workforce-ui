@@ -37,7 +37,7 @@ export default class UnallocatedCase {
     crn: string,
     tier: string,
     sentenceDate: string,
-    handoverDate: string | undefined,
+    handoverDate: string,
     initialAppointment: InitialAppointment,
     primaryStatus: string,
     offenderManager: OffenderManager,

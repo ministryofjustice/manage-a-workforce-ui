@@ -12,6 +12,10 @@ class PersistentSortOrder {
       this.forceSortOrder(table, sortOrder)
     }
   }
+  static persistCurrentTablePersistentId(tablePersistentId) {
+    const object = { tablePersistentId }
+    window.localStorage.setItem('currentTable', JSON.stringify(object))
+  }
   static createARIASort(from) {
     if (from === 'none' || from === 'ascending' || from === 'descending') {
       return from
@@ -46,7 +50,6 @@ class PersistentSortOrder {
           console.warn('Unrecognised aria-sort attribute')
           return
         }
-        const columnNumber = header.getAttribute('col-number')
         const datePatternForSort = header.getAttribute('date-pattern-for-sort')
         const columnPersistentId = header.dataset.persistentId
         if (columnPersistentId === undefined) {
@@ -55,7 +58,7 @@ class PersistentSortOrder {
         }
         // IE11 doesn't support `.includes`, so we're using `indexOf` here.
         if (['descending', 'ascending'].indexOf(newAriaSort) > -1) {
-          this.persistSortOrder(tablePersistentId, columnPersistentId, newAriaSort, datePatternForSort, columnNumber)
+          this.persistSortOrder(tablePersistentId, columnPersistentId, newAriaSort, datePatternForSort)
         }
       }
     })
@@ -63,10 +66,9 @@ class PersistentSortOrder {
   static sortOrderLocalStorageKey(tablePersistentId) {
     return `sortOrder:${tablePersistentId}`
   }
-
-  static persistSortOrder(tablePersistentId, columnPersistentId, order, datePatternForSort, columnNumber) {
+  static persistSortOrder(tablePersistentId, columnPersistentId, order, datePatternForSort) {
     const key = this.sortOrderLocalStorageKey(tablePersistentId)
-    const object = { columnPersistentId, order, datePatternForSort, columnNumber }
+    const object = { columnPersistentId, order, datePatternForSort }
     window.localStorage.setItem(key, JSON.stringify(object))
   }
   static fetchSortOrderDTO(tablePersistentId) {
@@ -104,12 +106,6 @@ class PersistentSortOrder {
     // Ditto re “not sure why a cast is necessary”
     return withTypedValues
   }
-
-  static persistCurrentTablePersistentId(tablePersistentId) {
-    const object = { tablePersistentId }
-    window.localStorage.setItem('currentTable', JSON.stringify(object))
-  }
-
   static forceSortOrder(table, sortOrder) {
     const headers = table.querySelectorAll('thead th')
     let header

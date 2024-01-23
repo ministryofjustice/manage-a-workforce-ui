@@ -5,16 +5,62 @@ class PersistentSortOrder {
       console.warn('Table has no data-persistent-id attribute; cannot set up persistent sort order.')
       return
     }
-    this.persistCurrentTablePersistentId(tablePersistentId)
+    this.persistCurrentTable(tablePersistentId)
     this.observeAttributeChanges(tablePersistentId)
     const sortOrder = this.fetchSortOrderDTO(tablePersistentId)
     if (sortOrder !== null) {
       this.forceSortOrder(table, sortOrder)
     }
   }
-  static persistCurrentTablePersistentId(tablePersistentId) {
-    const object = { tablePersistentId }
-    window.localStorage.setItem('currentTable', JSON.stringify(object))
+  static generateCurrentTableColumns() {
+    const headers = document.querySelectorAll('thead th')
+    const currentTableColumns = []
+    let columnIndex = 0
+    // IE11 doesn't allow us to call `forEach` on NodeListOf<Element>
+    Array.prototype.forEach.call(headers, header => {
+      const columnDataPersistentId = header.getAttribute('data-persistent-id')
+      const columnDataType = header.getAttribute('data-type')
+      const columnSortDirection = header.getAttribute('aria-sort')
+      currentTableColumns.push({
+        columnIndex,
+        columnDataPersistentId,
+        columnDataType,
+        columnSortDirection,
+      })
+      columnIndex += 1
+    })
+    return currentTableColumns
+  }
+  static persistCurrentTable(tablePersistentId) {
+    const currentTableColumns = this.generateCurrentTableColumns()
+    const currentTable = {
+      tablePersistentId: tablePersistentId,
+      currentTableColumns: currentTableColumns,
+    }
+    window.localStorage.setItem('currentTable', JSON.stringify(currentTable))
+  }
+  static fetchCurrentTablePersistentIdDTO() {
+    const key = 'currentTable'
+    const serialized = window.localStorage.getItem(key)
+    if (serialized === null) {
+      return null
+    }
+    const deserialized = JSON.parse(serialized)
+    if (!(typeof deserialized === 'object' && deserialized !== null && 'tablePersistentId' in deserialized)) {
+      return null
+    }
+    // I’m not sure why a cast is necessary; I’d have thought the compiler
+    // would allow us to assign directly to a variable of this type given
+    // the above check, but no…
+    const keyed = deserialized
+    if (!(typeof keyed.tablePersistentId === 'string')) {
+      return null
+    }
+    const withTypedValues = {
+      tablePersistentId: keyed.tablePersistentId,
+      currentTableColumns: keyed.currentTableColumns,
+    }
+    return withTypedValues
   }
   static createARIASort(from) {
     if (from === 'none' || from === 'ascending' || from === 'descending') {
@@ -59,6 +105,7 @@ class PersistentSortOrder {
         // IE11 doesn't support `.includes`, so we're using `indexOf` here.
         if (['descending', 'ascending'].indexOf(newAriaSort) > -1) {
           this.persistSortOrder(tablePersistentId, columnPersistentId, newAriaSort, dataType)
+          this.persistCurrentTable(tablePersistentId)
         }
       }
     })
@@ -256,52 +303,45 @@ $(() => {
     return value
   }
 
-  function fetchCurrentTablePersistentIdDTO() {
-    const key = 'currentTable'
-    const serialized = window.localStorage.getItem(key)
-    if (serialized === null) {
-      return null
-    }
-    const deserialized = JSON.parse(serialized)
-    if (!(typeof deserialized === 'object' && deserialized !== null && 'tablePersistentId' in deserialized)) {
-      return null
-    }
-    // I’m not sure why a cast is necessary; I’d have thought the compiler
-    // would allow us to assign directly to a variable of this type given
-    // the above check, but no…
-    const keyed = deserialized
-    if (!(typeof keyed.tablePersistentId === 'string')) {
-      return null
-    }
-    const withTypedValues = {
-      tablePersistentId: keyed.tablePersistentId,
-    }
-    return withTypedValues
-  }
-
   function isSortDataTypeADate(dataType) {
     return dataType && (dataType === 'DATE' || dataType === 'DATE_ON_FIRST_LINE')
   }
 
-  MOJFrontend.SortableTable.prototype.sort = function (rows, columnNumber, sortDirection) {
-    const currentTableDTO = fetchCurrentTablePersistentIdDTO()
-    const sortOrder = PersistentSortOrder.fetchSortOrderDTO(currentTableDTO.tablePersistentId)
-    const sortDataTypeIsDate = isSortDataTypeADate(sortOrder.dataType)
+  function getClickedColumn(columnIndex) {
+    let clickedColumn = {
+      columnIndex: columnIndex,
+      columnDataType: 'string',
+    }
+    const currentTableDTO = PersistentSortOrder.fetchCurrentTablePersistentIdDTO()
+    if (currentTableDTO) {
+      const matchingColumns = currentTableDTO.currentTableColumns.filter(
+        column => column.columnIndex.toString() === columnIndex
+      )
+      if (matchingColumns.length > 0) {
+        clickedColumn = matchingColumns[0]
+      }
+    }
+    return clickedColumn
+  }
+
+  MOJFrontend.SortableTable.prototype.sort = function (rows, columnIndex, sortDirection) {
+    const clickedColumn = getClickedColumn(columnIndex, sortDirection)
+    const sortDataTypeIsDate = isSortDataTypeADate(clickedColumn.columnDataType)
     var newRows = rows.sort(
       $.proxy(function (rowA, rowB) {
-        var tdA = $(rowA).find('td,th').eq(columnNumber)
-        var tdB = $(rowB).find('td,th').eq(columnNumber)
+        var tdA = $(rowA).find('td,th').eq(columnIndex)
+        var tdB = $(rowB).find('td,th').eq(columnIndex)
         var valueA = this.getCellValue(tdA)
         var valueB = this.getCellValue(tdB)
         if (sortDirection === 'ascending') {
           if (sortDataTypeIsDate) {
-            return sortDateAsc(valueA, valueB, sortOrder.dataType)
+            return sortDateAsc(valueA, valueB, clickedColumn.columnDataType)
           } else {
             return sortStringAsc(valueA, valueB)
           }
         } else {
           if (sortDataTypeIsDate) {
-            return sortDateDesc(valueA, valueB, sortOrder.dataType)
+            return sortDateDesc(valueA, valueB, clickedColumn.columnDataType)
           } else {
             return sortStringDesc(valueA, valueB)
           }

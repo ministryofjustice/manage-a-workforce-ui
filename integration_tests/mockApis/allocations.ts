@@ -1,200 +1,198 @@
 import { SuperAgentRequest } from 'superagent'
 import { stubForAllocation } from './wiremock'
 
+export const allocationsByTeamResponse = [
+  {
+    name: 'Dylan Adam Armstrong',
+    crn: 'J678910',
+    tier: 'C1',
+    sentenceDate: '2021-09-01',
+    handoverDate: null,
+    initialAppointment: {
+      date: '2021-09-01',
+      staff: {
+        name: {
+          forename: 'Unallocated',
+          middlename: null,
+          surname: 'Staff',
+          combinedName: 'Unallocated Staff',
+        },
+      },
+    },
+    status: 'Currently managed',
+    offenderManager: {
+      forenames: 'Antonio',
+      surname: 'LoSardo',
+      grade: 'SPO',
+    },
+    convictionNumber: 1,
+    caseType: 'COMMUNITY',
+    outOfAreaTransfer: false,
+  },
+  {
+    name: 'Sofia Mitchell',
+    crn: 'L786545',
+    tier: 'C1',
+    sentenceDate: '2021-09-01',
+    handoverDate: '2025-01-03',
+    initialAppointment: null,
+    status: 'Previously managed',
+    offenderManager: {
+      forenames: 'John',
+      surname: 'Agard',
+    },
+    convictionNumber: 2,
+    caseType: 'CUSTODY',
+    sentenceLength: '5 Years',
+    outOfAreaTransfer: false,
+  },
+  {
+    name: 'John Smith',
+    crn: 'P125643',
+    tier: 'C3',
+    sentenceDate: '2021-07-23',
+    handoverDate: null,
+    initialAppointment: {
+      date: '2021-09-01',
+      staff: {
+        name: {
+          forename: 'Reece',
+          middlename: 'John',
+          surname: 'Spears',
+          combinedName: 'Reece John Spears',
+        },
+      },
+    },
+    status: 'New to probation',
+    convictionNumber: 3,
+    caseType: 'COMMUNITY',
+    outOfAreaTransfer: false,
+  },
+  {
+    name: 'Kacey Ray',
+    crn: 'E124321',
+    tier: 'C2',
+    sentenceDate: '2021-09-01',
+    handoverDate: null,
+    initialAppointment: {
+      date: '2021-09-02',
+      staff: {
+        name: {
+          forename: 'Micheala',
+          middlename: null,
+          surname: 'Smith',
+          combinedName: 'Micheala Smith',
+        },
+      },
+    },
+    status: 'New to probation',
+    convictionNumber: 4,
+    caseType: 'COMMUNITY',
+    outOfAreaTransfer: false,
+  },
+  {
+    name: 'Andrew Williams',
+    crn: 'P567654',
+    tier: 'C1',
+    sentenceDate: '2021-09-01',
+    handoverDate: null,
+    initialAppointment: {
+      date: '2021-09-03',
+      staff: {
+        name: {
+          forename: 'John',
+          middlename: 'Paul',
+          surname: 'Tinker',
+          combinedName: 'John Paul Tinker',
+        },
+      },
+    },
+    status: 'Previously managed',
+    convictionNumber: 5,
+    caseType: 'COMMUNITY',
+    outOfAreaTransfer: false,
+  },
+  {
+    name: 'Sarah Siddall',
+    crn: 'C567654',
+    tier: 'C2',
+    sentenceDate: '2021-09-01',
+    handoverDate: null,
+    initialAppointment: {
+      date: '2021-09-01',
+      staff: {
+        name: {
+          forename: 'Lando',
+          middlename: null,
+          surname: 'Nickson',
+          combinedName: 'Lando Nickson',
+        },
+      },
+    },
+    status: 'Previously managed',
+    convictionNumber: 1,
+    caseType: 'COMMUNITY',
+    outOfAreaTransfer: false,
+  },
+  {
+    name: 'Mick Jones',
+    crn: 'C234432',
+    tier: 'C1',
+    sentenceDate: '2021-08-25',
+    handoverDate: null,
+    initialAppointment: null,
+    status: 'Previously managed',
+    convictionNumber: 6,
+    caseType: 'COMMUNITY',
+    outOfAreaTransfer: false,
+  },
+  {
+    name: 'Bill Turner',
+    crn: 'F5635632',
+    tier: 'D1',
+    sentenceDate: '2021-09-01',
+    handoverDate: null,
+    initialAppointment: {
+      date: '2021-09-01',
+      staff: {
+        name: {
+          forename: 'Emma',
+          middlename: 'Marie',
+          surname: 'Williams',
+          combinedName: 'Emma Marie Williams',
+        },
+      },
+    },
+    status: 'Currently managed',
+    offenderManager: {
+      forenames: 'Richard',
+      surname: 'Moore',
+    },
+    convictionNumber: 7,
+    caseType: 'COMMUNITY',
+    outOfAreaTransfer: false,
+  },
+  {
+    name: 'Daffy Duck',
+    crn: 'X768522',
+    tier: 'C1',
+    sentenceDate: '2000-03-01',
+    handoverDate: '2024-10-03',
+    initialAppointment: null,
+    status: 'Previously managed',
+    offenderManager: {
+      forenames: 'John',
+      surname: 'Agard',
+    },
+    convictionNumber: 2,
+    caseType: 'CUSTODY',
+    sentenceLength: '25 Years',
+    outOfAreaTransfer: false,
+  },
+]
+
 export default {
-  stubGetAllocationsByTeam: ({
-    teamCode,
-    response = [
-      {
-        name: 'Dylan Adam Armstrong',
-        crn: 'J678910',
-        tier: 'C1',
-        sentenceDate: '2021-09-01',
-        initialAppointment: {
-          date: '2021-09-01',
-          staff: {
-            name: {
-              forename: 'Unallocated',
-              middlename: null,
-              surname: 'Staff',
-              combinedName: 'Unallocated Staff',
-            },
-          },
-        },
-        status: 'Currently managed',
-        offenderManager: {
-          forenames: 'Antonio',
-          surname: 'LoSardo',
-          grade: 'SPO',
-        },
-        convictionNumber: 1,
-        caseType: 'COMMUNITY',
-        outOfAreaTransfer: false,
-      },
-      {
-        name: 'John Doe',
-        crn: 'X678911',
-        tier: 'C1',
-        sentenceDate: '2023-12-01',
-        initialAppointment: {
-          date: '2023-12-20',
-          staff: {
-            name: {
-              forename: 'Unallocated',
-              middlename: null,
-              surname: 'Staff',
-              combinedName: 'Unallocated Staff',
-            },
-          },
-        },
-        status: 'Currently managed',
-        offenderManager: {
-          forenames: 'Jane',
-          surname: 'Doe',
-          grade: 'SPO',
-        },
-        convictionNumber: 1,
-        caseType: 'COMMUNITY',
-        outOfAreaTransfer: true,
-      },
-      {
-        name: 'Sofia Mitchell',
-        crn: 'L786545',
-        tier: 'C1',
-        sentenceDate: '2021-09-01',
-        initialAppointment: null,
-        status: 'Previously managed',
-        offenderManager: {
-          forenames: 'John',
-          surname: 'Agard',
-        },
-        convictionNumber: 2,
-        caseType: 'CUSTODY',
-        sentenceLength: '32 Years',
-        outOfAreaTransfer: false,
-      },
-      {
-        name: 'John Smith',
-        crn: 'P125643',
-        tier: 'C3',
-        sentenceDate: '2021-07-23',
-        initialAppointment: {
-          date: '2021-09-01',
-          staff: {
-            name: {
-              forename: 'Reece',
-              middlename: 'John',
-              surname: 'Spears',
-              combinedName: 'Reece John Spears',
-            },
-          },
-        },
-        status: 'New to probation',
-        convictionNumber: 3,
-        caseType: 'COMMUNITY',
-        outOfAreaTransfer: false,
-      },
-      {
-        name: 'Kacey Ray',
-        crn: 'E124321',
-        tier: 'C2',
-        sentenceDate: '2021-09-01',
-        initialAppointment: {
-          date: '2021-09-02',
-          staff: {
-            name: {
-              forename: 'Micheala',
-              middlename: null,
-              surname: 'Smith',
-              combinedName: 'Micheala Smith',
-            },
-          },
-        },
-        status: 'New to probation',
-        convictionNumber: 4,
-        caseType: 'COMMUNITY',
-        outOfAreaTransfer: false,
-      },
-      {
-        name: 'Andrew Williams',
-        crn: 'P567654',
-        tier: 'C1',
-        sentenceDate: '2021-09-01',
-        initialAppointment: {
-          date: '2021-09-03',
-          staff: {
-            name: {
-              forename: 'John',
-              middlename: 'Paul',
-              surname: 'Tinker',
-              combinedName: 'John Paul Tinker',
-            },
-          },
-        },
-        status: 'Previously managed',
-        convictionNumber: 5,
-        caseType: 'COMMUNITY',
-        outOfAreaTransfer: false,
-      },
-      {
-        name: 'Sarah Siddall',
-        crn: 'C567654',
-        tier: 'C2',
-        sentenceDate: '2021-09-01',
-        initialAppointment: {
-          date: '2021-09-01',
-          staff: {
-            name: {
-              forename: 'Lando',
-              middlename: null,
-              surname: 'Nickson',
-              combinedName: 'Lando Nickson',
-            },
-          },
-        },
-        status: 'Previously managed',
-        convictionNumber: 1,
-        caseType: 'COMMUNITY',
-        outOfAreaTransfer: false,
-      },
-      {
-        name: 'Mick Jones',
-        crn: 'C234432',
-        tier: 'C1',
-        sentenceDate: '2021-08-25',
-        initialAppointment: null,
-        status: 'Previously managed',
-        convictionNumber: 6,
-        caseType: 'COMMUNITY',
-        outOfAreaTransfer: false,
-      },
-      {
-        name: 'Bill Turner',
-        crn: 'F5635632',
-        tier: 'D1',
-        sentenceDate: '2021-09-01',
-        initialAppointment: {
-          date: '2021-09-01',
-          staff: {
-            name: {
-              forename: 'Emma',
-              middlename: 'Marie',
-              surname: 'Williams',
-              combinedName: 'Emma Marie Williams',
-            },
-          },
-        },
-        status: 'Currently managed',
-        offenderManager: {
-          forenames: 'Richard',
-          surname: 'Moore',
-        },
-        convictionNumber: 7,
-        caseType: 'COMMUNITY',
-        outOfAreaTransfer: false,
-      },
-    ],
-  }): SuperAgentRequest => {
+  stubGetAllocationsByTeam: ({ teamCode, response = allocationsByTeamResponse }): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',

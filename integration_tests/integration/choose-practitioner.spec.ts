@@ -412,22 +412,26 @@ context('Choose Practitioner', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const headings = ['Name', 'Team', 'Grade', 'Workload %', 'Cases in past 7 days', 'Community cases', 'Custody cases']
     headings.forEach(heading => {
-      it(`should set headings correctly when sorting by ${heading}`, () => {
-        cy.get('table').within(() => cy.contains('button', heading).click())
+      cy.get('table')
+        .eq(0)
+        .within(() => cy.contains('button', heading).click())
 
-        // check the clicked heading is sorted and all others are not
-        cy.get('thead')
-          .find('th')
-          .each($el => {
-            const sort = $el.text() === heading ? 'ascending' : 'none'
-            cy.wrap($el).should('have.attr', { 'aria-sort': sort })
-          })
+      // check the clicked heading is sorted and all others are not
+      cy.get('thead')
+        .find('th')
+        .each($el => {
+          const sort = $el.text() === heading ? 'ascending' : 'none'
+          cy.wrap($el).should('have.attr', { 'aria-sort': sort })
+        })
 
-        // clicking again sorts in the other direction
-        cy.get('table').within(() => cy.contains('button', heading).click())
+      // clicking again sorts in the other direction
+      cy.get('table')
+        .eq(0)
+        .within(() => cy.contains('button', heading).click())
 
-        cy.get('table').within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
-      })
+      cy.get('table')
+        .eq(0)
+        .within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
     })
   })
 

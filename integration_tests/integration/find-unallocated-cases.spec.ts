@@ -2,6 +2,7 @@ import FindUnallocatedPage from '../pages/findUnallocatedCases'
 import Page from '../pages/page'
 
 import config from '../../server/config'
+import { allocationsByTeamResponse } from '../mockApis/allocations'
 
 context('Find Unallocated cases', () => {
   let findUnallocatedCasesPage: FindUnallocatedPage
@@ -131,8 +132,37 @@ context('Find Unallocated cases', () => {
   })
 
   it('retrieve allocation demand for team saved in user preference allocation demand', () => {
+    const outOfAreaTransferCase = {
+      name: 'John Doe',
+      crn: 'X678911',
+      tier: 'C1',
+      sentenceDate: '2023-12-01',
+      handoverDate: null,
+      initialAppointment: {
+        date: '2023-12-20',
+        staff: {
+          name: {
+            forename: 'Unallocated',
+            middlename: null,
+            surname: 'Staff',
+            combinedName: 'Unallocated Staff',
+          },
+        },
+      },
+      status: 'Currently managed',
+      offenderManager: {
+        forenames: 'Jane',
+        surname: 'Doe',
+        grade: 'SPO',
+      },
+      convictionNumber: 1,
+      caseType: 'COMMUNITY',
+      outOfAreaTransfer: true,
+    }
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
-    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
+    const response = allocationsByTeamResponse
+    response.push(outOfAreaTransferCase)
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1', response })
     cy.reload()
     cy.get('table')
       .getTable()
@@ -141,27 +171,23 @@ context('Find Unallocated cases', () => {
           'Name / CRN': 'Dylan Adam ArmstrongJ678910',
           Tier: 'C1',
           'Sentence date': '1 September 2021',
+          'COM Handover date': 'N/A',
           'Initial appointment date': '1 September 2021Unallocated officer',
           'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
-        },
-        {
-          'Name / CRN': 'John DoeX678911  Actionrequired',
-          Tier: 'C1',
-          'Sentence date': '1 December 2023',
-          'Initial appointment date':
-            'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.',
         },
         {
           'Name / CRN': 'Sofia MitchellL786545',
           Tier: 'C1',
           'Sentence date': '1 September 2021',
-          'Initial appointment date': 'Not neededCustody case (32 Years)',
+          'COM Handover date': '3 January 2025',
+          'Initial appointment date': 'Not neededCustody case (5 Years)',
           'Probation status': 'Previously managed(John Agard)',
         },
         {
           'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
           'Sentence date': '23 July 2021',
+          'COM Handover date': 'N/A',
           'Initial appointment date': '1 September 2021Reece John Spears',
           'Probation status': 'New to probation',
         },
@@ -169,6 +195,7 @@ context('Find Unallocated cases', () => {
           'Name / CRN': 'Kacey RayE124321',
           Tier: 'C2',
           'Sentence date': '1 September 2021',
+          'COM Handover date': 'N/A',
           'Initial appointment date': '2 September 2021Micheala Smith',
           'Probation status': 'New to probation',
         },
@@ -176,6 +203,7 @@ context('Find Unallocated cases', () => {
           'Name / CRN': 'Andrew WilliamsP567654',
           Tier: 'C1',
           'Sentence date': '1 September 2021',
+          'COM Handover date': 'N/A',
           'Initial appointment date': '3 September 2021John Paul Tinker',
           'Probation status': 'Previously managed',
         },
@@ -183,6 +211,7 @@ context('Find Unallocated cases', () => {
           'Name / CRN': 'Sarah SiddallC567654',
           Tier: 'C2',
           'Sentence date': '1 September 2021',
+          'COM Handover date': 'N/A',
           'Initial appointment date': '1 September 2021Lando Nickson',
           'Probation status': 'Previously managed',
         },
@@ -190,6 +219,7 @@ context('Find Unallocated cases', () => {
           'Name / CRN': 'Mick JonesC234432',
           Tier: 'C1',
           'Sentence date': '25 August 2021',
+          'COM Handover date': 'N/A',
           'Initial appointment date': 'Not foundCheck with your team',
           'Probation status': 'Previously managed',
         },
@@ -197,8 +227,25 @@ context('Find Unallocated cases', () => {
           'Name / CRN': 'Bill TurnerF5635632',
           Tier: 'D1',
           'Sentence date': '1 September 2021',
+          'COM Handover date': 'N/A',
           'Initial appointment date': '1 September 2021Emma Marie Williams',
           'Probation status': 'Currently managed(Richard Moore)',
+        },
+        {
+          'Name / CRN': 'Daffy DuckX768522',
+          Tier: 'C1',
+          'Sentence date': '1 March 2000',
+          'COM Handover date': '3 October 2024',
+          'Initial appointment date': 'Not neededCustody case (25 Years)',
+          'Probation status': 'Previously managed(John Agard)',
+        },
+        {
+          'Name / CRN': 'John DoeX678911  Actionrequired',
+          Tier: 'C1',
+          'Sentence date': '1 December 2023',
+          'COM Handover date': 'N/A',
+          'Initial appointment date':
+            'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.',
         },
       ])
   })
@@ -271,24 +318,24 @@ context('Find Unallocated cases', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
     cy.reload()
+    cy.get('table').within(() => cy.contains('button', 'Name / CRN'))
+
     const headings = ['Name / CRN', 'Tier', 'Sentence date', 'Initial appointment date', 'Probation status']
     headings.forEach(heading => {
-      it(`should set headings correctly when sorting by ${heading}`, () => {
-        cy.get('table').within(() => cy.contains('button', heading).click())
+      cy.get('table').within(() => cy.contains('button', heading).click())
 
-        // check the clicked heading is sorted and all others are not
-        cy.get('thead')
-          .find('th')
-          .each($el => {
-            const sort = $el.text() === heading ? 'ascending' : 'none'
-            cy.wrap($el).should('have.attr', { 'aria-sort': sort })
-          })
+      // check the clicked heading is sorted and all others are not
+      cy.get('thead')
+        .find('th')
+        .each($el => {
+          const sort = $el.text() === heading ? 'ascending' : 'none'
+          cy.wrap($el).should('have.attr', { 'aria-sort': sort })
+        })
 
-        // clicking again sorts in the other direction
-        cy.get('table').within(() => cy.contains('button', heading).click())
+      // clicking again sorts in the other direction
+      cy.get('table').within(() => cy.contains('button', heading).click())
 
-        cy.get('table').within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
-      })
+      cy.get('table').within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
     })
   })
 

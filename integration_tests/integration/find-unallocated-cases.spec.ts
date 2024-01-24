@@ -178,7 +178,7 @@ context('Find Unallocated cases', () => {
         {
           'Name / CRN': 'Sofia MitchellL786545',
           Tier: 'C1',
-          'Sentence date': '1 September 2021',
+          'Sentence date': '10 May 2021',
           'COM Handover date': '3 January 2025',
           'Initial appointment date': 'Not neededCustody case (5 Years)',
           'Probation status': 'Previously managed(John Agard)',
@@ -186,39 +186,39 @@ context('Find Unallocated cases', () => {
         {
           'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
-          'Sentence date': '23 July 2021',
+          'Sentence date': '23 July 2023',
           'COM Handover date': 'N/A',
-          'Initial appointment date': '1 September 2021Reece John Spears',
+          'Initial appointment date': '1 September 2023Reece John Spears',
           'Probation status': 'New to probation',
         },
         {
           'Name / CRN': 'Kacey RayE124321',
           Tier: 'C2',
-          'Sentence date': '1 September 2021',
+          'Sentence date': '16 February 2022',
           'COM Handover date': 'N/A',
-          'Initial appointment date': '2 September 2021Micheala Smith',
+          'Initial appointment date': '25 March 2022Micheala Smith',
           'Probation status': 'New to probation',
         },
         {
           'Name / CRN': 'Andrew WilliamsP567654',
           Tier: 'C1',
-          'Sentence date': '1 September 2021',
+          'Sentence date': '1 June 2021',
           'COM Handover date': 'N/A',
-          'Initial appointment date': '3 September 2021John Paul Tinker',
+          'Initial appointment date': '15 June 2021John Paul Tinker',
           'Probation status': 'Previously managed',
         },
         {
           'Name / CRN': 'Sarah SiddallC567654',
           Tier: 'C2',
-          'Sentence date': '1 September 2021',
+          'Sentence date': '1 March 2024',
           'COM Handover date': 'N/A',
-          'Initial appointment date': '1 September 2021Lando Nickson',
+          'Initial appointment date': '25 April 2024Lando Nickson',
           'Probation status': 'Previously managed',
         },
         {
           'Name / CRN': 'Mick JonesC234432',
           Tier: 'C1',
-          'Sentence date': '25 August 2021',
+          'Sentence date': '25 May 2021',
           'COM Handover date': 'N/A',
           'Initial appointment date': 'Not foundCheck with your team',
           'Probation status': 'Previously managed',
@@ -226,9 +226,9 @@ context('Find Unallocated cases', () => {
         {
           'Name / CRN': 'Bill TurnerF5635632',
           Tier: 'D1',
-          'Sentence date': '1 September 2021',
+          'Sentence date': '10 May 2021',
           'COM Handover date': 'N/A',
-          'Initial appointment date': '1 September 2021Emma Marie Williams',
+          'Initial appointment date': '21 August 2021Emma Marie Williams',
           'Probation status': 'Currently managed(Richard Moore)',
         },
         {
@@ -314,14 +314,77 @@ context('Find Unallocated cases', () => {
     cy.url().should('contain', 'pdu/PDU1/case-allocation-history')
   })
 
+  const generateSortExpectations = () => {
+    const sortExpectations = new Map<string, Array<string>>()
+    sortExpectations.set('Name / CRN', [
+      'C234432',
+      'C567654',
+      'E124321',
+      'F5635632',
+      'J678910',
+      'L786545',
+      'P125643',
+      'P567654',
+      'X768522',
+    ])
+    sortExpectations.set('Tier', ['D1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C2', 'C2', 'C3'])
+    sortExpectations.set('Sentence date', [
+      '1 March 2000',
+      '10 May 2021',
+      '10 May 2021',
+      '25 May 2021',
+      '1 June 2021',
+      '1 September 2021',
+      '16 February 2022',
+      '23 July 2023',
+      '1 March 2024',
+    ])
+    sortExpectations.set('COM Handover date', [
+      '3 October 2024',
+      '3 January 2025',
+      'N/A',
+      'N/A',
+      'N/A',
+      'N/A',
+      'N/A',
+      'N/A',
+      'N/A',
+    ])
+    sortExpectations.set('Initial appointment date', [
+      '15 June 2021',
+      '21 August 2021',
+      '1 September 2021',
+      '25 March 2022',
+      '1 September 2023',
+      '25 April 2024',
+      'Not',
+      'Not',
+      'Not',
+    ])
+    sortExpectations.set('Probation status', [
+      'Currently managed',
+      'Currently managed',
+      'New to probation',
+      'New to probation',
+      'Previously managed',
+      'Previously managed',
+      'Previously managed',
+      'Previously managed',
+      'Previously managed',
+    ])
+    return sortExpectations
+  }
+
   it('should show the column the table is currently sorted by', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
     cy.reload()
     cy.get('table').within(() => cy.contains('button', 'Name / CRN'))
 
-    const headings = ['Name / CRN', 'Tier', 'Sentence date', 'Initial appointment date', 'Probation status']
-    headings.forEach(heading => {
+    let columnNumber = 1
+    const sortExpectations = generateSortExpectations()
+    sortExpectations.forEach((expectedOrderedColumnValues: Array<string>, key: string) => {
+      const heading = key
       cy.get('table').within(() => cy.contains('button', heading).click())
 
       // check the clicked heading is sorted and all others are not
@@ -332,10 +395,32 @@ context('Find Unallocated cases', () => {
           cy.wrap($el).should('have.attr', { 'aria-sort': sort })
         })
 
+      // checks data for column is sorted ascending
+      let rowNumber = 0
+      expectedOrderedColumnValues.forEach(expectedValue => {
+        cy.get(`tr td:nth-child(${columnNumber})`) // gets the 1st column
+          .eq(rowNumber) // grabs the 2nd row of that column
+          .contains(expectedValue) // asserts expectedColumnValue
+
+        rowNumber += 1
+      })
+
       // clicking again sorts in the other direction
       cy.get('table').within(() => cy.contains('button', heading).click())
-
       cy.get('table').within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
+
+      // checks data for column is sorted descending
+      rowNumber = 0
+      const expectedReverseOrderColumnValues = expectedOrderedColumnValues.reverse()
+      expectedReverseOrderColumnValues.forEach(expectedValue => {
+        cy.get(`tr td:nth-child(${columnNumber})`) // gets the 1st column
+          .eq(rowNumber) // grabs the 2nd row of that column
+          .contains(expectedValue) // asserts expectedColumnValue
+
+        rowNumber += 1
+      })
+
+      columnNumber += 1
     })
   })
 

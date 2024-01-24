@@ -329,10 +329,10 @@ $(() => {
     const sortDataTypeIsDate = isSortDataTypeADate(clickedColumn.columnDataType)
     var newRows = rows.sort(
       $.proxy(function (rowA, rowB) {
-        var tdA = $(rowA).find('td,th').eq(columnIndex)
-        var tdB = $(rowB).find('td,th').eq(columnIndex)
-        var valueA = this.getCellValue(tdA)
-        var valueB = this.getCellValue(tdB)
+        const tdA = $(rowA).find('td,th').eq(columnIndex)
+        const tdB = $(rowB).find('td,th').eq(columnIndex)
+        const valueA = this.getCellValue(tdA)
+        const valueB = this.getCellValue(tdB)
         if (sortDirection === 'ascending') {
           if (sortDataTypeIsDate) {
             return sortDateAsc(valueA, valueB, clickedColumn.columnDataType)

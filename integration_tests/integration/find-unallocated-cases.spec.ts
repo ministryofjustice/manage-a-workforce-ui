@@ -394,7 +394,7 @@ context('Find Unallocated cases', () => {
     cy.get('table').within(() => cy.contains('button', 'Name / CRN'))
 
     const sortExpectations = generateSortExpectations()
-    sortDataAndAssertSortExpectations(sortExpectations)
+    sortDataAndAssertSortExpectations(1, sortExpectations, false)
   })
 
   it('persists sort order when refreshing the page', () => {

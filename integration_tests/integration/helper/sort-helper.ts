@@ -3,11 +3,20 @@ export interface ColumnSortExpectations {
   orderedData: Array<string>
 }
 
-export const sortDataAndAssertSortExpectations = (sortExpectations: Array<ColumnSortExpectations>) => {
-  let columnNumber = 1
+export const sortDataAndAssertSortExpectations = (
+  firstSortableColumnNumber: number,
+  sortExpectations: Array<ColumnSortExpectations>,
+  isMultiTabTable: boolean
+) => {
+  let columnNumber = firstSortableColumnNumber
   sortExpectations.forEach(columnSortExpectation => {
-    cy.get('table').within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
-
+    if (isMultiTabTable === true) {
+      cy.get('table')
+        .eq(0)
+        .within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
+    } else {
+      cy.get('table').within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
+    }
     // check the clicked heading is sorted and all others are not
     cy.get('thead')
       .find('th')
@@ -28,10 +37,23 @@ export const sortDataAndAssertSortExpectations = (sortExpectations: Array<Column
     })
 
     // clicking again sorts in the other direction
-    cy.get('table').within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
-    cy.get('table').within(() =>
-      cy.contains('button', columnSortExpectation.columnHeaderName).should('have.attr', { 'aria-sort': 'descending' })
-    )
+    if (isMultiTabTable === true) {
+      cy.get('table')
+        .eq(0)
+        .within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
+      cy.get('table')
+        .eq(0)
+        .within(() =>
+          cy
+            .contains('button', columnSortExpectation.columnHeaderName)
+            .should('have.attr', { 'aria-sort': 'descending' })
+        )
+    } else {
+      cy.get('table').within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
+      cy.get('table').within(() =>
+        cy.contains('button', columnSortExpectation.columnHeaderName).should('have.attr', { 'aria-sort': 'descending' })
+      )
+    }
 
     // checks data for column is sorted descending
     rowNumber = 0

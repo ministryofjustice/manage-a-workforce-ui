@@ -155,7 +155,7 @@ context('Documents', () => {
         orderedData: ['', '', '16 Oct 2021', '7 Nov 2021', '7 Dec 2021'],
       },
     ]
-    sortDataAndAssertSortExpectations(sortExpectations)
+    sortDataAndAssertSortExpectations(1, sortExpectations, false)
   })
 
   it('persists sort order when refreshing the page', () => {

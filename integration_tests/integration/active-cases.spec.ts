@@ -91,7 +91,7 @@ context('Active Cases', () => {
         orderedData: ['Custody', 'License'],
       },
     ]
-    sortDataAndAssertSortExpectations(sortExpectations)
+    sortDataAndAssertSortExpectations(1, sortExpectations, false)
   })
 
   it('persists the sort order when refreshing the page', () => {

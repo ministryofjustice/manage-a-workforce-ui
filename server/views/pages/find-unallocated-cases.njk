@@ -42,7 +42,7 @@
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': 'find-unallocated-cases-appointment-date',
-                "data-type": 'DATE_ON_FIRST_LINE'
+                "data-type": 'DATE'
             }
         },
         { text: 'Probation status',
@@ -63,7 +63,9 @@
                 item.crn,
                 'govuk-body-s',
                 '<span><strong class="action-required">Action<br>required</strong></span>'
-            )},
+                ),
+                attributes: { "data-sort-value": item.crn }
+            },
             { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
             { text: (item.sentenceDate | dateFormat), attributes: {
                 "data-sort-value": item.sentenceDate
@@ -77,13 +79,19 @@
         {{ tableData.rows.push(tableRow) }}
     {% else %}
         {%- set tableRow = [
-            { text: doubleCell('<a href="/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' +  item.name + '</a>', item.crn, 'govuk-body-s' )},
+            {
+                text: doubleCell('<a href="/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' +  item.name + '</a>', item.crn, 'govuk-body-s' ),
+                attributes: { "data-sort-value": item.crn }
+            },
             { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
             { text: (item.sentenceDate | dateFormat), attributes: {
                 "data-sort-value": item.sentenceDate
             } },
             { text: item.handoverDate, attributes: { "data-sort-value": item.handoverDate } },
-            { text: doubleCell(item.primaryInitialAppointment,item.secondaryInitialAppointment, 'maw-secondary' )},
+            {
+                text: doubleCell(item.primaryInitialAppointment,item.secondaryInitialAppointment, 'maw-secondary' ),
+                attributes: { "data-sort-value": item.primaryInitialAppointment }
+            },
             { text: doubleCell(item.primaryStatus, item.secondaryStatus, 'govuk-body-s')}
         ] -%}
         {{ tableData.rows.push(tableRow) }}

@@ -1,5 +1,7 @@
 import Page from '../pages/page'
 import ActiveCasesPage from '../pages/activeCases'
+// eslint-disable-next-line import/named
+import { sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Active Cases', () => {
   let activeCasesPage
@@ -74,23 +76,22 @@ context('Active Cases', () => {
   })
 
   it('should show which column the table is currently sorted by', () => {
-    const headings = ['Name / CRN', 'Tier', 'Type of case']
-    headings.forEach(heading => {
-      cy.get('table').within(() => cy.contains('button', heading).click())
-
-      // check the clicked heading is sorted and all others are not
-      cy.get('thead')
-        .find('th')
-        .each($el => {
-          const sort = $el.text() === heading ? 'ascending' : 'none'
-          cy.wrap($el).should('have.attr', { 'aria-sort': sort })
-        })
-
-      // clicking again sorts in the other direction
-      cy.get('table').within(() => cy.contains('button', heading).click())
-
-      cy.get('table').within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
-    })
+    const sortExpectations = [
+      {
+        columnHeaderName: 'Name / CRN',
+        orderedData: ['CRN111', 'CRN222'],
+      },
+      {
+        columnHeaderName: 'Tier',
+        // tier sorts by tierOrder which is different to the alpha chars below (which is wy B3 comes before A0)
+        orderedData: ['B3', 'A0'],
+      },
+      {
+        columnHeaderName: 'Type of case',
+        orderedData: ['Custody', 'License'],
+      },
+    ]
+    sortDataAndAssertSortExpectations(sortExpectations)
   })
 
   it('persists the sort order when refreshing the page', () => {

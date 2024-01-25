@@ -245,8 +245,8 @@ $(() => {
     return 0
   }
 
-  function sortDateAsc(date1String, date2String, dateDataType) {
-    const { date1, date2 } = extractAndConvertDates(date1String, date2String, dateDataType)
+  function sortDateAsc(date1String, date2String) {
+    const { date1, date2 } = convertDates(date1String, date2String)
     if (date1 < date2) {
       return -1
     } else if (date1 > date2) {
@@ -255,8 +255,8 @@ $(() => {
     return 0
   }
 
-  function sortDateDesc(date1String, date2String, dateDataType) {
-    const { date1, date2 } = extractAndConvertDates(date1String, date2String, dateDataType)
+  function sortDateDesc(date1String, date2String) {
+    const { date1, date2 } = convertDates(date1String, date2String)
     if (date2 < date1) {
       return -1
     }
@@ -270,37 +270,23 @@ $(() => {
     return value !== undefined && value !== '' && value !== 'N/A'
   }
 
-  function extractAndConvertDates(date1String, date2String, dateDataType) {
+  function convertDates(date1String, date2String) {
     return {
-      date1: extractAndConvertDate(date1String, dateDataType),
-      date2: extractAndConvertDate(date2String, dateDataType),
+      date1: convertDate(date1String),
+      date2: convertDate(date2String),
     }
   }
 
-  function extractAndConvertDate(dateString, dateDataType) {
+  function convertDate(dateString) {
     const farInTheFutureDate = Date.parse('3000-01-01')
     if (valueIsSet(dateString)) {
-      const extractedDateString = extractDateFromValue(dateString, dateDataType)
-      if (extractedDateString) {
-        let convertedDate = Date.parse(extractedDateString)
-        if (isNaN(convertedDate)) {
-          convertedDate = farInTheFutureDate
-        }
-        return convertedDate
+      let convertedDate = Date.parse(dateString)
+      if (isNaN(convertedDate)) {
+        convertedDate = farInTheFutureDate
       }
+      return convertedDate
     }
     return farInTheFutureDate
-  }
-
-  function extractDateFromValue(value, dateDataType) {
-    if (dateDataType === 'DATE_ON_FIRST_LINE') {
-      const lines = value.split('\n')
-      if (lines.length > 1) {
-        return lines[0]
-      }
-      return undefined
-    }
-    return value
   }
 
   function isSortDataTypeADate(dataType) {
@@ -335,13 +321,13 @@ $(() => {
         const valueB = this.getCellValue(tdB)
         if (sortDirection === 'ascending') {
           if (sortDataTypeIsDate) {
-            return sortDateAsc(valueA, valueB, clickedColumn.columnDataType)
+            return sortDateAsc(valueA, valueB)
           } else {
             return sortStringAsc(valueA, valueB)
           }
         } else {
           if (sortDataTypeIsDate) {
-            return sortDateDesc(valueA, valueB, clickedColumn.columnDataType)
+            return sortDateDesc(valueA, valueB)
           } else {
             return sortStringDesc(valueA, valueB)
           }

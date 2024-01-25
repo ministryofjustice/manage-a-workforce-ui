@@ -39,7 +39,10 @@
 
 {% for item in cases %}
     {%- set tableRow = [
-        { text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' )},
+        {
+            text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' ),
+            attributes: { "data-sort-value": item.crn }
+        },
         { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
         { text: (item.type | capitalize)}
     ] -%}

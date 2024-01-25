@@ -3,6 +3,8 @@ import Page from '../pages/page'
 
 import config from '../../server/config'
 import { allocationsByTeamResponse } from '../mockApis/allocations'
+// eslint-disable-next-line import/named
+import { ColumnSortExpectations, sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Find Unallocated cases', () => {
   let findUnallocatedCasesPage: FindUnallocatedPage
@@ -314,65 +316,75 @@ context('Find Unallocated cases', () => {
     cy.url().should('contain', 'pdu/PDU1/case-allocation-history')
   })
 
-  const generateSortExpectations = () => {
-    const sortExpectations = new Map<string, Array<string>>()
-    sortExpectations.set('Name / CRN', [
-      'C234432',
-      'C567654',
-      'E124321',
-      'F5635632',
-      'J678910',
-      'L786545',
-      'P125643',
-      'P567654',
-      'X768522',
-    ])
-    sortExpectations.set('Tier', ['D1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C2', 'C2', 'C3'])
-    sortExpectations.set('Sentence date', [
-      '1 March 2000',
-      '10 May 2021',
-      '10 May 2021',
-      '25 May 2021',
-      '1 June 2021',
-      '1 September 2021',
-      '16 February 2022',
-      '23 July 2023',
-      '1 March 2024',
-    ])
-    sortExpectations.set('COM Handover date', [
-      '3 October 2024',
-      '3 January 2025',
-      'N/A',
-      'N/A',
-      'N/A',
-      'N/A',
-      'N/A',
-      'N/A',
-      'N/A',
-    ])
-    sortExpectations.set('Initial appointment date', [
-      '15 June 2021',
-      '21 August 2021',
-      '1 September 2021',
-      '25 March 2022',
-      '1 September 2023',
-      '25 April 2024',
-      'Not',
-      'Not',
-      'Not',
-    ])
-    sortExpectations.set('Probation status', [
-      'Currently managed',
-      'Currently managed',
-      'New to probation',
-      'New to probation',
-      'Previously managed',
-      'Previously managed',
-      'Previously managed',
-      'Previously managed',
-      'Previously managed',
-    ])
-    return sortExpectations
+  const generateSortExpectations = (): Array<ColumnSortExpectations> => {
+    return [
+      {
+        columnHeaderName: 'Name / CRN',
+        orderedData: [
+          // we order by CRN not name in this column
+          'C234432',
+          'C567654',
+          'E124321',
+          'F5635632',
+          'J678910',
+          'L786545',
+          'P125643',
+          'P567654',
+          'X768522',
+        ],
+      },
+      {
+        columnHeaderName: 'Tier',
+        // tier sorts by tierOrder which is different to the alpha chars below (which is wy D1 comes before C1)
+        orderedData: ['D1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C2', 'C2', 'C3'],
+      },
+      {
+        columnHeaderName: 'Sentence date',
+        orderedData: [
+          '1 March 2000',
+          '10 May 2021',
+          '10 May 2021',
+          '25 May 2021',
+          '1 June 2021',
+          '1 September 2021',
+          '16 February 2022',
+          '23 July 2023',
+          '1 March 2024',
+        ],
+      },
+      {
+        columnHeaderName: 'COM Handover date',
+        orderedData: ['3 October 2024', '3 January 2025', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'],
+      },
+      {
+        columnHeaderName: 'Initial appointment date',
+        orderedData: [
+          '15 June 2021',
+          '21 August 2021',
+          '1 September 2021',
+          '25 March 2022',
+          '1 September 2023',
+          '25 April 2024',
+          'Not',
+          'Not',
+          'Not',
+        ],
+      },
+      {
+        columnHeaderName: 'Probation status',
+        orderedData: [
+          'Currently managed',
+          'Currently managed',
+          'New to probation',
+          'New to probation',
+          'Previously managed',
+          'Previously managed',
+          'Previously managed',
+          'Previously managed',
+          'Previously managed',
+        ],
+      },
+    ]
   }
 
   it('should show the column the table is currently sorted by', () => {
@@ -381,47 +393,8 @@ context('Find Unallocated cases', () => {
     cy.reload()
     cy.get('table').within(() => cy.contains('button', 'Name / CRN'))
 
-    let columnNumber = 1
     const sortExpectations = generateSortExpectations()
-    sortExpectations.forEach((expectedOrderedColumnValues: Array<string>, key: string) => {
-      const heading = key
-      cy.get('table').within(() => cy.contains('button', heading).click())
-
-      // check the clicked heading is sorted and all others are not
-      cy.get('thead')
-        .find('th')
-        .each($el => {
-          const sort = $el.text() === heading ? 'ascending' : 'none'
-          cy.wrap($el).should('have.attr', { 'aria-sort': sort })
-        })
-
-      // checks data for column is sorted ascending
-      let rowNumber = 0
-      expectedOrderedColumnValues.forEach(expectedValue => {
-        cy.get(`tr td:nth-child(${columnNumber})`) // gets the 1st column
-          .eq(rowNumber) // grabs the 2nd row of that column
-          .contains(expectedValue) // asserts expectedColumnValue
-
-        rowNumber += 1
-      })
-
-      // clicking again sorts in the other direction
-      cy.get('table').within(() => cy.contains('button', heading).click())
-      cy.get('table').within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
-
-      // checks data for column is sorted descending
-      rowNumber = 0
-      const expectedReverseOrderColumnValues = expectedOrderedColumnValues.reverse()
-      expectedReverseOrderColumnValues.forEach(expectedValue => {
-        cy.get(`tr td:nth-child(${columnNumber})`) // gets the 1st column
-          .eq(rowNumber) // grabs the 2nd row of that column
-          .contains(expectedValue) // asserts expectedColumnValue
-
-        rowNumber += 1
-      })
-
-      columnNumber += 1
-    })
+    sortDataAndAssertSortExpectations(sortExpectations)
   })
 
   it('persists sort order when refreshing the page', () => {

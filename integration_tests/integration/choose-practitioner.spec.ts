@@ -1,6 +1,7 @@
 import Page from '../pages/page'
 import ChoosePractitionerPage from '../pages/choosePractitioner'
 import SummaryPage from '../pages/summary'
+import { sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Choose Practitioner', () => {
   beforeEach(() => {
@@ -410,25 +411,38 @@ context('Choose Practitioner', () => {
   it('should show which column the choose-practitioner table is currently sorted by', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
-    const headings = ['Name', 'Team', 'Grade', 'Workload %', 'Cases in past 7 days', 'Community cases', 'Custody cases']
-    headings.forEach(heading => {
-      it(`should set headings correctly when sorting by ${heading}`, () => {
-        cy.get('table').within(() => cy.contains('button', heading).click())
-
-        // check the clicked heading is sorted and all others are not
-        cy.get('thead')
-          .find('th')
-          .each($el => {
-            const sort = $el.text() === heading ? 'ascending' : 'none'
-            cy.wrap($el).should('have.attr', { 'aria-sort': sort })
-          })
-
-        // clicking again sorts in the other direction
-        cy.get('table').within(() => cy.contains('button', heading).click())
-
-        cy.get('table').within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
-      })
-    })
+    const sortExpectations = [
+      {
+        columnHeaderName: 'Name',
+        orderedData: ['Jane Doe', 'Jim Jam', 'Sam Smam'],
+      },
+      {
+        columnHeaderName: 'Team',
+        orderedData: ['Team 1', 'Team 2', 'Team 2'],
+      },
+      {
+        columnHeaderName: 'Grade',
+        // grade is not sorted by the alpha results listed below - it is sorted by gradeOrder (to avoid confusion here)
+        orderedData: ['SPO', 'PQiP', 'PO'],
+      },
+      {
+        columnHeaderName: 'Workload %',
+        orderedData: ['19%', '32%', '32%'],
+      },
+      {
+        columnHeaderName: 'Cases in past 7 days',
+        orderedData: ['2', '5', '5'],
+      },
+      {
+        columnHeaderName: 'Community cases',
+        orderedData: ['0', '0', '3'],
+      },
+      {
+        columnHeaderName: 'Custody cases',
+        orderedData: ['5', '5', '5'],
+      },
+    ]
+    sortDataAndAssertSortExpectations(2, sortExpectations, true)
   })
 
   it('persists the sort order of the selected column when refreshing the page', () => {

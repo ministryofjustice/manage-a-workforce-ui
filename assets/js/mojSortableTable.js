@@ -5,11 +5,62 @@ class PersistentSortOrder {
       console.warn('Table has no data-persistent-id attribute; cannot set up persistent sort order.')
       return
     }
+    this.persistCurrentTable(tablePersistentId)
     this.observeAttributeChanges(tablePersistentId)
     const sortOrder = this.fetchSortOrderDTO(tablePersistentId)
     if (sortOrder !== null) {
       this.forceSortOrder(table, sortOrder)
     }
+  }
+  static generateCurrentTableColumns() {
+    const headers = document.querySelectorAll('thead th')
+    const currentTableColumns = []
+    let columnIndex = 0
+    // IE11 doesn't allow us to call `forEach` on NodeListOf<Element>
+    Array.prototype.forEach.call(headers, header => {
+      const columnDataPersistentId = header.getAttribute('data-persistent-id')
+      const columnDataType = header.getAttribute('data-type')
+      const columnSortDirection = header.getAttribute('aria-sort')
+      currentTableColumns.push({
+        columnIndex,
+        columnDataPersistentId,
+        columnDataType,
+        columnSortDirection,
+      })
+      columnIndex += 1
+    })
+    return currentTableColumns
+  }
+  static persistCurrentTable(tablePersistentId) {
+    const currentTableColumns = this.generateCurrentTableColumns()
+    const currentTable = {
+      tablePersistentId: tablePersistentId,
+      currentTableColumns: currentTableColumns,
+    }
+    window.localStorage.setItem('currentTable', JSON.stringify(currentTable))
+  }
+  static fetchCurrentTablePersistentIdDTO() {
+    const key = 'currentTable'
+    const serialized = window.localStorage.getItem(key)
+    if (serialized === null) {
+      return null
+    }
+    const deserialized = JSON.parse(serialized)
+    if (!(typeof deserialized === 'object' && deserialized !== null && 'tablePersistentId' in deserialized)) {
+      return null
+    }
+    // I’m not sure why a cast is necessary; I’d have thought the compiler
+    // would allow us to assign directly to a variable of this type given
+    // the above check, but no…
+    const keyed = deserialized
+    if (!(typeof keyed.tablePersistentId === 'string')) {
+      return null
+    }
+    const withTypedValues = {
+      tablePersistentId: keyed.tablePersistentId,
+      currentTableColumns: keyed.currentTableColumns,
+    }
+    return withTypedValues
   }
   static createARIASort(from) {
     if (from === 'none' || from === 'ascending' || from === 'descending') {
@@ -45,6 +96,7 @@ class PersistentSortOrder {
           console.warn('Unrecognised aria-sort attribute')
           return
         }
+        const dataType = header.getAttribute('data-type')
         const columnPersistentId = header.dataset.persistentId
         if (columnPersistentId === undefined) {
           console.warn('Column has no data-persistent-id attribute; cannot persist chosen order.')
@@ -52,21 +104,22 @@ class PersistentSortOrder {
         }
         // IE11 doesn't support `.includes`, so we're using `indexOf` here.
         if (['descending', 'ascending'].indexOf(newAriaSort) > -1) {
-          this.persistSortOrder(tablePersistentId, columnPersistentId, newAriaSort)
+          this.persistSortOrder(tablePersistentId, columnPersistentId, newAriaSort, dataType)
+          this.persistCurrentTable(tablePersistentId)
         }
       }
     })
   }
-  static localStorageKey(tablePersistentId) {
+  static sortOrderLocalStorageKey(tablePersistentId) {
     return `sortOrder:${tablePersistentId}`
   }
-  static persistSortOrder(tablePersistentId, columnPersistentId, order) {
-    const key = this.localStorageKey(tablePersistentId)
-    const object = { columnPersistentId, order }
+  static persistSortOrder(tablePersistentId, columnPersistentId, order, dataType) {
+    const key = this.sortOrderLocalStorageKey(tablePersistentId)
+    const object = { columnPersistentId, order, dataType }
     window.localStorage.setItem(key, JSON.stringify(object))
   }
   static fetchSortOrderDTO(tablePersistentId) {
-    const key = this.localStorageKey(tablePersistentId)
+    const key = this.sortOrderLocalStorageKey(tablePersistentId)
     const serialized = window.localStorage.getItem(key)
     if (serialized === null) {
       return null
@@ -92,6 +145,7 @@ class PersistentSortOrder {
     const withTypedValues = {
       columnPersistentId: keyed.columnPersistentId,
       order: this.createARIASort(keyed.order),
+      dataType: keyed.dataType,
     }
     if (withTypedValues.order === null) {
       return null
@@ -165,15 +219,124 @@ $(() => {
     return
   }
 
-  class SortableTable extends MOJFrontend.SortableTable {
-    constructor(tableElement) {
-      super({ table: tableElement })
+  function SortableTable(tableElement) {
+    // Calls the SortableTable constructor with `this` as its context
+    MOJFrontend.SortableTable.call(this, tableElement)
+  }
+  SortableTable.prototype = Object.create(MOJFrontend.SortableTable.prototype)
+
+  function sortStringAsc(valueA, valueB) {
+    if (valueA < valueB) {
+      return -1
     }
-    // overrides MOJFrontend.SortableTable.sort function
-    sort(rows, columnNumber, sortDirection) {
-      return super.sort(rows, columnNumber, sortDirection)
+    if (valueA > valueB) {
+      return 1
+    }
+    return 0
+  }
+
+  function sortStringDesc(valueA, valueB) {
+    if (valueB < valueA) {
+      return -1
+    }
+    if (valueB > valueA) {
+      return 1
+    }
+    return 0
+  }
+
+  function sortDateAsc(date1String, date2String) {
+    const { date1, date2 } = convertDates(date1String, date2String)
+    if (date1 < date2) {
+      return -1
+    } else if (date1 > date2) {
+      return 1
+    }
+    return 0
+  }
+
+  function sortDateDesc(date1String, date2String) {
+    const { date1, date2 } = convertDates(date1String, date2String)
+    if (date2 < date1) {
+      return -1
+    }
+    if (date2 > date1) {
+      return 1
+    }
+    return 0
+  }
+
+  function valueIsSet(value) {
+    return value !== undefined && value !== '' && value !== 'N/A'
+  }
+
+  function convertDates(date1String, date2String) {
+    return {
+      date1: convertDate(date1String),
+      date2: convertDate(date2String),
     }
   }
+
+  function convertDate(dateString) {
+    const farInTheFutureDate = Date.parse('3000-01-01')
+    if (valueIsSet(dateString)) {
+      let convertedDate = Date.parse(dateString)
+      if (isNaN(convertedDate)) {
+        convertedDate = farInTheFutureDate
+      }
+      return convertedDate
+    }
+    return farInTheFutureDate
+  }
+
+  function isSortDataTypeADate(dataType) {
+    return dataType && (dataType === 'DATE' || dataType === 'DATE_ON_FIRST_LINE')
+  }
+
+  function getClickedColumn(columnIndex) {
+    let clickedColumn = {
+      columnIndex: columnIndex,
+      columnDataType: 'string',
+    }
+    const currentTableDTO = PersistentSortOrder.fetchCurrentTablePersistentIdDTO()
+    if (currentTableDTO) {
+      const matchingColumns = currentTableDTO.currentTableColumns.filter(
+        column => column.columnIndex.toString() === columnIndex
+      )
+      if (matchingColumns.length > 0) {
+        clickedColumn = matchingColumns[0]
+      }
+    }
+    return clickedColumn
+  }
+
+  MOJFrontend.SortableTable.prototype.sort = function (rows, columnIndex, sortDirection) {
+    const clickedColumn = getClickedColumn(columnIndex, sortDirection)
+    const sortDataTypeIsDate = isSortDataTypeADate(clickedColumn.columnDataType)
+    var newRows = rows.sort(
+      $.proxy(function (rowA, rowB) {
+        const tdA = $(rowA).find('td,th').eq(columnIndex)
+        const tdB = $(rowB).find('td,th').eq(columnIndex)
+        const valueA = this.getCellValue(tdA)
+        const valueB = this.getCellValue(tdB)
+        if (sortDirection === 'ascending') {
+          if (sortDataTypeIsDate) {
+            return sortDateAsc(valueA, valueB)
+          } else {
+            return sortStringAsc(valueA, valueB)
+          }
+        } else {
+          if (sortDataTypeIsDate) {
+            return sortDateDesc(valueA, valueB)
+          } else {
+            return sortStringDesc(valueA, valueB)
+          }
+        }
+      }, this)
+    )
+    return newRows
+  }
+  SortableTable.prototype.constructor = SortableTable
 
   Array.from(tables).forEach(function (table) {
     new SortableTable(table)

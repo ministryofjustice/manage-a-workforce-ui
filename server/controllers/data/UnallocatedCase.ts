@@ -16,6 +16,8 @@ export default class UnallocatedCase {
 
   sentenceDate: string
 
+  handoverDate: string
+
   primaryInitialAppointment: string
 
   secondaryInitialAppointment: string
@@ -35,6 +37,7 @@ export default class UnallocatedCase {
     crn: string,
     tier: string,
     sentenceDate: string,
+    handoverDate: string,
     initialAppointment: InitialAppointment,
     primaryStatus: string,
     offenderManager: OffenderManager,
@@ -48,6 +51,7 @@ export default class UnallocatedCase {
     this.tier = tier
     this.tierOrder = tierOrder(tier)
     this.sentenceDate = sentenceDate
+    this.setHandoverDate(handoverDate)
     this.setInitialAppointment(initialAppointment, caseType, sentenceLength)
     this.initialAppointment = initialAppointment
     this.primaryStatus = primaryStatus
@@ -65,6 +69,14 @@ export default class UnallocatedCase {
       return `, ${grade}`
     }
     return ''
+  }
+
+  setHandoverDate(handoverDate: string) {
+    if (handoverDate) {
+      this.handoverDate = `${dayjs(handoverDate).format(config.dateFormat)}`
+    } else {
+      this.handoverDate = 'N/A'
+    }
   }
 
   setInitialAppointment(initialAppointment: InitialAppointment, caseType: string, sentenceLength: string): void {

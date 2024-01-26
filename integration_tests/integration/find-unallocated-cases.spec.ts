@@ -2,6 +2,9 @@ import FindUnallocatedPage from '../pages/findUnallocatedCases'
 import Page from '../pages/page'
 
 import config from '../../server/config'
+import { allocationsByTeamResponse } from '../mockApis/allocations'
+// eslint-disable-next-line import/named
+import { ColumnSortExpectations, sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Find Unallocated cases', () => {
   let findUnallocatedCasesPage: FindUnallocatedPage
@@ -131,8 +134,37 @@ context('Find Unallocated cases', () => {
   })
 
   it('retrieve allocation demand for team saved in user preference allocation demand', () => {
+    const outOfAreaTransferCase = {
+      name: 'John Doe',
+      crn: 'X678911',
+      tier: 'C1',
+      sentenceDate: '2023-12-01',
+      handoverDate: null,
+      initialAppointment: {
+        date: '2023-12-20',
+        staff: {
+          name: {
+            forename: 'Unallocated',
+            middlename: null,
+            surname: 'Staff',
+            combinedName: 'Unallocated Staff',
+          },
+        },
+      },
+      status: 'Currently managed',
+      offenderManager: {
+        forenames: 'Jane',
+        surname: 'Doe',
+        grade: 'SPO',
+      },
+      convictionNumber: 1,
+      caseType: 'COMMUNITY',
+      outOfAreaTransfer: true,
+    }
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
-    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
+    const response = allocationsByTeamResponse
+    response.push(outOfAreaTransferCase)
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1', response })
     cy.reload()
     cy.get('table')
       .getTable()
@@ -141,64 +173,81 @@ context('Find Unallocated cases', () => {
           'Name / CRN': 'Dylan Adam ArmstrongJ678910',
           Tier: 'C1',
           'Sentence date': '1 September 2021',
+          'COM Handover date': 'N/A',
           'Initial appointment date': '1 September 2021Unallocated officer',
           'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
         },
         {
-          'Name / CRN': 'John DoeX678911  Actionrequired',
-          Tier: 'C1',
-          'Sentence date': '1 December 2023',
-          'Initial appointment date':
-            'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.',
-        },
-        {
           'Name / CRN': 'Sofia MitchellL786545',
           Tier: 'C1',
-          'Sentence date': '1 September 2021',
-          'Initial appointment date': 'Not neededCustody case (32 Years)',
+          'Sentence date': '10 May 2021',
+          'COM Handover date': '3 January 2025',
+          'Initial appointment date': 'Not neededCustody case (5 Years)',
           'Probation status': 'Previously managed(John Agard)',
         },
         {
           'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
-          'Sentence date': '23 July 2021',
-          'Initial appointment date': '1 September 2021Reece John Spears',
+          'Sentence date': '23 July 2023',
+          'COM Handover date': 'N/A',
+          'Initial appointment date': '1 September 2023Reece John Spears',
           'Probation status': 'New to probation',
         },
         {
           'Name / CRN': 'Kacey RayE124321',
           Tier: 'C2',
-          'Sentence date': '1 September 2021',
-          'Initial appointment date': '2 September 2021Micheala Smith',
+          'Sentence date': '16 February 2022',
+          'COM Handover date': 'N/A',
+          'Initial appointment date': '25 March 2022Micheala Smith',
           'Probation status': 'New to probation',
         },
         {
           'Name / CRN': 'Andrew WilliamsP567654',
           Tier: 'C1',
-          'Sentence date': '1 September 2021',
-          'Initial appointment date': '3 September 2021John Paul Tinker',
+          'Sentence date': '1 June 2021',
+          'COM Handover date': 'N/A',
+          'Initial appointment date': '15 June 2021John Paul Tinker',
           'Probation status': 'Previously managed',
         },
         {
           'Name / CRN': 'Sarah SiddallC567654',
           Tier: 'C2',
-          'Sentence date': '1 September 2021',
-          'Initial appointment date': '1 September 2021Lando Nickson',
+          'Sentence date': '1 March 2024',
+          'COM Handover date': 'N/A',
+          'Initial appointment date': '25 April 2024Lando Nickson',
           'Probation status': 'Previously managed',
         },
         {
           'Name / CRN': 'Mick JonesC234432',
           Tier: 'C1',
-          'Sentence date': '25 August 2021',
+          'Sentence date': '25 May 2021',
+          'COM Handover date': 'N/A',
           'Initial appointment date': 'Not foundCheck with your team',
           'Probation status': 'Previously managed',
         },
         {
           'Name / CRN': 'Bill TurnerF5635632',
           Tier: 'D1',
-          'Sentence date': '1 September 2021',
-          'Initial appointment date': '1 September 2021Emma Marie Williams',
+          'Sentence date': '10 May 2021',
+          'COM Handover date': 'N/A',
+          'Initial appointment date': '21 August 2021Emma Marie Williams',
           'Probation status': 'Currently managed(Richard Moore)',
+        },
+        {
+          'Name / CRN': 'Daffy DuckX768522',
+          Tier: 'C1',
+          'Sentence date': '1 March 2000',
+          'COM Handover date': '3 October 2024',
+          'Initial appointment date': 'Not neededCustody case (25 Years)',
+          'Probation status': 'Previously managed(John Agard)',
+        },
+        {
+          'Name / CRN': 'John DoeX678911  Actionrequired',
+          Tier: 'C1',
+          'Sentence date': '1 December 2023',
+          'COM Handover date': 'N/A',
+          'Initial appointment date':
+            'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.',
         },
       ])
   })
@@ -267,29 +316,85 @@ context('Find Unallocated cases', () => {
     cy.url().should('contain', 'pdu/PDU1/case-allocation-history')
   })
 
+  const generateSortExpectations = (): Array<ColumnSortExpectations> => {
+    return [
+      {
+        columnHeaderName: 'Name / CRN',
+        orderedData: [
+          // we order by CRN not name in this column
+          'C234432',
+          'C567654',
+          'E124321',
+          'F5635632',
+          'J678910',
+          'L786545',
+          'P125643',
+          'P567654',
+          'X768522',
+        ],
+      },
+      {
+        columnHeaderName: 'Tier',
+        // tier sorts by tierOrder which is different to the alpha chars below (which is wy D1 comes before C1)
+        orderedData: ['D1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C2', 'C2', 'C3'],
+      },
+      {
+        columnHeaderName: 'Sentence date',
+        orderedData: [
+          '1 March 2000',
+          '10 May 2021',
+          '10 May 2021',
+          '25 May 2021',
+          '1 June 2021',
+          '1 September 2021',
+          '16 February 2022',
+          '23 July 2023',
+          '1 March 2024',
+        ],
+      },
+      {
+        columnHeaderName: 'COM Handover date',
+        orderedData: ['3 October 2024', '3 January 2025', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'],
+      },
+      {
+        columnHeaderName: 'Initial appointment date',
+        orderedData: [
+          '15 June 2021',
+          '21 August 2021',
+          '1 September 2021',
+          '25 March 2022',
+          '1 September 2023',
+          '25 April 2024',
+          'Not',
+          'Not',
+          'Not',
+        ],
+      },
+      {
+        columnHeaderName: 'Probation status',
+        orderedData: [
+          'Currently managed',
+          'Currently managed',
+          'New to probation',
+          'New to probation',
+          'Previously managed',
+          'Previously managed',
+          'Previously managed',
+          'Previously managed',
+          'Previously managed',
+        ],
+      },
+    ]
+  }
+
   it('should show the column the table is currently sorted by', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
     cy.reload()
-    const headings = ['Name / CRN', 'Tier', 'Sentence date', 'Initial appointment date', 'Probation status']
-    headings.forEach(heading => {
-      it(`should set headings correctly when sorting by ${heading}`, () => {
-        cy.get('table').within(() => cy.contains('button', heading).click())
+    cy.get('table').within(() => cy.contains('button', 'Name / CRN'))
 
-        // check the clicked heading is sorted and all others are not
-        cy.get('thead')
-          .find('th')
-          .each($el => {
-            const sort = $el.text() === heading ? 'ascending' : 'none'
-            cy.wrap($el).should('have.attr', { 'aria-sort': sort })
-          })
-
-        // clicking again sorts in the other direction
-        cy.get('table').within(() => cy.contains('button', heading).click())
-
-        cy.get('table').within(() => cy.contains('button', heading).should('have.attr', { 'aria-sort': 'descending' }))
-      })
-    })
+    const sortExpectations = generateSortExpectations()
+    sortDataAndAssertSortExpectations(1, sortExpectations, false)
   })
 
   it('persists sort order when refreshing the page', () => {

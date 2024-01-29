@@ -24,7 +24,6 @@
                 {{- ", and we've sent you a copy of your allocation instructions" if sendEmailCopyToAllocatingOfficer and not otherEmails | length}}
                 {{- ', and we have sent a copy of your allocation instructions to ' + ('you and ' if sendEmailCopyToAllocatingOfficer) + otherEmails | join(", ")  if otherEmails | length }}</li>
                 {% if data.type === 'CUSTODY' %}
-                    <li>no initial appointment needed (custody case)</li>
                 {% elseif data.initialAppointment.date %}
                     <li>the initial appointment is scheduled for <strong>{{ data.initialAppointment.date | dateFormat }}</strong></li>
                 {% else %}

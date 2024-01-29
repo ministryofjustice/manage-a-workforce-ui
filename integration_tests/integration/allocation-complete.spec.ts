@@ -99,6 +99,7 @@ context('Allocate Complete', () => {
         'contain',
         "John Doe (john.doe@test.justice.gov.uk) has been notified, and we've sent you a copy of your allocation instructions"
       )
+      .and('contain', 'the initial appointment is scheduled for 1 September 2021 with John Doe PO')
   })
 
   it('What happens next with no additional emails supplied, opting out of copy content visible on page', () => {

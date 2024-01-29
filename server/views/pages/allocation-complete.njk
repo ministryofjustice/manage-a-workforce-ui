@@ -25,7 +25,7 @@
                 {{- ', and we have sent a copy of your allocation instructions to ' + ('you and ' if sendEmailCopyToAllocatingOfficer) + otherEmails | join(", ")  if otherEmails | length }}</li>
                 {% if data.type === 'CUSTODY' %}
                 {% elseif data.initialAppointment.date %}
-                    <li>the initial appointment is scheduled for <strong>{{ data.initialAppointment.date | dateFormat }}</strong></li>
+                    <li>the initial appointment is scheduled for <strong>{{ data.initialAppointment.date | dateFormat }}</strong> with {{ data.staff.name.combinedName }} {{ data.staff.grade }}</strong></li>
                 {% else %}
                     <li>no date found for the initial appointment, please check with your team</li>
                 {% endif %}

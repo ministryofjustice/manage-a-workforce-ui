@@ -131,7 +131,7 @@ context('Allocate Complete', () => {
       .should('contain', 'no date found for the initial appointment, please check with your team')
   })
 
-  it('When a custody case, Initial appointment date not needed visible on page', () => {
+  it('When a custody case, Initial appointment not visible on page', () => {
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     cy.task('stubAllocateOffenderManagerToCase')
@@ -140,8 +140,9 @@ context('Allocate Complete', () => {
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
       .bulletedList()
-      .should('contain', 'no initial appointment needed (custody case)')
-      .and('contain', 'John Doe (john.doe@test.justice.gov.uk) has been notified')
+      .contains('John Doe (john.doe@test.justice.gov.uk) has been notified')
+      .contains('the initial appointment is scheduled for ')
+      .should('not.exist')
   })
 
   it('must keep instruction text after an errored allocation', () => {

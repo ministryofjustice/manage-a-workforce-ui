@@ -242,6 +242,14 @@ context('Find Unallocated cases', () => {
           'Probation status': 'Previously managed(John Agard)',
         },
         {
+          'Name / CRN': 'Paul DanielsXX89999',
+          Tier: 'C1',
+          'Sentence date': '10 May 2023',
+          'COM Handover date': 'N/A',
+          'Initial appointment date': 'Not neededCustody case (11 months)',
+          'Probation status': 'Previously managed(John Agard)',
+        },
+        {
           'Name / CRN': 'John DoeX678911  Actionrequired',
           Tier: 'C1',
           'Sentence date': '1 December 2023',
@@ -331,12 +339,13 @@ context('Find Unallocated cases', () => {
           'P125643',
           'P567654',
           'X768522',
+          'XX89999',
         ],
       },
       {
         columnHeaderName: 'Tier',
         // tier sorts by tierOrder which is different to the alpha chars below (which is wy D1 comes before C1)
-        orderedData: ['D1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C2', 'C2', 'C3'],
+        orderedData: ['D1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C2', 'C2', 'C3'],
       },
       {
         columnHeaderName: 'Sentence date',
@@ -348,13 +357,14 @@ context('Find Unallocated cases', () => {
           '1 June 2021',
           '1 September 2021',
           '16 February 2022',
+          '10 May 2023',
           '23 July 2023',
           '1 March 2024',
         ],
       },
       {
         columnHeaderName: 'COM Handover date',
-        orderedData: ['3 October 2024', '3 January 2025', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'],
+        orderedData: ['3 October 2024', '3 January 2025', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'],
       },
       {
         columnHeaderName: 'Initial appointment date',
@@ -368,6 +378,7 @@ context('Find Unallocated cases', () => {
           'Not',
           'Not',
           'Not',
+          'Not',
         ],
       },
       {
@@ -377,6 +388,7 @@ context('Find Unallocated cases', () => {
           'Currently managed',
           'New to probation',
           'New to probation',
+          'Previously managed',
           'Previously managed',
           'Previously managed',
           'Previously managed',

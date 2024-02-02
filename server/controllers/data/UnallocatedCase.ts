@@ -80,7 +80,7 @@ export default class UnallocatedCase {
   }
 
   setInitialAppointment(initialAppointment: InitialAppointment, caseType: string, sentenceLength: string): void {
-    if (caseType === 'CUSTODY') {
+    if (caseType === 'CUSTODY' || caseType === 'LICENSE') {
       this.primaryInitialAppointment = 'Not needed'
       this.secondaryInitialAppointment = 'Custody case'
       if (sentenceLength) {

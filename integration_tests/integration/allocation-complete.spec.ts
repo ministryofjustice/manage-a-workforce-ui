@@ -146,6 +146,20 @@ context('Allocate Complete', () => {
       .should('not.exist')
   })
 
+  it('When a license case, Initial appointment not visible on page', () => {
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    cy.task('stubAllocateOffenderManagerToCase')
+    cy.task('stubGetAllocationCompleteDetailsLicense')
+    instructionsConfirmPage.continueButton('1').click()
+    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
+    allocationCompletePage
+      .bulletedList()
+      .contains('John Doe (john.doe@test.justice.gov.uk) has been notified')
+      .contains('the initial appointment is scheduled for ')
+      .should('not.exist')
+  })
+
   it('must keep instruction text after an errored allocation', () => {
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')

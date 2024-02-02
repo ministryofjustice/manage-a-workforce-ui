@@ -177,6 +177,45 @@ export default {
             combinedName: 'Dylan Adam Armstrong',
           },
           type: 'CUSTODY',
+          initialAppointment: {
+            date: '2024-10-01',
+          },
+          staff: {
+            code: 'OM1',
+            name: {
+              forename: 'John',
+              middleName: '',
+              surname: 'Doe',
+              combinedName: 'John Doe',
+            },
+            email: 'john.doe@test.justice.gov.uk',
+            grade: 'PO',
+          },
+        },
+      },
+    })
+  },
+  stubGetAllocationCompleteDetailsLicense: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: '/allocation/person/J678910/event/1/complete-details',
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          crn: 'J678910',
+          name: {
+            forename: 'Dylan',
+            middleName: 'Adam',
+            surname: 'Armstrong',
+            combinedName: 'Dylan Adam Armstrong',
+          },
+          type: 'LICENSE',
+          initialAppointment: {
+            date: '2024-11-05',
+          },
           staff: {
             code: 'OM1',
             name: {

@@ -23,10 +23,9 @@
                 <li><strong>{{ data.staff.name.combinedName }}</strong> (<em>{{ data.staff.email }}</em>) has been notified
                 {{- ", and we've sent you a copy of your allocation instructions" if sendEmailCopyToAllocatingOfficer and not otherEmails | length}}
                 {{- ', and we have sent a copy of your allocation instructions to ' + ('you and ' if sendEmailCopyToAllocatingOfficer) + otherEmails | join(", ")  if otherEmails | length }}</li>
-                {% if data.type === 'CUSTODY' %}
-                {% elseif data.initialAppointment.date %}
+                {% if initialAppointmentDateDisplayResult.showDisplayContentForInitialAppointmentDateAndStaff %}
                     <li>the initial appointment is scheduled for <strong>{{ data.initialAppointment.date | dateFormat }}</strong> with {{ data.staff.name.combinedName }} {{ data.staff.grade }}</strong></li>
-                {% else %}
+                {% elseif initialAppointmentDateDisplayResult.showDisplayContentForNoInitialAppointmentDate %}
                     <li>no date found for the initial appointment, please check with your team</li>
                 {% endif %}
             </ul>

@@ -189,6 +189,23 @@ export const allocationsByTeamResponse = [
     sentenceLength: '25 Years',
     outOfAreaTransfer: false,
   },
+  {
+    name: 'Paul Daniels',
+    crn: 'XX89999',
+    tier: 'C1',
+    sentenceDate: '2023-05-10',
+    handoverDate: null,
+    initialAppointment: '2024-04-10',
+    status: 'Previously managed',
+    offenderManager: {
+      forenames: 'John',
+      surname: 'Agard',
+    },
+    convictionNumber: 2,
+    caseType: 'LICENSE',
+    sentenceLength: '11 months',
+    outOfAreaTransfer: false,
+  },
 ]
 
 export default {

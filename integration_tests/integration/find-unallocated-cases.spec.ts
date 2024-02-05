@@ -62,7 +62,7 @@ context('Find Unallocated cases', () => {
   })
 
   it('filter heading visible on page', () => {
-    findUnallocatedCasesPage.filterHeading().should('contain', 'Select a team to view unallocated case')
+    findUnallocatedCasesPage.filterHeading().should('contain', 'What types of case can I allocate?')
   })
 
   it('select pdu visible on page', () => {
@@ -173,88 +173,88 @@ context('Find Unallocated cases', () => {
           'Name / CRN': 'Dylan Adam ArmstrongJ678910',
           Tier: 'C1',
           'Sentence date': '1 September 2021',
-          'COM Handover date': 'N/A',
-          'Initial appointment date': '1 September 2021Unallocated officer',
+          'COM handover': 'N/A',
+          'Initial appointment': '1 September 2021Unallocated officer',
           'Probation status': 'Currently managed(Antonio LoSardo, SPO)',
         },
         {
           'Name / CRN': 'Sofia MitchellL786545',
           Tier: 'C1',
           'Sentence date': '10 May 2021',
-          'COM Handover date': '3 January 2025',
-          'Initial appointment date': 'Not neededCustody case (5 Years)',
+          'COM handover': '3 January 2025',
+          'Initial appointment': 'Not neededCustody case (5 Years)',
           'Probation status': 'Previously managed(John Agard)',
         },
         {
           'Name / CRN': 'John SmithP125643',
           Tier: 'C3',
           'Sentence date': '23 July 2023',
-          'COM Handover date': 'N/A',
-          'Initial appointment date': '1 September 2023Reece John Spears',
+          'COM handover': 'N/A',
+          'Initial appointment': '1 September 2023Reece John Spears',
           'Probation status': 'New to probation',
         },
         {
           'Name / CRN': 'Kacey RayE124321',
           Tier: 'C2',
           'Sentence date': '16 February 2022',
-          'COM Handover date': 'N/A',
-          'Initial appointment date': '25 March 2022Micheala Smith',
+          'COM handover': 'N/A',
+          'Initial appointment': '25 March 2022Micheala Smith',
           'Probation status': 'New to probation',
         },
         {
           'Name / CRN': 'Andrew WilliamsP567654',
           Tier: 'C1',
           'Sentence date': '1 June 2021',
-          'COM Handover date': 'N/A',
-          'Initial appointment date': '15 June 2021John Paul Tinker',
+          'COM handover': 'N/A',
+          'Initial appointment': '15 June 2021John Paul Tinker',
           'Probation status': 'Previously managed',
         },
         {
           'Name / CRN': 'Sarah SiddallC567654',
           Tier: 'C2',
           'Sentence date': '1 March 2024',
-          'COM Handover date': 'N/A',
-          'Initial appointment date': '25 April 2024Lando Nickson',
+          'COM handover': 'N/A',
+          'Initial appointment': '25 April 2024Lando Nickson',
           'Probation status': 'Previously managed',
         },
         {
           'Name / CRN': 'Mick JonesC234432',
           Tier: 'C1',
           'Sentence date': '25 May 2021',
-          'COM Handover date': 'N/A',
-          'Initial appointment date': 'Not foundCheck with your team',
+          'COM handover': 'N/A',
+          'Initial appointment': 'Not foundCheck with your team',
           'Probation status': 'Previously managed',
         },
         {
           'Name / CRN': 'Bill TurnerF5635632',
           Tier: 'D1',
           'Sentence date': '10 May 2021',
-          'COM Handover date': 'N/A',
-          'Initial appointment date': '21 August 2021Emma Marie Williams',
+          'COM handover': 'N/A',
+          'Initial appointment': '21 August 2021Emma Marie Williams',
           'Probation status': 'Currently managed(Richard Moore)',
         },
         {
           'Name / CRN': 'Daffy DuckX768522',
           Tier: 'C1',
           'Sentence date': '1 March 2000',
-          'COM Handover date': '3 October 2024',
-          'Initial appointment date': 'Not neededCustody case (25 Years)',
+          'COM handover': '3 October 2024',
+          'Initial appointment': 'Not neededCustody case (25 Years)',
           'Probation status': 'Previously managed(John Agard)',
         },
         {
           'Name / CRN': 'Paul DanielsXX89999',
           Tier: 'C1',
           'Sentence date': '10 May 2023',
-          'COM Handover date': 'N/A',
-          'Initial appointment date': 'Not neededCustody case (11 months)',
+          'COM handover': 'N/A',
+          'Initial appointment': 'Not neededCustody case (11 months)',
           'Probation status': 'Previously managed(John Agard)',
         },
         {
           'Name / CRN': 'John DoeX678911  Actionrequired',
           Tier: 'C1',
           'Sentence date': '1 December 2023',
-          'COM Handover date': 'N/A',
-          'Initial appointment date':
+          'COM handover': 'N/A',
+          'Initial appointment':
             'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.',
         },
       ])
@@ -363,11 +363,11 @@ context('Find Unallocated cases', () => {
         ],
       },
       {
-        columnHeaderName: 'COM Handover date',
+        columnHeaderName: 'COM handover',
         orderedData: ['3 October 2024', '3 January 2025', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'],
       },
       {
-        columnHeaderName: 'Initial appointment date',
+        columnHeaderName: 'Initial appointment',
         orderedData: [
           '15 June 2021',
           '21 August 2021',

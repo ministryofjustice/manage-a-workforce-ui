@@ -102,12 +102,20 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.sectionBreak().should('exist')
   })
 
-  it('Sub heading is visible on page', () => {
+  it('Heading text is visible on page', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.subHeading().should('contain', 'Allocate to a probation practitioner')
+    choosePractitionerPage.headingText().should('have.text', 'Allocate to a probation practitioner')
+  })
+
+  it('Shows link to Edit my teams list', () => {
+    cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.manageMyTeamsLink().should('equal', '/pdu/PDU1/select-teams')
   })
 
   it('Warning is visible on page if probation status is currently managed', () => {

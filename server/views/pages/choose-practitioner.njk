@@ -185,11 +185,10 @@
     </div>
     {% endif %}
 
-    {{ pop({name: name, crn: crn, tier: tier}) }}
-
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Allocate to a probation practitioner</h1>
+    <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{pduCode}}/select-teams">Edit my teams list</a>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-
-    <h2 class="govuk-heading-l">Allocate to a probation practitioner</h2>
+    {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg' }) }}
 
     {% if (probationStatus == 'Currently managed' and offenderManagerDetails) or probationStatus == 'Previously managed' %}
         <div class="govuk-warning-text">

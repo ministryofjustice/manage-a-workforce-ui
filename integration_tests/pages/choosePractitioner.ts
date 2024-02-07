@@ -9,6 +9,8 @@ export default class ChoosePractitionerPage extends Page {
 
   warningIcon = (): PageElement => cy.get('.govuk-warning-text__icon')
 
+  captionText = (): PageElement => cy.get('.govuk-caption-l')
+
   tabs = (): PageElement => cy.get('[data-module="govuk-tabs"]')
 
   tab = (id: string): PageElement => cy.get(`[id="tab_${id}"]`)
@@ -28,4 +30,6 @@ export default class ChoosePractitionerPage extends Page {
   allocateCaseButton = (): PageElement => cy.get('form > div > button.govuk-button')
 
   clearSelectionButton = (): PageElement => cy.get(`.govuk-button--secondary`)
+
+  manageMyTeamsLink = (): PageElement => cy.get('[data-qa-link="select-teams"]').invoke('attr', 'href')
 }

@@ -20,3 +20,6 @@ generic-service:
 
   scheduledDowntime:
     enabled: true
+
+generic-prometheus-alerts:
+  businessHoursOnly: true

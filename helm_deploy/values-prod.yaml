@@ -19,4 +19,5 @@ generic-service:
     STAFF_LOOKUP_SERVICE_URL: "https://hmpps-staff-lookup-service.hmpps.service.justice.gov.uk"
 
 generic-prometheus-alerts:
+  alertSeverity: workforce-management-prod-alerts
   ingress5xxErrorWindowMinutes: 4

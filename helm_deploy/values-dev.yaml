@@ -35,3 +35,6 @@ generic-service:
       - internal
       - prisons
       - unilink_staff
+
+generic-prometheus-alerts:
+  businessHoursOnly: true

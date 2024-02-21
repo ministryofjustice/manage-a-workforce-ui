@@ -91,6 +91,12 @@ generic-service:
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=attack-rce;ARGS:evidenceText"
+      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
+        "id:1013,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=attack-rfi;ARGS:evidenceText"
 
   livenessProbe:
     httpGet:

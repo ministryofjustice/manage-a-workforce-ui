@@ -1,5 +1,22 @@
 [
   {
+    "heading": "21 February 2024",
+    "whatsNew": [
+      "Allocating custody cases: We’ve made a number of small changes to support you with allocating custody-to-community cases through the service.",
+      "COM handover: We’ve added the COM handover date to the Unallocated cases table.",
+      "Deselecting empty teams: If you see empty teams on the Allocate cases by team screen or Select a probation practitioner screen, we’ve added a link to edit your teams list.",
+      "Allocating other types of case: We’ve updated the content about what types of case cannot be allocated through the service, and will need to be done in NDelius.",
+      "Who the initial appointment is with: If there’s an initial appointment date in the Unallocated cases table, it will display who the initial appointment is booked with.",
+      "External transfers: We’ve added an ‘Action required’ badge to external transfer cases appearing in the Unallocated cases table. These cases cannot be allocated through the service until the transfer process is completed in NDelius. You can still review the case details.",
+      "Entering an email address: We’ve updated the email address autocomplete functionality to trigger when uppercase letters are entered into the address field, so it will bring up the email address book.",
+      "Notification email: We’ve updated the email content to include an Official-Sensitive disclaimer"
+    ],
+    "technicalFixes": [
+      "We’ve fixed an issue with the beta banner where it was partially obscured at certain zoom levels.",
+      "We’ve updated the names of some teams in the London region to fix spelling mistakes."
+    ]
+  },
+  {
     "heading": "15 December 2023",
     "whatsNew": [],
     "technicalFixes": ["We’ve added the new regions that were onboarded in November to the probation estate."]

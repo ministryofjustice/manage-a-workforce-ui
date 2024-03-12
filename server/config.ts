@@ -57,9 +57,9 @@ export default {
     allocationsService: {
       url: get('ALLOCATIONS_SERVICE_URL', 'http://127.0.0.1:9091', requiredInProduction),
       timeout: {
-        response: 3000,
+        response: 10000,
       },
-      agent: new AgentConfig(3000),
+      agent: new AgentConfig(10000),
       retries: 2,
     },
     workloadService: {

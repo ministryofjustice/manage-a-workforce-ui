@@ -9,7 +9,9 @@
     classes: 'active-registrations-table',
     caption: 'Active registrations',
     captionClasses: 'govuk-table__caption--m',
+    firstCellIsHeader: true,
     head: [
+        { text: 'Flag'},
         { text: 'Type'},
         { text: 'Registered'},
         { text: 'Notes'}
@@ -20,7 +22,10 @@
 {% for registration in data.activeRegistrations %}
     {{
     activeRegistrationsData.rows.push([
-        { text: registration.type },
+        { text: registration.flag },
+        { text: registration.type,
+          classes: 'govuk-table__header'
+        },
         { text: registration.registered | dateFormat },
         { text: registration.notes if registration.notes | length else '-'}
     ])
@@ -31,7 +36,9 @@
     classes: 'inactive-registrations-table',
     caption: 'Inactive registrations',
     captionClasses: 'govuk-table__caption--m',
+    firstCellIsHeader: true,
     head: [
+        { text: 'Flag'},
         { text: 'Type'},
         { text: 'Registered'},
         { text: 'End date'},
@@ -43,7 +50,10 @@
 {% for registration in data.inactiveRegistrations %}
     {{
     inactiveRegistrationsData.rows.push([
-        { text: registration.type },
+        { text: registration.flag },
+        { text: registration.type,
+          classes: 'govuk-table__header'
+        },
         { text: registration.registered | dateFormat},
         { text: registration.endDate | dateFormat},
         { text: registration.notes if registration.notes | length else '-'}

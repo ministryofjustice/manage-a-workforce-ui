@@ -21,18 +21,21 @@ export default {
               registered: '2020-12-13',
               nextReviewDate: '2022-06-13',
               notes: 'Previous suicide /self-harm attempt. Needs further investigating.',
+              flag: 'RoSH',
             },
             {
               type: 'Child concerns',
               registered: '2020-12-13',
               nextReviewDate: '2022-03-13',
               notes: 'Awaiting outcome of social services enquiry.',
+              flag: 'Alerts',
             },
             {
               type: 'Medium RoSH',
               registered: '2021-11-09',
               nextReviewDate: '2022-05-09',
               notes: null,
+              flag: 'Safeguarding',
             },
           ],
           inactiveRegistrations: [
@@ -41,12 +44,14 @@ export default {
               registered: '2012-06-14',
               endDate: '2019-11-26',
               notes: null,
+              flag: 'Information',
             },
             {
               type: 'Mental health issues',
               registered: '2017-12-13',
               endDate: '2019-06-13',
               notes: null,
+              flag: 'Public protection',
             },
           ],
           roshRisk: {

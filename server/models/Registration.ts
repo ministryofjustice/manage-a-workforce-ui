@@ -3,4 +3,5 @@ export default interface Registration {
   registered: string
   notes: string
   endDate: string
+  flag: string
 }

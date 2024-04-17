@@ -76,16 +76,19 @@ context('Risk', () => {
       .getTable()
       .should('deep.equal', [
         {
+          Flag: 'RoSH',
           Type: 'Suicide/self-harm',
           Registered: '13 December 2020',
           Notes: 'Previous suicide /self-harm attempt. Needs further investigating.',
         },
         {
+          Flag: 'Alerts',
           Type: 'Child concerns',
           Registered: '13 December 2020',
           Notes: 'Awaiting outcome of social services enquiry.',
         },
         {
+          Flag: 'Safeguarding',
           Type: 'Medium RoSH',
           Registered: '9 November 2021',
           Notes: '-',
@@ -103,12 +106,14 @@ context('Risk', () => {
       .getTable()
       .should('deep.equal', [
         {
+          Flag: '',
           Type: 'Domestic abuse perpetrator',
           Registered: '14 June 2012',
           'End date': '26 November 2019',
           Notes: '-',
         },
         {
+          Flag: 'Public protection',
           Type: 'Mental health issues',
           Registered: '13 December 2017',
           'End date': '13 June 2019',

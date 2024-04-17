@@ -106,7 +106,7 @@ context('Risk', () => {
       .getTable()
       .should('deep.equal', [
         {
-          Flag: '',
+          Flag: 'Information',
           Type: 'Domestic abuse perpetrator',
           Registered: '14 June 2012',
           'End date': '26 November 2019',

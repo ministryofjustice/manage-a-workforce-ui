@@ -44,7 +44,7 @@ export default {
               registered: '2012-06-14',
               endDate: '2019-11-26',
               notes: null,
-              flag: null,
+              flag: 'Information',
             },
             {
               type: 'Mental health issues',

@@ -22,7 +22,7 @@
 {% for registration in data.activeRegistrations %}
     {{
     activeRegistrationsData.rows.push([
-        { text: registration.flag },
+        { text: registration.flag.description },
         { text: registration.type,
           classes: 'govuk-table__header'
         },
@@ -50,7 +50,7 @@
 {% for registration in data.inactiveRegistrations %}
     {{
     inactiveRegistrationsData.rows.push([
-        { text: registration.flag },
+        { text: registration.flag.description },
         { text: registration.type,
           classes: 'govuk-table__header'
         },

@@ -19,7 +19,7 @@ context('Technical Updates', () => {
 
   it('header visible on page', () => {
     const technicalUpdatesPage = Page.verifyOnPage(TechnicalUpdatesPage)
-    technicalUpdatesPage.headingText().should('have.text', 'Technical updates')
+    technicalUpdatesPage.headingText().should('have.text', 'What’s new')
   })
 
   it('send us feedback visible on page', () => {

@@ -139,7 +139,7 @@
     "@types/passport-oauth2": "1.4.15",
     "@types/redis": "4.0.11",
     "@types/superagent": "4.1.24",
-    "@types/supertest": "2.0.16",
+    "@types/supertest": "6.0.2",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "audit-ci": "6.6.1",

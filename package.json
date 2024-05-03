@@ -105,7 +105,7 @@
     "connect-redis": "7.1.1",
     "cookie-session": "2.1.0",
     "csurf": "1.11.0",
-    "dayjs": "1.11.10",
+    "dayjs": "1.11.11",
     "express": "4.19.2",
     "express-session": "1.18.0",
     "govuk-frontend": "4.8.0",

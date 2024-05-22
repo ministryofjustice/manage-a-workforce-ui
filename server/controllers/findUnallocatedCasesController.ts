@@ -84,6 +84,7 @@ export default class FindUnallocatedCasesController {
       isCaseAllocationHistoryPage: false,
       pduDetails,
       title: 'Unallocated cases | Manage a workforce',
+      pageUrl: `${req.headers.host}${req.url}`,
       errors: req.flash('errors') || [],
       dropDownSelectionData: JSON.stringify(allEstate),
       pduOptions,

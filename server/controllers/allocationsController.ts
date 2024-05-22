@@ -46,6 +46,7 @@ export default class AllocationsController {
       name: response.name,
       convictionNumber: response.convictionNumber,
       title: `${response.name} | Summary | Manage a workforce`,
+      pageUrl: `${req.headers.host}${req.url}`,
       pduCode,
       outOfAreaTransfer: response.outOfAreaTransfer,
     })
@@ -94,6 +95,7 @@ export default class AllocationsController {
       totalPreviousCount,
       convictionNumber: probationRecord.convictionNumber,
       title: `${probationRecord.name} | Probation record | Manage a workforce`,
+      pageUrl: `${req.headers.host}${req.url}`,
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
     })
@@ -106,6 +108,7 @@ export default class AllocationsController {
     ])
     res.render('pages/risk', {
       title: `${risk.name} | Risk | Manage a workforce`,
+      pageUrl: `${_.headers.host}${_.url}`,
       data: risk,
       crn: risk.crn,
       tier: risk.tier,
@@ -125,6 +128,7 @@ export default class AllocationsController {
     const documentRows = documents.map(document => new DocumentRow(document))
     res.render('pages/documents', {
       title: `${caseOverview.name} | Documents | Manage a workforce`,
+      pageUrl: `${_.headers.host}${_.url}`,
       crn: caseOverview.crn,
       tier: caseOverview.tier,
       name: caseOverview.name,
@@ -230,6 +234,7 @@ export default class AllocationsController {
     )
     res.render('pages/decision-evidence', {
       title: `${response.name.combinedName} | Explain your decision | Manage a workforce`,
+      pageUrl: `${req.headers.host}${req.url}`,
       data: response,
       name: response.name.combinedName,
       crn,
@@ -299,6 +304,7 @@ export default class AllocationsController {
     )
     res.render('pages/confirm-instructions', {
       title: `${response.name.combinedName} | Review allocation instructions | Manage a workforce`,
+      pageUrl: `${req.headers.host}${req.url}`,
       data: response,
       name: response.name.combinedName,
       crn: response.crn,

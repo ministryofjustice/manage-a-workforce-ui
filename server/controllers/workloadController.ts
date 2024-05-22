@@ -50,6 +50,7 @@ export default class WorkloadController {
 
     return res.render('pages/allocation-complete', {
       title: `${allocationCompleteDetails.name.combinedName} | Case allocated | Manage a workforce`,
+      pageUrl: `${req.headers.host}${req.url}`,
       data: allocationCompleteDetails,
       crn,
       convictionNumber,

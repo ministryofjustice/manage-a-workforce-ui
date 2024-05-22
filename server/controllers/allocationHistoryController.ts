@@ -33,6 +33,7 @@ export default class AllocationHistoryController {
       isFindUnalllocatedCasesPage: false,
       isCaseAllocationHistoryPage: true,
       title: 'Cases allocated in last 30 days | Manage a workforce',
+      pageUrl: `${req.headers.host}${req.url}`,
       pduCode,
       pduDetails,
       casesLength: 0,

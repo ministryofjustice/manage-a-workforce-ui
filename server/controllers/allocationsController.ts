@@ -417,6 +417,8 @@ export default class AllocationsController {
       }
     ).map(error => fixupArrayNotation(error))
 
+    // TODO: add in error handling for the 'linkfreetext' rule
+
     if (errors.length > 0) {
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)

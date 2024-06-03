@@ -130,12 +130,10 @@ generic-service:
       REDIS_AUTH_TOKEN: "auth_token"
 
   allowlist:
-    cymulate-1: 54.217.50.18/32
-    cymulate-2: 52.208.202.111/32
-    cymulate-3: 52.49.144.209/32
     groups:
       - internal
       - prisons
+      - probation
 
 generic-prometheus-alerts:
   targetApplication: manage-a-workforce-ui

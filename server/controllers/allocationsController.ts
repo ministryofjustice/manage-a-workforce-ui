@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import type { ConfirmInstructionForm, DecisionEvidenceForm } from 'forms'
+import { log } from 'node:util'
 import AllocationsService from '../services/allocationsService'
 import Allocation from '../models/Allocation'
 import Sentence from './data/Sentence'
@@ -408,18 +409,19 @@ export default class AllocationsController {
     form,
     pduCode
   ) {
+    console.log('in the form')
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
       confirmInstructionForm,
-      { 'person.*.email': 'email' },
+      { 'person.*.email': 'email', instructions: 'noUrl' },
       {
         email: 'Enter an email address in the correct format, like name@example.com',
+        noUrl: 'You cannot include links in the allocation notes',
       }
     ).map(error => fixupArrayNotation(error))
 
-    // TODO: add in error handling for the 'linkfreetext' rule
-
     if (errors.length > 0) {
+      console.log('we have a problem with the form')
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
       return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)

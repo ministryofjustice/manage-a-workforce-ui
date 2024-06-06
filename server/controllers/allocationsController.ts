@@ -413,10 +413,10 @@ export default class AllocationsController {
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
       confirmInstructionForm,
-      { 'person.*.email': 'email', instructions: 'noUrl' },
+      { 'person.*.email': 'email', instructions: 'nourl' },
       {
         email: 'Enter an email address in the correct format, like name@example.com',
-        noUrl: 'You cannot include links in the allocation notes',
+        nourl: 'You cannot include links in the allocation notes',
       }
     ).map(error => fixupArrayNotation(error))
 
@@ -456,7 +456,10 @@ export default class AllocationsController {
     )
   }
 }
-
+function noUrl(text) {
+  const regex = /(https?:\/\/(?:www\.|(?!www))[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/g
+  return !regex.test(text)
+}
 function filterEmptyEmails(form: ConfirmInstructionForm): ConfirmInstructionForm {
   return { ...form, person: form.person.filter(person => person.email) }
 }

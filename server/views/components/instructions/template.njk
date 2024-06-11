@@ -1,0 +1,33 @@
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% if params.inGridRow %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+{% endif %}
+
+{{ govukTextarea({
+  name: "instructions",
+  id: "instructions",
+  label: {
+    text: ((params.titleText) | safe if params.titleText else "Allocation instructions"),
+    classes: "govuk-label--l",
+    isPageHeading: true
+  },
+  hint: {
+    text: ( (params.hintText) | safe if params.hintText else "Enter notes for the probation practitioner, which will be sent in the allocation email. You’ll still need to create a Management Oversight contact in NDelius. Do not include links in the notes" )
+  }
+
+}) }}
+
+    {% if params.inGridRow %}
+  </div>
+</div>
+{% endif %}
+
+{% block javascripts %}
+    <script src="/assets/instructions.js"></script>
+    {% if params.inGridRow %}
+        <script src="/assets/instructions-persist-pop.js"></script>
+    {% else %}
+        <script src="/assets/instructions-persist-confirm-allocation.js"></script>
+    {% endif %}
+{% endblock %}

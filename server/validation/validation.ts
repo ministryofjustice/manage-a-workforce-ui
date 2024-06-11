@@ -12,7 +12,7 @@ export default function validate<T>(
   return checkErrors(validation)
 }
 
-const urlValidator = (value, attribute, req) => {
+const urlValidator = value => {
   // Regex pattern to match URLs
   const urlPattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g
 

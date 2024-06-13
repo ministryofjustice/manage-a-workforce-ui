@@ -414,7 +414,7 @@ export default class AllocationsController {
       { 'person.*.email': 'email', instructions: 'nourl' },
       {
         email: 'Enter an email address in the correct format, like name@example.com',
-        instructions: 'You cannot include links in the allocation notes',
+        nourl: 'You cannot include links in the allocation notes',
       }
     ).map(error => fixupArrayNotation(error))
 

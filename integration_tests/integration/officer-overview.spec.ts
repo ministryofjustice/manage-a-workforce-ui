@@ -135,6 +135,22 @@ context('Overview', () => {
           'Number of cases': '14',
         },
         {
+          Tier: 'AS',
+          'Number of cases': '1',
+        },
+        {
+          Tier: 'BS',
+          'Number of cases': '3',
+        },
+        {
+          Tier: 'CS',
+          'Number of cases': '7',
+        },
+        {
+          Tier: 'DS',
+          'Number of cases': '11',
+        },
+        {
           Tier: 'Untiered',
           'Number of cases': '2',
         },

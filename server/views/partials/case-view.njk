@@ -69,17 +69,32 @@
             {% block caseContent %}{% endblock %}
 
         </div>
-    </div>
+    <form action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}" method="GET">
 
-    {{ instructions({ inGridRow: true, convictionNumber: convictionNumber, crn: crn }) }}
+         {{   instructions({
+                convictionNumber: convictionNumber,
+                crn: crn,
+                inGridRow: true
+            })
+         }}
 
-    {{ govukButton({
-        text: "Continue",
-        href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner",
-        classes: "allocate",
-        id: convictionNumber,
-        disabled: outOfAreaTransfer
-    }) }}
+                <div class="govuk-button-group">
+                    {{
+                        govukButton({
+                            text: 'Continue',
+                            classes: 'allocate',
+                            type: 'submit',
+                            name: 'action',
+                            value: 'continue',
+                            preventDoubleClick: true,
+                            id: convictionNumber,
+                            disabled: outOfAreaTransfer
+
+                        })
+                    }}
+
+        </div>
+      </form>
 
     {% block feedbackPrompt %}{% endblock %}
 

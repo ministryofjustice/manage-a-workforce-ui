@@ -32,16 +32,12 @@ export default class AllocationsController {
   ) {}
 
   async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
-    console.log('getUnallocatedCase()')
-    console.log('getUnallocatedCase calling allocationsService.getUnallocatedCase')
     const response: Allocation = await this.allocationsService.getUnallocatedCase(
       res.locals.user.token,
       crn,
       convictionNumber
     )
     const address = new DisplayAddress(response.address)
-    console.log('getUnallocatedCase render pages/summarry')
-
     res.render('pages/summary', {
       data: response,
       address,
@@ -56,8 +52,6 @@ export default class AllocationsController {
   }
 
   async getProbationRecord(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
-    console.log('getProbationRecord()')
-
     const [unallocatedCase, probationRecord] = await Promise.all([
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
       await this.allocationsService.getProbationRecord(res.locals.user.token, crn, convictionNumber),
@@ -106,7 +100,6 @@ export default class AllocationsController {
   }
 
   async getRisk(_, res: Response, crn: string, convictionNumber, pduCode: string) {
-    console.log('getRisk()')
     const [unallocatedCase, risk] = await Promise.all([
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
       await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
@@ -145,8 +138,6 @@ export default class AllocationsController {
 
   // eslint-disable-next-line consistent-return
   async choosePractitioner(req: Request, res: Response, crn, convictionNumber, pduCode) {
-    console.log('choosePractitioner()')
-
     const { token, username } = res.locals.user
     // TODO set form here
     // const summaryForm = trimForm<SummaryForm>(form)
@@ -191,8 +182,6 @@ export default class AllocationsController {
   }
 
   async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionNumber, pduCode) {
-    console.log('selectAllocateOffenderManager()')
-
     const {
       body: { allocatedOfficer: teamAndStaffCode },
     } = req
@@ -204,14 +193,10 @@ export default class AllocationsController {
       )
     }
     req.query.error = 'true'
-    console.log('selectAllocateOffenderManager calling choosePractitioner')
-
     return this.choosePractitioner(req, res, crn, convictionNumber, pduCode)
   }
 
   async getAllocateToPractitioner(_, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
-    console.log('getAllocateToPractitioner()')
-
     const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,
@@ -232,15 +217,12 @@ export default class AllocationsController {
   }
 
   async getDecisionEvidencing(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
-    console.log('getDecisionEvidencing()')
-
     const response: PersonOnProbationStaffDetails = await this.allocationsService.getDecisionEvidencing(
       res.locals.user.token,
       crn,
       convictionNumber,
       staffCode
     )
-    console.log('DecisionEvidenceForm  -- from allocationStorageService.getDecisionEvidence()')
     const decisionEvidenceForm = await this.allocationStorageService.getDecisionEvidence(
       res.locals.user.username,
       crn,
@@ -248,7 +230,6 @@ export default class AllocationsController {
       staffCode,
       convictionNumber
     )
-    console.log('Explain Decision page render')
     res.render('pages/decision-evidence', {
       title: `${response.name.combinedName} | Explain your decision | Manage a workforce`,
       data: response,
@@ -274,8 +255,6 @@ export default class AllocationsController {
     pduCode,
     form
   ) {
-    console.log('submitDecisionEvidencing()')
-
     const decisionEvidenceForm = trimForm<DecisionEvidenceForm>(form)
     const errors = validate(
       decisionEvidenceForm,
@@ -314,17 +293,12 @@ export default class AllocationsController {
     pduCode,
     scrollToBottom = false
   ) {
-    console.log('getConfirmInstructions()')
-
-    console.log('getConfirmInstructions() calling .allocationsService.getConfirmInstructions')
-
     const response: PersonOnProbationStaffDetails = await this.allocationsService.getConfirmInstructions(
       res.locals.user.token,
       crn,
       convictionNumber,
       staffCode
     )
-    console.log('getConfirmInstructions() render pages/confirm-instructions')
     res.render('pages/confirm-instructions', {
       title: `${response.name.combinedName} | Review allocation instructions | Manage a workforce`,
       data: response,
@@ -342,8 +316,6 @@ export default class AllocationsController {
   }
 
   async getOverview(_, res: Response, crn, offenderManagerTeamCode, offenderManagerCode, convictionNumber, pduCode) {
-    console.log('getOverview()')
-
     const [response, teamDetails] = await Promise.all([
       this.workloadService.getOffenderManagerOverview(
         res.locals.user.token,
@@ -366,8 +338,6 @@ export default class AllocationsController {
   }
 
   async getActiveCases(_, res: Response, crn, offenderManagerTeamCode, offenderManagerCode, convictionNumber, pduCode) {
-    console.log('getActiveCases()')
-
     const [response, teamDetails] = await Promise.all([
       this.workloadService.getOffenderManagerCases(res.locals.user.token, offenderManagerCode, offenderManagerTeamCode),
       this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
@@ -404,8 +374,6 @@ export default class AllocationsController {
     form,
     pduCode
   ) {
-    console.log('allocateCaseToOffenderManager()')
-
     if (form.remove !== undefined) {
       form.person.splice(form.remove, 1)
       req.session.confirmInstructionForm = form
@@ -413,7 +381,6 @@ export default class AllocationsController {
     }
     switch (form.action) {
       case 'continue':
-        console.log('allocateCaseToOffenderManager, calling continueConfirmInstructions()')
         return this.continueConfirmInstructions(
           req,
           res,
@@ -443,8 +410,6 @@ export default class AllocationsController {
     form,
     pduCode
   ) {
-    console.log('continueConfirmInstructions()')
-
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
       confirmInstructionForm,

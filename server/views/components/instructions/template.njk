@@ -3,23 +3,35 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 {% endif %}
+{% if params.errorMessage %}
+    <div class="govuk-form-group govuk-form-group--error">
+{% else %}
+    <div class="govuk-form-group">
+{% endif %}
+      <h2 class="govuk-heading-l">
+            {{ params.titleText | safe if params.titleText else "Allocation instructions" }}
+      </h2>
+      <label class="govuk-label govuk-label--l" for="instructions">
 
-{{ govukTextarea({
-  name: "instructions",
-  id: "instructions",
-  label: {
-    text: ((params.titleText) | safe if params.titleText else "Allocation instructions"),
-    classes: "govuk-label--l",
-    isPageHeading: true
-  },
-  hint: {
-    text: ( (params.hintText) | safe if params.hintText else "Enter notes for the probation practitioner, which will be sent in the allocation email. You’ll still need to create a Management Oversight contact in NDelius. Do not include links in the notes" )
-  },
+        {{ params.html | safe if params.html}}
 
-  errorMessage: params.errorMessage
+            <div id="more-detail-hint" class="govuk-hint">
+              {{ params.hintText | safe if params.hintText else "Enter notes for the allocated officer. This is saved automatically, and you can add to or amend it throughout the allocation process." }}
+            </div>
 
-}) }}
+{% if params.errorMessage %}
+      <p id="instructions-error" class="govuk-error-message">
+        <span class="govuk-visually-hidden">Error:</span> {{ params.titleText | safe if params.errorMessage }}
+      </p>
+              <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}"  id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint instructions-error"></textarea>
 
+{% else %}
+              <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}"  id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint"></textarea>
+
+{% endif %}
+
+      </label>
+    </div>
     {% if params.inGridRow %}
   </div>
 </div>

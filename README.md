@@ -48,6 +48,7 @@ Or run tests with the cypress UI:
 
 ### Running web application locally
 - It is possible to get the web application running locally, authenticating against the dev environment, and making networks calls to the dev environment APIs.
+- For authentication to work correctly you need to have already logged into the dev environment before you log into the app locally.
 - To achieve this do the following:
 
 #### Create a .env file for local deployment

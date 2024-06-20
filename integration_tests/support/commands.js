@@ -1,5 +1,5 @@
 Cypress.Commands.add('signIn', (options = { failOnStatusCode: true }) => {
-  cy.request('/')
+  cy.request(`/`)
   cy.task('getSignInUrl').then(url => cy.visit(url, options))
 })
 

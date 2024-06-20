@@ -16,12 +16,12 @@
         {{ params.html | safe if params.html}}
 
             <div id="more-detail-hint" class="govuk-hint">
-              {{ params.hintText | safe if params.hintText else "Enter notes for the allocated officer. This is saved automatically, and you can add to or amend it throughout the allocation process." }}
+              {{ params.hintText | safe if params.hintText else "Enter notes for the probation practitioner, which will be sent in the allocation email. You’ll still need to create a Management Oversight contact in NDelius. Do not include links in the notes." }}
             </div>
 
 {% if params.errorMessage %}
       <p id="instructions-error" class="govuk-error-message">
-        <span class="govuk-visually-hidden">Error:</span> {{ params.titleText | safe if params.errorMessage }}
+        <span class="govuk-visually-hidden">Error:</span> {{ params.errorMessage.text | safe if params.errorMessage.text }}
       </p>
               <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}"  id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint instructions-error"></textarea>
 

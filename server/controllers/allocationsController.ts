@@ -139,8 +139,6 @@ export default class AllocationsController {
   // eslint-disable-next-line consistent-return
   async choosePractitioner(req: Request, res: Response, crn, convictionNumber, pduCode) {
     const { token, username } = res.locals.user
-    // TODO set form here
-    // const summaryForm = trimForm<SummaryForm>(form)
 
     const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
 

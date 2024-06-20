@@ -14,7 +14,4 @@ declare module 'forms' {
     evidenceText?: string
     isSensitive?: boolean
   }
-  export interface SummaryForm {
-    instructions?: string
-  }
 }

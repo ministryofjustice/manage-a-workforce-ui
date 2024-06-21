@@ -75,7 +75,7 @@ context('Instructions Confirmation', () => {
     instructionsPage
       .errorSummary()
       .trimTextContent()
-      .should('equal', 'You cannot include links in the allocation notes')
+      .should('equal', 'There is a problem You cannot include links in the allocation notes')
   })
 
   it('technical updates banner remains hidden after loading page', () => {

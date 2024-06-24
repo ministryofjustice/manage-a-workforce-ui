@@ -78,6 +78,15 @@ context('Instructions Confirmation', () => {
       .should('equal', 'There is a problem You cannot include links in the allocation notes')
   })
 
+  it('entering link without protocol in allocation notes errors', () => {
+    instructionsPage.instructionsTextArea().type('bbc.co.uk/noway')
+    instructionsPage.continueButton('1').click()
+    instructionsPage
+      .errorSummary()
+      .trimTextContent()
+      .should('equal', 'There is a problem You cannot include links in the allocation notes')
+  })
+
   it('technical updates banner remains hidden after loading page', () => {
     instructionsPage.hideMessageLink().click()
     cy.reload()

@@ -14,7 +14,8 @@ export default function validate<T>(
 
 const urlValidator = value => {
   // Regex pattern to match URLs
-  const urlPattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g
+  const urlPattern =
+    /((https?|ftp|smtp):\/\/)?(www.)?[A-Za-z0-9]+(\.[A-Za-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?/g
 
   // Match the text against the regex pattern
   const matches = value.match(urlPattern)

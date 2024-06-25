@@ -70,7 +70,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('entering link in allocation notes errors', () => {
-    instructionsPage.instructionsTextArea().type('https://www.bbc.co.uk/noway')
+    instructionsPage.instructionsTextArea().type('https://bbc.co.uk/noway')
     instructionsPage.continueButton('1').click()
     instructionsPage
       .errorSummary()
@@ -78,17 +78,8 @@ context('Instructions Confirmation', () => {
       .should('equal', 'There is a problem You cannot include links in the allocation notes')
   })
 
-  it('entering link without protocol in allocation notes errors', () => {
-    instructionsPage.instructionsTextArea().type('bbc.co.uk/noway')
-    instructionsPage.continueButton('1').click()
-    instructionsPage
-      .errorSummary()
-      .trimTextContent()
-      .should('equal', 'There is a problem You cannot include links in the allocation notes')
-  })
-
-  it('entering any link allocation notes errors', () => {
-    instructionsPage.instructionsTextArea().type('this is a link bbc.co.uk')
+  it('entering link without scheme but with www in allocation notes errors', () => {
+    instructionsPage.instructionsTextArea().type('www.bbc.co.uk/noway')
     instructionsPage.continueButton('1').click()
     instructionsPage
       .errorSummary()

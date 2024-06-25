@@ -411,9 +411,10 @@ export default class AllocationsController {
     const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
     const errors = validate(
       confirmInstructionForm,
-      { 'person.*.email': 'email' },
+      { 'person.*.email': 'email', instructions: 'nourl' },
       {
         email: 'Enter an email address in the correct format, like name@example.com',
+        nourl: 'You cannot include links in the allocation notes',
       }
     ).map(error => fixupArrayNotation(error))
 

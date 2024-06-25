@@ -69,6 +69,24 @@ context('Instructions Confirmation', () => {
     instructionsPage.inputTexts().should('have.length', 2)
   })
 
+  it('entering link in allocation notes errors', () => {
+    instructionsPage.instructionsTextArea().type('https://bbc.co.uk/noway')
+    instructionsPage.continueButton('1').click()
+    instructionsPage
+      .errorSummary()
+      .trimTextContent()
+      .should('equal', 'There is a problem You cannot include links in the allocation notes')
+  })
+
+  it('entering link without scheme but with www in allocation notes errors', () => {
+    instructionsPage.instructionsTextArea().type('www.bbc.co.uk/noway')
+    instructionsPage.continueButton('1').click()
+    instructionsPage
+      .errorSummary()
+      .trimTextContent()
+      .should('equal', 'There is a problem You cannot include links in the allocation notes')
+  })
+
   it('technical updates banner remains hidden after loading page', () => {
     instructionsPage.hideMessageLink().click()
     cy.reload()

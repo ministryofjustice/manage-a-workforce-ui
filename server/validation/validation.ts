@@ -1,6 +1,6 @@
 import Validator, { ErrorMessages, Rules } from 'validatorjs'
 
-const urlValidator = value => {
+const urlCheck = value => {
   // Regex pattern to match URLs
   const urlPattern = /((https?|ftp|smtp):\/\/|www\.)([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g
 
@@ -14,7 +14,7 @@ const urlValidator = value => {
   return true
 }
 
-Validator.register('nourl', urlValidator)
+Validator.register('nourl', urlCheck)
 
 export default function validate<T>(
   form: T,

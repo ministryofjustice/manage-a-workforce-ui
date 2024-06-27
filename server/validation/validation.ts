@@ -1,5 +1,21 @@
 import Validator, { ErrorMessages, Rules } from 'validatorjs'
 
+const urlValidator = value => {
+  // Regex pattern to match URLs
+  const urlPattern = /((https?|ftp|smtp):\/\/|www\.)([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g
+
+  // Match the text against the regex pattern
+  const matches = value.match(urlPattern)
+
+  // Check if matches exist
+  if (matches) {
+    return false
+  }
+  return true
+}
+
+Validator.register('nourl', urlValidator)
+
 export default function validate<T>(
   form: T,
   rules: Rules,

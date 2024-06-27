@@ -1,17 +1,5 @@
 import Validator, { ErrorMessages, Rules } from 'validatorjs'
 
-export default function validate<T>(
-  form: T,
-  rules: Rules,
-  customMessages: ErrorMessages
-): Array<{ text: string; href: string }> {
-  Validator.register('nourl', urlValidator)
-
-  const validation = new Validator(form, rules, customMessages)
-
-  return checkErrors(validation)
-}
-
 const urlValidator = value => {
   // Regex pattern to match URLs
   const urlPattern = /((https?|ftp|smtp):\/\/|www\.)([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g
@@ -26,9 +14,17 @@ const urlValidator = value => {
   return true
 }
 
-// eslint-disable-next-line no-empty-function
-// const passes = () => {}
-// Function to check if text contains links using regex
+Validator.register('nourl', urlValidator)
+
+export default function validate<T>(
+  form: T,
+  rules: Rules,
+  customMessages: ErrorMessages
+): Array<{ text: string; href: string }> {
+  const validation = new Validator(form, rules, customMessages)
+
+  return checkErrors(validation)
+}
 
 const checkErrors = <T>(validation: Validator.Validator<T>): Array<{ text: string; href: string }> => {
   validation.check()

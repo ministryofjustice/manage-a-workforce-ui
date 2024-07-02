@@ -18,6 +18,7 @@ export default class ProbationEstateController {
     )
     res.render('pages/select-teams', {
       title: `Select your teams | Manage a workforce`,
+      pageUrl: `${req.headers.host}${req.url}`,
       data: response.teams.sort((a, b) => a.name.localeCompare(b.name)),
       error,
       pduName: response.name,

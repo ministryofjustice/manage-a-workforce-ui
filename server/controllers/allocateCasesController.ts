@@ -43,6 +43,7 @@ export default class AllocateCasesController {
     }
     res.render('pages/allocate-cases-by-team', {
       title: 'Allocate cases by team | Manage a workforce',
+      pageUrl: `${req.headers.host}${req.url}`,
       teams: caseInformationByTeam,
       pduCode,
       pduName: probationDeliveryUnitDetails.name,

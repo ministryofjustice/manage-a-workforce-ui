@@ -113,7 +113,11 @@
                     <dd class="govuk-summary-list__value">
                         <ul class="govuk-list govuk-list--bullet">
                             {%- for requirement in data.requirements  if data.requirements %}
-                                <li>{{ requirement.mainCategory }}: {{ requirement.subCategory }} {{ requirement.length }}</li>
+                                {% if requirement.subCategory %}
+                                    <li>{{ requirement.mainCategory }}: {{ requirement.subCategory }} {{ requirement.length }}</li>
+                                {% else %}
+                                    <li>{{ requirement.mainCategory }}: {{ requirement.length }}</li>
+                                {% endif %} 
                             {% endfor -%}
                         </ul>
                         {%- for requirement in data.requirements if data.requirements %}

@@ -1,5 +1,5 @@
 export default interface Requirement {
   mainCategory: string
-  subCategory: string
+  subCategory: string | null
   length: string
 }

@@ -65,7 +65,11 @@ export default class AllocationsController {
     if (errors.length > 0) {
       req.session.confirmInstructionForm = confirmInstructionForm
       req.flash('errors', errors)
-      return this.getUnallocatedCase(req, res, crn, convictionNumber, pduCode)
+
+      return res.redirect(
+        // eslint-disable-next-line security-node/detect-dangerous-redirects
+        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/case-view`
+      )
     }
 
     return res.redirect(

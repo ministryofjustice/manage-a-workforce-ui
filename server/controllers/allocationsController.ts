@@ -326,7 +326,7 @@ export default class AllocationsController {
 
     const confirmInstructionForm = {
       ...req.session.confirmInstructionForm,
-      person: req.session.confirmInstructionForm.person || [],
+      person: req.session.confirmInstructionForm?.person || [],
     }
 
     res.render('pages/confirm-instructions', {

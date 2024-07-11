@@ -48,7 +48,27 @@ export default class AllocationsController {
       title: `${response.name} | Summary | Manage a workforce`,
       pduCode,
       outOfAreaTransfer: response.outOfAreaTransfer,
+      errors: req.flash('errors') || [],
     })
+  }
+
+  async postUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode, form): Promise<void> {
+    const confirmInstructionForm = trimForm<ConfirmInstructionForm>(form)
+    const errors = validate(
+      confirmInstructionForm,
+      { instructions: 'nourl' },
+      {
+        nourl: 'You cannot include links in the allocation notes',
+      }
+    ).map(error => fixupArrayNotation(error))
+
+    if (errors.length > 0) {
+      req.session.confirmInstructionForm = confirmInstructionForm
+      req.flash('errors', errors)
+      return this.getUnallocatedCase(req, res, crn, convictionNumber, pduCode)
+    }
+
+    return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner`)
   }
 
   async getProbationRecord(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
@@ -297,6 +317,12 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
+
+    const confirmInstructionForm = {
+      ...req.session.confirmInstructionForm,
+      person: req.session.confirmInstructionForm.person || [],
+    }
+
     res.render('pages/confirm-instructions', {
       title: `${response.name.combinedName} | Review allocation instructions | Manage a workforce`,
       data: response,
@@ -307,7 +333,7 @@ export default class AllocationsController {
       staffTeamCode,
       convictionNumber: response.convictionNumber,
       errors: req.flash('errors') || [],
-      confirmInstructionForm: req.session.confirmInstructionForm || { person: [] },
+      confirmInstructionForm,
       pduCode,
       scrollToBottom,
     })

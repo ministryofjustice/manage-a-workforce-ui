@@ -70,16 +70,27 @@
 
         </div>
     </div>
-
-    {{ instructions({ inGridRow: true, convictionNumber: convictionNumber, crn: crn }) }}
-
-    {{ govukButton({
-        text: "Continue",
-        href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner",
-        classes: "allocate",
-        id: convictionNumber,
-        disabled: outOfAreaTransfer
-    }) }}
+    <form action="{{ '/pdu/'+pduCode + '/' + crn + '/convictions/' + convictionNumber + '/case-view'}}" method="POST">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        {{ instructions({ 
+                inGridRow: true,
+                convictionNumber: convictionNumber,
+                crn: crn,
+                errorMessage: errors | findError('instructions')
+            }) 
+        }}
+        {{ govukButton({
+                text: 'Continue',
+                classes: 'allocate',
+                type: 'submit',
+                name: 'action',
+                value: 'continue',
+                preventDoubleClick: true,
+                disabled: outOfAreaTransfer,
+                id: convictionNumber
+            })
+        }}
+    </form>
 
     {% block feedbackPrompt %}{% endblock %}
 

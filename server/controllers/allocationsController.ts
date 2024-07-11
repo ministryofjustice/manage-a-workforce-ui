@@ -68,7 +68,10 @@ export default class AllocationsController {
       return this.getUnallocatedCase(req, res, crn, convictionNumber, pduCode)
     }
 
-    return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner`)
+    return res.redirect(
+      // eslint-disable-next-line security-node/detect-dangerous-redirects
+      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner`
+    )
   }
 
   async getProbationRecord(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {

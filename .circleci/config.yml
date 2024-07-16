@@ -222,6 +222,10 @@ workflows:
           helm_timeout: 5m
           requires:
             - request-prod-approval
+          filters:
+            branches:
+              only:
+                - main
 
   security:
     triggers:

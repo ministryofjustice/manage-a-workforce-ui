@@ -33,7 +33,9 @@ export default abstract class Page {
 
   highlightedTab = (): PageElement => cy.get('a[aria-current*="page"]')
 
-  errorSummary = (): PageElement => cy.get('.govuk-error-message')
+  errorSummary = (): PageElement => cy.get('.govuk-error-summary')
+
+  errorMessage = (): PageElement => cy.get('.govuk-error-message')
 
   captionText = (): PageElement => cy.get('.govuk-caption-xl')
 

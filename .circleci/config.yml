@@ -154,6 +154,14 @@ workflows:
             branches:
               only:
                 - main
+                - /epic.*/
+      - request-dev-approval:
+          type: approval
+          requires:
+            - helm_lint
+            - unit_test
+            - integration_test
+            - build_docker
       - hmpps/deploy_env:
           name: deploy_dev
           env: "dev"
@@ -165,11 +173,13 @@ workflows:
             branches:
               only:
                 - main
+                - /epic.*/
           requires:
-            - helm_lint
-            - unit_test
-            - integration_test
-            - build_docker
+            - request-dev-approval
+      - request-preprod-approval:
+          type: approval
+          requires:
+            - deploy_dev
       - hmpps/deploy_env:
           name: deploy_preprod
           env: "preprod"
@@ -183,16 +193,17 @@ workflows:
             branches:
               only:
                 - main
+                - /epic.*/
           requires:
-            - helm_lint
-            - unit_test
-            - integration_test
-            - build_docker
+            - request-preprod-approval
       - request-prod-approval:
           type: approval
           requires:
             - deploy_preprod
-            - deploy_dev
+          filters:
+            branches:
+              only:
+                - main
       - hmpps/deploy_env:
           name: deploy_prod
           env: "prod"

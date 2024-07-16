@@ -10,7 +10,6 @@
 {% from "../components/instructions/macro.njk" import instructions %}
 {% from "../components/pop/macro.njk" import pop %}
 
-
 {% set emailCheckbox %}
 {{ govukCheckboxes({
     name: 'emailCopy',
@@ -24,7 +23,7 @@
 {% endset %}
 
 {% block beforeContent %}
-    {{ govukBreadcrumbs({
+  {{ govukBreadcrumbs({
         items: [
             {
                 text: "Home",
@@ -52,25 +51,25 @@
             }
         ]
     }) }}
-    {% if errors | length > 0 %}
-      {{ govukErrorSummary({
+  {% if errors | length > 0 %}
+    {{ govukErrorSummary({
           titleText: "There is a problem",
           errorList: errors
       }) }}
-    {% endif %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
-    {{ pop({name: name, crn: crn, tier: tier}) }}
+  {{ pop({name: name, crn: crn, tier: tier}) }}
 
-    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+  <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
-<div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <form action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="POST">
+      <form data-form="confirm-instructions" data-validate-form="confirm-allocation" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="POST">
         <div class="govuk-form-group">
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-            {{
+          {{
             instructions({
                 titleText: "Review allocation instructions",
                 html: ('<p>We\'ll send a copy of these notes to you and <br><strong>' + data.staff.name.combinedName + '</strong> (<em>' + data.staff.email + '</em>).</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
@@ -198,7 +197,8 @@
                         value: 'continue',
                         preventDoubleClick: true,
                         attributes: {
-                            id: convictionNumber
+                            id: convictionNumber,
+                            'data-form-submit': undefined
                         }
                     })
                 }}
@@ -216,4 +216,6 @@
 {% block javascripts %}
     <script src="/assets/accessible-autocomplete.min.js"></script>
     <script id="autocomplete-script" src="/assets/js/autocomplete-email.js" {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}></script>
+    <script src="/assets/validator.js"></script>
+    <script src="/assets/validation.js"></script>
 {% endblock %}

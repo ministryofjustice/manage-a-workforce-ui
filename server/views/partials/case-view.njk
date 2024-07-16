@@ -65,12 +65,11 @@
                 ]
             }) }}
 
-
             {% block caseContent %}{% endblock %}
 
         </div>
     </div>
-    <form action="{{ '/pdu/'+pduCode + '/' + crn + '/convictions/' + convictionNumber + '/case-view'}}" method="POST">
+    <form data-validate-form="case-view">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         {{ instructions({ 
                 inGridRow: true,
@@ -79,20 +78,25 @@
                 errorMessage: errors | findError('instructions')
             }) 
         }}
+
         {{ govukButton({
-                text: 'Continue',
-                classes: 'allocate',
-                type: 'submit',
-                name: 'action',
-                value: 'continue',
-                preventDoubleClick: true,
-                disabled: outOfAreaTransfer,
-                id: convictionNumber
-            })
-        }}
+            text: "Continue",
+            href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner",
+            classes: "allocate",
+            id: convictionNumber,
+            disabled: outOfAreaTransfer,
+                    attributes: {
+                        'data-form-submit': undefined
+                    }
+        }) }}
+
     </form>
 
     {% block feedbackPrompt %}{% endblock %}
 
 {% endblock %}
 
+{% block javascripts %}
+    <script src="/assets/validator.js"></script>
+    <script src="/assets/validation.js"></script>
+{% endblock %}

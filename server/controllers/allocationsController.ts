@@ -52,31 +52,6 @@ export default class AllocationsController {
     })
   }
 
-  async postUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode, form): Promise<void> {
-    const confirmInstructionForm = trimForm<ConfirmInstructionForm>(form)
-    const errors = validate(
-      confirmInstructionForm,
-      { instructions: 'nourl' },
-      {
-        nourl: 'You cannot include links in the allocation notes',
-      }
-    ).map(error => fixupArrayNotation(error))
-
-    if (errors.length > 0) {
-      req.session.confirmInstructionForm = confirmInstructionForm
-      req.flash('errors', errors)
-      return res.redirect(
-        // eslint-disable-next-line security-node/detect-dangerous-redirects
-        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/case-view`
-      )
-    }
-
-    return res.redirect(
-      // eslint-disable-next-line security-node/detect-dangerous-redirects
-      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner`
-    )
-  }
-
   async getProbationRecord(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
     const [unallocatedCase, probationRecord] = await Promise.all([
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
@@ -122,11 +97,10 @@ export default class AllocationsController {
       title: `${probationRecord.name} | Probation record | Manage a workforce`,
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
-      errors: req.flash('errors') || [],
     })
   }
 
-  async getRisk(req: Request, res: Response, crn: string, convictionNumber, pduCode: string) {
+  async getRisk(_, res: Response, crn: string, convictionNumber, pduCode: string) {
     const [unallocatedCase, risk] = await Promise.all([
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
       await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
@@ -140,11 +114,10 @@ export default class AllocationsController {
       convictionNumber: risk.convictionNumber,
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
-      errors: req.flash('errors') || [],
     })
   }
 
-  async getDocuments(req: Request, res: Response, crn: string, convictionNumber, pduCode: string) {
+  async getDocuments(_, res: Response, crn: string, convictionNumber, pduCode: string) {
     const [unallocatedCase, caseOverview, documents] = await Promise.all([
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
       await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber),
@@ -161,7 +134,6 @@ export default class AllocationsController {
       documents: documentRows,
       documentsCount: documentRows.length,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
-      errors: req.flash('errors') || [],
     })
   }
 

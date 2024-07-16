@@ -90,7 +90,7 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.continueButton().click()
+    summaryPage.allocateCaseButton('J678910', '1', 'PDU1').click()
     Page.verifyOnPage(ChoosePractitionerPage)
   })
 

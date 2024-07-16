@@ -162,6 +162,11 @@ workflows:
             - unit_test
             - integration_test
             - build_docker
+          filters:
+            branches:
+              only:
+                - main
+                - /epic.*/
       - hmpps/deploy_env:
           name: deploy_dev
           env: "dev"

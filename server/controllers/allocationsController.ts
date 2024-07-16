@@ -97,10 +97,11 @@ export default class AllocationsController {
       title: `${probationRecord.name} | Probation record | Manage a workforce`,
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
+      errors: req.flash('errors') || [],
     })
   }
 
-  async getRisk(_, res: Response, crn: string, convictionNumber, pduCode: string) {
+  async getRisk(req: Request, res: Response, crn: string, convictionNumber, pduCode: string) {
     const [unallocatedCase, risk] = await Promise.all([
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
       await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
@@ -114,10 +115,11 @@ export default class AllocationsController {
       convictionNumber: risk.convictionNumber,
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
+      errors: req.flash('errors') || [],
     })
   }
 
-  async getDocuments(_, res: Response, crn: string, convictionNumber, pduCode: string) {
+  async getDocuments(req: Request, res: Response, crn: string, convictionNumber, pduCode: string) {
     const [unallocatedCase, caseOverview, documents] = await Promise.all([
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
       await this.allocationsService.getCaseOverview(res.locals.user.token, crn, convictionNumber),
@@ -134,6 +136,7 @@ export default class AllocationsController {
       documents: documentRows,
       documentsCount: documentRows.length,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
+      errors: req.flash('errors') || [],
     })
   }
 

@@ -123,6 +123,12 @@ window.addEventListener('load', () => {
         nourl: 'You cannot include links in the allocation notes',
       },
     ],
+    'decision-evidence': [
+      { evidenceText: 'nourl' },
+      {
+        nourl: 'You cannot include links in the allocation notes',
+      },
+    ],
   }
 
   document.querySelectorAll('[data-validate-form]').forEach(form => {

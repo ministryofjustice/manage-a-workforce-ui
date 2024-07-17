@@ -1,47 +1,42 @@
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% if params.inGridRow %}
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-{% endif %}
-{% if params.errorMessage %}
-    <div class="govuk-form-group govuk-form-group--error">
-{% else %}
-    <div class="govuk-form-group">
-{% endif %}
-      <h2 class="govuk-heading-l">
-            {{ params.titleText | safe if params.titleText else "Allocation instructions" }}
-      </h2>
-      <label class="govuk-label govuk-label--l" for="instructions">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    {% endif %}
+    {% if params.errorMessage %}
+      <div class="govuk-form-group govuk-form-group--error">
+      {% else %}
+        <div class="govuk-form-group">
+        {% endif %}
+        <h2 class="govuk-heading-l">
+          {{ params.titleText | safe if params.titleText else "Allocation instructions" }}
+        </h2>
+        <label class="govuk-label govuk-label--l" for="instructions">
+          {{ params.html | safe if params.html}}
+          <div id="more-detail-hint" class="govuk-hint">
+            {{ params.hintText | safe if params.hintText else "Enter notes for the probation practitioner, which will be sent in the allocation email. You’ll still need to create a Management Oversight contact in NDelius. Do not include links in the notes." }}
+          </div>
+        </label>
+        {% if params.errorMessage %}
+          <p id="instructions-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ params.errorMessage.text | safe if params.errorMessage.text }}
+          </p>
+          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint instructions-error"></textarea>
+        {% else %}
+          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint"></textarea>
+        {% endif %}
 
-        {{ params.html | safe if params.html}}
-
-            <div id="more-detail-hint" class="govuk-hint">
-              {{ params.hintText | safe if params.hintText else "Enter notes for the probation practitioner, which will be sent in the allocation email. You’ll still need to create a Management Oversight contact in NDelius. Do not include links in the notes." }}
-            </div>
-
-{% if params.errorMessage %}
-      <p id="instructions-error" class="govuk-error-message">
-        <span class="govuk-visually-hidden">Error:</span> {{ params.errorMessage.text | safe if params.errorMessage.text }}
-      </p>
-              <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}"  id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint instructions-error"></textarea>
-
-{% else %}
-              <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}"  id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint"></textarea>
-
-{% endif %}
-
-      </label>
+      </div>
+      {% if params.inGridRow %}
+      </div>
     </div>
-    {% if params.inGridRow %}
-  </div>
-</div>
-{% endif %}
-
-{% block javascripts %}
+  {% endif %}
+  {% block javascripts %}
     <script src="/assets/instructions.js"></script>
     {% if params.inGridRow %}
-        <script src="/assets/instructions-persist-pop.js"></script>
+      <script src="/assets/instructions-persist-pop.js"></script>
     {% else %}
-        <script src="/assets/instructions-persist-confirm-allocation.js"></script>
+      <script src="/assets/instructions-persist-confirm-allocation.js"></script>
     {% endif %}
-{% endblock %}
+  {% endblock %}

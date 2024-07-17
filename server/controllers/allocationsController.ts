@@ -52,32 +52,6 @@ export default class AllocationsController {
     })
   }
 
-  async postUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode, form): Promise<void> {
-    const confirmInstructionForm = trimForm<ConfirmInstructionForm>(form)
-    const errors = validate(
-      confirmInstructionForm,
-      { instructions: 'nourl' },
-      {
-        nourl: 'You cannot include links in the allocation notes',
-      }
-    ).map(error => fixupArrayNotation(error))
-
-    if (errors.length > 0) {
-      req.session.confirmInstructionForm = confirmInstructionForm
-      req.flash('errors', errors)
-
-      return res.redirect(
-        // eslint-disable-next-line security-node/detect-dangerous-redirects
-        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/case-view`
-      )
-    }
-
-    return res.redirect(
-      // eslint-disable-next-line security-node/detect-dangerous-redirects
-      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner`
-    )
-  }
-
   async getProbationRecord(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
     const [unallocatedCase, probationRecord] = await Promise.all([
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),

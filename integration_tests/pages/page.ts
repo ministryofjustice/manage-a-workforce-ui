@@ -35,6 +35,8 @@ export default abstract class Page {
 
   errorSummary = (): PageElement => cy.get('.govuk-error-summary')
 
+  errorMessage = (): PageElement => cy.get('.govuk-error-message')
+
   captionText = (): PageElement => cy.get('.govuk-caption-xl')
 
   headingText = (): PageElement => cy.get('.govuk-heading-xl')

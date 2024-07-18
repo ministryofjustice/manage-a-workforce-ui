@@ -6,7 +6,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
-{% set offenderManagerDetails = data.staff.name.combinedName + (' (' + data.staff.grade + ')' if data.staff.grade)  %}
+{% set offenderManagerDetails = data.staff.name.combinedName + (' (' + data.staff.grade + ')' if data.staff.grade) %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -34,12 +34,12 @@
         ]
     }) }}
 
-      {% if errors | length > 0 %}
-      {{ govukErrorSummary({
+    {% if errors | length > 0 %}
+        {{ govukErrorSummary({
           titleText: "There is a problem",
           errorList: errors
       }) }}
-      {% endif %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -50,7 +50,7 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h2 class="govuk-heading-l">Explain why you're allocating this case to {{ offenderManagerDetails }}</h2>
-            <form method="POST" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded">
+            <form method="POST" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded" data-validate-form="decision-evidence">
                 <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
                 {{ govukCharacterCount({
@@ -100,14 +100,21 @@
                             type: 'submit',
                             name: 'action',
                             value: 'continue',
-                            preventDoubleClick: true
+                            preventDoubleClick: true,
+                            attributes: {
+                                'data-form-submit': undefined
+                            }
                         })
                     }}
                     <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Cancel</a>
-                    
+
                 </div>
             </form>
         </div>
     </div>
 {% endblock %}
 
+{% block javascripts %}
+    <script src="/assets/validator.js"></script>
+    <script src="/assets/validation.js"></script>
+{% endblock %}

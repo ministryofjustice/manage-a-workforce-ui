@@ -60,12 +60,12 @@ function test(form, rules, messages, scrollToGroup) {
       const group = element.closest('.govuk-form-group')
       group.classList.add('govuk-form-group--error')
 
-      const label = group.querySelector('label')
+      const label = element.type === 'radio' ? group.querySelector('legend') : group.querySelector('label')
 
       const error = document.createElement('p')
       error.classList.add('govuk-error-message')
       error.innerHTML = `<span class="govuk-visually-hidden">Error: </span> ${message}`
-      label.insertAdjacentElement('afterend', error)
+      label ? label.insertAdjacentElement('afterend', error) : element.insertAdjacentElement('beforebegin', error)
 
       if (index === 0 && scrollToGroup) {
         const { top } = group.getBoundingClientRect()
@@ -93,8 +93,6 @@ function bindForm(form, rules, messages) {
       }
     })
   }
-
-  form.addEventListener('change', () => test(form, rules, messages, false))
 }
 
 window.addEventListener('load', () => {
@@ -124,9 +122,15 @@ window.addEventListener('load', () => {
       },
     ],
     'decision-evidence': [
-      { evidenceText: 'nourl' },
+      {
+        evidenceText: 'nourl|required|max:3500',
+        isSensitive: 'required',
+      },
       {
         nourl: 'You cannot include links in the allocation notes',
+        'required.evidenceText': 'Enter the reasons for your allocation decision',
+        'max.evidenceText': 'Your explanation must be 3500 characters or fewer',
+        'required.isSensitive': "Select 'Yes' if this includes sensitive information",
       },
     ],
   }

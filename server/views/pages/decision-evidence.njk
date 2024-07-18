@@ -100,7 +100,10 @@
                             type: 'submit',
                             name: 'action',
                             value: 'continue',
-                            preventDoubleClick: true
+                            preventDoubleClick: true,
+                            attributes: {
+                                'data-form-submit': undefined
+                            }
                         })
                     }}
                     <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Cancel</a>

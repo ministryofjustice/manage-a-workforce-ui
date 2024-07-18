@@ -48,12 +48,10 @@ context('Decision Evidencing', () => {
   it('Not filling in the form results in errors', () => {
     decisionEvidencingPage.button().click()
     decisionEvidencingPage
-      .errorSummary()
+      .errorMessage()
+      .last()
       .trimTextContent()
-      .should(
-        'equal',
-        "There is a problem Enter the reasons for your allocation decision Select 'Yes' if this includes sensitive information"
-      )
+      .should('equal', "Error: Select 'Yes' if this includes sensitive information")
     decisionEvidencingPage.radioButton('true').should('not.be.checked')
     decisionEvidencingPage.radioButton('false').should('not.be.checked')
   })
@@ -61,7 +59,7 @@ context('Decision Evidencing', () => {
   it('part filling in form keeps filled in parts after submission', () => {
     decisionEvidencingPage.evidenceText().type('Some Evidences')
     decisionEvidencingPage.button().click()
-    decisionEvidencingPage.evidenceText().should('have.text', 'Some Evidences')
+    decisionEvidencingPage.evidenceText().should('have.value', 'Some Evidences')
   })
 
   it('keep radio button checked after submitting form', () => {
@@ -71,12 +69,35 @@ context('Decision Evidencing', () => {
   })
 
   it('Submitting evidence text greater than 3500 characters results in errors', () => {
-    decisionEvidencingPage.evidenceText().type('A'.repeat(3501))
+    decisionEvidencingPage.evidenceText().type('A'.repeat(3501), { delay: 0 })
     decisionEvidencingPage.radioButton('true').click()
     decisionEvidencingPage.button().click()
     decisionEvidencingPage
-      .errorSummary()
+      .errorMessage()
+      .first()
       .trimTextContent()
-      .should('equal', 'There is a problem Your explanation must be 3500 characters or fewer')
+      .should('equal', 'Error: Your explanation must be 3500 characters or fewer')
+  })
+
+  it('entering link in notes errors', () => {
+    decisionEvidencingPage.evidenceText().type('https://bbc.co.uk/noway')
+    decisionEvidencingPage.radioButton('true').click()
+    decisionEvidencingPage.button().click()
+    decisionEvidencingPage
+      .errorMessage()
+      .first()
+      .trimTextContent()
+      .should('equal', 'Error: You cannot include links in the allocation notes')
+  })
+
+  it('entering link without scheme but with www in notes errors', () => {
+    decisionEvidencingPage.evidenceText().type('www.bbc.co.uk/noway')
+    decisionEvidencingPage.radioButton('true').click()
+    decisionEvidencingPage.button().click()
+    decisionEvidencingPage
+      .errorMessage()
+      .first()
+      .trimTextContent()
+      .should('equal', 'Error: You cannot include links in the allocation notes')
   })
 })

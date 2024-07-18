@@ -42,6 +42,51 @@ function toArrayNotation(field) {
   return field.split('.').reduce((acc, text) => `${acc}[${text}]`)
 }
 
+function buildErrorSummary(errors, form) {
+  const errorSummary = document.createElement('div')
+  errorSummary.classList.add('govuk-error-summary')
+  errorSummary.dataset.module = 'govuk-error-summary'
+
+  const errorSummaryAlert = document.createElement('div')
+  errorSummaryAlert.setAttribute('role', 'alert')
+
+  const errorSummaryTitle = document.createElement('h2')
+  errorSummaryTitle.classList.add('govuk-error-summary__title')
+  errorSummaryTitle.innerText = 'There is a problem'
+
+  const errorSummaryBody = document.createElement('div')
+  errorSummaryBody.classList.add('govuk-error-summary__body')
+
+  const errorSummaryList = document.createElement('ul')
+  errorSummaryList.classList.add('govuk-list')
+  errorSummaryList.classList.add('govuk-error-summary__list')
+
+  Object.entries(errors)
+    .map(([field, message]) => {
+      const element = form.querySelector(`[name="${toArrayNotation(field)}"]`)
+
+      const errorListItem = document.createElement('li')
+
+      const errorLink = document.createElement('a')
+      errorLink.setAttribute('href', `#${element.id}`)
+      errorLink.innerText = message
+
+      errorListItem.appendChild(errorLink)
+
+      return errorListItem
+    })
+    .forEach(error => {
+      errorSummaryList.appendChild(error)
+    })
+
+  errorSummaryBody.appendChild(errorSummaryList)
+  errorSummaryAlert.appendChild(errorSummaryTitle)
+  errorSummaryAlert.appendChild(errorSummaryBody)
+  errorSummary.appendChild(errorSummaryAlert)
+
+  return errorSummary
+}
+
 function test(form, rules, messages, scrollToGroup) {
   const validator = new Validator(serializeForm(form), rules, messages)
 
@@ -53,7 +98,15 @@ function test(form, rules, messages, scrollToGroup) {
     group.classList.remove('govuk-form-group--error')
   })
 
+  document.querySelectorAll('.govuk-error-summary').forEach(summary => {
+    summary.remove()
+  })
+
   if (validator.fails()) {
+    document
+      .querySelector('.govuk-main-wrapper')
+      .insertAdjacentElement('beforebegin', buildErrorSummary(validator.errors.all(), form))
+
     Object.entries(validator.errors.all()).forEach(([field, message], index) => {
       const element = form.querySelector(`[name="${toArrayNotation(field)}"]`)
 

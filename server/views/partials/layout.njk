@@ -160,7 +160,7 @@
 %}
 
 {%- if canAllocate -%}
-    {% set footerItems = (footerItems.push({href: "/technical-updates",text: "Technical updates"}), footerItems) %}
+    {% set footerItems = (footerItems.push({href: "/whats-new",text: "What's new"}), footerItems) %}
 {%- endif -%}
 {% block footer %}
     {%- from "govuk/components/footer/macro.njk" import govukFooter -%}

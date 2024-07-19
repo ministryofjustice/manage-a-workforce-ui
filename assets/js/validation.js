@@ -118,7 +118,7 @@ function test(form, rules, messages, scrollToGroup) {
       const error = document.createElement('p')
       error.classList.add('govuk-error-message')
       error.innerHTML = `<span class="govuk-visually-hidden">Error: </span> ${message}`
-      label ? label.insertAdjacentElement('afterend', error) : element.insertAdjacentElement('beforebegin', error)
+      label ? label.insertAdjacentElement('afterend', error) : group.insertAdjacentElement('afterbegin', error)
 
       if (index === 0 && scrollToGroup) {
         const { top } = group.getBoundingClientRect()

@@ -159,9 +159,16 @@
             ]
 %}
 
+
+<div class="govuk-width-row feedback-prompt">
+    <h2 class="feedback-prompt-text"><a href="{{ "https://eu.surveymonkey.com/r/73CLHLM?url=" + pageUrl }}" class="govuk-link" target="_blank">Was this page helpful?</a></h2>
+</div>
+
+
 {%- if canAllocate -%}
     {% set footerItems = (footerItems.push({href: "/technical-updates",text: "Technical updates"}), footerItems) %}
 {%- endif -%}
+
 {% block footer %}
     {%- from "govuk/components/footer/macro.njk" import govukFooter -%}
     {{ govukFooter({
@@ -170,8 +177,6 @@
         }
     }) }}
 {% endblock %}
-
-
 
 {% block bodyEnd %}
     <script src="/assets/govuk/all.js"></script>

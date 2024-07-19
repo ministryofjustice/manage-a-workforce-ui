@@ -186,6 +186,16 @@ window.addEventListener('load', () => {
         'required.isSensitive': "Select 'Yes' if this includes sensitive information",
       },
     ],
+    'choose-practitioner': [
+      {
+        instructions: 'nourl',
+        allocatedOfficer: 'required',
+      },
+      {
+        required: 'Select a probation practitioner',
+        nourl: 'You cannot include links in the allocation notes',
+      },
+    ],
   }
 
   document.querySelectorAll('[data-validate-form]').forEach(form => {

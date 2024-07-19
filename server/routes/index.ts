@@ -270,7 +270,7 @@ export default function routes(services: Services): Router {
     await probationEstateController.selectProbationDeliveryUnit(req, res, regionCode)
   })
 
-  get('/technical-updates', async (req, res) => {
+  get("/what's-new", async (req, res) => {
     await technicalUpdatesController.getTechnicalUpdates(req, res)
   })
   return router

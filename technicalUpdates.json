@@ -1,5 +1,14 @@
 [
   {
+    "heading": "19 July 2024",
+    "whatsNew": [
+      "Registration data: We’ve added registration flag data to the registration tables on the risk page.",
+      "Requirements allocation: Only unallocated requirements are allocated. Requirements that are already allocated, are no longer overwritten.",
+      "Technical updates banner: We’ve renamed this to ‘What’s new’.",
+      "CADE contact: The allocating SPO’s name is now displayed on the corresponding contact record in NDelius."
+    ]
+  },
+  {
     "heading": "21 February 2024",
     "whatsNew": [
       "Allocating custody cases: We’ve made a number of small changes to support you with allocating custody-to-community cases through the service.",

@@ -28,13 +28,33 @@
                 </li>
                 <li>Survey about the notification email: We’ve added a link in the email to a <a class="govuk-link" href="https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2JfL5_1h2G9Gi17tzGJyJ5hUNzNPNDNZN0pQMlBCOTAySzkzM0U3R0ZaUS4u">feedback survey</a>, where you can tell us what case data you want to see in the email.</li>
             {% endif %}
+            {% if technicalUpdate.heading === "19 July 2024" %}
+                <li>Probation estate changes: We've made some configuration changes to team names and probation structures within these regions
+                <ul>
+                    <li>North West</li>
+                    <li>London</li>
+                    <li>South Central</li>
+                    <li>South West</li>
+                    <li>East Midlands</li>
+                    <li>West Midlands</li>
+                    <li>Greater Manchester</li>
+                 </ul>
+                 </li>
+                 <li>Onboarding prep: In preparation for their onboarding into our service, we've configured two new regions:
+                 <ul>
+                    <li>Kent, Surrey and Sussex</li>
+                    <li>Yorkshire & The Humber</li>
+                 </ul>
+            {% endif %}
          </ul>
-        <h2 class="govuk-heading-s">Technical fixes</h2>
-        <ul class="govuk-list govuk-list--bullet">
-            {% for technicalFix in technicalUpdate.technicalFixes %}
-                <li>{{ technicalFix }}</li>
-            {% endfor%}
-        </ul>
+        {% if technicalUpdate.technicalFixes %}
+            <h2 class="govuk-heading-s">Technical fixes</h2>
+            <ul class="govuk-list govuk-list--bullet">
+                {% for technicalFix in technicalUpdate.technicalFixes %}
+                    <li>{{ technicalFix }}</li>
+                {% endfor%}
+            </ul>
+        {% endif %}
     {% endset %}
     {% set technicalUpdateItems = (technicalUpdateItems.push({
          heading: {

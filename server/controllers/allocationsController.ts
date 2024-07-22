@@ -180,6 +180,7 @@ export default class AllocationsController {
       error,
       missingEmail,
       pduCode,
+      errors: req.flash('errors') || [],
     })
   }
 

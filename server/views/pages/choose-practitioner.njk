@@ -6,6 +6,10 @@
 {% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "../components/instructions/macro.njk" import instructions %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "../components/instructions/macro.njk" import instructions %}
+{% from "../components/pop/macro.njk" import pop %}
 
 {% from "../components/pop/macro.njk" import pop %}
 
@@ -128,7 +132,7 @@
 
 {% for teamDetails in perTeamsTableData %}
     {% set perTeamsTableHtml %}
-         {{ govukTable(teamDetails.tableData) }}
+    {{ govukTable(teamDetails.tableData) }}
     {% endset -%}
     {%- set perTeamTabItem = {
         label: teamDetails.name,
@@ -159,30 +163,25 @@
             }
         ]
     }) }}
-    {% if error %}
+    {% if errors | length > 0 %}
         {{ govukErrorSummary({
-            titleText: "There is a problem",
-            errorList: [
-                {
-                text: "Select a probation practitioner",
-                href: "#select-probation-practitioner"
-                }
-            ]
-        }) }}
+          titleText: "There is a problem",
+          errorList: errors
+      }) }}
     {% endif %}
 {% endblock %}
 
-    {% block content %}
+{% block content %}
     {% if missingEmail%}
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-             {{ govukNotificationBanner({
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                {{ govukNotificationBanner({
                          html: '
                      <p class="govuk-notification-banner__heading">If you cannot allocate to a probation practitioner, it’s because their email address is not linked to their staff code in NDelius.</p>
                      <p class="govuk-notification-banner__heading">Report the issue via Service Desk as an \'unlinked officer code\'.</p>'
              }) }}
+            </div>
         </div>
-    </div>
     {% endif %}
 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Allocate to a probation practitioner</h1>
@@ -190,15 +189,16 @@
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg' }) }}
 
-    {% if (probationStatus == 'Currently managed' and offenderManagerDetails) or probationStatus == 'Previously managed' %}
+    {% if (probationStatus == 'Currently managed' and offenderManagerDetails) 
+        or probationStatus == 'Previously managed' %}
         <div class="govuk-warning-text">
             <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
             <strong class="govuk-warning-text__text">
                 <span class="govuk-warning-text__assistive">Warning</span>
                 {% if probationStatus == 'Previously managed' %}
-                {{ name }} was previously managed{{ offenderManagerDetails }}.
+                    {{ name }} was previously managed{{ offenderManagerDetails }}.
                 {% else %}
-                {{ name }} is currently managed{{ offenderManagerDetails }}.
+                    {{ name }} is currently managed{{ offenderManagerDetails }}.
                 {% endif %}
             </strong>
         </div>
@@ -209,22 +209,40 @@
             <p id="select-probation-practitioner" class="govuk-error-message">
                 <span class="govuk-visually-hidden">Error:</span> Select a probation practitioner
             </p>
-    {% endif %}
-    <form method="post">
-        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        {{ govukTabs({
-            items: govukTabItems
-        }) }}
-        <div class="govuk-button-group">
-            {{ govukButton({
-                text: 'Continue'
+        {% endif %}
+        <form data-validate-form="choose-practitioner" method="post">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <div class="govuk-form-group">
+                {{ govukTabs({
+                items: govukTabItems
             }) }}
-            <a class="govuk-button govuk-button--secondary" href="{{'/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner'}}">Clear selection </a>
-         </div>
-     </form>
-    {% if error %}
+            </div>
+
+            {{ instructions({
+                inGridRow: true,
+                convictionNumber: convictionNumber,
+                crn: crn,
+               errorMessage: errors | findError('instructions')
+            })
+        }}
+
+            <div class="govuk-button-group">
+                {{ govukButton({
+                text: 'Continue',
+                attributes: {
+                    'data-form-submit': undefined
+                }
+            }) }}
+                <a class="govuk-button govuk-button--secondary" href="{{'/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner'}}">           Clear selection </a>
+            </div>
+        </form>
+        {% if error %}
         </div>
     {% endif %}
 
 {% endblock %}
 
+{% block javascripts %}
+    <script src="/assets/validator.js"></script>
+    <script src="/assets/validation.js"></script>
+{% endblock %}

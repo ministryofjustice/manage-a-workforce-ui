@@ -155,7 +155,34 @@ workflows:
               only:
                 - main
                 - /epic.*/
+                - /WFP.*/
       - request-dev-approval:
+          type: approval
+          requires:
+            - helm_lint
+            - unit_test
+            - integration_test
+            - build_docker
+          filters:
+            branches:
+              only:
+                - /WFP.*/
+      - hmpps/deploy_env:
+          name: deploy_dev
+          env: "dev"
+          jira_update: true
+          jira_env_type: development
+          slack_notification: true
+          slack_channel_name: << pipeline.parameters.releases-slack-channel >>
+          context: hmpps-common-vars
+          helm_timeout: 5m
+          filters:
+            branches:
+              only:
+                - /WFP.*/
+          requires:
+            - request-dev-approval
+      - request-preprod-approval:
           type: approval
           requires:
             - helm_lint
@@ -167,24 +194,6 @@ workflows:
               only:
                 - main
                 - /epic.*/
-      - hmpps/deploy_env:
-          name: deploy_dev
-          env: "dev"
-          jira_update: true
-          jira_env_type: development
-          context: hmpps-common-vars
-          helm_timeout: 5m
-          filters:
-            branches:
-              only:
-                - main
-                - /epic.*/
-          requires:
-            - request-dev-approval
-      - request-preprod-approval:
-          type: approval
-          requires:
-            - deploy_dev
       - hmpps/deploy_env:
           name: deploy_preprod
           env: "preprod"

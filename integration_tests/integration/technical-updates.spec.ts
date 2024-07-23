@@ -5,7 +5,7 @@ context('Technical Updates', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.signIn()
-    cy.visit('/technical-updates')
+    cy.visit('/whats-new')
   })
 
   it('Technical updates', () => {

@@ -199,7 +199,15 @@ export default class AllocationsController {
     return this.choosePractitioner(req, res, crn, convictionNumber, pduCode)
   }
 
-  async getAllocateToPractitioner(_, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
+  async getAllocateToPractitioner(
+    req: Request,
+    res: Response,
+    crn,
+    staffTeamCode,
+    staffCode,
+    convictionNumber,
+    pduCode
+  ) {
     const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,
@@ -216,6 +224,7 @@ export default class AllocationsController {
       staffCode,
       staffTeamCode,
       pduCode,
+      errors: req.flash('errors') || [],
     })
   }
 

@@ -15,7 +15,7 @@
                 rows: []
  } %}
 
- {% for currentSentence in currentSentences %}
+{% for currentSentence in currentSentences %}
     {{
         currentSentenceData.rows.push([
             { text: currentSentence.sentence },
@@ -41,7 +41,7 @@
                 rows: []
  } %}
 
- {% for previousSentence in previousSentences %}
+{% for previousSentence in previousSentences %}
     {{
         previousSentenceData.rows.push([
             { text: previousSentence.sentence },
@@ -57,19 +57,19 @@
 
     <h2 class="govuk-heading-l">Probation record</h2>
 
-        {% if currentSentences | length > 0 %}
-            {{ govukTable(currentSentenceData) }}
-        {% else %}
+    {% if currentSentences | length > 0 %}
+        {{ govukTable(currentSentenceData) }}
+    {% else %}
 
-            <h3 class="govuk-heading-m">Current sentences</h3>
-            <p class="govuk-body">No current sentences.</p>
-            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-        {% endif %}
+        <h3 class="govuk-heading-m">Current sentences</h3>
+        <p class="govuk-body">No current sentences.</p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    {% endif %}
 
     {% if previousSentences | length > 0 %}
         {{ govukTable(previousSentenceData) }}
         {% if not viewAll %}
-            <a href="{{ '/pdu/' + pduCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous sentences ({{ totalPreviousCount }})</a>
+            <a href="{{ '/pdu/' + pduCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state view-all-link">View all previous sentences ({{ totalPreviousCount }})</a>
         {% endif %}
     {% else %}
 
@@ -79,7 +79,4 @@
 
     {% endif %}
 
-
-
 {% endblock %}
-

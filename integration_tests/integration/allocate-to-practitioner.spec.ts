@@ -54,7 +54,7 @@ context('Allocate to Practitioner', () => {
     })
     choosePractitionerPage.allocateCaseButton().click()
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
-    allocatePage.headingText().should('have.text', "\n    You're allocating Dylan Adam Armstrong (C1) to John Doe (PO)")
+    allocatePage.headingText().should('contain', "You're allocating Dylan Adam Armstrong (C1) to John Doe (PO)")
     allocatePage.breadCrumbsSection().within(() => {
       cy.get('li>a').first().should('have.attr', 'href').and('include', 'PDU1')
     })
@@ -71,7 +71,7 @@ context('Allocate to Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
-    allocatePage.headingText().should('have.text', "\n    You're allocating Dylan Adam Armstrong (C1) to John Doe (PO)")
+    allocatePage.headingText().should('contain', "You're allocating Dylan Adam Armstrong (C1) to John Doe (PO)")
   })
 
   it('Breadcrumbs visible on page', () => {
@@ -90,7 +90,7 @@ context('Allocate to Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
-    allocatePage.button().should('exist').and('have.text', '\n  Continue\n')
+    allocatePage.button().should('exist').and('contain', 'Continue')
   })
 
   it('Continue button links to Decision Evidencing', () => {

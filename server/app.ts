@@ -37,7 +37,7 @@ export default function createApp(services: Services): express.Application {
   }
 
   app.use((req, res, next) => {
-    res.locals.pageUrl = encodeURI(`${req.headers.host}${req.url}`)
+    res.locals.pageUrl = encodeURI(`${req.protocol}://${req.headers.host}${req.url}`)
     next()
   })
 

@@ -15,5 +15,5 @@ export default class TechnicalUpdatesService {
 export type TechnicalUpdate = {
   heading: string
   whatsNew: string[]
-  technicalFixes: string[]
+  technicalFixes?: string[]
 }

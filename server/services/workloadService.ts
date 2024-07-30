@@ -60,8 +60,10 @@ export default class WorkloadService {
     emailTo,
     sendEmailCopyToAllocatingOfficer,
     eventNumber: number,
-    decisionEvidence: DecisionEvidenceForm
+    decisionEvidence: DecisionEvidenceForm,
+    isSensitive: boolean
   ): Promise<OffenderManagerAllocatedCase> {
+    console.log('Is Sensitive', isSensitive)
     const evidence = decisionEvidence
       ? { allocationJustificationNotes: decisionEvidence.evidenceText, sensitiveNotes: decisionEvidence.isSensitive }
       : {}

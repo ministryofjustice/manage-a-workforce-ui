@@ -100,7 +100,7 @@ context('Allocate to Practitioner', () => {
     allocatePage
       .button()
       .should('have.attr', 'href')
-      .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/decision-evidencing')
+      .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocation-notes')
   })
 
   it('Choose different probation practitioner visible on page', () => {

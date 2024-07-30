@@ -44,10 +44,6 @@
             {
                 text: "Allocate to practitioner",
                 href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/allocate/" + staffTeamCode + '/' + staffCode + "/allocate-to-practitioner"
-            },
-            {
-                text: "Explain your decision",
-                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/allocate/" + staffTeamCode + '/' + staffCode + "/decision-evidencing"
             }
         ]
     }) }}
@@ -71,20 +67,33 @@
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
           {{
             instructions({
-                titleText: "Review allocation instructions",
-                html: ('<p>We\'ll send a copy of these notes to you and <br><strong>' + data.staff.name.combinedName + '</strong> (<em>' + data.staff.email + '</em>).</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
-                hintText: "Review your notes for the probation practitioner.",
+                titleText: "Review your allocation notes",
+                html: ('<p><br>ese notes will be sent in the allocation emailTh to <strong>' + data.staff.name.combinedName + '</strong> (<em>' + data.staff.email + '</em>).</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
                 convictionNumber: convictionNumber,
+                hintText: ' ',
                 crn: crn,
                 inGridRow: false,
                 rows: 20,
                 errorMessage: errors | findError('instructions')
             })
             }}
-            <p id='copyText'>You can send a copy of these notes to another person, for example a case admin officer.</p>
         </div>
         <div class="govuk-form-group">
         {% if confirmInstructionForm.person.length === 0 %}
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h3 class="govuk-fieldset__heading">Does this contain sensitive information?</h3>
+        </legend>
+        <p class="govuk-hint">This is information that would cause harm or undermine the investigation of a crime if it were disclosed to a person on probation. For example, a victim's personal details.</p>
+        {{ govukCheckboxes({
+            name: 'isSensitive',
+            items: [{
+                text: 'Yes, it contains sensitive information',
+                value: 'yes',
+                checked: confirmInstructionForm.isSensitive
+                }],
+            classes: 'govuk-checkboxes--medium margin-bottom-10'
+        })}}
+
         {% call govukFieldset({
           classes: 'moj-add-another__item',
               legend: {

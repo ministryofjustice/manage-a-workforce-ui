@@ -318,7 +318,7 @@ export default class AllocationsController {
     }
 
     res.render('pages/confirm-instructions', {
-      title: `${response.name.combinedName} | Review allocation instructions | Manage a workforce`,
+      title: `${response.name.combinedName} | Review allocation notes | Manage a workforce`,
       data: response,
       name: response.name.combinedName,
       crn: response.crn,
@@ -428,7 +428,9 @@ export default class AllocationsController {
     form,
     pduCode
   ) {
-    const confirmInstructionForm = filterEmptyEmails(trimForm<ConfirmInstructionForm>(form))
+    const confirmInstructionForm = filterEmptyEmails(
+      trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
+    )
     const errors = validate(
       confirmInstructionForm,
       { 'person.*.email': 'email', instructions: 'nourl' },
@@ -461,7 +463,8 @@ export default class AllocationsController {
       otherEmails,
       sendEmailCopyToAllocatingOfficer,
       convictionNumber,
-      decisionEvidence
+      decisionEvidence,
+      form.isSensitive
     )
     req.session.allocationForm = {
       otherEmails,

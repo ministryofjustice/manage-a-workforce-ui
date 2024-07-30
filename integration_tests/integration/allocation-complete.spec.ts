@@ -3,7 +3,6 @@ import AllocationCompletePage from '../pages/allocationComplete'
 import InstructionsConfirmPage from '../pages/confirmInstructions'
 import ErrorPage from '../pages/error'
 import SummaryPage from '../pages/summary'
-import DecisionEvidencingPage from '../pages/decisionEvidencing'
 
 context('Allocate Complete', () => {
   beforeEach(() => {

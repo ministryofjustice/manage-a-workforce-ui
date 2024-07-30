@@ -63,9 +63,8 @@ export default class WorkloadService {
     decisionEvidence: DecisionEvidenceForm,
     isSensitive: boolean
   ): Promise<OffenderManagerAllocatedCase> {
-    console.log('Is Sensitive', isSensitive)
     const evidence = decisionEvidence
-      ? { allocationJustificationNotes: decisionEvidence.evidenceText, sensitiveNotes: decisionEvidence.isSensitive }
+      ? { allocationJustificationNotes: decisionEvidence.evidenceText, sensitiveNotes: isSensitive }
       : {}
     return (await this.restClient(token).post({
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,

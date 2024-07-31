@@ -1,0 +1,110 @@
+{% extends "partials/layout.njk" %}
+{%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{%- from "govuk/components/input/macro.njk" import govukInput -%}
+{%- from "govuk/components/button/macro.njk" import govukButton -%}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "../components/instructions/macro.njk" import instructions %}
+{% from "../components/pop/macro.njk" import pop %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home",
+                href: "/pdu/" + pduCode + "/teams"
+            },
+            {
+                text: "Unallocated cases",
+                href: "/pdu/" + pduCode + "/find-unallocated"
+            },
+            {
+                text: "Case details",
+                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/case-view"
+            },
+            {
+                text: "Choose practitioner",
+                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner"
+            },
+            {
+                text: "Allocate to practitioner",
+                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/allocate/" + staffTeamCode + '/' + staffCode + "/allocate-to-practitioner"
+            }
+        ]
+    }) }}
+  {% if errors | length > 0 %}
+    {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errors
+      }) }}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {{ pop({name: name, crn: crn, tier: tier}) }}
+
+  <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <form data-validate-form="confirm-allocation" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="POST">
+        <div class="govuk-form-group">
+          <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+          {{
+            instructions({
+                titleText: "Create an SPO Oversight contact",
+                html: ('<p><br>This should include the rationale for your allocation decision, and your notes to the practitioner about the case. It will be saved in NDelius</p>') | safe,
+                convictionNumber: convictionNumber,
+                hintText: ' ',
+                crn: crn,
+                inGridRow: false,
+                rows: 20,
+                errorMessage: errors | findError('instructions')
+            })
+            }}
+        </div>
+        <div class="govuk-form-group">
+        {% if confirmInstructionForm.person.length === 0 %}
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h3 class="govuk-fieldset__heading">Does this contain sensitive information?</h3>
+        </legend>
+        <p class="govuk-hint">This is information that would cause harm or undermine the investigation of a crime if it were disclosed to a person on probation. For example, a victim's personal details.</p>
+        {{ govukCheckboxes({
+            name: 'isSensitive',
+            items: [{
+                text: 'Yes, it contains sensitive information',
+                value: 'yes',
+                checked: confirmInstructionForm.isSensitive
+                }],
+            classes: 'govuk-checkboxes--medium margin-bottom-10'
+        })}}
+
+            <div class="govuk-button-group">
+                {{
+                    govukButton({
+                        text: 'Save and allocate case',
+                        classes: 'allocate',
+                        type: 'submit',
+                        name: 'action',
+                        value: 'continue',
+                        preventDoubleClick: true,
+                        attributes: {
+                            id: convictionNumber,
+                            'data-form-submit': undefined
+                        }
+                    })
+                }}
+                <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocation-notes' }}">Go back to review allocation notes</a>
+        </div>
+      </form>
+    </div>
+  </div>    
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/assets/validator.js"></script>
+    <script src="/assets/validation.js"></script>
+{% endblock %}

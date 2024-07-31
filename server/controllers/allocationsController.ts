@@ -472,8 +472,42 @@ export default class AllocationsController {
     }
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
-      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`
+      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/spo-oversight-contact`
     )
+  }
+
+  async getSpoOversight(
+    req: Request,
+    res: Response,
+    crn: string,
+    staffTeamCode: string,
+    staffCode: string,
+    convictionNumber: string,
+    pduCode: string
+  ) {
+    const response: PersonOnProbationStaffDetails = await this.allocationsService.getConfirmInstructions(
+      res.locals.user.token,
+      crn,
+      convictionNumber,
+      staffCode
+    )
+    const confirmInstructionForm = {
+      ...req.session.confirmInstructionForm,
+      person: req.session.confirmInstructionForm?.person || [],
+    }
+
+    res.render('pages/spo-oversight-contact', {
+      title: `${response.name.combinedName} | Review allocation notes | Manage a workforce`,
+      data: response,
+      name: response.name.combinedName,
+      crn: response.crn,
+      staffCode: response.staff.code,
+      staffTeamCode,
+      convictionNumber,
+      errors: req.flash('errors') || [],
+      confirmInstructionForm,
+      pduCode,
+    })
   }
 }
 

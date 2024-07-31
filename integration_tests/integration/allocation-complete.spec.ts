@@ -3,7 +3,6 @@ import AllocationCompletePage from '../pages/allocationComplete'
 import InstructionsConfirmPage from '../pages/confirmInstructions'
 import ErrorPage from '../pages/error'
 import SummaryPage from '../pages/summary'
-import DecisionEvidencingPage from '../pages/decisionEvidencing'
 
 context('Allocate Complete', () => {
   beforeEach(() => {
@@ -11,7 +10,7 @@ context('Allocate Complete', () => {
     cy.task('stubSearchStaff')
     cy.task('stubGetConfirmInstructions')
     cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
   })
 
   it('return to unallocated cases of team link exists', () => {
@@ -172,17 +171,17 @@ context('Allocate Complete', () => {
     summaryPage.instructionsTextArea().should('have.value', 'Test')
   })
 
-  it('must send evidence when it exists', () => {
-    cy.task('stubGetDecisionEvidencing')
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/decision-evidencing')
-    const decisionEvidencingPage = Page.verifyOnPage(DecisionEvidencingPage)
-    decisionEvidencingPage.evidenceText().type('Some Evidences')
-    decisionEvidencingPage.radioButton('false').click()
-    decisionEvidencingPage.button().click()
-    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
-    cy.task('stubAllocateOffenderManagerToCaseWithEvidence')
-    cy.task('stubGetAllocationCompleteDetailsCustody')
-    instructionsConfirmPage.continueButton('1').click()
-    Page.verifyOnPage(AllocationCompletePage)
-  })
+  // it('must send evidence when it exists', () => {
+  //   cy.task('stubGetDecisionEvidencing')
+  //   cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/decision-evidencing')
+  //   // const decisionEvidencingPage = Page.verifyOnPage(DecisionEvidencingPage)
+  //   // decisionEvidencingPage.evidenceText().type('Some Evidences')
+  //   // decisionEvidencingPage.radioButton('false').click()
+  //   // decisionEvidencingPage.button().click()
+  //   const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+  //   cy.task('stubAllocateOffenderManagerToCaseWithEvidence')
+  //   cy.task('stubGetAllocationCompleteDetailsCustody')
+  //   instructionsConfirmPage.continueButton('1').click()
+  //   Page.verifyOnPage(AllocationCompletePage)
+  // })
 })

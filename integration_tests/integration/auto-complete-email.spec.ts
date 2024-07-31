@@ -6,7 +6,7 @@ context('Auto Complete Email', () => {
     cy.task('stubSetup')
     cy.task('stubGetConfirmInstructions')
     cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
   })
 
   it('options drop down appears when typing', () => {

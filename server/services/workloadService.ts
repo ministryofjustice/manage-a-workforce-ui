@@ -60,10 +60,11 @@ export default class WorkloadService {
     emailTo,
     sendEmailCopyToAllocatingOfficer,
     eventNumber: number,
-    decisionEvidence: DecisionEvidenceForm
+    decisionEvidence: DecisionEvidenceForm,
+    isSensitive: boolean
   ): Promise<OffenderManagerAllocatedCase> {
     const evidence = decisionEvidence
-      ? { allocationJustificationNotes: decisionEvidence.evidenceText, sensitiveNotes: decisionEvidence.isSensitive }
+      ? { allocationJustificationNotes: decisionEvidence.evidenceText, sensitiveNotes: isSensitive }
       : {}
     return (await this.restClient(token).post({
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,

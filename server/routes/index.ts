@@ -168,7 +168,7 @@ export default function routes(services: Services): Router {
   )
 
   get(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/instructions',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/allocation-notes',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
       await allocationsController.getConfirmInstructions(

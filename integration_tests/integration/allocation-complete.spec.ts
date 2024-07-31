@@ -36,10 +36,10 @@ context('Allocate Complete', () => {
     cy.task('stubGetAllocationCompleteDetails')
     instructionsConfirmPage.continueButton('1').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
-    allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')
+    allocationCompletePage.panelTitle().should('contain', 'Case allocated')
     allocationCompletePage
       .panelBody()
-      .should('have.text', '\n    Dylan Adam Armstrong (J678910) has been allocated to John Doe (PO)\n  ')
+      .should('contain', 'Dylan Adam Armstrong (J678910) has been allocated to John Doe (PO)')
   })
 
   it('What happens next with multiple emails supplied, opting out of copy content visible on page', () => {
@@ -53,15 +53,14 @@ context('Allocate Complete', () => {
     cy.task('stubGetAllocationCompleteDetails')
     instructionsConfirmPage.continueButton('1').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
-    allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')
-    allocationCompletePage.mediumHeading().should('have.text', 'What happens next')
+    allocationCompletePage.panelTitle().should('contain', 'Case allocated')
+    allocationCompletePage.mediumHeading().should('contain', 'What happens next')
     allocationCompletePage
       .bulletedList()
-      .should('contain', 'this case will be updated in NDelius within 5 minutes')
-      .and('contain', "you'll need to create a Management Oversight contact separately")
+      .should('contain', 'the case and SPO Oversight contact will be saved in NDelius within 5 minutes')
       .and(
         'contain',
-        'John Doe (john.doe@test.justice.gov.uk) has been notified, and we have sent a copy of your allocation instructions to example.one@justice.gov.uk, example.two@justice.gov.uk'
+        'we have sent a copy of the allocation email to example.one@justice.gov.uk, example.two@justice.gov.uk'
       )
       .and('contain', 'the initial appointment is scheduled for 1 September 2021')
   })
@@ -76,13 +75,13 @@ context('Allocate Complete', () => {
     cy.task('stubGetAllocationCompleteDetails')
     instructionsConfirmPage.continueButton('1').click()
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
-    allocationCompletePage.panelTitle().should('have.text', '\n    Allocation complete\n  ')
-    allocationCompletePage.mediumHeading().should('have.text', 'What happens next')
+    allocationCompletePage.panelTitle().should('contain', 'Case allocated')
+    allocationCompletePage.mediumHeading().should('contain', 'What happens next')
     allocationCompletePage
       .bulletedList()
       .should(
         'contain',
-        'John Doe (john.doe@test.justice.gov.uk) has been notified, and we have sent a copy of your allocation instructions to you and example.one@justice.gov.uk, example.two@justice.gov.uk'
+        'we have sent a copy of the allocation email to example.one@justice.gov.uk, example.two@justice.gov.uk'
       )
   })
 
@@ -95,10 +94,8 @@ context('Allocate Complete', () => {
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
       .bulletedList()
-      .should(
-        'contain',
-        "John Doe (john.doe@test.justice.gov.uk) has been notified, and we've sent you a copy of your allocation instructions"
-      )
+      .should('contain', 'your allocation notes have been emailed to John Doe (john.doe@test.justice.gov.uk)')
+      .and('contain', "we've sent you a copy of the allocation email")
       .and('contain', 'the initial appointment is scheduled for 1 September 2021 with John Doe PO')
   })
 
@@ -112,7 +109,7 @@ context('Allocate Complete', () => {
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
       .bulletedList()
-      .should('contain', 'John Doe (john.doe@test.justice.gov.uk) has been notified')
+      .should('contain', 'your allocation notes have been emailed to John Doe (john.doe@test.justice.gov.uk)')
       .then(() => {
         // eslint-disable-next-line no-unused-expressions
         expect(localStorage.getItem('instructions-save-J678910-1')).to.be.null
@@ -141,7 +138,7 @@ context('Allocate Complete', () => {
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
       .bulletedList()
-      .contains('John Doe (john.doe@test.justice.gov.uk) has been notified')
+      .contains('your allocation notes have been emailed to John Doe (john.doe@test.justice.gov.uk)')
       .contains('the initial appointment is scheduled for ')
       .should('not.exist')
   })
@@ -155,7 +152,7 @@ context('Allocate Complete', () => {
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage
       .bulletedList()
-      .contains('John Doe (john.doe@test.justice.gov.uk) has been notified')
+      .contains('your allocation notes have been emailed to John Doe (john.doe@test.justice.gov.uk)')
       .contains('the initial appointment is scheduled for ')
       .should('not.exist')
   })

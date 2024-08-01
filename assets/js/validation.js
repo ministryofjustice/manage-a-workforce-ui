@@ -189,13 +189,11 @@ window.addEventListener('load', () => {
     'spo-oversight': [
       {
         instructions: 'nourl|required|max:3500',
-        isSensitive: 'required',
       },
       {
         nourl: 'You cannot include links in the spo oversight contact',
         'required.instructions': 'Enter the reasons for your allocation decision',
         'max.instructions': 'Your explanation must be 3500 characters or fewer',
-        'required.isSensitive': "Select 'Yes' if this includes sensitive information",
       },
     ],
     'choose-practitioner': [

@@ -62,7 +62,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <form data-validate-form="confirm-allocation" action="{{ '/pdu/' + pducode + '/' + crn + '/convictions/' + convictionnumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-instructions' }}" method="post">
+      <form data-validate-form="confirm-allocation" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-instructions' }}" method="post">
         <div class="govuk-form-group">
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
           {{
@@ -198,7 +198,7 @@
           <div class="govuk-button-group">
             {{
                     govukButton({
-                        text: 'Allocate case',
+                        text: 'Continue',
                         classes: 'allocate',
                         type: 'submit',
                         name: 'action',

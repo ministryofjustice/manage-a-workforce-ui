@@ -392,9 +392,13 @@ export default class AllocationsController {
     form,
     pduCode
   ) {
+    const confirmInstructionForm = filterEmptyEmails(
+      trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
+    )
+
     if (form.remove !== undefined) {
       form.person.splice(form.remove, 1)
-      req.session.confirmInstructionForm = form
+      req.session.confirmInstructionForm = confirmInstructionForm
       return res.redirect(
         // eslint-disable-next-line security-node/detect-dangerous-redirects
         `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`
@@ -402,14 +406,14 @@ export default class AllocationsController {
     }
     switch (form.action) {
       case 'continue':
-        req.session.confirmInstructionForm = form
+        req.session.confirmInstructionForm = confirmInstructionForm
         return res.redirect(
           // eslint-disable-next-line security-node/detect-dangerous-redirects
           `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/spo-oversight-contact`
         )
       case 'add-another-person':
         form.person.push({ email: '' })
-        req.session.confirmInstructionForm = form
+        req.session.confirmInstructionForm = confirmInstructionForm
         return res.redirect(
           // eslint-disable-next-line security-node/detect-dangerous-redirects
           `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`
@@ -432,9 +436,7 @@ export default class AllocationsController {
     form,
     pduCode
   ) {
-    const spoOversightForm = filterEmptyEmails(
-      trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
-    )
+    const spoOversightForm = trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
     const errors = validate(
       spoOversightForm,
       { 'person.*.email': 'email', instructions: 'nourl' },
@@ -443,10 +445,12 @@ export default class AllocationsController {
         nourl: 'You cannot include links in the allocation notes',
       }
     ).map(error => fixupArrayNotation(error))
+
     const confirmInstructionForm = {
       ...req.session.confirmInstructionForm,
       person: req.session.confirmInstructionForm?.person || [],
     }
+
     if (errors.length > 0) {
       req.session.confirmInstructionForm = spoOversightForm
       req.flash('errors', errors)
@@ -456,12 +460,13 @@ export default class AllocationsController {
       )
     }
     const sendEmailCopyToAllocatingOfficer = !form.emailCopy
-    const otherEmails = form.person.map(person => person.email).filter(email => email)
+    const otherEmails = confirmInstructionForm.person.map(person => person.email).filter(email => email)
 
-    const spoOversightContact = form.instructions
-    const spoOversightSensitive = form.isSensitive
+    const spoOversightContact = spoOversightForm.instructions
+    const spoOversightSensitive = spoOversightForm.isSensitive
     const allocationNotes = confirmInstructionForm.instructions
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
+
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
       crn,
@@ -500,7 +505,7 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
-    console.log('checking', staffCode, staffTeamCode)
+
     const confirmInstructionForm = {
       ...req.session.confirmInstructionForm,
       person: req.session.confirmInstructionForm?.person || [],

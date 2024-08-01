@@ -395,30 +395,34 @@ export default class AllocationsController {
     if (form.remove !== undefined) {
       form.person.splice(form.remove, 1)
       req.session.confirmInstructionForm = form
-      return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode, true)
+      return res.redirect(
+        // eslint-disable-next-line security-node/detect-dangerous-redirects
+        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`
+      )
     }
     switch (form.action) {
       case 'continue':
-        return this.continueConfirmInstructions(
-          req,
-          res,
-          crn,
-          staffTeamCode,
-          staffCode,
-          convictionNumber,
-          form,
-          pduCode
+        req.session.confirmInstructionForm = form
+        return res.redirect(
+          // eslint-disable-next-line security-node/detect-dangerous-redirects
+          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/spo-oversight-contact`
         )
       case 'add-another-person':
         form.person.push({ email: '' })
         req.session.confirmInstructionForm = form
-        return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode, true)
+        return res.redirect(
+          // eslint-disable-next-line security-node/detect-dangerous-redirects
+          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`
+        )
       default:
-        return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+        return res.redirect(
+          // eslint-disable-next-line security-node/detect-dangerous-redirects
+          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`
+        )
     }
   }
 
-  async continueConfirmInstructions(
+  async submitSpoOversight(
     req: Request,
     res: Response,
     crn,
@@ -428,43 +432,48 @@ export default class AllocationsController {
     form,
     pduCode
   ) {
-    const confirmInstructionForm = filterEmptyEmails(
+    const spoOversightForm = filterEmptyEmails(
       trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
     )
     const errors = validate(
-      confirmInstructionForm,
+      spoOversightForm,
       { 'person.*.email': 'email', instructions: 'nourl' },
       {
         email: 'Enter an email address in the correct format, like name@example.com',
         nourl: 'You cannot include links in the allocation notes',
       }
     ).map(error => fixupArrayNotation(error))
-
+    const confirmInstructionForm = {
+      ...req.session.confirmInstructionForm,
+      person: req.session.confirmInstructionForm?.person || [],
+    }
     if (errors.length > 0) {
-      req.session.confirmInstructionForm = confirmInstructionForm
+      req.session.confirmInstructionForm = spoOversightForm
       req.flash('errors', errors)
-      return this.getConfirmInstructions(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+      return res.redirect(
+        // eslint-disable-next-line security-node/detect-dangerous-redirects
+        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/${staffTeamCode}/spo-oversight-contact`
+      )
     }
     const sendEmailCopyToAllocatingOfficer = !form.emailCopy
     const otherEmails = form.person.map(person => person.email).filter(email => email)
-    const decisionEvidence = await this.allocationStorageService.getDecisionEvidence(
-      res.locals.user.username,
-      crn,
-      staffTeamCode,
-      staffCode,
-      convictionNumber
-    )
+
+    const spoOversightContact = form.instructions
+    const spoOversightSensitive = form.isSensitive
+    const allocationNotes = confirmInstructionForm.instructions
+    const allocationNotesSensitive = confirmInstructionForm.isSensitive
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
       crn,
       staffCode,
       staffTeamCode,
-      form.instructions,
       otherEmails,
       sendEmailCopyToAllocatingOfficer,
       convictionNumber,
-      decisionEvidence,
-      form.isSensitive
+      spoOversightContact,
+      spoOversightSensitive,
+      allocationNotes,
+      allocationNotesSensitive
     )
     req.session.allocationForm = {
       otherEmails,
@@ -472,7 +481,7 @@ export default class AllocationsController {
     }
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
-      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/spo-oversight-contact`
+      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`
     )
   }
 
@@ -491,6 +500,7 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
+    console.log('checking', staffCode, staffTeamCode)
     const confirmInstructionForm = {
       ...req.session.confirmInstructionForm,
       person: req.session.confirmInstructionForm?.person || [],

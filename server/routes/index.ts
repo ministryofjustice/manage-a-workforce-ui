@@ -224,10 +224,26 @@ export default function routes(services: Services): Router {
   )
 
   post(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-allocation',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-instructions',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
       await allocationsController.allocateCaseToOffenderManager(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        Number(convictionNumber),
+        req.body,
+        pduCode
+      )
+    }
+  )
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-allocation',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.submitSpoOversight(
         req,
         res,
         crn,

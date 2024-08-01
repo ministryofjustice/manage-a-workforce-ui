@@ -56,25 +56,26 @@ export default class WorkloadService {
     crn,
     staffCode,
     teamCode,
-    instructions,
     emailTo,
     sendEmailCopyToAllocatingOfficer,
     eventNumber: number,
-    decisionEvidence: DecisionEvidenceForm,
-    isSensitive: boolean
+    spoOversightNotes: string,
+    sensitiveOversightNotes: boolean,
+    allocationJustificationNotes: string,
+    sensitiveNotes: boolean
   ): Promise<OffenderManagerAllocatedCase> {
-    const evidence = decisionEvidence
-      ? { allocationJustificationNotes: decisionEvidence.evidenceText, sensitiveNotes: isSensitive }
-      : {}
     return (await this.restClient(token).post({
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,
       data: {
         crn,
-        instructions,
+        instructions: '',
         emailTo,
         sendEmailCopyToAllocatingOfficer,
         eventNumber,
-        ...evidence,
+        allocationJustificationNotes,
+        sensitiveNotes,
+        spoOversightNotes,
+        sensitiveOversightNotes,
       },
     })) as OffenderManagerAllocatedCase
   }

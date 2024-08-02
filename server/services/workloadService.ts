@@ -83,13 +83,14 @@ export default class WorkloadService {
     sensitiveNotes: boolean,
     isSPOOversightAccessed: boolean
   ): Promise<OffenderManagerAllocatedCase> {
-    this.sendComparisionLogToWorkload(
+    await this.sendComparisionLogToWorkload(
       spoOversightNotes === allocationJustificationNotes,
       isSPOOversightAccessed,
       crn,
       teamCode,
       token
     )
+
     return (await this.restClient(token).post({
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,
       data: {

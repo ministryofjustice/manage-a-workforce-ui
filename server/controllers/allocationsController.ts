@@ -523,6 +523,7 @@ export default class AllocationsController {
       name: response.name.combinedName,
       crn: response.crn,
       staffCode: response.staff.code,
+      tier: response.tier,
       staffTeamCode,
       convictionNumber,
       errors: req.flash('errors') || [],

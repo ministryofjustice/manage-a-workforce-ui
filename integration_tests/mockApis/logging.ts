@@ -2,7 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForWorkload } from './wiremock'
 
 export default {
-  stubSendComparisionLogToWorkload: (): SuperAgentRequest => {
+  stubSendComparisionLogToWorkload: (notesChanged: boolean = true): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',
@@ -13,7 +13,7 @@ export default {
               crn: 'J678910',
               teamCode: 'TM2',
               isSPOOversightAccessed: true,
-              notesChanged: true,
+              notesChanged,
             }),
           },
         ],

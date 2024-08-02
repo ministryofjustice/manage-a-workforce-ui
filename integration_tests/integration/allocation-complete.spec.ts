@@ -35,6 +35,7 @@ context('Allocate Complete', () => {
   it('What happens next with multiple emails supplied, opting out of copy content visible on page', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
+    cy.task('stubSendComparisionLogToWorkload')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
 
@@ -63,6 +64,7 @@ context('Allocate Complete', () => {
   it('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', true)
+    cy.task('stubSendComparisionLogToWorkload')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
 

@@ -466,6 +466,7 @@ export default class AllocationsController {
     const spoOversightSensitive = spoOversightForm.isSensitive
     const allocationNotes = confirmInstructionForm.instructions
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
+    const isSPOOversightAccessed = true
 
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
@@ -478,7 +479,8 @@ export default class AllocationsController {
       spoOversightContact,
       spoOversightSensitive,
       allocationNotes,
-      allocationNotesSensitive
+      allocationNotesSensitive,
+      isSPOOversightAccessed
     )
     req.session.allocationForm = {
       otherEmails,

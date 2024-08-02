@@ -62,8 +62,16 @@ export default class WorkloadService {
     spoOversightNotes: string,
     sensitiveOversightNotes: boolean,
     allocationJustificationNotes: string,
-    sensitiveNotes: boolean
+    sensitiveNotes: boolean,
+    isSPOOversightAccessed: boolean
   ): Promise<OffenderManagerAllocatedCase> {
+    sendComparisionLogToWorkload(
+      spoOversightNotes === allocationJustificationNotes,
+      isSPOOversightAccessed,
+      crn,
+      teamCode,
+      token
+    )
     return (await this.restClient(token).post({
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,
       data: {
@@ -109,4 +117,21 @@ export default class WorkloadService {
       path: `/allocation/events/me/count?since=${sinceDate}`,
     })) as AllocationHistoryCount
   }
+}
+async function sendComparisionLogToWorkload(
+  notesChanged: boolean,
+  isSPOOversightAccessed: boolean,
+  crn: string,
+  teamCode: string,
+  token: string
+) {
+  await this.restClient(token).post({
+    path: `/allocations/contact/logging`,
+    data: {
+      crn,
+      teamCode,
+      isSPOOversightAccessed,
+      notesChanged,
+    },
+  })
 }

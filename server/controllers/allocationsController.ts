@@ -393,7 +393,11 @@ export default class AllocationsController {
     pduCode
   ) {
     const confirmInstructionForm = filterEmptyEmails(
-      trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
+      trimForm<ConfirmInstructionForm>({
+        ...form,
+        isSensitive: form.isSensitive === 'yes',
+        emailCopy: form.emailCopy !== 'no',
+      })
     )
 
     if (form.remove !== undefined) {
@@ -401,7 +405,7 @@ export default class AllocationsController {
       req.session.confirmInstructionForm = confirmInstructionForm
       return res.redirect(
         // eslint-disable-next-line security-node/detect-dangerous-redirects
-        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`
+        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`
       )
     }
     switch (form.action) {
@@ -412,16 +416,16 @@ export default class AllocationsController {
           `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/spo-oversight-contact`
         )
       case 'add-another-person':
-        form.person.push({ email: '' })
+        confirmInstructionForm.person.push({ email: '' })
         req.session.confirmInstructionForm = confirmInstructionForm
         return res.redirect(
           // eslint-disable-next-line security-node/detect-dangerous-redirects
-          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`
+          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`
         )
       default:
         return res.redirect(
           // eslint-disable-next-line security-node/detect-dangerous-redirects
-          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`
+          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`
         )
     }
   }
@@ -459,7 +463,7 @@ export default class AllocationsController {
         `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/${staffTeamCode}/spo-oversight-contact`
       )
     }
-    const sendEmailCopyToAllocatingOfficer = !form.emailCopy
+    const sendEmailCopyToAllocatingOfficer = !confirmInstructionForm.emailCopy
     const otherEmails = confirmInstructionForm.person.map(person => person.email).filter(email => email)
 
     const spoOversightContact = spoOversightForm.instructions
@@ -512,7 +516,7 @@ export default class AllocationsController {
     }
 
     res.render('pages/spo-oversight-contact', {
-      title: `${response.name.combinedName} | Review allocation notes | Manage a workforce`,
+      title: `${response.name.combinedName} | SPO Oversight Contact | Manage a workforce`,
       data: response,
       name: response.name.combinedName,
       crn: response.crn,

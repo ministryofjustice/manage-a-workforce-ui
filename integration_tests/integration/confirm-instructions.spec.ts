@@ -30,12 +30,12 @@ context('Instructions Confirmation', () => {
   })
 
   it('Allocate Case button visible on page', () => {
-    instructionsPage.continueButton('1').should('exist').and('have.text', '\n  Allocate case\n')
+    instructionsPage.continueButton('1').should('exist').and('contain', 'continue')
   })
 
   it('Continue button goes to next page', () => {
     instructionsPage.continueButton('1').click()
-    cy.url().should('include', '/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/confirm-allocation')
+    cy.url().should('include', '/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/spo-oversight-contact')
   })
 
   it('Cancel link visible on page', () => {
@@ -55,6 +55,7 @@ context('Instructions Confirmation', () => {
 
   it('adding another person adds more email address inputs', () => {
     instructionsPage.inputTexts().should('have.length', 1)
+    instructionsPage.inputTexts().first().type('john.doe@justice.gov.uk')
     instructionsPage.addAnotherPersonButton().click()
     instructionsPage.inputTexts().should('have.length', 2)
   })

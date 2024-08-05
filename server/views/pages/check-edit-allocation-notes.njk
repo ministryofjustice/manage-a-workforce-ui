@@ -63,37 +63,34 @@
 
                 <form data-validate-form="edit-notes" method="post">
                     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-                    <div class="govuk-form-group">
-                        {{ govukTabs({
-                        items: govukTabItems
-                    }) }}
-                    </div>
 
 
                         <a class="govuk-button govuk-button--secondary" href="{{'/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner'}}">Edit my notes before allocating the case </a>
 
                     <div class="govuk-button-group">
                         {{ govukButton({
-                            text: 'Save my notes without editing, and allocate the case',
+                            text: 'Edit my notes before allocating the case',
+                            type: 'submit',
+                            name: 'action',
+                            value: 'edit',
+                            preventDoubleClick: true,
                             attributes: {
                                 'data-form-submit': undefined
                             }
                         }) }}
                     </div>
                 </form>
+
                 <form data-validate-form="edit-notes" method="post">
                     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-                    <div class="govuk-form-group">
-                            {{ govukTabs({
-                            items: govukTabItems
-                        }) }}
-                    </div>
-
-
 
                     <div class="govuk-button-group">
                         {{ govukButton({
                             text: 'Save my notes without editing, and allocate the case',
+                            type: 'submit',
+                            name: 'action',
+                            value: 'save',
+                            preventDoubleClick: true,
                             attributes: {
                                 'data-form-submit': undefined
                             }
@@ -101,7 +98,9 @@
                     </div>
                 </form>
 
-                <a class="govuk-button govuk-button--secondary" href="{{'/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner'}}">Edit my notes before allocating the case </a>
+                <p class="govuk-body>
+                    <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Go back to review allocation notes</a>
+                </p>
             </div>
         </div>
     </div>

@@ -184,6 +184,14 @@ export default function routes(services: Services): Router {
   )
 
   get(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.getSpoOversight(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+    }
+  )
+
+  get(
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/officer-view',
     async (req, res) => {
       const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
@@ -216,10 +224,27 @@ export default function routes(services: Services): Router {
   )
 
   post(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-allocation',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-instructions',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
       await allocationsController.allocateCaseToOffenderManager(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        Number(convictionNumber),
+        req.body,
+        pduCode
+      )
+    }
+  )
+
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-allocation',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.submitSpoOversight(
         req,
         res,
         crn,

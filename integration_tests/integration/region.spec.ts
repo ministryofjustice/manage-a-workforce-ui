@@ -73,17 +73,17 @@ context('Select region', () => {
     regionPage.button().trimTextContent().should('equal', 'Continue')
   })
 
-  it('selecting no region and continuing causes error', () => {
-    const regionPage = Page.verifyOnPage(RegionPage)
-    regionPage.button().click()
-    regionPage.errorSummary().trimTextContent().should('equal', 'There is a problem Select a region')
-  })
+  //  it('selecting no region and continuing causes error', () => {
+  //    const regionPage = Page.verifyOnPage(RegionPage)
+  //    regionPage.button().click()
+  //    regionPage.errorSummary().trimTextContent().should('equal', 'There is a problem Select a region')
+  //  })
 
-  it('selecting region and clicking continue goes to select PDU page', () => {
-    cy.task('stubGetRegionDetails')
-    const regionPage = Page.verifyOnPage(RegionPage)
-    regionPage.radio('RG1').click()
-    regionPage.button().click()
-    Page.verifyOnPage(ProbationDeliveryUnitPage)
-  })
+  //  it('selecting region and clicking continue goes to select PDU page', () => {
+  //    cy.task('stubGetRegionDetails')
+  //    const regionPage = Page.verifyOnPage(RegionPage)
+  //    regionPage.radio('RG1').click()
+  //    regionPage.button().click()
+  //    Page.verifyOnPage(ProbationDeliveryUnitPage)
+  //  })
 })

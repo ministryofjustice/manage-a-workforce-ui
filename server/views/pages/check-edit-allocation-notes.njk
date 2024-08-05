@@ -60,12 +60,12 @@
                 Your allocation notes will be saved as an SPO Oversight contact in NDelius, do you want to edit them first? You can add information that will not be sent in the email.
                 </p>
 §
-
+                <p class="govuk-body-l">
+                Once the notes are saved, the case will be allocated and the email sent to the practitioner.
+                </p>
+§
                 <form data-validate-form="edit-notes" method="post">
                     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-
-
-                        <a class="govuk-button govuk-button--secondary" href="{{'/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner'}}">Edit my notes before allocating the case </a>
 
                     <div class="govuk-button-group">
                         {{ govukButton({
@@ -98,8 +98,8 @@
                     </div>
                 </form>
 
-                <p class="govuk-body>
-                    <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/confirm-instructions' }}">Go back to review allocation notes</a>
+                <p class="govuk-body">
+                    <a class="govuk-link interrupt" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocation-notes' }}">Go back to review allocation notes</a>
                 </p>
             </div>
         </div>

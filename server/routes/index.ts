@@ -182,12 +182,30 @@ export default function routes(services: Services): Router {
       )
     }
   )
+  get(
+    //      /pdu/WPTNWS/X791281/convictions/2/check-edit-allocation-notes'
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/check-edit-allocation-notes',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+    }
+  )
 
   get(
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      // await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
       await allocationsController.getSpoOversight(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+    }
+  )
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      console.log('post me')
+      await allocationsController.testMe(req, res, crn, staffTeamCode, staffCode, 12, pduCode)
+      // await allocationsController.getSpoOversight(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
     }
   )
 

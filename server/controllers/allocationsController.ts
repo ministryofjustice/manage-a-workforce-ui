@@ -333,6 +333,26 @@ export default class AllocationsController {
     })
   }
 
+  async getCheckEdit(
+    req: Request,
+    res: Response,
+    crn,
+    staffTeamCode,
+    staffCode,
+    convictionNumber,
+    pduCode,
+    scrollToBottom = false
+  ) {
+    res.render('pages/check-edit-allocation-notes', {
+      crn,
+      staffCode,
+      staffTeamCode,
+      convictionNumber,
+      pduCode,
+      scrollToBottom,
+    })
+  }
+
   async getOverview(_, res: Response, crn, offenderManagerTeamCode, offenderManagerCode, convictionNumber, pduCode) {
     const [response, teamDetails] = await Promise.all([
       this.workloadService.getOffenderManagerOverview(
@@ -492,7 +512,70 @@ export default class AllocationsController {
     }
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
-      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`
+      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/check-edit-allocation-notes`
+    )
+  }
+
+  async testMe(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber: number, pduCode) {
+    console.log('testMe')
+  }
+
+  async submitCheckEdit(
+    req: Request,
+    res: Response,
+    crn,
+    staffTeamCode,
+    staffCode,
+    convictionNumber: number,
+    form,
+    pduCode
+  ) {
+    const spoOversightForm = trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
+    const errors = validate(
+      spoOversightForm,
+      { 'person.*.email': 'email', instructions: 'nourl' },
+      {
+        email: 'Enter an email address in the correct format, like name@example.com',
+        nourl: 'You cannot include links in the allocation notes',
+      }
+    ).map(error => fixupArrayNotation(error))
+
+    // const confirmInstructionForm = {
+    //     ...req.session.confirmInstructionForm,
+    //     person: req.session.confirmInstructionForm?.person || [],
+    //   }
+
+    // TODO remove WE don't care we are not allocation yet
+    // const sendEmailCopyToAllocatingOfficer = !form.emailCopy
+    // const otherEmails = form.person.map(person => person.email).filter(email => email)
+    // const decisionEvidence = await this.allocationStorageService.getDecisionEvidence(
+    //   res.locals.user.username,
+    //   crn,
+    //   staffTeamCode,
+    //   staffCode,
+    //   convictionNumber
+    // )
+    // await this.workloadService.allocateCaseToOffenderManager(
+    //   res.locals.user.token,
+    //   crn,
+    //   staffCode,
+    //   staffTeamCode,
+    //   form.instructions,
+    //   otherEmails,
+    //   sendEmailCopyToAllocatingOfficer,
+    //   convictionNumber,
+    //   decisionEvidence,
+    //   form.isSensitive
+    // )
+    // req.session.allocationForm = {
+    //   otherEmails,
+    //   sendEmailCopyToAllocatingOfficer,
+    // }
+
+    console.log('submitCheckEdit')
+    return res.redirect(
+      // eslint-disable-next-line security-node/detect-dangerous-redirects
+      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/check-edit-allocation-notes`
     )
   }
 
@@ -516,6 +599,7 @@ export default class AllocationsController {
       ...req.session.confirmInstructionForm,
       person: req.session.confirmInstructionForm?.person || [],
     }
+    console.log('getSpoOversight')
 
     res.render('pages/spo-oversight-contact', {
       title: `${response.name.combinedName} | SPO Oversight Contact | Manage a workforce`,

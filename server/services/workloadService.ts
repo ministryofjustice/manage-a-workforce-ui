@@ -1,4 +1,3 @@
-import type { DecisionEvidenceForm } from 'forms'
 import RestClient from '../data/restClient'
 import { ApiConfig } from '../config'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'

@@ -50,20 +50,16 @@
 
      <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
-     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    
+    <div class="govuk-panel govuk-panel--confirmation interrupt">
+        <h2 id="cleared" class="govuk-heading-l">Save your notes as an oversight contact and allocate case to Edie Garrod (PO)</h2>
+        <p class="govuk-body-l">Your allocation notes will be saved as an SPO Oversight contact in NDelius, do you want to edit them first? You can add information that will not be sent in the email.
+        </p>
+        <p class="govuk-body-l">Once the notes are saved, the case will be allocated and the email sent to the practitioner.
+        </p>
 
-            <div class="govuk-panel govuk-panel--confirmation interrupt">
-
-                <h2 id="cleared" class="govuk-heading-l">Save your notes as an oversight contact and allocate case to {{ data.staff.name.combinedName }} {{ data.staff.email }}</h2>
-                <p class="govuk-body-l">
-                Your allocation notes will be saved as an SPO Oversight contact in NDelius, do you want to edit them first? You can add information that will not be sent in the email.
-                </p>
-§
-                <p class="govuk-body-l">
-                Once the notes are saved, the case will be allocated and the email sent to the practitioner.
-                </p>
-§
                 <form data-validate-form="edit-notes" method="post">
                     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
@@ -81,7 +77,7 @@
                     </div>
                 </form>
 
-                <form data-validate-form="edit-notes" method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation' }}" method="post">>
+                <form data-validate-form="edit-notes" method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation' }}" method="post">
                     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
                     <div class="govuk-button-group">
@@ -99,7 +95,7 @@
                 </form>
 
                 <p class="govuk-body">
-                    <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/allocation-notes'  }}">Go back to review allocation notes</a>
+                    <a class="govuk-lin interrupt" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/allocation-notes'  }}">Go back to review allocation notes</a>
                 </p>
             </div>
         </div>

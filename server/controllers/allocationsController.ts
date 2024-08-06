@@ -408,7 +408,7 @@ export default class AllocationsController {
     crn,
     staffTeamCode,
     staffCode,
-    convictionNumber: number,
+    convictionNumber,
     form,
     pduCode
   ) {
@@ -512,70 +512,52 @@ export default class AllocationsController {
     }
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
-      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/check-edit-allocation-notes`
+      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`
     )
   }
 
-  async testMe(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber: number, pduCode) {
-    console.log('testMe')
-  }
-
-  async submitCheckEdit(
+  async submitNoSpoOversight(
     req: Request,
     res: Response,
     crn,
     staffTeamCode,
     staffCode,
-    convictionNumber: number,
+    convictionNumber,
     form,
     pduCode
   ) {
-    const spoOversightForm = trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
-    const errors = validate(
-      spoOversightForm,
-      { 'person.*.email': 'email', instructions: 'nourl' },
-      {
-        email: 'Enter an email address in the correct format, like name@example.com',
-        nourl: 'You cannot include links in the allocation notes',
-      }
-    ).map(error => fixupArrayNotation(error))
+    const confirmInstructionForm = {
+      ...req.session.confirmInstructionForm,
+      person: req.session.confirmInstructionForm?.person || [],
+    }
 
-    // const confirmInstructionForm = {
-    //     ...req.session.confirmInstructionForm,
-    //     person: req.session.confirmInstructionForm?.person || [],
-    //   }
+    const sendEmailCopyToAllocatingOfficer = !confirmInstructionForm.emailCopy
+    const otherEmails = confirmInstructionForm.person.map(person => person.email).filter(email => email)
+    const spoOversightContact = confirmInstructionForm.instructions
+    const spoOversightSensitive = confirmInstructionForm.isSensitive
+    const allocationNotes = confirmInstructionForm.instructions
+    const allocationNotesSensitive = confirmInstructionForm.isSensitive
+    const isSPOOversightAccessed = false
 
-    // TODO remove WE don't care we are not allocation yet
-    // const sendEmailCopyToAllocatingOfficer = !form.emailCopy
-    // const otherEmails = form.person.map(person => person.email).filter(email => email)
-    // const decisionEvidence = await this.allocationStorageService.getDecisionEvidence(
-    //   res.locals.user.username,
-    //   crn,
-    //   staffTeamCode,
-    //   staffCode,
-    //   convictionNumber
-    // )
-    // await this.workloadService.allocateCaseToOffenderManager(
-    //   res.locals.user.token,
-    //   crn,
-    //   staffCode,
-    //   staffTeamCode,
-    //   form.instructions,
-    //   otherEmails,
-    //   sendEmailCopyToAllocatingOfficer,
-    //   convictionNumber,
-    //   decisionEvidence,
-    //   form.isSensitive
-    // )
-    // req.session.allocationForm = {
-    //   otherEmails,
-    //   sendEmailCopyToAllocatingOfficer,
-    // }
+    await this.workloadService.allocateCaseToOffenderManager(
+      res.locals.user.token,
+      crn,
+      staffCode,
+      staffTeamCode,
+      otherEmails,
+      sendEmailCopyToAllocatingOfficer,
+      convictionNumber,
+      spoOversightContact,
+      spoOversightSensitive,
+      allocationNotes,
+      allocationNotesSensitive,
+      isSPOOversightAccessed
+    )
 
     console.log('submitCheckEdit')
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
-      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/check-edit-allocation-notes`
+      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`
     )
   }
 

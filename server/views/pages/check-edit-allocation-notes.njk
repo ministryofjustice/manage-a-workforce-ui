@@ -81,7 +81,7 @@
                     </div>
                 </form>
 
-                <form data-validate-form="edit-notes" method="post">
+                <form data-validate-form="edit-notes" method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation' }}" method="post">>
                     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
                     <div class="govuk-button-group">

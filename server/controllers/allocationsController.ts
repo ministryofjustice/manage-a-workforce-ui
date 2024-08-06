@@ -343,12 +343,22 @@ export default class AllocationsController {
     pduCode,
     scrollToBottom = false
   ) {
+    const response: PersonOnProbationStaffDetails = await this.allocationsService.getConfirmInstructions(
+      res.locals.user.token,
+      crn,
+      convictionNumber,
+      staffCode
+    )
+
     res.render('pages/check-edit-allocation-notes', {
       crn,
       staffCode,
       staffTeamCode,
       convictionNumber,
       pduCode,
+      tier: response.tier,
+      name: response.name.combinedName,
+      data: response,
       scrollToBottom,
     })
   }

@@ -182,14 +182,10 @@ export default function routes(services: Services): Router {
       )
     }
   )
-  get(
-    //      /pdu/WPTNWS/X791281/convictions/2/check-edit-allocation-notes'
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/check-edit-allocation-notes',
-    async (req, res) => {
-      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
-    }
-  )
+  get('/pdu/:pduCode/:crn/convictions/:convictionNumber/check-edit-allocation-notes', async (req, res) => {
+    const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+    await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+  })
 
   get(
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact',

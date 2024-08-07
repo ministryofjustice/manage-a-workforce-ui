@@ -166,12 +166,13 @@ window.addEventListener('load', () => {
     ],
     'confirm-allocation': [
       {
-        instructions: 'nourl',
+        instructions: 'nourl|required',
         'person.*.email': 'email',
       },
       {
         email: 'Enter an email address in the correct format, like name@example.com',
         nourl: 'You cannot include links in the allocation notes',
+        'required.instructions': 'Enter allocation notes',
       },
     ],
     'decision-evidence': [

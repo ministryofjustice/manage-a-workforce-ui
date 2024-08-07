@@ -182,12 +182,41 @@ export default function routes(services: Services): Router {
       )
     }
   )
+  get('/pdu/:pduCode/:crn/convictions/:convictionNumber/check-edit-allocation-notes', async (req, res) => {
+    const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+
+    await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+  })
 
   get(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact-option',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+
+      await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+    }
+  )
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact-option',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
       await allocationsController.getSpoOversight(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+    }
+  )
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/save-allocation',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.submitNoSpoOversight(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        convictionNumber,
+        req.body,
+        pduCode
+      )
     }
   )
 

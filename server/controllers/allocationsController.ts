@@ -349,7 +349,6 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
-    console.log('async get check edit')
     res.render('pages/check-edit-allocation-notes', {
       crn,
       staffCode,
@@ -548,7 +547,6 @@ export default class AllocationsController {
     const allocationNotes = confirmInstructionForm.instructions
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
     const isSPOOversightAccessed = false
-    console.log('async in submitNoSpoOversight')
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
       crn,
@@ -564,7 +562,6 @@ export default class AllocationsController {
       isSPOOversightAccessed
     )
 
-    console.log('async submitNoSpoOversight')
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`
@@ -591,7 +588,6 @@ export default class AllocationsController {
       ...req.session.confirmInstructionForm,
       person: req.session.confirmInstructionForm?.person || [],
     }
-    console.log('async getSpoOversight')
 
     res.render('pages/spo-oversight-contact', {
       title: `${response.name.combinedName} | SPO Oversight Contact | Manage a workforce`,

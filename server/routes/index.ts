@@ -184,7 +184,6 @@ export default function routes(services: Services): Router {
   )
   get('/pdu/:pduCode/:crn/convictions/:convictionNumber/check-edit-allocation-notes', async (req, res) => {
     const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-    console.log('route GET check-edit-allocation-notes')
 
     await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
   })
@@ -193,7 +192,6 @@ export default function routes(services: Services): Router {
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact-option',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      console.log('route GET spo oversight contact, called on continue from instructions, calls get check edit')
 
       await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
     }
@@ -202,7 +200,6 @@ export default function routes(services: Services): Router {
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact-option',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      console.log('route post spo oversight contact, called on edit button, calls getSpo Oversight')
       await allocationsController.getSpoOversight(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
     }
   )
@@ -210,7 +207,6 @@ export default function routes(services: Services): Router {
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/save-allocation',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      console.log('save Allocation')
       await allocationsController.submitNoSpoOversight(
         req,
         res,
@@ -260,7 +256,6 @@ export default function routes(services: Services): Router {
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-instructions',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      console.log('confirm instructions')
       await allocationsController.allocateCaseToOffenderManager(
         req,
         res,

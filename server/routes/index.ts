@@ -184,21 +184,25 @@ export default function routes(services: Services): Router {
   )
   get('/pdu/:pduCode/:crn/convictions/:convictionNumber/check-edit-allocation-notes', async (req, res) => {
     const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+    console.log('route GET check-edit-allocation-notes')
+
     await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
   })
 
   get(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact-option',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      console.log('route GET spo oversight contact, called on continue from instructions, calls get check edit')
+
       await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
     }
   )
   post(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact-option',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      console.log('spo oversight')
+      console.log('route post spo oversight contact, called on edit button, calls getSpo Oversight')
       await allocationsController.getSpoOversight(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
     }
   )

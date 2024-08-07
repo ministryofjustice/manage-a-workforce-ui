@@ -57,6 +57,9 @@ export default class WorkloadService {
     teamCode: string,
     token: string
   ) {
+    console.log('final before sending')
+    console.log(isSPOOversightAccessed)
+    console.log(notesChanged)
     await this.restClient(token).post({
       path: `/allocations/contact/logging`,
       data: {
@@ -80,11 +83,15 @@ export default class WorkloadService {
     sensitiveOversightNotes: boolean,
     allocationJustificationNotes: string,
     sensitiveNotes: boolean,
-    isSPOOversightAccessed: boolean
+    isSPOOversightAccessed: string
   ): Promise<OffenderManagerAllocatedCase> {
+    console.log(crn)
+    console.log(isSPOOversightAccessed)
+    console.log(allocationJustificationNotes)
+    console.log(spoOversightNotes)
     await this.sendComparisionLogToWorkload(
-      spoOversightNotes === allocationJustificationNotes,
-      isSPOOversightAccessed,
+      spoOversightNotes !== allocationJustificationNotes,
+      isSPOOversightAccessed !== 'false',
       crn,
       teamCode,
       token

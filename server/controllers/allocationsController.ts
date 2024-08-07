@@ -499,7 +499,7 @@ export default class AllocationsController {
     const spoOversightSensitive = spoOversightForm.isSensitive
     const allocationNotes = confirmInstructionForm.instructions
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
-    const isSPOOversightAccessed = true
+    const isSPOOversightAccessed = 'true'
 
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
@@ -546,7 +546,7 @@ export default class AllocationsController {
     const spoOversightSensitive = confirmInstructionForm.isSensitive
     const allocationNotes = confirmInstructionForm.instructions
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
-    const isSPOOversightAccessed = false
+    const isSPOOversightAccessed = 'false'
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
       crn,

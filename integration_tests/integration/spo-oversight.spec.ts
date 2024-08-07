@@ -1,8 +1,8 @@
-import Page from '../pages/page'
-import SpoOversightPage from '../pages/spoOversight'
+// import Page from '../pages/page'
+// import SpoOversightPage from '../pages/spoOversight'
 
 context('Instructions Confirmation', () => {
-  let spoOversightPage: SpoOversightPage
+  // let spoOversightPage: SpoOversightPage
   // beforeEach(() => {
   //   cy.task('stubSetup')
   //   cy.task('stubGetConfirmInstructions')

@@ -80,11 +80,11 @@ export default class WorkloadService {
     sensitiveOversightNotes: boolean,
     allocationJustificationNotes: string,
     sensitiveNotes: boolean,
-    isSPOOversightAccessed: boolean
+    isSPOOversightAccessed: string
   ): Promise<OffenderManagerAllocatedCase> {
     await this.sendComparisionLogToWorkload(
-      spoOversightNotes === allocationJustificationNotes,
-      isSPOOversightAccessed,
+      spoOversightNotes !== allocationJustificationNotes,
+      isSPOOversightAccessed !== 'false',
       crn,
       teamCode,
       token

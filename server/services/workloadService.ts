@@ -51,8 +51,8 @@ export default class WorkloadService {
   }
 
   async sendComparisionLogToWorkload(
-    notesChanged: boolean,
-    isSPOOversightAccessed: boolean,
+    notesEdited: boolean,
+    editNotesScreenAccessed: boolean,
     crn: string,
     teamCode: string,
     token: string
@@ -62,8 +62,8 @@ export default class WorkloadService {
       data: {
         crn,
         teamCode,
-        isSPOOversightAccessed,
-        notesChanged,
+        editNotesScreenAccessed,
+        notesEdited,
       },
     })
   }
@@ -84,7 +84,7 @@ export default class WorkloadService {
   ): Promise<OffenderManagerAllocatedCase> {
     await this.sendComparisionLogToWorkload(
       spoOversightNotes !== allocationJustificationNotes,
-      isSPOOversightAccessed !== 'false',
+      isSPOOversightAccessed === 'true',
       crn,
       teamCode,
       token

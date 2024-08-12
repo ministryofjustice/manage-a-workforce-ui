@@ -21,7 +21,8 @@ export default function routes(services: Services): Router {
     services.workloadService,
     services.userPreferenceService,
     services.probationEstateService,
-    services.allocationStorageService
+    services.allocationStorageService,
+    services.allocationNotesStorageService
   )
   const probationEstateController = new ProbationEstateController(
     services.probationEstateService,
@@ -54,6 +55,16 @@ export default function routes(services: Services): Router {
 
   const technicalUpdatesController = new TechnicalUpdatesController(services.technicalUpdatesService)
 
+  // get('/store-allocation-notes', async (req, res) => {
+  //   const { crn, convictionNumber } = req.params
+  //   await allocationsController.getAllocationNotes(req, res, crn, convictionNumber)
+  // })
+
+  // post('/store-allocation-notes', async (req, res) => {
+  //   const { crn, convictionNumber, instructions } = req.body
+  //   await allocationsController.saveAllocationNotes(req, res, crn, convictionNumber, instructions)
+  // })
+
   get('/', async (req, res) => {
     await homeController.redirectUser(req, res)
   })
@@ -85,7 +96,14 @@ export default function routes(services: Services): Router {
 
   get('/pdu/:pduCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
     const { crn, convictionNumber, pduCode } = req.params
-    await allocationsController.getUnallocatedCase(req, res, crn, convictionNumber, pduCode)
+    const instructions = await allocationsController.getAllocationNotes(req, res, crn, convictionNumber)
+    await allocationsController.getUnallocatedCase(req, res, crn, convictionNumber, pduCode, instructions)
+  })
+
+  post('/pdu/:pduCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
+    const { crn, convictionNumber, pduCode } = req.params
+    const { instructions } = req.body
+    await allocationsController.saveAllocationNotes(req, res, crn, convictionNumber, instructions)
   })
 
   get('/:crn/documents/:documentId/:documentName', async (req, res) => {
@@ -115,6 +133,8 @@ export default function routes(services: Services): Router {
 
   post('/pdu/:pduCode/:crn/convictions/:convictionNumber/choose-practitioner', async (req, res) => {
     const { crn, convictionNumber, pduCode } = req.params
+    const { instructions } = req.body
+    await allocationsController.saveAllocationNotes(req, res, crn, convictionNumber, instructions)
     await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionNumber, pduCode)
   })
 

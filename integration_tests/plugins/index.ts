@@ -25,6 +25,7 @@ import allocationComplete from '../mockApis/allocationComplete'
 import probationEstate from '../mockApis/probationEstate'
 import staffLookup from '../mockApis/staffLookup'
 import logging from '../mockApis/logging'
+import storeAllocationNotes from '../mockApis/storeAllocationNotes'
 
 const redisService = new RedisService()
 
@@ -98,5 +99,6 @@ export default (on: (string, Record) => void): void => {
     ...choosePractitioner,
     ...staffLookup,
     ...logging,
+    ...storeAllocationNotes,
   })
 }

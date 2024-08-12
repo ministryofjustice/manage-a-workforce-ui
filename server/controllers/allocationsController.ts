@@ -21,6 +21,7 @@ import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
 import AllocationStorageService from '../services/allocationStorageService'
+import AllocationNotesStorageService from '../services/allocationNotesStorageService'
 
 export default class AllocationsController {
   constructor(
@@ -28,10 +29,22 @@ export default class AllocationsController {
     private readonly workloadService: WorkloadService,
     private readonly userPreferenceService: UserPreferenceService,
     private readonly probationEstateService: ProbationEstateService,
-    private readonly allocationStorageService: AllocationStorageService
+    private readonly allocationStorageService: AllocationStorageService,
+    private readonly allocationNotesStorageService: AllocationNotesStorageService
   ) {}
 
-  async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
+  SERVICE = 'APOP'
+
+  async saveAllocationNotes(req, res, crn, convictionNumber, instructions) {
+    return this.allocationNotesStorageService.saveAllocationNotes(crn, convictionNumber, instructions)
+  }
+
+  async getAllocationNotes(req, res, crn, convictionNumber) {
+    const response = await this.allocationNotesStorageService.getAllocationNotes(crn, convictionNumber)
+    return res.json(response)
+  }
+
+  async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode, instructions): Promise<void> {
     const response: Allocation = await this.allocationsService.getUnallocatedCase(
       res.locals.user.token,
       crn,
@@ -49,6 +62,7 @@ export default class AllocationsController {
       pduCode,
       outOfAreaTransfer: response.outOfAreaTransfer,
       errors: req.flash('errors') || [],
+      instructions,
     })
   }
 
@@ -214,6 +228,7 @@ export default class AllocationsController {
       staffCode,
       staffTeamCode
     )
+
     res.render('pages/allocate-to-practitioner', {
       title: `${response.name.combinedName} | Allocate to practitioner | Manage a workforce`,
       data: response,
@@ -225,6 +240,7 @@ export default class AllocationsController {
       staffTeamCode,
       pduCode,
       errors: req.flash('errors') || [],
+      token: res.locals.user.token,
     })
   }
 
@@ -312,6 +328,12 @@ export default class AllocationsController {
       staffCode
     )
 
+    await this.allocationNotesStorageService.saveAllocationNotes(
+      crn,
+      convictionNumber,
+      req.session.confirmInstructionForm.instructions
+    )
+
     const confirmInstructionForm = {
       ...req.session.confirmInstructionForm,
       person: req.session.confirmInstructionForm?.person || [],
@@ -330,6 +352,7 @@ export default class AllocationsController {
       confirmInstructionForm,
       pduCode,
       scrollToBottom,
+      token: res.locals.user.token,
     })
   }
 
@@ -359,6 +382,7 @@ export default class AllocationsController {
       name: response.name.combinedName,
       data: response,
       scrollToBottom,
+      token: res.locals.user.token,
     })
   }
 
@@ -601,6 +625,7 @@ export default class AllocationsController {
       errors: req.flash('errors') || [],
       confirmInstructionForm,
       pduCode,
+      token: res.locals.user.token,
     })
   }
 }

@@ -8,6 +8,7 @@ import config from '../config'
 import StaffLookupService from './staffLookupService'
 import TechnicalUpdatesService from './technicalUpdatesService'
 import AllocationStorageService from './allocationStorageService'
+import AllocationNotesStorageService from './allocationNotesStorageService'
 
 export const services = () => {
   const { manageUsersClient } = dataAccess()
@@ -20,6 +21,7 @@ export const services = () => {
   const staffLookupService = new StaffLookupService(config.apis.staffLookupService)
   const technicalUpdatesService = new TechnicalUpdatesService()
   const allocationStorageService = new AllocationStorageService()
+  const allocationNotesStorageService = new AllocationNotesStorageService()
   return {
     userService,
     allocationsService,
@@ -29,6 +31,7 @@ export const services = () => {
     staffLookupService,
     technicalUpdatesService,
     allocationStorageService,
+    allocationNotesStorageService,
   }
 }
 

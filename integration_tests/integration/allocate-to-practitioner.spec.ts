@@ -45,7 +45,7 @@ context('Allocate to Practitioner', () => {
       },
     })
     cy.task('stubGetPotentialOffenderManagerWorkload', { teamCode: 'TM1', staffCode: 'OM3' })
-
+    cy.task('stubGetAllocationNotesForAllocateToPractioner', { crn: 'J678910', convictionNumber: '1' })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)

@@ -492,7 +492,7 @@ export default class AllocationsController {
         `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/${staffTeamCode}/spo-oversight-contact-option`
       )
     }
-    const sendEmailCopyToAllocatingOfficer = !confirmInstructionForm.emailCopy
+    const sendEmailCopyToAllocatingOfficer = confirmInstructionForm.emailCopy
     const otherEmails = confirmInstructionForm.person.map(person => person.email).filter(email => email)
 
     const spoOversightContact = spoOversightForm.instructions
@@ -540,7 +540,7 @@ export default class AllocationsController {
       person: req.session.confirmInstructionForm?.person || [],
     }
 
-    const sendEmailCopyToAllocatingOfficer = !confirmInstructionForm.emailCopy
+    const sendEmailCopyToAllocatingOfficer = confirmInstructionForm.emailCopy
     const otherEmails = confirmInstructionForm.person.map(person => person.email).filter(email => email)
     const spoOversightContact = confirmInstructionForm.instructions
     const spoOversightSensitive = confirmInstructionForm.isSensitive

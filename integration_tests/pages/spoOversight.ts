@@ -6,12 +6,12 @@ export default class AllocationCompletePage extends Page {
   }
 
   checkOnPage() {
-    cy.get('h2').contains('Save your notes as an oversight contact and allocate case to')
+    cy.get('h2').contains('Create an SPO Oversight contact')
   }
 
   continueButton = (convictionNumber): PageElement => cy.get(`#${convictionNumber}`)
 
-  saveButton = (): PageElement => cy.get('[value="save"]')
+  saveButton = (): PageElement => cy.get('#1')
 
   editButton = (): PageElement => cy.get('[value="edit"]')
 

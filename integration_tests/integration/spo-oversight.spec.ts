@@ -1,14 +1,27 @@
 import Page from '../pages/page'
 import SpoOversightPage from '../pages/spoOversight'
+import SpoOversightOptionPage from '../pages/spoOversightOption'
+import InstructionsConfirmPage from '../pages/confirmInstructions'
 
 context('Instructions Confirmation', () => {
+  let oversightOptionPage: SpoOversightOptionPage
   let spoOversightPage: SpoOversightPage
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubSearchStaff')
     cy.task('stubGetConfirmInstructions')
+    cy.task('stubGetOversightContactOption')
+    cy.task('stubGetAllocationCompleteDetails')
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
+    cy.task('stubSendComparisionLogToWorkload')
     cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/spo-oversight-contact')
-    // spoOversightPage = Page.verifyOnPage(SpoOversightPage)
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    instructionsConfirmPage.continueButton('1').click()
+    oversightOptionPage = Page.verifyOnPage(SpoOversightOptionPage)
+    oversightOptionPage.editButton().click()
+    spoOversightPage = Page.verifyOnPage(SpoOversightPage)
   })
 
   it('Offender details visible on page', () => {

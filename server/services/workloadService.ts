@@ -82,6 +82,40 @@ export default class WorkloadService {
     sensitiveNotes: boolean,
     isSPOOversightAccessed: string
   ): Promise<OffenderManagerAllocatedCase> {
+    console.table({
+      token,
+      crn,
+      staffCode,
+      teamCode,
+      emailTo,
+      sendEmailCopyToAllocatingOfficer,
+      eventNumber,
+      spoOversightNotes,
+      sensitiveOversightNotes,
+      allocationJustificationNotes,
+      sensitiveNotes,
+      isSPOOversightAccessed,
+    })
+    console.log(`/team/${teamCode}/offenderManager/${staffCode}/case`)
+    console.log('here now =========')
+    console.log(
+      `${spoOversightNotes !== allocationJustificationNotes}, ${
+        isSPOOversightAccessed === 'true'
+      }, ${crn}, ${teamCode}, ${token}`
+    )
+    console.log(
+      JSON.stringify({
+        crn,
+        instructions: '',
+        emailTo,
+        sendEmailCopyToAllocatingOfficer,
+        eventNumber,
+        allocationJustificationNotes,
+        sensitiveNotes,
+        spoOversightNotes,
+        sensitiveOversightNotes,
+      })
+    )
     await this.sendComparisionLogToWorkload(
       spoOversightNotes !== allocationJustificationNotes,
       isSPOOversightAccessed === 'true',
@@ -113,6 +147,7 @@ export default class WorkloadService {
   }
 
   async getEventManagerDetails(token: string, crn, convictionNumber): Promise<EventManagerDetails> {
+    console.log(`getEventManagerDetails /allocation/person/${crn}/event/${convictionNumber}/details`)
     return (await this.restClient(token).get({
       path: `/allocation/person/${crn}/event/${convictionNumber}/details`,
     })) as EventManagerDetails

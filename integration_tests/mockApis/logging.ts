@@ -25,4 +25,18 @@ export default {
       },
     })
   },
+  stubSendComparisionLogToWorkloadUnchanged: (notesChanged: boolean = false): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'POST',
+        urlPattern: `/allocations/contact/logging`,
+        bodyPatterns: [],
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {},
+      },
+    })
+  },
 }

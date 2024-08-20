@@ -547,6 +547,10 @@ export default class AllocationsController {
     const allocationNotes = confirmInstructionForm.instructions
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
     const isSPOOversightAccessed = 'false'
+    console.log(`--- url /pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
+    console.log(
+      `crn ${crn}, staffCode ${staffCode}, spoOversightSensitive ${spoOversightSensitive}, isSPOOversightAccessed ${isSPOOversightAccessed}, spoOversightContact ${spoOversightContact}, allocationNotesSensitive ${allocationNotesSensitive}, otherEmails ${otherEmails}, sendEmailCopyToAllocatingOfficer ${sendEmailCopyToAllocatingOfficer}`
+    )
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
       crn,
@@ -561,7 +565,7 @@ export default class AllocationsController {
       allocationNotesSensitive,
       isSPOOversightAccessed
     )
-
+    console.log(`xxxxx url /pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`

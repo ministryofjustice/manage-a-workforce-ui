@@ -15,7 +15,7 @@
                 rows: []
  } %}
 
- {% for currentSentence in currentSentences %}
+{% for currentSentence in currentSentences %}
     {{
         currentSentenceData.rows.push([
             { text: currentSentence.sentence },
@@ -41,7 +41,7 @@
                 rows: []
  } %}
 
- {% for previousSentence in previousSentences %}
+{% for previousSentence in previousSentences %}
     {{
         previousSentenceData.rows.push([
             { text: previousSentence.sentence },
@@ -57,29 +57,26 @@
 
     <h2 class="govuk-heading-l">Probation record</h2>
 
-        {% if currentSentences | length > 0 %}
-            {{ govukTable(currentSentenceData) }}
-        {% else %}
-
-            <h3 class="govuk-heading-m">Current sentences</h3>
-            <p class="govuk-body">No current sentences.</p>
-            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-        {% endif %}
-
-    {% if previousSentences | length > 0 %}
-        {{ govukTable(previousSentenceData) }}
-        {% if not viewAll %}
-            <a href="{{ '/pdu/' + pduCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous sentences ({{ totalPreviousCount }})</a>
-        {% endif %}
+    {% if currentSentences | length > 0 %}
+        {{ govukTable(currentSentenceData) }}
     {% else %}
 
+        <h3 class="govuk-heading-m">Current sentences</h3>
+        <p class="govuk-body">No current sentences.</p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    {% endif %}
+
+    {% if previousSentences | length > 0 %}
+        <div class="govuk-!-margin-bottom-9">
+            {{ govukTable(previousSentenceData) }}
+            {% if not viewAll %}{% endif %}
+            <a href="{{ '/pdu/' + pduCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous sentences ({{ totalPreviousCount }})</a>
+        </div>
+    {% else %}
         <h3 class="govuk-heading-m">Previous sentencess</h3>
         <p class="govuk-body">No previous sentences.</p>
         <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
     {% endif %}
 
-
-
 {% endblock %}
-

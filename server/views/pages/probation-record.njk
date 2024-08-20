@@ -69,8 +69,9 @@
     {% if previousSentences | length > 0 %}
         <div class="govuk-!-margin-bottom-9">
             {{ govukTable(previousSentenceData) }}
-            {% if not viewAll %}{% endif %}
-            <a href="{{ '/pdu/' + pduCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous sentences ({{ totalPreviousCount }})</a>
+            {% if not viewAll %}
+                <a href="{{ '/pdu/' + pduCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state">View all previous sentences ({{ totalPreviousCount }})</a>
+            {% endif %}
         </div>
     {% else %}
         <h3 class="govuk-heading-m">Previous sentencess</h3>

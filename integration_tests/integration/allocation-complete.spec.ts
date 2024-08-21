@@ -69,7 +69,7 @@ context('Allocate Complete', () => {
       .and('contain', 'the initial appointment is scheduled for 1 September 2021')
   })
 
-  it.only('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
+  it('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
     // THIS one
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', true)
@@ -166,27 +166,28 @@ context('Allocate Complete', () => {
       .should('not.exist')
   })
 
-  // it('must keep instruction text after an errored allocation', () => {
-  //   cy.task('stubGetAllocationCompleteDetails')
-  //   cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
-  //   cy.task('stubSendComparisionLogToWorkload')
-  //   cy.signIn()
-  //   cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
-  //
-  //   const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
-  //   instructionsConfirmPage.instructionsTextArea().type('Test')
-  //   instructionsConfirmPage.checkbox().check()
-  //   instructionsConfirmPage.continueButton('1').click()
-  //   const oversightOptionPage = Page.verifyOnPage(SpoOversightOptionPage)
-  //   oversightOptionPage.saveButton().click()
-  //   cy.task('stubErrorAllocateOffenderManagerToCase')
-  //   oversightOptionPage.saveButton().click()
-  //
-  //   const instructionsConfirmPage2 = Page.verifyOnPage(InstructionsConfirmPage)
-  //   Page.verifyOnPage(ErrorPage)
-  //   cy.task('stubGetUnallocatedCase')
-  //   cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
-  //   const summaryPage = Page.verifyOnPage(SummaryPage)
-  //   summaryPage.instructionsTextArea().should('have.value', 'Test')
-  // })
+  it('must keep instruction text after an errored allocation', () => {
+    cy.task('stubGetAllocationCompleteDetails')
+    cy.task('stubSendComparisionLogToWorkloadUnchanged')
+    cy.task('stubNotFoundEventManagerDetails')
+    cy.task('stubErrorAllocateOffenderManagerToCase')
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    instructionsConfirmPage.checkbox().check()
+    instructionsConfirmPage.emailInput(0).type('example.one@justice.gov.uk')
+    instructionsConfirmPage.addAnotherPersonButton().click()
+    instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
+    instructionsConfirmPage.continueButton('1').click()
+    const oversightOptionPage = Page.verifyOnPage(SpoOversightOptionPage)
+
+    oversightOptionPage.saveButton().click()
+    Page.verifyOnPage(ErrorPage)
+    cy.task('stubGetUnallocatedCase')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.instructionsTextArea().should('have.value', 'Test')
+  })
 })

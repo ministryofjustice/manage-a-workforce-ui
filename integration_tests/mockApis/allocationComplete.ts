@@ -77,7 +77,7 @@ export default {
         urlPattern: `/team/TM2/offenderManager/OM1/case`,
         bodyPatterns: [
           {
-            equalToJson: `{"crn":"J678910", "instructions": "Test", "sendEmailCopyToAllocatingOfficer": true, "emailTo": [], "eventNumber": 1}`,
+            equalToJson: `{"crn":"J678910", "instructions": "", "allocationJustificationNotes": "Test", "sensitiveNotes": false, "spoOversightNotes": "Test", "sensitiveOversightNotes": false, "sendEmailCopyToAllocatingOfficer": true, "emailTo": ["example.one@justice.gov.uk", "example.two@justice.gov.uk"], "eventNumber": "1"}`,
           },
         ],
       },

@@ -62,10 +62,10 @@ context('Allocate Complete', () => {
     allocationCompletePage
       .bulletedList()
       .should('contain', 'the case and SPO Oversight contact will be saved in NDelius within 5 minutes')
-      // .and(
-      //   'contain',
-      //   'we have sent a copy of the allocation email to example.one@justice.gov.uk, example.two@justice.gov.uk'
-      // )
+      .and(
+        'contain',
+        'we have sent a copy of the allocation email to example.one@justice.gov.uk, example.two@justice.gov.uk'
+      )
       .and('contain', 'the initial appointment is scheduled for 1 September 2021')
   })
 

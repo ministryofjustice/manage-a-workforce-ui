@@ -565,6 +565,10 @@ export default class AllocationsController {
       allocationNotesSensitive,
       isSPOOversightAccessed
     )
+    req.session.allocationForm = {
+      otherEmails,
+      sendEmailCopyToAllocatingOfficer,
+    }
     console.log(`xxxxx url /pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects

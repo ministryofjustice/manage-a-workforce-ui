@@ -547,6 +547,7 @@ export default class AllocationsController {
     const allocationNotes = confirmInstructionForm.instructions
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
     const isSPOOversightAccessed = 'false'
+
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
       crn,
@@ -561,7 +562,10 @@ export default class AllocationsController {
       allocationNotesSensitive,
       isSPOOversightAccessed
     )
-
+    req.session.allocationForm = {
+      otherEmails,
+      sendEmailCopyToAllocatingOfficer,
+    }
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`

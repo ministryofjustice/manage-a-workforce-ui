@@ -2,21 +2,12 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForWorkload } from './wiremock'
 
 export default {
-  stubSendComparisionLogToWorkload: (notesChanged: boolean = true): SuperAgentRequest => {
+  stubSendComparisonLogToWorkload: (): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',
         urlPattern: `/allocations/contact/logging`,
-        bodyPatterns: [
-          {
-            equalToJson: JSON.stringify({
-              crn: 'J678910',
-              teamCode: 'TM2',
-              isSPOOversightAccessed: true,
-              notesChanged,
-            }),
-          },
-        ],
+        bodyPatterns: [],
       },
       response: {
         status: 200,

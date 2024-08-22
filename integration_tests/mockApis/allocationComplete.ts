@@ -66,14 +66,14 @@ export default {
     })
   },
 
-  stubAllocateOffenderManagerToCaseMultipleEmails3: (sendCopy = false): SuperAgentRequest => {
+  stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent: (sendCopy = false): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',
         urlPattern: '/team/TM2/offenderManager/OM1/case',
         bodyPatterns: [
           {
-            equalToJson: ` {"crn":"J678910","instructions":"","emailTo":["example.one@justice.gov.uk","example.two@justice.gov.uk"],"sendEmailCopyToAllocatingOfficer":false,"eventNumber": 1,"allocationJustificationNotes":"Test","sensitiveNotes":false,"spoOversightNotes":"Test","sensitiveOversightNotes":false}`,
+            equalToJson: ` {"crn":"J678910","instructions":"","emailTo":["example.one@justice.gov.uk","example.two@justice.gov.uk"],"sendEmailCopyToAllocatingOfficer":${sendCopy},"eventNumber": 1,"allocationJustificationNotes":"Test","sensitiveNotes":false,"spoOversightNotes":"Test","sensitiveOversightNotes":false}`,
           },
         ],
       },

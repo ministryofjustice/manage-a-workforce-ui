@@ -13,7 +13,7 @@ context('Instructions Confirmation', () => {
     cy.task('stubGetOversightContactOption')
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
-    cy.task('stubSendComparisionLogToWorkload')
+    cy.task('stubSendComparisonLogToWorkload')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)

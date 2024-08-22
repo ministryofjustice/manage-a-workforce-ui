@@ -91,12 +91,12 @@
     ]
   },
   "dependencies": {
-    "@ministryofjustice/frontend": "1.8.1",
     "@babel/traverse": "7.23.2",
+    "@ministryofjustice/frontend": "1.8.1",
     "accessible-autocomplete": "3.0.0",
     "agentkeepalive": "4.5.0",
     "applicationinsights": "2.9.5",
-    "axios": "1.7.2",
+    "axios": "^1.7.4",
     "axios-retry": "4.3.0",
     "body-parser": "1.20.2",
     "bunyan": "1.8.15",

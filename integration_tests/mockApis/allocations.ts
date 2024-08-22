@@ -1070,39 +1070,6 @@ export default {
       },
     })
   },
-  stubGetOversightContactOption: (): SuperAgentRequest => {
-    return stubForAllocation({
-      request: {
-        method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/1/spo-oversight-contact-option\\?staffCode=OM1`,
-      },
-      response: {
-        status: 200,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          name: {
-            forename: 'Dylan',
-            middleName: 'Adam',
-            surname: 'Armstrong',
-            combinedName: 'Dylan Adam Armstrong',
-          },
-          crn: 'J678910',
-          tier: 'C1',
-          convictionNumber: 1,
-          staff: {
-            code: 'OM1',
-            name: {
-              forename: 'John',
-              middleName: '',
-              surname: 'Doe',
-              combinedName: 'John Doe',
-            },
-            email: 'john.doe@test.justice.gov.uk',
-          },
-        },
-      },
-    })
-  },
   stubGetDecisionEvidencing: (): SuperAgentRequest => {
     return stubForAllocation({
       request: {

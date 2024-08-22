@@ -10,7 +10,6 @@ context('Instructions Confirmation', () => {
     cy.task('stubSetup')
     cy.task('stubSearchStaff')
     cy.task('stubGetConfirmInstructions')
-    cy.task('stubGetOversightContactOption')
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
     cy.task('stubSendComparisonLogToWorkload')

@@ -25,7 +25,7 @@ export default {
       },
     })
   },
-  stubSendComparisionLogToWorkloadUnchanged: (notesChanged: boolean = false): SuperAgentRequest => {
+  stubSendComparisonLogToWorkloadUnchanged: (notesChanged: boolean = false): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',

@@ -38,8 +38,7 @@ context('Allocate Complete', () => {
 
   it('What happens next with multiple emails supplied, opting out of copy content visible on page', () => {
     cy.task('stubGetAllocationCompleteDetails')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
-    cy.task('stubSendComparisionLogToWorkloadUnchanged')
+    cy.task('stubSendComparisonLogToWorkloadUnchanged')
     cy.task('stubNotFoundEventManagerDetails')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', true)
     cy.signIn()
@@ -70,18 +69,11 @@ context('Allocate Complete', () => {
   })
 
   it('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
-    // THIS one
     cy.task('stubGetAllocationCompleteDetails')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', true)
     cy.task('stubSendComparisionLogToWorkload')
     cy.task('stubNotFoundEventManagerDetails')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails2', false)
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails2', true)
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails3', false)
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails3', true)
-    cy.task('stubSendComparisionLogToWorkloadUnchanged')
-
-    cy.task('stubSendComparisionLogToWorkload')
+    cy.task('stubSendComparisonLogToWorkloadUnchanged')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
 
@@ -168,7 +160,7 @@ context('Allocate Complete', () => {
 
   it('must keep instruction text after an errored allocation', () => {
     cy.task('stubGetAllocationCompleteDetails')
-    cy.task('stubSendComparisionLogToWorkloadUnchanged')
+    cy.task('stubSendComparisonLogToWorkloadUnchanged')
     cy.task('stubNotFoundEventManagerDetails')
     cy.task('stubErrorAllocateOffenderManagerToCase')
     cy.signIn()

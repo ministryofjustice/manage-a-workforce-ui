@@ -36,11 +36,6 @@ export default function createApp(services: Services): express.Application {
     ...config.notification,
   }
 
-  app.use((req, res, next) => {
-    res.locals.pageUrl = encodeURI(`${req.protocol}://${req.headers.host}${req.url}`)
-    next()
-  })
-
   app.use(setUpHealthChecks())
   app.use(setUpWebSecurity())
   app.use(setUpWebSession())

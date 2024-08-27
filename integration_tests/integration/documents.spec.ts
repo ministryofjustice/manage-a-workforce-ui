@@ -167,4 +167,27 @@ context('Documents', () => {
 
     cy.get('table').within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
   })
+
+  it('feedback prompt visible on page', () => {
+    const documentsPage = Page.verifyOnPage(DocumentsPage)
+    documentsPage.feedbackPrompt().should('contain', 'Was this page helpful?')
+    documentsPage
+      .feedbackLink()
+      .should('have.attr', 'href')
+      .and(
+        'include',
+        'https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2JfL5_1h2G9Gi17tzGJyJ5hURE1SU041UjMwSkQ0RFJJTE5OSzcyRDgxUy4u'
+      )
+  })
+
+  it('feedback link contains feedback form', () => {
+    const documentsPage = Page.verifyOnPage(DocumentsPage)
+    documentsPage
+      .feedbackLink()
+      .should('have.attr', 'href')
+      .and(
+        'include',
+        'https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2JfL5_1h2G9Gi17tzGJyJ5hURE1SU041UjMwSkQ0RFJJTE5OSzcyRDgxUy4u'
+      )
+  })
 })

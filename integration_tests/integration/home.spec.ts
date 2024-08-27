@@ -36,7 +36,7 @@ context('Unallocated', () => {
     cy.signIn()
     const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     allocateCasesByTeamPage
-      .surveyLink()
+      .feedbackLink()
       .should('have.attr', 'href')
       .and(
         'equal',
@@ -68,17 +68,5 @@ context('Unallocated', () => {
     const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     allocateCasesByTeamPage.hideMessageLink().click()
     allocateCasesByTeamPage.technicalUpdatesBanner().should('have.class', 'moj-hidden')
-  })
-
-  it('feedback prompt visible on page', () => {
-    cy.signIn()
-    const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
-    allocateCasesByTeamPage.feedbackPrompt().should('contain', 'Was this page helpful?')
-    cy.url().then(url => {
-      allocateCasesByTeamPage
-        .feedbackLink()
-        .should('have.attr', 'href')
-        .and('include', `https://eu.surveymonkey.com/r/73CLHLM?url=${url}`)
-    })
   })
 })

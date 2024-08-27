@@ -23,7 +23,7 @@ export default abstract class Page {
     )
   }
 
-  surveyLink = (): PageElement => cy.get('.feedback')
+  feedbackLink = (): PageElement => cy.get('.feedback')
 
   signOut = (): PageElement => cy.get("[href='/sign-out']")
 
@@ -64,10 +64,6 @@ export default abstract class Page {
   technicalUpdatesBanner = (): PageElement => cy.get(`#technical-updates-banner`)
 
   hideMessageLink = (): PageElement => cy.get('#hide-message')
-
-  feedbackPrompt = (): PageElement => cy.get('.feedback-prompt')
-
-  feedbackLink = (): PageElement => cy.get('.feedback-prompt-text > a')
 
   downloadDocumentLink = (crn, documentId, fileName): PageElement =>
     cy.get(`a[href*="/${crn}/documents/${documentId}/${fileName}"]`)

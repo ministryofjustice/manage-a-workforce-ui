@@ -20,8 +20,7 @@ export default function routes(services: Services): Router {
     services.allocationsService,
     services.workloadService,
     services.userPreferenceService,
-    services.probationEstateService,
-    services.allocationStorageService
+    services.probationEstateService
   )
   const probationEstateController = new ProbationEstateController(
     services.probationEstateService,
@@ -130,39 +129,6 @@ export default function routes(services: Services): Router {
         staffCode,
         convictionNumber,
         pduCode
-      )
-    }
-  )
-
-  get(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/decision-evidencing',
-    async (req, res) => {
-      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      await allocationsController.getDecisionEvidencing(
-        req,
-        res,
-        crn,
-        staffTeamCode,
-        staffCode,
-        convictionNumber,
-        pduCode
-      )
-    }
-  )
-
-  post(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/decision-evidencing',
-    async (req, res) => {
-      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      await allocationsController.submitDecisionEvidencing(
-        req,
-        res,
-        crn,
-        staffTeamCode,
-        staffCode,
-        convictionNumber,
-        pduCode,
-        req.body
       )
     }
   )

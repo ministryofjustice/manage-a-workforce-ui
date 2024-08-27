@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import type { ConfirmInstructionForm, DecisionEvidenceForm } from 'forms'
+import type { ConfirmInstructionForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
 import Allocation from '../models/Allocation'
 import Sentence from './data/Sentence'
@@ -20,15 +20,13 @@ import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
-import AllocationStorageService from '../services/allocationStorageService'
 
 export default class AllocationsController {
   constructor(
     private readonly allocationsService: AllocationsService,
     private readonly workloadService: WorkloadService,
     private readonly userPreferenceService: UserPreferenceService,
-    private readonly probationEstateService: ProbationEstateService,
-    private readonly allocationStorageService: AllocationStorageService
+    private readonly probationEstateService: ProbationEstateService
   ) {}
 
   async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
@@ -226,73 +224,6 @@ export default class AllocationsController {
       pduCode,
       errors: req.flash('errors') || [],
     })
-  }
-
-  async getDecisionEvidencing(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, pduCode) {
-    const response: PersonOnProbationStaffDetails = await this.allocationsService.getDecisionEvidencing(
-      res.locals.user.token,
-      crn,
-      convictionNumber,
-      staffCode
-    )
-    const decisionEvidenceForm = await this.allocationStorageService.getDecisionEvidence(
-      res.locals.user.username,
-      crn,
-      staffTeamCode,
-      staffCode,
-      convictionNumber
-    )
-    res.render('pages/decision-evidence', {
-      title: `${response.name.combinedName} | Explain your decision | Manage a workforce`,
-      data: response,
-      name: response.name.combinedName,
-      crn,
-      tier: response.tier,
-      convictionNumber,
-      staffCode,
-      staffTeamCode,
-      pduCode,
-      errors: req.flash('errors') || [],
-      decisionEvidenceForm: decisionEvidenceForm || {},
-    })
-  }
-
-  async submitDecisionEvidencing(
-    req: Request,
-    res: Response,
-    crn,
-    staffTeamCode,
-    staffCode,
-    convictionNumber: string,
-    pduCode,
-    form
-  ) {
-    const decisionEvidenceForm = trimForm<DecisionEvidenceForm>(form)
-    const errors = validate(
-      decisionEvidenceForm,
-      { evidenceText: 'required|max:3500', isSensitive: 'required' },
-      {
-        'required.evidenceText': 'Enter the reasons for your allocation decision',
-        'max.evidenceText': 'Your explanation must be 3500 characters or fewer',
-        'required.isSensitive': "Select 'Yes' if this includes sensitive information",
-      }
-    )
-    await this.allocationStorageService.saveDecisionEvidence(
-      res.locals.user.username,
-      crn,
-      staffTeamCode,
-      staffCode,
-      convictionNumber,
-      decisionEvidenceForm
-    )
-    if (errors.length > 0) {
-      req.flash('errors', errors)
-      return this.getDecisionEvidencing(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
-    }
-    return res.redirect(
-      // eslint-disable-next-line security-node/detect-dangerous-redirects
-      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/instructions`
-    )
   }
 
   async getConfirmInstructions(

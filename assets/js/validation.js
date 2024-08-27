@@ -175,18 +175,6 @@ window.addEventListener('load', () => {
         'required.instructions': 'Enter allocation notes',
       },
     ],
-    'decision-evidence': [
-      {
-        evidenceText: 'nourl|required|max:3500',
-        isSensitive: 'required',
-      },
-      {
-        nourl: 'You cannot include links in the allocation notes',
-        'required.evidenceText': 'Enter the reasons for your allocation decision',
-        'max.evidenceText': 'Your explanation must be 3500 characters or fewer',
-        'required.isSensitive': "Select 'Yes' if this includes sensitive information",
-      },
-    ],
     'spo-oversight': [
       {
         instructions: 'nourl|required|max:3500',

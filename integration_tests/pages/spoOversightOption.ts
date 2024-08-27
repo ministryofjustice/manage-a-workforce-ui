@@ -6,7 +6,7 @@ export default class OversightOptionPage extends Page {
   }
 
   checkOnPage() {
-    cy.get('h2').contains('Save your notes as an oversight contact and allocate case to')
+    cy.get('h2').contains('Save your notes as an oversight contact and allocate the case to')
   }
 
   continueButton = (convictionNumber): PageElement => cy.get(`#${convictionNumber}`)

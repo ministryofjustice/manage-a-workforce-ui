@@ -2,9 +2,20 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% set notification %}
+<p class="govuk-notification-banner__heading">
+  <h3 class="govuk-notification-banner__heading">
+    Changes to case allocation notes
+  </h3>
+  <p class="govuk-body">Your allocation notes will now be saved as an SPO Oversight contact in NDelius. <a class="govuk-notification-banner__link" href="/whats-new">Read more about changes to allocation notes</a>.</p>
+</p>
+{% endset %}
+
 {% set tableRows = [] %}
 {% for team in teams %}
-    {{ tableRows.push(
+  {{ tableRows.push(
       [
       {
         text: team.teamName
@@ -21,23 +32,31 @@
 
 {% block content %}
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        <span class="govuk-caption-xl">{{ regionName }}</span>
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ pduName }}</h1>
-        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-    </div>    
-</div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukNotificationBanner({
+          html: notification
+      }) }}
+    </div>
+  </div>
 
-<div class="govuk-warning-text">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <span class="govuk-caption-xl">{{ regionName }}</span>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ pduName }}</h1>
+      <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    </div>
+  </div>
+
+  <div class="govuk-warning-text">
     <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
     <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
+      <span class="govuk-warning-text__assistive">Warning</span>
         If you have empty teams, you can <a class="govuk-link--no-visited-state" href="/pdu/{{pduCode}}/select-teams" data-qa-link="edit-teams">remove them by editing your teams list</a>.
     </strong>
-</div>
+  </div>
 
-{{ govukTable({
+  {{ govukTable({
   caption: "Your teams",
   captionClasses: "govuk-table__caption--l",
   firstCellIsHeader: true,
@@ -56,10 +75,9 @@
   }) 
 }}
 
-
-{{ govukButton({
-  text: "View unallocated cases",
-  href: '/pdu/' + pduCode + '/find-unallocated'
-}) }}
+  {{ govukButton({
+    text: "View unallocated cases",
+    href: '/pdu/' + pduCode + '/find-unallocated'
+  }) }}
 
 {% endblock %}

@@ -24,7 +24,7 @@ context('Technical Updates', () => {
 
   it('send us feedback visible on page', () => {
     const technicalUpdatesPage = Page.verifyOnPage(TechnicalUpdatesPage)
-    technicalUpdatesPage.sendFeedback().should('have.text', 'Send us feedback on the Allocations tool')
+    technicalUpdatesPage.sendFeedback().should('contain', 'Send us feedback on the Allocations tool')
   })
 
   it('technical updates banner not visible on page', () => {

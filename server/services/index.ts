@@ -7,7 +7,6 @@ import UserPreferenceService from './userPreferenceService'
 import config from '../config'
 import StaffLookupService from './staffLookupService'
 import TechnicalUpdatesService from './technicalUpdatesService'
-import AllocationStorageService from './allocationStorageService'
 
 export const services = () => {
   const { manageUsersClient } = dataAccess()
@@ -19,7 +18,6 @@ export const services = () => {
   const userPreferenceService = new UserPreferenceService(config.apis.userPreferenceService)
   const staffLookupService = new StaffLookupService(config.apis.staffLookupService)
   const technicalUpdatesService = new TechnicalUpdatesService()
-  const allocationStorageService = new AllocationStorageService()
   return {
     userService,
     allocationsService,
@@ -28,7 +26,6 @@ export const services = () => {
     userPreferenceService,
     staffLookupService,
     technicalUpdatesService,
-    allocationStorageService,
   }
 }
 

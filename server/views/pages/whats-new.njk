@@ -6,10 +6,20 @@
 
 {% for technicalUpdate in technicalUpdates%}
     {% set content %}
-        <h2 class="govuk-heading-s">New features and functionality</h2>
-        <ul class="govuk-list govuk-list--bullet">
-            {% for whatsNew in technicalUpdate.whatsNew %}
+    <h2 class="govuk-heading-s">New features and functionality</h2>
+    <ul class="govuk-list govuk-list--bullet">
+        {% for whatsNew in technicalUpdate.whatsNew %}
+
+            {% if whatsNew | isArray %}
+                <ul>
+                    {% for subWhatsNew in whatsNew %}
+                        <li>{{ subWhatsNew }}</li>
+                    {% endfor %}
+                </ul>
+                {%else%}
+
                 <li>{{ whatsNew }}</li>
+            {% endif %}
             {% endfor%}
             {% if technicalUpdate.heading === "25 October 2023" %}
                 <li>Terms and conditions: We updated <a class="govuk-link" href="{{ workloadMeasurementUrl }}/terms-and-conditions">the T&Cs page for the Workload Management Tool (WMT)</a>.</li>
@@ -31,78 +41,79 @@
             {% if technicalUpdate.heading === "19 July 2024" %}
                 <li>Probation estate changes: We've made some configuration changes to team names and probation structures within these regions
                 <ul>
-                    <li>North West</li>
-                    <li>London</li>
-                    <li>South Central</li>
-                    <li>South West</li>
-                    <li>East Midlands</li>
-                    <li>West Midlands</li>
-                    <li>Greater Manchester</li>
-                 </ul>
-                 </li>
-                 <li>Onboarding prep: In preparation for their onboarding into our service, we've configured two new regions:
+                        <li>North West</li>
+                        <li>London</li>
+                        <li>South Central</li>
+                        <li>South West</li>
+                        <li>East Midlands</li>
+                        <li>West Midlands</li>
+                        <li>Greater Manchester</li>
+                    </ul>
+                </li>
+                <li>Onboarding prep: In preparation for their onboarding into our service, we've configured two new regions:
                  <ul>
-                    <li>Kent, Surrey and Sussex</li>
-                    <li>Yorkshire & The Humber</li>
-                 </ul>
+                        <li>Kent, Surrey and Sussex</li>
+                        <li>Yorkshire & The Humber</li>
+                    </ul>
                  We've also configured the relevant unpaid work teams.</li>
             {% endif %}
-         </ul>
+        </ul>
         {% if technicalUpdate.technicalFixes %}
             <h2 class="govuk-heading-s">Technical fixes</h2>
             <ul class="govuk-list govuk-list--bullet">
                 {% for technicalFix in technicalUpdate.technicalFixes %}
                     <li>{{ technicalFix }}</li>
-                {% endfor%}
-            </ul>
-        {% endif %}
-    {% endset %}
-    {% set technicalUpdateItems = (technicalUpdateItems.push({
-         heading: {
-            text: technicalUpdate.heading
-         },
-         expanded: loop.first,
-         content:{
-            html: content
-            }
-        }), technicalUpdateItems) %}
-{% endfor %}
+                    {% endfor%}
+                </ul>
+            {% endif %}
+            {% endset %}
+            {% set technicalUpdateItems = (technicalUpdateItems.push({
+                heading: {
+                    text: technicalUpdate.heading
+                },
+                expanded: loop.first,
+                content: {
+                    html: content
+                }
+            }), technicalUpdateItems) %}
+        {% endfor %}
 
-{% block beforeContent %}
-    {% if referrer %}
-        {{ govukBackLink({
+        {% block beforeContent %}
+            {% if referrer %}
+                {{ govukBackLink({
             text: "Back",
             href: referrer
         })
         }}
-    {% endif %}
-{% endblock %}
+            {% endif %}
+        {% endblock %}
 
-{% block content %}
+        {% block content %}
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        <span class="govuk-caption-xl">Allocations</span>
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">What’s new</h1>
-    </div>
-</div>
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <p data-qa-link="send-feedback"><a class="govuk-link--no-visited-state" href="https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2JfL5_1h2G9Gi17tzGJyJ5hUMjI3UDgwVzgwS1JLV0hXNDFOTjc4Q1FCQi4u">Send us feedback on the Allocations tool</a></p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <span class="govuk-caption-xl">Allocations</span>
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">What’s new</h1>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <p data-qa-link="send-feedback">
+                        <a class="govuk-link--no-visited-state" href="https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2JfL5_1h2G9Gi17tzGJyJ5hUMjI3UDgwVzgwS1JLV0hXNDFOTjc4Q1FCQi4u">Send us feedback on the Allocations tool</a>
+                    </p>
 
-        {{ govukAccordion({
+                    {{ govukAccordion({
             id: "accordion-default",
             items: technicalUpdateItems
            })
         }}
+                </div>
+            </div>
 
-    </div>
-</div>
+        {% endblock %}
 
-{% endblock %}
-
-{% block javascripts %}
-     <script nonce="{{ cspNonce }}">
-        localStorage.setItem("technicalUpdateReadVersion", "{{ lastTechnicalUpdate }}")
-     </script>
-{% endblock %}
+        {% block javascripts %}
+            <script nonce="{{ cspNonce }}">
+                localStorage.setItem("technicalUpdateReadVersion", "{{ lastTechnicalUpdate }}")
+            </script>
+        {% endblock %}

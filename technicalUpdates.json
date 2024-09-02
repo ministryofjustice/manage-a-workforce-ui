@@ -1,5 +1,21 @@
 [
   {
+    "heading": "3 September 2024",
+    "whatsNew": [
+      "Changes to allocation notes:",
+      [
+        "We've consolidated 'Explain your decision' and 'Allocation notes' into a single box 'Allocation notes and SPO Oversight'. This will continue to be sent to the allocated practitioner and there will be an option to edit these notes before saving as an SPO Oversight contact.",
+        "We've added a warning message reminding users not to add links in the allocation notes."
+      ],
+      "User surveys: We've introduced an 'Is this page' useful survey on every page.",
+      "Team changes:",
+      [
+        "We've added SPO roles for Yorkshire & The Humber",
+        "We've added new teams for North West Region, South West Region, North East Region and South Central."
+      ]
+    ]
+  },
+  {
     "heading": "19 July 2024",
     "whatsNew": [
       "Registration data: We’ve added registration flag data to the registration tables on the risk page.",

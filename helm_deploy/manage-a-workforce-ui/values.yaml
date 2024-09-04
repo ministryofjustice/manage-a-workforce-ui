@@ -98,31 +98,31 @@ generic-service:
         nolog,\
         ctl:ruleRemoveTargetByTag=language-php;ARGS:instructions"
       SecRule REQUEST_URI "@endsWith /confirm-instructions" \
-        "id:1014,\
+        "id:1019,\
         phase:1,\
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:instructions"
       SecRule REQUEST_URI "@endsWith /confirm-instructions" \
-        "id:1015,\
+        "id:1020,\
         phase:1,\
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=platform-windows;ARGS:instructions"
       SecRule REQUEST_URI "@endsWith /confirm-instructions" \
-        "id:1016,\
+        "id:1021,\
         phase:1,\
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=attack-rce;ARGS:instructions"
       SecRule REQUEST_URI "@endsWith /confirm-instructions" \
-        "id:1017,\
+        "id:1022,\
         phase:2,\
         pass,\
         nolog,\
         ctl:ruleRemoveById=921110"
       SecRule REQUEST_URI "@endsWith /confirm-instructions" \
-        "id:1018,\
+        "id:1023,\
         phase:1,\
         pass,\
         nolog,\

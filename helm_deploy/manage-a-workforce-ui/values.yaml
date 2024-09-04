@@ -61,43 +61,42 @@ generic-service:
         nolog,\
         ctl:ruleRemoveById=921110"
       SecRuleUpdateTargetById 942440 "!ARGS:_csrf"
-      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
-        "id:1008,\
-        phase:1,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:evidenceText"
-      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
-        "id:1009,\
-        phase:1,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveTargetByTag=language-php;ARGS:evidenceText"
       SecRule REQUEST_URI "@endsWith /confirm-allocation" \
         "id:1010,\
         phase:1,\
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=language-php;ARGS:instructions"
-      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
-        "id:1011,\
+      SecRule REQUEST_URI "@endsWith /choose-practitioner" \
+        "id:1014,\
         phase:1,\
         pass,\
         nolog,\
-        ctl:ruleRemoveTargetByTag=platform-windows;ARGS:evidenceText"
-      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
-        "id:1012,\
+        ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:instructions"
+      SecRule REQUEST_URI "@endsWith /choose-practitioner" \
+        "id:1015,\
         phase:1,\
         pass,\
         nolog,\
-        ctl:ruleRemoveTargetByTag=attack-rce;ARGS:evidenceText"
-      SecRule REQUEST_URI "@endsWith /decision-evidencing" \
-        "id:1013,\
+        ctl:ruleRemoveTargetByTag=platform-windows;ARGS:instructions"
+      SecRule REQUEST_URI "@endsWith /choose-practitioner" \
+        "id:1016,\
         phase:1,\
         pass,\
         nolog,\
-        ctl:ruleRemoveTargetByTag=attack-rfi;ARGS:evidenceText"
-
+        ctl:ruleRemoveTargetByTag=attack-rce;ARGS:instructions"
+      SecRule REQUEST_URI "@endsWith /choose-practitioner" \
+        "id:1017,\
+        phase:2,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveById=921110"
+      SecRule REQUEST_URI "@endsWith /choose-practitioner" \
+        "id:1018,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=language-php;ARGS:instructions"
   livenessProbe:
     httpGet:
       path: /ping
@@ -108,10 +107,10 @@ generic-service:
 
   # Environment variables to load into the deployment
   env:
-    NODE_ENV: "production"
-    REDIS_TLS_ENABLED: "true"
-    TOKEN_VERIFICATION_ENABLED: "true"
-    SHOW_NOTIFICATION: "false"
+    NODE_ENV: 'production'
+    REDIS_TLS_ENABLED: 'true'
+    TOKEN_VERIFICATION_ENABLED: 'true'
+    SHOW_NOTIFICATION: 'false'
 
   # Pre-existing kubernetes secrets to load as environment variables in the deployment.
   # namespace_secrets:
@@ -120,14 +119,14 @@ generic-service:
 
   namespace_secrets:
     manage-a-workforce-ui:
-      APPINSIGHTS_INSTRUMENTATIONKEY: "APPINSIGHTS_INSTRUMENTATIONKEY"
-      API_CLIENT_ID: "AUTH_API_CLIENT_ID"
-      API_CLIENT_SECRET: "AUTH_API_CLIENT_SECRET"
-      SESSION_SECRET: "SESSION_SECRET"
-      GOOGLE_ANALYTICS_KEY: "GOOGLE_ANALYTICS_KEY"
+      APPINSIGHTS_INSTRUMENTATIONKEY: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+      API_CLIENT_ID: 'AUTH_API_CLIENT_ID'
+      API_CLIENT_SECRET: 'AUTH_API_CLIENT_SECRET'
+      SESSION_SECRET: 'SESSION_SECRET'
+      GOOGLE_ANALYTICS_KEY: 'GOOGLE_ANALYTICS_KEY'
     elasticache-redis:
-      REDIS_HOST: "primary_endpoint_address"
-      REDIS_AUTH_TOKEN: "auth_token"
+      REDIS_HOST: 'primary_endpoint_address'
+      REDIS_AUTH_TOKEN: 'auth_token'
 
   allowlist:
     groups:

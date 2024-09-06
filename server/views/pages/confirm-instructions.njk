@@ -44,10 +44,6 @@
             {
                 text: "Allocate to practitioner",
                 href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/allocate/" + staffTeamCode + '/' + staffCode + "/allocate-to-practitioner"
-            },
-            {
-                text: "Explain your decision",
-                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/allocate/" + staffTeamCode + '/' + staffCode + "/decision-evidencing"
             }
         ]
     }) }}
@@ -66,26 +62,39 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <form data-validate-form="confirm-allocation" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="POST">
+      <form data-validate-form="confirm-allocation" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-instructions' }}" method="post">
         <div class="govuk-form-group">
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
           {{
             instructions({
-                titleText: "Review allocation instructions",
-                html: ('<p>We\'ll send a copy of these notes to you and <br><strong>' + data.staff.name.combinedName + '</strong> (<em>' + data.staff.email + '</em>).</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
-                hintText: "Review your notes for the probation practitioner.",
+                titleText: "Review your allocation notes",
+                html: ('<p><br>These notes will be sent in the allocation email to <strong>' + data.staff.name.combinedName + '</strong> (<em>' + data.staff.email + '</em>).</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
                 convictionNumber: convictionNumber,
+                hintText: ' ',
                 crn: crn,
                 inGridRow: false,
                 rows: 20,
                 errorMessage: errors | findError('instructions')
             })
             }}
-            <p id='copyText'>You can send a copy of these notes to another person, for example a case admin officer.</p>
         </div>
         <div class="govuk-form-group">
-        {% if confirmInstructionForm.person.length === 0 %}
-        {% call govukFieldset({
+          {% if confirmInstructionForm.person.length === 0 %}
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h3 class="govuk-fieldset__heading">Does this contain sensitive information?</h3>
+            </legend>
+            <p class="govuk-hint">This is information that would cause harm or undermine the investigation of a crime if it were disclosed to a person on probation. For example, a victim's personal details.</p>
+            {{ govukCheckboxes({
+            name: 'isSensitive',
+            items: [{
+                text: 'Yes, it contains sensitive information',
+                value: 'yes',
+                checked: confirmInstructionForm.isSensitive
+                }],
+            classes: 'govuk-checkboxes--medium margin-bottom-10'
+        })}}
+
+            {% call govukFieldset({
           classes: 'moj-add-another__item',
               legend: {
                 text: 'Add another recipient',
@@ -118,10 +127,10 @@
             }) }}
 
             {% endcall %}
-            {% endif %}
-            {% for person in confirmInstructionForm.person %}
+          {% endif %}
+          {% for person in confirmInstructionForm.person %}
 
-              {% call govukFieldset({
+            {% call govukFieldset({
                 classes: 'moj-add-another__item',
                 legend: {
                   text: 'Add another recipient',
@@ -130,18 +139,18 @@
                 }
               }) %}
 
-                {% if confirmInstructionForm.person.length > 1 %}
-                {{ govukButton({
+            {% if confirmInstructionForm.person.length > 1 %}
+              {{ govukButton({
                     text: 'Remove',
                     type: 'submit',
                     name: 'remove',
                     value: loop.index0,
                     classes: 'govuk-button govuk-button--secondary  moj-add-another__remove-button'
                   }) }}
-                {% endif %}
-                
-                <noscript>
-                  {{ govukInput({
+            {% endif %}
+
+            <noscript>
+              {{ govukInput({
                   id: 'person[' +loop.index0 +'][email]',
                   name: 'person[' +loop.index0 +'][email]',
                   label: {
@@ -154,9 +163,9 @@
                   value: person.email,
                   errorMessage: errors | findError('person[' +loop.index0 +'][email]')
                 }) }}
-                </noscript>
+            </noscript>
 
-                {{ govukSelect({
+            {{ govukSelect({
                   id: 'person[' +loop.index0 +'][email]',
                   name: 'person[' +loop.index0 +'][emailPlaceholder]',
                   classes: 'hidden',
@@ -172,25 +181,24 @@
                   errorMessage: errors | findError('person[' +loop.index0 +'][email]')
                 }) }}
 
-              {% endcall %}
+            {% endcall %}
 
-            {% endfor %}
+          {% endfor %}
 
-            <div class="moj-button-action">
-                  {{ govukButton({
+          <div class="moj-button-action">
+            {{ govukButton({
                     text: 'Add another person',
                     type: 'submit',
                     name: 'action',
                     value: 'add-another-person',
                     classes: 'govuk-button--secondary govuk-!-margin-bottom-4 govuk-!-margin-top-3'
                   }) }}
-            </div>
+          </div>
 
-
-            <div class="govuk-button-group">
-                {{
+          <div class="govuk-button-group">
+            {{
                     govukButton({
-                        text: 'Allocate case',
+                        text: 'Continue',
                         classes: 'allocate',
                         type: 'submit',
                         name: 'action',
@@ -202,20 +210,19 @@
                         }
                     })
                 }}
-                <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Cancel</a>
-          
-        </div>
-      </form>
+            <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Cancel</a>
+
+          </div>
+        </form>
+      </div>
     </div>
-  </div>    
-</div>
+  </div>
 
 {% endblock %}
 
-
 {% block javascripts %}
-    <script src="/assets/accessible-autocomplete.min.js"></script>
-    <script id="autocomplete-script" src="/assets/js/autocomplete-email.js" {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}></script>
-    <script src="/assets/validator.js"></script>
-    <script src="/assets/validation.js"></script>
+  <script src="/assets/accessible-autocomplete.min.js"></script>
+  <script id="autocomplete-script" src="/assets/js/autocomplete-email.js" {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}></script>
+  <script src="/assets/validator.js"></script>
+  <script src="/assets/validation.js"></script>
 {% endblock %}

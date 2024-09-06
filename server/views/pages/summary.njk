@@ -3,6 +3,7 @@
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
 {% from "../components/risk-summary/macro.njk" import riskSummaryBadge %}
+{% from "../components/instructions/macro.njk" import instructions %}
 {% set documentTabHref = '/pdu/' + pduCode+ '/' + crn + '/convictions/' + convictionNumber + '/documents' %}
 {% set offenceData = data.offences %}
 {%- set offences = [] -%}

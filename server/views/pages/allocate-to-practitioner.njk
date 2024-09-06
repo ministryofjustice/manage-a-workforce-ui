@@ -1,9 +1,10 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "../components/pop/macro.njk" import pop %}
+{% from "../components/instructions/macro.njk" import instructions %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
-
-{% set offenderManagerDetails = data.staff.name.combinedName + (' (' + data.staff.grade + ')' if data.staff.grade)  %}
+{% set offenderManagerDetails = data.staff.name.combinedName + (' (' + data.staff.grade + ')' if data.staff.grade) %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -29,22 +30,54 @@
 {% endblock %}
 
 {% block content %}
-
-    {{ pop({name: name, crn: crn, tier: tier}) }}
-
-    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-
-    <h2 class="govuk-heading-l">You're allocating this case to probation practitioner {{ offenderManagerDetails }}</h2>
-    {% if data.capacity == data.potentialCapacity %}
-        <p id="impact-statement">Their workload will remain at <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> as they are already managing this case.</p>
-    {% else %}
-        <p id="impact-statement">This will increase their workload from <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> to <span class="{{ 'percentage-extra-over' if data.potentialCapacity > 100 }}">{{ data.potentialCapacity | round(1) }}%</span>.</p>
-    {% endif %}
-    <div class="govuk-form-group govuk-!-margin-top-9">
-        <div class="govuk-button-group">
-          <a class="govuk-button" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode +  '/' + staffCode +  '/decision-evidencing' }}">Continue</a>
-          <a class="govuk-link govuk-link--no-visited-state" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Choose a different probation practitioner</a>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-10">
+        You're allocating {{name}} ({{tier}}) to {{ offenderManagerDetails }}</h1>
+            {% if data.capacity == data.potentialCapacity %}
+                <p class="govuk-body-l !-margin-bottom-2" id="impact-statement">Their workload will remain at <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> as they are already managing this case.</p>
+            {% else %}
+                <p class="govuk-body-l !-margin-bottom-2" id="impact-statement">This will increase their workload from <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> to <span class="{{ 'percentage-extra-over' if data.potentialCapacity > 100 }}">{{ data.potentialCapacity | round(1) }}%</span>.</p>
+            {% endif %}
         </div>
-      </div>
+    </div>
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-9">
+            <h3 id="cleared" class="govuk-heading-m">Having considered the tier and complexity of the case, does this practitioner have the capabilities to manage it? If so, select ‘Continue’</h3>
+            <p class="-margin-bottom-10 capacity-notes-screen">If not, select ‘Choose a different probation practitioner’.</p>
+        </div>
+    </div>
+    <form data-validate-form="case-view">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        {{ instructions({
+            inGridRow: true,
+            convictionNumber: convictionNumber,
+            crn: crn,
+            errorMessage: errors | findError('instructions'),
+            rows: 10
+        })
+    }}
+        <div class="govuk-form-group govuk-!-margin-top-7">
+            <div class="govuk-button-group">
+                {{ govukButton({
+                text: "Continue",
+                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/allocate/" + staffTeamCode +  "/" + staffCode +  "/allocation-notes",
+                classes: "allocate",
+                id: convictionNumber,
+                disabled: outOfAreaTransfer,
+                attributes: {
+                    'data-form-submit': undefined
+                    }
+                })
+            }}
+                <a class="govuk-link govuk-link--no-visited-state" href={{"/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner"}}>Choose a different probation practitioner</a>
+            </div>
+        </div>
+    </form>
 {% endblock %}
 
+{% block javascripts %}
+    <script src="/assets/validator.js"></script>
+    <script src="/assets/validation.js"></script>
+{% endblock %}

@@ -7,7 +7,7 @@ context('Instructions Confirmation', () => {
     cy.task('stubSetup')
     cy.task('stubGetConfirmInstructions')
     cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
     instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
   })
 
@@ -27,16 +27,16 @@ context('Instructions Confirmation', () => {
       .and('contain', 'Case details')
       .and('contain', 'Choose practitioner')
       .and('contain', 'Allocate to practitioner')
-      .and('contain', 'Explain your decision')
   })
 
   it('Allocate Case button visible on page', () => {
-    instructionsPage.continueButton('1').should('exist').and('have.text', '\n  Allocate case\n')
+    instructionsPage.continueButton('1').should('exist').and('contain', 'continue')
   })
 
   it('Continue button goes to next page', () => {
+    instructionsPage.instructionsTextArea().type('some text')
     instructionsPage.continueButton('1').click()
-    cy.url().should('include', '/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/confirm-allocation')
+    cy.url().should('include', '/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/spo-oversight-contact')
   })
 
   it('Cancel link visible on page', () => {
@@ -45,18 +45,9 @@ context('Instructions Confirmation', () => {
 
   it('Instructions textArea should be visible on page', () => {
     instructionsPage.instructionsTextArea().should('exist').and('have.attr', 'rows', '20')
-    instructionsPage.subHeading().should('contain', 'Review allocation instructions')
-    instructionsPage
-      .label()
-      .should('contain', "We'll send a copy of these notes to you and John Doe (john.doe@test.justice.gov.uk).")
-    instructionsPage.hint().should('contain', 'Review your notes for the probation practitioner.')
+    instructionsPage.subHeading().should('contain', 'Review your allocation notes')
+    // instructionsPage.hint().should('contain', 'These notes will be sent in the allocation email')
     instructionsPage.checkboxText().should('contain', 'Tick the box if you do not want to receive a copy.')
-  })
-
-  it('another copy text should be visible on page', () => {
-    instructionsPage
-      .copyText()
-      .should('contain', 'You can send a copy of these notes to another person, for example a case admin officer.')
   })
 
   it('add another recipient should be visible on page', () => {
@@ -65,6 +56,7 @@ context('Instructions Confirmation', () => {
 
   it('adding another person adds more email address inputs', () => {
     instructionsPage.inputTexts().should('have.length', 1)
+    instructionsPage.inputTexts().first().type('john.doe@justice.gov.uk')
     instructionsPage.addAnotherPersonButton().click()
     instructionsPage.inputTexts().should('have.length', 2)
   })

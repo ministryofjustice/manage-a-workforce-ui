@@ -4,8 +4,6 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
-
-
 {% set radioItems = [] %}
 {% for item in data %}
     {{ radioItems.push({
@@ -16,7 +14,7 @@
 
 {% block content %}
 
-{% if error %}
+    {% if error %}
         {{ govukErrorSummary({
             titleText: "There is a problem",
             errorList: [
@@ -28,18 +26,18 @@
         }) }}
     {% endif %}
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        <span class="govuk-caption-xl">Allocations</span>
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Select your teams</h1>
-        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-    </div>    
-</div>
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <form method="post">
-            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        {{ govukRadios({
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <span class="govuk-caption-xl">Allocations</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Select your teams</h1>
+            <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="post">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                {{ govukRadios({
             name: "region",
             fieldset: {
                 legend: {
@@ -52,11 +50,11 @@
             items: radioItems
         })}}
 
-        {{ govukButton({
+                {{ govukButton({
             text: "Continue"
         }) }}
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
 {% endblock %}

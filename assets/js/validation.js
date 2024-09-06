@@ -122,7 +122,7 @@ function test(form, rules, messages, scrollToGroup) {
       const error = document.createElement('p')
       error.classList.add('govuk-error-message')
       error.innerHTML = `<span class="govuk-visually-hidden">Error: </span> ${message}`
-      label ? label.insertAdjacentElement('afterend', error) : element.insertAdjacentElement('beforebegin', error)
+      label ? label.insertAdjacentElement('afterend', error) : group.insertAdjacentElement('afterbegin', error)
 
       if (index === 0 && scrollToGroup) {
         const { top } = group.getBoundingClientRect()
@@ -170,24 +170,33 @@ window.addEventListener('load', () => {
     ],
     'confirm-allocation': [
       {
-        instructions: 'nourl',
+        instructions: 'nourl|required',
         'person.*.email': 'email',
       },
       {
         email: 'Enter an email address in the correct format, like name@example.com',
         nourl: 'You cannot include links in the allocation notes',
+        'required.instructions': 'Enter allocation notes',
       },
     ],
-    'decision-evidence': [
+    'spo-oversight': [
       {
-        evidenceText: 'nourl|required|max:3500',
-        isSensitive: 'required',
+        instructions: 'nourl|required|max:3500',
       },
       {
+        nourl: 'You cannot include links in the spo oversight contact',
+        'required.instructions': 'Enter the reasons for your allocation decision',
+        'max.instructions': 'Your explanation must be 3500 characters or fewer',
+      },
+    ],
+    'choose-practitioner': [
+      {
+        instructions: 'nourl',
+        allocatedOfficer: 'required',
+      },
+      {
+        required: 'Select a probation practitioner',
         nourl: 'You cannot include links in the allocation notes',
-        'required.evidenceText': 'Enter the reasons for your allocation decision',
-        'max.evidenceText': 'Your explanation must be 3500 characters or fewer',
-        'required.isSensitive': "Select 'Yes' if this includes sensitive information",
       },
     ],
   }

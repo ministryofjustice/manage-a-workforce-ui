@@ -1,0 +1,112 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/label/macro.njk" import govukLabel %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "../components/instructions/macro.njk" import instructions %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "../components/instructions/macro.njk" import instructions %}
+{% from "../components/pop/macro.njk" import pop %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home",
+                href: "/pdu/" + pduCode + "/teams"
+            },
+            {
+                text: "Unallocated cases",
+                href: "/pdu/" + pduCode + "/find-unallocated"
+            },
+            {
+                text: "Case details",
+                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/case-view"
+            },
+            {
+                text: "Choose practitioner",
+                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner"
+            },
+            {
+                text: "Allocate to practitioner",
+                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/allocate/" + staffTeamCode + '/' + staffCode + "/allocate-to-practitioner"
+            }
+        ]
+    }) }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg' }) }}
+
+        </div>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+    <div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <div class="govuk-panel govuk-panel--confirmation interrupt">
+                <h2 id="cleared" class="govuk-heading-l">Save your notes as an oversight contact and allocate the case to {{ data.staff.name.combinedName }} ({{ data.staff.grade }})</h2>
+                <p class="govuk-body-l">Your allocation notes will be saved as an SPO Oversight contact in NDelius, do you want to edit them first? You can add information that will not be sent in the email.
+        </p>
+                <p class="govuk-body-l">Once the notes are saved, the case will be allocated and the email sent to the practitioner.
+        </p>
+
+                <form data-validate-form="edit-notes" method="post">
+                    <div class="govuk-form-group govuk-!-margin-top-2">
+
+                        <div class="govuk-button-group">
+                            {{ govukButton({
+                                text: 'Edit my notes before allocating the case',
+                                type: 'submit',
+                                name: 'action',
+                                value: 'edit',
+                                preventDoubleClick: true,
+                                attributes: {
+                                    'data-form-submit': undefined
+                                }
+                            }) }}
+                        </div>
+
+                    </div>
+                    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+                </form>
+
+                <form data-validate-form="edit-notes" method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation' }}" method="post">
+                    <div class="govuk-form-group govuk-!-margin-top-2">
+
+                        <div class="govuk-button-group">
+                            {{ govukButton({
+                                text: 'Save my notes without editing, and allocate the case',
+                                type: 'submit',
+                                name: 'action',
+                                value: 'save',
+                                preventDoubleClick: true,
+                                attributes: {
+                                    'data-form-submit': undefined
+                                }
+                            }) }}
+                        </div>
+
+                    </div>
+                    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                </form>
+
+                <p class="govuk-body">
+                    <a class="govuk-lin interrupt" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/allocation-notes'  }}">Go back to review allocation notes</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

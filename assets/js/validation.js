@@ -88,6 +88,10 @@ function buildErrorSummary(errors, form) {
 }
 
 function test(form, rules, messages, scrollToGroup) {
+  form.querySelectorAll('input, textarea').forEach(element => {
+    element.value = element.value.replace(/[^\x00-\x7F]/g, '')
+  })
+
   const validator = new Validator(serializeForm(form), rules, messages)
 
   form.querySelectorAll('.govuk-error-message').forEach(error => {

@@ -33,6 +33,12 @@ context('Instructions Confirmation', () => {
     instructionsPage.continueButton('1').should('exist').and('contain', 'continue')
   })
 
+  it('Continue button goes to next page', () => {
+    instructionsPage.instructionsTextArea().type('some text')
+    instructionsPage.continueButton('1').click()
+    cy.url().should('include', '/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/spo-oversight-contact')
+  })
+
   it('Cancel link visible on page', () => {
     instructionsPage.cancelLink('J678910', '1', 'PDU1').should('exist').and('have.text', 'Cancel')
   })

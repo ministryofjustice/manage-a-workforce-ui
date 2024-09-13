@@ -1,0 +1,27 @@
+.govuk-email-list {
+  > .govuk-email-list-item {
+    padding-bottom: govuk-spacing(3);
+    margin-bottom: govuk-spacing(3);
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $govuk-secondary-text-colour;
+    }
+  }
+}
+
+.govuk-email-list-item {
+  display: flex;
+  gap: 15px;
+  align-items: end;
+
+  > div:first-child {
+    flex: 1 0 auto;
+  }
+}
+
+.govuk-allocations-emails-form {
+  input:read-only {
+    background-color: govuk-colour('light-grey');
+    cursor: not-allowed;
+  }
+}

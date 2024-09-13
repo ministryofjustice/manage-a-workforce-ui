@@ -23,7 +23,7 @@ export default class InstructionsConfirmPage extends Page {
 
   lastInputText = (): PageElement => cy.get('input').last()
 
-  removeButton = (index): PageElement => cy.get(`button[value*="${index}"]`)
+  removeButton = (): PageElement => cy.get(`.govuk-email-list button`)
 
   inputTexts = (): PageElement => cy.get('input.autocomplete__input')
 
@@ -38,9 +38,7 @@ export default class InstructionsConfirmPage extends Page {
 
   emailInput = (index): PageElement => cy.get(`input[id="person\\[${index}\\]\\[email\\]"]`)
 
-  autoCompleteOption = (emailInputIndex, optionIndex): PageElement =>
-    cy.get(`#person\\[${emailInputIndex}\\]\\[email\\]__option--${optionIndex}`)
+  autoCompleteOption = (emailInputIndex, optionIndex): PageElement => cy.get(`#person__option--${optionIndex}`)
 
-  firstAutoCompleteOption = (emailInputIndex): PageElement =>
-    cy.get(`ul[id="person\\[${emailInputIndex}\\]\\[email\\]__listbox"]:first`)
+  firstAutoCompleteOption = (emailInputIndex): PageElement => cy.get(`ul[id="person__listbox"]:first`)
 }

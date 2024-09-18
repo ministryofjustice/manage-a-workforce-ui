@@ -4,7 +4,7 @@
     margin-bottom: govuk-spacing(3);
 
     &:not(:last-child) {
-      border-bottom: 1px solid $govuk-secondary-text-colour;
+      border-bottom: 1px solid $govuk-border-colour;
     }
   }
 }

@@ -25,10 +25,7 @@ function removeNoScriptElements() {
 window.addEventListener('load', function () {
   removeNoScriptElements()
 
-  document.getElementById('add-another-person').style.display = 'none'
-  document.getElementById('remove-email-placeholder').style.display = 'none'
-
-  var emailInputs = document.getElementsByClassName('govuk-autocomplete')
+  var emailInputs = document.getElementsByClassName('govuk-select')
   for (var i = 0; i < emailInputs.length; i++) {
     var emailInput = emailInputs.item(i)
     accessibleAutocomplete.enhanceSelectElement({
@@ -73,29 +70,6 @@ window.addEventListener('load', function () {
         }
         request.send()
       }, 100),
-      onConfirm: function () {
-        this.element.querySelectorAll('input').forEach(input => {
-          input.readOnly = true
-          input.name = `person[${document.querySelector('.govuk-email-list').children.length}][email]`
-
-          document.getElementById('add-another-person').style.display = 'block'
-          document.getElementById('remove-email-placeholder').style.display = 'block'
-
-          const removeButtons = [...document.getElementById('remove-email-placeholder').getElementsByTagName('button')]
-
-          removeButtons.forEach(
-            button =>
-              (button.onclick = () => {
-                input.readOnly = false
-                input.name = ``
-                input.value = ''
-
-                document.getElementById('add-another-person').style.display = 'none'
-                document.getElementById('remove-email-placeholder').style.display = 'none'
-              })
-          )
-        })
-      },
     })
   }
   if (document.getElementById('autocomplete-script').dataset.scrollToBottom) {

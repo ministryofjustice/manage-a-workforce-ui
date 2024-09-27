@@ -376,6 +376,7 @@ export default class AllocationsController {
           `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/spo-oversight-contact-option`
         )
       case 'add-another-person':
+        confirmInstructionForm.person.push({ email: '' })
         req.session.confirmInstructionForm = confirmInstructionForm
         return res.redirect(
           // eslint-disable-next-line security-node/detect-dangerous-redirects
@@ -540,7 +541,7 @@ export default class AllocationsController {
 }
 
 function filterEmptyEmails(form: ConfirmInstructionForm): ConfirmInstructionForm {
-  return { ...form, person: form.person?.filter(person => person.email) }
+  return { ...form, person: form.person.filter(person => person.email) }
 }
 
 function toArrayNotation(href: string) {

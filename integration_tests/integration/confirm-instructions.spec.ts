@@ -55,10 +55,14 @@ context('Instructions Confirmation', () => {
   })
 
   it('adding another person adds more email address inputs', () => {
+    cy.task('stubSearchStaff')
+
     instructionsPage.inputTexts().should('have.length', 1)
-    instructionsPage.inputTexts().first().type('john.doe@justice.gov.uk')
+    instructionsPage.inputTexts().first().type('john.doe')
+    instructionsPage.emailAutocompleteItem().click()
+    instructionsPage.addAnotherPersonButton().should('have.length', 1)
     instructionsPage.addAnotherPersonButton().click()
-    instructionsPage.inputTexts().should('have.length', 2)
+    instructionsPage.hiddenInputTexts().should('have.length', 1)
   })
 
   it('entering link in allocation notes errors', () => {

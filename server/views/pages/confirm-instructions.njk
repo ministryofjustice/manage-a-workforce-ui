@@ -78,7 +78,7 @@
             })
             }}
         </div>
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-allocations-emails-form">
           {% if confirmInstructionForm.person.length === 0 %}
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
               <h3 class="govuk-fieldset__heading">Does this contain sensitive information?</h3>
@@ -94,96 +94,52 @@
             classes: 'govuk-checkboxes--medium margin-bottom-10'
         })}}
 
-            {% call govukFieldset({
-          classes: 'moj-add-another__item',
-              legend: {
-                text: 'Add another recipient',
-                classes: 'moj-add-another__title govuk-fieldset__legend--m',
-                isPageHeading: false
-              }
-            }) %}
-            <noscript>
-              {{ govukInput({
-              id: 'person[0][email]',
-              name: 'person[0][email]',
-              label: {
-                text: 'Email address',
-                classes: 'govuk-!-font-weight-bold'
-              },
-              type: "email",
-              autocomplete: "email",
-              spellcheck: false
-            }) }}
-            </noscript>
-            {{ govukSelect({
-              id: 'person[0][email]',
-              name: 'person[0][emailPlaceholder]',
-              items: [],
-              classes: 'hidden',
-              label: {
-                text: 'Email address',
-                classes: 'govuk-!-font-weight-bold'
-              }
-            }) }}
-
-            {% endcall %}
+          {% else %}
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h3 class="govuk-fieldset__heading">Additional recipients</h3>
+            </legend>
           {% endif %}
-          {% for person in confirmInstructionForm.person %}
+          <div class="govuk-email-list">
+            {% for person in confirmInstructionForm.person %}
 
-            {% call govukFieldset({
-                classes: 'moj-add-another__item',
-                legend: {
-                  text: 'Add another recipient',
-                  classes: 'moj-add-another__title govuk-fieldset__legend--m',
-                  isPageHeading: false
-                }
-              }) %}
-
-            {% if confirmInstructionForm.person.length > 1 %}
-              {{ govukButton({
+              <div class="govuk-email-list-item">
+                <div>
+                  {{ govukInput({
+                      id: 'person[' +loop.index0 +'][email]',
+                      name: 'person[' +loop.index0 +'][email]',
+                      value: person.email,
+                      type: 'hidden',
+                      label: {
+                        text: person.email,
+                        classes: 'govuk-!-font-weight-bold govuk-recipient__label'
+                      },
+                      attributes: {
+                        readonly: true
+                      },
+                      errorMessage: errors | findError('person[' +loop.index0 +'][email]')
+                    }) }}
+                </div>
+                <div>
+                  {{ govukButton({
                     text: 'Remove',
                     type: 'submit',
                     name: 'remove',
                     value: loop.index0,
-                    classes: 'govuk-button govuk-button--secondary  moj-add-another__remove-button'
+                    classes: 'govuk-button govuk-button--secondary govuk-!-margin-0'
                   }) }}
-            {% endif %}
+                </div>
+              </div>
 
-            <noscript>
-              {{ govukInput({
-                  id: 'person[' +loop.index0 +'][email]',
-                  name: 'person[' +loop.index0 +'][email]',
-                  label: {
-                    text: 'Email address',
-                    classes: 'govuk-!-font-weight-bold'
-                  },
-                  type: "email",
-                  autocomplete: "email",
-                  spellcheck: false,
-                  value: person.email,
-                  errorMessage: errors | findError('person[' +loop.index0 +'][email]')
-                }) }}
-            </noscript>
+            {% endfor %}
+          </div>
 
-            {{ govukSelect({
-                  id: 'person[' +loop.index0 +'][email]',
-                  name: 'person[' +loop.index0 +'][emailPlaceholder]',
-                  classes: 'hidden',
-                  label: {
-                    text: 'Email address',
-                    classes: 'govuk-!-font-weight-bold'
-                  },
-                  items: [ {
-                    value: person.email,
-                    text: person.email,
-                    selected: true
-                  }],
-                  errorMessage: errors | findError('person[' +loop.index0 +'][email]')
-                }) }}
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h3 class="govuk-fieldset__heading moj-add-another__title">Add another recipient</h3>
+          </legend>
 
-            <div class="govuk-email-list-item">
-              <div>
-                {{ govukSelect({
+          <div class="govuk-email-list-item">
+            <div>
+              {{ govukSelect({
                     id: 'person',
                     name: 'person_placeholder',
                     items: [],
@@ -194,31 +150,29 @@
                       classes: 'govuk-!-font-weight-bold'
                     }
                   }) }}
-              </div>
-              <div id="remove-email-placeholder">
-                {{ govukButton({
+            </div>
+            <div id="remove-email-placeholder">
+              {{ govukButton({
                     text: 'Remove',
                     type: 'button',
                     name: 'remove',
                     value: loop.index0,
                     classes: 'govuk-button govuk-button--secondary govuk-!-margin-0'
                   }) }}
-              </div>
             </div>
+          </div>
 
-          {% endfor %}
-
-          <div class="moj-button-action">
+          <div id="add-another-person" class="moj-button-action">
             {{ govukButton({
                     text: 'Add another person',
                     type: 'submit',
                     name: 'action',
                     value: 'add-another-person',
-                    classes: 'govuk-button--secondary govuk-!-margin-bottom-4 govuk-!-margin-top-3'
+                    classes: 'govuk-button--secondary  govuk-!-margin-top-3'
                   }) }}
           </div>
 
-          <div class="govuk-button-group">
+          <div class="govuk-button-group govuk-!-margin-top-4">
             {{
                     govukButton({
                         text: 'Continue',

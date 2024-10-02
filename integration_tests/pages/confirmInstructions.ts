@@ -15,15 +15,19 @@ export default class InstructionsConfirmPage extends Page {
 
   addRecipientHeader = (): PageElement => cy.get('.moj-add-another__title')
 
+  emailAutocompleteItem = (): PageElement => cy.get('#person__listbox #person__option--0')
+
   addAnotherPersonButton = (): PageElement => cy.get('button[value*="add-another-person"]')
 
   lastAddAnotherPersonButton = (): PageElement => cy.get('button[value*="add-another-person"]').last()
 
   lastInputText = (): PageElement => cy.get('input').last()
 
-  removeButton = (index): PageElement => cy.get(`button[value*="${index}"]`)
+  removeButton = (): PageElement => cy.get(`.govuk-email-list button`)
 
   inputTexts = (): PageElement => cy.get('input.autocomplete__input')
+
+  hiddenInputTexts = (): PageElement => cy.get('label.govuk-recipient__label')
 
   cancelLink = (crn, convictionNumber, pduCode): PageElement =>
     cy.get(`a[href*="/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner"]`).eq(1)
@@ -34,9 +38,7 @@ export default class InstructionsConfirmPage extends Page {
 
   emailInput = (index): PageElement => cy.get(`input[id="person\\[${index}\\]\\[email\\]"]`)
 
-  autoCompleteOption = (emailInputIndex, optionIndex): PageElement =>
-    cy.get(`#person\\[${emailInputIndex}\\]\\[email\\]__option--${optionIndex}`)
+  autoCompleteOption = (optionIndex): PageElement => cy.get(`#person__option--${optionIndex}`)
 
-  firstAutoCompleteOption = (emailInputIndex): PageElement =>
-    cy.get(`ul[id="person\\[${emailInputIndex}\\]\\[email\\]__listbox"]:first`)
+  firstAutoCompleteOption = (): PageElement => cy.get(`ul[id="person__listbox"]:first`)
 }

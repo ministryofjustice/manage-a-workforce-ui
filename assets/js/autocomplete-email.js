@@ -25,10 +25,7 @@ function removeNoScriptElements() {
 window.addEventListener('load', function () {
   removeNoScriptElements()
 
-  document.getElementById('add-another-person').style.display = 'none'
-  document.getElementById('remove-email-placeholder').style.display = 'none'
-
-  var emailInputs = document.getElementsByClassName('govuk-autocomplete')
+  var emailInputs = document.getElementsByClassName('govuk-select')
   for (var i = 0; i < emailInputs.length; i++) {
     var emailInput = emailInputs.item(i)
     accessibleAutocomplete.enhanceSelectElement({

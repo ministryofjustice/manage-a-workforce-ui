@@ -356,7 +356,7 @@ export default class AllocationsController {
       trimForm<ConfirmInstructionForm>({
         ...form,
         isSensitive: form.isSensitive === 'yes',
-        emailCopy: form.emailCopy !== 'no',
+        emailCopyOptOut: form.emailCopyOptOut === 'yes',
       })
     )
 
@@ -376,6 +376,7 @@ export default class AllocationsController {
           `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/spo-oversight-contact-option`
         )
       case 'add-another-person':
+        confirmInstructionForm.person.push({ email: '' })
         req.session.confirmInstructionForm = confirmInstructionForm
         return res.redirect(
           // eslint-disable-next-line security-node/detect-dangerous-redirects
@@ -422,7 +423,7 @@ export default class AllocationsController {
         `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/${staffTeamCode}/spo-oversight-contact-option`
       )
     }
-    const sendEmailCopyToAllocatingOfficer = confirmInstructionForm.emailCopy
+    const sendEmailCopyToAllocatingOfficer = !confirmInstructionForm.emailCopyOptOut
     const otherEmails = confirmInstructionForm.person.map(person => person.email).filter(email => email)
 
     const spoOversightContact = spoOversightForm.instructions
@@ -470,7 +471,7 @@ export default class AllocationsController {
       person: req.session.confirmInstructionForm?.person || [],
     }
 
-    const sendEmailCopyToAllocatingOfficer = confirmInstructionForm.emailCopy
+    const sendEmailCopyToAllocatingOfficer = !confirmInstructionForm.emailCopyOptOut
     const otherEmails = confirmInstructionForm.person.map(person => person.email).filter(email => email)
     const spoOversightContact = confirmInstructionForm.instructions
     const spoOversightSensitive = confirmInstructionForm.isSensitive
@@ -540,7 +541,7 @@ export default class AllocationsController {
 }
 
 function filterEmptyEmails(form: ConfirmInstructionForm): ConfirmInstructionForm {
-  return { ...form, person: form.person?.filter(person => person.email) }
+  return { ...form, person: form.person.filter(person => person.email) }
 }
 
 function toArrayNotation(href: string) {

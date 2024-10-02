@@ -39,23 +39,16 @@ context('Allocate Complete', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubNotFoundEventManagerDetails')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', true)
-    cy.task('stubSearchStaff')
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
 
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     instructionsConfirmPage.checkbox().check()
-    instructionsConfirmPage.inputTexts().first().type('fi')
-    instructionsConfirmPage.autoCompleteOption(0).should('have.text', 'first@justice.gov.uk - First Name')
-    instructionsConfirmPage.autoCompleteOption(0).click()
-    instructionsConfirmPage.inputTexts().first().should('have.value', 'first@justice.gov.uk')
+    instructionsConfirmPage.emailInput(0).type('example.one@justice.gov.uk')
     instructionsConfirmPage.addAnotherPersonButton().click()
-    instructionsConfirmPage.inputTexts().first().type('se')
-    instructionsConfirmPage.autoCompleteOption(1).should('have.text', 'second@justice.gov.uk - Second Name')
-    instructionsConfirmPage.autoCompleteOption(1).click()
-
+    instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
     instructionsConfirmPage.continueButton('1').click()
     const oversightOptionPage = Page.verifyOnPage(SpoOversightOptionPage)
 
@@ -67,7 +60,10 @@ context('Allocate Complete', () => {
     allocationCompletePage
       .bulletedList()
       .should('contain', 'the case and SPO Oversight contact will be saved in NDelius within 5 minutes')
-      .and('contain', 'we have sent a copy of the allocation email to first@justice.gov.uk, second@justice.gov.uk')
+      .and(
+        'contain',
+        'we have sent a copy of the allocation email to example.one@justice.gov.uk, example.two@justice.gov.uk'
+      )
       .and('contain', 'the initial appointment is scheduled for 1 September 2021')
   })
 
@@ -75,22 +71,16 @@ context('Allocate Complete', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubNotFoundEventManagerDetails')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent')
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', true)
     cy.task('stubSendComparisonLogToWorkload')
-    cy.task('stubSearchStaff')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
 
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
-    instructionsConfirmPage.inputTexts().first().type('fi')
-    instructionsConfirmPage.autoCompleteOption(0).should('have.text', 'first@justice.gov.uk - First Name')
-    instructionsConfirmPage.autoCompleteOption(0).click()
-    instructionsConfirmPage.inputTexts().first().should('have.value', 'first@justice.gov.uk')
+    instructionsConfirmPage.emailInput(0).type('example.one@justice.gov.uk')
     instructionsConfirmPage.addAnotherPersonButton().click()
-    instructionsConfirmPage.inputTexts().first().type('se')
-    instructionsConfirmPage.autoCompleteOption(1).should('have.text', 'second@justice.gov.uk - Second Name')
-    instructionsConfirmPage.autoCompleteOption(1).click()
+    instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
     instructionsConfirmPage.continueButton('1').click()
     const oversightOptionPage = Page.verifyOnPage(SpoOversightOptionPage)
     oversightOptionPage.editButton().click()
@@ -101,7 +91,10 @@ context('Allocate Complete', () => {
     allocationCompletePage.mediumHeading().should('contain', 'What happens next')
     allocationCompletePage
       .bulletedList()
-      .should('contain', 'we have sent a copy of the allocation email to first@justice.gov.uk, second@justice.gov.uk')
+      .should(
+        'contain',
+        'we have sent a copy of the allocation email to example.one@justice.gov.uk, example.two@justice.gov.uk'
+      )
   })
 
   it('What happens next with no additional emails supplied, opting in of copy content visible on page', () => {
@@ -169,21 +162,15 @@ context('Allocate Complete', () => {
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubNotFoundEventManagerDetails')
     cy.task('stubErrorAllocateOffenderManagerToCase')
-    cy.task('stubSearchStaff')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
 
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsConfirmPage.instructionsTextArea().type('Test')
     instructionsConfirmPage.checkbox().check()
-    instructionsConfirmPage.inputTexts().first().type('fi')
-    instructionsConfirmPage.autoCompleteOption(0).should('have.text', 'first@justice.gov.uk - First Name')
-    instructionsConfirmPage.autoCompleteOption(0).click()
-    instructionsConfirmPage.inputTexts().first().should('have.value', 'first@justice.gov.uk')
+    instructionsConfirmPage.emailInput(0).type('example.one@justice.gov.uk')
     instructionsConfirmPage.addAnotherPersonButton().click()
-    instructionsConfirmPage.inputTexts().first().type('se')
-    instructionsConfirmPage.autoCompleteOption(1).should('have.text', 'second@justice.gov.uk - Second Name')
-    instructionsConfirmPage.autoCompleteOption(1).click()
+    instructionsConfirmPage.emailInput(1).type('example.two@justice.gov.uk')
     instructionsConfirmPage.continueButton('1').click()
     const oversightOptionPage = Page.verifyOnPage(SpoOversightOptionPage)
 

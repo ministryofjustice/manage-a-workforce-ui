@@ -87,7 +87,7 @@ window.addEventListener('load', function () {
             button =>
               (button.onclick = () => {
                 input.readOnly = false
-                input.name = ``
+                input.name = 'person_placeholder'
                 input.value = ''
 
                 document.getElementById('add-another-person').style.display = 'none'

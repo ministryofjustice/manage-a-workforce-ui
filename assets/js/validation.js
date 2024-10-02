@@ -155,6 +155,8 @@ window.addEventListener('load', () => {
       !/((https?|ftp|smtp):\/\/|www\.)([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g.test(value)
   )
 
+  Validator.register('empty', value => value.length < 1)
+
   const forms = {
     'case-view': [
       {
@@ -167,10 +169,10 @@ window.addEventListener('load', () => {
     'confirm-allocation': [
       {
         instructions: 'nourl|required',
-        'person.*.email': 'email',
+        person_placeholder: 'empty',
       },
       {
-        email: 'Enter an email address in the correct format, like name@example.com',
+        empty: 'Find and select a justice.gov.uk email address',
         nourl: 'You cannot include links in the allocation notes',
         'required.instructions': 'Enter allocation notes',
       },

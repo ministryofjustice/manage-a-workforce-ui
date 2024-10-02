@@ -39,7 +39,7 @@ context('Allocate Complete', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubNotFoundEventManagerDetails')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', true)
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
 
@@ -71,7 +71,7 @@ context('Allocate Complete', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubNotFoundEventManagerDetails')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent')
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', true)
     cy.task('stubSendComparisonLogToWorkload')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')

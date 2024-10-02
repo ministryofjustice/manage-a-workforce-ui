@@ -30,7 +30,7 @@ export default class InstructionsConfirmPage extends Page {
 
   checkboxText = (): PageElement => cy.get('.govuk-checkboxes__label')
 
-  checkbox = (): PageElement => cy.get('#emailCopy')
+  checkbox = (): PageElement => cy.get('#emailCopyOptOut')
 
   emailInput = (index): PageElement => cy.get(`input[id="person\\[${index}\\]\\[email\\]"]`)
 

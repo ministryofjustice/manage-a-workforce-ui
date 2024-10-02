@@ -12,11 +12,11 @@
 
 {% set emailCheckbox %}
 {{ govukCheckboxes({
-    name: 'emailCopy',
+    name: 'emailCopyOptOut',
     items: [{
-        value: 'no',
         text: 'Tick the box if you do not want to receive a copy.',
-        checked: confirmInstructionForm.emailCopy
+        value: 'yes',
+        checked: confirmInstructionForm.emailCopyOptOut
     }],
     classes: 'govuk-checkboxes--small'
 })}}

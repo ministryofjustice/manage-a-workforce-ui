@@ -5,7 +5,7 @@ declare module 'forms' {
       email?: string
     }[]
     isSensitive: boolean
-    emailCopy: boolean
+    emailCopyOptOut: boolean
   }
   export interface FindUnallocatedCasesForm {
     pdu?: string

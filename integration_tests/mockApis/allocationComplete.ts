@@ -49,7 +49,7 @@ export default {
         urlPattern: `/team/TM2/offenderManager/OM1/case`,
         bodyPatterns: [
           {
-            equalToJson: `{"crn":"J678910", "instructions": "", "allocationJustificationNotes": "Test", "sensitiveNotes": false, "spoOversightNotes": "Test", "sensitiveOversightNotes": false, "sendEmailCopyToAllocatingOfficer": true, "emailTo": ["first@justice.gov.uk", "second@justice.gov.uk"], "eventNumber": "1"}`,
+            equalToJson: `{"crn":"J678910", "instructions": "", "allocationJustificationNotes": "Test", "sensitiveNotes": false, "spoOversightNotes": "Test", "sensitiveOversightNotes": false, "sendEmailCopyToAllocatingOfficer": false, "emailTo": ["first@justice.gov.uk", "second@justice.gov.uk"], "eventNumber": "1"}`,
           },
         ],
       },
@@ -90,7 +90,17 @@ export default {
         urlPattern: '/team/TM2/offenderManager/OM1/case',
         bodyPatterns: [
           {
-            equalToJson: ` {"crn":"J678910","instructions":"","emailTo":["first@justice.gov.uk", "second@justice.gov.uk"],"sendEmailCopyToAllocatingOfficer":${sendCopy},"eventNumber": 1,"allocationJustificationNotes":"Test","sensitiveNotes":false,"spoOversightNotes":"Test","sensitiveOversightNotes":false}`,
+            equalToJson: JSON.stringify({
+              crn: 'J678910',
+              instructions: '',
+              emailTo: ['first@justice.gov.uk', 'second@justice.gov.uk'],
+              sendEmailCopyToAllocatingOfficer: sendCopy,
+              eventNumber: 1,
+              allocationJustificationNotes: 'Test',
+              sensitiveNotes: false,
+              spoOversightNotes: 'Test',
+              sensitiveOversightNotes: false,
+            }),
           },
         ],
       },

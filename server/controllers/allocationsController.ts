@@ -362,7 +362,7 @@ export default class AllocationsController {
 
     if (form.remove !== undefined) {
       form.person.splice(form.remove, 1)
-      req.session.confirmInstructionForm = confirmInstructionForm
+      req.session.confirmInstructionForm = { ...confirmInstructionForm, person: form.person }
       return res.redirect(
         // eslint-disable-next-line security-node/detect-dangerous-redirects
         `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`

@@ -6,7 +6,7 @@ generic-service:
   image:
     repository: quay.io/hmpps/manage-a-workforce-ui
     tag: app_version # override at deployment time
-    port:
+    port: 3000
 
   controller:
     service:

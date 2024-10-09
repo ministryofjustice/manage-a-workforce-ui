@@ -191,7 +191,7 @@ context('Choose Practitioner', () => {
           'Cases in past 30 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          Select: '',
+          Select: 'Select Jim Jam to allocate to',
         },
         {
           Name: 'Jane Doe',
@@ -201,7 +201,7 @@ context('Choose Practitioner', () => {
           'Cases in past 30 days': '2',
           'Community cases': '3',
           'Custody cases': '5',
-          Select: '',
+          Select: 'Select Jane Doe to allocate to',
         },
         {
           Name: 'Sam Smam',
@@ -244,7 +244,7 @@ context('Choose Practitioner', () => {
           'Cases in past 30 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          Select: '',
+          Select: 'Select Jim Jam to allocate to',
         },
         {
           Name: 'Sam Smam',

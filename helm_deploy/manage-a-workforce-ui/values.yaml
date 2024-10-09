@@ -8,6 +8,11 @@ generic-service:
     tag: app_version # override at deployment time
     port: 3000
 
+  controller:
+    service:
+      ports:
+        https: 443
+
   ingress:
     enabled: true
     modsecurity_enabled: true

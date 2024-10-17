@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 
 import WorkloadService from '../services/workloadService'
 import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
+import { unescapeApostrophe } from '../utils/utils'
 
 interface InitialAppointmentDateDisplayResult {
   showDisplayContentForInitialAppointmentDateAndStaff: boolean
@@ -47,7 +48,8 @@ export default class WorkloadController {
       sendEmailCopyToAllocatingOfficer: false,
     }
     delete req.session.allocationForm
-
+    allocationCompleteDetails.name.surname = unescapeApostrophe(allocationCompleteDetails.name.surname)
+    allocationCompleteDetails.name.combinedName = unescapeApostrophe(allocationCompleteDetails.name.combinedName)
     return res.render('pages/allocation-complete', {
       title: `${allocationCompleteDetails.name.combinedName} | Case allocated | Manage a workforce`,
       data: allocationCompleteDetails,

@@ -20,6 +20,7 @@ import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
+import { unescapeApostrophe } from '../utils/utils'
 
 export default class AllocationsController {
   constructor(
@@ -36,6 +37,7 @@ export default class AllocationsController {
       convictionNumber
     )
     const address = new DisplayAddress(response.address)
+    response.name = unescapeApostrophe(response.name)
     res.render('pages/summary', {
       data: response,
       address,
@@ -212,6 +214,8 @@ export default class AllocationsController {
       staffCode,
       staffTeamCode
     )
+    response.name.combinedName = unescapeApostrophe(response.name.combinedName)
+    response.name.surname = unescapeApostrophe(response.name.surname)
     res.render('pages/allocate-to-practitioner', {
       title: `${response.name.combinedName} | Allocate to practitioner | Manage a workforce`,
       data: response,
@@ -242,6 +246,8 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
+    response.name.surname = unescapeApostrophe(response.name.surname)
+    response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
     const confirmInstructionForm = {
       ...req.session.confirmInstructionForm,
@@ -280,6 +286,9 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
+    response.name.surname = unescapeApostrophe(response.name.surname)
+    response.name.combinedName = unescapeApostrophe(response.name.combinedName)
+
     res.render('pages/check-edit-allocation-notes', {
       crn,
       staffCode,
@@ -323,6 +332,8 @@ export default class AllocationsController {
     const cases = response.activeCases.map(
       activeCase => new Case(activeCase.crn, activeCase.tier, activeCase.type, activeCase.name.combinedName)
     )
+    response.name.surname = unescapeApostrophe(response.name.surname)
+    response.name.combinedName = unescapeApostrophe(response.name.combinedName)
     res.render('pages/active-cases', {
       title: `${response.name.combinedName} | Active cases | Manage a workforce`,
       data: response,
@@ -522,6 +533,8 @@ export default class AllocationsController {
       ...req.session.confirmInstructionForm,
       person: req.session.confirmInstructionForm?.person || [],
     }
+    response.name.surname = unescapeApostrophe(response.name.surname)
+    response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
     res.render('pages/spo-oversight-contact', {
       title: `${response.name.combinedName} | SPO Oversight Contact | Manage a workforce`,

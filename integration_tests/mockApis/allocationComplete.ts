@@ -153,6 +153,43 @@ export default {
     })
   },
 
+  stubGetApostropheAllocationCompleteDetails: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: '/allocation/person/J678910/event/1/complete-details',
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          crn: 'J678910',
+          name: {
+            forename: 'Dylan',
+            middleName: 'Adam',
+            surname: 'O&#39;Armstrong',
+            combinedName: 'Dylan Adam O&#39;Armstrong',
+          },
+          type: 'COMMUNITY',
+          initialAppointment: {
+            date: '2021-09-01',
+          },
+          staff: {
+            code: 'OM1',
+            name: {
+              forename: 'John',
+              middleName: '',
+              surname: 'Doe',
+              combinedName: 'John Doe',
+            },
+            email: 'john.doe@test.justice.gov.uk',
+            grade: 'PO',
+          },
+        },
+      },
+    })
+  },
+
   stubGetAllocationCompleteDetailsNoInitialAppointment: (): SuperAgentRequest => {
     return stubForWorkload({
       request: {

@@ -11,6 +11,7 @@ import AllocationsService from '../services/allocationsService'
 import UnallocatedCase from './data/UnallocatedCase'
 import WorkloadService from '../services/workloadService'
 import config from '../config'
+import { unescapeApostrophe } from '../utils/utils'
 
 export default class FindUnallocatedCasesController {
   constructor(
@@ -48,7 +49,7 @@ export default class FindUnallocatedCasesController {
     const unallocatedCases = unallocatedCasesByTeam.map(
       value =>
         new UnallocatedCase(
-          value.name,
+          unescapeApostrophe(value.name),
           value.crn,
           value.tier,
           value.sentenceDate,

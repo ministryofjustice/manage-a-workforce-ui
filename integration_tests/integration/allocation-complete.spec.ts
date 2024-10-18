@@ -35,6 +35,17 @@ context('Allocate Complete', () => {
       .should('contain', 'Dylan Adam Armstrong (J678910) has been allocated to John Doe (PO)')
   })
 
+  it('panel visible on page with correct information apostrophe in name', () => {
+    cy.task('stubGetApostropheAllocationCompleteDetails')
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocation-complete')
+    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
+    allocationCompletePage.panelTitle().should('contain', 'Case allocated')
+    allocationCompletePage
+      .panelBody()
+      .should('contain', "Dylan Adam O'Armstrong (J678910) has been allocated to John Doe (PO)")
+  })
+
   it('What happens next with multiple emails supplied, opting out of copy content visible on page', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubSendComparisonLogToWorkload')

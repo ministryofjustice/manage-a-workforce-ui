@@ -38,13 +38,6 @@ export default function setUpStaticResources(): Router {
     router.use('/assets/js/jquery.min.js', express.static(path.join(process.cwd(), dir), cacheControl))
   })
 
-  Array.of('/node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.css').forEach(dir => {
-    router.use(
-      '/assets/stylesheets/govuk-frontend.min.css',
-      express.static(path.join(process.cwd(), dir), cacheControl)
-    )
-  })
-
   // Don't cache dynamic resources
   router.use(noCache())
 

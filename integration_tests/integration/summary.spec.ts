@@ -28,7 +28,7 @@ context('Summary', () => {
     summaryPage.summaryHeading().should('contain', 'Summary')
     summaryPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
     summaryPage.button().should('contain', 'Continue')
-    summaryPage.button().should('have.class', 'govuk-button--disabled')
+    summaryPage.button().should('have.attr', 'disabled')
   })
 
   it('Sub nav visible on page', () => {

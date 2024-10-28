@@ -32,7 +32,7 @@ context('Probation record', () => {
     probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
     probationRecordPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
     probationRecordPage.button().should('contain', 'Continue')
-    probationRecordPage.button().should('have.class', 'govuk-button--disabled')
+    probationRecordPage.button().should('have.attr', 'disabled')
   })
 
   it('Sub nav visible on page', () => {

@@ -33,7 +33,7 @@ context('Risk', () => {
     riskPage.riskHeading().should('contain', 'Risk')
     riskPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
     riskPage.button().should('contain', 'Continue')
-    riskPage.button().should('have.class', 'govuk-button--disabled')
+    riskPage.button().should('have.attr', 'disabled')
   })
 
   it('Sub nav visible on page', () => {

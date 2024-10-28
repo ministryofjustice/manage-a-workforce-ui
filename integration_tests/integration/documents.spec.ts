@@ -32,7 +32,7 @@ context('Documents', () => {
     documentsPage.documentsHeading().should('contain', 'Documents')
     documentsPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
     documentsPage.button().should('contain', 'Continue')
-    documentsPage.button().should('have.class', 'govuk-button--disabled')
+    documentsPage.button().should('have.attr', 'disabled')
   })
 
   it('Sub nav visible on page', () => {

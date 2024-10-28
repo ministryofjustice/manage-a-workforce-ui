@@ -32,7 +32,7 @@ context('Probation record', () => {
     probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
     probationRecordPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
     probationRecordPage.button().should('contain', 'Continue')
-    probationRecordPage.button().should('have.attr', 'disabled')
+    probationRecordPage.button().should('be.disabled')
   })
 
   it('Sub nav visible on page', () => {
@@ -71,7 +71,7 @@ context('Probation record', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.button().should('contain', 'Continue')
-    probationRecordPage.button().should('not.have.class', 'govuk-button--disabled')
+    probationRecordPage.button().should('not.be.disabled')
   })
 
   it('Current sentences sub-heading visible on page with body text', () => {

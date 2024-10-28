@@ -32,7 +32,7 @@ context('Documents', () => {
     documentsPage.documentsHeading().should('contain', 'Documents')
     documentsPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
     documentsPage.button().should('contain', 'Continue')
-    documentsPage.button().should('have.attr', 'disabled')
+    documentsPage.button().should('be.disabled')
   })
 
   it('Sub nav visible on page', () => {
@@ -53,7 +53,7 @@ context('Documents', () => {
   it('Continue button enabled and visible on page', () => {
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.button().should('contain', 'Continue')
-    documentsPage.button().should('not.have.class', 'govuk-button--disabled')
+    documentsPage.button().should('not.be.disabled')
   })
 
   it('Instructions text should display', () => {

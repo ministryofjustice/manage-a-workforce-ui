@@ -83,7 +83,7 @@ context('Instructions text', () => {
     cy.task('stubGetAllRegions')
     cy.visit('/regions')
     cy.task('stubGetConfirmInstructions')
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
     const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPage.instructionsTextArea().should('have.value', 'Test Documents')
     // Must reset clock befoe changing the time
@@ -91,7 +91,7 @@ context('Instructions text', () => {
       clock.restore()
     })
     cy.clock(FOUR_WEEKS_AND_A_DAY_IN_MS)
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/instructions').then(_ => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes').then(_ => {
       // eslint-disable-next-line no-unused-expressions
       expect(localStorage.getItem('instructions-save-J678910-1')).to.be.null
     })

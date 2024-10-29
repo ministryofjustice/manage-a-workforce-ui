@@ -18,6 +18,12 @@ export default {
             fullName: 'First Name',
             email: 'first@justice.gov.uk',
           },
+          {
+            firstName: 'Second',
+            lastName: 'Name',
+            fullName: 'Second Name',
+            email: 'second@justice.gov.uk',
+          },
         ],
       },
     })

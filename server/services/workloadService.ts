@@ -1,4 +1,3 @@
-import type { DecisionEvidenceForm } from 'forms'
 import RestClient from '../data/restClient'
 import { ApiConfig } from '../config'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
@@ -51,29 +50,58 @@ export default class WorkloadService {
     })) as OffenderManagerOverview
   }
 
+  async sendComparisionLogToWorkload(
+    notesEdited: boolean,
+    editNotesScreenAccessed: boolean,
+    crn: string,
+    teamCode: string,
+    token: string
+  ) {
+    await this.restClient(token).post({
+      path: `/allocations/contact/logging`,
+      data: {
+        crn,
+        teamCode,
+        editNotesScreenAccessed,
+        notesEdited,
+      },
+    })
+  }
+
   async allocateCaseToOffenderManager(
     token: string,
     crn,
     staffCode,
     teamCode,
-    instructions,
     emailTo,
     sendEmailCopyToAllocatingOfficer,
     eventNumber: number,
-    decisionEvidence: DecisionEvidenceForm
+    spoOversightNotes: string,
+    sensitiveOversightNotes: boolean,
+    allocationJustificationNotes: string,
+    sensitiveNotes: boolean,
+    isSPOOversightAccessed: string
   ): Promise<OffenderManagerAllocatedCase> {
-    const evidence = decisionEvidence
-      ? { allocationJustificationNotes: decisionEvidence.evidenceText, sensitiveNotes: decisionEvidence.isSensitive }
-      : {}
+    await this.sendComparisionLogToWorkload(
+      spoOversightNotes !== allocationJustificationNotes,
+      isSPOOversightAccessed === 'true',
+      crn,
+      teamCode,
+      token
+    )
+
     return (await this.restClient(token).post({
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,
       data: {
         crn,
-        instructions,
+        instructions: '',
         emailTo,
         sendEmailCopyToAllocatingOfficer,
         eventNumber,
-        ...evidence,
+        allocationJustificationNotes,
+        sensitiveNotes,
+        spoOversightNotes,
+        sensitiveOversightNotes,
       },
     })) as OffenderManagerAllocatedCase
   }

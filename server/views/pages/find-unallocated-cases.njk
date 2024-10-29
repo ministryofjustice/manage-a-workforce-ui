@@ -56,8 +56,8 @@
 } %}
 
 {% for item in unallocatedCases %}
-    {% if item.outOfAreaTransfer == true %}
-        {%- set tableRow = [
+  {% if item.outOfAreaTransfer == true %}
+    {%- set tableRow = [
             { text: tripleCell(
                 '<a href="/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' +  item.name + '</a>',
                 item.crn,
@@ -76,9 +76,9 @@
                 text: 'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.', attributes: { "data-sort-value": item.tierOrder }
             }
         ] -%}
-        {{ tableData.rows.push(tableRow) }}
-    {% else %}
-        {%- set tableRow = [
+    {{ tableData.rows.push(tableRow) }}
+  {% else %}
+    {%- set tableRow = [
             {
                 text: doubleCell('<a href="/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' +  item.name + '</a>', item.crn, 'govuk-body-s' ),
                 attributes: { "data-sort-value": item.crn }
@@ -94,28 +94,28 @@
             },
             { text: doubleCell(item.primaryStatus, item.secondaryStatus, 'govuk-body-s')}
         ] -%}
-        {{ tableData.rows.push(tableRow) }}
-    {% endif %}
+    {{ tableData.rows.push(tableRow) }}
+  {% endif %}
 {% endfor %}
 
 {% block allocationContent %}
 
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
-            <h2 class="govuk-heading-l">Unallocated cases</h2>
-            <div class="govuk-filter-background govuk-!-margin-bottom-7">
-              <div class="moj-filter__selected-heading">
-                <div class="moj-filter__heading-title">
-                  <h2 class="govuk-heading-m">What types of case can I allocate?</h2>
-                  <p>You can allocate court-to-community and custody-to-community cases, but they may sit in separate teams.</p>
-                  <p>Use the filters to select a team containing cases awaiting allocation. Select ‘Save and view selection’.</p>
-                </div>
-              </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-l">Unallocated cases</h2>
+      <div class="govuk-filter-background govuk-!-margin-bottom-7">
+        <div class="moj-filter__selected-heading">
+          <div class="moj-filter__heading-title">
+            <h2 class="govuk-heading-m">What types of case can I allocate?</h2>
+            <p>You can allocate court-to-community and custody-to-community cases, but they may sit in separate teams.</p>
+            <p>Use the filters to select a team containing cases awaiting allocation. Select ‘Save and view selection’.</p>
+          </div>
+        </div>
 
-              <form method="post">
-                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <form method="post">
+          <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-                {{ govukSelect({
+          {{ govukSelect({
                   id: "pdu",
                   name: "pdu",
                   classes: "govuk-select--overflow",
@@ -130,7 +130,7 @@
                 })
                 }}
 
-                {{ govukSelect({
+          {{ govukSelect({
                   id: "ldu",
                   name: "ldu",
                   classes: "govuk-select--overflow",
@@ -145,7 +145,7 @@
                 })
                 }}
 
-                {{ govukSelect({
+          {{ govukSelect({
                   id: "team",
                   name: "team",
                   classes: "govuk-select--overflow",
@@ -160,66 +160,75 @@
                 })
                 }}
 
-                <div class="govuk-button-group">
-                  {{ govukButton({
+          <div class="govuk-button-group">
+            {{ govukButton({
                       text: "Save and view selection"
                   }) }}
-                  <a class="govuk-link" href="/pdu/{{pduDetails.code}}/clear-find-unallocated">Clear</a>
-                </div>
-              </form>
-            </div>
+            <a class="govuk-link" href="/pdu/{{pduDetails.code}}/clear-find-unallocated">Clear</a>
           </div>
-        </div>
-        <div class="moj-scrollable-pane govuk-!-margin-bottom-9">
-          <div class="moj-scrollable-pane__wrapper">
-            {% if casesLength %}
-              {{ govukTable(tableData) }}
-            {% elif teamSelected %}
-              <p class="govuk-body-l">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="moj-scrollable-pane govuk-!-margin-bottom-9">
+    <div class="moj-scrollable-pane__wrapper">
+      {% if casesLength %}
+        {{ govukTable(tableData) }}
+      {% elif teamSelected %}
+        <p class="govuk-body-l">
                 There are no cases currently awaiting allocation.
               </p>
-            {% endif %}
-          </div>
-        </div>
+      {% endif %}
+    </div>
+  </div>
 
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
-            <h2 class="govuk-heading-l">Allocating other types of case</h2>
-               <p>You’ll need to use NDelius to allocate cases that do not appear in the service, such as cases in OMIC teams, limited access offender cases, transition to adult cases, cases with unpaid work requirements, and cases with requirements not allocated to the primary practitioner.</p>
-          </div>
-        </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-l">Allocating other types of case</h2>
+      <p>Use NDelius to allocate limited access offender and transition to adult cases</p>
+    </div>
+  </div>
 
 {% endblock %}
 
 {% block javascripts %}
-    <script nonce="{{ cspNonce }}">
-        var dropDownSelectionData = {{ dropDownSelectionData | safe }}
-        window.onload = function() {
-          var pduSelect = document.getElementById("pdu")
-          var lduSelect = document.getElementById("ldu")
-          var teamSelect = document.getElementById("team")
+  <script nonce="{{ cspNonce }}">
+    var dropDownSelectionData = {{ dropDownSelectionData | safe }}
+    window.onload = function () {
+      var pduSelect = document.getElementById("pdu")
+      var lduSelect = document.getElementById("ldu")
+      var teamSelect = document.getElementById("team")
 
-          pduSelect.onchange = function() {
-            lduSelect.length = 1
-            teamSelect.length = 1
-            if(this.value) {
-              Object.entries(dropDownSelectionData[this.value].ldus)
-              .sort(([aKey,aValue],[bKey,bValue]) => aValue.name >= bValue.name ? 1 : 0)
-              .forEach(([key, value]) => lduSelect.options[lduSelect.options.length] = new Option(value.name, key))
-            }
-          }
-
-          lduSelect.onchange = function() {
-            teamSelect.length = 1
-            if(this.value) {
-              dropDownSelectionData[pduSelect.value].ldus[this.value].teams
-              .sort((a,b) => a.name >= b.name ? 1 : 0)
-              .forEach(team => teamSelect.options[teamSelect.options.length] = new Option(team.name, team.code))
-            }
-          }
-
-
+      pduSelect.onchange = function () {
+        lduSelect.length = 1
+        teamSelect.length = 1
+        if (this.value) {
+          Object
+            .entries(dropDownSelectionData[this.value].ldus)
+            .sort(
+              ([
+              aKey, aValue
+            ], [bKey, bValue]) => aValue.name >= bValue.name
+              ? 1
+              : 0)
+            .forEach(([key, value]) => lduSelect.options[lduSelect.options.length] = new Option(value.name, key))
         }
-    </script>
-{% endblock %}
+      }
 
+      lduSelect.onchange = function () {
+        teamSelect.length = 1
+        if (this.value) {
+          dropDownSelectionData[pduSelect.value]
+            .ldus[this.value]
+            .teams
+            .sort(
+              (a, b) => a.name >= b.name
+              ? 1
+              : 0)
+            .forEach(team => teamSelect.options[teamSelect.options.length] = new Option(team.name, team.code))
+        }
+      }
+
+    }
+  </script>
+{% endblock %}

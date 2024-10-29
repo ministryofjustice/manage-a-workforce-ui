@@ -227,4 +227,24 @@ context('Summary', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedRiskLink().should('exist')
   })
+
+  it('entering link in allocation notes errors', () => {
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.instructionsTextArea().type('https://bbc.co.uk/noway')
+    cy.get(`#1`).click()
+    summaryPage
+      .errorMessage()
+      .trimTextContent()
+      .should('equal', 'Error: You cannot include links in the allocation notes')
+  })
+
+  it('entering link without scheme but with www in allocation notes errors', () => {
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.instructionsTextArea().type('www.bbc.co.uk/noway')
+    cy.get(`#1`).click()
+    summaryPage
+      .errorMessage()
+      .trimTextContent()
+      .should('equal', 'Error: You cannot include links in the allocation notes')
+  })
 })

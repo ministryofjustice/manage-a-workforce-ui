@@ -188,27 +188,27 @@ context('Choose Practitioner', () => {
           Team: 'Team 2',
           Grade: 'POProbation Officer',
           'Workload %': '32%',
-          'Cases in past 7 days': '5',
+          'Cases in past 30 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          Select: '',
+          Select: 'Select Jim Jam to allocate to',
         },
         {
           Name: 'Jane Doe',
           Team: 'Team 1',
           Grade: 'PQiPTrainee Probation Officer',
           'Workload %': '19%',
-          'Cases in past 7 days': '2',
+          'Cases in past 30 days': '2',
           'Community cases': '3',
           'Custody cases': '5',
-          Select: '',
+          Select: 'Select Jane Doe to allocate to',
         },
         {
           Name: 'Sam Smam',
           Team: 'Team 2',
           Grade: 'SPOSenior Probation Officer',
           'Workload %': '32%',
-          'Cases in past 7 days': '5',
+          'Cases in past 30 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
           Select: '',
@@ -241,17 +241,17 @@ context('Choose Practitioner', () => {
           Team: 'Team 2',
           Grade: 'POProbation Officer',
           'Workload %': '32%',
-          'Cases in past 7 days': '5',
+          'Cases in past 30 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          Select: '',
+          Select: 'Select Jim Jam to allocate to',
         },
         {
           Name: 'Sam Smam',
           Team: 'Team 2',
           Grade: 'SPOSenior Probation Officer',
           'Workload %': '32%',
-          'Cases in past 7 days': '5',
+          'Cases in past 30 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
           Select: '',
@@ -309,11 +309,28 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.instructionsTextArea().type('fred')
     choosePractitionerPage.allocateCaseButton().click()
     choosePractitionerPage
       .errorSummary()
       .trimTextContent()
-      .should('equal', 'There is a problem Select a probation practitioner')
+      .should('contain', 'There is a problem')
+      .should('contain', 'Select a probation practitioner')
+      .should('not.contain', 'You cannot include links in the allocation notes')
+  })
+
+  it('should display error when offender managers selected and link in instructions allocate case button clicked', () => {
+    cy.task('stubGetNewToProbationCaseForChoosePractitioner')
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.instructionsTextArea().type('http://ww.bbc.com')
+    choosePractitionerPage.allocateCaseButton().click()
+    choosePractitionerPage
+      .errorSummary()
+      .trimTextContent()
+      .should('contain', 'There is a problem')
+      .should('contain', 'You cannot include links in the allocation notes')
   })
 
   it('should clear selection when clicking on Clear selection', () => {
@@ -438,7 +455,7 @@ context('Choose Practitioner', () => {
         orderedData: ['19%', '32%', '32%'],
       },
       {
-        columnHeaderName: 'Cases in past 7 days',
+        columnHeaderName: 'Cases in past 30 days',
         orderedData: ['2', '5', '5'],
       },
       {

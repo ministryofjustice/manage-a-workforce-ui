@@ -1,8 +1,26 @@
 {% extends "partials/layout.njk" %}
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {%- from "govuk/components/error-summary/macro.njk" import govukErrorSummary -%}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% set notification %}
+<p class="govuk-notification-banner__heading">
+    <h3 class="govuk-notification-banner__heading">
+    Changes to case allocation notes
+  </h3>
+    <p class="govuk-body">Your allocation notes will now be saved as an SPO Oversight contact in NDelius. <a class="govuk-notification-banner__link" href="/whats-new">Read more about changes to allocation notes</a>.</p>
+</p>
+{% endset %}
 
 {% block content %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {{ govukNotificationBanner({
+          html: notification
+      }) }}
+        </div>
+    </div>
 
     {% if errors | length > 0 %}
         {{ govukErrorSummary({
@@ -13,15 +31,15 @@
 
     <div class="govuk-grid-row govuk-!-padding-bottom-5">
         <div class="govuk-grid-column-full">
-        <span class="govuk-caption-xl">{{ pduDetails.region.name }}</span>
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">{{ pduDetails.name }}</h1>
-        <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{pduDetails.code}}/select-teams">Edit my teams list</a>
+            <span class="govuk-caption-xl">{{ pduDetails.region.name }}</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">{{ pduDetails.name }}</h1>
+            <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{pduDetails.code}}/select-teams">Edit my teams list</a>
         </div>
     </div>
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-        {{ mojSubNavigation({
+            {{ mojSubNavigation({
             label: 'Sub navigation',
             items: [
                 {
@@ -42,4 +60,3 @@
     {% block allocationContent %}{% endblock %}
 
 {% endblock %}
-

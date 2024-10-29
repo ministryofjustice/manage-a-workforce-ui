@@ -68,6 +68,10 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
     return cases > 99 ? '99+' : `${cases}`
   })
 
+  njkEnv.addFilter('isArray', (str: string | string[]) => {
+    return Array.isArray(str)
+  })
+
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)
   njkEnv.addGlobal('googleAnalyticsKey', config.googleAnalyticsKey)
   njkEnv.addGlobal('lastTechnicalUpdate', services.technicalUpdatesService.getLatestTechnicalUpdateHeading())

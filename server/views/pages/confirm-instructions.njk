@@ -10,21 +10,20 @@
 {% from "../components/instructions/macro.njk" import instructions %}
 {% from "../components/pop/macro.njk" import pop %}
 
-
 {% set emailCheckbox %}
 {{ govukCheckboxes({
-    name: 'emailCopy',
+    name: 'emailCopyOptOut',
     items: [{
-        value: 'no',
         text: 'Tick the box if you do not want to receive a copy.',
-        checked: confirmInstructionForm.emailCopy
+        value: 'yes',
+        checked: confirmInstructionForm.emailCopyOptOut
     }],
     classes: 'govuk-checkboxes--small'
 })}}
 {% endset %}
 
 {% block beforeContent %}
-    {{ govukBreadcrumbs({
+  {{ govukBreadcrumbs({
         items: [
             {
                 text: "Home",
@@ -45,174 +44,162 @@
             {
                 text: "Allocate to practitioner",
                 href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/allocate/" + staffTeamCode + '/' + staffCode + "/allocate-to-practitioner"
-            },
-            {
-                text: "Explain your decision",
-                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/allocate/" + staffTeamCode + '/' + staffCode + "/decision-evidencing"
             }
         ]
     }) }}
-    {% if errors | length > 0 %}
-      {{ govukErrorSummary({
+  {% if errors | length > 0 %}
+    {{ govukErrorSummary({
           titleText: "There is a problem",
           errorList: errors
       }) }}
-    {% endif %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
-    {{ pop({name: name, crn: crn, tier: tier}) }}
+  {{ pop({name: name, crn: crn, tier: tier}) }}
 
-    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+  <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
-<div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <form action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="POST">
+      <form data-validate-form="confirm-allocation" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-instructions' }}" method="post">
         <div class="govuk-form-group">
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-            {{
+          {{
             instructions({
-                titleText: "Review allocation instructions",
-                html: ('<p>We\'ll send a copy of these notes to you and <br><strong>' + data.staff.name.combinedName + '</strong> (<em>' + data.staff.email + '</em>).</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
-                hintText: "Review your notes for the probation practitioner.",
+                titleText: "Review your allocation notes",
+                html: ('<p><br>These notes will be sent in the allocation email to <strong>' + data.staff.name.combinedName + '</strong> (<em>' + data.staff.email + '</em>).</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
                 convictionNumber: convictionNumber,
+                hintText: ' ',
                 crn: crn,
                 inGridRow: false,
-                rows: 20
+                rows: 20,
+                errorMessage: errors | findError('instructions')
             })
             }}
-            <p id='copyText'>You can send a copy of these notes to another person, for example a case admin officer.</p>
         </div>
-        <div class="govuk-form-group">
-        {% if confirmInstructionForm.person.length === 0 %}
-        {% call govukFieldset({
-          classes: 'moj-add-another__item',
-              legend: {
-                text: 'Add another recipient',
-                classes: 'moj-add-another__title govuk-fieldset__legend--m',
-                isPageHeading: false
-              }
-            }) %}
-            <noscript>
-              {{ govukInput({
-              id: 'person[0][email]',
-              name: 'person[0][email]',
-              label: {
-                text: 'Email address',
-                classes: 'govuk-!-font-weight-bold'
-              },
-              type: "email",
-              autocomplete: "email",
-              spellcheck: false
-            }) }}
-            </noscript>
-            {{ govukSelect({
-              id: 'person[0][email]',
-              name: 'person[0][emailPlaceholder]',
-              items: [],
-              classes: 'hidden',
-              label: {
-                text: 'Email address',
-                classes: 'govuk-!-font-weight-bold'
-              }
-            }) }}
+        <div class="govuk-form-group govuk-allocations-emails-form">
+          {% if confirmInstructionForm.person.length === 0 %}
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h3 class="govuk-fieldset__heading">Does this contain sensitive information?</h3>
+            </legend>
+            <p class="govuk-hint">This is information that would cause harm or undermine the investigation of a crime if it were disclosed to a person on probation. For example, a victim's personal details.</p>
+            {{ govukCheckboxes({
+            name: 'isSensitive',
+            items: [{
+                text: 'Yes, it contains sensitive information',
+                value: 'yes',
+                checked: confirmInstructionForm.isSensitive
+                }],
+            classes: 'govuk-checkboxes--medium margin-bottom-10'
+        })}}
 
-            {% endcall %}
-            {% endif %}
+          {% else %}
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h3 class="govuk-fieldset__heading">Additional recipients</h3>
+            </legend>
+          {% endif %}
+          <div class="govuk-email-list">
             {% for person in confirmInstructionForm.person %}
 
-              {% call govukFieldset({
-                classes: 'moj-add-another__item',
-                legend: {
-                  text: 'Add another recipient',
-                  classes: 'moj-add-another__title govuk-fieldset__legend--m',
-                  isPageHeading: false
-                }
-              }) %}
-
-                {% if confirmInstructionForm.person.length > 1 %}
-                {{ govukButton({
+              <div class="govuk-email-list-item">
+                <div>
+                  {{ govukInput({
+                      id: 'person[' +loop.index0 +'][email]',
+                      name: 'person[' +loop.index0 +'][email]',
+                      value: person.email,
+                      type: 'hidden',
+                      label: {
+                        text: person.email,
+                        classes: 'govuk-!-font-weight-bold govuk-recipient__label'
+                      },
+                      attributes: {
+                        readonly: true
+                      },
+                      errorMessage: errors | findError('person[' +loop.index0 +'][email]')
+                    }) }}
+                </div>
+                <div>
+                  {{ govukButton({
                     text: 'Remove',
                     type: 'submit',
                     name: 'remove',
                     value: loop.index0,
-                    classes: 'govuk-button govuk-button--secondary  moj-add-another__remove-button'
+                    classes: 'govuk-button govuk-button--secondary govuk-!-margin-0'
                   }) }}
-                {% endif %}
-                
-                <noscript>
-                  {{ govukInput({
-                  id: 'person[' +loop.index0 +'][email]',
-                  name: 'person[' +loop.index0 +'][email]',
-                  label: {
-                    text: 'Email address',
-                    classes: 'govuk-!-font-weight-bold'
-                  },
-                  type: "email",
-                  autocomplete: "email",
-                  spellcheck: false,
-                  value: person.email,
-                  errorMessage: errors | findError('person[' +loop.index0 +'][email]')
-                }) }}
-                </noscript>
-
-                {{ govukSelect({
-                  id: 'person[' +loop.index0 +'][email]',
-                  name: 'person[' +loop.index0 +'][emailPlaceholder]',
-                  classes: 'hidden',
-                  label: {
-                    text: 'Email address',
-                    classes: 'govuk-!-font-weight-bold'
-                  },
-                  items: [ {
-                    value: person.email,
-                    text: person.email,
-                    selected: true
-                  }],
-                  errorMessage: errors | findError('person[' +loop.index0 +'][email]')
-                }) }}
-
-              {% endcall %}
+                </div>
+              </div>
 
             {% endfor %}
+          </div>
 
-            <div class="moj-button-action">
-                  {{ govukButton({
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h3 class="govuk-fieldset__heading moj-add-another__title">Add another recipient</h3>
+          </legend>
+
+          <div class="govuk-email-list-item">
+            <div>
+              {{ govukSelect({
+                    id: 'person',
+                    name: 'person_placeholder',
+                    items: [],
+                    classes: 'hidden govuk-autocomplete',
+                    hint: { text: 'Type to find and select a justice.gov.uk email address.' },
+                    label: {
+                      text: 'Email address',
+                      classes: 'govuk-!-font-weight-bold'
+                    }
+                  }) }}
+            </div>
+            <div id="remove-email-placeholder">
+              {{ govukButton({
+                    text: 'Remove',
+                    type: 'button',
+                    name: 'remove',
+                    value: loop.index0,
+                    classes: 'govuk-button govuk-button--secondary govuk-!-margin-0'
+                  }) }}
+            </div>
+          </div>
+
+          <div id="add-another-person" class="moj-button-action">
+            {{ govukButton({
                     text: 'Add another person',
                     type: 'submit',
                     name: 'action',
                     value: 'add-another-person',
-                    classes: 'govuk-button--secondary govuk-!-margin-bottom-4 govuk-!-margin-top-3'
+                    classes: 'govuk-button--secondary  govuk-!-margin-top-3'
                   }) }}
-            </div>
+          </div>
 
-
-            <div class="govuk-button-group">
-                {{
+          <div class="govuk-button-group govuk-!-margin-top-4">
+            {{
                     govukButton({
-                        text: 'Allocate case',
+                        text: 'Continue',
                         classes: 'allocate',
                         type: 'submit',
                         name: 'action',
                         value: 'continue',
                         preventDoubleClick: true,
                         attributes: {
-                            id: convictionNumber
+                            id: convictionNumber,
+                            'data-form-submit': undefined
                         }
                     })
                 }}
-                <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Cancel</a>
-          
-        </div>
-      </form>
+            <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Cancel</a>
+
+          </div>
+        </form>
+      </div>
     </div>
-  </div>    
-</div>
+  </div>
 
 {% endblock %}
 
-
 {% block javascripts %}
-    <script src="/assets/accessible-autocomplete.min.js"></script>
-    <script id="autocomplete-script" src="/assets/js/autocomplete-email.js" {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}></script>
+  <script src="/assets/accessible-autocomplete.min.js"></script>
+  <script id="autocomplete-script" src="/assets/js/autocomplete-email.js" {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}></script>
+  <script src="/assets/validator.js"></script>
+  <script src="/assets/validation.js"></script>
 {% endblock %}

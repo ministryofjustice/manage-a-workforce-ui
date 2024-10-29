@@ -65,23 +65,38 @@
                 ]
             }) }}
 
-
             {% block caseContent %}{% endblock %}
 
         </div>
     </div>
+    <form data-validate-form="case-view">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        {{ instructions({ 
+                inGridRow: true,
+                convictionNumber: convictionNumber,
+                crn: crn,
+                errorMessage: errors | findError('instructions')
+            }) 
+        }}
 
-    {{ instructions({ inGridRow: true, convictionNumber: convictionNumber, crn: crn }) }}
+        {{ govukButton({
+            text: "Continue",
+            href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner",
+            classes: "allocate",
+            id: convictionNumber,
+            disabled: outOfAreaTransfer,
+            attributes: {
+                'data-form-submit': undefined
+            }
+        }) }}
 
-    {{ govukButton({
-        text: "Continue",
-        href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner",
-        classes: "allocate",
-        id: convictionNumber,
-        disabled: outOfAreaTransfer
-    }) }}
+    </form>
 
     {% block feedbackPrompt %}{% endblock %}
 
 {% endblock %}
 
+{% block javascripts %}
+    <script src="/assets/validator.js"></script>
+    <script src="/assets/validation.js"></script>
+{% endblock %}

@@ -3,6 +3,7 @@
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
 {% from "../components/risk-summary/macro.njk" import riskSummaryBadge %}
+{% from "../components/instructions/macro.njk" import instructions %}
 {% set documentTabHref = '/pdu/' + pduCode+ '/' + crn + '/convictions/' + convictionNumber + '/documents' %}
 {% set offenceData = data.offences %}
 {%- set offences = [] -%}
@@ -113,7 +114,11 @@
                     <dd class="govuk-summary-list__value">
                         <ul class="govuk-list govuk-list--bullet">
                             {%- for requirement in data.requirements  if data.requirements %}
-                                <li>{{ requirement.mainCategory }}: {{ requirement.subCategory }} {{ requirement.length }}</li>
+                                {% if requirement.subCategory %}
+                                    <li>{{ requirement.mainCategory }}: {{ requirement.subCategory }} {{ requirement.length }}</li>
+                                {% else %}
+                                    <li>{{ requirement.mainCategory }}: {{ requirement.length }}</li>
+                                {% endif %} 
                             {% endfor -%}
                         </ul>
                         {%- for requirement in data.requirements if data.requirements %}

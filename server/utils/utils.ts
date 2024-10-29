@@ -21,3 +21,9 @@ export const initialiseName = (fullName?: string): string | null => {
   const array = fullName.split(' ')
   return `${array[0][0]}. ${array.reverse()[0]}`
 }
+
+export const unescapeApostrophe = (name?: string): string | null => {
+  if (!name) return null
+
+  return name.replace('&#39;', "'")
+}

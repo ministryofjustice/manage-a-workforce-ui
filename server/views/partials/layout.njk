@@ -88,7 +88,7 @@
             New features
         </strong>
         <span>
-            We’re updating the service all the time, <a class="govuk-link govuk-link--inverse" href="/technical-updates">find out more on the What’s new page.</a>
+            We’re updating the service all the time, <a class="govuk-link govuk-link--inverse" href="/whats-new">find out more on the What’s new page.</a>
         </span>
         </div>
         <a id="hide-message" class="technical-updates-hide-message govuk-link govuk-link--inverse" href="#" aria-current="page">Hide message</a>
@@ -159,9 +159,18 @@
             ]
 %}
 
+    
+<div class="govuk-width-container">
+    <div class="govuk-width-row feedback-prompt">
+        <h2 class="feedback-prompt-text"><a href="{{ "https://eu.surveymonkey.com/r/73CLHLM?url=" + pageUrl }}" class="govuk-link" target="_blank">Was this page helpful?</a></h2>
+    </div>
+</div>
+
+
 {%- if canAllocate -%}
-    {% set footerItems = (footerItems.push({href: "/technical-updates",text: "Technical updates"}), footerItems) %}
+    {% set footerItems = (footerItems.push({href: "/whats-new",text: "What's new"}), footerItems) %}
 {%- endif -%}
+
 {% block footer %}
     {%- from "govuk/components/footer/macro.njk" import govukFooter -%}
     {{ govukFooter({
@@ -170,8 +179,6 @@
         }
     }) }}
 {% endblock %}
-
-
 
 {% block bodyEnd %}
     <script type="module" src="/assets/govuk/govuk-frontend.min.js"></script>

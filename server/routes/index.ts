@@ -20,8 +20,7 @@ export default function routes(services: Services): Router {
     services.allocationsService,
     services.workloadService,
     services.userPreferenceService,
-    services.probationEstateService,
-    services.allocationStorageService
+    services.probationEstateService
   )
   const probationEstateController = new ProbationEstateController(
     services.probationEstateService,
@@ -135,10 +134,10 @@ export default function routes(services: Services): Router {
   )
 
   get(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/decision-evidencing',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/allocation-notes',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      await allocationsController.getDecisionEvidencing(
+      await allocationsController.getConfirmInstructions(
         req,
         res,
         crn,
@@ -149,35 +148,39 @@ export default function routes(services: Services): Router {
       )
     }
   )
+  get('/pdu/:pduCode/:crn/convictions/:convictionNumber/check-edit-allocation-notes', async (req, res) => {
+    const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
 
-  post(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/decision-evidencing',
-    async (req, res) => {
-      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      await allocationsController.submitDecisionEvidencing(
-        req,
-        res,
-        crn,
-        staffTeamCode,
-        staffCode,
-        convictionNumber,
-        pduCode,
-        req.body
-      )
-    }
-  )
+    await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+  })
 
   get(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/instructions',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact-option',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      await allocationsController.getConfirmInstructions(
+
+      await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+    }
+  )
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact-option',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.getSpoOversight(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
+    }
+  )
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/save-allocation',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.submitNoSpoOversight(
         req,
         res,
         crn,
         staffTeamCode,
         staffCode,
         convictionNumber,
+        req.body,
         pduCode
       )
     }
@@ -216,10 +219,27 @@ export default function routes(services: Services): Router {
   )
 
   post(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-allocation',
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-instructions',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
       await allocationsController.allocateCaseToOffenderManager(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        Number(convictionNumber),
+        req.body,
+        pduCode
+      )
+    }
+  )
+
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-allocation',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.submitSpoOversight(
         req,
         res,
         crn,
@@ -270,7 +290,7 @@ export default function routes(services: Services): Router {
     await probationEstateController.selectProbationDeliveryUnit(req, res, regionCode)
   })
 
-  get('/technical-updates', async (req, res) => {
+  get('/whats-new', async (req, res) => {
     await technicalUpdatesController.getTechnicalUpdates(req, res)
   })
   return router

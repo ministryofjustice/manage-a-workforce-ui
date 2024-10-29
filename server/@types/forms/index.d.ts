@@ -4,14 +4,12 @@ declare module 'forms' {
     person: {
       email?: string
     }[]
+    isSensitive: boolean
+    emailCopyOptOut: boolean
   }
   export interface FindUnallocatedCasesForm {
     pdu?: string
     ldu?: string
     team?: string
-  }
-  export interface DecisionEvidenceForm {
-    evidenceText?: string
-    isSensitive?: boolean
   }
 }

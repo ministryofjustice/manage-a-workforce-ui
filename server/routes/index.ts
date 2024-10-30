@@ -89,6 +89,7 @@ export default function routes(services: Services): Router {
 
   post('/pdu/:pduCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
     const { crn, convictionNumber, pduCode } = req.params
+    // eslint-disable-next-line security-node/detect-dangerous-redirects
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner`)
   })
 

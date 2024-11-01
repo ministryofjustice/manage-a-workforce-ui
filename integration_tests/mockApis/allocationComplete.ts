@@ -153,6 +153,20 @@ export default {
     })
   },
 
+  stubGetLaoStatus: ({ crn, status }): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: '/cases/unallocated/{crn}/restricted',
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: status,
+      },
+    })
+  },
+
   stubGetApostropheAllocationCompleteDetails: (): SuperAgentRequest => {
     return stubForWorkload({
       request: {

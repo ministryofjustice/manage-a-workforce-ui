@@ -5,6 +5,7 @@ import SpoOversightOptionPage from '../pages/spoOversightOption'
 import SpoOversightPage from '../pages/spoOversight'
 import ErrorPage from '../pages/error'
 import SummaryPage from '../pages/summary'
+import laoStatus from '../mockApis/laoStatus'
 
 context('Allocate Complete', () => {
   beforeEach(() => {
@@ -87,7 +88,7 @@ context('Allocate Complete', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubNotFoundEventManagerDetails')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', true)
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', { sendCopy: true, laoStatus: false })
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubSearchStaff')
     cy.signIn()

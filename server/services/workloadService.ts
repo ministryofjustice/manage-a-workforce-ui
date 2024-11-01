@@ -103,6 +103,7 @@ export default class WorkloadService {
         sensitiveNotes,
         spoOversightNotes,
         sensitiveOversightNotes,
+        laoCase,
       },
     })) as OffenderManagerAllocatedCase
   }

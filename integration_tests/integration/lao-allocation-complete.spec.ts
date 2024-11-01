@@ -3,8 +3,6 @@ import AllocationCompletePage from '../pages/allocationComplete'
 import InstructionsConfirmPage from '../pages/confirmInstructions'
 import SpoOversightOptionPage from '../pages/spoOversightOption'
 import SpoOversightPage from '../pages/spoOversight'
-import ErrorPage from '../pages/error'
-import SummaryPage from '../pages/summary'
 
 context('Allocate Complete', () => {
   beforeEach(() => {
@@ -40,7 +38,7 @@ context('Allocate Complete', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubNotFoundEventManagerDetails')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', true)
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', { sendCopy: true, laoStatus: true })
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubSearchStaff')
     cy.signIn()

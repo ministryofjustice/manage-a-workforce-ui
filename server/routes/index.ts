@@ -83,7 +83,7 @@ export default function routes(services: Services): Router {
   })
 
   get('/pdu/:pduCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
-    const { crn, convictionNumber, pduCode } = req.params
+    const { crn, convictionNumber, pduCode, laoCase } = req.params
     await allocationsController.getUnallocatedCase(req, res, crn, convictionNumber, pduCode)
   })
 
@@ -108,13 +108,13 @@ export default function routes(services: Services): Router {
   })
 
   get('/pdu/:pduCode/:crn/convictions/:convictionNumber/choose-practitioner', async (req, res) => {
-    const { crn, convictionNumber, pduCode } = req.params
+    const { crn, convictionNumber, pduCode, laoCase } = req.params
     await allocationsController.choosePractitioner(req, res, crn, convictionNumber, pduCode)
   })
 
   post('/pdu/:pduCode/:crn/convictions/:convictionNumber/choose-practitioner', async (req, res) => {
-    const { crn, convictionNumber, pduCode } = req.params
-    await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionNumber, pduCode)
+    const { crn, convictionNumber, pduCode, laoCase } = req.params
+    await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionNumber, pduCode, laoCase)
   })
 
   get(

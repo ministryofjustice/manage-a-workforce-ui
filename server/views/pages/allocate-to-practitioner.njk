@@ -34,6 +34,9 @@
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-10">
         You're allocating {{name}} ({{tier}}) to {{ offenderManagerDetails }}</h1>
+            {% if 'true' == laoCase %}
+                <span class="govuk-body govuk-tag--orange">Restricted access</span>
+            {% endif %}
             {% if data.capacity == data.potentialCapacity %}
                 <p class="govuk-body-l !-margin-bottom-2" id="impact-statement">Their workload will remain at <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> as they are already managing this case.</p>
             {% else %}
@@ -55,7 +58,8 @@
             convictionNumber: convictionNumber,
             crn: crn,
             errorMessage: errors | findError('instructions'),
-            rows: 10
+            rows: 10,
+            laoCase: laoCase
         })
     }}
         <div class="govuk-form-group govuk-!-margin-top-7">

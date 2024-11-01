@@ -36,6 +36,7 @@ export default class AllocationsController {
       crn,
       convictionNumber
     )
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     const address = new DisplayAddress(response.address)
     response.name = unescapeApostrophe(response.name)
     res.render('pages/summary', {
@@ -48,6 +49,7 @@ export default class AllocationsController {
       title: `${response.name} | Summary | Manage a workforce`,
       pduCode,
       outOfAreaTransfer: response.outOfAreaTransfer,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }
@@ -145,7 +147,7 @@ export default class AllocationsController {
     const { token, username } = res.locals.user
 
     const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
-
+    const laoCase = await this.allocationsService.getLaoStatus(crn, token)
     const [allocationInformationByTeam, allTeamDetails] = await Promise.all([
       await this.workloadService.getChoosePractitionerData(token, crn, teamCodesPreferences.items),
       await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
@@ -180,11 +182,12 @@ export default class AllocationsController {
       error,
       missingEmail,
       pduCode,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }
 
-  async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionNumber, pduCode) {
+  async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionNumber, pduCode, laoCase) {
     const {
       body: { allocatedOfficer: teamAndStaffCode },
     } = req
@@ -214,6 +217,7 @@ export default class AllocationsController {
       staffCode,
       staffTeamCode
     )
+    const laoCase = await this.allocationsService.getLaoStatus(crn, req.user.token)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
     response.name.surname = unescapeApostrophe(response.name.surname)
     res.render('pages/allocate-to-practitioner', {
@@ -226,6 +230,7 @@ export default class AllocationsController {
       staffCode,
       staffTeamCode,
       pduCode,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }
@@ -246,6 +251,7 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
+    const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
@@ -267,6 +273,7 @@ export default class AllocationsController {
       confirmInstructionForm,
       pduCode,
       scrollToBottom,
+      laoCase,
     })
   }
 
@@ -286,6 +293,7 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
+    const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
@@ -299,6 +307,7 @@ export default class AllocationsController {
       name: response.name.combinedName,
       data: response,
       scrollToBottom,
+      laoCase,
     })
   }
 
@@ -370,6 +379,7 @@ export default class AllocationsController {
         emailCopyOptOut: form.emailCopyOptOut === 'yes',
       })
     )
+    const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
 
     if (form.remove !== undefined) {
       form.person.splice(form.remove, 1)
@@ -411,6 +421,7 @@ export default class AllocationsController {
     pduCode
   ) {
     const spoOversightForm = trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
+    const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     const errors = validate(
       spoOversightForm,
       { 'person.*.email': 'email', instructions: 'nourl' },

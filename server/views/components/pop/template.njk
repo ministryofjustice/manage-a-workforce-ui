@@ -1,15 +1,31 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        {% if 'lg' == params.popSize -%}
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-10">{{ params.name }}
-                <span class="govuk-caption-l">Tier: {{ params.tier }}</span>
-                <span class="govuk-caption-l">CRN: {{ params.crn }}</span>
-            </h1>
+        {% if true == params.laoCase -%}
+            {% if 'lg' == params.popSize -%}
+                <h1 class="govuk-heading-l govuk-!-margin-bottom-10">{{ params.name }}
+                    <span class="govuk-caption-l">Tier: {{ params.tier }}</span>
+                    <span class="govuk-caption-l">CRN: {{ params.crn }}</span>
+                </h1>
+                <span class="govuk-body govuk-tag--orange">Restricted access</span>
+            {% else %}
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ params.name }}
+                    <span class="govuk-caption-xl">Tier: {{ params.tier }}</span>
+                    <span class="govuk-caption-xl">CRN: {{ params.crn }}</span>
+                </h1>
+                <span class="govuk-body govuk-tag--orange">Restricted access</span>
+            {%- endif %}
         {% else %}
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ params.name }}
-                <span class="govuk-caption-xl">Tier: {{ params.tier }}</span>
-                <span class="govuk-caption-xl">CRN: {{ params.crn }}</span>
-            </h1>
+            {% if 'lg' == params.popSize -%}
+                <h1 class="govuk-heading-l govuk-!-margin-bottom-10">{{ params.name }}
+                    <span class="govuk-caption-l">Tier: {{ params.tier }}</span>
+                    <span class="govuk-caption-l">CRN: {{ params.crn }}</span>
+                </h1>
+            {% else %}
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ params.name }}
+                    <span class="govuk-caption-xl">Tier: {{ params.tier }}</span>
+                    <span class="govuk-caption-xl">CRN: {{ params.crn }}</span>
+                </h1>
+            {%- endif %}
         {%- endif %}
     </div>
 </div>

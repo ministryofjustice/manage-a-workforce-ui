@@ -187,7 +187,7 @@ export default class AllocationsController {
     })
   }
 
-  async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionNumber, pduCode, laoCase) {
+  async selectAllocateOffenderManager(req: Request, res: Response, crn, convictionNumber, pduCode) {
     const {
       body: { allocatedOfficer: teamAndStaffCode },
     } = req
@@ -379,7 +379,7 @@ export default class AllocationsController {
         emailCopyOptOut: form.emailCopyOptOut === 'yes',
       })
     )
-    const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    // const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
 
     if (form.remove !== undefined) {
       form.person.splice(form.remove, 1)
@@ -421,7 +421,7 @@ export default class AllocationsController {
     pduCode
   ) {
     const spoOversightForm = trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
-    const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    // const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     const errors = validate(
       spoOversightForm,
       { 'person.*.email': 'email', instructions: 'nourl' },

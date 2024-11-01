@@ -5,6 +5,7 @@ import outOfAreasBannerBlurb from '../constants'
 context('Summary', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')

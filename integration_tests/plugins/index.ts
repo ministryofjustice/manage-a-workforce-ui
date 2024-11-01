@@ -7,6 +7,7 @@ import {
   resetWorkloadStubs,
   resetStaffLookupStubs,
   resetManageUsersStubs,
+  resetLaoStubs,
 } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
@@ -25,6 +26,7 @@ import allocationComplete from '../mockApis/allocationComplete'
 import probationEstate from '../mockApis/probationEstate'
 import staffLookup from '../mockApis/staffLookup'
 import logging from '../mockApis/logging'
+import laoStatus from '../mockApis/getLaoStatus'
 
 const redisService = new RedisService()
 
@@ -38,6 +40,7 @@ export default (on: (string, Record) => void): void => {
         resetUserPreferenceStubs(),
         resetStaffLookupStubs(),
         resetManageUsersStubs(),
+        resetLaoStubs(),
         redisService.deleteAll(),
       ])
       return Promise.all([
@@ -97,6 +100,7 @@ export default (on: (string, Record) => void): void => {
     ...userPreference,
     ...choosePractitioner,
     ...staffLookup,
+    ...laoStatus,
     ...logging,
   })
 }

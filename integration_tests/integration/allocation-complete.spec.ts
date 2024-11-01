@@ -11,6 +11,7 @@ context('Allocate Complete', () => {
     cy.task('stubSetup')
     cy.task('stubSearchStaff')
     cy.task('stubGetConfirmInstructions')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
   })
 
   it('return to unallocated cases if team link exists', () => {

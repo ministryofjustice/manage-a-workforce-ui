@@ -63,6 +63,9 @@ export { stubForManageUsers, resetManageUsersStubs }
 const { stubFor: stubForProbationEstate, resetStubs: resetProbationEstateStubs } = wiremock(probationUrl)
 export { stubForProbationEstate, resetProbationEstateStubs }
 
+const { stubFor: stubForLaoStatus, resetStubs: resetLaoStubs } = wiremock(allocationUrl)
+export { stubForLaoStatus, resetLaoStubs }
+
 const {
   stubFor: stubForAllocation,
   getRequests: getAllocationRequests,

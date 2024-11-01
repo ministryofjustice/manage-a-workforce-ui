@@ -6,6 +6,7 @@ context('Probation record', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.signIn()
   })
 

@@ -19,7 +19,7 @@ export default class AllocationsService {
   }
 
   async getLaoStatus(crn: string, token: string): Promise<boolean> {
-    return (await this.restClient(token).get({ path: `/cases/unallocated/${crn}/restricted` })) as boolean
+    return (await this.restClient(token).get({ path: `/cases/unallocated/${crn}/cases/restricted` })) as boolean
   }
 
   private restClient(token: string): RestClient {

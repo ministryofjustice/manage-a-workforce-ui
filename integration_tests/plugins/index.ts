@@ -26,7 +26,7 @@ import allocationComplete from '../mockApis/allocationComplete'
 import probationEstate from '../mockApis/probationEstate'
 import staffLookup from '../mockApis/staffLookup'
 import logging from '../mockApis/logging'
-import laoStatus from '../mockApis/getLaoStatus'
+import laoStatus from '../mockApis/laoStatus'
 
 const redisService = new RedisService()
 

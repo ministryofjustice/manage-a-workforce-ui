@@ -1,12 +1,13 @@
 import Page from '../pages/page'
 import AllocateToPractitionerPage from '../pages/allocateToPractitioner'
+import AllocateToPractitionerRestrictedPage from '../pages/allocateToPractitionerRestricted'
 import ChoosePractitionerPage from '../pages/choosePractitioner'
 
 context('Allocate to Practitioner', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetPotentialOffenderManagerWorkload', {})
-    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
   })
 
   it('can navigate to Allocate to Practitioner page from Choose Practitioner', () => {
@@ -138,5 +139,26 @@ context('Allocate to Practitioner', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
     allocatePage.redCapacities().should('have.text', '100.2%108.6%')
+  })
+
+  it('Display Lao Restriced access badge if Lao Case', () => {
+    cy.signIn()
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
+    const allocatePage = Page.verifyOnPage(AllocateToPractitionerRestrictedPage)
+    allocatePage.restrictedStatusBadge().should('exist')
+  })
+
+  it('Display amended hint text for notes for Lao Case', () => {
+    cy.signIn()
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
+    const allocatePage = Page.verifyOnPage(AllocateToPractitionerRestrictedPage)
+    allocatePage
+      .restrictedStatusAllocationNotesHintText()
+      .should(
+        'contain',
+        'These notes will be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes.'
+      )
   })
 })

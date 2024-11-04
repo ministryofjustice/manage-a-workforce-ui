@@ -7,6 +7,7 @@ context('Choose Practitioner', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubUserPreferenceTeams', ['N03F01', 'N03F02'])
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.task('stubGetUnallocatedCasesByTeams', {
       teamCodes: 'N03F01,N03F02',
       response: [

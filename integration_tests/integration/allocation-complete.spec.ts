@@ -5,7 +5,6 @@ import SpoOversightOptionPage from '../pages/spoOversightOption'
 import SpoOversightPage from '../pages/spoOversight'
 import ErrorPage from '../pages/error'
 import SummaryPage from '../pages/summary'
-import laoStatus from '../mockApis/laoStatus'
 
 context('Allocate Complete', () => {
   beforeEach(() => {

@@ -452,6 +452,7 @@ export default class AllocationsController {
     const allocationNotes = confirmInstructionForm.instructions
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
     const isSPOOversightAccessed = 'true'
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
 
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
@@ -465,7 +466,8 @@ export default class AllocationsController {
       spoOversightSensitive,
       allocationNotes,
       allocationNotesSensitive,
-      isSPOOversightAccessed
+      isSPOOversightAccessed,
+      laoCase
     )
     req.session.allocationForm = {
       otherEmails,
@@ -499,6 +501,7 @@ export default class AllocationsController {
     const allocationNotes = confirmInstructionForm.instructions
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
     const isSPOOversightAccessed = 'false'
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
 
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
@@ -512,7 +515,8 @@ export default class AllocationsController {
       spoOversightSensitive,
       allocationNotes,
       allocationNotesSensitive,
-      isSPOOversightAccessed
+      isSPOOversightAccessed,
+      laoCase
     )
     req.session.allocationForm = {
       otherEmails,

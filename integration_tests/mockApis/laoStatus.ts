@@ -6,7 +6,7 @@ export default {
     return stubForLaoStatus({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/${crn}/cases/restricted`,
+        urlPattern: `/cases/unallocated/${crn}/restricted`,
       },
       response: {
         status: 200,

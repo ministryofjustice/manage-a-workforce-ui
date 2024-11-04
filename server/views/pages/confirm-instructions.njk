@@ -65,7 +65,8 @@
       <form data-validate-form="confirm-allocation" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-instructions' }}" method="post">
         <div class="govuk-form-group">
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-          {{
+          {% if laoCase == false %}
+            {{
             instructions({
                 titleText: "Review your allocation notes",
                 html: ('<p><br>These notes will be sent in the allocation email to <strong>' + data.staff.name.combinedName + '</strong> (<em>' + data.staff.email + '</em>).</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
@@ -74,9 +75,26 @@
                 crn: crn,
                 inGridRow: false,
                 rows: 20,
-                errorMessage: errors | findError('instructions')
+                errorMessage: errors | findError('instructions'),
+                laoCase: laoCase
             })
             }}
+          {% else %}
+            {{
+            instructions({
+                titleText: "Review your allocation notes",
+                html: ('<div class="moj-banner" role="region" aria-label="information" id="not-included-banner"><h2 class="govuk-heading-s" id="not-included-warning-text">These notes will not be included in the email to the probation practitioner as this is a restricted case.</h2></div><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
+                convictionNumber: convictionNumber,
+                hintText: ' ',
+                crn: crn,
+                inGridRow: false,
+                rows: 20,
+                errorMessage: errors | findError('instructions'),
+                laoCase: laoCase
+            })
+            }}
+          {% endif %}
+
         </div>
         <div class="govuk-form-group govuk-allocations-emails-form">
           {% if confirmInstructionForm.person.length === 0 %}

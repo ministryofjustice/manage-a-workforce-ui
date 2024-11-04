@@ -1,12 +1,14 @@
 import Page from '../pages/page'
 import InstructionsConfirmPage from '../pages/confirmInstructions'
+import InstructionsConfirmPageRestricted from '../pages/confirmInstructionsRestricted'
 
 context('Instructions Confirmation', () => {
   let instructionsPage: InstructionsConfirmPage
+  let instructionsPageRestricted: InstructionsConfirmPageRestricted
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetConfirmInstructions')
-    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
     instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -88,5 +90,30 @@ context('Instructions Confirmation', () => {
     instructionsPage.hideMessageLink().click()
     cy.reload()
     instructionsPage.technicalUpdatesBanner().should('have.class', 'moj-hidden')
+  })
+
+  it('For Lao Case restricted access badge appears', () => {
+    cy.task('stubSetup')
+    cy.task('stubGetConfirmInstructions')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+    instructionsPageRestricted = Page.verifyOnPage(InstructionsConfirmPageRestricted)
+    instructionsPageRestricted.restrictedStatusBadge().should('exist')
+  })
+
+  it('For Lao Case warning text that notes not sent in email appears', () => {
+    cy.task('stubSetup')
+    cy.task('stubGetConfirmInstructions')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+    instructionsPageRestricted = Page.verifyOnPage(InstructionsConfirmPageRestricted)
+    instructionsPageRestricted
+      .restrictedStatusWarningTextForEmail()
+      .should(
+        'contain',
+        'These notes will not be included in the email to the probation practitioner as this is a restricted case.'
+      )
   })
 })

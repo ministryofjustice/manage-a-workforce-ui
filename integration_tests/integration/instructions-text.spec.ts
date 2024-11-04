@@ -10,6 +10,7 @@ const FOUR_WEEKS_AND_A_DAY_IN_MS = (4 * 7 + 1) * 24 * 3600 * 1000
 context('Instructions text', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
   })
 
   it('Instructions text should save and display when switching to summary page', () => {

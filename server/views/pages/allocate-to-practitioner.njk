@@ -34,7 +34,7 @@
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-10">
         You're allocating {{name}} ({{tier}}) to {{ offenderManagerDetails }}</h1>
-            {% if 'true' == laoCase %}
+            {% if true == laoCase %}
                 <span class="govuk-body govuk-tag--orange">Restricted access</span>
             {% endif %}
             {% if data.capacity == data.potentialCapacity %}

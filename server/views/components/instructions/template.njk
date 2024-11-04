@@ -14,7 +14,7 @@
         <label class="govuk-label govuk-label--l" for="instructions">
           {{ params.html | safe if params.html}}
           <div id="more-detail-hint" class="govuk-hint">
-            {% if true == laoCase %}
+            {% if false == laoCase %}
               {{ params.hintText | safe if params.hintText else "These notes are sent to the practitioner in the allocation email. They will also be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes." }}
             {% else %}
               {{ params.hintText | safe if params.hintText else "These notes will be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes." }}

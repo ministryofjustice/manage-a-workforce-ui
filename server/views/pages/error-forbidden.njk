@@ -1,0 +1,22 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home",
+                href: "/pdu/" + pduCode + "/teams"
+            },
+            {
+                text: "Unallocated cases",
+                href: "/pdu/" + pduCode + "/find-unallocated"
+            }
+        ]
+    }) }}
+{% endblock %}
+
+{% block content %}
+    <h1 class="govuk-heading-l" id="forbidden-header">You can no longer access this case.</h1>
+    <p class="govuk-body" id="forbidden-message">This is now a restricted access case. Check NDelius if you require access or further information</p>
+{% endblock %}

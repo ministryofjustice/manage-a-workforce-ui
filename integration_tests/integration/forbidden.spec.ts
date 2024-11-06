@@ -10,13 +10,9 @@ context('Forbidden', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view', { failOnStatusCode: false })
   })
 
-  it('403 message should be shown', () => {
+  it('403 message and header should be shown', () => {
     const forbiddenPage = Page.verifyOnPage(ForbiddenPage)
     forbiddenPage.message().should('exist')
-  })
-
-  it('403 header/title should be shown', () => {
-    const forbiddenPage = Page.verifyOnPage(ForbiddenPage)
     forbiddenPage.heading().should('exist')
   })
 })

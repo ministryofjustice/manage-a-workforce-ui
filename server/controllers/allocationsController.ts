@@ -15,12 +15,14 @@ import OfficerView from './data/OfficerView'
 import DisplayAddress from './data/DisplayAddress'
 import ProbationEstateService from '../services/probationEstateService'
 import DocumentRow from './data/DocumentRow'
-import ChoosePractitionerData from '../models/ChoosePractitionerData'
+import ChoosePractitionerData, { Practitioner } from '../models/ChoosePractitionerData'
 import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
 import { unescapeApostrophe } from '../utils/utils'
+import allocations from '../../integration_tests/mockApis/allocations'
+import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
 
 export default class AllocationsController {
   constructor(
@@ -152,6 +154,16 @@ export default class AllocationsController {
       await this.workloadService.getChoosePractitionerData(token, crn, teamCodesPreferences.items),
       await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
     ])
+
+    if (laoCase) {
+      // get the LAO status of each staffCode and add to allocation Information
+      const staffRestrictions = await this.allocationsService.getRestrictedStatusByCrnAndStaffIds(
+        token,
+        crn,
+        getStaffCodes(allocationInformationByTeam.teams)
+      )
+      allocationInformationByTeam.teams = setStaffRestrictions(allocationInformationByTeam.teams, staffRestrictions)
+    }
 
     const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
       allocationInformationByTeam,
@@ -646,6 +658,33 @@ function mapPractitioner(practitionerData): OffenderManagerToAllocate {
   }
 }
 
+function setStaffRestrictions(
+  practitionerData: Record<string, Practitioner[]>,
+  staffRestrictions: CrnStaffRestrictions
+): Record<string, Practitioner[]> {
+  // convert array to map
+  const staffMap = staffRestrictions.staffRestrictions.reduce((map, obj) => {
+    return { ...map, [obj.staffCode]: obj.isExcluded }
+  }, {})
+
+  const authorisedPractitioners = { ...practitionerData }
+  Object.entries(practitionerData).forEach(([teamCode, practitioners]) => {
+    practitioners.forEach((practioner, index) => {
+      authorisedPractitioners[teamCode][index] = { ...practioner, laoCase: staffMap[practioner.code] }
+    })
+  })
+
+  return authorisedPractitioners
+}
+
+function getStaffCodes(practitionerData: Record<string, Practitioner[]>): string[] {
+  const staffIds = Object.values(practitionerData)
+    .reduce((aggr, practitioners) => [...aggr, ...practitioners], [])
+    .map(practitioner => practitioner.code)
+
+  return staffIds
+}
+
 function sortPractitionersByGrade(a, b) {
   if (b.gradeOrder === a.gradeOrder) {
     return a.capacity - b.capacity
@@ -671,10 +710,16 @@ type OffenderManagerToAllocate = {
   communityCases: number
   custodyCases: number
   email?: string
+  restrictedAccess?: boolean
 }
 
 type OffenderManagerToAllocateWithTeam = OffenderManagerToAllocate & {
   teamCode: string
   teamName: string
   selectionCode: string
+}
+
+type StaffRestriction = {
+  staffCode: string
+  restricted: boolean
 }

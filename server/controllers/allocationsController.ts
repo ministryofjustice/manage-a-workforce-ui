@@ -21,7 +21,6 @@ import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
 import { unescapeApostrophe } from '../utils/utils'
-import allocations from '../../integration_tests/mockApis/allocations'
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
 
 export default class AllocationsController {
@@ -155,7 +154,7 @@ export default class AllocationsController {
       await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
     ])
 
-    if (laoCase) {
+    if (laoCase === true) {
       // get the LAO status of each staffCode and add to allocation Information
       const staffRestrictions = await this.allocationsService.getRestrictedStatusByCrnAndStaffIds(
         token,
@@ -655,6 +654,7 @@ function mapPractitioner(practitionerData): OffenderManagerToAllocate {
     communityCases: practitionerData.communityCases,
     custodyCases: practitionerData.custodyCases,
     email: practitionerData.email,
+    laoCase: practitionerData.laoCase,
   }
 }
 
@@ -710,16 +710,11 @@ type OffenderManagerToAllocate = {
   communityCases: number
   custodyCases: number
   email?: string
-  restrictedAccess?: boolean
+  laoCase?: boolean
 }
 
 type OffenderManagerToAllocateWithTeam = OffenderManagerToAllocate & {
   teamCode: string
   teamName: string
   selectionCode: string
-}
-
-type StaffRestriction = {
-  staffCode: string
-  restricted: boolean
 }

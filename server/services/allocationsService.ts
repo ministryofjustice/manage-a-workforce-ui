@@ -30,7 +30,7 @@ export default class AllocationsService {
   ): Promise<CrnStaffRestrictions> {
     console.log(`calling /cases/unallocated/${crn}/restrictions with ${staffCodes}`)
     return (await this.restClient(token).post({
-      path: `/cases/unallocated/{crn}/restrictions`,
+      path: `/cases/unallocated/${crn}/restrictions`,
       data: {
         staffCodes,
       },

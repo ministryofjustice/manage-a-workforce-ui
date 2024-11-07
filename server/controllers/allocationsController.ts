@@ -163,7 +163,7 @@ export default class AllocationsController {
         getStaffCodes(allocationInformationByTeam.teams)
       )
       console.log(`crn is ${crn} Succeeded`)
-      // allocationInformationByTeam.teams = setStaffRestrictions(allocationInformationByTeam.teams, staffRestrictions)
+      allocationInformationByTeam.teams = setStaffRestrictions(allocationInformationByTeam.teams, staffRestrictions)
     }
 
     const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(

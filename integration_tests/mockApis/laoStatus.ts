@@ -56,7 +56,7 @@ export default {
         urlPattern: `/cases/unallocated/J678910/restrictions`,
         bodyPatterns: [
           {
-            equalToJson: `{ "staffCodes": ["OM1", "OM2", "OM3"]}`,
+            equalToJson: `{ "staffCodes": ["OM1"]}`,
           },
         ],
       },

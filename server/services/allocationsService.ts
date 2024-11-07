@@ -28,6 +28,7 @@ export default class AllocationsService {
     crn: string,
     staffCodes: string[]
   ): Promise<CrnStaffRestrictions> {
+    console.log(`calling /cases/unallocated/${crn}/restrictions with ${staffCodes}`)
     return (await this.restClient(token).post({
       path: `/cases/unallocated/{crn}/restrictions`,
       data: {

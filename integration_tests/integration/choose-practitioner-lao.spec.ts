@@ -50,8 +50,8 @@ context('Choose Practitioner', () => {
       ],
     })
     cy.task('stubChoosePractitioners', {})
-    cy.task('stubForStaffLaoStatusByCrn', ['OM1', 'OM2', 'OM3'])
-    cy.task('stubForStaffLaoStatusByCrn2', '[OM1]')
+    cy.task('stubForStaffLaoStatusByCrn')
+    cy.task('stubForStaffLaoStatusByCrn2')
   })
 
   it('notification banner visible on page', () => {

@@ -15,7 +15,7 @@ export default {
       },
     })
   },
-  stubForStaffLaoStatusByCrn: (staffIds: string[]): SuperAgentRequest => {
+  stubForStaffLaoStatusByCrn: (): SuperAgentRequest => {
     return stubForLaoStatus({
       request: {
         method: 'POST',
@@ -49,7 +49,7 @@ export default {
       },
     })
   },
-  stubForStaffLaoStatusByCrn2: (staffIds: string[]): SuperAgentRequest => {
+  stubForStaffLaoStatusByCrn2: (): SuperAgentRequest => {
     return stubForLaoStatus({
       request: {
         method: 'POST',

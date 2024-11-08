@@ -156,13 +156,11 @@ export default class AllocationsController {
 
     if (laoCase === true) {
       // get the LAO status of each staffCode and add to allocation Information
-      console.log(`NOW crn is ${crn}`)
-      const staffRestrictions = await this.allocationsService.getRestrictedStatusByCrnAndStaffIds(
+      const staffRestrictions = await this.allocationsService.getRestrictedStatusByCrnAndStaffCodes(
         token,
         crn,
         getStaffCodes(allocationInformationByTeam.teams)
       )
-      console.log(`crn is ${crn} Succeeded`)
       allocationInformationByTeam.teams = setStaffRestrictions(allocationInformationByTeam.teams, staffRestrictions)
     }
 
@@ -680,13 +678,14 @@ function setStaffRestrictions(
 }
 
 function getStaffCodes(practitionerData: Record<string, Practitioner[]>): string[] {
-  const staffIds = Object.values(practitionerData)
+  /*
+   iterate through practitioner data creating a list of staffCodes
+   */
+  const staffCodes = Object.values(practitionerData)
     .reduce((aggr, practitioners) => [...aggr, ...practitioners], [])
     .map(practitioner => practitioner.code)
 
-  console.log(`looking for ${staffIds}`)
-
-  return staffIds
+  return staffCodes
 }
 
 function sortPractitionersByGrade(a, b) {

@@ -23,7 +23,7 @@ export default class AllocationsService {
     return (await this.restClient(token).get({ path: `/cases/unallocated/${crn}/restricted` })) as boolean
   }
 
-  async getRestrictedStatusByCrnAndStaffIds(
+  async getRestrictedStatusByCrnAndStaffCodes(
     token: string,
     crn: string,
     staffCodes: string[]

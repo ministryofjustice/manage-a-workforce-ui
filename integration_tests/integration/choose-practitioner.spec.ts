@@ -77,6 +77,14 @@ context('Choose Practitioner', () => {
       )
   })
 
+  it('Display Lao Restricted access badge if Lao Case', () => {
+    cy.task('stubChoosePractitionersWithEmails')
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.restrictedStatusBadge().should('not.exist')
+  })
+
   it('Offender details visible on page', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()

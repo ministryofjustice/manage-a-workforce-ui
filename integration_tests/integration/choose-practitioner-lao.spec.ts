@@ -51,12 +51,21 @@ context('Choose Practitioner', () => {
     cy.task('stubForStaffLaoStatusByCrn2')
   })
 
-  it('notification banner is not visible on page if all practitioner have email addresses', () => {
+  it('Display Lao Restricted access badge if Lao Case', () => {
     cy.task('stubChoosePractitionersWithEmails')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const regionPage = Page.verifyOnPage(ChoosePractitionerPage)
-    regionPage
+    regionPage.restrictedStatusBadge().should('exist')
+  })
+
+  it('notification banner is not visible on page if all practitioner have email addresses', () => {
+    cy.task('stubChoosePractitionersWithEmails')
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.restrictedStatusBadge().should('exist')
+    choosePractitionerPage
       .notificationBanner()
       .should(
         'not.contain',

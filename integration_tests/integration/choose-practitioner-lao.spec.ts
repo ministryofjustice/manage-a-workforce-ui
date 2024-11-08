@@ -1,7 +1,5 @@
 import Page from '../pages/page'
 import ChoosePractitionerPage from '../pages/choosePractitioner'
-import SummaryPage from '../pages/summary'
-import { sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Choose Practitioner', () => {
   beforeEach(() => {

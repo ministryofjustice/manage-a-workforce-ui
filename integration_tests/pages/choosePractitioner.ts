@@ -5,6 +5,8 @@ export default class ChoosePractitionerPage extends Page {
     super('Choose practitioner')
   }
 
+  restrictedStatusBadge = (): PageElement => cy.get('.govuk-body.govuk-tag--orange')
+
   warningText = (): PageElement => cy.get('.govuk-warning-text')
 
   warningIcon = (): PageElement => cy.get('.govuk-warning-text__icon')

@@ -56,7 +56,43 @@
 } %}
 
 {% for item in unallocatedCases %}
-  {% if item.outOfAreaTransfer == true %}
+  {% if item.apopExcluded == true %}
+
+    {%- set tableRow = [
+            {
+                text: tripleCell(
+                  '<strong>' + item.name + '</strong>',
+                  item.crn,
+                  'govuk-body-s govuk-!-display-inline-block',
+                  '<span class="govuk-tag--orange">Restricted access</span>'
+                ),
+                attributes: { "data-sort-value": item.crn }
+            },
+            { text: 'This is a restricted case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 5 }
+        ] -%}
+  {% elif item.excluded == true %}
+    {%- set tableRow = [
+            {
+                text: tripleCell(
+                  '<a href="/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' +  item.name + '</a>',
+                  item.crn, 
+                  'govuk-body-s govuk-!-display-inline-block',
+                  '<span class="govuk-tag--orange">Restricted access</span>'
+                ),
+                attributes: { "data-sort-value": item.crn }
+            },
+            { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+            { text: (item.sentenceDate | dateFormat), attributes: {
+                "data-sort-value": item.sentenceDate
+            } },
+            { text: item.handoverDate, attributes: { "data-sort-value": item.handoverDate } },
+            {
+                text: doubleCell(item.primaryInitialAppointment,item.secondaryInitialAppointment, 'maw-secondary' ),
+                attributes: { "data-sort-value": item.primaryInitialAppointment }
+            },
+            { text: doubleCell(item.primaryStatus, item.secondaryStatus, 'govuk-body-s')}
+        ] -%}
+  {% elif item.outOfAreaTransfer == true %}
     {%- set tableRow = [
             { text: tripleCell(
                 '<a href="/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' +  item.name + '</a>',
@@ -76,11 +112,10 @@
                 text: 'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.', attributes: { "data-sort-value": item.tierOrder }
             }
         ] -%}
-    {{ tableData.rows.push(tableRow) }}
   {% else %}
     {%- set tableRow = [
             {
-                text: doubleCell('<a href="/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" " class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' +  item.name + '</a>', item.crn, 'govuk-body-s' ),
+                text: doubleCell('<a href="/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view" class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="' + item.crn + '-' + item.convictionNumber +'"">' +  item.name + '</a>', item.crn, 'govuk-body-s' ),
                 attributes: { "data-sort-value": item.crn }
             },
             { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
@@ -94,8 +129,10 @@
             },
             { text: doubleCell(item.primaryStatus, item.secondaryStatus, 'govuk-body-s')}
         ] -%}
-    {{ tableData.rows.push(tableRow) }}
+
   {% endif %}
+
+  {{ tableData.rows.push(tableRow) }}
 {% endfor %}
 
 {% block allocationContent %}
@@ -183,9 +220,10 @@
   </div>
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <h2 class="govuk-heading-l">Allocating other types of case</h2>
-      <p>Use NDelius to allocate limited access offender and transition to adult cases</p>
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-l">Allocating limited access offender (LAO) cases</h2>
+      <p>You are now able to allocate some LAO cases which will be shown with a <span class="govuk-tag--orange">Restricted access</span> badge next to the peson on probation's name.</p>
+      <p>Not all LAO cases will be shown so you should still check NDelius to view and allocate.</p>
     </div>
   </div>
 

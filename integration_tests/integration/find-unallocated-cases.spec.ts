@@ -162,7 +162,7 @@ context('Find Unallocated cases', () => {
       outOfAreaTransfer: true,
     }
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
-    const response = allocationsByTeamResponse
+    const response = [...allocationsByTeamResponse]
     response.push(outOfAreaTransferCase)
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1', response })
     cy.reload()
@@ -250,7 +250,7 @@ context('Find Unallocated cases', () => {
           'Probation status': 'Previously managed(John Agard)',
         },
         {
-          'Name / CRN': 'John DoeX678911  Actionrequired',
+          'Name / CRN': 'John Doe      X678911      Actionrequired',
           Tier: 'C1',
           'Sentence date': '1 December 2023',
           'COM handover': 'N/A',
@@ -420,5 +420,206 @@ context('Find Unallocated cases', () => {
     cy.reload()
 
     cy.get('table').within(() => cy.contains('button', 'Name / CRN').should('have.attr', { 'aria-sort': 'ascending' }))
+  })
+
+  it('shows the Restricted access badge when appropriate', () => {
+    const excludedCases = [
+      {
+        name: 'John Doe',
+        crn: 'X678911',
+        tier: 'C1',
+        sentenceDate: '2023-12-01',
+        handoverDate: null,
+        initialAppointment: {
+          date: '2023-12-20',
+          staff: {
+            name: {
+              forename: 'Unallocated',
+              middlename: null,
+              surname: 'Staff',
+              combinedName: 'Unallocated Staff',
+            },
+          },
+        },
+        status: 'Currently managed',
+        offenderManager: {
+          forenames: 'Jane',
+          surname: 'Doe',
+          grade: 'SPO',
+        },
+        convictionNumber: 1,
+        caseType: 'COMMUNITY',
+        outOfAreaTransfer: false,
+        excluded: true,
+      },
+      {
+        name: 'John Doe',
+        crn: 'X678911',
+        tier: 'C1',
+        sentenceDate: '2023-12-01',
+        handoverDate: null,
+        initialAppointment: {
+          date: '2023-12-20',
+          staff: {
+            name: {
+              forename: 'Unallocated',
+              middlename: null,
+              surname: 'Staff',
+              combinedName: 'Unallocated Staff',
+            },
+          },
+        },
+        status: 'Currently managed',
+        offenderManager: {
+          forenames: 'Jane',
+          surname: 'Doe',
+          grade: 'SPO',
+        },
+        convictionNumber: 1,
+        caseType: 'COMMUNITY',
+        outOfAreaTransfer: false,
+        excluded: true,
+      },
+    ]
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    const response = [...allocationsByTeamResponse]
+    response.push(...excludedCases)
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1', response })
+    cy.reload()
+
+    // Check tags
+    cy.get('table').find('.govuk-tag--orange').should('have.length', 2)
+    cy.get('table').find('.govuk-tag--orange').first().should('have.text', 'Restricted access')
+  })
+
+  it('shows the Restricted access badge and redacts info when appropriate', () => {
+    const excludedCases = [
+      {
+        name: 'John Doe',
+        crn: 'X678911',
+        tier: 'C1',
+        sentenceDate: '2023-12-01',
+        handoverDate: null,
+        initialAppointment: {
+          date: '2023-12-20',
+          staff: {
+            name: {
+              forename: 'Unallocated',
+              middlename: null,
+              surname: 'Staff',
+              combinedName: 'Unallocated Staff',
+            },
+          },
+        },
+        status: 'Currently managed',
+        offenderManager: {
+          forenames: 'Jane',
+          surname: 'Doe',
+          grade: 'SPO',
+        },
+        convictionNumber: 1,
+        caseType: 'COMMUNITY',
+        outOfAreaTransfer: false,
+        excluded: true,
+      },
+      {
+        name: 'John Doe',
+        crn: 'X678912',
+        tier: 'C1',
+        sentenceDate: '2023-12-01',
+        handoverDate: null,
+        initialAppointment: {
+          date: '2023-12-20',
+          staff: {
+            name: {
+              forename: 'Unallocated',
+              middlename: null,
+              surname: 'Staff',
+              combinedName: 'Unallocated Staff',
+            },
+          },
+        },
+        status: 'Currently managed',
+        offenderManager: {
+          forenames: 'Jane',
+          surname: 'Doe',
+          grade: 'SPO',
+        },
+        convictionNumber: 1,
+        caseType: 'COMMUNITY',
+        outOfAreaTransfer: false,
+        excluded: true,
+      },
+      {
+        name: 'John Doe',
+        crn: 'X678913',
+        tier: 'C1',
+        sentenceDate: '2023-12-01',
+        handoverDate: null,
+        initialAppointment: {
+          date: '2023-12-20',
+          staff: {
+            name: {
+              forename: 'Unallocated',
+              middlename: null,
+              surname: 'Staff',
+              combinedName: 'Unallocated Staff',
+            },
+          },
+        },
+        status: 'Currently managed',
+        offenderManager: {
+          forenames: 'Jane',
+          surname: 'Doe',
+          grade: 'SPO',
+        },
+        convictionNumber: 1,
+        caseType: 'COMMUNITY',
+        outOfAreaTransfer: false,
+        apopExcluded: true,
+      },
+      {
+        name: 'John Doe',
+        crn: 'X678914',
+        tier: 'C1',
+        sentenceDate: '2023-12-01',
+        handoverDate: null,
+        initialAppointment: {
+          date: '2023-12-20',
+          staff: {
+            name: {
+              forename: 'Unallocated',
+              middlename: null,
+              surname: 'Staff',
+              combinedName: 'Unallocated Staff',
+            },
+          },
+        },
+        status: 'Currently managed',
+        offenderManager: {
+          forenames: 'Jane',
+          surname: 'Doe',
+          grade: 'SPO',
+        },
+        convictionNumber: 1,
+        caseType: 'COMMUNITY',
+        outOfAreaTransfer: false,
+        apopExcluded: true,
+      },
+    ]
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    const response = [...allocationsByTeamResponse]
+    response.push(...excludedCases)
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1', response })
+    cy.reload()
+
+    // Check tags
+    cy.get('table').find('.govuk-tag--orange').should('have.length', 4)
+    cy.get('table').find('.govuk-tag--orange').first().should('have.text', 'Restricted access')
+
+    // Check table cell contents
+    cy.get('table').find('tr').last().should('not.contain.text', ['C1', 'C2', 'C3'])
+    cy.get('table').find('tr').last().should('not.contain.text', 'John Doe')
+    cy.get('table').find('tr').last().find('td').should('have.length', 2)
   })
 })

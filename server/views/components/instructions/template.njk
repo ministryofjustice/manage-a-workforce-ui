@@ -13,6 +13,9 @@
         </h2>
         <label class="govuk-label govuk-label--l" for="instructions">
           {{ params.html | safe if params.html}}
+          <div id="more-detail-hint-header" class="govuk-hint">
+            Make notes for the practitioner who will be allocated this case. You can continue to edit notes which will be retained as you move through and review the case details.
+          </div>
           <div id="more-detail-hint" class="govuk-hint">
             {% if false == laoCase %}
               {{ params.hintText | safe if params.hintText else "These notes are sent to the practitioner in the allocation email. They will also be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes." }}

@@ -147,7 +147,7 @@ context('Summary', () => {
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Risk assessment': 'VERY HIGH RoSH MEDIUM RSR HIGH OGRS',
       'Active risk registrations': 'ALT Under MAPPA Arrangements, Suicide/self-harm',
-      OASys: 'CHECK OASYSUploaded 27 January 2022',
+      OASys: 'CHECK OASYS Uploaded 27 January 2022',
     })
     summaryPage.riskSummaryBadge().then($data => {
       expect($data.get(0).className).to.contain('risk-badge--very-high')
@@ -165,7 +165,7 @@ context('Summary', () => {
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Risk assessment': 'Unknown RoSH Unknown RSR No OGRS',
       'Active risk registrations': 'There are no active registrations.',
-      OASys: 'CHECK OASYSUploaded 27 January 2022',
+      OASys: 'CHECK OASYS Uploaded 27 January 2022',
     })
     summaryPage.riskSummaryBadge().then($data => {
       expect($data.get(0).className).to.contain('risk-badge--unavailable')
@@ -182,7 +182,7 @@ context('Summary', () => {
     summaryPage.riskTitle().should('have.text', 'Risk')
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Risk assessment': 'Unknown RoSH No RSR No OGRS',
-      OASys: 'CHECK OASYSUploaded 27 January 2022',
+      OASys: 'CHECK OASYS Uploaded 27 January 2022',
       'Active risk registrations': 'There are no active registrations.',
     })
     summaryPage.riskSummaryBadge().then($data => {

@@ -66,33 +66,33 @@ context('Documents', () => {
       .getTable()
       .should('deep.equal', [
         {
-          Name: 'doc.pdfCourt Report',
+          Name: 'doc.pdf            Court Report',
           Type: 'Pre-Sentence Report - Fast',
-          Event: 'CurrentAttempt/Common/Assault of an Emergency Worker   (Act 2018) 00873',
+          Event: 'Current            Attempt/Common/Assault of an Emergency Worker   (Act 2018) 00873',
           'Date created': '7 Dec 2021',
         },
         {
-          Name: 'Pre Cons.pdfPNC previous convictions',
+          Name: 'Pre Cons.pdf            PNC previous convictions',
           Type: 'Pre Cons',
           Event: 'Not attached to an event',
           'Date created': '17 Nov 2021',
         },
         {
-          Name: 'cps.pdfCrown Prosecution Service case packSENSITIVE',
+          Name: 'cps.pdf            Crown Prosecution Service case packSENSITIVE',
           Type: 'SA2020 Suspended Sentence Order',
-          Event: 'PreviousCommon assault and battery - 10501',
+          Event: 'Previous            Common assault and battery - 10501',
           'Date created': '16 Oct 2021',
         },
         {
-          Name: 'OfficeVisitDocument.DOCContact',
+          Name: 'OfficeVisitDocument.DOC            Contact',
           Type: 'Planned Office Visit (NS)',
-          Event: 'PreviousCommon assault and battery - 10501',
+          Event: 'Previous            Common assault and battery - 10501',
           'Date created': '',
         },
         {
-          Name: 'documentWithoutId.pdfContact',
+          Name: 'documentWithoutId.pdf            Contact',
           Type: 'Planned Office Visit (NS)',
-          Event: 'PreviousCommon assault and battery - 10501',
+          Event: 'Previous            Common assault and battery - 10501',
           'Date created': '',
         },
       ])

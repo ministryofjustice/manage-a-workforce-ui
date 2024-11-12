@@ -23,4 +23,6 @@ export default class SummaryPage extends Page {
     cy.get(`a[href*="/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner"]`)
 
   riskSummaryBadge = (): PageElement => cy.get('.risk-badge')
+
+  moreDetailHintHeader = (): PageElement => cy.get('#more-detail-hint-header')
 }

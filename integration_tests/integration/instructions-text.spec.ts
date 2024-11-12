@@ -99,4 +99,19 @@ context('Instructions text', () => {
     const instructionsPageAfterTimeout = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPageAfterTimeout.instructionsTextArea().should('have.value', '')
   })
+
+  it('Instructions hint text should display header text', () => {
+    cy.task('stubGetUnallocatedCase')
+    cy.signIn()
+    cy.clock()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.moreDetailHintHeader().should('exist')
+    summaryPage
+      .moreDetailHintHeader()
+      .should(
+        'contain.text',
+        'Make notes for the practitioner who will be allocated this case. You can continue to edit notes which will be retained as you move through and review the case details.'
+      )
+  })
 })

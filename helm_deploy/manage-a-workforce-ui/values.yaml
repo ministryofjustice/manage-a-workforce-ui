@@ -29,13 +29,13 @@ generic-service:
       SecRuleUpdateTargetById 942450 "!REQUEST_COOKIES:/connect.sid/"
       SecRuleUpdateTargetById 930120 "!REQUEST_COOKIES:/connect.sid/"
       SecRuleUpdateTargetById 942210 "!REQUEST_COOKIES:/connect.sid/"
-      SecRule REQUEST_URI "@rx ^.+\/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
+      SecRule REQUEST_URI "@rx \/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
         "id:1004,\
         phase:1,\
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:instructions"
-      SecRule REQUEST_URI "@rx ^.+\/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
+      SecRule REQUEST_URI "@rx \/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
         "id:1005,\
         phase:1,\
         pass,\
@@ -48,20 +48,20 @@ generic-service:
         pass,\
         t:none,\
         setvar:tx.paranoia_level=2"
-      SecRule REQUEST_URI "@rx ^.+\/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
+      SecRule REQUEST_URI "@rx \/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
         "id:1006,\
         phase:1,\
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=attack-rce;ARGS:instructions"
-      SecRule REQUEST_URI "@rx ^.+\/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
+      SecRule REQUEST_URI "@rx \/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
         "id:1007,\
         phase:2,\
         pass,\
         nolog,\
         ctl:ruleRemoveById=921110"
       SecRuleUpdateTargetById 942440 "!ARGS:_csrf"
-      SecRule REQUEST_URI "@rx ^.+\/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
+      SecRule REQUEST_URI "@rx \/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
         "id:1010,\
         phase:1,\
         pass,\

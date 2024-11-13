@@ -14,7 +14,9 @@
         <label class="govuk-label govuk-label--l" for="instructions">
           {{ params.html | safe if params.html}}
           <div id="more-detail-hint-header" class="govuk-hint">
-            Make notes for the practitioner who will be allocated this case. You can continue to edit notes which will be retained as you move through and review the case details.
+            {% if not params.hintText or params.hintText == "" %}
+              Make notes for the practitioner who will be allocated this case. You can continue to edit notes which will be retained as you move through and review the case details.
+            {% endif %}
           </div>
           <div id="more-detail-hint" class="govuk-hint">
             {% if false == laoCase %}

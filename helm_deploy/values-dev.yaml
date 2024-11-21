@@ -32,7 +32,7 @@ generic-service:
     unilink-aovpn9: 78.33.32.104/30
     unilink-aovpn10: 78.33.32.108/32
     groups:
-      - internal
+      - digital_staff_and_mojo
       - prisons
       - unilink_staff
 

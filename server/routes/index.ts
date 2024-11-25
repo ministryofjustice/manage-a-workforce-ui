@@ -87,6 +87,12 @@ export default function routes(services: Services): Router {
     await allocationsController.getUnallocatedCase(req, res, crn, convictionNumber, pduCode)
   })
 
+  post('/pdu/:pduCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
+    const { crn, convictionNumber, pduCode } = req.params
+    // eslint-disable-next-line security-node/detect-dangerous-redirects
+    return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner`)
+  })
+
   get('/:crn/documents/:documentId/:documentName', async (req, res) => {
     const { crn, documentId, documentName } = req.params
     await allocationsController.getDocument(res, crn, documentId, documentName)

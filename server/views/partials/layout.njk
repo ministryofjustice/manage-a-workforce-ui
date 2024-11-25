@@ -47,22 +47,22 @@
         (window,document,'script','dataLayer','GTM-WLS8X4P');
          </script>
 
-        <!--[if !IE 8]><!-->
+     
+        <link href="/assets/govuk/govuk-frontend.min.css" rel="stylesheet" />
         <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet"/>
-        <!--<![endif]-->
-
+    
         <!--[if lt IE 9]>
-        <link href="/assets/stylesheets/application-ie8.css?{{ version }}" rel="stylesheet"/>
         <script src="/assets/js/html5shiv-3.7.3.min.js"></script>
         <![endif]-->
 
         <script src="/assets/js/jquery.min.js"></script>
         <script src="/assets/jquery-ui.min.js"></script>
+        
         <link href="/assets/themes/ui-lightness/jquery-ui.css" rel="stylesheet"/>
 
     {% endblock %}
 </head>
-<body class="govuk-template__body">
+<body class="govuk-frontend-supported govuk-template__body">
 
 <script>
     document.body.classList.add('js-enabled')
@@ -103,7 +103,7 @@
         {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
         {{ govukPhaseBanner({
             tag: {
-                text: "beta"
+                text: "Beta"
             },
             classes: 'maw-no-border',
             html: 'This is a new service – <a class="govuk-link feedback" href="https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2JfL5_1h2G9Gi17tzGJyJ5hUMjI3UDgwVzgwS1JLV0hXNDFOTjc4Q1FCQi4u" target="_blank" rel="noopener noreferrer">your feedback</a> will help us to improve it.'
@@ -181,8 +181,8 @@
 {% endblock %}
 
 {% block bodyEnd %}
-    <script src="/assets/govuk/all.js"></script>
-    <script src="/assets/govukFrontendInit.js"></script>
+    <script type="module" src="/assets/govuk/govuk-frontend.min.js"></script>
+    <script type="module" src="/assets/govukFrontendInit.js"></script>
     <script src="/assets/moj/all.js"></script>
     <script src="/assets/naturalSortableTable.js"></script>
     <script src="/assets/mojSortableTable.js"></script>

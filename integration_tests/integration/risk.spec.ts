@@ -33,7 +33,7 @@ context('Risk', () => {
     riskPage.riskHeading().should('contain', 'Risk')
     riskPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
     riskPage.button().should('contain', 'Continue')
-    riskPage.button().should('have.class', 'govuk-button--disabled')
+    riskPage.button().should('be.disabled')
   })
 
   it('Sub nav visible on page', () => {
@@ -63,7 +63,7 @@ context('Risk', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.button().should('contain', 'Continue')
-    riskPage.button().should('not.have.class', 'govuk-button--disabled')
+    riskPage.button().should('not.be.disabled')
   })
 
   it('Active registrations visible on page', () => {

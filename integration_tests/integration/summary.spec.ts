@@ -28,7 +28,7 @@ context('Summary', () => {
     summaryPage.summaryHeading().should('contain', 'Summary')
     summaryPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
     summaryPage.button().should('contain', 'Continue')
-    summaryPage.button().should('have.class', 'govuk-button--disabled')
+    summaryPage.button().should('be.disabled')
   })
 
   it('Sub nav visible on page', () => {
@@ -49,7 +49,7 @@ context('Summary', () => {
   it('Continue button enabled and visible on page', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.button().should('contain', 'Continue')
-    summaryPage.button().should('not.have.class', 'govuk-button--disabled')
+    summaryPage.button().should('not.be.disabled')
   })
 
   it('Personal details visible on page', () => {

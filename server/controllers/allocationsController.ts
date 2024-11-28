@@ -60,6 +60,7 @@ export default class AllocationsController {
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
       await this.allocationsService.getProbationRecord(res.locals.user.token, crn, convictionNumber),
     ])
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     const totalPreviousCount = probationRecord.previous.length
     const viewAll = totalPreviousCount <= 3 ? true : req.query.viewAll
     const amountToSlice = viewAll ? totalPreviousCount : 3
@@ -100,6 +101,7 @@ export default class AllocationsController {
       title: `${probationRecord.name} | Probation record | Manage a workforce`,
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }
@@ -109,6 +111,7 @@ export default class AllocationsController {
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
       await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
     ])
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     res.render('pages/risk', {
       title: `${risk.name} | Risk | Manage a workforce`,
       data: risk,
@@ -118,6 +121,7 @@ export default class AllocationsController {
       convictionNumber: risk.convictionNumber,
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }
@@ -129,6 +133,7 @@ export default class AllocationsController {
       await this.allocationsService.getDocuments(res.locals.user.token, crn),
     ])
     const documentRows = documents.map(document => new DocumentRow(document))
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     res.render('pages/documents', {
       title: `${caseOverview.name} | Documents | Manage a workforce`,
       crn: caseOverview.crn,
@@ -139,6 +144,7 @@ export default class AllocationsController {
       documents: documentRows,
       documentsCount: documentRows.length,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }

@@ -28,6 +28,7 @@ export const allocationsByTeamResponse = [
     convictionNumber: 1,
     caseType: 'COMMUNITY',
     outOfAreaTransfer: false,
+    laoCase: false,
   },
   {
     name: 'Sofia Mitchell',
@@ -45,6 +46,7 @@ export const allocationsByTeamResponse = [
     caseType: 'CUSTODY',
     sentenceLength: '5 Years',
     outOfAreaTransfer: false,
+    laoCase: false,
   },
   {
     name: 'John Smith',
@@ -67,6 +69,7 @@ export const allocationsByTeamResponse = [
     convictionNumber: 3,
     caseType: 'COMMUNITY',
     outOfAreaTransfer: false,
+    laoCase: false,
   },
   {
     name: 'Kacey Ray',
@@ -89,6 +92,7 @@ export const allocationsByTeamResponse = [
     convictionNumber: 4,
     caseType: 'COMMUNITY',
     outOfAreaTransfer: false,
+    laoCase: false,
   },
   {
     name: 'Andrew Williams',
@@ -111,6 +115,7 @@ export const allocationsByTeamResponse = [
     convictionNumber: 5,
     caseType: 'COMMUNITY',
     outOfAreaTransfer: false,
+    laoCase: false,
   },
   {
     name: 'Sarah Siddall',
@@ -133,6 +138,7 @@ export const allocationsByTeamResponse = [
     convictionNumber: 1,
     caseType: 'COMMUNITY',
     outOfAreaTransfer: false,
+    laoCase: false,
   },
   {
     name: 'Mick Jones',
@@ -145,6 +151,7 @@ export const allocationsByTeamResponse = [
     convictionNumber: 6,
     caseType: 'COMMUNITY',
     outOfAreaTransfer: false,
+    laoCase: false,
   },
   {
     name: 'Bill Turner',
@@ -171,6 +178,7 @@ export const allocationsByTeamResponse = [
     convictionNumber: 7,
     caseType: 'COMMUNITY',
     outOfAreaTransfer: false,
+    laoCase: false,
   },
   {
     name: 'Daffy Duck',
@@ -188,6 +196,7 @@ export const allocationsByTeamResponse = [
     caseType: 'CUSTODY',
     sentenceLength: '25 Years',
     outOfAreaTransfer: false,
+    laoCase: false,
   },
   {
     name: 'Paul Daniels',
@@ -205,6 +214,7 @@ export const allocationsByTeamResponse = [
     caseType: 'LICENSE',
     sentenceLength: '11 months',
     outOfAreaTransfer: false,
+    laoCase: false,
   },
 ]
 
@@ -327,6 +337,7 @@ export default {
           rsrLevel: 'MEDIUM',
           ogrsScore: 85,
           activeRiskRegistration: 'ALT Under MAPPA Arrangements, Suicide/self-harm',
+          laoCase: false,
         },
       },
     })
@@ -905,6 +916,7 @@ export default {
             noFixedAbode: true,
             typeVerified: false,
           },
+          laoCase: false,
         },
       },
     })
@@ -1020,6 +1032,7 @@ export default {
             sensitive: false,
           },
         ],
+        laoCase: false,
       },
     })
   },
@@ -1066,6 +1079,7 @@ export default {
             },
             email: 'john.doe@test.justice.gov.uk',
           },
+          laoCase: false,
         },
       },
     })

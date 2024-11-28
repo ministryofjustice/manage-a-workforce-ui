@@ -4,9 +4,9 @@
 {% from "../components/card/macro.njk" import card %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
-{% set officerName = data.forename + ' '  + data.surname %}
-{% set officerGrade =  data.grade %}
-{% set officerCode =  data.code %}
+{% set officerName = data.forename + ' ' + data.surname %}
+{% set officerGrade = data.grade %}
+{% set officerCode = data.code %}
 {% set officerTotalCases = data.totalCases %}
 
 {% set tableData = {
@@ -14,8 +14,7 @@
     head: [
         {
             text: "Tier"
-        },
-        {
+        }, {
             text: "Number of cases"
         }
     ],
@@ -23,78 +22,68 @@
         [
             {
                 text: "A"
-            },
-            {
+            }, {
                 text: data.caseTotals.a
             }
         ],
         [
             {
                 text: "B"
-            },
-            {
+            }, {
                 text: data.caseTotals.b
             }
         ],
         [
             {
                 text: "C"
-            },
-            {
+            }, {
                 text: data.caseTotals.c
             }
         ],
         [
             {
                 text: "D"
-            },
-            {
+            }, {
                 text: data.caseTotals.d
             }
         ],
         [
             {
                 text: "AS"
-            },
-            {
+            }, {
                 text: data.caseTotals.as
             }
         ],
         [
             {
                 text: "BS"
-            },
-            {
+            }, {
                 text: data.caseTotals.bs
             }
         ],
         [
             {
                 text: "CS"
-            },
-            {
+            }, {
                 text: data.caseTotals.cs
             }
         ],
         [
             {
                 text: "DS"
-            },
-            {
+            }, {
                 text: data.caseTotals.ds
             }
         ],
         [
             {
                 text: "Untiered"
-            },
-            {
+            }, {
                 text: data.caseTotals.untiered
             }
         ]
     ]
 } %}
-
 
 {% block officerContent %}
     <div class="govuk-grid-row">
@@ -107,18 +96,17 @@
                 <div class="card__layout">
                     {{ card({
                         classes: 'card-total',
-                        titleHtml: ('<a href="/pdu/'+ pduCode +'/' + crn + '/convictions/' + convictionNumber + '/allocate/' + officerTeamCode + '/' + data.code + '/active-cases" class="govuk-link--no-visited-state" aria-label="Total cases">' + data.totalCases + '<br>' + '<p>' + "cases"  + '</p>' + '</a>')
+                        titleHtml: ('<a href="/pdu/'+ pduCode +'/' + crn + '/convictions/' + convictionNumber + '/allocate/' + officerTeamCode + '/' + data.code + '/active-cases" class="govuk-link--no-visited-state" aria-label="Total cases">' + data.totalCases + '<br>' + '<p class="govuk-body">' + "cases"  + '</p>' + '</a>')
                     }) }}
                 </div>
                 <div class="card__layout">
                     {{ card({
                         classes: 'card-total-subset ' + ('over-capacity' if data.capacity > 99 else 'under-capacity'),
-                        titleHtml: (data.capacity + '%' + '<p class="">' + "capacity"  + '</p>')
+                        titleHtml: (data.capacity + '%' + '<p class="govuk-body">' + "capacity"  + '</p>')
                     }) }}
                 </div>
 
             </div>
-
 
             {{ govukDetails({
                 summaryText: "View as points",

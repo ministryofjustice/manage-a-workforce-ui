@@ -26,8 +26,7 @@
                     </li>
                 {% endif %}
                 {% if initialAppointmentDateDisplayResult.showDisplayContentForInitialAppointmentDateAndStaff %}
-                    <li>the initial appointment is scheduled for <strong>{{ data.initialAppointment.date | dateFormat }}</strong> with {{ data.staff.name.combinedName }}
-                        {{ data.staff.grade }}</strong>
+                    <li>the initial appointment is scheduled for <strong>{{ data.initialAppointment.date | dateFormat }}</strong> with {{ data.staff.name.combinedName }} {{ data.staff.grade }}</strong>
                 </li>
             {% elseif initialAppointmentDateDisplayResult.showDisplayContentForNoInitialAppointmentDate %}
                 <li>no date found for the initial appointment, please check with your team</li>

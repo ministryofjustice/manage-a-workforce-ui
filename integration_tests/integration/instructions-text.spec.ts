@@ -59,6 +59,7 @@ context('Instructions text', () => {
   it('Instructions text should save and display when switching to documents page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().should('exist')
@@ -66,6 +67,7 @@ context('Instructions text', () => {
     summaryPage.instructionsTextArea().type('Test Documents')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetDocuments')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/documents')
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.instructionsTextArea().should('have.value', 'Test Documents')

@@ -10,6 +10,7 @@ context('Documents', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetDocuments')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/documents')
   })

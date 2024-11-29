@@ -35,13 +35,15 @@
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-10">
         You're allocating {{name}} ({{tier}}) to {{ offenderManagerDetails }}</h1>
             {% if true == laoCase %}
-                <span class="govuk-body govuk-tag--orange">Restricted access</span>
+                <span class="govuk-body govuk-tag--orange govuk-!-margin-bottom-2 govuk-!-display-inline-block">Restricted access</span>
             {% endif %}
-            {% if data.capacity == data.potentialCapacity %}
-                <p class="govuk-body-l !-margin-bottom-2" id="impact-statement">Their workload will remain at <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> as they are already managing this case.</p>
-            {% else %}
-                <p class="govuk-body-l !-margin-bottom-2" id="impact-statement">This will increase their workload from <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> to <span class="{{ 'percentage-extra-over' if data.potentialCapacity > 100 }}">{{ data.potentialCapacity | round(1) }}%</span>.</p>
-            {% endif %}
+            <p class="govuk-body-l govuk-!-margin-bottom-2" id="impact-statement">
+                {% if data.capacity == data.potentialCapacity %}
+                Their workload will remain at <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> as they are already managing this case.
+                {% else %}
+                This will increase their workload from <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> to <span class="{{ 'percentage-extra-over' if data.potentialCapacity > 100 }}">{{ data.potentialCapacity | round(1) }}%</span>.
+                {% endif %}
+            </p>
         </div>
     </div>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">

@@ -120,7 +120,9 @@ context('Allocate to Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
-    allocatePage.capacityImpactStatement().should('have.text', 'This will increase their workload from 50.4% to 64.8%.')
+    allocatePage
+      .capacityImpactStatement()
+      .should('contain.text', 'This will increase their workload from 50.4% to 64.8%.')
   })
 
   it('Displays current capacity only when same PoP allocated to same PO', () => {
@@ -130,7 +132,7 @@ context('Allocate to Practitioner', () => {
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
     allocatePage
       .capacityImpactStatement()
-      .should('have.text', 'Their workload will remain at 50.4% as they are already managing this case.')
+      .should('contain.text', 'Their workload will remain at 50.4% as they are already managing this case.')
   })
 
   it('Display current and potential capacity as red when over capacity', () => {

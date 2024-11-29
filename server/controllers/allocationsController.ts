@@ -561,6 +561,7 @@ export default class AllocationsController {
       staffCode
     )
 
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     const confirmInstructionForm = {
       ...req.session.confirmInstructionForm,
       person: req.session.confirmInstructionForm?.person || [],
@@ -580,6 +581,7 @@ export default class AllocationsController {
       errors: req.flash('errors') || [],
       confirmInstructionForm,
       pduCode,
+      laoCase,
     })
   }
 }

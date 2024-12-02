@@ -82,6 +82,8 @@ export default class FindUnallocatedCasesController {
       : []
     const teamOptions = getDropDownItems(teams, 'Select team', allocationDemandSelection.team)
 
+    req.session.confirmInstructionForm = null
+
     res.render('pages/find-unallocated-cases', {
       isFindUnalllocatedCasesPage: true,
       isCaseAllocationHistoryPage: false,

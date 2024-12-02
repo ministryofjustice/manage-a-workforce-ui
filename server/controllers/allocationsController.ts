@@ -486,10 +486,14 @@ export default class AllocationsController {
       isSPOOversightAccessed,
       laoCase
     )
+
     req.session.allocationForm = {
       otherEmails,
       sendEmailCopyToAllocatingOfficer,
     }
+
+    req.session.confirmInstructionForm = null
+
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`
@@ -535,10 +539,14 @@ export default class AllocationsController {
       isSPOOversightAccessed,
       laoCase
     )
+
     req.session.allocationForm = {
       otherEmails,
       sendEmailCopyToAllocatingOfficer,
     }
+
+    req.session.confirmInstructionForm = null
+
     return res.redirect(
       // eslint-disable-next-line security-node/detect-dangerous-redirects
       `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`

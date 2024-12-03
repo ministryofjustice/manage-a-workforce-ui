@@ -89,6 +89,7 @@ export default class AllocationsController {
           )
       )
       .slice(0, amountToSlice)
+    probationRecord.name = unescapeApostrophe(probationRecord.name)
     res.render('pages/probation-record', {
       name: probationRecord.name,
       crn: probationRecord.crn,
@@ -112,6 +113,7 @@ export default class AllocationsController {
       await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
     ])
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    risk.name = unescapeApostrophe(risk.name)
     res.render('pages/risk', {
       title: `${risk.name} | Risk | Manage a workforce`,
       data: risk,
@@ -134,6 +136,7 @@ export default class AllocationsController {
     ])
     const documentRows = documents.map(document => new DocumentRow(document))
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    caseOverview.name = unescapeApostrophe(caseOverview.name)
     res.render('pages/documents', {
       title: `${caseOverview.name} | Documents | Manage a workforce`,
       crn: caseOverview.crn,

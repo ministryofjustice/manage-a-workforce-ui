@@ -76,6 +76,80 @@ export default {
       },
     })
   },
+  stubGetProbationApostropheRecord: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/unallocated/J678910/record/exclude-conviction/1`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'John O&#39;Reilly',
+          crn: 'J678910',
+          tier: 'C1',
+          convictionNumber: 1,
+          active: [
+            {
+              description: 'Adult Custody < 12m',
+              length: '6 Months',
+              startDate: '2019-11-17',
+              offenderManager: {
+                name: 'Sheila Linda Hancock',
+                grade: 'PSO',
+              },
+              offences: [
+                {
+                  description: 'Abstracting electricity - 04300',
+                  mainOffence: true,
+                },
+              ],
+            },
+            {
+              description: 'ORA Community Order',
+              length: '18 Months',
+              startDate: '2020-11-05',
+              offences: [
+                {
+                  description: 'Common assault and battery - 10501',
+                  mainOffence: true,
+                },
+              ],
+            },
+          ],
+          previous: [
+            {
+              description: 'Fine',
+              length: 0,
+              endDate: '2018-06-23',
+              offenderManager: {
+                name: 'Sheila Linda Hancock',
+                grade: 'PSO',
+              },
+              offences: [
+                {
+                  description: 'Abstracting electricity - 04300',
+                  mainOffence: true,
+                },
+              ],
+            },
+            {
+              description: 'ORA Community Order',
+              length: '18 Months',
+              endDate: '2020-11-05',
+              offences: [
+                {
+                  description: 'Common assault and battery - 10501',
+                  mainOffence: true,
+                },
+              ],
+            },
+          ],
+        },
+      },
+    })
+  },
   stubGetProbationRecordNoConvictions: (): SuperAgentRequest => {
     return stubForAllocation({
       request: {

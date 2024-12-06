@@ -63,12 +63,12 @@ context('Active Cases', () => {
       .getTable()
       .should('deep.equal', [
         {
-          'Name / CRN': 'Dylan Adam ArmstrongCRN1111',
+          'Name / CRN': 'Dylan Adam Armstrong            CRN1111',
           Tier: 'B3',
           'Type of case': 'Custody',
         },
         {
-          'Name / CRN': 'Cindy SmithCRN2222',
+          'Name / CRN': 'Cindy Smith            CRN2222',
           Tier: 'A0',
           'Type of case': 'License',
         },

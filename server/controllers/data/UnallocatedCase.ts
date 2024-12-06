@@ -32,6 +32,10 @@ export default class UnallocatedCase {
 
   outOfAreaTransfer: boolean
 
+  excluded: boolean
+
+  apopExcluded: boolean
+
   constructor(
     name: string,
     crn: string,
@@ -44,24 +48,32 @@ export default class UnallocatedCase {
     convictionNumber: number,
     caseType: string,
     sentenceLength: string,
-    outOfAreaTransfer: boolean
+    outOfAreaTransfer: boolean,
+    excluded: boolean = false,
+    apopExcluded: boolean = false
   ) {
-    this.name = name
+    this.name = apopExcluded ? '************' : name
     this.crn = crn
-    this.tier = tier
-    this.tierOrder = tierOrder(tier)
-    this.sentenceDate = sentenceDate
-    this.setHandoverDate(handoverDate)
-    this.setInitialAppointment(initialAppointment, caseType, sentenceLength)
-    this.initialAppointment = initialAppointment
-    this.primaryStatus = primaryStatus
-    if (offenderManager) {
-      this.secondaryStatus = `(${offenderManager.forenames} ${offenderManager.surname}${this.getGrade(
-        offenderManager.grade
-      )})`
+
+    if (!apopExcluded) {
+      this.tier = tier
+      this.tierOrder = tierOrder(tier)
+      this.sentenceDate = sentenceDate
+      this.setHandoverDate(handoverDate)
+      this.setInitialAppointment(initialAppointment, caseType, sentenceLength)
+      this.initialAppointment = initialAppointment
+      this.primaryStatus = primaryStatus
+      if (offenderManager) {
+        this.secondaryStatus = `(${offenderManager.forenames} ${offenderManager.surname}${this.getGrade(
+          offenderManager.grade
+        )})`
+      }
+      this.convictionNumber = convictionNumber
+      this.outOfAreaTransfer = outOfAreaTransfer
     }
-    this.convictionNumber = convictionNumber
-    this.outOfAreaTransfer = outOfAreaTransfer
+
+    this.excluded = excluded
+    this.apopExcluded = apopExcluded
   }
 
   getGrade(grade: string): string {

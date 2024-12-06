@@ -5,6 +5,7 @@ context('Auto Complete Email', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetConfirmInstructions')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
   })

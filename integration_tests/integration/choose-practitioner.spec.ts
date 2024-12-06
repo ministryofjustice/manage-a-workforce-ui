@@ -7,6 +7,7 @@ context('Choose Practitioner', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubUserPreferenceTeams', ['N03F01', 'N03F02'])
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.task('stubGetUnallocatedCasesByTeams', {
       teamCodes: 'N03F01,N03F02',
       response: [
@@ -74,6 +75,14 @@ context('Choose Practitioner', () => {
         'not.contain',
         'If you cannot allocate to a probation practitioner, it’s because their email address is not linked to their staff code in NDelius.'
       )
+  })
+
+  it('Display Lao Restricted access badge if Lao Case', () => {
+    cy.task('stubChoosePractitionersWithEmails')
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.restrictedStatusBadge().should('not.exist')
   })
 
   it('Offender details visible on page', () => {

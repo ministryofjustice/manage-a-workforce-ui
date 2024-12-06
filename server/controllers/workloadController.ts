@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import WorkloadService from '../services/workloadService'
 import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
 import { unescapeApostrophe } from '../utils/utils'
+import AllocationsService from '../services/allocationsService'
 
 interface InitialAppointmentDateDisplayResult {
   showDisplayContentForInitialAppointmentDateAndStaff: boolean
@@ -10,7 +11,10 @@ interface InitialAppointmentDateDisplayResult {
 }
 
 export default class WorkloadController {
-  constructor(private readonly workloadService: WorkloadService) {}
+  constructor(
+    private readonly workloadService: WorkloadService,
+    private readonly allocationService: AllocationsService
+  ) {}
 
   getInitialAppointmentDateDisplayResult(
     allocationCompleteDetails: AllocationCompleteDetails
@@ -37,11 +41,10 @@ export default class WorkloadController {
   }
 
   async allocationComplete(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
-    const allocationCompleteDetails = await this.workloadService.getAllocationCompleteDetails(
-      res.locals.user.token,
-      crn,
-      convictionNumber
-    )
+    const [allocationCompleteDetails, laoRestricted] = await Promise.all([
+      await this.workloadService.getAllocationCompleteDetails(res.locals.user.token, crn, convictionNumber),
+      await this.allocationService.getLaoStatus(crn, res.locals.user.token),
+    ])
 
     const { otherEmails, sendEmailCopyToAllocatingOfficer } = req.session.allocationForm || {
       otherEmails: [],
@@ -59,6 +62,7 @@ export default class WorkloadController {
       pduCode,
       sendEmailCopyToAllocatingOfficer,
       initialAppointmentDateDisplayResult: this.getInitialAppointmentDateDisplayResult(allocationCompleteDetails),
+      laoRestricted,
     })
   }
 }

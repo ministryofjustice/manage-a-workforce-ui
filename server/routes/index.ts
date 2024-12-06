@@ -49,7 +49,7 @@ export default function routes(services: Services): Router {
 
   const staffController = new StaffController(services.staffLookupService)
 
-  const workloadController = new WorkloadController(services.workloadService)
+  const workloadController = new WorkloadController(services.workloadService, services.allocationsService)
 
   const technicalUpdatesController = new TechnicalUpdatesController(services.technicalUpdatesService)
 

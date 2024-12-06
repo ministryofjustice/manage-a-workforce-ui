@@ -11,6 +11,7 @@ context('Allocate Complete', () => {
     cy.task('stubSetup')
     cy.task('stubSearchStaff')
     cy.task('stubGetConfirmInstructions')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
   })
 
   it('return to unallocated cases if team link exists', () => {
@@ -86,7 +87,7 @@ context('Allocate Complete', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubNotFoundEventManagerDetails')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', true)
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', { sendCopy: true, laoStatus: false })
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubSearchStaff')
     cy.signIn()

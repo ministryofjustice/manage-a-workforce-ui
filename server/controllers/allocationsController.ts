@@ -15,12 +15,13 @@ import OfficerView from './data/OfficerView'
 import DisplayAddress from './data/DisplayAddress'
 import ProbationEstateService from '../services/probationEstateService'
 import DocumentRow from './data/DocumentRow'
-import ChoosePractitionerData from '../models/ChoosePractitionerData'
+import ChoosePractitionerData, { Practitioner } from '../models/ChoosePractitionerData'
 import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
 import { unescapeApostrophe } from '../utils/utils'
+import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
 
 export default class AllocationsController {
   constructor(
@@ -36,6 +37,7 @@ export default class AllocationsController {
       crn,
       convictionNumber
     )
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     const address = new DisplayAddress(response.address)
     response.name = unescapeApostrophe(response.name)
     res.render('pages/summary', {
@@ -48,6 +50,7 @@ export default class AllocationsController {
       title: `${response.name} | Summary | Manage a workforce`,
       pduCode,
       outOfAreaTransfer: response.outOfAreaTransfer,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }
@@ -57,6 +60,7 @@ export default class AllocationsController {
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
       await this.allocationsService.getProbationRecord(res.locals.user.token, crn, convictionNumber),
     ])
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     const totalPreviousCount = probationRecord.previous.length
     const viewAll = totalPreviousCount <= 3 ? true : req.query.viewAll
     const amountToSlice = viewAll ? totalPreviousCount : 3
@@ -85,6 +89,7 @@ export default class AllocationsController {
           )
       )
       .slice(0, amountToSlice)
+    probationRecord.name = unescapeApostrophe(probationRecord.name)
     res.render('pages/probation-record', {
       name: probationRecord.name,
       crn: probationRecord.crn,
@@ -97,6 +102,7 @@ export default class AllocationsController {
       title: `${probationRecord.name} | Probation record | Manage a workforce`,
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }
@@ -106,6 +112,8 @@ export default class AllocationsController {
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
       await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
     ])
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    risk.name = unescapeApostrophe(risk.name)
     res.render('pages/risk', {
       title: `${risk.name} | Risk | Manage a workforce`,
       data: risk,
@@ -115,6 +123,7 @@ export default class AllocationsController {
       convictionNumber: risk.convictionNumber,
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }
@@ -126,6 +135,8 @@ export default class AllocationsController {
       await this.allocationsService.getDocuments(res.locals.user.token, crn),
     ])
     const documentRows = documents.map(document => new DocumentRow(document))
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    caseOverview.name = unescapeApostrophe(caseOverview.name)
     res.render('pages/documents', {
       title: `${caseOverview.name} | Documents | Manage a workforce`,
       crn: caseOverview.crn,
@@ -136,6 +147,7 @@ export default class AllocationsController {
       documents: documentRows,
       documentsCount: documentRows.length,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }
@@ -145,11 +157,21 @@ export default class AllocationsController {
     const { token, username } = res.locals.user
 
     const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
-
+    const laoCase = await this.allocationsService.getLaoStatus(crn, token)
     const [allocationInformationByTeam, allTeamDetails] = await Promise.all([
       await this.workloadService.getChoosePractitionerData(token, crn, teamCodesPreferences.items),
       await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
     ])
+
+    if (laoCase === true) {
+      // get the LAO status of each staffCode and add to allocation Information
+      const staffRestrictions = await this.allocationsService.getRestrictedStatusByCrnAndStaffCodes(
+        token,
+        crn,
+        getStaffCodes(allocationInformationByTeam.teams)
+      )
+      allocationInformationByTeam.teams = setStaffRestrictions(allocationInformationByTeam.teams, staffRestrictions)
+    }
 
     const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
       allocationInformationByTeam,
@@ -180,6 +202,7 @@ export default class AllocationsController {
       error,
       missingEmail,
       pduCode,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }
@@ -214,6 +237,7 @@ export default class AllocationsController {
       staffCode,
       staffTeamCode
     )
+    const laoCase = await this.allocationsService.getLaoStatus(crn, req.user.token)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
     response.name.surname = unescapeApostrophe(response.name.surname)
     res.render('pages/allocate-to-practitioner', {
@@ -226,6 +250,7 @@ export default class AllocationsController {
       staffCode,
       staffTeamCode,
       pduCode,
+      laoCase,
       errors: req.flash('errors') || [],
     })
   }
@@ -246,6 +271,7 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
+    const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
@@ -267,6 +293,7 @@ export default class AllocationsController {
       confirmInstructionForm,
       pduCode,
       scrollToBottom,
+      laoCase,
     })
   }
 
@@ -286,6 +313,7 @@ export default class AllocationsController {
       convictionNumber,
       staffCode
     )
+    const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
@@ -299,6 +327,7 @@ export default class AllocationsController {
       name: response.name.combinedName,
       data: response,
       scrollToBottom,
+      laoCase,
     })
   }
 
@@ -370,6 +399,7 @@ export default class AllocationsController {
         emailCopyOptOut: form.emailCopyOptOut === 'yes',
       })
     )
+    // const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
 
     if (form.remove !== undefined) {
       form.person.splice(form.remove, 1)
@@ -411,6 +441,7 @@ export default class AllocationsController {
     pduCode
   ) {
     const spoOversightForm = trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
+    // const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     const errors = validate(
       spoOversightForm,
       { 'person.*.email': 'email', instructions: 'nourl' },
@@ -441,6 +472,7 @@ export default class AllocationsController {
     const allocationNotes = confirmInstructionForm.instructions
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
     const isSPOOversightAccessed = 'true'
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
 
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
@@ -454,7 +486,8 @@ export default class AllocationsController {
       spoOversightSensitive,
       allocationNotes,
       allocationNotesSensitive,
-      isSPOOversightAccessed
+      isSPOOversightAccessed,
+      laoCase
     )
 
     req.session.allocationForm = {
@@ -492,6 +525,7 @@ export default class AllocationsController {
     const allocationNotes = confirmInstructionForm.instructions
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
     const isSPOOversightAccessed = 'false'
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
 
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
@@ -505,7 +539,8 @@ export default class AllocationsController {
       spoOversightSensitive,
       allocationNotes,
       allocationNotesSensitive,
-      isSPOOversightAccessed
+      isSPOOversightAccessed,
+      laoCase
     )
 
     req.session.allocationForm = {
@@ -537,6 +572,7 @@ export default class AllocationsController {
       staffCode
     )
 
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     const confirmInstructionForm = {
       ...req.session.confirmInstructionForm,
       person: req.session.confirmInstructionForm?.person || [],
@@ -556,6 +592,7 @@ export default class AllocationsController {
       errors: req.flash('errors') || [],
       confirmInstructionForm,
       pduCode,
+      laoCase,
     })
   }
 }
@@ -636,7 +673,38 @@ function mapPractitioner(practitionerData): OffenderManagerToAllocate {
     communityCases: practitionerData.communityCases,
     custodyCases: practitionerData.custodyCases,
     email: practitionerData.email,
+    laoCase: practitionerData.laoCase,
   }
+}
+
+function setStaffRestrictions(
+  practitionerData: Record<string, Practitioner[]>,
+  staffRestrictions: CrnStaffRestrictions
+): Record<string, Practitioner[]> {
+  // convert array to map
+  const staffMap = staffRestrictions.staffRestrictions.reduce((map, obj) => {
+    return { ...map, [obj.staffCode]: obj.isExcluded }
+  }, {})
+
+  const authorisedPractitioners = { ...practitionerData }
+  Object.entries(practitionerData).forEach(([teamCode, practitioners]) => {
+    practitioners.forEach((practioner, index) => {
+      authorisedPractitioners[teamCode][index] = { ...practioner, laoCase: staffMap[practioner.code] }
+    })
+  })
+
+  return authorisedPractitioners
+}
+
+function getStaffCodes(practitionerData: Record<string, Practitioner[]>): string[] {
+  /*
+   iterate through practitioner data creating a list of staffCodes
+   */
+  const staffCodes = Object.values(practitionerData)
+    .reduce((aggr, practitioners) => [...aggr, ...practitioners], [])
+    .map(practitioner => practitioner.code)
+
+  return staffCodes
 }
 
 function sortPractitionersByGrade(a, b) {
@@ -664,6 +732,7 @@ type OffenderManagerToAllocate = {
   communityCases: number
   custodyCases: number
   email?: string
+  laoCase?: boolean
 }
 
 type OffenderManagerToAllocateWithTeam = OffenderManagerToAllocate & {

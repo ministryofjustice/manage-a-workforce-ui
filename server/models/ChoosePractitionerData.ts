@@ -25,6 +25,7 @@ export interface Practitioner {
   casesPastWeek: number
   communityCases: number
   custodyCases: number
+  laoCase?: boolean
 }
 
 export default interface ChoosePractitionerData {

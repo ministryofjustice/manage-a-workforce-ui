@@ -84,6 +84,7 @@ export default {
             score: 85,
           },
           convictionNumber: 1,
+          laoCase: false,
         },
       },
     })
@@ -112,6 +113,7 @@ export default {
             percentage: -2147483648,
           },
           convictionNumber: 1,
+          laoCase: false,
         },
       },
     })
@@ -140,6 +142,7 @@ export default {
             percentage: -2147483648,
           },
           convictionNumber: 1,
+          laoCase: false,
         },
       },
     })
@@ -169,6 +172,7 @@ export default {
             percentage: -2147483648,
           },
           convictionNumber: 1,
+          laoCase: false,
         },
       },
     })

@@ -14,4 +14,6 @@ export default interface UnallocatedCase {
   convictionNumber: number
   caseType: string
   outOfAreaTransfer: boolean
+  excluded?: boolean
+  apopExcluded?: boolean
 }

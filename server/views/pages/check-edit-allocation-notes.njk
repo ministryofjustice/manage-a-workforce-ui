@@ -56,9 +56,11 @@
 
             <div class="govuk-panel govuk-panel--confirmation interrupt">
                 <h2 id="cleared" class="govuk-heading-l">Save your notes as an oversight contact and allocate the case to {{ data.staff.name.combinedName }} ({{ data.staff.grade }})</h2>
-                <p class="govuk-body-l">Your allocation notes will be saved as an SPO Oversight contact in NDelius, do you want to edit them first? You can add information that will not be sent in the email.</p>
                 {% if laoCase == true %}
-                    <p class="govuk-body-l" id="confirmation-interrupt-lao-notes">These notes will not be included in the email to the probation practitioner as this is a restricted case.</p>
+                    <p class="govuk-body-l">Your allocation notes will be saved as an SPO Oversight contact in NDelius.</p>
+                    <p class="govuk-body-l" id="confirmation-interrupt-lao-notes">These notes will not be included in the email to the probation practitioner as this is a restricted access case.</p>
+                {% else %}
+                    <p class="govuk-body-l">Your allocation notes will be saved as an SPO Oversight contact in NDelius, do you want to edit them first? You can add information that will not be sent in the email.</p>
                 {% endif %}
                 <p class="govuk-body-l">Once the notes are saved, the case will be allocated and the email sent to the practitioner.</p>
                 <form data-validate-form="edit-notes" method="post">

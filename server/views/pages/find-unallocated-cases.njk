@@ -62,7 +62,7 @@
                 text: unallocatedCaseLink(item, pduCode),
                 attributes: { "data-sort-value": item.crn }
             },
-            { text: 'This is a restricted case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 5 }
+            { text: 'This is a restricted access case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 5 }
         ] -%}
   {% else %}
     {%- set tableRow = [

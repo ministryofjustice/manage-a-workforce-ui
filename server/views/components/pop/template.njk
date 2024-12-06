@@ -1,18 +1,21 @@
-<div class="govuk-grid-row">
+{% if 'lg' == params.popSize -%}
+    {% set marginClass = 'govuk-!-margin-bottom-10'  %}
+    {% set headingClass = 'govuk-heading-l' %}
+    {% set captionClass = 'govuk-caption-l' %}
+{% else %}
+    {% set marginClass = 'govuk-!-margin-bottom-2'  %}
+    {% set headingClass = 'govuk-heading-xl' %}
+    {% set captionClass = 'govuk-caption-xl' %}
+{%- endif %}
+
+<div class="govuk-grid-row {{marginClass}}">
     <div class="govuk-grid-column-two-thirds">
-        {% if 'lg' == params.popSize -%}
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-10">{{ params.name }}
-                <span class="govuk-caption-l">Tier: {{ params.tier }}</span>
-                <span class="govuk-caption-l">CRN: {{ params.crn }}</span>
-            </h1>
-        {% else %}
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ params.name }}
-                <span class="govuk-caption-xl">Tier: {{ params.tier }}</span>
-                <span class="govuk-caption-xl">CRN: {{ params.crn }}</span>
-            </h1>
-        {%- endif %}
+        <h1 class="{{headingClass}} govuk-!-margin-bottom-0">{{ params.name }}
+            <span class="{{captionClass}}">Tier: {{ params.tier }}</span>
+            <span class="{{captionClass}}">CRN: {{ params.crn }}</span>
+        </h1>
         {% if true == params.laoCase %}
-            <span class="govuk-body govuk-tag--orange govuk-!-margin-bottom-2 govuk-!-display-inline-block">Restricted access</span>
+            <span class="govuk-body govuk-tag--orange govuk-!-margin-top-2 govuk-!-margin-bottom-2 govuk-!-display-inline-block">Restricted access</span>
         {%- endif %}
     </div>
 </div>

@@ -1,6 +1,7 @@
 {% macro doubleCell(first, second, secondStyle) -%}
-{{ first | safe}}
-{% if second -%}
-<br><span class="{{ secondStyle }}">{{ second | safe }}
-{%- endif %}
-{%- endmacro %}
+    {{ first | safe}}
+    {% if second -%}
+        <br/>
+        <span class="{{ secondStyle }}">{{ second | safe }}
+        {%- endif %}
+    {%- endmacro %}

@@ -104,13 +104,13 @@ context('Case allocation history', () => {
       .getTable()
       .should('deep.equal', [
         {
-          'Name / CRN': 'Terrance YundtX602070',
+          'Name / CRN': 'Terrance Yundt            X602070',
           Tier: 'D0',
           'Date allocated': '3 March 2023',
           'Probation Practitioner': 'Andy Pandy',
         },
         {
-          'Name / CRN': 'Stacy KoeppX602047',
+          'Name / CRN': 'Stacy Koepp            X602047',
           Tier: 'C1',
           'Date allocated': '2 February 2023',
           'Probation Practitioner': 'Steve Leave',

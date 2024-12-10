@@ -1,3 +1,4 @@
+import SummaryRestrictedPage from '../pages/summaryRestricted'
 import Page from '../pages/page'
 import SummaryPage from '../pages/summary'
 import outOfAreasBannerBlurb from '../constants'
@@ -5,23 +6,26 @@ import outOfAreasBannerBlurb from '../constants'
 context('Summary', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
   })
 
   it('Caption text visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
 
   it('Summary header visible on page and out of area transfer banner is not visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.summaryHeading().should('contain', 'Summary')
     cy.contains(outOfAreasBannerBlurb).should('not.exist')
   })
 
   it('Out of area transfer banner is visible on page and continue button is disabled when case is out of area transfer case', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseWhereIsOutOfAreaTransfer')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -32,6 +36,7 @@ context('Summary', () => {
   })
 
   it('Sub nav visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage
       .subNav()
@@ -42,17 +47,20 @@ context('Summary', () => {
   })
 
   it('Summary tab is highlighted', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.highlightedTab().should('contain.text', 'Summary')
   })
 
   it('Continue button enabled and visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.button().should('contain', 'Continue')
     summaryPage.button().should('not.be.disabled')
   })
 
   it('Personal details visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.personalDetailsTitle().should('have.text', 'Personal details')
     cy.get('#personal-details .govuk-summary-list').getSummaryList().should('deep.equal', {
@@ -66,6 +74,7 @@ context('Summary', () => {
   })
 
   it('Personal details no fixed abode address visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -80,6 +89,7 @@ context('Summary', () => {
   })
 
   it('Sentence visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.sentenceTitle().should('have.text', 'Sentence')
     cy.get('#sentence .govuk-summary-list').getSummaryList().should('deep.equal', {
@@ -90,6 +100,7 @@ context('Summary', () => {
   })
 
   it('No requirements sentence visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseNoRequirements')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -102,6 +113,7 @@ context('Summary', () => {
   })
 
   it('Sentence visible on page when invalid end date', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseInvalidEndDate')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -114,6 +126,7 @@ context('Summary', () => {
   })
 
   it('Sentence visible on page with multiple offences and requirements', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -128,12 +141,13 @@ context('Summary', () => {
   })
 
   it('Risk visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.riskTitle().should('have.text', 'Risk')
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Risk assessment': 'VERY HIGH RoSH MEDIUM RSR HIGH OGRS',
       'Active risk registrations': 'ALT Under MAPPA Arrangements, Suicide/self-harm',
-      OASys: 'CHECK OASYSUploaded 27 January 2022',
+      OASys: 'CHECK OASYS Uploaded 27 January 2022',
     })
     summaryPage.riskSummaryBadge().then($data => {
       expect($data.get(0).className).to.contain('risk-badge--very-high')
@@ -143,6 +157,7 @@ context('Summary', () => {
   })
 
   it('Unavailable Risk visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseUnavailableRisk')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -150,7 +165,7 @@ context('Summary', () => {
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Risk assessment': 'Unknown RoSH Unknown RSR No OGRS',
       'Active risk registrations': 'There are no active registrations.',
-      OASys: 'CHECK OASYSUploaded 27 January 2022',
+      OASys: 'CHECK OASYS Uploaded 27 January 2022',
     })
     summaryPage.riskSummaryBadge().then($data => {
       expect($data.get(0).className).to.contain('risk-badge--unavailable')
@@ -160,13 +175,14 @@ context('Summary', () => {
   })
 
   it('Not Found Risk visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseNotFoundRisk')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.riskTitle().should('have.text', 'Risk')
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
       'Risk assessment': 'Unknown RoSH No RSR No OGRS',
-      OASys: 'CHECK OASYSUploaded 27 January 2022',
+      OASys: 'CHECK OASYS Uploaded 27 January 2022',
       'Active risk registrations': 'There are no active registrations.',
     })
     summaryPage.riskSummaryBadge().then($data => {
@@ -177,6 +193,7 @@ context('Summary', () => {
   })
 
   it('Documents visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedDocumentsTitle().should('have.text', 'Documents')
     cy.get('#case-details .govuk-body-m')
@@ -192,6 +209,7 @@ context('Summary', () => {
   })
 
   it('Documents visible on page with no reports or assessments', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -209,26 +227,31 @@ context('Summary', () => {
   })
 
   it('Breadcrumbs visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.breadCrumbs().should('contain', 'Home').and('contain', 'Unallocated cases')
   })
 
   it('Instructions textArea should be visible on page', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().should('exist')
   })
 
   it('Documents page link exists', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedDocumentsLink().should('exist')
   })
 
   it('Risk page link exists', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedRiskLink().should('exist')
   })
 
   it('entering link in allocation notes errors', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().type('https://bbc.co.uk/noway')
     cy.get(`#1`).click()
@@ -239,6 +262,7 @@ context('Summary', () => {
   })
 
   it('entering link without scheme but with www in allocation notes errors', () => {
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().type('www.bbc.co.uk/noway')
     cy.get(`#1`).click()
@@ -246,5 +270,24 @@ context('Summary', () => {
       .errorMessage()
       .trimTextContent()
       .should('equal', 'Error: You cannot include links in the allocation notes')
+  })
+
+  it('when lao case restricted label visible', () => {
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryRestrictedPage)
+    summaryPage.restrictedStatusBadge().should('exist')
+  })
+
+  it('when lao case restricted hint text amended', () => {
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryRestrictedPage)
+    summaryPage
+      .restrictedStatusAllocationNotesHintText()
+      .should(
+        'contain.text',
+        'These notes will be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes.'
+      )
   })
 })

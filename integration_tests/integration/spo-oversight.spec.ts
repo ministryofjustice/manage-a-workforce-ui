@@ -2,6 +2,7 @@ import Page from '../pages/page'
 import SpoOversightPage from '../pages/spoOversight'
 import SpoOversightOptionPage from '../pages/spoOversightOption'
 import InstructionsConfirmPage from '../pages/confirmInstructions'
+import InstructionsConfirmPageRestricted from '../pages/confirmInstructionsRestricted'
 
 context('Instructions Confirmation', () => {
   let oversightOptionPage: SpoOversightOptionPage
@@ -13,6 +14,7 @@ context('Instructions Confirmation', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
     cy.task('stubSendComparisonLogToWorkload')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -73,5 +75,38 @@ context('Instructions Confirmation', () => {
     spoOversightPage.hideMessageLink().click()
     cy.reload()
     spoOversightPage.technicalUpdatesBanner().should('have.class', 'moj-hidden')
+  })
+
+  it('if lao case then display restricted access badge', () => {
+    cy.task('stubSetup')
+    cy.task('stubSearchStaff')
+    cy.task('stubGetConfirmInstructions')
+    cy.task('stubGetAllocationCompleteDetails')
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
+    cy.task('stubSendComparisonLogToWorkload')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+    const instructionsConfirmPageRestricted = Page.verifyOnPage(InstructionsConfirmPageRestricted)
+    instructionsConfirmPageRestricted.restrictedStatusBadge().should('exist')
+  })
+
+  it('if lao case then display additional text', () => {
+    cy.task('stubSetup')
+    cy.task('stubSearchStaff')
+    cy.task('stubGetConfirmInstructions')
+    cy.task('stubGetAllocationCompleteDetails')
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmails', false)
+    cy.task('stubSendComparisonLogToWorkload')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+    const instructionsConfirmPageRestricted = Page.verifyOnPage(InstructionsConfirmPageRestricted)
+    instructionsConfirmPageRestricted
+      .restrictedStatusWarningTextForEmail()
+      .should(
+        'contain',
+        'These notes will not be included in the email to the probation practitioner as this is a restricted access case.'
+      )
   })
 })

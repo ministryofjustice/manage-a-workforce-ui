@@ -57,6 +57,7 @@ export default function createApp(services: Services): express.Application {
   )
   app.use(routes(services))
   app.use((req, res, next) => next(createError(404, 'Not found')))
+  app.use((req, res, next) => next(createError(403, 'Forbidden')))
   app.use('/pdu/:pduCode/:crn/convictions/:convictionNumber/', checkCaseAlreadyAllocated(services.workloadService))
   app.use(errorHandler())
 

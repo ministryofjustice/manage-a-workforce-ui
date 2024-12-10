@@ -5,6 +5,7 @@ import Page from '../pages/page'
 context('Notification badge', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.signIn()
   })
 

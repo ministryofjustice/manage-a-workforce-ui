@@ -22,4 +22,6 @@ export default class SummaryPage extends Page {
   allocateCaseButton = (convictionNumber): PageElement => cy.get(`button#${convictionNumber}`)
 
   riskSummaryBadge = (): PageElement => cy.get('.risk-badge')
+
+  moreDetailHintHeader = (): PageElement => cy.get('#more-detail-hint-header')
 }

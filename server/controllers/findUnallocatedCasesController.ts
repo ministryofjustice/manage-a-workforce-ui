@@ -60,7 +60,9 @@ export default class FindUnallocatedCasesController {
           value.convictionNumber,
           value.caseType,
           value.sentenceLength,
-          value.outOfAreaTransfer
+          value.outOfAreaTransfer,
+          value.excluded,
+          value.apopExcluded
         )
     )
 

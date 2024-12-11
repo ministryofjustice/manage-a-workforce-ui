@@ -16,7 +16,11 @@
 
             <ul class="govuk-list govuk-list--bullet">
                 <li>the case and SPO Oversight contact will be saved in NDelius within 5 minutes</li>
+                {% if laoRestricted == false %}
                 <li>your allocation notes have been emailed to <strong>{{ data.staff.name.combinedName }}</strong> (<em>{{ data.staff.email }}</em>)</li>
+                {% else %}
+                <li>your allocation has been emailed to <strong>{{ data.staff.name.combinedName }}</strong> (<em>{{ data.staff.email }}</em>)</li>
+                {% endif %}
                 {% if sendEmailCopyToAllocatingOfficer %}
                     <li>we've sent you a copy of the allocation email</li>
                 {% endif %}

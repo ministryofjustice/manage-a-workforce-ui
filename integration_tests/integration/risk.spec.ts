@@ -11,6 +11,7 @@ context('Risk', () => {
   it('Caption text visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
@@ -19,6 +20,7 @@ context('Risk', () => {
   it('Risk header visible on page and out of area transfer banner is not visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.riskHeading().should('contain', 'Risk')
@@ -28,6 +30,7 @@ context('Risk', () => {
   it('Out of area transfer banner is visible on page and continue button is disabled when case is out of area transfer case', () => {
     cy.task('stubGetUnallocatedCaseWhereIsOutOfAreaTransfer')
     cy.task('stubGetRisk')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.riskHeading().should('contain', 'Risk')
@@ -39,6 +42,7 @@ context('Risk', () => {
   it('Sub nav visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage
@@ -52,6 +56,7 @@ context('Risk', () => {
   it('Risk tab is highlighted', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.highlightedTab().should('contain.text', 'Risk')
@@ -60,6 +65,7 @@ context('Risk', () => {
   it('Continue button enabled and visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.button().should('contain', 'Continue')
@@ -69,6 +75,7 @@ context('Risk', () => {
   it('Active registrations visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage
@@ -99,6 +106,7 @@ context('Risk', () => {
   it('Inactive registrations visible on page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage
@@ -125,6 +133,7 @@ context('Risk', () => {
   it('Display text when no registrations on the page', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRiskNoRegistrations')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.bodyText().contains('There are no active registrations.')
@@ -136,6 +145,7 @@ context('Risk', () => {
   it('Displays Assessments when returned', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetRisk')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage
@@ -167,6 +177,7 @@ context('Risk', () => {
   it('Displays Not Found Assessment', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetNotFoundRisk')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.roshWidget().should('have.class', 'rosh-widget--none')
@@ -197,6 +208,7 @@ context('Risk', () => {
   it('Displays Unavailable Assessment', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetUnavailableRisk')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.roshWidget().should('have.class', 'rosh-widget--unavailable')

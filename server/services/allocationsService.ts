@@ -11,6 +11,7 @@ import UnallocatedCase from '../models/UnallocatedCase'
 import CaseOverview from '../models/CaseOverview'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
+import AllocationLAOStatus from '../models/AllocationLAOStatus'
 
 export default class AllocationsService {
   config: ApiConfig
@@ -34,6 +35,12 @@ export default class AllocationsService {
         staffCodes,
       },
     })) as CrnStaffRestrictions
+  }
+
+  async getLAOStatusforAllocation(token: string, crn: string): Promise<AllocationLAOStatus> {
+    return (await this.restClient(token).get({
+      path: `/cases/${crn}/restrictions`,
+    })) as AllocationLAOStatus
   }
 
   private restClient(token: string): RestClient {

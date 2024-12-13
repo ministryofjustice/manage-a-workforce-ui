@@ -23,11 +23,17 @@ export default class FindUnallocatedCasesController {
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
     const { token, username } = res.locals.user
-    const [pduDetails, savedAllocationDemandSelection, allocatedCasesCount] = await Promise.all([
-      this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode),
-      this.userPreferenceService.getAllocationDemandSelection(token, username),
-      this.workloadService.getAllocationHistoryCount(token, config.casesAllocatedSinceDate().toISOString()),
-    ])
+    const teamCodes = await this.userPreferenceService.getTeamsUserPreference(token, username)
+    const pduDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)
+    const savedAllocationDemandSelection = await this.userPreferenceService.getAllocationDemandSelection(
+      token,
+      username
+    )
+    const allocatedCasesCount = await this.workloadService.postAllocationHistoryCount(
+      token,
+      config.casesAllocatedSinceDate().toISOString(),
+      teamCodes.items
+    )
     const allEstate = await this.probationEstateService.getAllEstateByRegionCode(token, pduDetails.region.code)
 
     const flashAllocationDemandSelected = req.flash('allocationDemandSelected')

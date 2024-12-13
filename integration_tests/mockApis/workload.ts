@@ -53,8 +53,8 @@ export default {
   stubCaseAllocationHistory: (): SuperAgentRequest => {
     return stubForWorkload({
       request: {
-        method: 'GET',
-        urlPattern: `/allocation/events/me\\?since=.*`,
+        method: 'POST',
+        urlPattern: `/allocation/events/teams\\?since=.*`,
       },
       response: {
         status: 200,
@@ -109,8 +109,8 @@ export default {
   stubCaseAllocationHistoryEmpty: (): SuperAgentRequest => {
     return stubForWorkload({
       request: {
-        method: 'GET',
-        urlPattern: `/allocation/events/me\\?since=.*`,
+        method: 'POST',
+        urlPattern: `/allocation/events/teams\\?since=.*`,
       },
       response: {
         status: 200,
@@ -144,8 +144,8 @@ export default {
     }))
     return stubForWorkload({
       request: {
-        method: 'GET',
-        urlPattern: `/allocation/events/me\\?since=.*`,
+        method: 'POST',
+        urlPattern: `/allocation/events/teams\\?since=.*`,
       },
       response: {
         status: 200,
@@ -159,8 +159,8 @@ export default {
   stubCaseAllocationHistoryCount: (caseCount = 8): SuperAgentRequest => {
     return stubForWorkload({
       request: {
-        method: 'GET',
-        urlPattern: `/allocation/events/me/count\\?since=.*`,
+        method: 'POST',
+        urlPattern: `/allocation/events/teams/count\\?since=.*`,
       },
       response: {
         status: 200,

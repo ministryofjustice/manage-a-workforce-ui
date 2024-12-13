@@ -10,6 +10,7 @@ import ChoosePractitionerData from '../models/ChoosePractitionerData'
 import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
 import AllocationHistory from '../models/AllocationHistory'
 import AllocationHistoryCount from '../models/AllocationHistoryCount'
+import AllocationLAOStatus from '../models/AllocationLAOStatus'
 
 export default class WorkloadService {
   config: ApiConfig
@@ -135,6 +136,24 @@ export default class WorkloadService {
   async getAllocationHistoryCount(token: string, sinceDate: string): Promise<AllocationHistoryCount> {
     return (await this.restClient(token).get({
       path: `/allocation/events/me/count?since=${sinceDate}`,
+    })) as AllocationHistoryCount
+  }
+
+  async postAllocationHistory(token: string, sinceDate: string, teams: string[]): Promise<AllocationHistory> {
+    return (await this.restClient(token).post({
+      path: `/allocation/events/teams?since=${sinceDate}`,
+      data: {
+        teams,
+      },
+    })) as AllocationHistory
+  }
+
+  async postAllocationHistoryCount(token: string, sinceDate: string, teams: string[]): Promise<AllocationHistoryCount> {
+    return (await this.restClient(token).post({
+      path: `/allocation/events/teams/count?since=${sinceDate}`,
+      data: {
+        teams,
+      },
     })) as AllocationHistoryCount
   }
 }

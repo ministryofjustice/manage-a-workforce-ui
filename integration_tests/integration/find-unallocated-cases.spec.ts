@@ -167,6 +167,13 @@ context('Find Unallocated cases', () => {
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1', response })
     cy.reload()
     cy.get('table').find('tr').last().should('contain.text', 'Action required')
+    cy.get('table')
+      .find('tr')
+      .last()
+      .should(
+        'contain.text',
+        'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.'
+      )
   })
 
   it('clicking clear link removes user preference', () => {

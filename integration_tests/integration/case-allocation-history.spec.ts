@@ -138,7 +138,10 @@ context('Case allocation history', () => {
   })
 
   it('shows message but no table is shown if no data returned', () => {
+    // this doesn't appear to be registering
+    cy.task('stubCaseAllocationHistoryCountEmpty', 20)
     cy.task('stubCaseAllocationHistoryEmpty')
+    cy.task('stubCaseAllocationHistoryCount', 20)
     cy.reload()
     cy.get('#tab_allCases').should('exist')
     caseAllocationHistoryPage.noCasesBody().should('exist')

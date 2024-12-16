@@ -9,6 +9,7 @@
 
 {% set tableData = {
         firstCellIsHeader: true,
+        attributes: { 'data-module': 'moj-sortable-table' },
         head: [
             { text: 'Name / CRN',
                 attributes: {
@@ -23,8 +24,9 @@
                 } 
             },
             { text: 'Date allocated',
+                format: "date",
                 attributes: {
-                    "aria-sort": "none",
+                    "aria-sort": "descending",
                     'data-persistent-id': 'allocation-history-cases-date-allocated'
                 } 
             },
@@ -69,64 +71,101 @@
     {{ tableData.rows.push(tableRow) }}
 {% endfor %}
 
+{% if tableData.rows.length > 0 %}
+    {% set panelHtml = govukTable(tableData) %}
+{% else %}
+    {% set panelHtml = '<p class="govuk-body-l">There are no cases allocated in the past 30 days.</p>' %}
+{% endif %}
+
 {% set teamTabItem = {
-        label: 'All cases',
-        id: 'allCases',
-        panel: {
-            html: govukTable(tableData)
-        }
-    } -%}
+    label: 'All cases',
+    id: 'allCases',
+    panel: {
+        html: panelHtml
+    }
+} %}
 {{ govukTabItems.push(teamTabItem) }}
 
-<div class="govuk-grid-row">
-    {% for team in teams %}
-        {% set tableData = {
-            head: [
-                {
-                    text: 'Name / CRN'
-                }, {
-                    text: 'Tier'
-                }, {
-                    text: 'Date allocated'
-                }, {
-                    text: 'Probation Practitioner'
-                }, {
-                    text: 'Allocated by'
-                }
-            ],
-            rows: []
-        } %}
+{% for team in teams %}
+    {% set tableData = {
+                firstCellIsHeader: true,
+                attributes: { 'data-module': 'moj-sortable-table' },
+                head: [
+                    { text: 'Name / CRN',
+                        attributes: {
+                            "aria-sort": "none",
+                            'data-persistent-id': 'allocation-history-cases-name-crn'
+                        }
+                    },
+                    { text: 'Tier',
+                        attributes: {
+                            "aria-sort": "none",
+                            'data-persistent-id': 'allocation-history-cases-tier'
+                        }
+                    },
+                    { text: 'Date allocated',
+                        format: "date",
+                        attributes: {
+                            "aria-sort": "descending",
+                            'data-persistent-id': 'allocation-history-cases-date-allocated'
+                        }
+                    },
+                    { text: 'Probation Practitioner',
+                        attributes: {
+                            "aria-sort": "none",
+                            'data-persistent-id': 'allocation-history-cases-probation-practitioner'
+                        }
+                    },
+                    { text: 'Allocated by',
+                        attributes: {
+                            "aria-sort": "none",
+                            'data-persistent-id': 'allocation-history-cases-allocated-by'
+                        }
+                    }
+                ],
+                rows: []
+            } %}
 
-        {% for item in team.items %}
-            {% set tableRow = [
-                    { text: item.nameCrn, attributes: { "data-sort-value": item.nameCrn } },
-                    { text: item.tier, attributes: { "data-sort-value": item.tier } },
-                    { text: (item.allocationDate | dateFormat), attributes: { "data-sort-value": item.allocationDate } },
-                    { html: govukLabel({
-                        text: ('<a href="/pdu/'+ item.pduCode +'/' + item.crn + '/convictions/' + 1 + '/allocate/' + item.team + '/' + item.staffCode + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + item.staffCode + '" aria-label="View">' + item.staffName + '</a>' ) | safe,
-                        for: ('allocated-officer-' + item.staffCode)
-                    }), attributes: { "data-sort-value": item.staffName } },
-                    { text: item.allocatedBy, attributes: { "data-sort-value": item.allocatedBy } }
-                ] %}
-            {{ tableData.rows.push(tableRow) }}
-        {% endfor %}
-
-        {% if tableData.rows.length > 0 %}
-            {% set panelHtml = govukTable(tableData) %}
+    {% for item in allocatedCasesByTeam[team.code] %}
+        {% if item.apopExcluded == true %}
+            {%- set tableRow = [
+                    {
+                        text: allocatedCaseDisplay(item, pduCode),
+                        attributes: { "data-sort-value": item.crn }
+                    },
+                    { text: 'This is a restricted access case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 5 }
+                ] -%}
         {% else %}
-            {% set panelHtml = '<p class="govuk-body-l">There are no cases allocated in the past 30 days.</p>' %}
+            {%- set tableRow = [
+            { text: doubleCell(item.name, item.crn, 'govuk-body-s'),
+              attributes: { "data-sort-value": item.crn } },
+            { text: item.tier, attributes: { "data-sort-value": item.tier } },
+            { text: (item.allocationDate | dateFormat), attributes: { "data-sort-value": item.allocationDate } },
+            { html: govukLabel({
+                text: ('<a href="/pdu/'+ item.pduCode +'/' + item.crn + '/convictions/' + 1 + '/allocate/' + item.team + '/' + item.staffCode + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + item.staffCode + '" aria-label="View">' + item.staffName + '</a>' ) | safe,
+                for: ('allocated-officer-' + item.staffCode)
+            }), attributes: { "data-sort-value": item.staffName } },
+            { text: item.allocatedBy, attributes: { "data-sort-value": item.allocatedBy } }
+        ] -%}
         {% endif %}
-
-        {% set teamTabItem = {
-            label: team.name,
-            id: team.code,
-            panel: {
-                html: panelHtml
-            }
-        } %}
-        {{ govukTabItems.push(teamTabItem) }}
+        {{ tableData.rows.push(tableRow) }}
     {% endfor %}
-</div>
+
+    {% if tableData.rows.length > 0 %}
+        {% set panelHtml = govukTable(tableData) %}
+    {% else %}
+        {% set panelHtml = '<p class="govuk-body-l">There are no cases allocated in the past 30 days.</p>' %}
+    {% endif %}
+
+    {% set teamTabItem = {
+        label: team.name,
+        id: team.code,
+        panel: {
+            html: panelHtml
+        }
+    } %}
+    {{ govukTabItems.push(teamTabItem) }}
+{% endfor %}
 
 {% block allocationContent %}
     <div class="govuk-grid-row">

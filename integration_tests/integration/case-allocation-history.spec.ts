@@ -103,8 +103,8 @@ context('Case allocation history', () => {
   })
 
   it('case allocation history table shows the correct data', () => {
-    cy.get('#tab_allCases').should('exist') // Check if the tab exists
-    cy.get('#allCases').should('exist') // Check if the table exists within the tab
+    cy.get('#tab_allCases').should('exist')
+    cy.get('#allCases').should('exist')
 
     cy.get('#allCases')
       .getTable()
@@ -143,7 +143,7 @@ context('Case allocation history', () => {
     cy.task('stubCaseAllocationHistoryEmpty')
     cy.task('stubCaseAllocationHistoryCount', 20)
     cy.reload()
-    cy.get('#tab_allCases').should('exist')
+    cy.get('#allCases').should('exist')
     caseAllocationHistoryPage.noCasesBody().should('exist')
     caseAllocationHistoryPage.noCasesBody().should('contain.text', 'There are no cases allocated in the past 30 days.')
   })

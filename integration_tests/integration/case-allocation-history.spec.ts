@@ -8,6 +8,9 @@ context('Case allocation history', () => {
   let caseAllocationHistoryPage: CaseAllocationHistoryPage
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubForGetLaoRestrictions', { crn: 'N04A123' })
+    cy.task('stubForGetLaoRestrictions', { crn: 'X602047' })
+    cy.task('stubForGetLaoRestrictions', { crn: 'X602070' })
     cy.task('stubCaseAllocationHistory')
     cy.signIn()
     cy.visit('/pdu/PDU1/case-allocation-history')

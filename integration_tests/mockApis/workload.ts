@@ -80,6 +80,8 @@ export default {
               },
               tier: 'C1',
               allocatedOn: '2023-02-02T11:49:35.844055Z',
+              allocatingSpo: 'N04A124',
+              teamCode: 'TM1',
             },
             {
               crn: 'X602070',
@@ -100,6 +102,8 @@ export default {
               },
               tier: 'D0',
               allocatedOn: '2023-03-03T13:23:15.008829Z',
+              allocatingSpo: 'N04A124',
+              teamCode: 'TM1',
             },
           ],
         },
@@ -141,6 +145,8 @@ export default {
       },
       tier: 'D0',
       allocatedOn: '2023-03-03T13:23:15.008829Z',
+      allocatingSpo: 'N04A124',
+      teamCode: 'TM1',
     }))
     return stubForWorkload({
       request: {

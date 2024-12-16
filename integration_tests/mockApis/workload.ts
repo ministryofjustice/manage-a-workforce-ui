@@ -121,6 +121,21 @@ export default {
       },
     })
   },
+  stubCaseAllocationHistoryCountEmpty: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'POST',
+        urlPattern: `/allocation/events/teams/count\\?since=.*`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          caseCount: 20,
+        },
+      },
+    })
+  },
   stubOverOneHundredCaseAllocationHistory: (): SuperAgentRequest => {
     const cases = new Array(100).fill(0).map(() => ({
       crn: 'X602070',

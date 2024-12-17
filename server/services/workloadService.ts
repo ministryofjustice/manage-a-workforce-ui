@@ -137,4 +137,22 @@ export default class WorkloadService {
       path: `/allocation/events/me/count?since=${sinceDate}`,
     })) as AllocationHistoryCount
   }
+
+  async postAllocationHistory(token: string, sinceDate: string, teams: string[]): Promise<AllocationHistory> {
+    return (await this.restClient(token).post({
+      path: `/allocation/events/teams?since=${sinceDate}`,
+      data: {
+        teams,
+      },
+    })) as AllocationHistory
+  }
+
+  async postAllocationHistoryCount(token: string, sinceDate: string, teams: string[]): Promise<AllocationHistoryCount> {
+    return (await this.restClient(token).post({
+      path: `/allocation/events/teams/count?since=${sinceDate}`,
+      data: {
+        teams,
+      },
+    })) as AllocationHistoryCount
+  }
 }

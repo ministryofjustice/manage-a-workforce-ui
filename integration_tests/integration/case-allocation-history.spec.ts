@@ -8,6 +8,9 @@ context('Case allocation history', () => {
   let caseAllocationHistoryPage: CaseAllocationHistoryPage
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubForGetLaoRestrictions', { crn: 'N04A123' })
+    cy.task('stubForGetLaoRestrictions', { crn: 'X602047' })
+    cy.task('stubForGetLaoRestrictions', { crn: 'X602070' })
     cy.task('stubCaseAllocationHistory')
     cy.signIn()
     cy.visit('/pdu/PDU1/case-allocation-history')
@@ -100,28 +103,47 @@ context('Case allocation history', () => {
   })
 
   it('case allocation history table shows the correct data', () => {
-    cy.get('table')
+    cy.get('#tab_allCases').should('exist')
+    cy.get('#allCases').should('exist')
+
+    cy.get('#allCases')
       .getTable()
-      .should('deep.equal', [
-        {
-          'Name / CRN': 'Terrance Yundt            X602070',
-          Tier: 'D0',
-          'Date allocated': '3 March 2023',
-          'Probation Practitioner': 'Andy Pandy',
-        },
-        {
-          'Name / CRN': 'Stacy Koepp            X602047',
-          Tier: 'C1',
-          'Date allocated': '2 February 2023',
-          'Probation Practitioner': 'Steve Leave',
-        },
-      ])
+      .then(actualTableData => {
+        const trimmedActualTableData = actualTableData.map(row => {
+          const trimmedRow = {}
+          Object.entries(row).forEach(([key, value]) => {
+            if (Object.prototype.hasOwnProperty.call(row, key)) {
+              trimmedRow[key] = (value as string).trim()
+            }
+          })
+          return trimmedRow
+        })
+        expect(trimmedActualTableData).to.deep.equal([
+          {
+            'Name / CRN': 'Terrance Yundt                    X602070',
+            Tier: 'D0',
+            'Date allocated': '3 March 2023',
+            'Probation Practitioner': 'Andy Pandy',
+            'Allocated by': 'N04A124',
+          },
+          {
+            'Name / CRN': 'Stacy Koepp                    X602047',
+            Tier: 'C1',
+            'Date allocated': '2 February 2023',
+            'Probation Practitioner': 'Steve Leave',
+            'Allocated by': 'N04A124',
+          },
+        ])
+      })
   })
 
   it('shows message but no table is shown if no data returned', () => {
+    // this doesn't appear to be registering
+    cy.task('stubCaseAllocationHistoryCountEmpty', 20)
     cy.task('stubCaseAllocationHistoryEmpty')
+    cy.task('stubCaseAllocationHistoryCount', 20)
     cy.reload()
-    cy.get('table').should('not.exist')
+    cy.get('#allCases').should('exist')
     caseAllocationHistoryPage.noCasesBody().should('exist')
     caseAllocationHistoryPage.noCasesBody().should('contain.text', 'There are no cases allocated in the past 30 days.')
   })

@@ -44,7 +44,9 @@ export default function routes(services: Services): Router {
 
   const allocationHistoryController = new AllocationHistoryController(
     services.workloadService,
-    services.probationEstateService
+    services.probationEstateService,
+    services.userPreferenceService,
+    services.allocationsService
   )
 
   const staffController = new StaffController(services.staffLookupService)
@@ -69,7 +71,7 @@ export default function routes(services: Services): Router {
 
   get('/pdu/:pduCode/case-allocation-history', async (req, res) => {
     const { pduCode } = req.params
-    await allocationHistoryController.getCasesAllocated(req, res, pduCode)
+    await allocationHistoryController.getCasesAllocatedByTeam(req, res, pduCode)
   })
 
   post('/pdu/:pduCode/find-unallocated', async (req, res) => {

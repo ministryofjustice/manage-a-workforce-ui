@@ -62,7 +62,7 @@
             { text: item.tier, attributes: { "data-sort-value": item.tier } },
             { text: (item.allocationDate | dateFormat), attributes: { "data-sort-value": item.allocationDate } },
             { html: govukLabel({
-                text: ('<a href="/pdu/'+ item.pduCode +'/' + item.crn + '/convictions/' + 1 + '/allocate/' + item.team + '/' + item.staffCode + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + item.staffCode + '" aria-label="View">' + item.staffName + '</a>' ) | safe,
+                text: ('<a href="/pdu/'+ item.pduCode +'/' + item.crn + '/convictions/' + 1 + '/allocate/' + item.team + '/' + item.staffCode + '/history-officer-view" class="govuk-link--no-visited-state" data-qa-link="' + item.staffCode + '" aria-label="View">' + item.staffName + '</a>' ) | safe,
                 for: ('allocated-officer-' + item.staffCode)
             }), attributes: { "data-sort-value": item.staffName } },
             { text: item.allocatedBy, attributes: { "data-sort-value": item.allocatedBy } }
@@ -142,7 +142,7 @@
             { text: item.tier, attributes: { "data-sort-value": item.tier } },
             { text: (item.allocationDate | dateFormat), attributes: { "data-sort-value": item.allocationDate } },
             { html: govukLabel({
-                text: ('<a href="/pdu/'+ item.pduCode +'/' + item.crn + '/convictions/' + 1 + '/allocate/' + item.team + '/' + item.staffCode + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + item.staffCode + '" aria-label="View">' + item.staffName + '</a>' ) | safe,
+                text: ('<a href="/pdu/'+ item.pduCode +'/' + item.crn + '/convictions/' + 1 + '/allocate/' + item.team + '/' + item.staffCode + '/history-officer-view" class="govuk-link--no-visited-state" data-qa-link="' + item.staffCode + '" aria-label="View">' + item.staffName + '</a>' ) | safe,
                 for: ('allocated-officer-' + item.staffCode)
             }), attributes: { "data-sort-value": item.staffName } },
             { text: item.allocatedBy, attributes: { "data-sort-value": item.allocatedBy } }

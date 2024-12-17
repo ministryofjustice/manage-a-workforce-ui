@@ -10,7 +10,6 @@ import ChoosePractitionerData from '../models/ChoosePractitionerData'
 import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
 import AllocationHistory from '../models/AllocationHistory'
 import AllocationHistoryCount from '../models/AllocationHistoryCount'
-import AllocationLAOStatus from '../models/AllocationLAOStatus'
 
 export default class WorkloadService {
   config: ApiConfig

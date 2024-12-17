@@ -205,7 +205,25 @@ export default function routes(services: Services): Router {
         offenderManagerTeamCode,
         offenderManagerCode,
         convictionNumber,
-        pduCode
+        pduCode,
+        false
+      )
+    }
+  )
+
+  get(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/history-officer-view',
+    async (req, res) => {
+      const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
+      await allocationsController.getOverview(
+        req,
+        res,
+        crn,
+        offenderManagerTeamCode,
+        offenderManagerCode,
+        convictionNumber,
+        pduCode,
+        true
       )
     }
   )

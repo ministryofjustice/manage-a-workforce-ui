@@ -198,7 +198,6 @@ export default function routes(services: Services): Router {
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/officer-view',
     async (req, res) => {
       const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
-      console.log('here')
       await allocationsController.getOverview(
         req,
         res,
@@ -216,7 +215,6 @@ export default function routes(services: Services): Router {
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/history-officer-view',
     async (req, res) => {
       const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
-      console.log('here 2')
       await allocationsController.getOverview(
         req,
         res,

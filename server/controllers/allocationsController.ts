@@ -331,7 +331,16 @@ export default class AllocationsController {
     })
   }
 
-  async getOverview(_, res: Response, crn, offenderManagerTeamCode, offenderManagerCode, convictionNumber, pduCode) {
+  async getOverview(
+    _,
+    res: Response,
+    crn,
+    offenderManagerTeamCode,
+    offenderManagerCode,
+    convictionNumber,
+    pduCode,
+    history
+  ) {
     const [response, teamDetails] = await Promise.all([
       this.workloadService.getOffenderManagerOverview(
         res.locals.user.token,
@@ -341,7 +350,12 @@ export default class AllocationsController {
       this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
     ])
     const data: OfficerView = new OfficerView(response)
-    res.render('pages/officer-overview', {
+    let nextPage = 'pages/officer-overview'
+    if (history) {
+      nextPage = 'pages/history-officer-overview'
+    }
+
+    res.render(nextPage, {
       title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
       data,
       officerTeamCode: offenderManagerTeamCode,

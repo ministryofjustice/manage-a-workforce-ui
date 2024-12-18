@@ -143,4 +143,21 @@ export default {
       },
     })
   },
+  stubForGetLaoRestrictions: ({ crn }): SuperAgentRequest => {
+    return stubForLaoStatus({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/${crn}/restrictions`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          crn: '$crn}',
+          isExcluded: false,
+          isRedacted: false,
+        },
+      },
+    })
+  },
 }

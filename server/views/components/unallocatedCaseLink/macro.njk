@@ -8,14 +8,12 @@
     </div>
     <div class="govuk-body-s">{{ item.crn }}</div>
     {% if item.outOfAreaTransfer === true %}
-        <div class="govuk-body-s">
-            <strong>Action required</strong>
-        </div>
+        <span class="govuk-tag govuk-tag--blue">Action required</span>
+    {% endif %}
+    {% if item.outOfAreaTransfer === true and(item.excluded or item.apopExcluded) %}
+        <div class="govuk-!-padding-top-3"></div>
     {% endif %}
     {% if item.excluded or item.apopExcluded %}
-        <div>
-            <span class="govuk-tag--orange govuk-!-display-inline-block">Restricted access</span>
-        </div>
+        <span class="govuk-tag govuk-tag--orange">Restricted access</span>
     {% endif %}
-
 {%- endmacro %}

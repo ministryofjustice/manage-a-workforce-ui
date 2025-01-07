@@ -39,8 +39,8 @@ export default class AllocationHistoryController {
           pduCode,
           allocatedBy: caseAllocation.allocatingSpo,
           team: caseAllocation.teamCode,
-          apopExcluded: laoStatus.isRedacted,
-          excluded: laoStatus.isRestricted,
+          apopExcluded: laoStatus.isRestricted,
+          excluded: laoStatus.isRedacted,
         }
       })
     )

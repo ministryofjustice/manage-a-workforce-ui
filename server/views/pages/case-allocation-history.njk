@@ -47,18 +47,14 @@
     } %}
 
 {% for item in allocatedCases %}
-    {% if item.apopExcluded == true %}
-        {%- set tableRow = [
-                    {
-                        text: allocatedCaseDisplay(item, pduCode),
-                        attributes: { "data-sort-value": item.crn }
-                    },
-                    { text: 'This is a restricted access case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 5 }
-                ] -%}
-    {% else %}
-        {%- set tableRow = [
-            { text: doubleCell(item.name, item.crn, 'govuk-body-s'),
-              attributes: { "data-sort-value": item.crn } },
+    {%- set tableRow = [
+            {% if item.excluded == true %}
+                { text: allocatedCaseDisplay(item, pduCode),
+                    attributes: { "data-sort-value": item.crn }
+                },
+            {% else %}
+            { text: doubleCell(item.name, item.crn, 'govuk-body-s'), attributes: { "data-sort-value": item.crn } }
+            {% endif %},
             { text: item.tier, attributes: { "data-sort-value": item.tier } },
             { text: (item.allocationDate | dateFormat), attributes: { "data-sort-value": item.allocationDate } },
             { html: govukLabel({
@@ -67,27 +63,26 @@
             }), attributes: { "data-sort-value": item.staffName } },
             { text: item.allocatedBy, attributes: { "data-sort-value": item.allocatedBy } }
         ] -%}
-    {% endif %}
     {{ tableData.rows.push(tableRow) }}
 {% endfor %}
 
 {% if tableData.rows.length > 0 %}
-    {% set panelHtml = govukTable(tableData) %}
+{% set panelHtml = govukTable(tableData) %}
 {% else %}
-    {% set panelHtml = '<p class="govuk-body-l">There are no cases allocated in the past 30 days.</p>' %}
+{% set panelHtml = '<p class="govuk-body-l">There are no cases allocated in the past 30 days.</p>' %}
 {% endif %}
 
 {% set teamTabItem = {
-    label: 'All cases',
-    id: 'allCases',
-    panel: {
-        html: panelHtml
-    }
+label: 'All cases',
+id: 'allCases',
+panel: {
+    html: panelHtml
+}
 } %}
 {{ govukTabItems.push(teamTabItem) }}
 
 {% for team in teams %}
-    {% set tableData = {
+{% set tableData = {
                 firstCellIsHeader: true,
                 attributes: { 'data-module': 'moj-sortable-table' },
                 head: [
@@ -126,19 +121,15 @@
                 rows: []
             } %}
 
-    {% for item in allocatedCasesByTeam[team.code] %}
-        {% if item.apopExcluded == true %}
-            {%- set tableRow = [
-                    {
-                        text: allocatedCaseDisplay(item, pduCode),
-                        attributes: { "data-sort-value": item.crn }
-                    },
-                    { text: 'This is a restricted access case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 5 }
-                ] -%}
-        {% else %}
-            {%- set tableRow = [
-            { text: doubleCell(item.name, item.crn, 'govuk-body-s'),
-              attributes: { "data-sort-value": item.crn } },
+{% for item in allocatedCasesByTeam[team.code] %}
+    {%- set tableRow = [
+            {% if item.excluded == true %}
+                            { text: allocatedCaseDisplay(item, pduCode),
+                                attributes: { "data-sort-value": item.crn }
+                            },
+            {% else %}
+                { text: doubleCell(item.name, item.crn, 'govuk-body-s'), attributes: { "data-sort-value": item.crn } }
+            {% endif %},
             { text: item.tier, attributes: { "data-sort-value": item.tier } },
             { text: (item.allocationDate | dateFormat), attributes: { "data-sort-value": item.allocationDate } },
             { html: govukLabel({
@@ -147,37 +138,36 @@
             }), attributes: { "data-sort-value": item.staffName } },
             { text: item.allocatedBy, attributes: { "data-sort-value": item.allocatedBy } }
         ] -%}
-        {% endif %}
         {{ tableData.rows.push(tableRow) }}
-    {% endfor %}
+{% endfor %}
 
-    {% if tableData.rows.length > 0 %}
-        {% set panelHtml = govukTable(tableData) %}
-    {% else %}
-        {% set panelHtml = '<p class="govuk-body-l">There are no cases allocated in the past 30 days.</p>' %}
-    {% endif %}
+{% if tableData.rows.length > 0 %}
+{% set panelHtml = govukTable(tableData) %}
+{% else %}
+{% set panelHtml = '<p class="govuk-body-l">There are no cases allocated in the past 30 days.</p>' %}
+{% endif %}
 
-    {% set teamTabItem = {
-        label: team.name,
-        id: team.code,
-        panel: {
-            html: panelHtml
-        }
-    } %}
-    {{ govukTabItems.push(teamTabItem) }}
+{% set teamTabItem = {
+label: team.name,
+id: team.code,
+panel: {
+    html: panelHtml
+}
+} %}
+{{ govukTabItems.push(teamTabItem) }}
 {% endfor %}
 
 {% block allocationContent %}
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h2 class="govuk-heading-l">Cases allocated through the Allocations tool in the last 30 days</h2>
-            <p class="govuk-body-s secondary-text-col" style="margin: -25px 0 30px;">Last updated: {{ lastUpdatedOn | dateFormat }} at {{ lastUpdatedOn | timeFormat }}</p>
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l">Cases allocated through the Allocations tool in the last 30 days</h2>
+    <p class="govuk-body-s secondary-text-col" style="margin: -25px 0 30px;">Last updated: {{ lastUpdatedOn | dateFormat }} at {{ lastUpdatedOn | timeFormat }}</p>
 
-            <div class="moj-scrollable-pane">
-                <div class="moj-scrollable-pane__wrapper">
-                    {{ govukTabs({ items: govukTabItems }) }}
-                </div>
-            </div>
+    <div class="moj-scrollable-pane">
+        <div class="moj-scrollable-pane__wrapper">
+            {{ govukTabs({ items: govukTabItems }) }}
         </div>
     </div>
+</div>
+</div>
 {% endblock %}

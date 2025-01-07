@@ -120,17 +120,17 @@ context('Case allocation history', () => {
         })
         expect(trimmedActualTableData).to.deep.equal([
           {
-            'Name / CRN': 'Terrance Yundt                    X602070',
-            Tier: 'D0',
-            'Date allocated': '3 March 2023',
-            'Probation Practitioner': 'Andy Pandy',
-            'Allocated by': 'N04A124',
-          },
-          {
             'Name / CRN': 'Stacy Koepp                    X602047',
             Tier: 'C1',
             'Date allocated': '2 February 2023',
             'Probation Practitioner': 'Steve Leave',
+            'Allocated by': 'N04A124',
+          },
+          {
+            'Name / CRN': 'Terrance Yundt                    X602070',
+            Tier: 'D0',
+            'Date allocated': '3 March 2023',
+            'Probation Practitioner': 'Andy Pandy',
             'Allocated by': 'N04A124',
           },
         ])

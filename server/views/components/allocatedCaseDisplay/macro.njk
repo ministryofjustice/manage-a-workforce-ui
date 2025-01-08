@@ -9,7 +9,7 @@
     <div class="govuk-body-s">{{ item.crn }}</div>
     {% if item.excluded or item.apopExcluded %}
         <div>
-            <span class="govuk-tag--orange govuk-!-display-inline-block">Restricted access</span>
+            <span class="govuk-tag govuk-tag--orange">Restricted access</span>
         </div>
     {% endif %}
 {%- endmacro %}

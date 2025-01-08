@@ -8,8 +8,6 @@
     </div>
     <div class="govuk-body-s">{{ item.crn }}</div>
     {% if item.excluded or item.apopExcluded %}
-        <div>
-            <span class="govuk-tag govuk-tag--orange">Restricted access</span>
-        </div>
+        <span class="govuk-tag govuk-tag--orange">Restricted access</span>
     {% endif %}
 {%- endmacro %}

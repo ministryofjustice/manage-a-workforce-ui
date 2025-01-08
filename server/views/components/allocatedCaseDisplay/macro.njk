@@ -1,9 +1,9 @@
 {% macro allocatedCaseDisplay(item, pduCode) -%}
     <div>
         {% if item.apopExcluded !== true %}
-            <strong>{{item.name}}</strong>
+            {{item.name}}
         {% else %}
-            <strong>*********</strong>
+            *********
         {% endif %}
     </div>
     <div class="govuk-body-s">{{ item.crn }}</div>

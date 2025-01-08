@@ -48,7 +48,7 @@
     {%- if item.excluded == true -%}
         {% set rowText = allocatedCaseDisplay(item, pduCode) %}
     {%- else -%}
-        {% set rowText = doubleCell('<class="govuk-!-font-weight-regular" {%item.name%}', item.crn, 'govuk-body-s') %}
+        {% set rowText = doubleCell('<class="govuk-!-font-weight-regular>" {%item.name%}', item.crn, 'govuk-body-s') %}
     {%- endif -%}
     {%- set tableRow = [
         { text: rowText, attributes: { "data-sort-value": item.crn } },
@@ -122,7 +122,7 @@
         {%- if item.excluded == true -%}
             {% set rowText = allocatedCaseDisplay(item, pduCode) %}
         {%- else -%}
-            {% set rowText = doubleCell('<class="govuk-!-font-weight-regular" {%item.name%}', item.crn, 'govuk-body-s') %}
+            {% set rowText = doubleCell('<class="govuk-!-font-weight-regular>" {%item.name%}', item.crn, 'govuk-body-s') %}
         {%- endif -%}
         {%- set tableRow = [
             { text: rowText, attributes: { "data-sort-value": item.crn } },

@@ -121,7 +121,7 @@
     {% for item in allocatedCasesByTeam[team.code] %}
         {%- if item.excluded == true -%}
             {% set rowText = allocatedCaseDisplay(item, pduCode) %}
-        %- else -%}
+        {%- else -%}
             {% set rowText = doubleCell(item.name, item.crn, 'govuk-body-s') %}
         {%- endif -%}
         {%- set tableRow = [

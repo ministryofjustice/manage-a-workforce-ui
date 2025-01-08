@@ -2,7 +2,7 @@
 {%- from "govuk/components/tabs/macro.njk" import govukTabs -%}
 {%- from "govuk/components/table/macro.njk" import govukTable -%}
 {% from "govuk/components/label/macro.njk" import govukLabel %}
-{%- from "../components/doubleCell/macro.njk" import doubleCell -%}
+{%- from "../components/doubleCellFormat/macro.njk" import doubleCellFormat -%}
 {%- from "../components/allocatedCaseDisplay/macro.njk" import allocatedCaseDisplay -%}
 
 {% set govukTabItems = [] -%}
@@ -48,7 +48,7 @@
     {%- if item.excluded == true -%}
         {% set rowText = allocatedCaseDisplay(item, pduCode) %}
     {%- else -%}
-        {% set rowText = doubleCell('<class="govuk-!-font-weight-regular>" {%item.name%}', item.crn, 'govuk-body-s') %}
+        {% set rowText = doubleCellFormat(item.name, item.crn,'govuk-!-font-weight-regular', 'govuk-body-s') %}
     {%- endif -%}
     {%- set tableRow = [
         { text: rowText, attributes: { "data-sort-value": item.crn } },
@@ -122,7 +122,7 @@
         {%- if item.excluded == true -%}
             {% set rowText = allocatedCaseDisplay(item, pduCode) %}
         {%- else -%}
-            {% set rowText = doubleCell('<class="govuk-!-font-weight-regular>" {%item.name%}', item.crn, 'govuk-body-s') %}
+            {% set rowText = doubleCellFormat(item.name, item.crn,'govuk-!-font-weight-regular', 'govuk-body-s') %}
         {%- endif -%}
         {%- set tableRow = [
             { text: rowText, attributes: { "data-sort-value": item.crn } },

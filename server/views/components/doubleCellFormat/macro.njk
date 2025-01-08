@@ -1,0 +1,7 @@
+{% macro doubleCellFormat(first, second, firstStyle, secondStyle) -%}
+    <span class="{{ firstStyle }}">{{ first | safe}}
+        {% if second -%}
+            <br/>
+            <span class="{{ secondStyle }}">{{ second | safe }}
+            {%- endif %}
+        {%- endmacro %}

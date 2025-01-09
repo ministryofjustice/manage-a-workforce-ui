@@ -37,4 +37,6 @@ export default class CaseAllocationHistoryPage extends Page {
   noCasesBody = (): PageElement => cy.get('.govuk-body-l')
 
   unallocatedCasesSubNavLink = (): PageElement => cy.get('a.moj-sub-navigation__link').contains('Unallocated cases')
+
+  restrictedBadge = (): PageElement => cy.get('.govuk-tag--orange')
 }

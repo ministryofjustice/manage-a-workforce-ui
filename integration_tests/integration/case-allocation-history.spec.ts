@@ -9,7 +9,7 @@ context('Case allocation history', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubForGetLaoRestrictions', { crn: 'N04A123' })
-    cy.task('stubForGetLaoRestrictions', { crn: 'X602047' })
+    cy.task('stubForGetLaoRestrictionsExcluded', { crn: 'X602047' })
     cy.task('stubForGetLaoRestrictions', { crn: 'X602070' })
     cy.task('stubCaseAllocationHistory')
     cy.signIn()
@@ -127,7 +127,7 @@ context('Case allocation history', () => {
             'Allocated by': 'N04A124',
           },
           {
-            'Name / CRN': 'Stacy Koepp                            X602047',
+            'Name / CRN': 'Stacy Koepp                            X602047                    Restricted access',
             Tier: 'C1',
             'Date allocated': '2 February 2023',
             'Probation Practitioner': 'Steve Leave',
@@ -146,6 +146,10 @@ context('Case allocation history', () => {
     cy.get('#allCases').should('exist')
     caseAllocationHistoryPage.noCasesBody().should('exist')
     caseAllocationHistoryPage.noCasesBody().should('contain.text', 'There are no cases allocated in the past 30 days.')
+  })
+
+  it('shows restricted badge and warning text if case has restricted access', () => {
+    caseAllocationHistoryPage.restrictedBadge().should('exist')
   })
 
   it('This tab is highlighted', () => {

@@ -154,7 +154,24 @@ export default {
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
           crn: '$crn}',
-          isExcluded: false,
+          isRestricted: false,
+          isRedacted: false,
+        },
+      },
+    })
+  },
+  stubForGetLaoRestrictionsExcluded: ({ crn }): SuperAgentRequest => {
+    return stubForLaoStatus({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/${crn}/restrictions`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          crn: '$crn}',
+          isRestricted: true,
           isRedacted: false,
         },
       },

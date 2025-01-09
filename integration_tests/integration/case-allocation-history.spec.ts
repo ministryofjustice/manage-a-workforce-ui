@@ -11,6 +11,7 @@ context('Case allocation history', () => {
     cy.task('stubForGetLaoRestrictions', { crn: 'N04A123' })
     cy.task('stubForGetLaoRestrictionsExcluded', { crn: 'X602047' })
     cy.task('stubForGetLaoRestrictions', { crn: 'X602070' })
+    cy.task('stubForGetLaoRestrictionsRedacted', { crn: 'X456123' })
     cy.task('stubCaseAllocationHistory')
     cy.signIn()
     cy.visit('/pdu/PDU1/case-allocation-history')
@@ -58,7 +59,7 @@ context('Case allocation history', () => {
     cy.reload()
     caseAllocationHistoryPage
       .subNav()
-      .should('contain', 'Cases allocated in last 30 days (2)')
+      .should('contain', 'Cases allocated in last 30 days (3)')
       // TODO - Add unallocated cases count
       .and('contain', 'Unallocated cases (10)')
   })
@@ -128,6 +129,13 @@ context('Case allocation history', () => {
           },
           {
             'Name / CRN': 'Stacy Koepp                            X602047                    Restricted access',
+            Tier: 'C1',
+            'Date allocated': '2 February 2023',
+            'Probation Practitioner': 'Steve Leave',
+            'Allocated by': 'N04A124',
+          },
+          {
+            'Name / CRN': '*********                            X456123                    Restricted access',
             Tier: 'C1',
             'Date allocated': '2 February 2023',
             'Probation Practitioner': 'Steve Leave',

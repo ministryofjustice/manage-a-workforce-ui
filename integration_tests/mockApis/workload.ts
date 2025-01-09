@@ -105,6 +105,28 @@ export default {
               allocatingSpo: 'N04A124',
               teamCode: 'TM1',
             },
+            {
+              crn: 'X456123',
+              name: {
+                forename: 'John',
+                middleName: '',
+                surname: 'Smith',
+                combinedName: 'John Smith',
+              },
+              staff: {
+                code: 'N04A123',
+                name: {
+                  forename: 'Steve',
+                  surname: 'Leave',
+                  combinedName: 'Steve Leave',
+                },
+                grade: 'PO',
+              },
+              tier: 'C1',
+              allocatedOn: '2023-02-02T11:49:35.844055Z',
+              allocatingSpo: 'N04A124',
+              teamCode: 'TM1',
+            },
           ],
         },
       },

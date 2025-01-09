@@ -1,15 +1,13 @@
 {% macro allocatedCaseDisplay(item, pduCode) -%}
-    <div>
+    <div class="govuk-!-font-weight-regular">
         {% if item.apopExcluded !== true %}
-            <strong>{{item.name}}</strong>
+            {{item.name}}
         {% else %}
-            <strong>*********</strong>
+            *********
         {% endif %}
     </div>
-    <div class="govuk-body-s">{{ item.crn }}</div>
+    <div class="govuk-body-s govuk-!-margin-bottom-2">{{ item.crn }}</div>
     {% if item.excluded or item.apopExcluded %}
-        <div>
-            <span class="govuk-tag--orange govuk-!-display-inline-block">Restricted access</span>
-        </div>
+        <span class="govuk-tag govuk-tag--orange">Restricted access</span>
     {% endif %}
 {%- endmacro %}

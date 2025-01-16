@@ -10,7 +10,13 @@ context('Not found', () => {
     cy.signIn()
     cy.visit('/unknown', { failOnStatusCode: false })
     const notFoundPage = Page.verifyOnPage(NotFoundPage)
-    notFoundPage.bodyText().first().contains('If you entered a web address, check it is correct.')
-    notFoundPage.bodyText().last().contains('You can go to the homepage to find the information you need.')
+    notFoundPage
+      .bodyText()
+      .contains(
+        'If you typed the web address, check it is correct. If you pasted the web address, check you copied the entire address.'
+      )
+    notFoundPage
+      .bodyText()
+      .contains('If you see this error frequently, email the Manage a Workforce team with details of the issue.')
   })
 })

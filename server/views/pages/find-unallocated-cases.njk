@@ -216,7 +216,7 @@
               aKey, aValue
             ], [bKey, bValue]) => aValue.name >= bValue.name
               ? 1
-              : 0)
+              : -1)
             .forEach(([key, value]) => lduSelect.options[lduSelect.options.length] = new Option(value.name, key))
         }
       }
@@ -230,7 +230,7 @@
             .sort(
               (a, b) => a.name >= b.name
               ? 1
-              : 0)
+              : -1)
             .forEach(team => teamSelect.options[teamSelect.options.length] = new Option(team.name, team.code))
         }
       }

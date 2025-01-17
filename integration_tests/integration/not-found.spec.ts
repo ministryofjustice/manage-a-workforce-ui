@@ -10,14 +10,13 @@ context('Not found', () => {
     cy.signIn()
     cy.visit('/unknown', { failOnStatusCode: false })
     const notFoundPage = Page.verifyOnPage(NotFoundPage)
-    notFoundPage.bodyText().contains('If you entered a web address, check it is correct.')
-    notFoundPage.bodyText().contains('You can go to the homepage to find the information you need.')
-  })
-
-  it('Must show link to homepage', () => {
-    cy.signIn()
-    cy.visit('/unknown', { failOnStatusCode: false })
-    const notFoundPage = Page.verifyOnPage(NotFoundPage)
-    notFoundPage.link().should('have.attr', 'href').and('include', '/')
+    notFoundPage
+      .bodyText()
+      .contains(
+        'If you typed the web address, check it is correct. If you pasted the web address, check you copied the entire address.'
+      )
+    notFoundPage
+      .bodyText()
+      .contains('If you see this error frequently, email the Manage a Workforce team with details of the issue.')
   })
 })

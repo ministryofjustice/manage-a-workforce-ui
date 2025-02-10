@@ -42,6 +42,11 @@ context('Show allocate cases by team based on user preferences', () => {
             Cases: '2',
           },
         ])
+      cy.get('table')
+        .contains('tr', 'Team 1')
+        .find('a')
+        .should('have.attr', 'href')
+        .and('include', '/team-workload/TM1')
     })
 
     it('link to edit team list must exist', () => {

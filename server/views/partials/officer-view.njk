@@ -6,7 +6,9 @@
 {% block beforeContent %}
     {{ govukBackLink({
       text: "Back",
-      href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner"
+      attributes: {
+        onclick: 'window.history.back();'
+      }
     }) }}
 {% endblock %}
 

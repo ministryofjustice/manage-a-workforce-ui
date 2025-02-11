@@ -6,19 +6,21 @@
 {% block beforeContent %}
     {{ govukBackLink({
       text: "Back",
-      href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner"
+      attributes: {
+       "data-back" : undefined
+      }
     }) }}
 {% endblock %}
 
 {% block content %}
     {% if not data.email %}
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-             {{ govukNotificationBanner({
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                {{ govukNotificationBanner({
                  text: 'You cannot allocate cases to ' + officerName + ' through the Allocations tool because their email address is not linked to their staff code in NDelius.'
              }) }}
+            </div>
         </div>
-    </div>
     {% endif %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
@@ -36,17 +38,16 @@
                 items: [
                     {
                         text: 'Overview',
-                        href: '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + officerTeamCode + '/' + officerCode + '/officer-view',
+                        href: '/pdu/' + pduCode + '/' + officerTeamCode + '/' + officerCode + '/officer-view',
                         active: isOverview
                     },
                     {
                         text: 'Active cases (' + officerTotalCases + ')',
-                        href: '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + officerTeamCode + '/' + officerCode + '/active-cases',
+                        href: '/pdu/' + pduCode + '/' + officerTeamCode + '/' + officerCode + '/active-cases',
                         active: isActiveCases
                     }
                 ]
             }) }}
-
 
             {% block officerContent %}{% endblock %}
 
@@ -54,4 +55,3 @@
     </div>
 
 {% endblock %}
-

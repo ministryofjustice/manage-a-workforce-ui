@@ -1,0 +1,113 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "../components/card/macro.njk" import card %}
+
+{%- set teamTableData = {
+    attributes: {
+        'data-module': 'moj-sortable-table',
+        'data-persistent-id': teamData.teamCode + '-choose-practitioner'
+    },
+    captionClasses: "govuk-table__caption--l",
+    firstCellIsHeader: true,
+    head: [
+        {
+            text: "Name",
+            attributes: {
+                "aria-sort": "none",
+                'data-persistent-id': teamCode + '-team-workload-name'
+            }
+        },
+        {
+            text: "Grade",
+            attributes: {
+                "aria-sort": "none",
+                'data-persistent-id': teamCode + '-team-workload-grade'
+            }
+        },
+        {
+            text: "Workload %",
+            attributes: {
+                "aria-sort": "none",
+                'data-persistent-id': teamCode + '-team-workload-workload'
+            }
+        },
+        {
+            text: "Cases in past 7 days",
+            attributes: {
+                "aria-sort": "none",
+                'data-persistent-id': teamCode + '-team-workload-cases-past-week'
+            }
+        },
+        {
+            text: "Community Cases",
+            attributes: {
+                "aria-sort": "none",
+                'data-persistent-id': teamCode + '-team-workload-community-cases'
+            }
+        },
+        {
+            text: "Custody Cases",
+            attributes: {
+                "aria-sort": "none",
+                'data-persistent-id': teamCode + '-team-workload-custody-cases'
+            }
+        }
+    ],
+    rows: []
+} -%}
+{% for offenderManager in teamWorkload %}
+    {%- set tableRow = [
+            { 
+                html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/' + offenderManager.code + '/officer-view">' + offenderManager.name.forename + ' ' + offenderManager.name.surname   
+            },
+            { 
+                text: offenderManager.grade 
+            },
+            { 
+                text: offenderManager.workload + '%'
+            },
+            {
+                text: offenderManager.casesPastWeek
+            },
+            {
+                text: offenderManager.communityCases
+            },
+            {
+                text: offenderManager.custodyCases
+            }
+        ] -%}
+    {{ teamTableData.rows.push(tableRow) }}
+{% endfor %}
+
+{% block content %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <span class="govuk-caption-xl">{{ teamDetails.probationDeliveryUnit.name }}</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ teamDetails.name }}</h1>
+            <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+        </div>
+    </div>
+
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-0">Workload</h2>
+    <p class="govuk-body-s govuk-!-margin-bottom-2">Last updated: {{ data.lastUpdatedOn | dateFormat }} at {{ data.lastUpdatedOn | timeFormat }}</p>
+
+    <div class="govuk-grid-row  govuk-!-margin-bottom-9">
+        <div class="card__layout">
+            {{ card({
+                classes: 'card-total',
+                titleHtml: (totalCases + '<br>' + '<p class="govuk-body">' + "cases"  + '</p>' + '</a>')
+            }) }}
+        </div>
+        <div class="card__layout">
+            {{ card({
+                classes: 'card-total-subset ' + ('over-capacity' if averageWorkload >= 100 else 'under-capacity'),
+                titleHtml: (averageWorkload + '%<p class="govuk-body">workload %</p>')
+            }) }}
+        </div>
+
+    </div>
+
+    {{ govukTable(teamTableData) }}
+
+    {%endblock%}

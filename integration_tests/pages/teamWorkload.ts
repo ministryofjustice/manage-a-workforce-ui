@@ -5,27 +5,15 @@ export default class TeamWorkloadPage extends Page {
     super('Team Workload')
   }
 
-  backLink = (): PageElement => cy.get('.govuk-back-link')
-
   secondaryText = (): PageElement => cy.get('.maw-secondary-text-col')
 
-  heading = (): PageElement => cy.get('h2.govuk-heading-l')
+  heading = (): PageElement => cy.get('h1.govuk-heading-xl')
 
-  mediumHeading = (): PageElement => cy.get('h3.govuk-heading-m')
+  mediumHeading = (): PageElement => cy.get('h2.govuk-heading-l')
 
-  summaryText = (): PageElement => cy.get('.govuk-details__summary-text')
+  totalCases = (): PageElement => cy.get('.card.card-total')
 
-  overCapacityCard = (): PageElement => cy.get('.over-capacity')
+  averageWorkload = (): PageElement => cy.get('.card.card-total-subset')
 
-  underCapacityCard = (): PageElement => cy.get('.under-capacity')
-
-  cardHeading = (): PageElement => cy.get('.card__heading')
-
-  totalCases = (): PageElement => cy.get('.card__heading > a > p')
-
-  lastUpdated = (): PageElement => cy.get('.govuk-body-s')
-
-  totalCasesLink = (): PageElement => cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/active-cases"]')
-
-  tierTable = (): PageElement => cy.get('.govuk-table')
+  teamTableRows = (): PageElement => cy.get('.govuk-table tbody tr')
 }

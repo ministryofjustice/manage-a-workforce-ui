@@ -71,7 +71,7 @@ export default class AllocateCasesController {
       teamCode,
       teamWorkload: teamWorkload[teamCode].teams,
       totalCases,
-      averageWorkload: totalWorkload / teamWorkload[teamCode].teams.length,
+      averageWorkload: Math.round(totalWorkload / teamWorkload[teamCode].teams.length),
     })
   }
 }

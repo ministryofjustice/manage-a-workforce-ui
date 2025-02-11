@@ -9,7 +9,7 @@ context('Team Workload', () => {
     cy.signIn()
     cy.task('stubGetTeamDetails', { code: 'N03F01', name: 'Team Name 1' })
     cy.task('stubForTeamWorkload')
-    cy.visit('/team-workload/N03F01')
+    cy.visit('/pdu/PDU1/N03F01/team-workload')
 
     teamWorkloadPage = Page.verifyOnPage(TeamWorkloadPage)
   })
@@ -35,7 +35,7 @@ context('Team Workload', () => {
 
   it('adds the over-capacity class to average workload', () => {
     cy.task('stubForTeamWorkloadOverCapacity')
-    cy.visit('/team-workload/N03F01')
+    cy.visit('/pdu/PDU1/N03F01/team-workload')
 
     teamWorkloadPage.averageWorkload().should('have.class', 'over-capacity')
   })

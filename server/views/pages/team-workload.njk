@@ -58,7 +58,7 @@
 {% for offenderManager in teamWorkload %}
     {%- set tableRow = [
             { 
-                text: offenderManager.name.forename + ' ' + offenderManager.name.surname   
+                html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/' + offenderManager.code + '/officer-view">' + offenderManager.name.forename + ' ' + offenderManager.name.surname   
             },
             { 
                 text: offenderManager.grade 

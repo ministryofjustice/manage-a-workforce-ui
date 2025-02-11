@@ -50,7 +50,7 @@ export default class AllocateCasesController {
     })
   }
 
-  async getTeamWorkload(_req: Request, res: Response, teamCode: string) {
+  async getTeamWorkload(_req: Request, res: Response, pduCode: string, teamCode: string) {
     const { token } = res.locals.user
 
     const teamDetails = await this.probationEstateService.getTeamDetails(token, teamCode)
@@ -69,6 +69,7 @@ export default class AllocateCasesController {
       title: 'Team Workload | Manage a workforce',
       teamDetails,
       teamCode,
+      pduCode,
       teamWorkload: teamWorkload[teamCode].teams,
       totalCases,
       averageWorkload: Math.round(totalWorkload / teamWorkload[teamCode].teams.length),

@@ -305,8 +305,8 @@ export default function routes(services: Services): Router {
   })
 
   get('/pdu/:pduCode/:teamCode/team-workload', async (req, res) => {
-    const { teamCode } = req.params
-    await allocateCasesController.getTeamWorkload(req, res, teamCode)
+    const { teamCode, pduCode } = req.params
+    await allocateCasesController.getTeamWorkload(req, res, pduCode, teamCode)
   })
 
   get('/whats-new', async (req, res) => {

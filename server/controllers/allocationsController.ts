@@ -334,7 +334,6 @@ export default class AllocationsController {
   async getOverview(
     _,
     res: Response,
-    crn,
     offenderManagerTeamCode,
     offenderManagerCode,
     convictionNumber,
@@ -359,7 +358,6 @@ export default class AllocationsController {
       title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
       data,
       officerTeamCode: offenderManagerTeamCode,
-      crn,
       convictionNumber,
       isOverview: true,
       pduCode,
@@ -367,7 +365,7 @@ export default class AllocationsController {
     })
   }
 
-  async getActiveCases(_, res: Response, crn, offenderManagerTeamCode, offenderManagerCode, convictionNumber, pduCode) {
+  async getActiveCases(_, res: Response, offenderManagerTeamCode, offenderManagerCode, convictionNumber, pduCode) {
     const [response, teamDetails] = await Promise.all([
       this.workloadService.getOffenderManagerCases(res.locals.user.token, offenderManagerCode, offenderManagerTeamCode),
       this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
@@ -382,7 +380,6 @@ export default class AllocationsController {
       data: response,
       officerTeamCode: offenderManagerTeamCode,
       cases,
-      crn,
       convictionNumber,
       isActiveCases: true,
       pduCode,

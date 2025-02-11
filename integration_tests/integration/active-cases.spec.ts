@@ -10,7 +10,7 @@ context('Active Cases', () => {
     cy.task('stubGetOffenderManagerCases')
     cy.task('stubGetTeamDetails', { code: 'TM2', name: 'Team Name 1' })
     cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/active-cases')
+    cy.visit('/pdu/PDU1/TM2/OM2/active-cases')
     activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
   })
 

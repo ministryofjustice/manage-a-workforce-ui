@@ -8,7 +8,7 @@ context('Overview', () => {
     cy.task('stubGetOverview')
     cy.task('stubGetTeamDetails', { code: 'TM2', name: 'Team Name 1' })
     cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/officer-view')
+    cy.visit('/pdu/PDU1/TM2/OM2/officer-view')
     overviewPage = Page.verifyOnPage(OverviewPage)
   })
 
@@ -32,7 +32,7 @@ context('Overview', () => {
 
   it('notification banner is visible when officer has no email', () => {
     cy.task('stubGetOverviewWithLastAllocatedEvent')
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM6/officer-view')
+    cy.visit('/pdu/PDU1/TM2/OM6/officer-view')
     overviewPage
       .notificationBanner()
       .should(
@@ -84,10 +84,7 @@ context('Overview', () => {
   it('Total cases card visible on page', () => {
     overviewPage.cardHeading().should('contain', '22')
     overviewPage.totalCases().should('contain', 'cases')
-    overviewPage
-      .totalCasesLink()
-      .should('have.attr', 'href')
-      .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/active-cases')
+    overviewPage.totalCasesLink().should('have.attr', 'href').and('include', '/pdu/PDU1/TM2/OM2/active-cases')
   })
 
   it('Section break visible on page', () => {
@@ -159,7 +156,7 @@ context('Overview', () => {
 
   it('must show last allocated event information in Last Case Allocated', () => {
     cy.task('stubGetOverviewWithLastAllocatedEvent')
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM6/officer-view')
+    cy.visit('/pdu/PDU1/TM2/OM6/officer-view')
     cy.get('.availability').getSummaryList().should('deep.equal', {
       'Weekly hours': '22.5',
       Reductions: '10 hours until 3 November 2022',

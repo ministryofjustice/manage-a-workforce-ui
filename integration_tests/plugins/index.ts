@@ -20,6 +20,7 @@ import risk from '../mockApis/risk'
 import choosePractitioner from '../mockApis/choosePractitioner'
 import allocateToPractitioner from '../mockApis/allocateToPractitioner'
 import workload from '../mockApis/workload'
+import teamWorkload from '../mockApis/teamWorkload'
 import overview from '../mockApis/overview'
 import allocationCase from '../mockApis/allocationCase'
 import offenderManagerCases from '../mockApis/offenderManagerCases'
@@ -95,6 +96,7 @@ export default (on: (string, Record) => void): void => {
     ...allocations,
     ...allocateToPractitioner,
     ...workload,
+    ...teamWorkload,
     ...offenderManagerCases,
     ...allocationComplete,
     ...allocationCase,

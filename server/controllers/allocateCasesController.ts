@@ -49,4 +49,29 @@ export default class AllocateCasesController {
       regionName: probationDeliveryUnitDetails.region.name,
     })
   }
+
+  async getTeamWorkload(_req: Request, res: Response, teamCode: string) {
+    const { token } = res.locals.user
+
+    const teamDetails = await this.probationEstateService.getTeamDetails(token, teamCode)
+    const teamWorkload = await this.workloadService.getTeamWorkload(token, teamCode)
+
+    let totalCases = 0
+    let totalWorkload = 0
+
+    teamWorkload[teamCode].teams.forEach(team => {
+      totalCases += team.custodyCases
+      totalCases += team.communityCases
+      totalWorkload += team.workload
+    })
+
+    res.render('pages/team-workload', {
+      title: 'Team Workload | Manage a workforce',
+      teamDetails,
+      teamCode,
+      teamWorkload: teamWorkload[teamCode].teams,
+      totalCases,
+      averageWorkload: totalWorkload / teamWorkload[teamCode].teams.length,
+    })
+  }
 }

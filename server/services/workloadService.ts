@@ -155,4 +155,10 @@ export default class WorkloadService {
       },
     })) as AllocationHistoryCount
   }
+
+  async getTeamWorkload(token: string, teamCode: string) {
+    return this.restClient(token).get({
+      path: `/team/practitioner-workloadcases?teamCode=${teamCode}`,
+    })
+  }
 }

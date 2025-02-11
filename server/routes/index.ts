@@ -316,6 +316,11 @@ export default function routes(services: Services): Router {
     await probationEstateController.selectProbationDeliveryUnit(req, res, regionCode)
   })
 
+  get('/team-workload/:teamCode', async (req, res) => {
+    const { teamCode } = req.params
+    await allocateCasesController.getTeamWorkload(req, res, teamCode)
+  })
+
   get('/whats-new', async (req, res) => {
     await technicalUpdatesController.getTechnicalUpdates(req, res)
   })

@@ -46,7 +46,7 @@ context('Show allocate cases by team based on user preferences', () => {
         .contains('tr', 'Team 1')
         .find('a')
         .should('have.attr', 'href')
-        .and('include', '/team-workload/TM1')
+        .and('include', '/pdu/PDU1/TM1/team-workload')
     })
 
     it('link to edit team list must exist', () => {

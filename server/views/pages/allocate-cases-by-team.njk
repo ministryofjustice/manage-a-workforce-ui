@@ -9,7 +9,7 @@
   {{ tableRows.push(
       [
       {
-        text: team.teamName
+        html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/team-workload" class="govuk-link">' + team.teamName + '</a>'
       },
       {
         text: team.workload

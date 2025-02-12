@@ -39,4 +39,11 @@ context('Team Workload', () => {
 
     teamWorkloadPage.averageWorkload().should('have.class', 'over-capacity')
   })
+
+  it('filters out 0% workloads', () => {
+    cy.task('stubForTeamWorkloadZeroCapacities')
+    cy.visit('/pdu/PDU1/N03F01/team-workload')
+
+    teamWorkloadPage.averageWorkload().should('contain.text', '75%')
+  })
 })

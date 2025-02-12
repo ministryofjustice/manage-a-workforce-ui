@@ -234,4 +234,21 @@ export default {
       },
     })
   },
+  stubForTeamWorkloadZeroCapacities: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'GET',
+        urlPattern: '/team/practitioner-workloadcases\\?teamCode=.*',
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          N03F01: {
+            teams: teamWorkload.N03F01.teams.map((team, index) => ({ ...team, workload: index < 4 ? 0 : 75 })),
+          },
+        },
+      },
+    })
+  },
 }

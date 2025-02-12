@@ -1,6 +1,7 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "../components/card/macro.njk" import card %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {%- set teamTableData = {
     attributes: {
@@ -78,6 +79,21 @@
         ] -%}
     {{ teamTableData.rows.push(tableRow) }}
 {% endfor %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Your teams",
+                href: "/pdu/" + pduCode + "/teams"
+            },
+            {
+                text: teamDetails.name,
+                href: '/pdu/' + pduCode + '/' + teamCode +  '/team-workload'
+            }
+        ]
+    }) }}
+{% endblock %}
 
 {% block content %}
 

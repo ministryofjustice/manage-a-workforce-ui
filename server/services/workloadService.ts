@@ -10,9 +10,12 @@ import ChoosePractitionerData from '../models/ChoosePractitionerData'
 import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
 import AllocationHistory from '../models/AllocationHistory'
 import AllocationHistoryCount from '../models/AllocationHistoryCount'
+import { createRedisClient } from '../data/redisClient'
 
 export default class WorkloadService {
   config: ApiConfig
+
+  redisClient = createRedisClient().connect()
 
   constructor(config: ApiConfig) {
     this.config = config
@@ -91,20 +94,26 @@ export default class WorkloadService {
       token
     )
 
+    const allocationData = {
+      crn,
+      instructions: '',
+      emailTo,
+      sendEmailCopyToAllocatingOfficer,
+      eventNumber,
+      allocationJustificationNotes,
+      sensitiveNotes,
+      spoOversightNotes,
+      sensitiveOversightNotes,
+      laoCase,
+    }
+
+    const canPost = await checkRedisCache(crn, staffCode, teamCode, eventNumber)
+    if (!canPost) {
+      throw new Error('Duplicate request')
+    }
     return (await this.restClient(token).post({
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,
-      data: {
-        crn,
-        instructions: '',
-        emailTo,
-        sendEmailCopyToAllocatingOfficer,
-        eventNumber,
-        allocationJustificationNotes,
-        sensitiveNotes,
-        spoOversightNotes,
-        sensitiveOversightNotes,
-        laoCase,
-      },
+      data: allocationData,
     })) as OffenderManagerAllocatedCase
   }
 
@@ -155,4 +164,18 @@ export default class WorkloadService {
       },
     })) as AllocationHistoryCount
   }
+}
+async function checkRedisCache(
+  crn: string,
+  staffCode: string,
+  teamCode: string,
+  eventNumber: number
+): Promise<boolean> {
+  const cacheKey = `allocation:${crn}:${staffCode}:${teamCode}:${eventNumber}`
+  const cachedValue = await this.redisClient.get(cacheKey)
+  if (cachedValue) {
+    return false
+  }
+  await this.redisClient.set(cacheKey, 'true', 'EX', 60)
+  return true
 }

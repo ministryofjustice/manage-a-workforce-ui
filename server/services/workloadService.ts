@@ -1,3 +1,4 @@
+import { createClient } from 'redis'
 import RestClient from '../data/restClient'
 import { ApiConfig } from '../config'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
@@ -10,16 +11,39 @@ import ChoosePractitionerData from '../models/ChoosePractitionerData'
 import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
 import AllocationHistory from '../models/AllocationHistory'
 import AllocationHistoryCount from '../models/AllocationHistoryCount'
+import { createRedisClient } from '../data/redisClient'
 
 export default class WorkloadService {
   config: ApiConfig
 
+  redisClient: ReturnType<typeof createClient>
+
   constructor(config: ApiConfig) {
     this.config = config
+    this.initializeRedisClient()
+  }
+
+  private async initializeRedisClient() {
+    this.redisClient = await createRedisClient().connect()
   }
 
   private restClient(token: string): RestClient {
     return new RestClient('Workload Service API Client', this.config, token)
+  }
+
+  private async checkRedisCache(
+    crn: string,
+    staffCode: string,
+    teamCode: string,
+    eventNumber: number
+  ): Promise<boolean> {
+    const cacheKey = `allocation:${crn}:${staffCode}:${teamCode}:${eventNumber}`
+    const cachedValue = await this.redisClient.get(cacheKey)
+    if (cachedValue) {
+      return false
+    }
+    await this.redisClient.set(cacheKey, 'true', { EX: 60 })
+    return true
   }
 
   async getChoosePractitionerData(token: string, crn: string, teamCodes: string[]): Promise<ChoosePractitionerData> {
@@ -91,20 +115,31 @@ export default class WorkloadService {
       token
     )
 
+    const allocationData = {
+      crn,
+      instructions: '',
+      emailTo,
+      sendEmailCopyToAllocatingOfficer,
+      eventNumber,
+      allocationJustificationNotes,
+      sensitiveNotes,
+      spoOversightNotes,
+      sensitiveOversightNotes,
+      laoCase,
+    }
+
+    const canPost = await this.checkRedisCache(crn, staffCode, teamCode, eventNumber)
+    if (!canPost) {
+      const emptyCase: OffenderManagerAllocatedCase = {
+        personManagerId: '',
+        eventManagerId: '',
+        requirementManagerIds: [],
+      }
+      return emptyCase
+    }
     return (await this.restClient(token).post({
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,
-      data: {
-        crn,
-        instructions: '',
-        emailTo,
-        sendEmailCopyToAllocatingOfficer,
-        eventNumber,
-        allocationJustificationNotes,
-        sensitiveNotes,
-        spoOversightNotes,
-        sensitiveOversightNotes,
-        laoCase,
-      },
+      data: allocationData,
     })) as OffenderManagerAllocatedCase
   }
 

@@ -57,12 +57,14 @@ export default class AllocateCasesController {
     const teamWorkload = await this.workloadService.getTeamWorkload(token, teamCode)
 
     let totalCases = 0
-    let totalWorkload = 0
+    let totalAvailablePoints = 0
+    let totalPoints = 0
 
     teamWorkload[teamCode].teams.forEach(team => {
       totalCases += team.custodyCases
       totalCases += team.communityCases
-      totalWorkload += team.workload
+      totalAvailablePoints += team.availablePoints
+      totalPoints += team.totalPoints
     })
 
     res.render('pages/team-workload', {
@@ -72,9 +74,7 @@ export default class AllocateCasesController {
       pduCode,
       teamWorkload: teamWorkload[teamCode].teams,
       totalCases,
-      averageWorkload: Math.round(
-        totalWorkload / teamWorkload[teamCode].teams.filter(team => team.workload > 0).length
-      ),
+      averageWorkload: Math.round((totalAvailablePoints / totalPoints) * 100),
     })
   }
 }

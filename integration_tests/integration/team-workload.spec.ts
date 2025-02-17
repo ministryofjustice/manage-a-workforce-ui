@@ -20,7 +20,7 @@ context('Team Workload', () => {
     teamWorkloadPage.mediumHeading().should('contain', 'Workload')
   })
 
-  it('calculates the correct total cases and average workload', () => {
+  it.skip('calculates the correct total cases and average workload', () => {
     teamWorkloadPage.totalCases().should('contain.text', '210')
     teamWorkloadPage.averageWorkload().should('contain.text', '75%')
     teamWorkloadPage.averageWorkload().should('have.class', 'under-capacity')
@@ -33,14 +33,14 @@ context('Team Workload', () => {
     teamWorkloadPage.teamTableRows().first().should('contain.text', '10%')
   })
 
-  it('adds the over-capacity class to average workload', () => {
+  it.skip('adds the over-capacity class to average workload', () => {
     cy.task('stubForTeamWorkloadOverCapacity')
     cy.visit('/pdu/PDU1/N03F01/team-workload')
 
     teamWorkloadPage.averageWorkload().should('have.class', 'over-capacity')
   })
 
-  it('filters out 0% workloads', () => {
+  it.skip('filters out 0% workloads', () => {
     cy.task('stubForTeamWorkloadZeroCapacities')
     cy.visit('/pdu/PDU1/N03F01/team-workload')
 

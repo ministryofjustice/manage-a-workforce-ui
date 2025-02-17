@@ -74,7 +74,7 @@ export default class AllocateCasesController {
       pduCode,
       teamWorkload: teamWorkload[teamCode].teams,
       totalCases,
-      averageWorkload: Math.round((totalAvailablePoints / totalPoints) * 100),
+      averageWorkload: Math.round((totalPoints / totalAvailablePoints) * 100),
     })
   }
 }

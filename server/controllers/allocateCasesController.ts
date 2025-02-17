@@ -50,13 +50,6 @@ export default class AllocateCasesController {
     })
   }
 
-  calculateCapacity(totalPoints, availablePoints) {
-    if (totalPoints !== 0 && availablePoints !== 0) {
-      return (totalPoints / availablePoints) * 100
-    }
-    return 0
-  }
-
   async getTeamWorkload(_req: Request, res: Response, pduCode: string, teamCode: string) {
     const { token } = res.locals.user
 
@@ -70,8 +63,10 @@ export default class AllocateCasesController {
     teamWorkload[teamCode].teams.forEach(team => {
       totalCases += team.custodyCases
       totalCases += team.communityCases
-      totalAvailablePoints += team.availablePoints
-      totalPoints += team.totalPoints
+      if (team.availablePoints !== 0 && team.totalPoints !== 0) {
+        totalAvailablePoints += team.availablePoints
+        totalPoints += team.totalPoints
+      }
     })
 
     res.render('pages/team-workload', {
@@ -81,7 +76,7 @@ export default class AllocateCasesController {
       pduCode,
       teamWorkload: teamWorkload[teamCode].teams,
       totalCases,
-      averageWorkload: Math.round(this.calculateCapacity(totalPoints, totalAvailablePoints)),
+      averageWorkload: Math.round((totalPoints / totalAvailablePoints) * 100),
     })
   }
 }

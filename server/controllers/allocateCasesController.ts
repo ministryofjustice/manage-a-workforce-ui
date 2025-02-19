@@ -3,6 +3,7 @@ import AllocationsService from '../services/allocationsService'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 import WorkloadService from '../services/workloadService'
+import { gradeOrder } from './data/AllocateOffenderManager'
 
 export default class AllocateCasesController {
   constructor(
@@ -64,14 +65,25 @@ export default class AllocateCasesController {
       totalCases += team.communityCases
     })
 
+    const workload = teamWorkload[teamCode].teams.map(team => team.workload)
+    const newWorkload = { ...workload, gradeOrder: 0 }
+    newWorkload.sort(sortPractitionersByCapacity)
+
     res.render('pages/team-workload', {
       title: 'Team Workload | Manage a workforce',
       teamDetails,
       teamCode,
       pduCode,
-      teamWorkload: teamWorkload[teamCode].teams,
+      teamWorkload: workload,
       totalCases,
       averageWorkload: teamWorkloadData[0].workload,
     })
   }
+}
+
+function sortPractitionersByCapacity(a, b) {
+  if (b.capacity === a.capacity) {
+    return a.caseCount - b.caseCount
+  }
+  return b.capacity - a.capacity
 }

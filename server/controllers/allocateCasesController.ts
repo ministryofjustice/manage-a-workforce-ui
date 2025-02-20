@@ -64,14 +64,33 @@ export default class AllocateCasesController {
       totalCases += team.communityCases
     })
 
+    const workload = teamWorkload[teamCode].teams.map(team => ({ ...team, gradeOrder: setGradeOrder(team.grade) }))
+    workload.sort(sortPractitionersByGrade)
+
     res.render('pages/team-workload', {
       title: 'Team Workload | Manage a workforce',
       teamDetails,
       teamCode,
       pduCode,
-      teamWorkload: teamWorkload[teamCode].teams,
+      teamWorkload: workload,
       totalCases,
       averageWorkload: teamWorkloadData[0].workload,
     })
   }
+}
+
+function sortPractitionersByGrade(a, b) {
+  if (b.gradeOrder === a.gradeOrder) {
+    return a.capacity - b.capacity
+  }
+  return b.gradeOrder - a.gradeOrder
+}
+
+function setGradeOrder(grade) {
+  const order = {
+    PO: 3,
+    PSO: 2,
+    PQiP: 1,
+  }
+  return order[grade] || 0
 }

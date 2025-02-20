@@ -59,22 +59,40 @@
 {% for offenderManager in teamWorkload %}
     {%- set tableRow = [
             { 
-                html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/' + offenderManager.code + '/officer-view">' + offenderManager.name.forename + ' ' + offenderManager.name.surname   
+                html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/' + offenderManager.code + '/officer-view">' + offenderManager.name.forename + ' ' + offenderManager.name.surname,
+                attributes: {
+                    "data-sort-value": offenderManager.name.forename + ' ' + offenderManager.name.surname
+                }   
             },
             { 
-                text: offenderManager.grade 
+                text: offenderManager.grade,
+                attributes: {
+                    "data-sort-value": offenderManager.grade
+                } 
             },
             { 
-                text: offenderManager.workload + '%'
+                text: offenderManager.workload + '%',
+                attributes: {
+                    "data-sort-value": offenderManager.workload
+                }
             },
             {
-                text: offenderManager.casesPastWeek
+                text: offenderManager.casesPastWeek,
+                attributes: {
+                    "data-sort-value": offenderManager.casesPastWeek
+                }
             },
             {
-                text: offenderManager.communityCases
+                text: offenderManager.communityCases,
+                attributes: {
+                    "data-sort-value": offenderManager.communityCases
+                }
             },
             {
-                text: offenderManager.custodyCases
+                text: offenderManager.custodyCases,
+                attributes: {
+                    "data-sort-value": offenderManager.custodyCases
+                }
             }
         ] -%}
     {{ teamTableData.rows.push(tableRow) }}

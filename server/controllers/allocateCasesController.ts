@@ -3,7 +3,6 @@ import AllocationsService from '../services/allocationsService'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 import WorkloadService from '../services/workloadService'
-import { gradeOrder } from './data/AllocateOffenderManager'
 
 export default class AllocateCasesController {
   constructor(
@@ -65,9 +64,8 @@ export default class AllocateCasesController {
       totalCases += team.communityCases
     })
 
-    const workload = teamWorkload[teamCode].teams.map(team => team.workload)
-    const newWorkload = { ...workload, gradeOrder: 0 }
-    newWorkload.sort(sortPractitionersByCapacity)
+    const workload = teamWorkload[teamCode].teams.map(team => ({ ...team, gradeOrder: setGradeOrder(team.grade) }))
+    workload.sort(sortPractitionersByGrade)
 
     res.render('pages/team-workload', {
       title: 'Team Workload | Manage a workforce',
@@ -81,9 +79,18 @@ export default class AllocateCasesController {
   }
 }
 
-function sortPractitionersByCapacity(a, b) {
-  if (b.capacity === a.capacity) {
-    return a.caseCount - b.caseCount
+function sortPractitionersByGrade(a, b) {
+  if (b.gradeOrder === a.gradeOrder) {
+    return a.capacity - b.capacity
   }
-  return b.capacity - a.capacity
+  return b.gradeOrder - a.gradeOrder
+}
+
+function setGradeOrder(grade) {
+  const order = {
+    PO: 3,
+    PSO: 2,
+    PQiP: 1,
+  }
+  return order[grade] || 0
 }

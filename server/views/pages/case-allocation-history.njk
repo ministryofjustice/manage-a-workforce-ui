@@ -67,7 +67,7 @@
 {% if tableData.rows.length > 0 %}
     {% set panelHtml = govukTable(tableData) %}
 {% else %}
-    {% set panelHtml = '<p class="govuk-body-l">There are no cases allocated in the past 7 days.</p>' %}
+    {% set panelHtml = '<p class="govuk-body-l">There are no cases allocated in the past 30 days.</p>' %}
 {% endif %}
 
 {% set teamTabItem = {
@@ -141,7 +141,7 @@
     {% if tableData.rows.length > 0 %}
         {% set panelHtml = govukTable(tableData) %}
     {% else %}
-        {% set panelHtml = '<p class="govuk-body-l">There are no cases allocated in the past 7 days.</p>' %}
+        {% set panelHtml = '<p class="govuk-body-l">There are no cases allocated in the past 30 days.</p>' %}
     {% endif %}
 
     {% set teamTabItem = {
@@ -157,7 +157,7 @@
 {% block allocationContent %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <h2 class="govuk-heading-l">Cases allocated through the Allocations tool in the last 7 days</h2>
+            <h2 class="govuk-heading-l">Cases allocated through the Allocations tool in the last 30 days</h2>
             <p class="govuk-body-s secondary-text-col" style="margin: -25px 0 30px;">Last updated: {{ lastUpdatedOn | dateFormat }} at {{ lastUpdatedOn | timeFormat }}</p>
 
             <div class="moj-scrollable-pane">

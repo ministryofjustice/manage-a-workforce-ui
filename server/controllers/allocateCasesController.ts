@@ -81,9 +81,9 @@ export default class AllocateCasesController {
 
 function sortPractitionersByGrade(a, b) {
   if (b.gradeOrder === a.gradeOrder) {
-    return a.capacity - b.capacity
+    return a.workload - b.workload
   }
-  return b.gradeOrder - a.gradeOrder
+  return a.gradeOrder - b.gradeOrder
 }
 
 function setGradeOrder(grade) {

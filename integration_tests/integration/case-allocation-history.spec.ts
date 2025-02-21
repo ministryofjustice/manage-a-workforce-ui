@@ -59,7 +59,7 @@ context('Case allocation history', () => {
     cy.reload()
     caseAllocationHistoryPage
       .subNav()
-      .should('contain', 'Cases allocated in last 7 days (3)')
+      .should('contain', 'Cases allocated in last 30 days (3)')
       // TODO - Add unallocated cases count
       .and('contain', 'Unallocated cases (10)')
   })
@@ -79,16 +79,16 @@ context('Case allocation history', () => {
     caseAllocationHistoryPage.subNavLink().should('contain.text', 'Unallocated cases (99+)')
   })
 
-  it('Must show 99+ in subnav when cases allocated in last 7 days are greater than 99', () => {
+  it('Must show 99+ in subnav when cases allocated in last 30 days are greater than 99', () => {
     cy.task('stubOverOneHundredCaseAllocationHistory')
     cy.reload()
-    caseAllocationHistoryPage.subNavLink().should('contain.text', 'Cases allocated in last 7 days (99+)')
+    caseAllocationHistoryPage.subNavLink().should('contain.text', 'Cases allocated in last 30 days (99+)')
   })
 
   it('large heading visible on page', () => {
     caseAllocationHistoryPage
       .largeHeading()
-      .should('contain', 'Cases allocated through the Allocations tool in the last 7 days')
+      .should('contain', 'Cases allocated through the Allocations tool in the last 30 days')
   })
 
   it('last updated date and time visible on page', () => {
@@ -96,7 +96,7 @@ context('Case allocation history', () => {
     caseAllocationHistoryPage.largeHeadingSecondaryText().should('contain', `Last updated: ${expectedLastUpdatedDate}`)
   })
 
-  it('requested start date is 7 days ago', () => {
+  it('requested start date is 30 days ago', () => {
     const date = new Date()
     date.setDate(date.getDate() - 7)
     const thirtyDaysAgoString = date.toISOString().replace(/T.*$/, '')
@@ -153,7 +153,7 @@ context('Case allocation history', () => {
     cy.reload()
     cy.get('#allCases').should('exist')
     caseAllocationHistoryPage.noCasesBody().should('exist')
-    caseAllocationHistoryPage.noCasesBody().should('contain.text', 'There are no cases allocated in the past 7 days.')
+    caseAllocationHistoryPage.noCasesBody().should('contain.text', 'There are no cases allocated in the past 30 days.')
   })
 
   it('shows restricted badge and warning text if case has restricted access', () => {
@@ -163,7 +163,7 @@ context('Case allocation history', () => {
   it('This tab is highlighted', () => {
     caseAllocationHistoryPage
       .highlightedTab()
-      .should('contain.text', 'Cases allocated in last 7 days')
+      .should('contain.text', 'Cases allocated in last 30 days')
       .and('not.contain.text', 'Unallocated cases')
   })
 

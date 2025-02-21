@@ -72,6 +72,7 @@
             },
             { 
                 text: offenderManager.workload + '%',
+                classes: ('percentage-extra-over' if offenderManager.workload > 100),
                 attributes: {
                     "data-sort-value": offenderManager.workload
                 }

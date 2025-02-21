@@ -198,7 +198,7 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage
       .subNav()
       .should('contain', 'Unallocated cases (8)')
-      .and('contain', 'Cases allocated in last 30 days (20)')
+      .and('contain', 'Cases allocated in last 7 days (20)')
   })
 
   it('Must show 99+ in subnav when unallocated cases are greater than 99', () => {
@@ -217,10 +217,10 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage.subNavLink().should('contain.text', 'Unallocated cases (99+)')
   })
 
-  it('Must show 99+ in subnav when cases allocated in last 30 days are greater than 99', () => {
+  it('Must show 99+ in subnav when cases allocated in last 7 days are greater than 99', () => {
     cy.task('stubCaseAllocationHistoryCount', 100)
     cy.reload()
-    findUnallocatedCasesPage.subNavLink().should('contain.text', 'Cases allocated in last 30 days (99+)')
+    findUnallocatedCasesPage.subNavLink().should('contain.text', 'Cases allocated in last 7 days (99+)')
   })
 
   it('no table or content exists before save', () => {
@@ -232,7 +232,7 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage
       .highlightedTab()
       .should('contain.text', 'Unallocated cases')
-      .and('not.contain.text', 'Cases allocated in last 30 days')
+      .and('not.contain.text', 'Cases allocated in last 7 days')
   })
 
   it('navigate to case history page via sub nav', () => {

@@ -19,10 +19,9 @@ document.querySelectorAll('button[data-disable2]').forEach(elem => {
   elem.addEventListener('click', event => {
     // Perform validation before submitting the form
     const form = elem.form
-    const value = form.querySelector('textarea[name="instructions"]').toString()
+    const value = form.getElementById('instructions').text()
     const isValid =
       !/((https?|ftp|smtp):\/\/|www\.)([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g.test(value)
-    console.info(value)
 
     if (!isValid) {
       event.preventDefault()

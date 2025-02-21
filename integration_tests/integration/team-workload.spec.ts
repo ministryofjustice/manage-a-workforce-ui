@@ -66,9 +66,9 @@ context('Team Workload', () => {
 
     teamWorkloadPage = Page.verifyOnPage(TeamWorkloadPage)
     teamWorkloadPage.teamTableRows().should('have.length', 14)
-    teamWorkloadPage.teamTableRows().first().should('contain.text', 'AutomatedTestUser AutomatedTestUser')
-    teamWorkloadPage.teamTableRows().first().should('contain.text', 'PSO')
-    teamWorkloadPage.teamTableRows().first().should('contain.text', '50%')
+    teamWorkloadPage.teamTableRows().first().should('contain.text', 'Coco Pint')
+    teamWorkloadPage.teamTableRows().first().should('contain.text', 'PO')
+    teamWorkloadPage.teamTableRows().first().should('contain.text', '10%')
   })
 
   it('adds the over-capacity class to average workload', () => {

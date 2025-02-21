@@ -88,9 +88,10 @@ function sortPractitionersByGrade(a, b) {
 
 function setGradeOrder(grade) {
   const order = {
-    PO: 3,
-    PSO: 2,
-    PQiP: 1,
+    PO: 4,
+    PSO: 3,
+    PQiP: 2,
+    SPO: 1,
   }
   return order[grade] || 0
 }

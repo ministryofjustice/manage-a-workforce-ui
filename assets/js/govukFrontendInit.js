@@ -17,7 +17,6 @@ document.querySelectorAll('button[data-disable]').forEach(elem => {
 
 document.querySelectorAll('button[data-disable2]').forEach(elem => {
   elem.addEventListener('click', event => {
-    c
     // Perform validation before submitting the form
     const form = elem.form
     const value = form.getElementById('instructions').text()
@@ -25,17 +24,20 @@ document.querySelectorAll('button[data-disable2]').forEach(elem => {
       !/((https?|ftp|smtp):\/\/|www\.)([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g.test(value)
     console.info(value)
     console.info(fail)
-    //const isValid = validateForm(form)
 
-    // if (!isValid) {
-    //   event.preventDefault()
-    //   return
-    // }
+    if (!isValid) {
+      event.preventDefault()
+      return
+    }
+    if (!value || value.trim().length == 0) {
+      event.preventDefault()
+      return
+    }
 
     document.querySelectorAll('button[data-disable2]').forEach(item => {
       item.disabled = true
     })
 
-    form.submit()
+    elem.form.submit()
   })
 })

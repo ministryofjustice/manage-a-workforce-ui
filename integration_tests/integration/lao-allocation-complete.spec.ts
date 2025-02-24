@@ -1,8 +1,8 @@
 import Page from '../pages/page'
 import AllocationCompletePage from '../pages/allocationComplete'
-// import InstructionsConfirmPage from '../pages/confirmInstructions'
-// import SpoOversightOptionPage from '../pages/spoOversightOption'
-// import SpoOversightPage from '../pages/spoOversight'
+import InstructionsConfirmPage from '../pages/confirmInstructions'
+import SpoOversightOptionPage from '../pages/spoOversightOption'
+import SpoOversightPage from '../pages/spoOversight'
 
 context('Allocate Complete', () => {
   beforeEach(() => {
@@ -34,40 +34,39 @@ context('Allocate Complete', () => {
       .should('contain', "Dylan Adam O'Armstrong (J678910) has been allocated to John Doe (PO)")
   })
 
-  // Ignore
-  // it('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
-  //   cy.task('stubGetAllocationCompleteDetails')
-  //   cy.task('stubSendComparisonLogToWorkload')
-  //   cy.task('stubNotFoundEventManagerDetails')
-  //   cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', { sendCopy: true, laoStatus: true })
-  //   cy.task('stubSendComparisonLogToWorkload')
-  //   cy.task('stubSearchStaff')
-  //   cy.signIn()
-  //   cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
-  //
-  //   const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
-  //   instructionsConfirmPage.instructionsTextArea().type('Test')
-  //   instructionsConfirmPage.inputTexts().first().type('fi')
-  //   instructionsConfirmPage.autoCompleteOption(0).should('have.text', 'first@justice.gov.uk - First Name')
-  //   instructionsConfirmPage.autoCompleteOption(0).click()
-  //   instructionsConfirmPage.inputTexts().first().should('have.value', 'first@justice.gov.uk')
-  //   instructionsConfirmPage.addAnotherPersonButton().click()
-  //   instructionsConfirmPage.inputTexts().first().type('se')
-  //   instructionsConfirmPage.autoCompleteOption(1).should('have.text', 'second@justice.gov.uk - Second Name')
-  //   instructionsConfirmPage.autoCompleteOption(1).click()
-  //   instructionsConfirmPage.continueButton('1').click()
-  //   const oversightOptionPage = Page.verifyOnPage(SpoOversightOptionPage)
-  //   oversightOptionPage.editButton().click()
-  //   const spoOversightPage = Page.verifyOnPage(SpoOversightPage)
-  //   spoOversightPage.saveButton().click()
-  //   const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
-  //   allocationCompletePage.panelTitle().should('contain', 'Case allocated')
-  //   allocationCompletePage.mediumHeading().should('contain', 'What happens next')
-  //   allocationCompletePage
-  //     .bulletedList()
-  //     .should('contain', 'we have sent a copy of the allocation email to first@justice.gov.uk, second@justice.gov.uk')
-  //     .and('contain', 'your allocation has been emailed to John Doe (john.doe@test.justice.gov.uk)')
-  // })
+  it('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
+    cy.task('stubGetAllocationCompleteDetails')
+    cy.task('stubSendComparisonLogToWorkload')
+    cy.task('stubNotFoundEventManagerDetails')
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', { sendCopy: true, laoStatus: true })
+    cy.task('stubSendComparisonLogToWorkload')
+    cy.task('stubSearchStaff')
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    instructionsConfirmPage.inputTexts().first().type('fi')
+    instructionsConfirmPage.autoCompleteOption(0).should('have.text', 'first@justice.gov.uk - First Name')
+    instructionsConfirmPage.autoCompleteOption(0).click()
+    instructionsConfirmPage.inputTexts().first().should('have.value', 'first@justice.gov.uk')
+    instructionsConfirmPage.addAnotherPersonButton().click()
+    instructionsConfirmPage.inputTexts().first().type('se')
+    instructionsConfirmPage.autoCompleteOption(1).should('have.text', 'second@justice.gov.uk - Second Name')
+    instructionsConfirmPage.autoCompleteOption(1).click()
+    instructionsConfirmPage.continueButton('1').click()
+    const oversightOptionPage = Page.verifyOnPage(SpoOversightOptionPage)
+    oversightOptionPage.editButton().click()
+    const spoOversightPage = Page.verifyOnPage(SpoOversightPage)
+    spoOversightPage.saveButton().click()
+    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
+    allocationCompletePage.panelTitle().should('contain', 'Case allocated')
+    allocationCompletePage.mediumHeading().should('contain', 'What happens next')
+    allocationCompletePage
+      .bulletedList()
+      .should('contain', 'we have sent a copy of the allocation email to first@justice.gov.uk, second@justice.gov.uk')
+      .and('contain', 'your allocation has been emailed to John Doe (john.doe@test.justice.gov.uk)')
+  })
 
   it('What happens next with no additional emails supplied, opting in of copy content visible on page', () => {
     cy.task('stubGetAllocationCompleteDetails')

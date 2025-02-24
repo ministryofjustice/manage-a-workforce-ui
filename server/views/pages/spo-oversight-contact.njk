@@ -44,7 +44,7 @@
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
-            <form data-validate-form="spo-oversight" data-disable2="yes" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="post">
+            <form data-validate-form="spo-oversight" data-disable="yes" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="post">
                 <div class="govuk-form-group">
                     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
                     {{ instructions({
@@ -85,7 +85,7 @@
                             attributes: {
                                 id: convictionNumber,
                                 'data-form-submit': undefined,
-                                'data-disable2': undefined
+                                'data-disable': undefined
                             }
                         }) }}
                         <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/allocation-notes'  }}">Go back to review allocation notes</a>

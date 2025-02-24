@@ -2,7 +2,7 @@ import Page from '../pages/page'
 import AllocationCompletePage from '../pages/allocationComplete'
 import InstructionsConfirmPage from '../pages/confirmInstructions'
 import SpoOversightOptionPage from '../pages/spoOversightOption'
-import SpoOversightPage from '../pages/spoOversight'
+// import SpoOversightPage from '../pages/spoOversight'
 import ErrorPage from '../pages/error'
 import SummaryPage from '../pages/summary'
 

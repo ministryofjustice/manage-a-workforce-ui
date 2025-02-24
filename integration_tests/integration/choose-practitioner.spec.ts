@@ -197,7 +197,7 @@ context('Choose Practitioner', () => {
           Team: 'Team 2',
           Grade: 'POProbation Officer',
           'Workload %': '32%',
-          'Cases in past 30 days': '5',
+          'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
           Select: 'Select Jim Jam to allocate to',
@@ -207,7 +207,7 @@ context('Choose Practitioner', () => {
           Team: 'Team 1',
           Grade: 'PQiPTrainee Probation Officer',
           'Workload %': '19%',
-          'Cases in past 30 days': '2',
+          'Cases in past 7 days': '2',
           'Community cases': '3',
           'Custody cases': '5',
           Select: 'Select Jane Doe to allocate to',
@@ -217,7 +217,7 @@ context('Choose Practitioner', () => {
           Team: 'Team 2',
           Grade: 'SPOSenior Probation Officer',
           'Workload %': '32%',
-          'Cases in past 30 days': '5',
+          'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
           Select: '',
@@ -233,7 +233,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
+      .and('include', '/pdu/PDU1/N03F02/OM2/officer-view')
   })
 
   it('Individual team visible on page when selected', () => {
@@ -250,7 +250,7 @@ context('Choose Practitioner', () => {
           Team: 'Team 2',
           Grade: 'POProbation Officer',
           'Workload %': '32%',
-          'Cases in past 30 days': '5',
+          'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
           Select: 'Select Jim Jam to allocate to',
@@ -260,7 +260,7 @@ context('Choose Practitioner', () => {
           Team: 'Team 2',
           Grade: 'SPOSenior Probation Officer',
           'Workload %': '32%',
-          'Cases in past 30 days': '5',
+          'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
           Select: '',
@@ -276,7 +276,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
+      .and('include', '/pdu/PDU1/N03F02/OM2/officer-view')
   })
 
   it('Individual team select radio button contains the correct team', () => {
@@ -464,7 +464,7 @@ context('Choose Practitioner', () => {
         orderedData: ['19%', '32%', '32%'],
       },
       {
-        columnHeaderName: 'Cases in past 30 days',
+        columnHeaderName: 'Cases in past 7 days',
         orderedData: ['2', '5', '5'],
       },
       {

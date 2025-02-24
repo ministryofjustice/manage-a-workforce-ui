@@ -98,7 +98,7 @@ context('Case allocation history', () => {
 
   it('requested start date is 30 days ago', () => {
     const date = new Date()
-    date.setDate(date.getDate() - 30)
+    date.setDate(date.getDate() - 7)
     const thirtyDaysAgoString = date.toISOString().replace(/T.*$/, '')
     cy.task('verifyAllocationHistoryRequest', thirtyDaysAgoString)
   })

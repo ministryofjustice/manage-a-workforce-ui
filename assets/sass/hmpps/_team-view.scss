@@ -1,65 +1,67 @@
 .card {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 1.14286;
-    text-decoration: none;
-    color: #0b0c0c;
-    display: block;
-    margin: 10px 0;
-    padding: 15px 20px;
-    background-color: #fff;
-    border: 1px solid #0b0c0c;
-    max-width: 960px;
-    font-family: "GDS Transport",arial,sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.14286;
+  text-decoration: none;
+  color: #0b0c0c;
+  display: block;
+  margin: 10px 0;
+  padding: 15px 20px;
+  background-color: #fff;
+  border: 1px solid #0b0c0c;
+  max-width: 960px;
+  font-family: 'GDS Transport', arial, sans-serif;
 
-    p {
-        margin-bottom: 0;
-        margin-top: 5px;
-    }
+  p {
+    margin-bottom: 0;
+    margin-top: 5px;
+  }
 }
 
-.card-total p {
+.card-total {
+  &,
+  & p {
     color: $govuk-brand-colour;
+  }
 }
 
 .card-total-subset p {
-    color: white;
+  color: white;
 }
 
 .card-total-subset {
-    background-color: $govuk-brand-colour;
-    color: #fff;
-    border:none;
+  background-color: $govuk-brand-colour;
+  color: #fff;
+  border: none;
 }
 
 .card__heading {
-    font-size: 48px;
-    line-height: 1;
-    display: block;
-    margin-bottom: 0.2rem;
-    font-weight: 700;
+  font-size: 48px;
+  line-height: 1;
+  display: block;
+  margin-bottom: 0.2rem;
+  font-weight: 700;
 }
 .card__attributes {
-    display: inline-block;
+  display: inline-block;
 }
 
-
 @media (min-width: 40.0625em) {
-    .card {
-        font-size: 16px;
-        font-size: 1rem;
-        line-height: 1.25;
-    }
+  .card {
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.25;
+  }
 }
 
 .card__layout {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 0 15px;
-    width: 28%;
-    float: left
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 15px;
+  width: 28%;
+  float: left;
 }
 
-.page-width  {
-    max-width: 727px !important;
+.page-width {
+  max-width: 727px !important;
 }

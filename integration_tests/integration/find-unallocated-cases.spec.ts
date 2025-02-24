@@ -232,7 +232,7 @@ context('Find Unallocated cases', () => {
     findUnallocatedCasesPage
       .highlightedTab()
       .should('contain.text', 'Unallocated cases')
-      .and('not.contain.text', 'Cases allocated in last 30 days')
+      .and('not.contain.text', 'Cases allocated in last 7 days')
   })
 
   it('navigate to case history page via sub nav', () => {

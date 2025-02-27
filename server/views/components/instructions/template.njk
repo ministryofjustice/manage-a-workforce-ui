@@ -31,9 +31,9 @@
             <span class="govuk-visually-hidden">Error:</span>
             {{ params.errorMessage.text | safe if params.errorMessage.text }}
           </p>
-          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint instructions-error"></textarea>
+          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instructions-error"></textarea>
         {% else %}
-          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint"></textarea>
+          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}"></textarea>
         {% endif %}
 
       </div>

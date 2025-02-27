@@ -57,6 +57,14 @@
                     </ul>
                  We've also configured the relevant unpaid work teams.</li>
             {% endif %}
+            {% if technicalUpdate.heading === "27 February 2025" %}
+                <li>Consistent use of colours as a visual aid: We’ve ensured that colour is used consistently to indicate workload above or below a threshold:
+                    <ul>
+                        <li>Workload below 100% will shown in blue</li>
+                        <li>Workload equal to or more than 100% will be shown in red</li>
+                    </ul>
+                </li>
+            {% endif %}
         </ul>
         {% if technicalUpdate.technicalFixes %}
             <h2 class="govuk-heading-s">Technical fixes</h2>

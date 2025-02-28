@@ -78,10 +78,7 @@
         {%- set tableRow = [
             { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name + ' to allocate to</span></label></div></div>')
                 if offenderManager.email and true != offenderManager.laoCase},
-            { html: govukLabel({
-                text: ('<a href="/pdu/'+ pduCode +'/' + offenderManager.teamCode + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '" aria-label="View">' + offenderManager.name + '</a>' ) | safe,
-                for: ('allocated-officer-' + offenderManager.code)
-            }),
+            { html: ('<a href="/pdu/'+ pduCode +'/' + offenderManager.teamCode + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name + '</a>' ) | safe,
                 attributes: {
                     "data-sort-value": offenderManager.name
                 }

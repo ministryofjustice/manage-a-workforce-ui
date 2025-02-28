@@ -1,7 +1,7 @@
 {% macro unallocatedCaseLink(item, pduCode) -%}
     <div>
         {% if item.apopExcluded !== true %}
-            <a href="{{'/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view'}}" class="govuk-link--no-visited-state" aria-label="Review case" data-qa-link="{{item.crn + '-' + item.convictionNumber}}">{{ item.name }}</a>
+            <a href="{{'/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view'}}" class="govuk-link--no-visited-state" data-qa-link="{{item.crn + '-' + item.convictionNumber}}">{{ item.name }}</a>
         {% else %}
             <strong>{{item.name}}</strong>
         {% endif %}

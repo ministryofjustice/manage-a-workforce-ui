@@ -67,6 +67,30 @@ generic-service:
         pass,\
         nolog,\
         ctl:ruleRemoveTargetByTag=language-php;ARGS:instructions"
+      SecRule REQUEST_URI "@rx \/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
+        "id:1011,\
+        phase:2,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveById=941130"
+      SecRule REQUEST_URI "@rx \/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
+        "id:1012,\
+        phase:2,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveById=941340"
+      SecRule REQUEST_URI "@rx \/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
+        "id:1013,\
+        phase:2,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveById=920271"
+      SecRule REQUEST_URI "@rx \/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
+        "id:1014,\
+        phase:2,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveById=941370"
   livenessProbe:
     httpGet:
       path: /ping

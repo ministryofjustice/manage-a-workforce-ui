@@ -6,19 +6,35 @@
 
 {% set tableRows = [] %}
 {% for team in teams %}
-  {{ tableRows.push(
-      [
-      {
-        html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/team-workload" class="govuk-link">' + team.teamName + '</a>'
-      },
-      {
-        text: team.workload
-      },
-      {
-        text: team.caseCount
-      }
-    ]) 
-    }}
+    {% if team.workload == '-%' %}
+      {{ tableRows.push(
+          [
+          {
+            text: team.teamName
+          },
+          {
+            text: team.workload
+          },
+          {
+            text: team.caseCount
+          }
+        ])
+        }}
+    {% else %}
+          {{ tableRows.push(
+              [
+              {
+                html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/team-workload" class="govuk-link">' + team.teamName + '</a>'
+              },
+              {
+                text: team.workload
+              },
+              {
+                text: team.caseCount
+              }
+            ])
+            }}
+    {% endif %}
 {% endfor %}
 
 {% block content %}

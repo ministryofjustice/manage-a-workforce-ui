@@ -26,6 +26,8 @@ generic-service:
       SecRuleRemoveById 942210
       SecRuleRemoveById 950100
       SecRuleUpdateTargetById 942440 "!REQUEST_COOKIES:/connect.sid/"
+      SecRuleUpdateTargetById 942440 "!ARGS:_csrf"
+      SecRuleUpdateTargetById 942440 "!REQUEST_COOKIES:/manage-a-workforce-ui/"
       SecRuleUpdateTargetById 942450 "!REQUEST_COOKIES:/connect.sid/"
       SecRuleUpdateTargetById 930120 "!REQUEST_COOKIES:/connect.sid/"
       SecRuleUpdateTargetById 942210 "!REQUEST_COOKIES:/connect.sid/"
@@ -60,7 +62,6 @@ generic-service:
         pass,\
         nolog,\
         ctl:ruleRemoveById=921110"
-      SecRuleUpdateTargetById 942440 "!ARGS:_csrf"
       SecRule REQUEST_URI "@rx \/(confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk)$" \
         "id:1010,\
         phase:1,\

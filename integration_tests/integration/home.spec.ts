@@ -32,16 +32,10 @@ context('Unallocated', () => {
     allocateCasesByTeamPage.headerUserName().should('contain.text', 'J. Smith')
   })
 
-  it('Feedback link goes to Microsoft forms survey', () => {
+  it('Feedback link goes to Smart Survey survey', () => {
     cy.signIn()
     const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
-    allocateCasesByTeamPage
-      .surveyLink()
-      .should('have.attr', 'href')
-      .and(
-        'equal',
-        'https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2JfL5_1h2G9Gi17tzGJyJ5hUMjI3UDgwVzgwS1JLV0hXNDFOTjc4Q1FCQi4u'
-      )
+    allocateCasesByTeamPage.surveyLink().should('have.attr', 'href').and('contain', 'www.smartsurvey.co.uk/s/AWQG5Z')
   })
 
   it('Footer visible on page', () => {

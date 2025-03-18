@@ -7,6 +7,7 @@ context('Active Cases', () => {
   let activeCasesPage
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubForStaffLaoStatusByCrns')
     cy.task('stubGetOffenderManagerCases')
     cy.task('stubGetTeamDetails', { code: 'TM2', name: 'Team Name 1' })
     cy.signIn()

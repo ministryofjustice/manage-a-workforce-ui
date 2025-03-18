@@ -22,6 +22,7 @@ import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetai
 import EstateTeam from '../models/EstateTeam'
 import { unescapeApostrophe } from '../utils/utils'
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
+import LAOStatusList from '../models/LAOStatusList'
 
 export default class AllocationsController {
   constructor(
@@ -370,8 +371,32 @@ export default class AllocationsController {
       this.workloadService.getOffenderManagerCases(res.locals.user.token, offenderManagerCode, offenderManagerTeamCode),
       this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
     ])
+
+    const caseList = response.activeCases.map(activeCase => activeCase.crn)
+
+    const crnRestrictions: LAOStatusList = await this.allocationsService.getRestrictedStatusByCrns(
+      res.locals.user.token,
+      caseList
+    )
+
+    const restrictedList = crnRestrictions.access
+      .filter(restriction => restriction.isRestricted)
+      .map(restrictions => restrictions.crn)
+
+    const excludedList = crnRestrictions.access
+      .filter(restriction => restriction.isExcluded)
+      .map(restrictions => restrictions.crn)
+
     const cases = response.activeCases.map(
-      activeCase => new Case(activeCase.crn, activeCase.tier, activeCase.type, activeCase.name.combinedName)
+      activeCase =>
+        new Case(
+          activeCase.crn,
+          activeCase.tier,
+          activeCase.type,
+          activeCase.name.combinedName,
+          excludedList.includes(activeCase.crn),
+          restrictedList.includes(activeCase.crn)
+        )
     )
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)

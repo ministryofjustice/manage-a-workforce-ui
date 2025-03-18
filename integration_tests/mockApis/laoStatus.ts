@@ -49,6 +49,37 @@ export default {
       },
     })
   },
+  stubForStaffLaoStatusByCrns: (): SuperAgentRequest => {
+    return stubForLaoStatus({
+      request: {
+        method: 'POST',
+        urlPattern: `/cases/restrictions/crn/list`,
+        bodyPatterns: [
+          {
+            equalToJson: `{ "crns": ["CRN1111", "CRN2222"]}`,
+          },
+        ],
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          access: [
+            {
+              crn: 'CRN11111',
+              userRestricted: false,
+              userExcluded: false,
+            },
+            {
+              crn: 'CRN11111',
+              userRestricted: false,
+              userExcluded: false,
+            },
+          ],
+        },
+      },
+    })
+  },
   stubForStaffLaoStatusByCrnNotExcluded: (): SuperAgentRequest => {
     return stubForLaoStatus({
       request: {

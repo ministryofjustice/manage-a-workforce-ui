@@ -22,8 +22,6 @@ import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetai
 import EstateTeam from '../models/EstateTeam'
 import { unescapeApostrophe } from '../utils/utils'
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
-import LAOStatusList from '../models/LAOStatusList'
-import LaoStatus from '../../integration_tests/mockApis/laoStatus'
 
 export default class AllocationsController {
   constructor(

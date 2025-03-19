@@ -69,6 +69,8 @@ export { stubForLaoStatus, resetLaoStubs }
 const { stubFor: stubForLaoStatus403, resetStubs: resetLaoStubs403 } = wiremock(allocationUrl)
 export { stubForLaoStatus403, resetLaoStubs403 }
 
+const { stubFor: stubForStaffLaoStatusByCrns, resetStubs: resetStaffLaoStatusByCrns } = wiremock(allocationUrl)
+export { stubForStaffLaoStatusByCrns, resetStaffLaoStatusByCrns }
 const {
   stubFor: stubForAllocation,
   getRequests: getAllocationRequests,

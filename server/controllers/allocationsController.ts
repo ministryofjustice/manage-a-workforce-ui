@@ -381,11 +381,11 @@ export default class AllocationsController {
     if (caseList.length > 0) {
       const crnRestrictions = await this.allocationsService.getRestrictedStatusByCrns(res.locals.user.token, caseList)
       restrictedList = crnRestrictions.access
-        .filter(restriction => restriction.isRestricted)
-        .map(restrictions => restrictions.crn)
+        .filter(restriction => restriction.userRestricted)
+        .map(restriction => restriction.crn)
 
       excludedList = crnRestrictions.access
-        .filter(restriction => restriction.isExcluded)
+        .filter(restriction => restriction.userExcluded)
         .map(restrictions => restrictions.crn)
     }
 

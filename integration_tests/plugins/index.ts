@@ -10,6 +10,7 @@ import {
   resetLaoStubs,
   resetLaoStubs403,
   resetStaffLaoStatusByCrns,
+  resetStaffLaoStatusByCrnsRestricted,
 } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
@@ -48,6 +49,7 @@ export default (on: (string, Record) => void): void => {
         resetLaoStubs403(),
         redisService.deleteAll(),
         resetStaffLaoStatusByCrns(),
+        resetStaffLaoStatusByCrnsRestricted(),
       ])
       return Promise.all([
         auth.stubSignIn(),

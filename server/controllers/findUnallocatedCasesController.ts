@@ -80,7 +80,7 @@ export default class FindUnallocatedCasesController {
     const ldus = allocationDemandSelection.pdu ? allEstate[allocationDemandSelection.pdu].ldus : []
     const lduOptions = getDropDownItems(
       Object.entries<AllLocalDeliveryUnit>(ldus),
-      'Select LDU',
+      'Select LAU',
       allocationDemandSelection.ldu
     )
     const teams = allocationDemandSelection.ldu
@@ -117,7 +117,7 @@ export default class FindUnallocatedCasesController {
       { pdu: 'required', ldu: 'required', team: 'required' },
       {
         'required.pdu': 'Select a Probation Delivery Unit (PDU)',
-        'required.ldu': 'Select a Local Delivery Unit (LDU)',
+        'required.ldu': 'Select a Local Admin Unit (LAU)',
         'required.team': 'Select a team',
       }
     )

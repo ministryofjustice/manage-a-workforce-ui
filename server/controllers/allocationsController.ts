@@ -23,6 +23,7 @@ import EstateTeam from '../models/EstateTeam'
 import { unescapeApostrophe } from '../utils/utils'
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
 import LAOStatusList from '../models/LAOStatusList'
+import LaoStatus from '../../integration_tests/mockApis/laoStatus'
 
 export default class AllocationsController {
   constructor(
@@ -374,18 +375,19 @@ export default class AllocationsController {
 
     const caseList = response.activeCases.map(activeCase => activeCase.crn)
 
-    const crnRestrictions: LAOStatusList = await this.allocationsService.getRestrictedStatusByCrns(
-      res.locals.user.token,
-      caseList
-    )
+    let restrictedList: string[] = []
+    let excludedList: string[] = []
 
-    const restrictedList = crnRestrictions.access
-      .filter(restriction => restriction.isRestricted)
-      .map(restrictions => restrictions.crn)
+    if (caseList.length > 0) {
+      const crnRestrictions = await this.allocationsService.getRestrictedStatusByCrns(res.locals.user.token, caseList)
+      restrictedList = crnRestrictions.access
+        .filter(restriction => restriction.isRestricted)
+        .map(restrictions => restrictions.crn)
 
-    const excludedList = crnRestrictions.access
-      .filter(restriction => restriction.isExcluded)
-      .map(restrictions => restrictions.crn)
+      excludedList = crnRestrictions.access
+        .filter(restriction => restriction.isExcluded)
+        .map(restrictions => restrictions.crn)
+    }
 
     const cases = response.activeCases.map(
       activeCase =>

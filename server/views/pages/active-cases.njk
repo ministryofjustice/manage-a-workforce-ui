@@ -1,6 +1,6 @@
 {% extends "partials/officer-view.njk" %}
 {%- from "../components/doubleCell/macro.njk" import doubleCell -%}
-{%- from "../components/tripleCell/macro.njk" import tripleCell -%}
+{%- from "../components/caseLoadCase/macro.njk" import caseLoadCase -%}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% set officerName = data.name.combinedName %}
@@ -42,7 +42,7 @@
     {% if item.redacted == true %}
         {%- set tableRow = [
             {
-                text: tripleCell('<strong>' + '************' + '</strong>', item.crn, 'govuk-body-s', '<span class="govuk-body govuk-tag--orange govuk-!-margin-top-2 govuk-!-margin-bottom-0 govuk-!-display-inline-block">' + 'Restricted access' + '</span>'),
+                text: caseLoadCase(item),
                 attributes: { "data-sort-value": item.crn }
             },
             { text: 'This is a restricted access case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 3 }
@@ -50,7 +50,7 @@
     {% elif item.excluded === true %}
         {%- set tableRow = [
             {
-                text: tripleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s',  '<span class="govuk-body govuk-tag--orange govuk-!-margin-top-2 govuk-!-margin-bottom-0 govuk-!-display-inline-block">' + 'Restricted access' + '</span>' ),
+                text: caseLoadCase(item),
                 attributes: { "data-sort-value": item.crn }
             },
             { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },

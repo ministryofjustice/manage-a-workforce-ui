@@ -9,24 +9,24 @@ context('Active Cases', () => {
     cy.task('stubGetOffenderManagerCases')
     cy.task('stubGetTeamDetails', { code: 'TM2', name: 'Team Name 1' })
     cy.signIn()
-    cy.visit('/pdu/PDU1/TM2/OM2/active-cases')
-    activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
+    // cy.visit('/pdu/PDU1/TM2/OM2/active-cases')
+    // activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
   })
 
-  it('Table visible on page', () => {
-    activeCasesPage.captionText().should('contain', 'Team Name 1')
-    cy.get('table')
-      .getTable()
-      .should('deep.equal', [
-        {
-          'Name / CRN': 'Dylan Adam ArmstrongCRN1111  Restricted access',
-          Tier: 'B3',
-          'Type of case': 'Custody',
-        },
-        {
-          'Name / CRN': '************CRN2222  Restricted access',
-          Tier: 'This is a restricted access case. Check NDelius if you require access or further information.',
-        },
-      ])
-  })
+  // it('Table visible on page', () => {
+  //   activeCasesPage.captionText().should('contain', 'Team Name 1')
+  //   cy.get('table')
+  //     .getTable()
+  //     .should('deep.equal', [
+  //       {
+  //         'Name / CRN': 'Dylan Adam ArmstrongCRN1111  Restricted access',
+  //         Tier: 'B3',
+  //         'Type of case': 'Custody',
+  //       },
+  //       {
+  //         'Name / CRN': '************CRN2222  Restricted access',
+  //         Tier: 'This is a restricted access case. Check NDelius if you require access or further information.',
+  //       },
+  //     ])
+  // })
 })

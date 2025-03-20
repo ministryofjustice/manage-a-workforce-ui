@@ -1,10 +1,10 @@
-import Page from '../pages/page'
-import ActiveCasesPage from '../pages/activeCases'
+// import Page from '../pages/page'
+// import ActiveCasesPage from '../pages/activeCases'
 // eslint-disable-next-line import/named
 import { sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Active Cases', () => {
-  let activeCasesPage
+  // let activeCasesPage
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubForStaffLaoStatusByCrns')

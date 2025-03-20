@@ -1,8 +1,8 @@
-import Page from '../pages/page'
-import ActiveCasesPage from '../pages/activeCases'
+// import Page from '../pages/page'
+// import ActiveCasesPage from '../pages/activeCases'
 
 context('Active Cases', () => {
-  let activeCasesPage
+  // let activeCasesPage
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubForStaffLaoStatusByCrnsRestricted')

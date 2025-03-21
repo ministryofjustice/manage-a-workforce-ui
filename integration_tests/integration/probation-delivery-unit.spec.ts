@@ -51,7 +51,7 @@ context('Select Probation Delivery Unit', () => {
 
   it('continue button exists', () => {
     const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
-    probationDeliveryUnitPage.button().trimTextContent().should('equal', 'Continue')
+    probationDeliveryUnitPage.continueButton().trimTextContent().should('equal', 'Continue')
   })
 
   it('cancel link goes back to select your region screen', () => {
@@ -65,7 +65,7 @@ context('Select Probation Delivery Unit', () => {
 
   it('selecting no PDU and continuing causes error', () => {
     const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
-    probationDeliveryUnitPage.button().click()
+    probationDeliveryUnitPage.continueButton().click()
     probationDeliveryUnitPage
       .errorSummary()
       .trimTextContent()
@@ -76,7 +76,7 @@ context('Select Probation Delivery Unit', () => {
     cy.task('stubGetPduDetails', 'PDU1')
     const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
     probationDeliveryUnitPage.radio('PDU1').click()
-    probationDeliveryUnitPage.button().click()
+    probationDeliveryUnitPage.continueButton().click()
     Page.verifyOnPage(SelectTeamsPage)
   })
 })

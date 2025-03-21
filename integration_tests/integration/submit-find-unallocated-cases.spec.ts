@@ -143,7 +143,7 @@ context('Submit find Unallocated cases', () => {
     findUnallocatedCasesPage.select('pdu').select('PDU1')
     findUnallocatedCasesPage.select('ldu').select('LDU1')
     findUnallocatedCasesPage.select('team').select('TM1')
-    findUnallocatedCasesPage.button().click()
+    findUnallocatedCasesPage.continueButton().click()
     cy.task('verifyPutUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
     Page.verifyOnPage(FindUnallocatedPage)
   })

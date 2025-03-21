@@ -57,12 +57,12 @@ context('Select teams', () => {
 
   it('continue button exists', () => {
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
-    selectTeamsPage.button().trimTextContent().should('equal', 'Continue')
+    selectTeamsPage.continueButton().trimTextContent().should('equal', 'Continue')
   })
 
   it('selecting no teams and continuing causes error', () => {
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
-    selectTeamsPage.button().click()
+    selectTeamsPage.continueButton().click()
     selectTeamsPage
       .errorSummary()
       .trimTextContent()

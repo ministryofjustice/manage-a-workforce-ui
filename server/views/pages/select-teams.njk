@@ -3,7 +3,6 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
-
 {% set checkboxItems = [] %}
 {% for item in data %}
     {{ checkboxItems.push({
@@ -14,7 +13,7 @@
 
 {% block content %}
 
-{% if error %}
+    {% if error %}
         {{ govukErrorSummary({
             titleText: "There is a problem",
             errorList: [
@@ -26,19 +25,19 @@
         }) }}
     {% endif %}
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        <span class="govuk-caption-xl">{{ regionName }}</span>
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ pduName }}</h1>
-        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-    </div>    
-</div>
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        
-        <form method="post">
-            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        {{ govukCheckboxes({
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <span class="govuk-caption-xl">{{ regionName }}</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ pduName }}</h1>
+            <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            <form method="post">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                {{ govukCheckboxes({
             name: "team",
             fieldset: {
                 legend: {
@@ -57,14 +56,15 @@
             items: checkboxItems
         })}}
 
-        <div class="govuk-button-group">
-            {{ govukButton({
+                <div class="govuk-button-group">
+                    {{ govukButton({
+                id: "continueButton",
                 text: "Continue"
             }) }}
-            <a class="govuk-link" href="/regions">Cancel</a>
+                    <a class="govuk-link" href="/regions">Cancel</a>
+                </div>
+            </form>
         </div>
-        </form>
     </div>
-</div>
 
 {% endblock %}

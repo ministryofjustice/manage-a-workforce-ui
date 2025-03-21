@@ -45,7 +45,7 @@ context('Select teams and show allocate cases by team', () => {
       cy.visit('/pdu/PDU1/select-teams')
       const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
       selectTeamsPage.checkbox('team').click()
-      selectTeamsPage.button().click()
+      selectTeamsPage.continueButton().click()
       allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     })
 
@@ -111,7 +111,7 @@ context('Select teams and show allocate cases by team', () => {
       const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
       selectTeamsPage.checkbox('team').click()
       selectTeamsPage.checkbox('team-2').click()
-      selectTeamsPage.button().click()
+      selectTeamsPage.continueButton().click()
       allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     })
 
@@ -197,7 +197,7 @@ context('Select teams and show allocate cases by team', () => {
       cy.visit('/pdu/PDU1/select-teams')
       const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
       selectTeamsPage.checkbox('team').click()
-      selectTeamsPage.button().click()
+      selectTeamsPage.continueButton().click()
       allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     })
 

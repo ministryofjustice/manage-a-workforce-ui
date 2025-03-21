@@ -31,7 +31,7 @@ export default class ChoosePractitionerPage extends Page {
 
   allocateCaseButton = (): PageElement => cy.get('form > div > button.govuk-button')
 
-  clearSelectionButton = (): PageElement => cy.get(`.govuk-button--secondary`)
+  clearSelectionButton = (): PageElement => cy.get(`#clearSelection`)
 
   manageMyTeamsLink = (): PageElement => cy.get('[data-qa-link="select-teams"]').invoke('attr', 'href')
 }

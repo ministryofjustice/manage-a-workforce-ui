@@ -21,7 +21,7 @@ context('Submit find Unallocated cases', () => {
       .trimTextContent()
       .should(
         'contain',
-        'There is a problem Select a Probation Delivery Unit (PDU) Select a Local Delivery Unit (LDU) Select a team'
+        'There is a problem Select a Probation Delivery Unit (PDU) Select a Local Admin Unit (LAU) Select a team'
       )
   })
 
@@ -38,7 +38,7 @@ context('Submit find Unallocated cases', () => {
     findUnallocatedCasesPage.select('ldu').select('LDU1')
     findUnallocatedCasesPage.saveViewButton().click()
     findUnallocatedCasesPage.select('pdu').find(':selected').contains('First Probation Delivery Unit')
-    findUnallocatedCasesPage.select('ldu').find(':selected').contains('First Local Delivery Unit')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('First Local Admin Unit')
   })
 
   it('must favour form submission over saved selection', () => {
@@ -50,11 +50,11 @@ context('Submit find Unallocated cases', () => {
     findUnallocatedCasesPage.saveViewButton().click()
     cy.task('verifyClearUserPreferenceAllocationDemand')
     findUnallocatedCasesPage.select('pdu').find(':selected').contains('Select PDU')
-    findUnallocatedCasesPage.select('ldu').find(':selected').contains('Select LDU')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('Select LAU')
     findUnallocatedCasesPage.select('team').find(':selected').contains('Select team')
   })
 
-  it('selecting PDU populates LDU with correct options', () => {
+  it('selecting PDU populates LAU with correct options', () => {
     findUnallocatedCasesPage.select('pdu').select('PDU1')
     findUnallocatedCasesPage
       .select('ldu')
@@ -62,20 +62,20 @@ context('Submit find Unallocated cases', () => {
       .should('deep.equal', [
         {
           optionValue: '',
-          optionContent: 'Select LDU',
+          optionContent: 'Select LAU',
         },
         {
           optionValue: 'LDU1',
-          optionContent: 'First Local Delivery Unit',
+          optionContent: 'First Local Admin Unit',
         },
         {
           optionValue: 'LDU2',
-          optionContent: 'Second Local Delivery Unit',
+          optionContent: 'Second Local Admin Unit',
         },
       ])
   })
 
-  it('selecting LDU populates Team with correct options', () => {
+  it('selecting LAU populates Team with correct options', () => {
     findUnallocatedCasesPage.select('pdu').select('PDU1')
     findUnallocatedCasesPage.select('ldu').select('LDU1')
     findUnallocatedCasesPage
@@ -108,7 +108,7 @@ context('Submit find Unallocated cases', () => {
       .should('deep.equal', [
         {
           optionValue: '',
-          optionContent: 'Select LDU',
+          optionContent: 'Select LAU',
         },
       ])
     findUnallocatedCasesPage

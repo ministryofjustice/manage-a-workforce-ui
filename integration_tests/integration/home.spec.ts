@@ -67,7 +67,7 @@ context('Unallocated', () => {
   it('feedback prompt visible on page', () => {
     cy.signIn()
     const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
-    allocateCasesByTeamPage.feedbackPrompt().should('contain', 'Is this page helpful?')
+    allocateCasesByTeamPage.feedbackPrompt().should('contain', 'Is this page useful?')
     allocateCasesByTeamPage
       .feedbackYes()
       .should('have.attr', 'href')

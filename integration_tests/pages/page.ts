@@ -57,6 +57,8 @@ export default abstract class Page {
 
   button = (): PageElement => cy.get('.govuk-button')
 
+  continueButton = (): PageElement => cy.get('#continueButton')
+
   sectionBreak = (): PageElement => cy.get('.govuk-section-break')
 
   instructionsTextArea = (): PageElement => cy.get(`#instructions`)

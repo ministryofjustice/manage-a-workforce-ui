@@ -70,7 +70,7 @@ context('Select region', () => {
 
   it('continue button exists', () => {
     const regionPage = Page.verifyOnPage(RegionPage)
-    regionPage.button().trimTextContent().should('equal', 'Continue')
+    regionPage.continueButton().trimTextContent().should('equal', 'Continue')
   })
 
   //  it('selecting no region and continuing causes error', () => {

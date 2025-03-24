@@ -14,4 +14,8 @@ export default class AllocateCasesByTeamPage extends Page {
   tableLink = (teamCode: string): PageElement => cy.get(`[data-qa-link="${teamCode}"]`).invoke('attr', 'href')
 
   footer = (): PageElement => cy.get('.govuk-footer ')
+
+  feedbackYes = (): PageElement => cy.get('#feedbackYes')
+
+  feedbackNo = (): PageElement => cy.get('#feedbackNo')
 }

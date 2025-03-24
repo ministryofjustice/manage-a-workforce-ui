@@ -1,0 +1,13 @@
+{% macro caseLoadCase(item) -%}
+    <div>
+        {% if item.redacted == true %}
+            <strong>************</strong>
+        {% else %}
+            <strong>{{item.name}}</strong>
+        {% endif %}
+    </div>
+    <div class="govuk-body-s govuk-!-margin-bottom-2">{{ item.crn }}</div>
+    {% if item.redacted or item.excluded %}
+        <span class="govuk-tag govuk-tag--orange">Restricted access</span>
+    {% endif %}
+{%- endmacro %}

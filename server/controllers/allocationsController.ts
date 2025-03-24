@@ -370,8 +370,33 @@ export default class AllocationsController {
       this.workloadService.getOffenderManagerCases(res.locals.user.token, offenderManagerCode, offenderManagerTeamCode),
       this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
     ])
+
+    const caseList = response.activeCases.map(activeCase => activeCase.crn)
+
+    let restrictedList: string[] = []
+    let excludedList: string[] = []
+
+    if (caseList.length > 0) {
+      const crnRestrictions = await this.allocationsService.getRestrictedStatusByCrns(res.locals.user.token, caseList)
+      restrictedList = crnRestrictions.access
+        .filter(restriction => restriction.userRestricted)
+        .map(restriction => restriction.crn)
+
+      excludedList = crnRestrictions.access
+        .filter(restriction => restriction.userExcluded)
+        .map(restrictions => restrictions.crn)
+    }
+
     const cases = response.activeCases.map(
-      activeCase => new Case(activeCase.crn, activeCase.tier, activeCase.type, activeCase.name.combinedName)
+      activeCase =>
+        new Case(
+          activeCase.crn,
+          activeCase.tier,
+          activeCase.type,
+          activeCase.name.combinedName,
+          excludedList.includes(activeCase.crn),
+          restrictedList.includes(activeCase.crn)
+        )
     )
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)

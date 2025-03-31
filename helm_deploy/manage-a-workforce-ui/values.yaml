@@ -114,11 +114,11 @@ generic-service:
 
   namespace_secrets:
     manage-a-workforce-ui:
+      GOOGLE_ANALYTICS_KEY: GOOGLE_ANALYTICS_KEY
       APPINSIGHTS_INSTRUMENTATIONKEY: 'APPINSIGHTS_INSTRUMENTATIONKEY'
       API_CLIENT_ID: 'AUTH_API_CLIENT_ID'
       API_CLIENT_SECRET: 'AUTH_API_CLIENT_SECRET'
       SESSION_SECRET: 'SESSION_SECRET'
-      GOOGLE_ANALYTICS_KEY: GOOGLE_ANALYTICS_KEY
     elasticache-redis:
       REDIS_HOST: 'primary_endpoint_address'
       REDIS_AUTH_TOKEN: 'auth_token'

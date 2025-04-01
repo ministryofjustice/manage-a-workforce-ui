@@ -1,0 +1,19 @@
+{% extends "../partials/layout.njk" %}
+
+{% block content %}
+    <h1 class="govuk-heading-l">The service has encountered a problem</h1>
+    <p class="govuk-body">Something in your allocation notes may have been rejected by our service. This could be because it contains</p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>information that has been copied and pasted from another application such as Microsoft Word</li>
+        <li>some types of special characters such as back (\) or forward (/) slashes</li>
+        <li>a combination of words or characters which could be misinterpreted by our security system as a cyber attack</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">What to do next</h2>
+    <ol class="govuk-list govuk-list--number">
+        <li>Return to your allocation notes by pressing the back button on your browser</li>
+        <li>Try removing any special characters (apart from basic punctuation)</li>
+        <li>Re-enter your allocation notes directly without copying and pasting from another application</li>
+    </ol>
+    <p class="govuk-body">If you see this error frequently, email the <a href="mailto:manageaworkforce@justice.gov.uk" class="govuk-link">Manage a workforce team</a> with details of the issue (specifically the time you encountered the issue) and we will investigate further.</p>
+{% endblock %}

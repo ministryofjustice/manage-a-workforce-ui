@@ -60,6 +60,24 @@ export default {
     })
   },
 
+  stubErrorNotAcceptable: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'POST',
+        urlPattern: `/team/TM2/offenderManager/OM1/case`,
+        bodyPatterns: [
+          {
+            equalToJson: `{"crn":"J678910", "instructions": "", "allocationJustificationNotes": "Test", "sensitiveNotes": false, "spoOversightNotes": "Test", "sensitiveOversightNotes": false, "sendEmailCopyToAllocatingOfficer": false, "emailTo": ["first@justice.gov.uk", "second@justice.gov.uk"], "eventNumber": "1", "laoCase": false}`,
+          },
+        ],
+      },
+      response: {
+        status: 406,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      },
+    })
+  },
+
   stubAllocateOffenderManagerToCaseMultipleEmails: (sendCopy = false, laoStatus = false): SuperAgentRequest => {
     return stubForWorkload({
       request: {

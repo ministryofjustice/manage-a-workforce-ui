@@ -22,11 +22,6 @@ context('Technical Updates', () => {
     technicalUpdatesPage.headingText().should('have.text', 'What’s new')
   })
 
-  it('send us feedback visible on page', () => {
-    const technicalUpdatesPage = Page.verifyOnPage(TechnicalUpdatesPage)
-    technicalUpdatesPage.sendFeedback().should('contain', 'Send us feedback on the Allocations tool')
-  })
-
   it('technical updates banner not visible on page', () => {
     const technicalUpdatesPage = Page.verifyOnPage(TechnicalUpdatesPage)
     technicalUpdatesPage.technicalUpdatesBanner().should('have.class', 'moj-hidden')

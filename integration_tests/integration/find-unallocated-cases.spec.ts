@@ -71,8 +71,8 @@ context('Find Unallocated cases', () => {
   })
 
   it('select ldu visible on page', () => {
-    findUnallocatedCasesPage.selectLabel('ldu').should('contain', 'Local delivery unit (LDU)')
-    findUnallocatedCasesPage.select('ldu').find(':selected').contains('Select LDU')
+    findUnallocatedCasesPage.selectLabel('ldu').should('contain', 'Local admin unit (LAU)')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('Select LAU')
   })
 
   it('select team visible on page', () => {
@@ -113,7 +113,7 @@ context('Find Unallocated cases', () => {
     cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
     cy.reload()
     findUnallocatedCasesPage.select('pdu').find(':selected').contains('First Probation Delivery Unit')
-    findUnallocatedCasesPage.select('ldu').find(':selected').contains('First Local Delivery Unit')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('First Local Admin Unit')
     findUnallocatedCasesPage.select('team').find(':selected').contains('First Team')
   })
 
@@ -122,14 +122,14 @@ context('Find Unallocated cases', () => {
     cy.task('stubGetAllocationsByTeam', { teamCode: 'OLDTEAM1' })
     cy.reload()
     findUnallocatedCasesPage.select('pdu').find(':selected').contains('First Probation Delivery Unit')
-    findUnallocatedCasesPage.select('ldu').find(':selected').contains('First Local Delivery Unit')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('First Local Admin Unit')
   })
 
   it('allocation demand selection in different estate has default options selected', () => {
     cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU3', lduCode: 'LDU5', teamCode: 'TM9' })
     cy.reload()
     findUnallocatedCasesPage.select('pdu').find(':selected').contains('Select PDU')
-    findUnallocatedCasesPage.select('ldu').find(':selected').contains('Select LDU')
+    findUnallocatedCasesPage.select('ldu').find(':selected').contains('Select LAU')
     findUnallocatedCasesPage.select('team').find(':selected').contains('Select team')
   })
 

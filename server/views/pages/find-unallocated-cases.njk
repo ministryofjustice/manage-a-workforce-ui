@@ -143,7 +143,7 @@
                     classes: "govuk-select--inline"
                   },
                   label: {
-                    text: "Local delivery unit (LDU)"
+                    text: "Local admin unit (LAU)"
                   },
                   items: lduOptions,
                   errorMessage: errors | findError('ldu')
@@ -167,6 +167,7 @@
 
           <div class="govuk-button-group">
             {{ govukButton({
+                      id: "continueButton",
                       text: "Save and view selection"
                   }) }}
             <a class="govuk-link" href="/pdu/{{pduDetails.code}}/clear-find-unallocated">Clear</a>

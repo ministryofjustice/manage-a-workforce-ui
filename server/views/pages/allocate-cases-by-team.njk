@@ -4,13 +4,6 @@
 
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
-{% set notification %}
-<p class="govuk-notification-banner__heading">
-
-    <p class="govuk-body">Allocate a Person on Probation will be unavailable from: <strong>5:45pm on Wednesday 26 March until 8:30pm on Wednesday 26 March</strong>. This is due to updates to NDelius.</p>
-</p>
-{% endset %}
-
 {% set tableRows = [] %}
 {% for team in teams %}
     {% if team.workload == '-%' %}
@@ -45,14 +38,6 @@
 {% endfor %}
 
 {% block content %}
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      {{ govukNotificationBanner({
-          html: notification
-      }) }}
-    </div>
-  </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">

@@ -15,7 +15,7 @@ parameters:
 
   node-version:
     type: string
-    default: 20.8-browsers
+    default: 20.19-browsers
 
 jobs:
   build:
@@ -74,7 +74,7 @@ jobs:
     executor:
       name: hmpps/node_redis
       node_tag: << pipeline.parameters.node-version >>
-      redis_tag: "6.2"
+      redis_tag: '6.2'
     steps:
       - checkout
       - attach_workspace:
@@ -169,7 +169,7 @@ workflows:
                 - /epic.*/
       - hmpps/deploy_env:
           name: deploy_dev
-          env: "dev"
+          env: 'dev'
           jira_update: true
           jira_env_type: development
           context: hmpps-common-vars
@@ -187,7 +187,7 @@ workflows:
             - deploy_dev
       - hmpps/deploy_env:
           name: deploy_preprod
-          env: "preprod"
+          env: 'preprod'
           jira_update: true
           jira_env_type: staging
           context:
@@ -211,7 +211,7 @@ workflows:
                 - main
       - hmpps/deploy_env:
           name: deploy_prod
-          env: "prod"
+          env: 'prod'
           jira_update: true
           jira_env_type: production
           slack_notification: true
@@ -230,7 +230,7 @@ workflows:
   security:
     triggers:
       - schedule:
-          cron: "40 5 * * 1-5"
+          cron: '40 5 * * 1-5'
           filters:
             branches:
               only:
@@ -253,7 +253,7 @@ workflows:
   security-weekly:
     triggers:
       - schedule:
-          cron: "10 5 * * 1"
+          cron: '10 5 * * 1'
           filters:
             branches:
               only:

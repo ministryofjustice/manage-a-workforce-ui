@@ -92,7 +92,7 @@
   },
   "dependencies": {
     "@babel/traverse": "7.27.0",
-    "@ministryofjustice/frontend": "1.8.1",
+    "@ministryofjustice/frontend": "4.0.1",
     "accessible-autocomplete": "3.0.1",
     "agentkeepalive": "4.6.0",
     "applicationinsights": "2.9.6",

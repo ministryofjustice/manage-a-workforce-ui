@@ -4,7 +4,7 @@ import { stubForWorkload } from './wiremock'
 export default {
   stubGetCurrentlyManagedCaseForChoosePractitioner: (
     teamCodes = ['N03F01', 'N03F02'],
-    crn = 'J678910'
+    crn = 'J678910',
   ): SuperAgentRequest => {
     return stubForWorkload({
       request: {
@@ -71,7 +71,7 @@ export default {
 
   stubGetCurrentlyManagedNoOffenderManagerCaseForChoosePractitioner: (
     teamCodes = ['N03F01', 'N03F02'],
-    crn = 'J678910'
+    crn = 'J678910',
   ): SuperAgentRequest => {
     return stubForWorkload({
       request: {
@@ -129,7 +129,7 @@ export default {
 
   stubGetPreviouslyManagedNoOffenderManagerCaseForChoosePractitioner: (
     teamCodes = ['N03F01', 'N03F02'],
-    crn = 'J678910'
+    crn = 'J678910',
   ): SuperAgentRequest => {
     return stubForWorkload({
       request: {
@@ -187,7 +187,7 @@ export default {
 
   stubGetNewToProbationCaseForChoosePractitioner: (
     teamCodes = ['N03F01', 'N03F02'],
-    crn = 'J678910'
+    crn = 'J678910',
   ): SuperAgentRequest => {
     return stubForWorkload({
       request: {

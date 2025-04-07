@@ -20,7 +20,7 @@ export default class OversightOptionPage extends Page {
   notesLink = (crn, convictionNumber, pduCode, teamCode, staffCode): PageElement =>
     cy
       .get(
-        `a[href="/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${teamCode}/${staffCode}/allocation-notes"]`
+        `a[href="/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${teamCode}/${staffCode}/allocation-notes"]`,
       )
       .eq(1)
 

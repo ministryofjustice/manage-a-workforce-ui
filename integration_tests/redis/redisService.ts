@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { RedisFlushModes } from '@redis/client/dist/lib/commands/FLUSHALL'
 import { createRedisClient } from '../../server/data/redisClient'
 

@@ -160,7 +160,7 @@ context('Allocate to Practitioner', () => {
       .restrictedStatusAllocationNotesHintText()
       .should(
         'contain',
-        'These notes will be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes.'
+        'These notes will be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes.',
       )
   })
 })

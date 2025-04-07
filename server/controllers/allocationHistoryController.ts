@@ -10,7 +10,7 @@ export default class AllocationHistoryController {
     private readonly workloadService: WorkloadService,
     private readonly probationEstateService: ProbationEstateService,
     private readonly userPreferenceService: UserPreferenceService,
-    private readonly allocationService: AllocationsService
+    private readonly allocationService: AllocationsService,
   ) {}
 
   async getCasesAllocatedByTeam(req: Request, res: Response, pduCode): Promise<void> {
@@ -24,7 +24,7 @@ export default class AllocationHistoryController {
     const caseAllocationHistory = await this.workloadService.postAllocationHistory(
       token,
       config.casesAllocatedSinceDate().toISOString(),
-      teamCodes
+      teamCodes,
     )
     const caseAllocationDetails = await Promise.all(
       caseAllocationHistory.cases.map(async caseAllocation => {
@@ -42,14 +42,14 @@ export default class AllocationHistoryController {
           apopExcluded: laoStatus.isRedacted,
           excluded: laoStatus.isRestricted,
         }
-      })
+      }),
     )
     const casesByTeam = caseAllocationDetails.reduce(
       (acc, caseAllocation) => ({
         ...acc,
         [caseAllocation.team]: [...(acc[caseAllocation.team] || []), caseAllocation],
       }),
-      {}
+      {},
     )
     res.render('pages/case-allocation-history', {
       isFindUnalllocatedCasesPage: false,

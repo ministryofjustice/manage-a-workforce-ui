@@ -20,17 +20,17 @@ export default function routes(services: Services): Router {
     services.allocationsService,
     services.workloadService,
     services.userPreferenceService,
-    services.probationEstateService
+    services.probationEstateService,
   )
   const probationEstateController = new ProbationEstateController(
     services.probationEstateService,
-    services.userPreferenceService
+    services.userPreferenceService,
   )
   const allocateCasesController = new AllocateCasesController(
     services.allocationsService,
     services.probationEstateService,
     services.userPreferenceService,
-    services.workloadService
+    services.workloadService,
   )
 
   const homeController = new HomeController(services.userPreferenceService)
@@ -39,14 +39,14 @@ export default function routes(services: Services): Router {
     services.probationEstateService,
     services.userPreferenceService,
     services.allocationsService,
-    services.workloadService
+    services.workloadService,
   )
 
   const allocationHistoryController = new AllocationHistoryController(
     services.workloadService,
     services.probationEstateService,
     services.userPreferenceService,
-    services.allocationsService
+    services.allocationsService,
   )
 
   const staffController = new StaffController(services.staffLookupService)
@@ -91,7 +91,6 @@ export default function routes(services: Services): Router {
 
   post('/pdu/:pduCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
     const { crn, convictionNumber, pduCode } = req.params
-    // eslint-disable-next-line security-node/detect-dangerous-redirects
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner`)
   })
 
@@ -136,9 +135,9 @@ export default function routes(services: Services): Router {
         staffTeamCode,
         staffCode,
         convictionNumber,
-        pduCode
+        pduCode,
       )
-    }
+    },
   )
 
   get(
@@ -152,9 +151,9 @@ export default function routes(services: Services): Router {
         staffTeamCode,
         staffCode,
         convictionNumber,
-        pduCode
+        pduCode,
       )
-    }
+    },
   )
   get('/pdu/:pduCode/:crn/convictions/:convictionNumber/check-edit-allocation-notes', async (req, res) => {
     const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
@@ -168,14 +167,14 @@ export default function routes(services: Services): Router {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
 
       await allocationsController.getCheckEdit(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
-    }
+    },
   )
   post(
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/spo-oversight-contact-option',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
       await allocationsController.getSpoOversight(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
-    }
+    },
   )
   post(
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/save-allocation',
@@ -189,9 +188,9 @@ export default function routes(services: Services): Router {
         staffCode,
         convictionNumber,
         req.body,
-        pduCode
+        pduCode,
       )
-    }
+    },
   )
 
   get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/officer-view', async (req, res) => {
@@ -203,7 +202,7 @@ export default function routes(services: Services): Router {
       offenderManagerCode,
       convictionNumber,
       pduCode,
-      false
+      false,
     )
   })
 
@@ -216,7 +215,7 @@ export default function routes(services: Services): Router {
       offenderManagerCode,
       convictionNumber,
       pduCode,
-      true
+      true,
     )
   })
 
@@ -228,7 +227,7 @@ export default function routes(services: Services): Router {
       offenderManagerTeamCode,
       offenderManagerCode,
       convictionNumber,
-      pduCode
+      pduCode,
     )
   })
 
@@ -244,9 +243,9 @@ export default function routes(services: Services): Router {
         staffCode,
         Number(convictionNumber),
         req.body,
-        pduCode
+        pduCode,
       )
-    }
+    },
   )
 
   post(
@@ -261,9 +260,9 @@ export default function routes(services: Services): Router {
         staffCode,
         Number(convictionNumber),
         req.body,
-        pduCode
+        pduCode,
       )
-    }
+    },
   )
 
   get('/pdu/:pduCode/:crn/convictions/:convictionNumber/allocation-complete', async (req, res) => {

@@ -9,7 +9,7 @@ export default class AllocateCasesController {
     private readonly allocationsService: AllocationsService,
     private readonly probationEstateService: ProbationEstateService,
     private readonly userPreferenceService: UserPreferenceService,
-    private readonly workloadService: WorkloadService
+    private readonly workloadService: WorkloadService,
   ) {}
 
   async getDataByTeams(req: Request, res: Response, pduCode: string) {

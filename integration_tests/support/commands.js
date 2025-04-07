@@ -21,7 +21,7 @@ const getTable = (subject, options = {}) => {
         return { ...acc }
       }
       return { ...acc, [headers[index]]: curr }
-    }, {})
+    }, {}),
   )
 }
 

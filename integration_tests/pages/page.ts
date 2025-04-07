@@ -19,7 +19,7 @@ export default abstract class Page {
   checkBetaOnPage(): void {
     cy.get('.govuk-phase-banner .govuk-phase-banner__content__tag').contains('Beta')
     cy.get('.govuk-phase-banner .govuk-phase-banner__text').contains(
-      'This is a new service – your feedback will help us to improve it.'
+      'This is a new service – your feedback will help us to improve it.',
     )
   }
 

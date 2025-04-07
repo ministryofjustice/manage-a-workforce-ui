@@ -95,8 +95,7 @@ context('Instructions text', () => {
     })
     cy.clock(FOUR_WEEKS_AND_A_DAY_IN_MS)
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes').then(_ => {
-      // eslint-disable-next-line no-unused-expressions
-      expect(localStorage.getItem('instructions-save-J678910-1')).to.be.null
+      expect(localStorage.getItem('instructions-save-J678910-1')).to.be(null)
     })
     const instructionsPageAfterTimeout = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPageAfterTimeout.instructionsTextArea().should('have.value', '')
@@ -113,7 +112,7 @@ context('Instructions text', () => {
       .moreDetailHintHeader()
       .should(
         'contain.text',
-        'Make notes for the practitioner who will be allocated this case. You can continue to edit notes which will be retained as you move through and review the case details.'
+        'Make notes for the practitioner who will be allocated this case. You can continue to edit notes which will be retained as you move through and review the case details.',
       )
   })
 })

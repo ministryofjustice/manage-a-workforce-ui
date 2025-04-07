@@ -32,7 +32,7 @@ describe('GET 500', () => {
       .expect(res => {
         expect(res.text).toContain('Sorry, the service is unavailable | Manage a workforce')
         expect(res.text).toContain(
-          'Try reloading the page. You can do this by pressing F5 (on a PC), or Cmd + R (on a Mac).'
+          'Try reloading the page. You can do this by pressing F5 (on a PC), or Cmd + R (on a Mac).',
         )
         expect(res.text).toContain('If the page still does not load, try again later.')
       })

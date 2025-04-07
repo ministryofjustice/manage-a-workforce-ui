@@ -41,7 +41,7 @@ export default class AllocateOffenderManager {
     custodyCases: number,
     code: string,
     totalCasesInLastWeek: number,
-    email: string
+    email: string,
   ) {
     this.name = `${forename} ${surname}`
     this.grade = grade

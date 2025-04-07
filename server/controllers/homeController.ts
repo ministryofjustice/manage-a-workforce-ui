@@ -9,7 +9,6 @@ export default class HomeController {
     const { token, username } = res.locals.user
     const { items: pduSelection } = await this.userPreferenceService.getPduUserPreference(token, username)
     if (pduSelection.length) {
-      // eslint-disable-next-line security-node/detect-dangerous-redirects
       res.redirect(`/pdu/${pduSelection[0]}/teams`)
     } else {
       res.redirect('/regions')

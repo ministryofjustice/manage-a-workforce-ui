@@ -17,7 +17,7 @@ export default class Sentence {
     length: string,
     offences: Offence[],
     date: string,
-    offenderManager: ConvictionOffenderManager
+    offenderManager: ConvictionOffenderManager,
   ) {
     const sentenceLength = length ? ` (${length})` : ''
     this.sentence = `${description}${sentenceLength}`

@@ -1,7 +1,7 @@
 import Page from '../pages/page'
 import DocumentsPage from '../pages/documents'
 import outOfAreasBannerBlurb from '../constants'
-// eslint-disable-next-line import/named
+
 import { sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Documents', () => {

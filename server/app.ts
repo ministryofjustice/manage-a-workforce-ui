@@ -53,7 +53,7 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
   app.use(
-    unless('/staff-lookup', getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService))
+    unless('/staff-lookup', getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService)),
   )
   app.use(routes(services))
   app.use((req, res, next) => next(createError(404, 'Not found')))

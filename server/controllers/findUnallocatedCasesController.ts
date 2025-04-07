@@ -18,7 +18,7 @@ export default class FindUnallocatedCasesController {
     private readonly probationEstateService: ProbationEstateService,
     private readonly userPreferenceService: UserPreferenceService,
     private readonly allocationsService: AllocationsService,
-    private readonly workloadService: WorkloadService
+    private readonly workloadService: WorkloadService,
   ) {}
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
@@ -27,12 +27,12 @@ export default class FindUnallocatedCasesController {
     const pduDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)
     const savedAllocationDemandSelection = await this.userPreferenceService.getAllocationDemandSelection(
       token,
-      username
+      username,
     )
     const allocatedCasesCount = await this.workloadService.postAllocationHistoryCount(
       token,
       config.casesAllocatedSinceDate().toISOString(),
-      teamCodes.items
+      teamCodes.items,
     )
     const allEstate = await this.probationEstateService.getAllEstateByRegionCode(token, pduDetails.region.code)
 
@@ -46,7 +46,7 @@ export default class FindUnallocatedCasesController {
     const allocationDemandSelection = getAllocationDemandSelected(
       formAllocationDemandSelected,
       savedAllocationDemandSelection,
-      allEstate
+      allEstate,
     )
     const unallocatedCasesByTeam = allocationDemandSelection.team
       ? await this.allocationsService.getUnallocatedCasesByTeam(token, allocationDemandSelection.team)
@@ -68,20 +68,20 @@ export default class FindUnallocatedCasesController {
           value.sentenceLength,
           value.outOfAreaTransfer,
           value.excluded,
-          value.apopExcluded
-        )
+          value.apopExcluded,
+        ),
     )
 
     const pduOptions = getDropDownItems(
       Array.from(Object.entries(allEstate)),
       'Select PDU',
-      allocationDemandSelection.pdu
+      allocationDemandSelection.pdu,
     )
     const ldus = allocationDemandSelection.pdu ? allEstate[allocationDemandSelection.pdu].ldus : []
     const lduOptions = getDropDownItems(
       Object.entries<AllLocalDeliveryUnit>(ldus),
       'Select LAU',
-      allocationDemandSelection.ldu
+      allocationDemandSelection.ldu,
     )
     const teams = allocationDemandSelection.ldu
       ? ldus[allocationDemandSelection.ldu].teams.map(team => [team.code, team])
@@ -119,7 +119,7 @@ export default class FindUnallocatedCasesController {
         'required.pdu': 'Select a Probation Delivery Unit (PDU)',
         'required.ldu': 'Select a Local Admin Unit (LAU)',
         'required.team': 'Select a team',
-      }
+      },
     )
     const allocationDemandSelected = {
       pdu: findUnallocatedCasesForm.pdu,
@@ -133,14 +133,12 @@ export default class FindUnallocatedCasesController {
     } else {
       await this.userPreferenceService.saveAllocationDemandPreference(token, username, allocationDemandSelected)
     }
-    // eslint-disable-next-line security-node/detect-dangerous-redirects
     res.redirect(`/pdu/${pduCode}/find-unallocated`)
   }
 
   async clearFindUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
     const { token, username } = res.locals.user
     await this.userPreferenceService.clearAllocationDemandPreference(token, username)
-    // eslint-disable-next-line security-node/detect-dangerous-redirects
     res.redirect(`/pdu/${pduCode}/find-unallocated`)
   }
 }
@@ -149,7 +147,7 @@ function getDropDownItems(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items: [string, any][],
   defaultDropDownItemText: string,
-  selectedItemValue: string
+  selectedItemValue: string,
 ): DropDownItem[] {
   return [{ value: '', text: defaultDropDownItemText }]
     .concat(
@@ -157,7 +155,7 @@ function getDropDownItems(
         .map(([value, details]) => {
           return { value, text: details.name }
         })
-        .sort((a, b) => (a.text >= b.text ? 1 : -1))
+        .sort((a, b) => (a.text >= b.text ? 1 : -1)),
     )
     .map(dropDownItem => {
       return { ...dropDownItem, selected: dropDownItem.value === selectedItemValue }
@@ -167,7 +165,7 @@ function getDropDownItems(
 function getAllocationDemandSelected(
   formAllocationDemandSelected: AllocationDemandSelected,
   savedAllocationDemandSelection: AllocationDemandSelected,
-  allEstate: Map<string, AllProbationDeliveryUnit>
+  allEstate: Map<string, AllProbationDeliveryUnit>,
 ): AllocationDemandSelected {
   const allocationDemandSelection = formAllocationDemandSelected || savedAllocationDemandSelection
   const pduSelected = allEstate[allocationDemandSelection.pdu] ? allocationDemandSelection.pdu : ''
@@ -176,7 +174,7 @@ function getAllocationDemandSelected(
   const teamSelected =
     lduSelected &&
     allEstate[allocationDemandSelection.pdu].ldus[allocationDemandSelection.ldu].teams.some(
-      team => team.code === allocationDemandSelection.team
+      team => team.code === allocationDemandSelection.team,
     )
       ? allocationDemandSelection.team
       : ''

@@ -6,7 +6,7 @@ export interface ColumnSortExpectations {
 export const sortDataAndAssertSortExpectations = (
   firstSortableColumnNumber: number,
   sortExpectations: Array<ColumnSortExpectations>,
-  isMultiTabTable: boolean
+  isMultiTabTable: boolean,
 ) => {
   let columnNumber = firstSortableColumnNumber
   sortExpectations.forEach(columnSortExpectation => {
@@ -46,12 +46,14 @@ export const sortDataAndAssertSortExpectations = (
         .within(() =>
           cy
             .contains('button', columnSortExpectation.columnHeaderName)
-            .should('have.attr', { 'aria-sort': 'descending' })
+            .should('have.attr', { 'aria-sort': 'descending' }),
         )
     } else {
       cy.get('table').within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
       cy.get('table').within(() =>
-        cy.contains('button', columnSortExpectation.columnHeaderName).should('have.attr', { 'aria-sort': 'descending' })
+        cy
+          .contains('button', columnSortExpectation.columnHeaderName)
+          .should('have.attr', { 'aria-sort': 'descending' }),
       )
     }
 

@@ -1,6 +1,6 @@
 import Page from '../pages/page'
 import ActiveCasesPage from '../pages/activeCases'
-// eslint-disable-next-line import/named
+
 import { sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Active Cases', () => {
@@ -29,7 +29,7 @@ context('Active Cases', () => {
       .notificationBannerHeading()
       .should(
         'not.contain',
-        'You cannot allocate cases to John Doe through the Allocations tool because their email address is not linked to their staff code in NDelius.'
+        'You cannot allocate cases to John Doe through the Allocations tool because their email address is not linked to their staff code in NDelius.',
       )
   })
 
@@ -40,7 +40,7 @@ context('Active Cases', () => {
       .notificationBanner()
       .should(
         'contain',
-        'You cannot allocate cases to John Doe through the Allocations tool because their email address is not linked to their staff code in NDelius.'
+        'You cannot allocate cases to John Doe through the Allocations tool because their email address is not linked to their staff code in NDelius.',
       )
   })
 

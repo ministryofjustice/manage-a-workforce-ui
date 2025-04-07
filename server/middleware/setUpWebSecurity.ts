@@ -57,7 +57,7 @@ export default function setUpWebSecurity(): Router {
       referrerPolicy: {
         policy: 'strict-origin-when-cross-origin',
       },
-    })
+    }),
   )
   return router
 }

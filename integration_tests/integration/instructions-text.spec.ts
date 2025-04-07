@@ -95,7 +95,8 @@ context('Instructions text', () => {
     })
     cy.clock(FOUR_WEEKS_AND_A_DAY_IN_MS)
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes').then(_ => {
-      expect(localStorage.getItem('instructions-save-J678910-1')).to.be(null)
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      expect(localStorage.getItem('instructions-save-J678910-1')).to.be.null
     })
     const instructionsPageAfterTimeout = Page.verifyOnPage(InstructionsConfirmPage)
     instructionsPageAfterTimeout.instructionsTextArea().should('have.value', '')

@@ -137,7 +137,8 @@ context('Allocate Complete', () => {
       .bulletedList()
       .should('contain', 'your allocation notes have been emailed to John Doe (john.doe@test.justice.gov.uk)')
       .then(() => {
-        expect(localStorage.getItem('instructions-save-J678910-1')).to.be(null)
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        expect(localStorage.getItem('instructions-save-J678910-1')).to.be.null
       })
   })
 

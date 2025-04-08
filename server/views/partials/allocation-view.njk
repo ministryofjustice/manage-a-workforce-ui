@@ -3,7 +3,21 @@
 {%- from "govuk/components/error-summary/macro.njk" import govukErrorSummary -%}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
+{% set notification %}
+<p class="govuk-notification-banner__heading">
+    <p class="govuk-body">Allocate a Person on Probation will be unavailable from: <strong>5.00pm on Wednesday 9th April  until 9pm on Wednesday 9 April</strong>. This is due to updates to NDelius.</p>
+</p>
+{% endset %}
+
 {% block content %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {{ govukNotificationBanner({
+          html: notification
+      }) }}
+        </div>
+    </div>
 
     {% if errors | length > 0 %}
         {{ govukErrorSummary({
@@ -11,7 +25,6 @@
             errorList: errors
         }) }}
     {% endif %}
-
 
     <div class="govuk-grid-row govuk-!-padding-bottom-5">
         <div class="govuk-grid-column-full">

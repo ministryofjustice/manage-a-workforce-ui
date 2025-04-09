@@ -6,6 +6,7 @@ context('Probation record', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.signIn()
   })
 
@@ -14,6 +15,13 @@ context('Probation record', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
+  })
+
+  it('Apostrophes are handled correctly', () => {
+    cy.task('stubGetProbationApostropheRecord')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.headingText().should('contain', "John O'Reilly")
   })
 
   it('Probation record header visible on page', () => {
@@ -32,7 +40,7 @@ context('Probation record', () => {
     probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
     probationRecordPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
     probationRecordPage.button().should('contain', 'Continue')
-    probationRecordPage.button().should('have.class', 'govuk-button--disabled')
+    probationRecordPage.button().should('be.disabled')
   })
 
   it('Sub nav visible on page', () => {
@@ -71,7 +79,7 @@ context('Probation record', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.button().should('contain', 'Continue')
-    probationRecordPage.button().should('not.have.class', 'govuk-button--disabled')
+    probationRecordPage.button().should('not.be.disabled')
   })
 
   it('Current sentences sub-heading visible on page with body text', () => {

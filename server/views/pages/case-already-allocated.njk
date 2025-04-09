@@ -18,14 +18,16 @@
 {% endblock %}
 
 {% block content %}
-    {{ pop({name: name, crn: crn, tier: tier}) }}
+    {{ pop({name: name, crn: crn, tier: tier, laoCase: laoCase}) }}
 
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h2 class="govuk-heading-l">This case has already been allocated</h2>
-            <p><a class="govuk-link--no-visited-state" href="{{'/pdu/' + pduCode + '/find-unallocated'}}" data-qa-link="return-to-unallocated">Return to unallocated cases</a></p>
+            <p class="govuk-body">
+                <a class="govuk-link--no-visited-state" href="{{'/pdu/' + pduCode + '/find-unallocated'}}" data-qa-link="return-to-unallocated">Return to unallocated cases</a>
+            </p>
         </div>
     </div>
 

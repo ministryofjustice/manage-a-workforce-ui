@@ -1,6 +1,6 @@
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% if params.inGridRow %}
-  <div class="govuk-grid-row">
+  <div class="govuk-grid-row" id="allocation-notes">
     <div class="govuk-grid-column-two-thirds">
     {% endif %}
     {% if params.errorMessage %}
@@ -13,8 +13,17 @@
         </h2>
         <label class="govuk-label govuk-label--l" for="instructions">
           {{ params.html | safe if params.html}}
+          <div id="more-detail-hint-header" class="govuk-hint">
+            {% if not params.hintText or params.hintText == "" %}
+              Make notes for the practitioner who will be allocated this case. You can continue to edit notes which will be retained as you move through and review the case details.
+            {% endif %}
+          </div>
           <div id="more-detail-hint" class="govuk-hint">
-            {{ params.hintText | safe if params.hintText else "These notes are sent to the practitioner in the allocation email. They will also be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes." }}
+            {% if false == laoCase %}
+              {{ params.hintText | safe if params.hintText else "These notes are sent to the practitioner in the allocation email. They will also be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes." }}
+            {% else %}
+              {{ params.hintText | safe if params.hintText else "These notes will be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes." }}
+            {% endif %}
           </div>
         </label>
         {% if params.errorMessage %}
@@ -22,9 +31,9 @@
             <span class="govuk-visually-hidden">Error:</span>
             {{ params.errorMessage.text | safe if params.errorMessage.text }}
           </p>
-          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint instructions-error"></textarea>
+          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instructions-error"></textarea>
         {% else %}
-          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instuctions-hint"></textarea>
+          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}"></textarea>
         {% endif %}
 
       </div>

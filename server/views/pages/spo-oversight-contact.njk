@@ -40,16 +40,16 @@
     {% endif %}
 {% endblock %}
 {% block content %}
-    {{ pop({name: name, crn: crn, tier: tier}) }}
+    {{ pop({name: name, crn: crn, tier: tier, laoCase: laoCase}) }}
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
-            <form data-validate-form="spo-oversight" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="post">
+            <form data-validate-form="spo-oversight" data-disable="yes" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="post">
                 <div class="govuk-form-group">
                     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
                     {{ instructions({
                 titleText: "Create an SPO Oversight contact",
-                html: ('<p>This should include the rationale for your allocation decision, and your notes to the practitioner about the case. It will be saved in NDelius</p>') | safe,
+                html: ('<p class="govuk-body">This should include the rationale for your allocation decision, and your notes to the practitioner about the case. It will be saved in NDelius</p>') | safe,
                 convictionNumber: convictionNumber,
                 hintText: ' ',
 
@@ -84,7 +84,8 @@
                             preventDoubleClick: true,
                             attributes: {
                                 id: convictionNumber,
-                                'data-form-submit': undefined
+                                'data-form-submit': undefined,
+                                'data-disable': undefined
                             }
                         }) }}
                         <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/allocation-notes'  }}">Go back to review allocation notes</a>

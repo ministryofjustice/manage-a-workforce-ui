@@ -1,3 +1,5 @@
+.govuk-width-container
+  max-width: 1220px
 
 .govuk-main-wrapper
   min-height: 600px
@@ -131,4 +133,41 @@ p.capacity-notes-screen
 
 .-margin-bottom-40 
   margin-bottom: 40px
-  
+
+.moj-banner
+    border: 5px solid #1d70b8
+    color: #1d70b8
+    margin-bottom: 30px
+    padding: 10px
+    display: flex
+    &::before
+      content: "!"
+      box-sizing: border-box
+      display: inline-block
+      min-width: 35px
+      height: 35px
+      margin-right: 10px
+      border: 3px solid #1d70b8
+      border-radius: 50%
+      color: #fff
+      background: #1d70b8
+      font-size: 30px
+      line-height: 29px
+      text-align: center
+      -webkit-user-select: none
+      -ms-user-select: none
+      user-select: none
+      forced-color-adjust: none
+    > .govuk-heading-s
+      margin-bottom: 0
+
+.documents-sticky-button
+  position: sticky
+  top: 0
+  right: 0
+  background-color: #1d70b8
+  float: right
+  z-index: 2
+
+  &:hover
+    background-color: #1d70b8

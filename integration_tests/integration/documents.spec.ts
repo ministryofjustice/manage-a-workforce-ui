@@ -10,6 +10,7 @@ context('Documents', () => {
     cy.task('stubGetUnallocatedCase')
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetDocuments')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/documents')
   })
@@ -32,7 +33,7 @@ context('Documents', () => {
     documentsPage.documentsHeading().should('contain', 'Documents')
     documentsPage.outOfAreaBanner().should('contain', outOfAreasBannerBlurb)
     documentsPage.button().should('contain', 'Continue')
-    documentsPage.button().should('have.class', 'govuk-button--disabled')
+    documentsPage.button().should('be.disabled')
   })
 
   it('Sub nav visible on page', () => {
@@ -53,7 +54,7 @@ context('Documents', () => {
   it('Continue button enabled and visible on page', () => {
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.button().should('contain', 'Continue')
-    documentsPage.button().should('not.have.class', 'govuk-button--disabled')
+    documentsPage.button().should('not.be.disabled')
   })
 
   it('Instructions text should display', () => {
@@ -66,33 +67,33 @@ context('Documents', () => {
       .getTable()
       .should('deep.equal', [
         {
-          Name: 'doc.pdfCourt Report',
+          Name: 'doc.pdf            Court Report',
           Type: 'Pre-Sentence Report - Fast',
-          Event: 'CurrentAttempt/Common/Assault of an Emergency Worker   (Act 2018) 00873',
+          Event: 'Current            Attempt/Common/Assault of an Emergency Worker   (Act 2018) 00873',
           'Date created': '7 Dec 2021',
         },
         {
-          Name: 'Pre Cons.pdfPNC previous convictions',
+          Name: 'Pre Cons.pdf            PNC previous convictions',
           Type: 'Pre Cons',
           Event: 'Not attached to an event',
           'Date created': '17 Nov 2021',
         },
         {
-          Name: 'cps.pdfCrown Prosecution Service case packSENSITIVE',
+          Name: 'cps.pdf            Crown Prosecution Service case packSENSITIVE',
           Type: 'SA2020 Suspended Sentence Order',
-          Event: 'PreviousCommon assault and battery - 10501',
+          Event: 'Previous            Common assault and battery - 10501',
           'Date created': '16 Oct 2021',
         },
         {
-          Name: 'OfficeVisitDocument.DOCContact',
+          Name: 'OfficeVisitDocument.DOC            Contact',
           Type: 'Planned Office Visit (NS)',
-          Event: 'PreviousCommon assault and battery - 10501',
+          Event: 'Previous            Common assault and battery - 10501',
           'Date created': '',
         },
         {
-          Name: 'documentWithoutId.pdfContact',
+          Name: 'documentWithoutId.pdf            Contact',
           Type: 'Planned Office Visit (NS)',
-          Event: 'PreviousCommon assault and battery - 10501',
+          Event: 'Previous            Common assault and battery - 10501',
           'Date created': '',
         },
       ])

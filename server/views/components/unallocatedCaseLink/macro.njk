@@ -1,0 +1,19 @@
+{% macro unallocatedCaseLink(item, pduCode) -%}
+    <div>
+        {% if item.apopExcluded !== true %}
+            <a href="{{'/pdu/' + pduCode +'/' + item.crn + '/convictions/' + item.convictionNumber +'/case-view'}}" class="govuk-link--no-visited-state" data-qa-link="{{item.crn + '-' + item.convictionNumber}}">{{ item.name }}</a>
+        {% else %}
+            <strong>{{item.name}}</strong>
+        {% endif %}
+    </div>
+    <div class="govuk-body-s govuk-!-margin-bottom-2">{{ item.crn }}</div>
+    {% if item.outOfAreaTransfer === true %}
+        <span class="govuk-tag govuk-tag--blue">Action required</span>
+    {% endif %}
+    {% if item.outOfAreaTransfer === true and(item.excluded or item.apopExcluded) %}
+        <div class="govuk-!-padding-top-3"></div>
+    {% endif %}
+    {% if item.excluded or item.apopExcluded %}
+        <span class="govuk-tag govuk-tag--orange">Restricted access</span>
+    {% endif %}
+{%- endmacro %}

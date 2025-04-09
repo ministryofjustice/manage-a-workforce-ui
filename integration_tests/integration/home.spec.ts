@@ -32,16 +32,10 @@ context('Unallocated', () => {
     allocateCasesByTeamPage.headerUserName().should('contain.text', 'J. Smith')
   })
 
-  it('Feedback link goes to Microsoft forms survey', () => {
+  it('Feedback link goes to Smart Survey survey', () => {
     cy.signIn()
     const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
-    allocateCasesByTeamPage
-      .surveyLink()
-      .should('have.attr', 'href')
-      .and(
-        'equal',
-        'https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2JfL5_1h2G9Gi17tzGJyJ5hUMjI3UDgwVzgwS1JLV0hXNDFOTjc4Q1FCQi4u'
-      )
+    allocateCasesByTeamPage.surveyLink().should('have.attr', 'href').and('contain', 'www.smartsurvey.co.uk/s/AWQG5Z')
   })
 
   it('Footer visible on page', () => {
@@ -73,12 +67,14 @@ context('Unallocated', () => {
   it('feedback prompt visible on page', () => {
     cy.signIn()
     const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
-    allocateCasesByTeamPage.feedbackPrompt().should('contain', 'Was this page helpful?')
-    cy.url().then(url => {
-      allocateCasesByTeamPage
-        .feedbackLink()
-        .should('have.attr', 'href')
-        .and('include', `https://eu.surveymonkey.com/r/73CLHLM?url=${url}`)
-    })
+    allocateCasesByTeamPage.feedbackPrompt().should('contain', 'Is this page useful?')
+    allocateCasesByTeamPage
+      .feedbackYes()
+      .should('have.attr', 'href')
+      .and('contain', 'https://www.smartsurvey.co.uk/s/WQFIXP')
+    allocateCasesByTeamPage
+      .feedbackNo()
+      .should('have.attr', 'href')
+      .and('contain', 'https://www.smartsurvey.co.uk/s/DDLZ5O')
   })
 })

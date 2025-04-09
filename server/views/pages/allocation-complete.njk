@@ -1,16 +1,13 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 
-
-{% block beforeContent %}
-
-{% endblock %}
+{% block beforeContent %}{% endblock %}
 
 {% block content %}
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-                        {{ govukPanel({
+            {{ govukPanel({
                             titleText: "Case allocated",
                             html: data.name.combinedName + " (" + crn + ") has been allocated to <strong>" + data.staff.name.combinedName + " (" + data.staff.grade + ")</strong>"
                         }) }}
@@ -19,31 +16,37 @@
 
             <ul class="govuk-list govuk-list--bullet">
                 <li>the case and SPO Oversight contact will be saved in NDelius within 5 minutes</li>
+                {% if laoRestricted == false %}
                 <li>your allocation notes have been emailed to <strong>{{ data.staff.name.combinedName }}</strong> (<em>{{ data.staff.email }}</em>)</li>
+                {% else %}
+                <li>your allocation has been emailed to <strong>{{ data.staff.name.combinedName }}</strong> (<em>{{ data.staff.email }}</em>)</li>
+                {% endif %}
                 {% if sendEmailCopyToAllocatingOfficer %}
                     <li>we've sent you a copy of the allocation email</li>
                 {% endif %}
                 {% if otherEmails | length %}
                     <li>
-                    {{- 'we have sent a copy of the allocation email to ' + otherEmails | join(", ")  }}
+                        {{- 'we have sent a copy of the allocation email to ' + otherEmails | join(", ")  }}
                     </li>
                 {% endif %}
                 {% if initialAppointmentDateDisplayResult.showDisplayContentForInitialAppointmentDateAndStaff %}
-                    <li>the initial appointment is scheduled for <strong>{{ data.initialAppointment.date | dateFormat }}</strong> with {{ data.staff.name.combinedName }} {{ data.staff.grade }}</strong></li>
-                {% elseif initialAppointmentDateDisplayResult.showDisplayContentForNoInitialAppointmentDate %}
-                    <li>no date found for the initial appointment, please check with your team</li>
-                {% endif %}
-            </ul>
+                    <li>the initial appointment is scheduled for <strong>{{ data.initialAppointment.date | dateFormat }}</strong> with {{ data.staff.name.combinedName }} {{ data.staff.grade }}</strong>
+                </li>
+            {% elseif initialAppointmentDateDisplayResult.showDisplayContentForNoInitialAppointmentDate %}
+                <li>no date found for the initial appointment, please check with your team</li>
+            {% endif %}
+        </ul>
 
-            <p><a class="govuk-link--no-visited-state" href="/pdu/{{ pduCode }}/find-unallocated">Return to unallocated cases</a></p>
+        <p class="govuk-body">
+            <a class="govuk-link--no-visited-state" href="/pdu/{{ pduCode }}/find-unallocated">Return to unallocated cases</a>
+        </p>
 
-        </div>
     </div>
+</div>
 {% endblock %}
 
-
 {% block javascripts %}
-    <script nonce="{{ cspNonce }}">
-        localStorage.removeItem('instructions-save-{{ crn }}-{{ convictionNumber }}')
-    </script>
+<script nonce="{{ cspNonce }}">
+    localStorage.removeItem('instructions-save-{{ crn }}-{{ convictionNumber }}')
+</script>
 {% endblock %}

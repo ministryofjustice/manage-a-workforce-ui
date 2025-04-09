@@ -53,8 +53,8 @@ export default {
   stubCaseAllocationHistory: (): SuperAgentRequest => {
     return stubForWorkload({
       request: {
-        method: 'GET',
-        urlPattern: `/allocation/events/me\\?since=.*`,
+        method: 'POST',
+        urlPattern: `/allocation/events/teams\\?since=.*`,
       },
       response: {
         status: 200,
@@ -80,6 +80,8 @@ export default {
               },
               tier: 'C1',
               allocatedOn: '2023-02-02T11:49:35.844055Z',
+              allocatingSpo: 'N04A124',
+              teamCode: 'TM1',
             },
             {
               crn: 'X602070',
@@ -100,6 +102,30 @@ export default {
               },
               tier: 'D0',
               allocatedOn: '2023-03-03T13:23:15.008829Z',
+              allocatingSpo: 'N04A124',
+              teamCode: 'TM1',
+            },
+            {
+              crn: 'X456123',
+              name: {
+                forename: 'John',
+                middleName: '',
+                surname: 'Smith',
+                combinedName: 'John Smith',
+              },
+              staff: {
+                code: 'N04A123',
+                name: {
+                  forename: 'Steve',
+                  surname: 'Leave',
+                  combinedName: 'Steve Leave',
+                },
+                grade: 'PO',
+              },
+              tier: 'C1',
+              allocatedOn: '2023-02-02T11:49:35.844055Z',
+              allocatingSpo: 'N04A124',
+              teamCode: 'TM1',
             },
           ],
         },
@@ -109,14 +135,29 @@ export default {
   stubCaseAllocationHistoryEmpty: (): SuperAgentRequest => {
     return stubForWorkload({
       request: {
-        method: 'GET',
-        urlPattern: `/allocation/events/me\\?since=.*`,
+        method: 'POST',
+        urlPattern: `/allocation/events/teams\\?since=.*`,
       },
       response: {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
           cases: [],
+        },
+      },
+    })
+  },
+  stubCaseAllocationHistoryCountEmpty: (): SuperAgentRequest => {
+    return stubForWorkload({
+      request: {
+        method: 'POST',
+        urlPattern: `/allocation/events/teams/count\\?since=.*`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          caseCount: 20,
         },
       },
     })
@@ -141,11 +182,13 @@ export default {
       },
       tier: 'D0',
       allocatedOn: '2023-03-03T13:23:15.008829Z',
+      allocatingSpo: 'N04A124',
+      teamCode: 'TM1',
     }))
     return stubForWorkload({
       request: {
-        method: 'GET',
-        urlPattern: `/allocation/events/me\\?since=.*`,
+        method: 'POST',
+        urlPattern: `/allocation/events/teams\\?since=.*`,
       },
       response: {
         status: 200,
@@ -159,8 +202,8 @@ export default {
   stubCaseAllocationHistoryCount: (caseCount = 8): SuperAgentRequest => {
     return stubForWorkload({
       request: {
-        method: 'GET',
-        urlPattern: `/allocation/events/me/count\\?since=.*`,
+        method: 'POST',
+        urlPattern: `/allocation/events/teams/count\\?since=.*`,
       },
       response: {
         status: 200,

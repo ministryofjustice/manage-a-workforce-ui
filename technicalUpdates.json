@@ -1,5 +1,17 @@
 [
   {
+    "heading": "27 February 2025",
+    "whatsNew": [
+      "Inclusion of Limited Access Offender (LAO) cases: Some LAO cases can now be allocated. These will be shown with a ‘Restricted access’ badge beneath the person on probation’s name.",
+      "Change to unallocated cases screen: We now show allocations made by all SPOs in the selected team over the last 30 days. Previously only allocations made by the selected SPO would be shown.",
+      "Improvements to the Documents screen: Accessing the allocation notes section on the Documents screen can involve a considerable amount of scrolling when a large number of documents are shown. We’ve added a ‘Skip to allocation notes’ button to enable users to navigate quickly to their allocation notes on this screen.",
+      "Global address list (GAL) update: On the Review your allocation notes screen we’ve restricted the ‘Add another recipient’ field to accept only justice.gov.uk emails within the GAL. This is to prevent sensitive information being sent to external recipients outside the Ministry of Justice.",
+      "Updates to the display of data from the Workload Measurement Tool (WMT): We now show WMT data within the Team view screen.",
+      "Change of wording from ‘Capacity to ‘Workload’: For clarity and consistency, we’ve changed the use of ‘Capacity’ to ‘Workload’ or ‘Workload %’.",
+      "Updates to the back button on the Active cases screen: When using the back button on this screen, users were taken to the Overview screen. Users are now taken back to the Team allocation screen instead. "
+    ]
+  },
+  {
     "heading": "3 September 2024",
     "whatsNew": [
       "Changes to allocation notes:",

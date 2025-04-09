@@ -44,12 +44,14 @@ export default function routes(services: Services): Router {
 
   const allocationHistoryController = new AllocationHistoryController(
     services.workloadService,
-    services.probationEstateService
+    services.probationEstateService,
+    services.userPreferenceService,
+    services.allocationsService
   )
 
   const staffController = new StaffController(services.staffLookupService)
 
-  const workloadController = new WorkloadController(services.workloadService)
+  const workloadController = new WorkloadController(services.workloadService, services.allocationsService)
 
   const technicalUpdatesController = new TechnicalUpdatesController(services.technicalUpdatesService)
 
@@ -69,7 +71,7 @@ export default function routes(services: Services): Router {
 
   get('/pdu/:pduCode/case-allocation-history', async (req, res) => {
     const { pduCode } = req.params
-    await allocationHistoryController.getCasesAllocated(req, res, pduCode)
+    await allocationHistoryController.getCasesAllocatedByTeam(req, res, pduCode)
   })
 
   post('/pdu/:pduCode/find-unallocated', async (req, res) => {
@@ -85,6 +87,12 @@ export default function routes(services: Services): Router {
   get('/pdu/:pduCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
     const { crn, convictionNumber, pduCode } = req.params
     await allocationsController.getUnallocatedCase(req, res, crn, convictionNumber, pduCode)
+  })
+
+  post('/pdu/:pduCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
+    const { crn, convictionNumber, pduCode } = req.params
+    // eslint-disable-next-line security-node/detect-dangerous-redirects
+    return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner`)
   })
 
   get('/:crn/documents/:documentId/:documentName', async (req, res) => {
@@ -186,37 +194,43 @@ export default function routes(services: Services): Router {
     }
   )
 
-  get(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/officer-view',
-    async (req, res) => {
-      const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
-      await allocationsController.getOverview(
-        req,
-        res,
-        crn,
-        offenderManagerTeamCode,
-        offenderManagerCode,
-        convictionNumber,
-        pduCode
-      )
-    }
-  )
+  get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/officer-view', async (req, res) => {
+    const { convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
+    await allocationsController.getOverview(
+      req,
+      res,
+      offenderManagerTeamCode,
+      offenderManagerCode,
+      convictionNumber,
+      pduCode,
+      false
+    )
+  })
 
-  get(
-    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:offenderManagerTeamCode/:offenderManagerCode/active-cases',
-    async (req, res) => {
-      const { crn, convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
-      await allocationsController.getActiveCases(
-        req,
-        res,
-        crn,
-        offenderManagerTeamCode,
-        offenderManagerCode,
-        convictionNumber,
-        pduCode
-      )
-    }
-  )
+  get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/history-officer-view', async (req, res) => {
+    const { convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
+    await allocationsController.getOverview(
+      req,
+      res,
+      offenderManagerTeamCode,
+      offenderManagerCode,
+      convictionNumber,
+      pduCode,
+      true
+    )
+  })
+
+  get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/active-cases', async (req, res) => {
+    const { convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
+    await allocationsController.getActiveCases(
+      req,
+      res,
+      offenderManagerTeamCode,
+      offenderManagerCode,
+      convictionNumber,
+      pduCode
+    )
+  })
 
   post(
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/confirm-instructions',
@@ -288,6 +302,11 @@ export default function routes(services: Services): Router {
   post('/region/:regionCode/probationDeliveryUnits', async (req, res) => {
     const { regionCode } = req.params
     await probationEstateController.selectProbationDeliveryUnit(req, res, regionCode)
+  })
+
+  get('/pdu/:pduCode/:teamCode/team-workload', async (req, res) => {
+    const { teamCode, pduCode } = req.params
+    await allocateCasesController.getTeamWorkload(req, res, pduCode, teamCode)
   })
 
   get('/whats-new', async (req, res) => {

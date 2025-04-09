@@ -43,7 +43,7 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
 
-            {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg' }) }}
+            {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
 
         </div>
     </div>
@@ -56,12 +56,14 @@
 
             <div class="govuk-panel govuk-panel--confirmation interrupt">
                 <h2 id="cleared" class="govuk-heading-l">Save your notes as an oversight contact and allocate the case to {{ data.staff.name.combinedName }} ({{ data.staff.grade }})</h2>
-                <p class="govuk-body-l">Your allocation notes will be saved as an SPO Oversight contact in NDelius, do you want to edit them first? You can add information that will not be sent in the email.
-        </p>
-                <p class="govuk-body-l">Once the notes are saved, the case will be allocated and the email sent to the practitioner.
-        </p>
-
-                <form data-validate-form="edit-notes" method="post">
+                {% if laoCase == true %}
+                    <p class="govuk-body-l">Your allocation notes will be saved as an SPO Oversight contact in NDelius.</p>
+                    <p class="govuk-body-l" id="confirmation-interrupt-lao-notes">These notes will not be included in the email to the probation practitioner as this is a restricted access case.</p>
+                {% else %}
+                    <p class="govuk-body-l">Your allocation notes will be saved as an SPO Oversight contact in NDelius, do you want to edit them first? You can add information that will not be sent in the email.</p>
+                {% endif %}
+                <p class="govuk-body-l">Once the notes are saved, the case will be allocated and the email sent to the practitioner.</p>
+                <form data-validate-form method="post">
                     <div class="govuk-form-group govuk-!-margin-top-2">
 
                         <div class="govuk-button-group">
@@ -72,7 +74,8 @@
                                 value: 'edit',
                                 preventDoubleClick: true,
                                 attributes: {
-                                    'data-form-submit': undefined
+                                    'data-form-submit': undefined,
+                                    'data-disable': undefined
                                 }
                             }) }}
                         </div>
@@ -82,7 +85,7 @@
 
                 </form>
 
-                <form data-validate-form="edit-notes" method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation' }}" method="post">
+                <form data-validate-form method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation' }}" method="post">
                     <div class="govuk-form-group govuk-!-margin-top-2">
 
                         <div class="govuk-button-group">
@@ -93,7 +96,8 @@
                                 value: 'save',
                                 preventDoubleClick: true,
                                 attributes: {
-                                    'data-form-submit': undefined
+                                    'data-form-submit': undefined,
+                                    'data-disable': undefined
                                 }
                             }) }}
                         </div>
@@ -109,4 +113,8 @@
         </div>
     </div>
 
+{% endblock %}
+{% block javascripts %}
+    <script src="/assets/validator.js"></script>
+    <script src="/assets/validation.js"></script>
 {% endblock %}

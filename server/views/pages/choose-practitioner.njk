@@ -49,7 +49,7 @@
                     'data-persistent-id': teamData.teamCode + '-choose-practitioner-workload'
                 }
             },
-            { text: 'Cases in past 30 days',
+            { text: 'Cases in past 7 days',
                 format: "numeric",
                 attributes: {
                     "aria-sort": "none",
@@ -77,11 +77,8 @@
     {% for offenderManager in teamData.offenderManagersToAllocate %}
         {%- set tableRow = [
             { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name + ' to allocate to</span></label></div></div>')
-                if offenderManager.email},
-            { html: govukLabel({
-                text: ('<a href="/pdu/'+ pduCode +'/' + crn + '/convictions/' + convictionNumber + '/allocate/' + offenderManager.teamCode + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '" aria-label="View">' + offenderManager.name + '</a>' ) | safe,
-                for: ('allocated-officer-' + offenderManager.code)
-            }),
+                if offenderManager.email and true != offenderManager.laoCase},
+            { html: ('<a href="/pdu/'+ pduCode +'/' + offenderManager.teamCode + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name + '</a>' ) | safe,
                 attributes: {
                     "data-sort-value": offenderManager.name
                 }
@@ -187,11 +184,11 @@
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Allocate to a probation practitioner</h1>
     <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{pduCode}}/select-teams">Edit my teams list</a>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-    {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg' }) }}
+    {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
 
     {% if (probationStatus == 'Currently managed' and offenderManagerDetails) 
         or probationStatus == 'Previously managed' %}
-        <div class="govuk-warning-text">
+        <div class="govuk-warning-text govuk-!-margin-bottom-0">
             <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
             <strong class="govuk-warning-text__text">
                 <span class="govuk-warning-text__assistive">Warning</span>
@@ -212,7 +209,7 @@
         {% endif %}
         <form data-validate-form="choose-practitioner" method="post">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-            <div class="govuk-form-group">
+            <div class="govuk-form-group govuk-!-margin-top-6">
                 {{ govukTabs({
                 items: govukTabItems
             }) }}
@@ -233,7 +230,7 @@
                     'data-form-submit': undefined
                 }
             }) }}
-                <a class="govuk-button govuk-button--secondary" href="{{'/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner'}}">           Clear selection </a>
+                <a id="clearSelection" class="govuk-button govuk-button--secondary" href="{{'/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner'}}">           Clear selection </a>
             </div>
         </form>
         {% if error %}

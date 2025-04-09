@@ -157,7 +157,7 @@ export default {
             name: 'First Probation Delivery Unit',
             ldus: {
               LDU1: {
-                name: 'First Local Delivery Unit',
+                name: 'First Local Admin Unit',
                 teams: [
                   {
                     code: 'TM1',
@@ -170,7 +170,7 @@ export default {
                 ],
               },
               LDU2: {
-                name: 'Second Local Delivery Unit',
+                name: 'Second Local Admin Unit',
                 teams: [
                   {
                     code: 'TM3',
@@ -188,7 +188,7 @@ export default {
             name: 'Second Probation Delivery Unit',
             ldus: {
               LDU3: {
-                name: 'Third Local Delivery Unit',
+                name: 'Third Local Admin Unit',
                 teams: [
                   {
                     code: 'TM5',
@@ -201,7 +201,7 @@ export default {
                 ],
               },
               LDU4: {
-                name: 'Fourth Local Delivery Unit',
+                name: 'Fourth Local Admin Unit',
                 teams: [
                   {
                     code: 'TM7',

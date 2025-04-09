@@ -205,5 +205,11 @@ window.addEventListener('load', () => {
     if (Array.isArray(forms[formId])) {
       bindForm(form, ...forms[formId])
     }
+
+    form.addEventListener('submit', event => {
+      document.querySelectorAll('[data-disable]').forEach(elem => {
+        elem.disabled = true
+      })
+    })
   })
 })

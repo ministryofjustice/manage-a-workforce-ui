@@ -11,4 +11,6 @@ interface AllocatedCase {
   staff: StaffMember
   tier: string
   allocatedOn: string
+  allocatingSpo: string
+  teamCode: string
 }

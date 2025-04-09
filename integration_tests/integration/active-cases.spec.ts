@@ -7,10 +7,11 @@ context('Active Cases', () => {
   let activeCasesPage
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubForStaffLaoStatusByCrns')
     cy.task('stubGetOffenderManagerCases')
     cy.task('stubGetTeamDetails', { code: 'TM2', name: 'Team Name 1' })
     cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/active-cases')
+    cy.visit('/pdu/PDU1/TM2/OM2/active-cases')
     activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
   })
 
@@ -63,12 +64,12 @@ context('Active Cases', () => {
       .getTable()
       .should('deep.equal', [
         {
-          'Name / CRN': 'Dylan Adam ArmstrongCRN1111',
+          'Name / CRN': 'Dylan Adam Armstrong            CRN1111',
           Tier: 'B3',
           'Type of case': 'Custody',
         },
         {
-          'Name / CRN': 'Cindy SmithCRN2222',
+          'Name / CRN': 'Cindy Smith            CRN2222',
           Tier: 'A0',
           'Type of case': 'License',
         },

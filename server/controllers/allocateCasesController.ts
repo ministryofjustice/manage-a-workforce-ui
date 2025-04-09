@@ -49,4 +49,49 @@ export default class AllocateCasesController {
       regionName: probationDeliveryUnitDetails.region.name,
     })
   }
+
+  async getTeamWorkload(_req: Request, res: Response, pduCode: string, teamCode: string) {
+    const { token } = res.locals.user
+
+    const teamDetails = await this.probationEstateService.getTeamDetails(token, teamCode)
+    const teamWorkload = await this.workloadService.getTeamWorkload(token, teamCode)
+    const teamWorkloadData = await this.workloadService.getWorkloadByTeams(token, [teamCode])
+
+    let totalCases = 0
+
+    teamWorkload[teamCode].teams.forEach(team => {
+      totalCases += team.custodyCases
+      totalCases += team.communityCases
+    })
+
+    const workload = teamWorkload[teamCode].teams.map(team => ({ ...team, gradeOrder: setGradeOrder(team.grade) }))
+    workload.sort(sortPractitionersByGrade)
+
+    res.render('pages/team-workload', {
+      title: 'Team Workload | Manage a workforce',
+      teamDetails,
+      teamCode,
+      pduCode,
+      teamWorkload: workload,
+      totalCases,
+      averageWorkload: teamWorkloadData[0].workload,
+    })
+  }
+}
+
+function sortPractitionersByGrade(a, b) {
+  if (b.gradeOrder === a.gradeOrder) {
+    return a.workload - b.workload
+  }
+  return a.gradeOrder - b.gradeOrder
+}
+
+function setGradeOrder(grade) {
+  const order = {
+    PO: 4,
+    PSO: 3,
+    PQiP: 2,
+    SPO: 1,
+  }
+  return order[grade] || 0
 }

@@ -6,9 +6,17 @@ export default function createErrorHandler() {
   return (error: SanitisedError, req: Request, res: Response, next: NextFunction): void => {
     logger.error(error, `Error handling request for '${req.originalUrl}', user '${res.locals.user?.username}'`)
 
-    if (error.status === 401 || error.status === 403) {
+    if (error.status === 401) {
       logger.info('Logging user out')
       return res.redirect('/sign-out')
+    }
+
+    if (error.status === 403) {
+      logger.info('User forbidden')
+      return res.status(error.status).render('pages/error-forbidden', {
+        notification: { active: false },
+        title: 'No Access | Manage a workforce',
+      })
     }
 
     const status = error.status || 500

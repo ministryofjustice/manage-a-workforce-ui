@@ -10,12 +10,47 @@ import DocumentDetails from '../models/DocumentDetails'
 import UnallocatedCase from '../models/UnallocatedCase'
 import CaseOverview from '../models/CaseOverview'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
+import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
+import AllocationLAOStatus from '../models/AllocationLAOStatus'
+import LaoStatusList from '../models/LaoStatusList'
 
 export default class AllocationsService {
   config: ApiConfig
 
   constructor(config: ApiConfig) {
     this.config = config
+  }
+
+  async getLaoStatus(crn: string, token: string): Promise<boolean> {
+    return (await this.restClient(token).get({ path: `/cases/unallocated/${crn}/restricted` })) as boolean
+  }
+
+  async getRestrictedStatusByCrnAndStaffCodes(
+    token: string,
+    crn: string,
+    staffCodes: string[]
+  ): Promise<CrnStaffRestrictions> {
+    return (await this.restClient(token).post({
+      path: `/cases/unallocated/${crn}/restrictions`,
+      data: {
+        staffCodes,
+      },
+    })) as CrnStaffRestrictions
+  }
+
+  async getRestrictedStatusByCrns(token: string, crns: string[]): Promise<LaoStatusList> {
+    return (await this.restClient(token).post({
+      path: `/cases/restrictions/crn/list`,
+      data: {
+        crns,
+      },
+    })) as LaoStatusList
+  }
+
+  async getLAOStatusforAllocation(token: string, crn: string): Promise<AllocationLAOStatus> {
+    return (await this.restClient(token).get({
+      path: `/cases/${crn}/restrictions`,
+    })) as AllocationLAOStatus
   }
 
   private restClient(token: string): RestClient {

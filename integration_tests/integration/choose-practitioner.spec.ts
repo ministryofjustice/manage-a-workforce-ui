@@ -7,6 +7,7 @@ context('Choose Practitioner', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubUserPreferenceTeams', ['N03F01', 'N03F02'])
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.task('stubGetUnallocatedCasesByTeams', {
       teamCodes: 'N03F01,N03F02',
       response: [
@@ -76,6 +77,14 @@ context('Choose Practitioner', () => {
       )
   })
 
+  it('Display Lao Restricted access badge if Lao Case', () => {
+    cy.task('stubChoosePractitionersWithEmails')
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.restrictedStatusBadge().should('not.exist')
+  })
+
   it('Offender details visible on page', () => {
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.signIn()
@@ -90,7 +99,7 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.allocateCaseButton('J678910', '1', 'PDU1').click()
+    summaryPage.allocateCaseButton('1').click()
     Page.verifyOnPage(ChoosePractitionerPage)
   })
 
@@ -188,7 +197,7 @@ context('Choose Practitioner', () => {
           Team: 'Team 2',
           Grade: 'POProbation Officer',
           'Workload %': '32%',
-          'Cases in past 30 days': '5',
+          'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
           Select: 'Select Jim Jam to allocate to',
@@ -198,7 +207,7 @@ context('Choose Practitioner', () => {
           Team: 'Team 1',
           Grade: 'PQiPTrainee Probation Officer',
           'Workload %': '19%',
-          'Cases in past 30 days': '2',
+          'Cases in past 7 days': '2',
           'Community cases': '3',
           'Custody cases': '5',
           Select: 'Select Jane Doe to allocate to',
@@ -208,7 +217,7 @@ context('Choose Practitioner', () => {
           Team: 'Team 2',
           Grade: 'SPOSenior Probation Officer',
           'Workload %': '32%',
-          'Cases in past 30 days': '5',
+          'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
           Select: '',
@@ -224,7 +233,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
+      .and('include', '/pdu/PDU1/N03F02/OM2/officer-view')
   })
 
   it('Individual team visible on page when selected', () => {
@@ -241,7 +250,7 @@ context('Choose Practitioner', () => {
           Team: 'Team 2',
           Grade: 'POProbation Officer',
           'Workload %': '32%',
-          'Cases in past 30 days': '5',
+          'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
           Select: 'Select Jim Jam to allocate to',
@@ -251,7 +260,7 @@ context('Choose Practitioner', () => {
           Team: 'Team 2',
           Grade: 'SPOSenior Probation Officer',
           'Workload %': '32%',
-          'Cases in past 30 days': '5',
+          'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
           Select: '',
@@ -267,7 +276,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', '/pdu/PDU1/J678910/convictions/1/allocate/N03F02/OM2/officer-view')
+      .and('include', '/pdu/PDU1/N03F02/OM2/officer-view')
   })
 
   it('Individual team select radio button contains the correct team', () => {
@@ -455,7 +464,7 @@ context('Choose Practitioner', () => {
         orderedData: ['19%', '32%', '32%'],
       },
       {
-        columnHeaderName: 'Cases in past 30 days',
+        columnHeaderName: 'Cases in past 7 days',
         orderedData: ['2', '5', '5'],
       },
       {

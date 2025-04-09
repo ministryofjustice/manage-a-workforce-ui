@@ -11,6 +11,7 @@ context('Allocate Complete', () => {
     cy.task('stubSetup')
     cy.task('stubSearchStaff')
     cy.task('stubGetConfirmInstructions')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
   })
 
   it('return to unallocated cases if team link exists', () => {
@@ -86,7 +87,7 @@ context('Allocate Complete', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubNotFoundEventManagerDetails')
-    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', true)
+    cy.task('stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent', { sendCopy: true, laoStatus: false })
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubSearchStaff')
     cy.signIn()
@@ -204,5 +205,39 @@ context('Allocate Complete', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().should('have.value', 'Test')
+  })
+
+  it('user tries to submit allocation twice in quick succession', () => {
+    cy.task('stubGetAllocationCompleteDetails')
+    cy.task('stubSendComparisonLogToWorkload')
+    cy.task('stubNotFoundEventManagerDetails')
+    cy.task('stubErrorAllocateOffenderManagerToCase')
+    cy.task('stubSearchStaff')
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+
+    const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)
+    instructionsConfirmPage.instructionsTextArea().type('Test')
+    instructionsConfirmPage.checkbox().check()
+    instructionsConfirmPage.inputTexts().first().type('fi')
+    instructionsConfirmPage.autoCompleteOption(0).should('have.text', 'first@justice.gov.uk - First Name')
+    instructionsConfirmPage.autoCompleteOption(0).click()
+    instructionsConfirmPage.inputTexts().first().should('have.value', 'first@justice.gov.uk')
+    instructionsConfirmPage.addAnotherPersonButton().click()
+    instructionsConfirmPage.inputTexts().first().type('se')
+    instructionsConfirmPage.autoCompleteOption(1).should('have.text', 'second@justice.gov.uk - Second Name')
+    instructionsConfirmPage.autoCompleteOption(1).click()
+    instructionsConfirmPage.continueButton('1').click()
+    const oversightOptionPage = Page.verifyOnPage(SpoOversightOptionPage)
+
+    oversightOptionPage.saveButton().click()
+    // adding in some thinking time for the user to consider their action
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(5000)
+    cy.go('back')
+    oversightOptionPage.saveButton().click()
+
+    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
+    allocationCompletePage.panelTitle().should('contain', 'Case allocated')
   })
 })

@@ -49,7 +49,7 @@ export default {
         urlPattern: `/team/TM2/offenderManager/OM1/case`,
         bodyPatterns: [
           {
-            equalToJson: `{"crn":"J678910", "instructions": "", "allocationJustificationNotes": "Test", "sensitiveNotes": false, "spoOversightNotes": "Test", "sensitiveOversightNotes": false, "sendEmailCopyToAllocatingOfficer": false, "emailTo": ["first@justice.gov.uk", "second@justice.gov.uk"], "eventNumber": "1"}`,
+            equalToJson: `{"crn":"J678910", "instructions": "", "allocationJustificationNotes": "Test", "sensitiveNotes": false, "spoOversightNotes": "Test", "sensitiveOversightNotes": false, "sendEmailCopyToAllocatingOfficer": false, "emailTo": ["first@justice.gov.uk", "second@justice.gov.uk"], "eventNumber": "1", "laoCase": false}`,
           },
         ],
       },
@@ -60,14 +60,14 @@ export default {
     })
   },
 
-  stubAllocateOffenderManagerToCaseMultipleEmails: (sendCopy = false): SuperAgentRequest => {
+  stubAllocateOffenderManagerToCaseMultipleEmails: (sendCopy = false, laoStatus = false): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',
         urlPattern: '/team/TM2/offenderManager/OM1/case',
         bodyPatterns: [
           {
-            equalToJson: `{"crn":"J678910", "instructions": "", "allocationJustificationNotes": "Test", "sensitiveNotes": false, "spoOversightNotes": "Test", "sensitiveOversightNotes": false, "sendEmailCopyToAllocatingOfficer": ${sendCopy}, "emailTo": ["first@justice.gov.uk", "second@justice.gov.uk"], "eventNumber": "1"}`,
+            equalToJson: `{"crn":"J678910", "instructions": "", "allocationJustificationNotes": "Test", "sensitiveNotes": false, "spoOversightNotes": "Test", "sensitiveOversightNotes": false, "sendEmailCopyToAllocatingOfficer": ${sendCopy}, "emailTo": ["first@justice.gov.uk", "second@justice.gov.uk"], "eventNumber": "1", "laoCase": ${laoStatus}}`,
           },
         ],
       },
@@ -83,7 +83,7 @@ export default {
     })
   },
 
-  stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent: (sendCopy = false): SuperAgentRequest => {
+  stubAllocateOffenderManagerToCaseMultipleEmailsNumericEvent: ({ sendCopy, laoStatus }): SuperAgentRequest => {
     return stubForWorkload({
       request: {
         method: 'POST',
@@ -100,6 +100,7 @@ export default {
               sensitiveNotes: false,
               spoOversightNotes: 'Test',
               sensitiveOversightNotes: false,
+              laoCase: laoStatus,
             }),
           },
         ],

@@ -2,7 +2,7 @@ import Page, { PageElement } from './page'
 
 export default class CaseAllocationHistoryPage extends Page {
   constructor() {
-    super('Cases allocated in last 30 days')
+    super('Cases allocated in last 7 days')
   }
 
   region = (): PageElement => cy.get('.govuk-caption-xl')
@@ -37,4 +37,6 @@ export default class CaseAllocationHistoryPage extends Page {
   noCasesBody = (): PageElement => cy.get('.govuk-body-l')
 
   unallocatedCasesSubNavLink = (): PageElement => cy.get('a.moj-sub-navigation__link').contains('Unallocated cases')
+
+  restrictedBadge = (): PageElement => cy.get('.govuk-tag--orange')
 }

@@ -7,6 +7,10 @@ import {
   resetWorkloadStubs,
   resetStaffLookupStubs,
   resetManageUsersStubs,
+  resetLaoStubs,
+  resetLaoStubs403,
+  resetStaffLaoStatusByCrns,
+  resetStaffLaoStatusByCrnsRestricted,
 } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
@@ -18,6 +22,7 @@ import risk from '../mockApis/risk'
 import choosePractitioner from '../mockApis/choosePractitioner'
 import allocateToPractitioner from '../mockApis/allocateToPractitioner'
 import workload from '../mockApis/workload'
+import teamWorkload from '../mockApis/teamWorkload'
 import overview from '../mockApis/overview'
 import allocationCase from '../mockApis/allocationCase'
 import offenderManagerCases from '../mockApis/offenderManagerCases'
@@ -25,6 +30,8 @@ import allocationComplete from '../mockApis/allocationComplete'
 import probationEstate from '../mockApis/probationEstate'
 import staffLookup from '../mockApis/staffLookup'
 import logging from '../mockApis/logging'
+import laoStatus from '../mockApis/laoStatus'
+import laoStatus403 from '../mockApis/laoStatus403'
 
 const redisService = new RedisService()
 
@@ -38,7 +45,11 @@ export default (on: (string, Record) => void): void => {
         resetUserPreferenceStubs(),
         resetStaffLookupStubs(),
         resetManageUsersStubs(),
+        resetLaoStubs(),
+        resetLaoStubs403(),
         redisService.deleteAll(),
+        resetStaffLaoStatusByCrns(),
+        resetStaffLaoStatusByCrnsRestricted(),
       ])
       return Promise.all([
         auth.stubSignIn(),
@@ -89,6 +100,7 @@ export default (on: (string, Record) => void): void => {
     ...allocations,
     ...allocateToPractitioner,
     ...workload,
+    ...teamWorkload,
     ...offenderManagerCases,
     ...allocationComplete,
     ...allocationCase,
@@ -97,6 +109,8 @@ export default (on: (string, Record) => void): void => {
     ...userPreference,
     ...choosePractitioner,
     ...staffLookup,
+    ...laoStatus,
+    ...laoStatus403,
     ...logging,
   })
 }

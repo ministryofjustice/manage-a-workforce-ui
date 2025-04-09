@@ -6,28 +6,41 @@
 
 {% set notification %}
 <p class="govuk-notification-banner__heading">
-  <h3 class="govuk-notification-banner__heading">
-    Changes to case allocation notes
-  </h3>
-  <p class="govuk-body">Your allocation notes will now be saved as an SPO Oversight contact in NDelius. <a class="govuk-notification-banner__link" href="/whats-new">Read more about changes to allocation notes</a>.</p>
+  <p class="govuk-body">Allocate a Person on Probation will be unavailable from: <strong>5.00pm on Wednesday 9th April until 9.00pm on Wednesday 9 April</strong>. This is due to updates to NDelius.</p>
 </p>
 {% endset %}
 
 {% set tableRows = [] %}
 {% for team in teams %}
-  {{ tableRows.push(
-      [
-      {
-        text: team.teamName
-      },
-      {
-        text: team.workload
-      },
-      {
-        text: team.caseCount
-      }
-    ]) 
-    }}
+  {% if team.workload == '-%' %}
+    {{ tableRows.push(
+          [
+          {
+            text: team.teamName
+          },
+          {
+            text: team.workload
+          },
+          {
+            text: team.caseCount
+          }
+        ])
+        }}
+  {% else %}
+    {{ tableRows.push(
+              [
+              {
+                html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/team-workload" class="govuk-link">' + team.teamName + '</a>'
+              },
+              {
+                text: team.workload
+              },
+              {
+                text: team.caseCount
+              }
+            ])
+            }}
+  {% endif %}
 {% endfor %}
 
 {% block content %}

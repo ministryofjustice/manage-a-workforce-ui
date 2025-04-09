@@ -23,11 +23,17 @@ export default class FindUnallocatedCasesController {
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
     const { token, username } = res.locals.user
-    const [pduDetails, savedAllocationDemandSelection, allocatedCasesCount] = await Promise.all([
-      this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode),
-      this.userPreferenceService.getAllocationDemandSelection(token, username),
-      this.workloadService.getAllocationHistoryCount(token, config.casesAllocatedSinceDate().toISOString()),
-    ])
+    const teamCodes = await this.userPreferenceService.getTeamsUserPreference(token, username)
+    const pduDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)
+    const savedAllocationDemandSelection = await this.userPreferenceService.getAllocationDemandSelection(
+      token,
+      username
+    )
+    const allocatedCasesCount = await this.workloadService.postAllocationHistoryCount(
+      token,
+      config.casesAllocatedSinceDate().toISOString(),
+      teamCodes.items
+    )
     const allEstate = await this.probationEstateService.getAllEstateByRegionCode(token, pduDetails.region.code)
 
     const flashAllocationDemandSelected = req.flash('allocationDemandSelected')
@@ -60,7 +66,9 @@ export default class FindUnallocatedCasesController {
           value.convictionNumber,
           value.caseType,
           value.sentenceLength,
-          value.outOfAreaTransfer
+          value.outOfAreaTransfer,
+          value.excluded,
+          value.apopExcluded
         )
     )
 
@@ -72,13 +80,15 @@ export default class FindUnallocatedCasesController {
     const ldus = allocationDemandSelection.pdu ? allEstate[allocationDemandSelection.pdu].ldus : []
     const lduOptions = getDropDownItems(
       Object.entries<AllLocalDeliveryUnit>(ldus),
-      'Select LDU',
+      'Select LAU',
       allocationDemandSelection.ldu
     )
     const teams = allocationDemandSelection.ldu
       ? ldus[allocationDemandSelection.ldu].teams.map(team => [team.code, team])
       : []
     const teamOptions = getDropDownItems(teams, 'Select team', allocationDemandSelection.team)
+
+    req.session.confirmInstructionForm = null
 
     res.render('pages/find-unallocated-cases', {
       isFindUnalllocatedCasesPage: true,
@@ -107,7 +117,7 @@ export default class FindUnallocatedCasesController {
       { pdu: 'required', ldu: 'required', team: 'required' },
       {
         'required.pdu': 'Select a Probation Delivery Unit (PDU)',
-        'required.ldu': 'Select a Local Delivery Unit (LDU)',
+        'required.ldu': 'Select a Local Admin Unit (LAU)',
         'required.team': 'Select a team',
       }
     )

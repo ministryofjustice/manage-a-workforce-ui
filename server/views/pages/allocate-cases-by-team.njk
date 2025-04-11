@@ -6,8 +6,8 @@
 
 {% set tableRows = [] %}
 {% for team in teams %}
-    {% if team.workload == '-%' %}
-      {{ tableRows.push(
+  {% if team.workload == '-%' %}
+    {{ tableRows.push(
           [
           {
             text: team.teamName
@@ -20,8 +20,8 @@
           }
         ])
         }}
-    {% else %}
-          {{ tableRows.push(
+  {% else %}
+    {{ tableRows.push(
               [
               {
                 html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/team-workload" class="govuk-link">' + team.teamName + '</a>'
@@ -34,7 +34,7 @@
               }
             ])
             }}
-    {% endif %}
+  {% endif %}
 {% endfor %}
 
 {% block content %}

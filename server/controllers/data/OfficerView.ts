@@ -64,7 +64,7 @@ export default class OfficerView {
     this.lastCaseAllocated = this.getLastCaseAllocated(offenderManagerOverview.lastAllocatedEvent)
     this.reductions = this.getReductions(
       offenderManagerOverview.totalReductionHours,
-      offenderManagerOverview.nextReductionChange
+      offenderManagerOverview.nextReductionChange,
     )
   }
 

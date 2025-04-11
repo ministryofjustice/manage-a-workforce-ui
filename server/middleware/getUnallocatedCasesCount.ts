@@ -5,7 +5,7 @@ import AllocationsService from '../services/allocationsService'
 
 export default function getUnallocatedCasesCount(
   userPreferenceService: UserPreferenceService,
-  allocationsService: AllocationsService
+  allocationsService: AllocationsService,
 ): RequestHandler {
   return async (_, res, next) => {
     try {

@@ -9,13 +9,13 @@ async function getApiClientToken(token: string) {
     const { active } = (await new RestClient(
       'Token Verification API Client',
       config.apis.tokenVerification,
-      token
+      token,
     ).post({
       path: '/token/verify',
     })) as TokenVerifyResponse
 
     return Boolean(active)
-  } catch (error) {
+  } catch {
     return false
   }
 }

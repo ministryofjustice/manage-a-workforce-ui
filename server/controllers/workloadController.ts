@@ -13,11 +13,11 @@ interface InitialAppointmentDateDisplayResult {
 export default class WorkloadController {
   constructor(
     private readonly workloadService: WorkloadService,
-    private readonly allocationService: AllocationsService
+    private readonly allocationService: AllocationsService,
   ) {}
 
   getInitialAppointmentDateDisplayResult(
-    allocationCompleteDetails: AllocationCompleteDetails
+    allocationCompleteDetails: AllocationCompleteDetails,
   ): InitialAppointmentDateDisplayResult {
     if (allocationCompleteDetails.type === 'COMMUNITY') {
       if (

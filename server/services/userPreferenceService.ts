@@ -55,7 +55,7 @@ export default class UserPreferenceService {
   async saveAllocationDemandPreference(
     token: string,
     username: string,
-    allocationDemandSelected: AllocationDemandSelected
+    allocationDemandSelected: AllocationDemandSelected,
   ): Promise<UserPreference> {
     return (await this.restClient(token).put({
       path: `/users/${username}/preferences/allocation-demand`,

@@ -16,6 +16,16 @@
     "experimentalDecorators": true,
     "typeRoots": ["./server/@types", "./node_modules/@types"]
   },
-  "exclude": ["node_modules", "assets/**/*.js", "integration_tests", "dist", "cypress"],
+  "exclude": [
+    "node_modules",
+    "esbuild",
+    "assets",
+    "dist",
+    "helm_deploy",
+    "integration_tests",
+    "test_results",
+    "cypress.config.ts",
+    "eslint.config.mjs"
+  ],
   "include": ["**/*.js", "**/*.ts"]
 }

@@ -153,7 +153,7 @@ context('Risk', () => {
       .trimTextContent()
       .should(
         'equal',
-        'Very high RoSH Risk of serious harmLast updated: 7 October 2022 Risk of serious harm in Community Risk to Community Children Low Known adult Medium Public High Staff Very high'
+        'Very high RoSH Risk of serious harmLast updated: 7 October 2022 Risk of serious harm in Community Risk to Community Children Low Known adult Medium Public High Staff Very high',
       )
     riskPage
       .roshDetail()
@@ -187,21 +187,21 @@ context('Risk', () => {
       .trimTextContent()
       .should(
         'equal',
-        "Unknown RoSH Risk of serious harmA RoSH summary has not been completed for this individual. Check OASys for this person's current assessment status."
+        "Unknown RoSH Risk of serious harmA RoSH summary has not been completed for this individual. Check OASys for this person's current assessment status.",
       )
     riskPage
       .rsrWidget()
       .trimTextContent()
       .should(
         'equal',
-        "No RSR Risk of serious recidivismAn RSR summary has not been completed for this individual. Check OASys for this person's current assessment status."
+        "No RSR Risk of serious recidivismAn RSR summary has not been completed for this individual. Check OASys for this person's current assessment status.",
       )
     riskPage
       .ogrsWidget()
       .trimTextContent()
       .should(
         'equal',
-        "No OGRS Offender group reconviction scaleAn OGRS summary has not been completed for this individual. Check NDelius for this person's current assessment status."
+        "No OGRS Offender group reconviction scaleAn OGRS summary has not been completed for this individual. Check NDelius for this person's current assessment status.",
       )
   })
 
@@ -217,7 +217,7 @@ context('Risk', () => {
       .trimTextContent()
       .should(
         'equal',
-        'Unknown RoSH Risk of serious harmSomething went wrong. We are unable to show RoSH at this time. Try again later.'
+        'Unknown RoSH Risk of serious harmSomething went wrong. We are unable to show RoSH at this time. Try again later.',
       )
     riskPage.rsrWidget().should('have.class', 'rosh-widget--unavailable')
     riskPage
@@ -225,7 +225,7 @@ context('Risk', () => {
       .trimTextContent()
       .should(
         'equal',
-        'Unknown RSR Risk of serious recidivismSomething went wrong. We are unable to show RSR at this time. Try again later.'
+        'Unknown RSR Risk of serious recidivismSomething went wrong. We are unable to show RSR at this time. Try again later.',
       )
   })
 })

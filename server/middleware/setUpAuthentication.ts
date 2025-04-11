@@ -1,5 +1,3 @@
-/* eslint-disable security-node/detect-dangerous-redirects */
-
 import type { Router } from 'express'
 import express from 'express'
 import passport from 'passport'
@@ -27,7 +25,7 @@ export default function setUpAuth(): Router {
     passport.authenticate('oauth2', {
       successReturnToOrRedirect: req.session.returnTo || '/',
       failureRedirect: '/autherror',
-    })(req, res, next)
+    })(req, res, next),
   )
 
   const authUrl = config.apis.hmppsAuth.externalUrl

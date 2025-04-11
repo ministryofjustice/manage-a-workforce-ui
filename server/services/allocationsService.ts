@@ -28,7 +28,7 @@ export default class AllocationsService {
   async getRestrictedStatusByCrnAndStaffCodes(
     token: string,
     crn: string,
-    staffCodes: string[]
+    staffCodes: string[],
   ): Promise<CrnStaffRestrictions> {
     return (await this.restClient(token).post({
       path: `/cases/unallocated/${crn}/restrictions`,
@@ -112,7 +112,7 @@ export default class AllocationsService {
     token: string,
     crn,
     convictionNumber,
-    staffCode
+    staffCode,
   ): Promise<PersonOnProbationStaffDetails> {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/confirm-instructions?staffCode=${staffCode}`,

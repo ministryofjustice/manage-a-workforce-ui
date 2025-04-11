@@ -201,7 +201,7 @@ context('Summary', () => {
       .should(
         'have.text',
         'All documents related to the current and previous events are listed on\n' +
-          '                            the Documents screen.'
+          '                            the Documents screen.',
       )
     cy.get('#case-details .govuk-body-m')
       .last()
@@ -219,7 +219,7 @@ context('Summary', () => {
       .should(
         'have.text',
         'All documents related to the current and previous events are listed on\n' +
-          '                            the Documents screen.'
+          '                            the Documents screen.',
       )
     cy.get('#case-details .govuk-body-m')
       .last()
@@ -287,7 +287,7 @@ context('Summary', () => {
       .restrictedStatusAllocationNotesHintText()
       .should(
         'contain.text',
-        'These notes will be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes.'
+        'These notes will be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes.',
       )
   })
 })

@@ -113,7 +113,7 @@ context('Instructions Confirmation', () => {
       .restrictedStatusWarningTextForEmail()
       .should(
         'contain',
-        'These notes will not be included in the email to the probation practitioner as this is a restricted access case.'
+        'These notes will not be included in the email to the probation practitioner as this is a restricted access case.',
       )
   })
 })

@@ -35,7 +35,7 @@ export default class WorkloadService {
     crn: string,
     staffCode: string,
     teamCode: string,
-    eventNumber: number
+    eventNumber: number,
   ): Promise<boolean> {
     const cacheKey = `allocation:${crn}:${staffCode}:${teamCode}:${eventNumber}`
     const cachedValue = await this.redisClient.get(cacheKey)
@@ -67,7 +67,7 @@ export default class WorkloadService {
   async getOffenderManagerOverview(
     token: string,
     offenderManagerCode,
-    teamCode: string
+    teamCode: string,
   ): Promise<OffenderManagerOverview> {
     return (await this.restClient(token).get({
       path: `/team/${teamCode}/offenderManagers/${offenderManagerCode}`,
@@ -79,7 +79,7 @@ export default class WorkloadService {
     editNotesScreenAccessed: boolean,
     crn: string,
     teamCode: string,
-    token: string
+    token: string,
   ) {
     await this.restClient(token).post({
       path: `/allocations/contact/logging`,
@@ -105,14 +105,14 @@ export default class WorkloadService {
     allocationJustificationNotes: string,
     sensitiveNotes: boolean,
     isSPOOversightAccessed: string,
-    laoCase: boolean
+    laoCase: boolean,
   ): Promise<OffenderManagerAllocatedCase> {
     await this.sendComparisionLogToWorkload(
       spoOversightNotes !== allocationJustificationNotes,
       isSPOOversightAccessed === 'true',
       crn,
       teamCode,
-      token
+      token,
     )
 
     const allocationData = {

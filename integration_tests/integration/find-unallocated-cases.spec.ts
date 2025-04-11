@@ -3,7 +3,7 @@ import Page from '../pages/page'
 
 import config from '../../server/config'
 import { allocationsByTeamResponse } from '../mockApis/allocations'
-// eslint-disable-next-line import/named
+
 import { ColumnSortExpectations, sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Find Unallocated cases', () => {
@@ -172,7 +172,7 @@ context('Find Unallocated cases', () => {
       .last()
       .should(
         'contain.text',
-        'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.'
+        'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.',
       )
   })
 

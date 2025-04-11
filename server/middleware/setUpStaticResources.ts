@@ -24,7 +24,7 @@ export default function setUpStaticResources(): Router {
     '/node_modules/jquery/dist',
     '/node_modules/accessible-autocomplete/dist',
     '/node_modules/jquery-ui/dist',
-    '/node_modules/validatorjs/dist'
+    '/node_modules/validatorjs/dist',
   ).forEach(dir => {
     router.use('/assets', express.static(path.join(process.cwd(), dir), cacheControl))
   })

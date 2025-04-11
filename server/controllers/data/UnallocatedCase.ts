@@ -50,7 +50,7 @@ export default class UnallocatedCase {
     sentenceLength: string,
     outOfAreaTransfer: boolean,
     excluded: boolean = false,
-    apopExcluded: boolean = false
+    apopExcluded: boolean = false,
   ) {
     this.name = apopExcluded ? '************' : name
     this.crn = crn
@@ -65,7 +65,7 @@ export default class UnallocatedCase {
       this.primaryStatus = primaryStatus
       if (offenderManager) {
         this.secondaryStatus = `(${offenderManager.forenames} ${offenderManager.surname}${this.getGrade(
-          offenderManager.grade
+          offenderManager.grade,
         )})`
       }
       this.convictionNumber = convictionNumber

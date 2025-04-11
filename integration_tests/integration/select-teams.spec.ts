@@ -25,7 +25,7 @@ context('Select teams', () => {
       .hint()
       .should(
         'contain',
-        'Select all the teams you currently allocate cases to.  You only need to pick teams that have probation practitioners in them.'
+        'Select all the teams you currently allocate cases to.  You only need to pick teams that have probation practitioners in them.',
       )
       .and('contain', 'You can select more than one team.')
   })

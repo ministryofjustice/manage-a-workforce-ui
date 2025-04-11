@@ -28,14 +28,14 @@ export default class AllocationsController {
     private readonly allocationsService: AllocationsService,
     private readonly workloadService: WorkloadService,
     private readonly userPreferenceService: UserPreferenceService,
-    private readonly probationEstateService: ProbationEstateService
+    private readonly probationEstateService: ProbationEstateService,
   ) {}
 
   async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
     const response: Allocation = await this.allocationsService.getUnallocatedCase(
       res.locals.user.token,
       crn,
-      convictionNumber
+      convictionNumber,
     )
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     const address = new DisplayAddress(response.address)
@@ -73,8 +73,8 @@ export default class AllocationsController {
             activeRecord.length,
             activeRecord.offences,
             activeRecord.startDate,
-            activeRecord.offenderManager
-          )
+            activeRecord.offenderManager,
+          ),
       )
     const previousSentences = probationRecord.previous
       .sort((a: Conviction, b: Conviction) => Date.parse(b.endDate) - Date.parse(a.endDate))
@@ -85,8 +85,8 @@ export default class AllocationsController {
             activeRecord.length,
             activeRecord.offences,
             activeRecord.endDate,
-            activeRecord.offenderManager
-          )
+            activeRecord.offenderManager,
+          ),
       )
       .slice(0, amountToSlice)
     probationRecord.name = unescapeApostrophe(probationRecord.name)
@@ -152,7 +152,6 @@ export default class AllocationsController {
     })
   }
 
-  // eslint-disable-next-line consistent-return
   async choosePractitioner(req: Request, res: Response, crn, convictionNumber, pduCode) {
     const { token, username } = res.locals.user
 
@@ -168,18 +167,18 @@ export default class AllocationsController {
       const staffRestrictions = await this.allocationsService.getRestrictedStatusByCrnAndStaffCodes(
         token,
         crn,
-        getStaffCodes(allocationInformationByTeam.teams)
+        getStaffCodes(allocationInformationByTeam.teams),
       )
       allocationInformationByTeam.teams = setStaffRestrictions(allocationInformationByTeam.teams, staffRestrictions)
     }
 
     const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
       allocationInformationByTeam,
-      allTeamDetails
+      allTeamDetails,
     )
     const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(offenderManagersToAllocateByTeam)
     const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams].concat(
-      offenderManagersToAllocateByTeam
+      offenderManagersToAllocateByTeam,
     )
 
     const name = `${allocationInformationByTeam.name.forename} ${allocationInformationByTeam.name.surname}`
@@ -214,8 +213,7 @@ export default class AllocationsController {
     if (teamAndStaffCode) {
       const { teamCode: chosenStaffTeamCode, staffCode } = TeamAndStaffCode.decode(teamAndStaffCode)
       return res.redirect(
-        // eslint-disable-next-line security-node/detect-dangerous-redirects
-        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${chosenStaffTeamCode}/${staffCode}/allocate-to-practitioner`
+        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${chosenStaffTeamCode}/${staffCode}/allocate-to-practitioner`,
       )
     }
     req.query.error = 'true'
@@ -229,13 +227,13 @@ export default class AllocationsController {
     staffTeamCode,
     staffCode,
     convictionNumber,
-    pduCode
+    pduCode,
   ) {
     const response: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
       res.locals.user.token,
       crn,
       staffCode,
-      staffTeamCode
+      staffTeamCode,
     )
     const laoCase = await this.allocationsService.getLaoStatus(crn, req.user.token)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
@@ -263,13 +261,13 @@ export default class AllocationsController {
     staffCode,
     convictionNumber,
     pduCode,
-    scrollToBottom = false
+    scrollToBottom = false,
   ) {
     const response: PersonOnProbationStaffDetails = await this.allocationsService.getConfirmInstructions(
       res.locals.user.token,
       crn,
       convictionNumber,
-      staffCode
+      staffCode,
     )
     const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     response.name.surname = unescapeApostrophe(response.name.surname)
@@ -305,13 +303,13 @@ export default class AllocationsController {
     staffCode,
     convictionNumber,
     pduCode,
-    scrollToBottom = false
+    scrollToBottom = false,
   ) {
     const response: PersonOnProbationStaffDetails = await this.allocationsService.getConfirmInstructions(
       res.locals.user.token,
       crn,
       convictionNumber,
-      staffCode
+      staffCode,
     )
     const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     response.name.surname = unescapeApostrophe(response.name.surname)
@@ -338,13 +336,13 @@ export default class AllocationsController {
     offenderManagerCode,
     convictionNumber,
     pduCode,
-    history
+    history,
   ) {
     const [response, teamDetails] = await Promise.all([
       this.workloadService.getOffenderManagerOverview(
         res.locals.user.token,
         offenderManagerCode,
-        offenderManagerTeamCode
+        offenderManagerTeamCode,
       ),
       this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
     ])
@@ -395,8 +393,8 @@ export default class AllocationsController {
           activeCase.type,
           activeCase.name.combinedName,
           excludedList.includes(activeCase.crn),
-          restrictedList.includes(activeCase.crn)
-        )
+          restrictedList.includes(activeCase.crn),
+        ),
     )
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
@@ -426,14 +424,14 @@ export default class AllocationsController {
     staffCode,
     convictionNumber,
     form,
-    pduCode
+    pduCode,
   ) {
     const confirmInstructionForm = filterEmptyEmails(
       trimForm<ConfirmInstructionForm>({
         ...form,
         isSensitive: form.isSensitive === 'yes',
         emailCopyOptOut: form.emailCopyOptOut === 'yes',
-      })
+      }),
     )
     // const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
 
@@ -441,27 +439,23 @@ export default class AllocationsController {
       form.person.splice(form.remove, 1)
       req.session.confirmInstructionForm = { ...confirmInstructionForm, person: form.person }
       return res.redirect(
-        // eslint-disable-next-line security-node/detect-dangerous-redirects
-        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`
+        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`,
       )
     }
     switch (form.action) {
       case 'continue':
         req.session.confirmInstructionForm = confirmInstructionForm
         return res.redirect(
-          // eslint-disable-next-line security-node/detect-dangerous-redirects
-          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/spo-oversight-contact-option`
+          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/spo-oversight-contact-option`,
         )
       case 'add-another-person':
         req.session.confirmInstructionForm = confirmInstructionForm
         return res.redirect(
-          // eslint-disable-next-line security-node/detect-dangerous-redirects
-          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`
+          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`,
         )
       default:
         return res.redirect(
-          // eslint-disable-next-line security-node/detect-dangerous-redirects
-          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`
+          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`,
         )
     }
   }
@@ -474,7 +468,7 @@ export default class AllocationsController {
     staffCode,
     convictionNumber: number,
     form,
-    pduCode
+    pduCode,
   ) {
     const spoOversightForm = trimForm<ConfirmInstructionForm>({ ...form, isSensitive: form.isSensitive === 'yes' })
     // const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
@@ -484,7 +478,7 @@ export default class AllocationsController {
       {
         email: 'Enter an email address in the correct format, like name@example.com',
         nourl: 'You cannot include links in the allocation notes',
-      }
+      },
     ).map(error => fixupArrayNotation(error))
 
     const confirmInstructionForm = {
@@ -496,8 +490,7 @@ export default class AllocationsController {
       req.session.confirmInstructionForm = spoOversightForm
       req.flash('errors', errors)
       return res.redirect(
-        // eslint-disable-next-line security-node/detect-dangerous-redirects
-        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/${staffTeamCode}/spo-oversight-contact-option`
+        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/${staffTeamCode}/spo-oversight-contact-option`,
       )
     }
     const sendEmailCopyToAllocatingOfficer = !confirmInstructionForm.emailCopyOptOut
@@ -523,7 +516,7 @@ export default class AllocationsController {
       allocationNotes,
       allocationNotesSensitive,
       isSPOOversightAccessed,
-      laoCase
+      laoCase,
     )
 
     req.session.allocationForm = {
@@ -533,10 +526,7 @@ export default class AllocationsController {
 
     req.session.confirmInstructionForm = null
 
-    return res.redirect(
-      // eslint-disable-next-line security-node/detect-dangerous-redirects
-      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`
-    )
+    return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
   }
 
   async submitNoSpoOversight(
@@ -547,7 +537,7 @@ export default class AllocationsController {
     staffCode,
     convictionNumber,
     form,
-    pduCode
+    pduCode,
   ) {
     const confirmInstructionForm = {
       ...req.session.confirmInstructionForm,
@@ -576,7 +566,7 @@ export default class AllocationsController {
       allocationNotes,
       allocationNotesSensitive,
       isSPOOversightAccessed,
-      laoCase
+      laoCase,
     )
 
     req.session.allocationForm = {
@@ -586,10 +576,7 @@ export default class AllocationsController {
 
     req.session.confirmInstructionForm = null
 
-    return res.redirect(
-      // eslint-disable-next-line security-node/detect-dangerous-redirects
-      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`
-    )
+    return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
   }
 
   async getSpoOversight(
@@ -599,13 +586,13 @@ export default class AllocationsController {
     staffTeamCode: string,
     staffCode: string,
     convictionNumber: string,
-    pduCode: string
+    pduCode: string,
   ) {
     const response: PersonOnProbationStaffDetails = await this.allocationsService.getConfirmInstructions(
       res.locals.user.token,
       crn,
       convictionNumber,
-      staffCode
+      staffCode,
     )
 
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
@@ -655,7 +642,7 @@ function fixupArrayNotation({ text, href }: { text: string; href: string }) {
 
 function getChoosePractitionerDataByTeam(
   allocationInformationByTeam: ChoosePractitionerData,
-  estateTeams: EstateTeam[]
+  estateTeams: EstateTeam[],
 ): TeamOffenderManagersToAllocate[] {
   const practitionerTeams = new Array<TeamOffenderManagersToAllocate>()
 
@@ -682,11 +669,11 @@ function getChoosePractitionerDataByTeam(
 }
 
 function getChoosePractitionerDataAllTeams(
-  offenderManagersToAllocateByTeam: TeamOffenderManagersToAllocate[]
+  offenderManagersToAllocateByTeam: TeamOffenderManagersToAllocate[],
 ): TeamOffenderManagersToAllocate {
   const practitionersInAllTeams = offenderManagersToAllocateByTeam.reduce(
     (accumulator, currentValue) => accumulator.concat(currentValue.offenderManagersToAllocate),
-    new Array<OffenderManagerToAllocateWithTeam>()
+    new Array<OffenderManagerToAllocateWithTeam>(),
   )
   practitionersInAllTeams.sort(sortPractitionersByGrade)
   return {
@@ -715,7 +702,7 @@ function mapPractitioner(practitionerData): OffenderManagerToAllocate {
 
 function setStaffRestrictions(
   practitionerData: Record<string, Practitioner[]>,
-  staffRestrictions: CrnStaffRestrictions
+  staffRestrictions: CrnStaffRestrictions,
 ): Record<string, Practitioner[]> {
   // convert array to map
   const staffMap = staffRestrictions.staffRestrictions.reduce((map, obj) => {

@@ -8,13 +8,13 @@ import ProbationDeliveryUnitDetails from '../models/ProbationDeliveryUnitDetails
 export default class ProbationEstateController {
   constructor(
     private readonly probationEstateService: ProbationEstateService,
-    private readonly userPreferenceService: UserPreferenceService
+    private readonly userPreferenceService: UserPreferenceService,
   ) {}
 
   async getPduTeams(req: Request, res: Response, pduCode, error = false) {
     const response: ProbationDeliveryUnitDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(
       res.locals.user.token,
-      pduCode
+      pduCode,
     )
     res.render('pages/select-teams', {
       title: `Select your teams | Manage a workforce`,
@@ -34,11 +34,10 @@ export default class ProbationEstateController {
       await this.userPreferenceService.saveTeamsUserPreference(
         res.locals.user.token,
         res.locals.user.username,
-        teamCodes
+        teamCodes,
       )
       await this.userPreferenceService.savePduUserPreference(res.locals.user.token, res.locals.user.username, pduCode)
 
-      // eslint-disable-next-line security-node/detect-dangerous-redirects
       return res.redirect(`/pdu/${pduCode}/teams`)
     }
     return this.getPduTeams(req, res, pduCode, true)
@@ -58,7 +57,6 @@ export default class ProbationEstateController {
       body: { region },
     } = req
     if (region) {
-      // eslint-disable-next-line security-node/detect-dangerous-redirects
       return res.redirect(`/region/${region}/probationDeliveryUnits`)
     }
     return this.getRegions(req, res, true)
@@ -67,7 +65,7 @@ export default class ProbationEstateController {
   async getProbationDeliveryUnitsByRegionCode(req: Request, res: Response, regionCode, error = false) {
     const response: RegionDetails = await this.probationEstateService.getRegionDetails(
       res.locals.user.token,
-      regionCode
+      regionCode,
     )
     res.render('pages/select-probation-delivery-unit', {
       title: `Select your PDU | Manage a workforce`,
@@ -82,7 +80,6 @@ export default class ProbationEstateController {
       body: { probationDeliveryUnit },
     } = req
     if (probationDeliveryUnit) {
-      // eslint-disable-next-line security-node/detect-dangerous-redirects
       return res.redirect(`/pdu/${probationDeliveryUnit}/select-teams`)
     }
     return this.getProbationDeliveryUnitsByRegionCode(req, res, regionCode, true)

@@ -8,7 +8,8 @@
 {% for item in data %}
     {{ radioItems.push({
         value: item.code,
-        text: item.name + item.allowed
+        text: item.name,
+        attributes: { disabled: undefined } if not item.allowed else undefined
     }) }}
 {% endfor %}
 

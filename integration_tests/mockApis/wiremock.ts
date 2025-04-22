@@ -72,6 +72,9 @@ export { stubForAllowedRegions, resetAllowedRegions }
 const { stubFor: stubForNoAllowedRegions, resetStubs: resetNoAllowedRegions } = wiremock(allocationUrl)
 export { stubForNoAllowedRegions, resetNoAllowedRegions }
 
+const { stubFor: stubForOneAllowedRegion, resetStubs: resetOneAllowedRegion } = wiremock(allocationUrl)
+export { stubForOneAllowedRegion, resetOneAllowedRegion }
+
 const { stubFor: stubForLaoStatus403, resetStubs: resetLaoStubs403 } = wiremock(allocationUrl)
 export { stubForLaoStatus403, resetLaoStubs403 }
 

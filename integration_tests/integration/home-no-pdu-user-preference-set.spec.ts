@@ -6,6 +6,7 @@ context('No PDU user preference set', () => {
     cy.task('stubSetup')
     cy.task('stubUserPreferencePDU', [])
     cy.task('stubGetAllRegions')
+    cy.task('stubForAllowedRegions', { staffId: 'USER1' })
     cy.signIn()
     cy.visit('/')
   })

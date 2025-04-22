@@ -8,6 +8,7 @@ context('Select region', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetAllRegions')
+    cy.task('stubForAllowedRegions', { staffId: 'USER1' })
     cy.signIn()
     cy.visit('/regions')
   })

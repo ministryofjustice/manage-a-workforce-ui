@@ -59,7 +59,7 @@ export default {
         urlPattern: `/user/${userId}/crn/${crn}/conviction/${convictionNumber}/is-allowed`,
       },
       response: {
-        status: 200,
+        status: errorCode,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {},
       },

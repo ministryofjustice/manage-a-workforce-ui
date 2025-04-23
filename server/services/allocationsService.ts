@@ -54,6 +54,17 @@ export default class AllocationsService {
     })) as RegionList
   }
 
+  async getUserRegionAccessForCrn(
+    token: string,
+    staffId: string,
+    crn: string,
+    convictionNumber: string,
+  ): Promise<string> {
+    return (await this.restClient(token).get({
+      path: `/user/${staffId}/crn/${crn}/conviction/${convictionNumber}/is-allowed`,
+    })) as string
+  }
+
   async getLAOStatusforAllocation(token: string, crn: string): Promise<AllocationLAOStatus> {
     return (await this.restClient(token).get({
       path: `/cases/${crn}/restrictions`,

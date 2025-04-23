@@ -1,5 +1,10 @@
 import { SuperAgentRequest } from 'superagent'
-import { stubForAllowedRegions, stubForNoAllowedRegions, stubForOneAllowedRegion } from './wiremock'
+import {
+  stubForAllowedRegions,
+  stubForNoAllowedRegions,
+  stubForOneAllowedRegion,
+  stubForCrnAllowedUserRegion,
+} from './wiremock'
 
 export default {
   stubForAllowedRegions: ({ staffId }): SuperAgentRequest => {
@@ -44,6 +49,19 @@ export default {
         jsonBody: {
           regions: ['RG2'],
         },
+      },
+    })
+  },
+  stubForCrnAllowedUserRegion: ({ userId, crn, convictionNumber, errorCode }): SuperAgentRequest => {
+    return stubForCrnAllowedUserRegion({
+      request: {
+        method: 'GET',
+        urlPattern: `/user/${userId}/crn/${crn}/conviction/${convictionNumber}/is-allowed`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {},
       },
     })
   },

@@ -8,6 +8,7 @@ context('Allocate to Practitioner', () => {
     cy.task('stubSetup')
     cy.task('stubGetPotentialOffenderManagerWorkload', {})
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
+    cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
   })
 
   it('can navigate to Allocate to Practitioner page from Choose Practitioner', () => {

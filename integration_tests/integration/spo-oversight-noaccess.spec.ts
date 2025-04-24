@@ -6,7 +6,6 @@ import ForbiddenPage from '../pages/forbidden'
 
 context('Instructions Confirmation', () => {
   let oversightOptionPage: SpoOversightOptionPage
-  let spoOversightPage: SpoOversightPage
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubSearchStaff')

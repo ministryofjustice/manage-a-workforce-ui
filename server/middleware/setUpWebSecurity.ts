@@ -1,63 +1,61 @@
-import express, { Router, Response, NextFunction } from 'express'
+import express, { Router, Request, Response, NextFunction } from 'express'
 import helmet from 'helmet'
 import crypto from 'crypto'
 
 export default function setUpWebSecurity(): Router {
   const router = express.Router()
 
-  router.use((_, res: Response, next: NextFunction) => {
+  // Step 1: Generate nonce and store it in res.locals
+  router.use((req: Request, res: Response, next: NextFunction) => {
     res.locals.cspNonce = crypto.randomBytes(16).toString('base64')
     next()
   })
 
-  // Secure code best practice - see:
-  // 1. https://expressjs.com/en/advanced/best-practice-security.html,
-  // 2. https://www.npmjs.com/package/helmet
-  router.use(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'", 'https://www.google-analytics.com', 'www.google-analytics.com'],
-          // Hash allows inline script pulled in from https://github.com/alphagov/govuk-frontend/blob/master/src/govuk/template.njk
-          scriptSrc: [
-            "'self'",
-            'code.jquery.com',
-            'www.googletagmanager.com',
-            'www.google-analytics.com',
-            'https://www.google-analytics.com',
-            'https://www.googletagmanager.com',
-            'js.monitor.azure.com',
-            "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
-            "'sha256-xseXYIyJf+ofw4QIbNxoWnzeuWkO8antz0n3bwjWrMk='",
-            (_, res: Response) => `'nonce-${res.locals.cspNonce}'`,
-          ],
-          styleSrc: ["'self'", (_, res: Response) => `'nonce-${res.locals.cspNonce}'`],
-          fontSrc: ["'self'"],
-          imgSrc: [
-            "'self'",
-            'https://www.google-analytics.com',
-            'www.google-analytics.com',
-            '*.analytics.google.com',
-            '*.google-analytics.com',
-            '*.googletagmanager.com',
-          ],
-          connectSrc: [
-            "'self'",
-            'www.googletagmanager.com',
-            'www.google-analytics.com',
-            'https://www.google-analytics.com',
-            '*.analytics.google.com',
-            '*.google-analytics.com',
-            'js.monitor.azure.com',
-            'dc.services.visualstudio.com',
-          ],
-        },
+  // Step 2: Apply CSP using the generated nonce
+  router.use((req: Request, res: Response, next: NextFunction) => {
+    const cspMiddleware = helmet.contentSecurityPolicy({
+      directives: {
+        defaultSrc: ["'self'", 'https://www.google-analytics.com', 'www.google-analytics.com'],
+        scriptSrc: [
+          "'self'",
+          'code.jquery.com',
+          'www.smartsurvey.co.uk',
+          'www.googletagmanager.com',
+          'www.google-analytics.com',
+          'https://www.google-analytics.com',
+          'https://www.googletagmanager.com',
+          'js.monitor.azure.com',
+          "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
+          "'sha256-xseXYIyJf+ofw4QIbNxoWnzeuWkO8antz0n3bwjWrMk='",
+          `'nonce-${res.locals.cspNonce}'`, // ✅ nonce correctly used
+        ],
+        styleSrc: ["'self'", '*.smartsurvey.co.uk', "'unsafe-inline'"],
+        fontSrc: ["'self'", '*.smartsurvey.co.uk'],
+        imgSrc: [
+          "'self'",
+          'https://www.google-analytics.com',
+          'www.google-analytics.com',
+          '*.analytics.google.com',
+          '*.google-analytics.com',
+          '*.googletagmanager.com',
+          '*.smartsurvey.co.uk',
+        ],
+        connectSrc: [
+          "'self'",
+          'www.googletagmanager.com',
+          'www.google-analytics.com',
+          'https://www.google-analytics.com',
+          '*.analytics.google.com',
+          '*.google-analytics.com',
+          'js.monitor.azure.com',
+          'dc.services.visualstudio.com',
+          'smartsurvey.co.uk',
+        ],
       },
-      crossOriginEmbedderPolicy: true,
-      referrerPolicy: {
-        policy: 'strict-origin-when-cross-origin',
-      },
-    }),
-  )
+    })
+
+    cspMiddleware(req, res, next) // ✅ correctly call the generated middleware
+  })
+
   return router
 }

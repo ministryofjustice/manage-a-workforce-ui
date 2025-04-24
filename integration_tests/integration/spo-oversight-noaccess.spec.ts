@@ -1,5 +1,4 @@
 import Page from '../pages/page'
-import SpoOversightPage from '../pages/spoOversight'
 import SpoOversightOptionPage from '../pages/spoOversightOption'
 import InstructionsConfirmPage from '../pages/confirmInstructions'
 import ForbiddenPage from '../pages/forbidden'

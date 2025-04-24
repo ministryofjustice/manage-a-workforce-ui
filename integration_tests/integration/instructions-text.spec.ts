@@ -12,6 +12,7 @@ context('Instructions text', () => {
     cy.task('stubSetup')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.task('stubForAllowedRegions', { staffId: 'USER1' })
+    cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
   })
 
   it('Instructions text should save and display when switching to summary page', () => {

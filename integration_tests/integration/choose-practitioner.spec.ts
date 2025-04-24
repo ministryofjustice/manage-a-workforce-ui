@@ -2,6 +2,7 @@ import Page from '../pages/page'
 import ChoosePractitionerPage from '../pages/choosePractitioner'
 import SummaryPage from '../pages/summary'
 import { sortDataAndAssertSortExpectations } from './helper/sort-helper'
+import ForbiddenPage from '../pages/forbidden'
 
 context('Choose Practitioner', () => {
   beforeEach(() => {
@@ -84,6 +85,16 @@ context('Choose Practitioner', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.restrictedStatusBadge().should('not.exist')
+  })
+
+  it('Display 403 page if invalid region', () => {
+    cy.task('stubChoosePractitionersWithEmails')
+    cy.signIn()
+    cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 403 })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner', { failOnStatusCode: false })
+    const forbiddenPage = Page.verifyOnPage(ForbiddenPage)
+    forbiddenPage.message().should('exist')
+    forbiddenPage.heading().should('exist')
   })
 
   it('Offender details visible on page', () => {

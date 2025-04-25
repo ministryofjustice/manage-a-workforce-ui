@@ -5,13 +5,11 @@ import crypto from 'crypto'
 export default function setUpWebSecurity(): Router {
   const router = express.Router()
 
-  // Step 1: Generate nonce and store it in res.locals
   router.use((req: Request, res: Response, next: NextFunction) => {
     res.locals.cspNonce = crypto.randomBytes(16).toString('base64')
     next()
   })
 
-  // Step 2: Apply CSP using the generated nonce
   router.use((req: Request, res: Response, next: NextFunction) => {
     const cspMiddleware = helmet.contentSecurityPolicy({
       directives: {
@@ -27,9 +25,16 @@ export default function setUpWebSecurity(): Router {
           'js.monitor.azure.com',
           "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
           "'sha256-xseXYIyJf+ofw4QIbNxoWnzeuWkO8antz0n3bwjWrMk='",
-          `'nonce-${res.locals.cspNonce}'`, // ✅ nonce correctly used
+          `'nonce-${res.locals.cspNonce}'`,
         ],
-        styleSrc: ["'self'", '*.smartsurvey.co.uk', "'unsafe-inline'"],
+        styleSrc: [
+          "'self'",
+          '*.smartsurvey.co.uk',
+          `'nonce-${res.locals.cspNonce}'`,
+          "'unsafe-hashes'",
+          "'sha256-uLscbKA9leLZ+gAcOlaJsUafZAw8nl4mzJuREYz2ZoQ='",
+          "'sha256-qnVkQSG7pWu17hBhIw0kCpfEB3XGvt0mNRa6+uM6OUU='",
+        ],
         fontSrc: ["'self'", '*.smartsurvey.co.uk'],
         imgSrc: [
           "'self'",
@@ -54,7 +59,7 @@ export default function setUpWebSecurity(): Router {
       },
     })
 
-    cspMiddleware(req, res, next) // ✅ correctly call the generated middleware
+    cspMiddleware(req, res, next)
   })
 
   return router

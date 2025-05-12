@@ -13,6 +13,7 @@ import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetai
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
 import AllocationLAOStatus from '../models/AllocationLAOStatus'
 import LaoStatusList from '../models/LaoStatusList'
+import RegionList from '../models/RegionList'
 
 export default class AllocationsService {
   config: ApiConfig
@@ -45,6 +46,12 @@ export default class AllocationsService {
         crns,
       },
     })) as LaoStatusList
+  }
+
+  async getRegionsForUser(token: string, staffId: string): Promise<RegionList> {
+    return (await this.restClient(token).get({
+      path: `/user/${staffId}/regions`,
+    })) as RegionList
   }
 
   async getLAOStatusforAllocation(token: string, crn: string): Promise<AllocationLAOStatus> {

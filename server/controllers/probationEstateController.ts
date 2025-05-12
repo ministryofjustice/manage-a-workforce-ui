@@ -4,11 +4,13 @@ import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 import RegionDetails from '../models/RegionDetails'
 import ProbationDeliveryUnitDetails from '../models/ProbationDeliveryUnitDetails'
+import AllocationsService from '../services/allocationsService'
 
 export default class ProbationEstateController {
   constructor(
     private readonly probationEstateService: ProbationEstateService,
     private readonly userPreferenceService: UserPreferenceService,
+    private readonly allocationsService: AllocationsService,
   ) {}
 
   async getPduTeams(req: Request, res: Response, pduCode, error = false) {
@@ -45,9 +47,17 @@ export default class ProbationEstateController {
 
   async getRegions(req: Request, res: Response, error = false) {
     const response: EstateRegion[] = await this.probationEstateService.getRegions(res.locals.user.token)
+    const userRegions = (
+      await this.allocationsService.getRegionsForUser(res.locals.user.token, res.locals.user.username)
+    ).regions
+
+    const regions = response.map(item => {
+      return { allowed: userRegions.includes(item.code), code: item.code, name: item.name }
+    })
+
     res.render('pages/select-region', {
       title: `Select your region | Manage a workforce`,
-      data: response.sort((a, b) => a.name.localeCompare(b.name)),
+      data: regions.sort((a, b) => a.name.localeCompare(b.name)),
       error,
     })
   }

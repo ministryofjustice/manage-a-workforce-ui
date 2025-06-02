@@ -6,6 +6,7 @@ context('Notification badge', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
+    cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
     cy.signIn()
   })
 

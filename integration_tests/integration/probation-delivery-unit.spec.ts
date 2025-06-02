@@ -7,6 +7,7 @@ context('Select Probation Delivery Unit', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetRegionDetails')
+    cy.task('stubForAllowedRegions', { staffId: 'USER1' })
     cy.signIn()
     cy.visit('/region/RG1/probationDeliveryUnits')
   })

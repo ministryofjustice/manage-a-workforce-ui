@@ -32,6 +32,7 @@ import staffLookup from '../mockApis/staffLookup'
 import logging from '../mockApis/logging'
 import laoStatus from '../mockApis/laoStatus'
 import laoStatus403 from '../mockApis/laoStatus403'
+import allowedRegions from '../mockApis/allowedRegions'
 
 const redisService = new RedisService()
 
@@ -111,6 +112,7 @@ export default (on: (string, Record) => void): void => {
     ...staffLookup,
     ...laoStatus,
     ...laoStatus403,
+    ...allowedRegions,
     ...logging,
   })
 }

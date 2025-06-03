@@ -44,7 +44,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Cancel link visible on page', () => {
-    instructionsPage.cancelLink('J678910', '1', 'PDU1').should('exist').and('have.text', 'Cancel')
+    instructionsPage.cancelLink('J678910', '1', 'PDU1').should('exist').and('have.text', 'Back to select practitioner')
   })
 
   it('Instructions textArea should be visible on page', () => {

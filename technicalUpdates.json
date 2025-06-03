@@ -4,6 +4,12 @@
     "whatsNew": ["Changes to limited access offender (LAO) cases"]
   },
   {
+    "heading": "29 May 2025",
+    "whatsNew": [
+      "Changes to the Select your teams screen: We’ve made a change that will restrict the regions you can select to those you can allocate from in Ndelius.  Regions that you cannot allocate from in NDelius will still be shown but will not be selectable."
+    ]
+  },
+  {
     "heading": "27 February 2025",
     "whatsNew": [
       "Inclusion of Limited Access Offender (LAO) cases: Some LAO cases can now be allocated. These will be shown with a ‘Restricted access’ badge beneath the person on probation’s name.",

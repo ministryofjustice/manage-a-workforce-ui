@@ -38,6 +38,12 @@ export default class AllocationsController {
       convictionNumber,
     )
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     const address = new DisplayAddress(response.address)
     response.name = unescapeApostrophe(response.name)
     res.render('pages/summary', {
@@ -61,6 +67,13 @@ export default class AllocationsController {
       await this.allocationsService.getProbationRecord(res.locals.user.token, crn, convictionNumber),
     ])
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
+
     const totalPreviousCount = probationRecord.previous.length
     const viewAll = totalPreviousCount <= 3 ? true : req.query.viewAll
     const amountToSlice = viewAll ? totalPreviousCount : 3
@@ -113,6 +126,13 @@ export default class AllocationsController {
       await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
     ])
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
+
     risk.name = unescapeApostrophe(risk.name)
     res.render('pages/risk', {
       title: `${risk.name} | Risk | Manage a workforce`,
@@ -136,6 +156,12 @@ export default class AllocationsController {
     ])
     const documentRows = documents.map(document => new DocumentRow(document))
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     caseOverview.name = unescapeApostrophe(caseOverview.name)
     res.render('pages/documents', {
       title: `${caseOverview.name} | Documents | Manage a workforce`,
@@ -157,6 +183,12 @@ export default class AllocationsController {
 
     const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const laoCase = await this.allocationsService.getLaoStatus(crn, token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     const [allocationInformationByTeam, allTeamDetails] = await Promise.all([
       await this.workloadService.getChoosePractitionerData(token, crn, teamCodesPreferences.items),
       await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
@@ -236,6 +268,12 @@ export default class AllocationsController {
       staffTeamCode,
     )
     const laoCase = await this.allocationsService.getLaoStatus(crn, req.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
     response.name.surname = unescapeApostrophe(response.name.surname)
     res.render('pages/allocate-to-practitioner', {
@@ -270,6 +308,12 @@ export default class AllocationsController {
       staffCode,
     )
     const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
@@ -312,6 +356,12 @@ export default class AllocationsController {
       staffCode,
     )
     const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
@@ -502,6 +552,12 @@ export default class AllocationsController {
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
     const isSPOOversightAccessed = 'true'
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber.toString(),
+    )
 
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
@@ -552,6 +608,12 @@ export default class AllocationsController {
     const allocationNotesSensitive = confirmInstructionForm.isSensitive
     const isSPOOversightAccessed = 'false'
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
 
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
@@ -596,6 +658,12 @@ export default class AllocationsController {
     )
 
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     const confirmInstructionForm = {
       ...req.session.confirmInstructionForm,
       person: req.session.confirmInstructionForm?.person || [],

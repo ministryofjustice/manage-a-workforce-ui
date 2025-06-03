@@ -9,6 +9,7 @@ context('Instructions Confirmation', () => {
     cy.task('stubSetup')
     cy.task('stubGetConfirmInstructions')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
+    cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
     instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
@@ -43,7 +44,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Cancel link visible on page', () => {
-    instructionsPage.cancelLink('J678910', '1', 'PDU1').should('exist').and('have.text', 'Cancel')
+    instructionsPage.cancelLink('J678910', '1', 'PDU1').should('exist').and('have.text', 'Back to select practitioner')
   })
 
   it('Instructions textArea should be visible on page', () => {
@@ -96,6 +97,7 @@ context('Instructions Confirmation', () => {
     cy.task('stubSetup')
     cy.task('stubGetConfirmInstructions')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
+    cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
     instructionsPageRestricted = Page.verifyOnPage(InstructionsConfirmPageRestricted)
@@ -106,6 +108,7 @@ context('Instructions Confirmation', () => {
     cy.task('stubSetup')
     cy.task('stubGetConfirmInstructions')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
+    cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
     instructionsPageRestricted = Page.verifyOnPage(InstructionsConfirmPageRestricted)

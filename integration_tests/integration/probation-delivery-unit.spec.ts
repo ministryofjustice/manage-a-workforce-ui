@@ -7,6 +7,7 @@ context('Select Probation Delivery Unit', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetRegionDetails')
+    cy.task('stubForAllowedRegions', { staffId: 'USER1' })
     cy.signIn()
     cy.visit('/region/RG1/probationDeliveryUnits')
   })
@@ -57,7 +58,7 @@ context('Select Probation Delivery Unit', () => {
   it('cancel link goes back to select your region screen', () => {
     cy.task('stubGetAllRegions')
     const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
-    probationDeliveryUnitPage.cancelLink().trimTextContent().should('equal', 'Cancel')
+    probationDeliveryUnitPage.cancelLink().trimTextContent().should('equal', 'Cancel selection')
     probationDeliveryUnitPage.cancelLink().click()
     const regionPage = Page.verifyOnPage(RegionPage)
     regionPage.legendHeading().trimTextContent().should('equal', 'Select your region')

@@ -8,7 +8,8 @@
 {% for item in data %}
     {{ radioItems.push({
         value: item.code,
-        text: item.name
+        text: item.name,
+        attributes: { disabled: undefined } if not item.allowed else undefined
     }) }}
 {% endfor %}
 
@@ -45,6 +46,9 @@
                     isPageHeading: true,
                     classes: "govuk-fieldset__legend--l"
                 }
+            },
+            hint: {
+                text: "You can select a region you currently allocate from in NDelius"
             },
             errorMessage: { text: "Select a region"} if error,
             items: radioItems

@@ -4,6 +4,7 @@ import RegionPage from '../pages/region'
 
 context('Select teams', () => {
   beforeEach(() => {
+    cy.task('stubForAllowedRegions', { staffId: 'USER1' })
     cy.task('stubSetup')
     cy.signIn()
     cy.visit('/pdu/PDU1/select-teams')
@@ -71,6 +72,7 @@ context('Select teams', () => {
 
   it('selecting cancel link goes to select your region screen', () => {
     cy.task('stubGetAllRegions')
+    cy.task('stubForAllowedRegions', { staffId: 'USER1' })
     const selectTeamsPage = Page.verifyOnPage(SelectTeamsPage)
     selectTeamsPage.cancelLink().click()
     const regionPage = Page.verifyOnPage(RegionPage)

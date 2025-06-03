@@ -66,6 +66,18 @@ export { stubForProbationEstate, resetProbationEstateStubs }
 const { stubFor: stubForLaoStatus, resetStubs: resetLaoStubs } = wiremock(allocationUrl)
 export { stubForLaoStatus, resetLaoStubs }
 
+const { stubFor: stubForAllowedRegions, resetStubs: resetAllowedRegions } = wiremock(allocationUrl)
+export { stubForAllowedRegions, resetAllowedRegions }
+
+const { stubFor: stubForNoAllowedRegions, resetStubs: resetNoAllowedRegions } = wiremock(allocationUrl)
+export { stubForNoAllowedRegions, resetNoAllowedRegions }
+
+const { stubFor: stubForOneAllowedRegion, resetStubs: resetOneAllowedRegion } = wiremock(allocationUrl)
+export { stubForOneAllowedRegion, resetOneAllowedRegion }
+
+const { stubFor: stubForCrnAllowedUserRegion, resetStubs: resetCrnAllowedUserRegion } = wiremock(allocationUrl)
+export { stubForCrnAllowedUserRegion, resetCrnAllowedUserRegion }
+
 const { stubFor: stubForLaoStatus403, resetStubs: resetLaoStubs403 } = wiremock(allocationUrl)
 export { stubForLaoStatus403, resetLaoStubs403 }
 

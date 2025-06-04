@@ -52,17 +52,17 @@
 
 {% block caseContent %}
     <div>
-        {{ 
+        {{
             govukButton({
                 text: "Skip to allocation notes",
                 href: '#allocation-notes',
                 classes: 'documents-sticky-button'
             })
-        
+
         }}
         <h2 class="govuk-heading-l">Documents</h2>
 
-        <p class="govuk-body">You can sort this list by date, event, document type, or name using the blue arrows at the top of each column.</p>
+        <p class="govuk-body">You can sort this list by date, event, document type, or name using the blue arrows at the top of each column. Selecting a document will download it to your device.</p>
 
         {{ govukTable(tableData) }}
 

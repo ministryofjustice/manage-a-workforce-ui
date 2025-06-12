@@ -15,7 +15,6 @@ export default class AllocationHistoryController {
 
   async getCasesAllocatedByTeam(req: Request, res: Response, pduCode): Promise<void> {
     const { token, username } = res.locals.user
-    console.log(`PDU 3 ${res.locals.user.username}, ${pduCode}`)
     await this.allocationService.getUserRegionAccessForPdu(res.locals.user.token, res.locals.user.username, pduCode)
 
     const [pduDetails, teamsUserPreference] = await Promise.all([
@@ -72,7 +71,6 @@ export default class AllocationHistoryController {
   async getCasesAllocated(req: Request, res: Response, pduCode): Promise<void> {
     const { token } = res.locals.user
 
-    console.log(`PDU 4 ${res.locals.user.username}, ${pduCode}`)
     await this.allocationService.getUserRegionAccessForPdu(res.locals.user.token, res.locals.user.username, pduCode)
 
     const [pduDetails, caseAllocationHistory] = await Promise.all([

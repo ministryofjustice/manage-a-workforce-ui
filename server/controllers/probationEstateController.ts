@@ -18,14 +18,12 @@ export default class ProbationEstateController {
       res.locals.user.token,
       pduCode,
     )
-    console.log(`REGION1 ${res.locals.user.username}, ${response.region.code}`)
 
     await this.allocationsService.getUserRegionAccessForRegion(
       res.locals.user.token,
       res.locals.user.username,
       response.region.code,
     )
-    console.log(`SUCCESS ${res.locals.user.username}, ${response.region.code}`)
 
     res.render('pages/select-teams', {
       title: `Select your teams | Manage a workforce`,
@@ -37,9 +35,7 @@ export default class ProbationEstateController {
   }
 
   async selectPduTeams(req: Request, res: Response, pduCode) {
-    console.log(`PDU 2 ${res.locals.user.username}, ${pduCode}`)
     await this.allocationsService.getUserRegionAccessForPdu(res.locals.user.token, res.locals.user.username, pduCode)
-    console.log(`PDU 2 SUCCESS ${res.locals.user.username}, ${pduCode}`)
 
     const {
       body: { team },

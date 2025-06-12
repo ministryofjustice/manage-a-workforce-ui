@@ -20,7 +20,7 @@ export default class ProbationEstateController {
     )
     console.log(`REGION1 ${res.locals.user.username}, ${response.region.code}`)
 
-    await this.allocationsService.getUserRegionAccessForPdu(
+    await this.allocationsService.getUserRegionAccessForRegion(
       res.locals.user.token,
       res.locals.user.username,
       response.region.code,

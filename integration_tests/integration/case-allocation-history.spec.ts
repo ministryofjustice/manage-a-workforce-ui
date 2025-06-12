@@ -13,6 +13,9 @@ context('Case allocation history', () => {
     cy.task('stubForGetLaoRestrictions', { crn: 'X602070' })
     cy.task('stubForGetLaoRestrictionsRedacted', { crn: 'X456123' })
     cy.task('stubCaseAllocationHistory')
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
+    cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'PDU1', errorCode: 200 })
+
     cy.signIn()
     cy.visit('/pdu/PDU1/case-allocation-history')
     caseAllocationHistoryPage = Page.verifyOnPage(CaseAllocationHistoryPage)

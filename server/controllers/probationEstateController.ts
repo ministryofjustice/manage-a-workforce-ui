@@ -18,6 +18,15 @@ export default class ProbationEstateController {
       res.locals.user.token,
       pduCode,
     )
+    console.log(`REGION1 ${res.locals.user.username}, ${response.region.code}`)
+
+    await this.allocationsService.getUserRegionAccessForPdu(
+      res.locals.user.token,
+      res.locals.user.username,
+      response.region.code,
+    )
+    console.log(`SUCCESS ${res.locals.user.username}, ${response.region.code}`)
+
     res.render('pages/select-teams', {
       title: `Select your teams | Manage a workforce`,
       data: response.teams.sort((a, b) => a.name.localeCompare(b.name)),
@@ -28,6 +37,10 @@ export default class ProbationEstateController {
   }
 
   async selectPduTeams(req: Request, res: Response, pduCode) {
+    console.log(`PDU 2 ${res.locals.user.username}, ${pduCode}`)
+    await this.allocationsService.getUserRegionAccessForPdu(res.locals.user.token, res.locals.user.username, pduCode)
+    console.log(`PDU 2 SUCCESS ${res.locals.user.username}, ${pduCode}`)
+
     const {
       body: { team },
     } = req
@@ -73,6 +86,11 @@ export default class ProbationEstateController {
   }
 
   async getProbationDeliveryUnitsByRegionCode(req: Request, res: Response, regionCode, error = false) {
+    await this.allocationsService.getUserRegionAccessForRegion(
+      res.locals.user.token,
+      res.locals.user.username,
+      regionCode,
+    )
     const response: RegionDetails = await this.probationEstateService.getRegionDetails(
       res.locals.user.token,
       regionCode,
@@ -86,6 +104,11 @@ export default class ProbationEstateController {
   }
 
   async selectProbationDeliveryUnit(req: Request, res: Response, regionCode) {
+    await this.allocationsService.getUserRegionAccessForRegion(
+      res.locals.user.token,
+      res.locals.user.username,
+      regionCode,
+    )
     const {
       body: { probationDeliveryUnit },
     } = req

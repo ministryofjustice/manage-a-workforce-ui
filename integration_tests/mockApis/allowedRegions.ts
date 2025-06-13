@@ -4,6 +4,8 @@ import {
   stubForNoAllowedRegions,
   stubForOneAllowedRegion,
   stubForCrnAllowedUserRegion,
+  stubForPduAllowedForUser,
+  stubForRegionAllowedForUser,
 } from './wiremock'
 
 export default {
@@ -57,6 +59,32 @@ export default {
       request: {
         method: 'GET',
         urlPattern: `/user/${userId}/crn/${crn}/conviction/${convictionNumber}/is-allowed`,
+      },
+      response: {
+        status: errorCode,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {},
+      },
+    })
+  },
+  stubForPduAllowedForUser: ({ userId, pdu, errorCode }): SuperAgentRequest => {
+    return stubForPduAllowedForUser({
+      request: {
+        method: 'GET',
+        urlPattern: `/user/${userId}/pdu/${pdu}/is-allowed`,
+      },
+      response: {
+        status: errorCode,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {},
+      },
+    })
+  },
+  stubForRegionAllowedForUser: ({ userId, region, errorCode }): SuperAgentRequest => {
+    return stubForRegionAllowedForUser({
+      request: {
+        method: 'GET',
+        urlPattern: `/user/${userId}/region/${region}/is-allowed`,
       },
       response: {
         status: errorCode,

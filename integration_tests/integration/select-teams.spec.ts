@@ -1,6 +1,7 @@
 import Page from '../pages/page'
 import SelectTeamsPage from '../pages/teams'
 import RegionPage from '../pages/region'
+import ForbiddenPage from '../pages/forbidden'
 
 context('Select teams', () => {
   beforeEach(() => {
@@ -30,6 +31,16 @@ context('Select teams', () => {
         'Select all the teams you currently allocate cases to.  You only need to pick teams that have probation practitioners in them.',
       )
       .and('contain', 'You can select more than one team.')
+  })
+
+  it('Show forbidden page if we do not have pdu permission', () => {
+    cy.task('stubSetup')
+    cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 403 })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/select-teams', { failOnStatusCode: false })
+    const forbiddenPage = Page.verifyOnPage(ForbiddenPage)
+    forbiddenPage.message().should('exist')
+    forbiddenPage.heading().should('exist')
   })
 
   it('teams in alphabetical order', () => {

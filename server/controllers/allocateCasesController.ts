@@ -13,6 +13,7 @@ export default class AllocateCasesController {
   ) {}
 
   async getDataByTeams(req: Request, res: Response, pduCode: string) {
+    await this.allocationsService.getUserRegionAccessForPdu(res.locals.user.token, res.locals.user.username, pduCode)
     const { token, username } = res.locals.user
     const [teamsUserPreference, probationDeliveryUnitDetails] = await Promise.all([
       this.userPreferenceService.getTeamsUserPreference(token, username),

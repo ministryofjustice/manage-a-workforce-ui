@@ -1,0 +1,62 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPattern": "/favicon.ico"
+      },
+      "response": {
+        "status": 200
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPattern": "/auth/oauth/authorize\\?response_type=code&redirect_uri=.+?&state=.+?&client_id=clientid"
+      },
+      "response": {
+        "status": 302,
+        "headers": {
+          "Content-Type": "text/html",
+          "Location": "http://localhost:3007/sign-in/callback?code=codexxxx&state={{ request.query.state }}"
+        },
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPattern": "/auth/sign-out.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/html"
+        },
+        "body": "<html><body>SignIn page<h1>Sign in</h1></body></html>"
+      }
+    },
+    {
+      "id": "ddd92112-5010-4dc3-8f5b-57b4f15d02d5",
+      "request": {
+        "urlPattern": "/auth/oauth/token",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJVU0VSMSIsInNjb3BlIjpbInJlYWQiXSwiYXV0aF9zb3VyY2UiOiJub21pcyIsImF1dGhvcml0aWVzIjpbIlJPTEVfTUFOQUdFX0FfV09SS0ZPUkNFX0FMTE9DQVRFIl0sImp0aSI6IjgzYjUwYTEwLWNjYTYtNDFkYi05ODVmLWU4N2VmYjMwM2RkYiIsImNsaWVudF9pZCI6ImNsaWVudGlkIiwiaWF0IjoxNzQ2NzE2MDYwLCJleHAiOjE3NDY3MTk2NjB9.hf34VvoFBW5vpcGoIrDWeyL_9TvW-xhkgcxE39YH74g",
+          "token_type": "bearer",
+          "user_name": "USER1",
+          "expires_in": 599,
+          "scope": "read",
+          "internalUser": true
+        },
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Location": "http://localhost:3007/sign-in/callback?code=codexxxx&state=stateyyyy"
+        }
+      }
+    }
+  ]
+}

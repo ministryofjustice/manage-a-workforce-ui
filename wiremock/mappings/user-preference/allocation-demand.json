@@ -1,0 +1,43 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPattern": "/users/USER1/preferences/allocation-teams"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json;charset=UTF-8" },
+        "jsonBody": {
+          "items": ["TM1"]
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/users/USER1/preferences/allocation-pdu",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json;charset=UTF-8" },
+        "jsonBody": {
+          "items": ["PDU1"]
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPattern": "/users/USER1/preferences/allocation-demand"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json;charset=UTF-8" },
+        "jsonBody": {
+          "items": ["{ \"pdu\": \"PDU1\", \"ldu\": \"LDU1\", \"team\": \"TM1\" }"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPattern": "/team/search\\?codes=TM1"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json;charset=UTF-8" },
+        "jsonBody": [
+          {
+            "code": "TM1",
+            "name": "Team 1"
+          }
+        ]
+      }
+    }
+  ]
+}

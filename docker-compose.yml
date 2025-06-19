@@ -1,6 +1,5 @@
 version: '3.1'
 services:
-
   redis:
     image: 'bitnami/redis:7.4'
     networks:
@@ -13,52 +12,63 @@ services:
   auth-wiremock:
     image: wiremock/wiremock
     networks:
-    - hmpps_int
+      - hmpps_int
     restart: always
     ports:
-      - "9090:8080"
+      - '9090:8080'
+    volumes:
+      - ./wiremock/mappings/auth:/home/wiremock/mappings
   allocation-wiremock:
     image: wiremock/wiremock
     networks:
-    - hmpps_int
+      - hmpps_int
     restart: always
     ports:
-      - "9091:8080"
+      - '9091:8080'
+    volumes:
+      - ./wiremock/mappings/allocation:/home/wiremock/mappings
   workload-wiremock:
     image: wiremock/wiremock
     networks:
-    - hmpps_int
+      - hmpps_int
     restart: always
     ports:
-      - "9092:8080"
+      - '9092:8080'
+    volumes:
+      - ./wiremock/mappings/workload:/home/wiremock/mappings
   probation-estate-wiremock:
     image: wiremock/wiremock
     networks:
-    - hmpps_int
+      - hmpps_int
     restart: always
     ports:
-      - "9093:8080"
+      - '9093:8080'
+    volumes:
+      - ./wiremock/mappings/probation-estate:/home/wiremock/mappings
   user-preference-wiremock:
     image: wiremock/wiremock
     networks:
-    - hmpps_int
+      - hmpps_int
     restart: always
     ports:
-      - "9094:8080"
+      - '9094:8080'
+    volumes:
+      - ./wiremock/mappings/user-preference:/home/wiremock/mappings
   staff-lookup-wiremock:
     image: wiremock/wiremock
     networks:
-    - hmpps_int
+      - hmpps_int
     restart: always
     ports:
-      - "9095:8080"
+      - '9095:8080'
   manage-users-wiremock:
     image: wiremock/wiremock
     networks:
       - hmpps_int
     restart: always
     ports:
-      - "9096:8080"
-
+      - '9096:8080'
+    volumes:
+      - ./wiremock/mappings/user:/home/wiremock/mappings
 networks:
   hmpps_int:

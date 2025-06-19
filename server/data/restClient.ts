@@ -73,7 +73,8 @@ export default class RestClient {
       })
       return result.data
     } catch (error) {
-      throw sanitiseError(error)
+      console.error({ ...error, path, method: 'GET' })
+      throw sanitiseError({ ...error, path, method: 'GET' })
     }
   }
 
@@ -84,7 +85,8 @@ export default class RestClient {
       })
       return result.data
     } catch (error) {
-      throw sanitiseError(error)
+      console.error({ ...error, path, method: 'POST' })
+      throw sanitiseError({ ...error, path, method: 'POST' })
     }
   }
 
@@ -94,7 +96,8 @@ export default class RestClient {
         headers: { 'Accept-Encoding': 'application/json', Authorization: `Bearer ${this.token}` },
       })
     } catch (error) {
-      throw sanitiseError(error)
+      console.error({ ...error, path, method: 'PUT' })
+      throw sanitiseError({ ...error, path, method: 'PUT' })
     }
   }
 

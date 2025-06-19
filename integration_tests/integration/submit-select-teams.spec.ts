@@ -67,6 +67,7 @@ context('Select teams and show allocate cases by team', () => {
       cy.task('stubGetPduDetails')
       cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 200 })
       cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
+      cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
       cy.task('stubGetUnallocatedCasesByTeams', {
         teamCodes: 'TM1,TM2',
         response: [

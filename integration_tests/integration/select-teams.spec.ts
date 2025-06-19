@@ -36,6 +36,7 @@ context('Select teams', () => {
   it('Show forbidden page if we do not have pdu permission', () => {
     cy.task('stubSetup')
     cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 403 })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
     cy.signIn()
     cy.visit('/pdu/PDU1/select-teams', { failOnStatusCode: false })
     const forbiddenPage = Page.verifyOnPage(ForbiddenPage)

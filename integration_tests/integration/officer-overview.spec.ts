@@ -7,6 +7,7 @@ context('Overview', () => {
     cy.task('stubSetup')
     cy.task('stubGetOverview')
     cy.task('stubGetTeamDetails', { code: 'TM2', name: 'Team Name 1' })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
     cy.signIn()
     cy.visit('/pdu/PDU1/TM2/OM2/officer-view')
     overviewPage = Page.verifyOnPage(OverviewPage)

@@ -4,6 +4,7 @@ import ForbiddenPage from '../pages/forbidden'
 context('Forbidden', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
     cy.signIn()
   })
 

@@ -10,6 +10,7 @@ context('Choose Practitioner', () => {
     cy.task('stubUserPreferenceTeams', ['N03F01', 'N03F02'])
     cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
     cy.task('stubGetUnallocatedCasesByTeams', {
       teamCodes: 'N03F01,N03F02',
       response: [

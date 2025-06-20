@@ -7,6 +7,7 @@ context('Auto Complete Email', () => {
     cy.task('stubGetConfirmInstructions')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
 
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')

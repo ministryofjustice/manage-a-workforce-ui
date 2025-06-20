@@ -7,6 +7,7 @@ context('Case Already Allocated', () => {
     cy.task('stubSetup')
     cy.task('stubNotFoundUnallocatedCase')
     cy.task('stubGetEventManagerDetails')
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view', { failOnStatusCode: false })
   })

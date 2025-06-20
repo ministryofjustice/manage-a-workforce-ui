@@ -5,6 +5,7 @@ import Page from '../pages/page'
 context('Unallocated', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
   })
 
   it('Unauthenticated user directed to auth', () => {

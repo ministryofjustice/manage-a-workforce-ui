@@ -27,6 +27,7 @@ context('Show allocate cases by team based on user preferences', () => {
         ],
       })
       cy.task('stubGetPduDetails')
+      cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
       cy.signIn()
       cy.visit('/pdu/PDU1/teams')
       allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
@@ -95,6 +96,7 @@ context('Show allocate cases by team based on user preferences', () => {
         ],
       })
       cy.task('stubGetPduDetails')
+      cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
       cy.signIn()
     })
 

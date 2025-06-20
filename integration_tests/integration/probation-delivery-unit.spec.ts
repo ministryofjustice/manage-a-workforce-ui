@@ -2,12 +2,15 @@ import Page from '../pages/page'
 import ProbationDeliveryUnitPage from '../pages/probationDeliveryUnit'
 import SelectTeamsPage from '../pages/teams'
 import RegionPage from '../pages/region'
+import ForbiddenPage from '../pages/forbidden'
 
 context('Select Probation Delivery Unit', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetRegionDetails')
     cy.task('stubForAllowedRegions', { staffId: 'USER1' })
+    cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 200 })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
     cy.signIn()
     cy.visit('/region/RG1/probationDeliveryUnits')
   })
@@ -74,10 +77,37 @@ context('Select Probation Delivery Unit', () => {
   })
 
   it('selecting PDU and clicking continue goes to select Team page', () => {
+    cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 200 })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
     cy.task('stubGetPduDetails', 'PDU1')
     const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
     probationDeliveryUnitPage.radio('PDU1').click()
     probationDeliveryUnitPage.continueButton().click()
     Page.verifyOnPage(SelectTeamsPage)
+  })
+
+  it('Should show 403 error if we do not have access to this region', () => {
+    cy.task('stubSetup')
+    cy.task('stubGetRegionDetails')
+    cy.task('stubForAllowedRegions', { staffId: 'USER1' })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
+    cy.signIn()
+    cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 403 })
+    cy.visit('/region/RG1/probationDeliveryUnits', { failOnStatusCode: false })
+    const forbiddenPage = Page.verifyOnPage(ForbiddenPage)
+    forbiddenPage.message().should('exist')
+    forbiddenPage.heading().should('exist')
+  })
+
+  it('show forbidden page if we do not have access to the pdus region', () => {
+    const probationDeliveryUnitPage = Page.verifyOnPage(ProbationDeliveryUnitPage)
+    probationDeliveryUnitPage.radio('PDU1').click()
+
+    cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 403 })
+
+    probationDeliveryUnitPage.continueButton().click()
+    const forbiddenPage = Page.verifyOnPage(ForbiddenPage)
+    forbiddenPage.message().should('exist')
+    forbiddenPage.heading().should('exist')
   })
 })

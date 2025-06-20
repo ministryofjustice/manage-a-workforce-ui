@@ -65,6 +65,18 @@ export default class AllocationsService {
     })) as string
   }
 
+  async getUserRegionAccessForRegion(token: string, staffId: string, region: string): Promise<string> {
+    return (await this.restClient(token).get({
+      path: `/user/${staffId}/region/${region}/is-allowed`,
+    })) as string
+  }
+
+  async getUserRegionAccessForPdu(token: string, staffId: string, pdu: string): Promise<string> {
+    return (await this.restClient(token).get({
+      path: `/user/${staffId}/pdu/${pdu}/is-allowed`,
+    })) as string
+  }
+
   async getLAOStatusforAllocation(token: string, crn: string): Promise<AllocationLAOStatus> {
     return (await this.restClient(token).get({
       path: `/cases/${crn}/restrictions`,

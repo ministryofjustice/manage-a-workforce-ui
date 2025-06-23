@@ -86,7 +86,7 @@
                                     f = !0, t = h, s = function () {
                                     var e = {},
                                         t = d.connectionString;
-                                    if (t) 
+                                    if (t)
                                         for (var n = t.split(";"), a = 0; a < n.length; a++) {
                                             var i = n[a].split("=");
                                             2 === i.length && (e[i[0][b]()] = i[1])
@@ -131,7 +131,7 @@
                                 function (e, t) {
                                     if (JSON) {
                                         var n = T.fetch;
-                                        if (n && !y.useXhr) 
+                                        if (n && !y.useXhr)
                                             n(t, {
                                                 method: N,
                                                 body: JSON.stringify(e),
@@ -178,7 +178,7 @@
                             m.cookie = l.cookie
                         } catch (p) {}
                         function t(e) {
-                            for (; e.length;) 
+                            for (; e.length;)
                                 !function (t) {
                                     m[t] = function () {
                                         var e = arguments;
@@ -280,7 +280,7 @@
                     f
                         .parentNode
                         .insertBefore(j, f);
-                })(window, document, 'script', 'dataLayer', 'GTM-WLS8X4P');
+                })(window, document, 'script', 'dataLayer', '{{ googleAnalyticsKey }}');
             </script>
 
             <link href="/assets/govuk/govuk-frontend.min.css" rel="stylesheet"/>

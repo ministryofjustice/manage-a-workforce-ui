@@ -8,9 +8,6 @@ import { initialiseName } from './utils'
 import type { Services } from '../services'
 
 const production = process.env.NODE_ENV === 'production'
-const {
-  analytics: { tagManagerContainerId },
-} = config
 
 type Error = {
   href: string
@@ -76,7 +73,7 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
   })
 
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)
-  njkEnv.addGlobal('tagManagerContainerId', tagManagerContainerId.trim())
+  njkEnv.addGlobal('tagManagerContainerId', config.analytics.tagManagerContainerId.trim())
   njkEnv.addGlobal('lastTechnicalUpdate', services.technicalUpdatesService.getLatestTechnicalUpdateHeading())
   njkEnv.addGlobal('instrumentationKey', config.instrumentationKey)
 }

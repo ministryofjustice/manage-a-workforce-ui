@@ -122,7 +122,7 @@ export default {
     return sinceDate
   },
   analytics: {
-    tagManagerContainerId: get('TAG_MANAGER_CONTAINER_ID', null),
+    tagManagerContainerId: get('TAG_MANAGER_CONTAINER_ID', ''),
   },
   notification: {
     active: get('SHOW_NOTIFICATION', 'false'),

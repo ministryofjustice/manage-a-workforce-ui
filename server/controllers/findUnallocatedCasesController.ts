@@ -40,6 +40,7 @@ export default class FindUnallocatedCasesController {
     if (!validUserPreference) {
       await this.userPreferenceService.clearAllocationDemandPreference(token, username)
       res.redirect(`/pdu/${pduCode}/select-teams`)
+      return
     }
 
     const allocatedCasesCount = await this.workloadService.postAllocationHistoryCount(

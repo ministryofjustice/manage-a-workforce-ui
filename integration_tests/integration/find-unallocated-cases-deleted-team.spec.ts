@@ -3,7 +3,6 @@ import Page from '../pages/page'
 import SelectTeamsPage from '../pages/teams'
 
 context('Find Unallocated cases', () => {
-  let findUnallocatedCasesPage: FindUnallocatedPage
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubAllEstateByRegionCode')
@@ -14,7 +13,7 @@ context('Find Unallocated cases', () => {
     cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
     cy.signIn()
     cy.visit('/pdu/PDU1/find-unallocated')
-    findUnallocatedCasesPage = Page.verifyOnPage(FindUnallocatedPage)
+    Page.verifyOnPage(FindUnallocatedPage)
   })
 
   it('old team code selected in user preference redirects to select teams page', () => {

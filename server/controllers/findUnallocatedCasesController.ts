@@ -39,6 +39,7 @@ export default class FindUnallocatedCasesController {
     const validUserPreference =
       savedAllocationDemandSelection.team.trim().length === 0 ||
       pduDetails.teams.map(team => team.code).includes(savedAllocationDemandSelection.team)
+
     if (!validUserPreference) {
       await this.userPreferenceService.clearAllocationDemandPreference(token, username)
       res.redirect(`/pdu/${pduCode}/select-teams`)

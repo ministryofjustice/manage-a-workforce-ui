@@ -35,6 +35,7 @@ export default class FindUnallocatedCasesController {
       token,
       username,
     )
+    /* eslint-disable no-console */
     console.log(`KDEBUG team =  <${savedAllocationDemandSelection.team}>`)
     console.log(`KDEBUG team length = <${savedAllocationDemandSelection.team.trim().length}>`)
     console.log(`KDEBUG teams list  = <${pduDetails.teams.map(team => team.code)}>`)
@@ -55,7 +56,7 @@ export default class FindUnallocatedCasesController {
       res.redirect(`/pdu/${pduCode}/select-teams`)
       return
     }
-
+    /* eslint-enable */
     const allocatedCasesCount = await this.workloadService.postAllocationHistoryCount(
       token,
       config.casesAllocatedSinceDate().toISOString(),

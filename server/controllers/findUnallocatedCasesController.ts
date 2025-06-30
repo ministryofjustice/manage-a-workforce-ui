@@ -35,6 +35,27 @@ export default class FindUnallocatedCasesController {
       token,
       username,
     )
+    console.log(`KDEBUG team =  <${savedAllocationDemandSelection.team}>`)
+    console.log(`KDEBUG team length = <${savedAllocationDemandSelection.team.trim().length}>`)
+    console.log(`KDEBUG teams list  = <${pduDetails.teams.map(team => team.code)}>`)
+    console.log(
+      `KDEBUG included = <${pduDetails.teams.map(team => team.code).includes(savedAllocationDemandSelection.team)}>`,
+    )
+
+    const validUserPreference =
+      savedAllocationDemandSelection.team.trim().length === 0 ||
+      pduDetails.teams.map(team => team.code).includes(savedAllocationDemandSelection.team)
+
+    console.log(`KDEBUG checking validUserPreference = <${validUserPreference}>`)
+
+    if (!validUserPreference) {
+      console.log(`KDEBUG not valid validUserPreference = <${validUserPreference}>`)
+
+      await this.userPreferenceService.clearAllocationDemandPreference(token, username)
+      res.redirect(`/pdu/${pduCode}/select-teams`)
+      return
+    }
+
     const allocatedCasesCount = await this.workloadService.postAllocationHistoryCount(
       token,
       config.casesAllocatedSinceDate().toISOString(),

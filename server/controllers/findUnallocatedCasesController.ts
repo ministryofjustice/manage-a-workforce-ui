@@ -35,6 +35,16 @@ export default class FindUnallocatedCasesController {
       token,
       username,
     )
+
+    if (savedAllocationDemandSelection.team.trim().length > 0) {
+      const teams = await this.probationEstateService.getTeamsByCode(token, [savedAllocationDemandSelection.team])
+      if (teams.length === 0) {
+        await this.userPreferenceService.clearAllocationDemandPreference(token, username)
+        res.redirect(`/pdu/${pduCode}/select-teams`)
+        return
+      }
+    }
+
     const allocatedCasesCount = await this.workloadService.postAllocationHistoryCount(
       token,
       config.casesAllocatedSinceDate().toISOString(),

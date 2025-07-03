@@ -9,6 +9,7 @@ generic-service:
     port: 3000
 
   ingress:
+    className: modsec
     enabled: true
     annotations:
       nginx.ingress.kubernetes.io/custom-http-errors: "406"

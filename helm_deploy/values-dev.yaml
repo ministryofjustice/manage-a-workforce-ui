@@ -4,6 +4,7 @@ generic-service:
   replicaCount: 2
 
   ingress:
+    className: modsec-non-prod
     host: workforce-management-dev.hmpps.service.justice.gov.uk
 
   env:

@@ -1,4 +1,12 @@
-import { setup, defaultClient, TelemetryClient, DistributedTracingModes } from 'applicationinsights'
+import {
+  setup,
+  defaultClient,
+  TelemetryClient,
+  DistributedTracingModes,
+  getCorrelationContext,
+} from 'applicationinsights'
+import { RequestHandler } from 'express'
+
 import applicationVersion from '../applicationVersion'
 
 function defaultName(): string {
@@ -22,11 +30,32 @@ export function initialiseAppInsights(): void {
   }
 }
 
-export function buildAppInsightsClient(name = defaultName()): TelemetryClient {
+export function buildAppInsightsClient(name: string = defaultName()): TelemetryClient {
   if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
     defaultClient.context.tags['ai.cloud.role'] = name
     defaultClient.context.tags['ai.application.ver'] = version()
+
+    defaultClient.addTelemetryProcessor(({ tags, data }, contextObjects) => {
+      const operationNameOverride = contextObjects.correlationContext?.customProperties?.getProperty('operationName')
+      if (operationNameOverride) {
+        tags['ai.operation.name'] = data.baseData.name = operationNameOverride // eslint-disable-line no-param-reassign,no-multi-assign
+      }
+      return true
+    })
+
     return defaultClient
   }
   return null
+}
+
+export function appInsightsMiddleware(): RequestHandler {
+  return (req, res, next) => {
+    res.prependOnceListener('finish', () => {
+      const context = getCorrelationContext()
+      if (context && req.route) {
+        context.customProperties.setProperty('operationName', `${req.method} ${req.route?.path}`)
+      }
+    })
+    next()
+  }
 }

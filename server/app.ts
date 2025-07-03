@@ -3,6 +3,7 @@ import express from 'express'
 import path from 'path'
 import createError from 'http-errors'
 
+import { appInsightsMiddleware } from './utils/azureAppInsights'
 import nunjucksSetup from './utils/nunjucksSetup'
 import errorHandler from './errorHandler'
 import authorisationMiddleware from './middleware/authorisationMiddleware'
@@ -41,6 +42,7 @@ export default function createApp(services: Services): express.Application {
     next()
   })
 
+  app.use(appInsightsMiddleware())
   app.use(setUpHealthChecks())
   app.use(setUpWebSecurity())
   app.use(setUpWebSession())

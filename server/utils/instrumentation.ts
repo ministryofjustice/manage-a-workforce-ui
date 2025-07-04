@@ -1,6 +1,7 @@
 import { NodeSDK } from '@opentelemetry/sdk-node'
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node'
 import { useAzureMonitor } from '@azure/monitor-opentelemetry'
+import logger from '../../logger'
 
 export default function instrumentation(): void {
   if (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'preprod' || process.env.NODE_ENV === 'dev') {
@@ -11,7 +12,7 @@ export default function instrumentation(): void {
         : undefined)
 
     if (!connectionString) {
-      console.warn('Azure Monitor not configured: no connection string or instrumentation key found.')
+      logger.warn('Azure Monitor not configured: no connection string or instrumentation key found.')
     } else {
       useAzureMonitor({
         azureMonitorExporterOptions: {
@@ -24,7 +25,7 @@ export default function instrumentation(): void {
       })
 
       sdk.start()
-      console.log('OpenTelemetry started')
+      logger.info('OpenTelemetry started')
     }
   }
 }

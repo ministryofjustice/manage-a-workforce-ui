@@ -3,11 +3,12 @@ import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentation
 import { useAzureMonitor } from '@azure/monitor-opentelemetry'
 import logger from '../../logger'
 
+const otelStartedSymbol = Symbol.for('otel.started')
+
 logger.info(`AppInsights key length ${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}`)
-const OTEL_STARTED = Symbol.for('myapp.otel.started')
 
 export default async function instrumentation(): Promise<void> {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV?.toLowerCase() === 'production') {
     logger.info(`Running instrumentation mode`)
     const connectionString =
       process.env.APPLICATIONINSIGHTS_CONNECTION_STRING ||
@@ -28,9 +29,17 @@ export default async function instrumentation(): Promise<void> {
         instrumentations: [getNodeAutoInstrumentations()],
       })
 
-      if (!global[OTEL_STARTED]) {
+      const globalSymbols = Object.getOwnPropertySymbols(globalThis)
+      const alreadyStarted = globalSymbols.includes(otelStartedSymbol)
+
+      if (!alreadyStarted) {
         await sdk.start()
-        global[OTEL_STARTED] = true
+        Object.defineProperty(globalThis, otelStartedSymbol, {
+          value: true,
+          writable: false,
+          enumerable: false,
+          configurable: false,
+        })
         logger.info('OpenTelemetry started')
       }
     }

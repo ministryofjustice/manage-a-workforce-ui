@@ -1,14 +1,17 @@
-// Require app insights before anything else to allow for instrumentation of bunyan and express
-
 import startOpenTelemetry from './server/utils/instrumentation'
-
-import app from './server/index'
 import logger from './logger'
 
-startOpenTelemetry().then(() => {
+async function start() {
+  await startOpenTelemetry()
   logger.info(`OpenTelemetry started`)
-})
 
-app.listen(app.get('port'), () => {
-  logger.info(`Server listening on port ${app.get('port')}`)
+  const app = (await import('./server/index')).default
+  app.listen(app.get('port'), () => {
+    logger.info(`Server listening on port ${app.get('port')}`)
+  })
+}
+
+start().catch(err => {
+  logger.error({ err }, 'Failed to start application')
+  process.exit(1)
 })

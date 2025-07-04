@@ -7,6 +7,8 @@ import {
 } from 'applicationinsights'
 import { RequestHandler } from 'express'
 
+import { context, trace } from '@opentelemetry/api'
+
 import applicationVersion from '../applicationVersion'
 
 function defaultName(): string {
@@ -48,12 +50,13 @@ export function buildAppInsightsClient(name: string = defaultName()): TelemetryC
   return null
 }
 
-export function appInsightsMiddleware(): RequestHandler {
+export function otelMiddleware(): RequestHandler {
   return (req, res, next) => {
-    res.prependOnceListener('finish', () => {
-      const context = getCorrelationContext()
-      if (context && req.route) {
-        context.customProperties.setProperty('operationName', `${req.method} ${req.route?.path}`)
+    res.on('finish', () => {
+      const span = trace.getSpan(context.active())
+      if (span && req.route?.path) {
+        span.updateName(`${req.method} ${req.route.path}`)
+        span.setAttribute('custom.operationName', `${req.method} ${req.route.path}`)
       }
     })
     next()

@@ -118,8 +118,11 @@ jobs:
           name: Build the app
           command: npm run build
       - run:
+          name: Show dist contents
+          command: ls -la ./dist
+      - run:
           name: Start app
-          command: cd ~/app && npm run start-feature
+          command: npm run start-feature
           background: true
       - run:
           name: Wait for node app to start

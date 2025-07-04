@@ -5,8 +5,6 @@ import logger from '../../logger'
 
 const otelStartedSymbol = Symbol.for('otel.started')
 
-logger.info(`AppInsights key length ${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}`)
-
 export default async function instrumentation(): Promise<void> {
   if (process.env.NODE_ENV?.toLowerCase() === 'production') {
     logger.info(`Running instrumentation mode`)
@@ -15,7 +13,6 @@ export default async function instrumentation(): Promise<void> {
       (process.env.APPINSIGHTS_INSTRUMENTATIONKEY
         ? `InstrumentationKey=${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}`
         : undefined)
-    logger.info(`Instrumentation connection string=${connectionString}`)
     if (!connectionString) {
       logger.warn('Azure Monitor not configured: no connection string or instrumentation key found.')
     } else {

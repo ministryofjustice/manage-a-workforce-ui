@@ -1,4 +1,5 @@
 // Require app insights before anything else to allow for instrumentation of bunyan and express
+
 import startOpenTelemetry from './server/utils/instrumentation'
 
 import app from './server/index'

@@ -121,9 +121,6 @@ jobs:
           name: Show dist contents
           command: ls -la ./dist
       - run:
-          name: Show server contents
-          command: ls -la ./dist/server
-      - run:
           name: Start app
           command: npm run start-feature
           background: true

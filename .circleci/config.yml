@@ -118,7 +118,7 @@ jobs:
           command: npm run build
       - run:
           name: Run the node app.
-          command: npm run start-feature
+          command: cd ~/app && npm run start-feature
           background: true
       - run:
           name: Wait for node app to start

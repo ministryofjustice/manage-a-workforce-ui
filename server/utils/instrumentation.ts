@@ -23,12 +23,8 @@ export default function instrumentation(): void {
         instrumentations: [getNodeAutoInstrumentations()],
       })
 
-      try {
-        sdk.start()
-        console.log('OpenTelemetry started')
-      } catch (err) {
-        console.error('Failed to start OpenTelemetry:', err)
-      }
+      sdk.start()
+      console.log('OpenTelemetry started')
     }
   }
 }

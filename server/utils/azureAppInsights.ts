@@ -1,10 +1,4 @@
-import {
-  setup,
-  defaultClient,
-  TelemetryClient,
-  DistributedTracingModes,
-  getCorrelationContext,
-} from 'applicationinsights'
+import { setup, defaultClient, TelemetryClient, DistributedTracingModes } from 'applicationinsights'
 import { RequestHandler } from 'express'
 
 import { context, trace } from '@opentelemetry/api'

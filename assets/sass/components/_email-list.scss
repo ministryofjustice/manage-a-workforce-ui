@@ -20,7 +20,7 @@
 }
 
 .govuk-allocations-emails-form {
-  input:read-only {
+  input[readonly] {
     background-color: govuk-colour('light-grey');
     cursor: not-allowed;
   }

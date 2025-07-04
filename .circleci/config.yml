@@ -75,6 +75,7 @@ jobs:
       name: hmpps/node_redis
       node_tag: << pipeline.parameters.node-version >>
       redis_tag: '6.2'
+    working_directory: ~/app
     steps:
       - checkout
       - attach_workspace:
@@ -117,11 +118,8 @@ jobs:
           name: Build the app
           command: npm run build
       - run:
-          name: Start app manually
-          command: |
-            cd ~/app
-            export $(cat feature.env)
-            node -r dotenv/config -r ./dist/preload-opentelemetry.js ./dist/server.js
+          name: Start app
+          command: cd ~/app && npm run start-feature
           background: true
       - run:
           name: Wait for node app to start

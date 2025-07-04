@@ -117,8 +117,11 @@ jobs:
           name: Build the app
           command: npm run build
       - run:
-          name: Run the node app.
-          command: cd ~/app && npm run start-feature
+          name: Start app manually
+          command: |
+            cd ~/app
+            export $(cat feature.env)
+            node -r dotenv/config -r ./dist/preload-opentelemetry.js ./dist/server.js
           background: true
       - run:
           name: Wait for node app to start

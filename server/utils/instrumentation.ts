@@ -12,6 +12,6 @@ const sdk = new NodeSDK({
   instrumentations: [getNodeAutoInstrumentations()],
 })
 
-export default function startOpenTelemetry(): Promise<void> {
+export default function startOpenTelemetry() {
   return sdk.start()
 }

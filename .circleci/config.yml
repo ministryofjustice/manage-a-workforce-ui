@@ -114,6 +114,9 @@ jobs:
           command: java -jar wiremock.jar --port 9096
           background: true
       - run:
+          name: Build the app
+          command: npm run build
+      - run:
           name: Run the node app.
           command: npm run start-feature
           background: true

@@ -4,7 +4,7 @@ import { useAzureMonitor } from '@azure/monitor-opentelemetry'
 import logger from '../../logger'
 
 export default function instrumentation(): void {
-  if (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'preprod' || process.env.NODE_ENV === 'dev') {
+  if (process.env.NODE_ENV === 'production') {
     const connectionString =
       process.env.APPLICATIONINSIGHTS_CONNECTION_STRING ||
       (process.env.APPINSIGHTS_INSTRUMENTATIONKEY

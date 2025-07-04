@@ -3,7 +3,7 @@ import express from 'express'
 import path from 'path'
 import createError from 'http-errors'
 
-import { otelMiddleware } from './utils/azureAppInsights'
+import otelMiddleware from './utils/azureAppInsights'
 import nunjucksSetup from './utils/nunjucksSetup'
 import errorHandler from './errorHandler'
 import authorisationMiddleware from './middleware/authorisationMiddleware'

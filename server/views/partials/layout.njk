@@ -13,13 +13,13 @@
 
             <title>{{ title }}</title>
 
-          {% if tagManagerContainerId %}
-          <!-- Google Tag Manager (noscript) -->
-          <noscript>
-            <iframe src="https://www.googletagmanager.com/ns.html?id={{tagManagerContainerId}} | safe }}"height="0" width="0" style="display:none;visibility:hidden"></iframe>
-          </noscript>
-          <!-- End Google Tag Manager (noscript) -->
-          {% endif %}
+            {% if tagManagerContainerId %}
+                <!-- Google Tag Manager (noscript) -->
+                <noscript>
+                    <iframe src="https://www.googletagmanager.com/ns.html?id={{tagManagerContainerId}} | safe }}"height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                </noscript>
+                <!-- End Google Tag Manager (noscript) -->
+            {% endif %}
 
             <script nonce="{{ cspNonce }}">
                 !function (T, l, y) {
@@ -94,7 +94,7 @@
                                     f = !0, t = h, s = function () {
                                     var e = {},
                                         t = d.connectionString;
-                                    if (t)
+                                    if (t) 
                                         for (var n = t.split(";"), a = 0; a < n.length; a++) {
                                             var i = n[a].split("=");
                                             2 === i.length && (e[i[0][b]()] = i[1])
@@ -139,7 +139,7 @@
                                 function (e, t) {
                                     if (JSON) {
                                         var n = T.fetch;
-                                        if (n && !y.useXhr)
+                                        if (n && !y.useXhr) 
                                             n(t, {
                                                 method: N,
                                                 body: JSON.stringify(e),
@@ -186,7 +186,7 @@
                             m.cookie = l.cookie
                         } catch (p) {}
                         function t(e) {
-                            for (; e.length;)
+                            for (; e.length;) 
                                 !function (t) {
                                     m[t] = function () {
                                         var e = arguments;
@@ -271,14 +271,24 @@
             <script nonce="{{ cspNonce }}">
                 window.dataLayer = window.dataLayer || [];
             </script>
-
-            <script nonce="{{ cspNonce }}">
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','{{tagManagerContainerId}}');</script>
-
+            {% if tagManagerContainerId %}
+                <script nonce="{{ cspNonce }}">
+                    (function (w, d, s, l, i) {
+                        w[l] = w[l] || [];
+                        w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+                        var f = d.getElementsByTagName(s)[0],
+                            j = d.createElement(s),
+                            dl = l != 'dataLayer'
+                                ? '&l=' + l
+                                : '';
+                        j.async = true;
+                        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                        f
+                            .parentNode
+                            .insertBefore(j, f);
+                    })(window, document, 'script', 'dataLayer', '{{tagManagerContainerId}}');
+                </script>
+            {% endif %}
             <link href="/assets/govuk/govuk-frontend.min.css" rel="stylesheet"/>
             <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet"/>
 

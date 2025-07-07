@@ -3,7 +3,6 @@ import CaseAllocationHistoryPage from '../pages/caseAllocationHistory'
 import Page from '../pages/page'
 
 import config from '../../server/config'
-import { ColumnSortExpectations, sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Case allocation history', () => {
   let caseAllocationHistoryPage: CaseAllocationHistoryPage

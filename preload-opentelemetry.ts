@@ -1,6 +1,7 @@
 import { NodeSDK } from '@opentelemetry/sdk-node'
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node'
 import { useAzureMonitor } from '@azure/monitor-opentelemetry'
+import { AzureMonitorTraceExporter } from '@azure/monitor-opentelemetry-exporter'
 
 // Declare global marker without leading underscores or var
 declare global {
@@ -18,6 +19,7 @@ if (process.env.NODE_ENV === 'production') {
     })
 
     const sdk = new NodeSDK({
+      traceExporter: new AzureMonitorTraceExporter(),
       instrumentations: [getNodeAutoInstrumentations()],
     })
 

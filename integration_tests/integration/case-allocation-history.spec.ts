@@ -3,6 +3,7 @@ import CaseAllocationHistoryPage from '../pages/caseAllocationHistory'
 import Page from '../pages/page'
 
 import config from '../../server/config'
+import { ColumnSortExpectations, sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Case allocation history', () => {
   let caseAllocationHistoryPage: CaseAllocationHistoryPage
@@ -172,5 +173,25 @@ context('Case allocation history', () => {
   it('navigate to find unallocated cases page via sub nav', () => {
     caseAllocationHistoryPage.unallocatedCasesSubNavLink().click()
     cy.url().should('contain', 'pdu/PDU1/find-unallocated')
+  })
+
+  it('should display ascending sort when table sort clicked', () => {
+    cy.get('table[data-persistent-id="case-allocation-history-all"]').within(() =>
+      cy.contains('button', 'Allocated by').click(),
+    )
+
+    cy.get('[data-persistent-id="allocation-history-cases-allocated-by"]').should('have.attr', 'aria-sort', 'ascending')
+  })
+
+  it('persists sort order when refreshing the page', () => {
+    cy.get('table[data-persistent-id="case-allocation-history-all"]').within(() =>
+      cy.contains('button', 'Allocated by').click(),
+    )
+
+    cy.get('[data-persistent-id="allocation-history-cases-allocated-by"]').should('have.attr', 'aria-sort', 'ascending')
+
+    cy.reload()
+
+    cy.get('[data-persistent-id="allocation-history-cases-allocated-by"]').should('have.attr', 'aria-sort', 'ascending')
   })
 })

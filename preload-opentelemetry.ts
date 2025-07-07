@@ -1,8 +1,7 @@
-// preload-opentelemetry.js
-const { NodeSDK } = require('@opentelemetry/sdk-node')
-const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node')
-const { AzureMonitorTraceExporter } = require('@azure/monitor-opentelemetry-exporter')
-const { BatchSpanProcessor } = require('@opentelemetry/sdk-trace-base')
+import { NodeSDK } from '@opentelemetry/sdk-node'
+import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node'
+import { AzureMonitorTraceExporter } from '@azure/monitor-opentelemetry-exporter'
+import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base'
 
 // Prevent double initialization
 global.otelStarted = global.otelStarted || false

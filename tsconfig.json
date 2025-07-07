@@ -27,5 +27,5 @@
     "cypress.config.ts",
     "eslint.config.mjs"
   ],
-  "include": ["server", "server.ts"]
+  "include": ["server", "preload-opentelemetry.ts", "server.ts"]
 }

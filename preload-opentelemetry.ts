@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'production') {
     })
 
     const sdk = new NodeSDK({
-      traceExporter: new AzureMonitorTraceExporter(),
+      traceExporter: new AzureMonitorTraceExporter({ connectionString: connStr }),
       instrumentations: [getNodeAutoInstrumentations()],
     })
 

@@ -173,4 +173,24 @@ context('Case allocation history', () => {
     caseAllocationHistoryPage.unallocatedCasesSubNavLink().click()
     cy.url().should('contain', 'pdu/PDU1/find-unallocated')
   })
+
+  it('should display ascending sort when table sort clicked', () => {
+    cy.get('table[data-persistent-id="case-allocation-history-all"]').within(() =>
+      cy.contains('button', 'Allocated by').click(),
+    )
+
+    cy.get('[data-persistent-id="allocation-history-cases-allocated-by"]').should('have.attr', 'aria-sort', 'ascending')
+  })
+
+  it('persists sort order when refreshing the page', () => {
+    cy.get('table[data-persistent-id="case-allocation-history-all"]').within(() =>
+      cy.contains('button', 'Allocated by').click(),
+    )
+
+    cy.get('[data-persistent-id="allocation-history-cases-allocated-by"]').should('have.attr', 'aria-sort', 'ascending')
+
+    cy.reload()
+
+    cy.get('[data-persistent-id="allocation-history-cases-allocated-by"]').should('have.attr', 'aria-sort', 'ascending')
+  })
 })

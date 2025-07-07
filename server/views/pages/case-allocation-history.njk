@@ -9,7 +9,7 @@
 
 {% set tableData = {
     firstCellIsHeader: true,
-    attributes: { 'data-module': 'moj-sortable-table' },
+    attributes: { 'data-module': 'moj-sortable-table', 'data-persistent-id': 'case-allocation-history-all'},
     head: [
         { text: 'Name / CRN',
             attributes: {
@@ -82,7 +82,7 @@
 {% for team in teams %}
     {% set tableData = {
                 firstCellIsHeader: true,
-                attributes: { 'data-module': 'moj-sortable-table' },
+                attributes: { 'data-module': 'moj-sortable-table', 'data-persistent-id': 'case-allocation-history-'+team.name },
                 head: [
                     { text: 'Name / CRN',
                         attributes: {

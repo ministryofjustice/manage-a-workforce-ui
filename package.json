@@ -91,7 +91,7 @@
     ]
   },
   "dependencies": {
-    "@babel/traverse": "7.27.4",
+    "@babel/traverse": "7.27.7",
     "@ministryofjustice/frontend": "1.8.1",
     "@redis/client": "^1.6.0",
     "accessible-autocomplete": "3.0.1",

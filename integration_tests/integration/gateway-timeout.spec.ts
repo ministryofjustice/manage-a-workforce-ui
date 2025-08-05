@@ -2,7 +2,6 @@ import Page from '../pages/page'
 import GatewayTimeoutPage from '../pages/gatewayTimeout'
 import InstructionsConfirmPage from '../pages/confirmInstructions'
 import SpoOversightOptionPage from '../pages/spoOversightOption'
-import NotFoundPage from '../pages/notFound'
 
 context('Gateway Timeout', () => {
   beforeEach(() => {

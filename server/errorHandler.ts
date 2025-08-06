@@ -25,6 +25,10 @@ export default function createErrorHandler() {
         return res.status(status).render('pages/error-notfound', {
           title: 'Not found | Manage a workforce',
         })
+      case 424:
+        return res.status(status).render('pages/error-dependency', {
+          title: 'This service is temporarily unavailable | Manage a workforce',
+        })
       case 503:
         return res.status(status).render('pages/error-unavailable', {
           title: 'Sorry, the service is unavailable | Manage a workforce',

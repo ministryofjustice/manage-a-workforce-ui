@@ -13,7 +13,7 @@ context('Dependency 424 error', () => {
     cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
   })
 
-  it('must display 424 error page when 524 error status returned', () => {
+  it('must display 424 error page when 424 error status returned', () => {
     cy.task('stubGetAllocationCompleteDetails')
     cy.task('stubSendComparisonLogToWorkload')
     cy.task('stubNotFoundEventManagerDetails')

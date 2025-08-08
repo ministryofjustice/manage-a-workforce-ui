@@ -46,7 +46,7 @@ jobs:
         id: integration-tests
         shell: bash
         run: |
-          nohup java -jar wiremock.jar --port 9091 &
+          nohup java -jar wiremock.jar --port 9090 9091 &
           nohup npm run start-feature &
           sleep 5
           npm run int-test

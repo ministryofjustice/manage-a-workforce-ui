@@ -1,0 +1,116 @@
+name: Integration tests
+on:
+  workflow_call:
+    inputs:
+      node_version_file:
+        description: "Passed to setup-node action to specify where to source the version of node from"
+        required: false
+        type: string
+        default: ".nvmrc"
+permissions:
+  contents: read
+jobs:
+  integration_test:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7.0
+        ports:
+          - 6379:6379
+        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ inputs.node_version_file }}
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ${{ inputs.node_version_file }}
+      - name: download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: npm_build_artifacts
+      - name: restore cache
+        id: restore-cache
+        uses: actions/cache/restore@v4
+        env:
+          cache-name: node-modules
+        with:
+          path: |
+            ./node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Get wiremock
+        shell: bash
+        run: |
+          curl -o wiremock.jar https://repo1.maven.org/maven2/org/wiremock/wiremock-standalone/3.9.1/wiremock-standalone-3.9.1.jar
+      - name: Prepare and run integration tests
+        id: integration-tests
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # start WireMock on all expected ports
+          for p in 9090 9091 9092 9093 9094 9095 9096; do
+            dir="/tmp/wiremock-$p"
+            mkdir -p "$dir/mappings" "$dir/__files"
+            nohup java -jar wiremock.jar \
+              --port "$p"\
+              --root-dir "$dir" \
+              >/tmp/wm-$p.log 2>&1 &
+          done
+
+          sleep 2
+
+          # wait for each WireMock to be ready
+          for p in 9090 9091 9092 9093 9094 9095 9096; do
+            echo "Waiting for WireMock on $p..."
+            for i in {1..30}; do
+              curl -fsS "http://127.0.0.1:$p/__admin" >/dev/null && break
+              sleep 0.5
+            done
+            curl -fsS "http://127.0.0.1:$p/__admin" >/dev/null || {
+              echo "WireMock on $p never came up"
+              tail -n 100 "/tmp/wm-$p.log" || true
+              exit 1
+            }
+          done
+
+          echo "== after starting wiremocks =="
+          ss -ltnp | awk 'NR==1 || /:909[0-6]/' || true
+
+          # start the app and give it a moment (or add a similar readiness check)
+          nohup npm run start-feature >/tmp/app.log 2>&1 &
+          sleep 5
+
+          # run the tests
+          npm run int-test
+        # continue-on-error: true
+        # replacing the above with if: always()
+      - name: upload results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm_integration_test_artifacts
+          path: |
+            integration_tests/videos/
+            integration_tests/screenshots/
+            coverage/
+            test_results/
+            ctrf/
+      - name: publish test report
+        if: ${{ !cancelled() && github.event.repository.visibility == 'public' }}
+        uses: dorny/test-reporter@v2
+        with:
+          artifact: npm_integration_test_artifacts
+          name: Test Report
+          path: 'test_results/**/*.xml'
+          reporter: java-junit
+          fail-on-empty: false
+          fail-on-error: false
+          list-suites: 'failed'
+          list-tests: 'failed'
+      - name: fail the action if the tests failed
+        if: ${{ steps.integration-tests.outcome == 'failure' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            core.setFailed('Integration tests failed')

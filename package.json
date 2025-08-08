@@ -22,6 +22,7 @@
     "lint": "eslint . --cache --max-warnings 0",
     "typecheck": "tsc && tsc -p integration_tests",
     "test": "jest --runInBand",
+    "test:ci": "JEST_JUNIT_OUTPUT_DIR=test_results/jest JEST_JUNIT_OUTPUT_NAME=junit.xml jest --ci --reporters=default --reporters=jest-junit --coverage",
     "security_audit": "npx audit-ci --config audit-ci.json",
     "int-test": "cypress run --config video=false --config-file=integration_tests/cypress.config.ts",
     "int-test-ui": "cypress open --config-file=integration_tests/cypress.config.ts",

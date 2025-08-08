@@ -4,7 +4,7 @@ generic-service:
   replicaCount: 2
 
   image:
-    repository: quay.io/hmpps/manage-a-workforce-ui
+    repository: ghcr.io/ministryofjustice/manage-a-workforce-ui
     tag: app_version # override at deployment time
     port: 3000
 

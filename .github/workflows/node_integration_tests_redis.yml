@@ -58,6 +58,8 @@ jobs:
               >/tmp/wm-$p.log 2>&1 &
           done
 
+          sleep 2
+
           # wait for each WireMock to be ready
           for p in 9090 9091 9092 9093 9094 9095 9096; do
             echo "Waiting for WireMock on $p..."

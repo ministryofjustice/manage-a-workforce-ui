@@ -42,12 +42,6 @@ jobs:
         shell: bash
         run: |
           curl -o wiremock.jar https://repo1.maven.org/maven2/org/wiremock/wiremock-standalone/3.9.1/wiremock-standalone-3.9.1.jar
-      - name: Check who is using test ports
-        shell: bash
-        run: |
-          echo "== before =="
-          ss -ltnp | awk 'NR==1 || /:909[0-6]/' || true
-          lsof -iTCP:9090 -sTCP:LISTEN || true
       - name: Prepare and run integration tests
         id: integration-tests
         shell: bash
@@ -56,7 +50,12 @@ jobs:
 
           # start WireMock on all expected ports
           for p in 9090 9091 9092 9093 9094 9095 9096; do
-            nohup java -jar wiremock.jar --port "$p" >/tmp/wm-$p.log 2>&1 &
+            dir="/tmp/wiremock-$p"
+            mkdir -p "$dir/mappings" "$dir/__files"
+            nohup java -jar wiremock.jar \
+              --port "$p"\
+              --root-dir "$dir" \
+              >/tmp/wm-$p.log 2>&1 &
           done
 
           # wait for each WireMock to be ready
@@ -72,6 +71,9 @@ jobs:
               exit 1
             }
           done
+
+          echo "== after starting wiremocks =="
+          ss -ltnp | awk 'NR==1 || /:909[0-6]/' || true
 
           # start the app and give it a moment (or add a similar readiness check)
           nohup npm run start-feature >/tmp/app.log 2>&1 &

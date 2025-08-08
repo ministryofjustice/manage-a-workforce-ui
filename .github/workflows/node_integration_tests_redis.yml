@@ -46,9 +46,32 @@ jobs:
         id: integration-tests
         shell: bash
         run: |
-          nohup java -jar wiremock.jar --port 9090 9091 &
-          nohup npm run start-feature &
+          set -euo pipefail
+
+          # start WireMock on all expected ports
+          for p in 9090 9091 9092 9093 9094 9095 9096; do
+            nohup java -jar wiremock.jar --port "$p" >/tmp/wm-$p.log 2>&1 &
+          done
+
+          # wait for each WireMock to be ready
+          for p in 9090 9091 9092 9093 9094 9095 9096; do
+            echo "Waiting for WireMock on $p..."
+            for i in {1..30}; do
+              curl -fsS "http://127.0.0.1:$p/__admin" >/dev/null && break
+              sleep 0.5
+            done
+            curl -fsS "http://127.0.0.1:$p/__admin" >/dev/null || {
+              echo "WireMock on $p never came up"
+              tail -n 100 "/tmp/wm-$p.log" || true
+              exit 1
+            }
+          done
+
+          # start the app and give it a moment (or add a similar readiness check)
+          nohup npm run start-feature >/tmp/app.log 2>&1 &
           sleep 5
+
+          # run the tests
           npm run int-test
         # continue-on-error: true
         # replacing the above with if: always()

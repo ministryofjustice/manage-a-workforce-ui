@@ -69,7 +69,7 @@ export default class AllocateCasesController {
     workload.sort(sortPractitionersByGrade)
 
     res.render('pages/team-workload', {
-      title: 'Team Workload | Manage a workforce',
+      title: 'Team workload | Manage a workforce',
       teamDetails,
       teamCode,
       pduCode,

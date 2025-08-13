@@ -53,7 +53,7 @@ export default class AllocationsController {
       tier: response.tier,
       name: response.name,
       convictionNumber: response.convictionNumber,
-      title: `${response.name} | Summary | Manage a workforce`,
+      title: 'Case summary | Manage a Workforce',
       pduCode,
       outOfAreaTransfer: response.outOfAreaTransfer,
       laoCase,
@@ -112,7 +112,7 @@ export default class AllocationsController {
       viewAll,
       totalPreviousCount,
       convictionNumber: probationRecord.convictionNumber,
-      title: `${probationRecord.name} | Probation record | Manage a workforce`,
+      title: 'Probation record | Manage a workforce',
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
       laoCase,
@@ -135,7 +135,7 @@ export default class AllocationsController {
 
     risk.name = unescapeApostrophe(risk.name)
     res.render('pages/risk', {
-      title: `${risk.name} | Risk | Manage a workforce`,
+      title: 'Risk | Manage a workforce',
       data: risk,
       crn: risk.crn,
       tier: risk.tier,
@@ -164,7 +164,7 @@ export default class AllocationsController {
     )
     caseOverview.name = unescapeApostrophe(caseOverview.name)
     res.render('pages/documents', {
-      title: `${caseOverview.name} | Documents | Manage a workforce`,
+      title: 'Documents | Manage a workforce',
       crn: caseOverview.crn,
       tier: caseOverview.tier,
       name: caseOverview.name,
@@ -222,7 +222,7 @@ export default class AllocationsController {
     const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
     const error = req.query.error === 'true'
     return res.render('pages/choose-practitioner', {
-      title: `${name} | Choose practitioner | Manage a workforce`,
+      title: 'Choose practitioner | Manage a workforce',
       name,
       crn: allocationInformationByTeam.crn,
       tier: allocationInformationByTeam.tier,
@@ -277,7 +277,7 @@ export default class AllocationsController {
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
     response.name.surname = unescapeApostrophe(response.name.surname)
     res.render('pages/allocate-to-practitioner', {
-      title: `${response.name.combinedName} | Allocate to practitioner | Manage a workforce`,
+      title: 'Allocate to practitioner | Manage a workforce',
       data: response,
       name: response.name.combinedName,
       crn,
@@ -323,7 +323,7 @@ export default class AllocationsController {
     }
 
     res.render('pages/confirm-instructions', {
-      title: `${response.name.combinedName} | Review allocation notes | Manage a workforce`,
+      title: 'Review allocation notes | Manage a workforce',
       data: response,
       name: response.name.combinedName,
       crn: response.crn,
@@ -371,6 +371,7 @@ export default class AllocationsController {
       staffTeamCode,
       convictionNumber,
       pduCode,
+      title: 'Edit or save allocation notes | Manage a Workforce',
       tier: response.tier,
       name: response.name.combinedName,
       data: response,
@@ -403,7 +404,7 @@ export default class AllocationsController {
     }
 
     res.render(nextPage, {
-      title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
+      title: 'Practitioner workload | Manage a Workforce',
       data,
       officerTeamCode: offenderManagerTeamCode,
       convictionNumber,
@@ -449,7 +450,7 @@ export default class AllocationsController {
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
     res.render('pages/active-cases', {
-      title: `${response.name.combinedName} | Active cases | Manage a workforce`,
+      title: 'Active cases | Manage a workforce',
       data: response,
       officerTeamCode: offenderManagerTeamCode,
       cases,
@@ -672,7 +673,7 @@ export default class AllocationsController {
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
     res.render('pages/spo-oversight-contact', {
-      title: `${response.name.combinedName} | SPO Oversight Contact | Manage a workforce`,
+      title: 'Create an SPO Oversight contact | Manage a Workforce',
       data: response,
       name: response.name.combinedName,
       crn: response.crn,

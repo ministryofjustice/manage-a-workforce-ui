@@ -56,7 +56,7 @@ export default class AllocationHistoryController {
     res.render('pages/case-allocation-history', {
       isFindUnalllocatedCasesPage: false,
       isCaseAllocationHistoryPage: true,
-      title: 'Cases allocated in last 7 days | Manage a workforce',
+      title: 'Cases allocated in last 30 days | Manage a workforce',
       pduCode,
       pduDetails,
       casesLength: 0,
@@ -93,7 +93,7 @@ export default class AllocationHistoryController {
     res.render('pages/case-allocation-history', {
       isFindUnalllocatedCasesPage: false,
       isCaseAllocationHistoryPage: true,
-      title: 'Cases allocated in last 7 days | Manage a workforce',
+      title: 'Cases allocated in last 30 days | Manage a workforce',
       pduCode,
       pduDetails,
       casesLength: 0,

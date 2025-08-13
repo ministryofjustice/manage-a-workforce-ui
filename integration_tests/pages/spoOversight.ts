@@ -2,7 +2,7 @@ import Page, { PageElement } from './page'
 
 export default class AllocationCompletePage extends Page {
   constructor() {
-    super('SPO Oversight Contact')
+    super('Create an SPO Oversight contact')
   }
 
   checkOnPage() {

@@ -45,7 +45,7 @@
                     {
                         text: 'Summary',
                         href: '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/case-view',
-                        active: 'Summary' in title
+                        active: 'Case summary' in title
                     },
                     {
                         text: 'Probation record',
@@ -71,13 +71,13 @@
     </div>
     <form data-validate-form="case-view" method="post" action="{{"/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/case-view"}}">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        {{ instructions({ 
+        {{ instructions({
                 inGridRow: true,
                 convictionNumber: convictionNumber,
                 crn: crn,
                 errorMessage: errors | findError('instructions'),
                 laoCase: laoCase
-            }) 
+            })
         }}
 
         {{ govukButton({

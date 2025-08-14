@@ -26,7 +26,7 @@ export default class ProbationEstateController {
     )
 
     res.render('pages/select-teams', {
-      title: `Select your teams | Manage a workforce`,
+      title: 'Select your teams | Manage a workforce',
       data: response.teams.sort((a, b) => a.name.localeCompare(b.name)),
       error,
       pduName: response.name,
@@ -65,7 +65,7 @@ export default class ProbationEstateController {
     })
 
     res.render('pages/select-region', {
-      title: `Select your region | Manage a workforce`,
+      title: 'Select your region | Manage a workforce',
       data: regions.sort((a, b) => a.name.localeCompare(b.name)),
       error,
     })
@@ -92,7 +92,7 @@ export default class ProbationEstateController {
       regionCode,
     )
     res.render('pages/select-probation-delivery-unit', {
-      title: `Select your PDU | Manage a workforce`,
+      title: 'Select your PDU | Manage a workforce',
       regionName: response.name,
       probationDeliveryUnits: response.probationDeliveryUnits.sort((a, b) => a.name.localeCompare(b.name)),
       error,

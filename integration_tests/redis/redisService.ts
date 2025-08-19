@@ -1,11 +1,10 @@
-import { RedisFlushModes } from '@redis/client/dist/lib/commands/FLUSHALL'
 import { createRedisClient } from '../../server/data/redisClient'
 
 export default class RedisService {
-  async deleteAll(): Promise<string> {
+  async deleteAll(): Promise<ReturnType<typeof redisClient.flushAll>> {
     const redisClient = createRedisClient()
     await redisClient.connect()
-    const result = await redisClient.flushAll(RedisFlushModes.SYNC)
+    const result = await redisClient.flushAll('SYNC')
     await redisClient.quit()
     return result
   }

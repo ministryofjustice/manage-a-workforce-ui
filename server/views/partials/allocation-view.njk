@@ -4,10 +4,15 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set notification %}
-  <p class="govuk-notification-banner__heading">
-  <p class="govuk-body">Allocate a Person on Probation will be unavailable from: <strong>5pm Friday 25 July until 9am on
-      Monday 28 July</strong>. This is due to updates to NDelius.</p>
-  </p>
+<p class="govuk-notification-banner__heading">
+    <p class="govuk-body">
+        <strong>Changes to limited access offender (LAO) cases</strong>
+        <br/>
+        If you are not excluded from accessing any LAO case you will now be able to view and allocate all cases of this type.
+        <br/>
+        <a class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold" href={{"/whats-new"}}>Read more about this change</a>.
+        </p>
+</p>
 {% endset %}
 
 {% block content %}

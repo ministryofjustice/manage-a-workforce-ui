@@ -54,7 +54,7 @@ export default class WorkloadController {
     allocationCompleteDetails.name.surname = unescapeApostrophe(allocationCompleteDetails.name.surname)
     allocationCompleteDetails.name.combinedName = unescapeApostrophe(allocationCompleteDetails.name.combinedName)
     return res.render('pages/allocation-complete', {
-      title: `${allocationCompleteDetails.name.combinedName} | Case allocated | Manage a workforce`,
+      title: 'Case allocated | Manage a Workforce',
       data: allocationCompleteDetails,
       crn,
       convictionNumber,

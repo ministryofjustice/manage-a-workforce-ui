@@ -2,7 +2,7 @@ import Page, { PageElement } from './page'
 
 export default class TeamWorkloadPage extends Page {
   constructor() {
-    super('Team Workload')
+    super('Team workload')
   }
 
   secondaryText = (): PageElement => cy.get('.maw-secondary-text-col')

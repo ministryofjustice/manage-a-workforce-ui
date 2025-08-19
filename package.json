@@ -118,7 +118,7 @@
     "jquery-ui": "1.14.1",
     "jwt-decode": "4.0.0",
     "nocache": "4.0.0",
-    "node": "^20.16.0",
+    "node": "^20.19.3",
     "nunjucks": "3.2.4",
     "passport": "0.7.0",
     "passport-oauth2": "1.8.0",

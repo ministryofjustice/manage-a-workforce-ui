@@ -92,6 +92,8 @@ export default function routes(services: Services): Router {
 
   post('/pdu/:pduCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
     const { crn, convictionNumber, pduCode } = req.params
+    const { instructions } = req.body
+    await services.allocationsService.setNotesCache(crn, convictionNumber, res.locals.user.username, { instructions })
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner`)
   })
 
@@ -122,6 +124,8 @@ export default function routes(services: Services): Router {
 
   post('/pdu/:pduCode/:crn/convictions/:convictionNumber/choose-practitioner', async (req, res) => {
     const { crn, convictionNumber, pduCode } = req.params
+    const { instructions } = req.body
+    await services.allocationsService.setNotesCache(crn, convictionNumber, res.locals.user.username, { instructions })
     await allocationsController.selectAllocateOffenderManager(req, res, crn, convictionNumber, pduCode)
   })
 

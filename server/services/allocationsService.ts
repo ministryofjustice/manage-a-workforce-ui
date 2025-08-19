@@ -1,3 +1,4 @@
+import { createClient } from 'redis'
 import RestClient from '../data/restClient'
 import logger from '../../logger'
 import { ApiConfig } from '../config'
@@ -14,12 +15,47 @@ import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
 import AllocationLAOStatus from '../models/AllocationLAOStatus'
 import LaoStatusList from '../models/LaoStatusList'
 import RegionList from '../models/RegionList'
+import { createRedisClient } from '../data/redisClient'
 
+interface CachedValue {
+  instructions?: string
+  isSensitive?: boolean
+  emailCopyOptOut?: boolean
+  person?: { email: string }[]
+}
 export default class AllocationsService {
   config: ApiConfig
 
+  redisClient: ReturnType<typeof createClient>
+
   constructor(config: ApiConfig) {
     this.config = config
+    this.initializeRedisClient()
+  }
+
+  private async initializeRedisClient() {
+    this.redisClient = await createRedisClient().connect()
+  }
+
+  async getNotesCache(crn: string, convictionNumber: string, staffCode: string): Promise<CachedValue> {
+    const cacheKey = `allocation_notes:${crn}:${convictionNumber}:${staffCode}`
+    const cachedValue = await this.redisClient.json.get(cacheKey)
+    return (cachedValue ?? {}) as CachedValue
+  }
+
+  async setNotesCache(crn: string, convictionNumber: string, staffCode: string, value: CachedValue): Promise<void> {
+    const cachedValue = await this.getNotesCache(crn, convictionNumber, staffCode)
+
+    const cacheKey = `allocation_notes:${crn}:${convictionNumber}:${staffCode}`
+    await this.redisClient.json.set(cacheKey, '$', {
+      ...cachedValue,
+      ...value,
+    })
+  }
+
+  async clearNotesCache(crn: string, convictionNumber: string, staffCode: string) {
+    const cacheKey = `allocation_notes:${crn}:${convictionNumber}:${staffCode}`
+    await this.redisClient.del(cacheKey)
   }
 
   async getLaoStatus(crn: string, token: string): Promise<boolean> {

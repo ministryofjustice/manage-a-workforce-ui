@@ -161,7 +161,7 @@
     "nodemon": "3.1.10",
     "prettier": "2.8.8",
     "sass": "1.90.0",
-    "superagent": "9.0.2",
+    "superagent": "10.2.3",
     "supertest": "7.1.4",
     "ts-jest": "29.4.1",
     "typescript": "5.9.2"

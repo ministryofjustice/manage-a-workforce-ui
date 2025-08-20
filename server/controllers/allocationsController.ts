@@ -617,7 +617,11 @@ export default class AllocationsController {
       laoCase,
     )
 
-    this.allocationsService.clearNotesCache(crn, `${convictionNumber}`, res.locals.user.username)
+    await this.allocationsService.setNotesCache(crn, `${convictionNumber}`, res.locals.user.username, {
+      sendEmailCopyToAllocatingOfficer,
+      spoOversightContact,
+      spoOversightSensitive,
+    })
 
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
   }
@@ -669,7 +673,11 @@ export default class AllocationsController {
       laoCase,
     )
 
-    this.allocationsService.clearNotesCache(crn, `${convictionNumber}`, res.locals.user.username)
+    await this.allocationsService.setNotesCache(crn, `${convictionNumber}`, res.locals.user.username, {
+      sendEmailCopyToAllocatingOfficer,
+      spoOversightContact,
+      spoOversightSensitive,
+    })
 
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
   }

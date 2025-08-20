@@ -22,6 +22,9 @@ interface CachedValue {
   isSensitive?: boolean
   emailCopyOptOut?: boolean
   person?: { email: string }[]
+  sendEmailCopyToAllocatingOfficer?: boolean
+  spoOversightContact?: string
+  spoOversightSensitive?: boolean
 }
 export default class AllocationsService {
   config: ApiConfig
@@ -51,6 +54,8 @@ export default class AllocationsService {
       ...cachedValue,
       ...value,
     })
+
+    await this.redisClient.expire(cacheKey, 60 * 60 * 24 * 7)
   }
 
   async clearNotesCache(crn: string, convictionNumber: string, staffCode: string) {

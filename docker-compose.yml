@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   redis:
-    image: 'redis/redis-stack:latest'
+    image: 'redis/redis-stack:7.2.0-v18'
     networks:
       - hmpps_int
     environment:

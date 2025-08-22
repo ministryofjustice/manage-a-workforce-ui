@@ -41,6 +41,9 @@
       </div>
     </div>
   {% endif %}
+  {% block javascripts %}
+    <script src="/assets/cache-instructions.js"></script>
+  {% endblock %}
   {# {% block javascripts %}
     <script src="/assets/instructions.js"></script>
     {% if params.inGridRow %}

@@ -25,6 +25,8 @@ context('Instructions text', () => {
     riskPage.instructionsTextArea().should('exist')
     riskPage.instructionsTextArea().clear()
     riskPage.instructionsTextArea().type('Test Summary')
+    /* eslint-disable-next-line cypress/no-unnecessary-waiting */
+    cy.wait(1000)
     cy.task('stubGetUnallocatedCase')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -39,6 +41,8 @@ context('Instructions text', () => {
     summaryPage.instructionsTextArea().should('exist')
     summaryPage.instructionsTextArea().clear()
     summaryPage.instructionsTextArea().type('Test Probation Record')
+    /* eslint-disable-next-line cypress/no-unnecessary-waiting */
+    cy.wait(1000)
     cy.task('stubGetProbationRecord')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
@@ -53,6 +57,8 @@ context('Instructions text', () => {
     summaryPage.instructionsTextArea().should('exist')
     summaryPage.instructionsTextArea().clear()
     summaryPage.instructionsTextArea().type('Test Risk')
+    /* eslint-disable-next-line cypress/no-unnecessary-waiting */
+    cy.wait(1000)
     cy.task('stubGetRisk')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -68,41 +74,14 @@ context('Instructions text', () => {
     summaryPage.instructionsTextArea().should('exist')
     summaryPage.instructionsTextArea().clear()
     summaryPage.instructionsTextArea().type('Test Documents')
+    /* eslint-disable-next-line cypress/no-unnecessary-waiting */
+    cy.wait(1000)
     cy.task('stubGetCurrentlyManagedCaseOverview')
     cy.task('stubGetDocuments')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/documents')
     const documentsPage = Page.verifyOnPage(DocumentsPage)
     documentsPage.instructionsTextArea().should('have.value', 'Test Documents')
-  })
-
-  it('Instructions text should be removed after TTL expired', () => {
-    cy.task('stubGetUnallocatedCase')
-    cy.signIn()
-    cy.clock()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
-    const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.instructionsTextArea().should('exist')
-    summaryPage.instructionsTextArea().clear()
-    summaryPage.instructionsTextArea().type('Test Documents')
-    // Visit random non-instructions page to save instructions
-    cy.task('stubGetAllRegions')
-    cy.visit('/regions')
-    cy.task('stubGetConfirmInstructions')
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
-    const instructionsPage = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsPage.instructionsTextArea().should('have.value', 'Test Documents')
-    // Must reset clock befoe changing the time
-    cy.clock().then(clock => {
-      clock.restore()
-    })
-    cy.clock(FOUR_WEEKS_AND_A_DAY_IN_MS)
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes').then(_ => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      expect(localStorage.getItem('instructions-save-J678910-1')).to.be.null
-    })
-    const instructionsPageAfterTimeout = Page.verifyOnPage(InstructionsConfirmPage)
-    instructionsPageAfterTimeout.instructionsTextArea().should('have.value', '')
   })
 
   it('Instructions hint text should display header text', () => {

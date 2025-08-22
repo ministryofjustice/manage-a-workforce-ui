@@ -316,5 +316,18 @@ export default function routes(services: Services): Router {
   get('/whats-new', async (req, res) => {
     await technicalUpdatesController.getTechnicalUpdates(req, res)
   })
+
+  post('/notes/:crn/:convictionNumber', async (req, res) => {
+    const { crn, convictionNumber } = req.params
+    const { instructions } = req.body
+
+    console.log('CACHING: ', crn, convictionNumber, instructions)
+    await services.allocationsService.setNotesCache(crn, convictionNumber, res.locals.user.username, {
+      instructions,
+    })
+
+    res.json(true)
+  })
+
   return router
 }

@@ -3,9 +3,6 @@ import Page from '../pages/page'
 import SummaryPage from '../pages/summary'
 import ProbationRecordPage from '../pages/probationRecord'
 import RiskPage from '../pages/risk'
-import InstructionsConfirmPage from '../pages/confirmInstructions'
-
-const FOUR_WEEKS_AND_A_DAY_IN_MS = (4 * 7 + 1) * 24 * 3600 * 1000
 
 context('Instructions text', () => {
   beforeEach(() => {

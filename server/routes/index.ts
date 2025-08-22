@@ -321,7 +321,6 @@ export default function routes(services: Services): Router {
     const { crn, convictionNumber } = req.params
     const { instructions } = req.body
 
-    console.log('CACHING: ', crn, convictionNumber, instructions)
     await services.allocationsService.setNotesCache(crn, convictionNumber, res.locals.user.username, {
       instructions,
     })

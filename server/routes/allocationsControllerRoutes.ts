@@ -2,7 +2,7 @@ import e, { type RequestHandler } from 'express'
 
 import AllocationsController from '../controllers/allocationsController'
 import type { Services } from '../services'
-import allocationsCaseViewRoutes from './allocationsCaseViewRoutes'
+import allocationsControllerCaseViewRoutes from './allocationsControllerCaseViewRoutes'
 
 export default function allocationsControllerRoutes(
   services: Services,
@@ -16,7 +16,7 @@ export default function allocationsControllerRoutes(
     services.probationEstateService,
   )
 
-  allocationsCaseViewRoutes(services, get, post, allocationsController)
+  allocationsControllerCaseViewRoutes(services, get, post, allocationsController)
 
   get('/pdu/:pduCode/:crn/convictions/:convictionNumber/choose-practitioner', async (req, res) => {
     const { crn, convictionNumber, pduCode } = req.params

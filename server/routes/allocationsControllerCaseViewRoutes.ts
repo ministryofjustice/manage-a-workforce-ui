@@ -3,7 +3,7 @@ import e, { type RequestHandler } from 'express'
 import AllocationsController from '../controllers/allocationsController'
 import type { Services } from '../services'
 
-export default function allocationsCaseViewRoutes(
+export default function allocationsControllerCaseViewRoutes(
   services: Services,
   get: (path: string, handler: e.RequestHandler) => e.Router,
   post: (path: string, handler: e.RequestHandler) => e.Router,

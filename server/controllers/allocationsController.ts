@@ -643,7 +643,7 @@ export default class AllocationsController {
     )
 
     const sendEmailCopyToAllocatingOfficer = !emailCopyOptOut
-    const otherEmails = person.map(p => p.email).filter(email => email)
+    const otherEmails = person?.map(p => p.email).filter(email => email)
     const spoOversightContact = instructions
     const spoOversightSensitive = isSensitive
     const allocationNotes = instructions

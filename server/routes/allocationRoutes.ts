@@ -34,11 +34,6 @@ export default function getAllocationRoutes(
     await findUnallocatedCasesController.findUnallocatedCases(req, res, pduCode)
   })
 
-  get('/pdu/:pduCode/case-allocation-history', async (req, res) => {
-    const { pduCode } = req.params
-    await allocationHistoryController.getCasesAllocatedByTeam(req, res, pduCode)
-  })
-
   post('/pdu/:pduCode/find-unallocated', async (req, res) => {
     const { pduCode } = req.params
     await findUnallocatedCasesController.submitFindUnallocatedCases(req, res, pduCode, req.body)
@@ -57,5 +52,10 @@ export default function getAllocationRoutes(
   get('/pdu/:pduCode/:teamCode/team-workload', async (req, res) => {
     const { teamCode, pduCode } = req.params
     await allocateCasesController.getTeamWorkload(req, res, pduCode, teamCode)
+  })
+
+  get('/pdu/:pduCode/case-allocation-history', async (req, res) => {
+    const { pduCode } = req.params
+    await allocationHistoryController.getCasesAllocatedByTeam(req, res, pduCode)
   })
 }

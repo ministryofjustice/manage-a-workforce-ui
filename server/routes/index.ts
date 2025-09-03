@@ -36,6 +36,17 @@ export default function routes(services: Services): Router {
     await staffController.lookup(req, res, searchString as string)
   })
 
+  post('/notes/:crn/:convictionNumber', async (req, res) => {
+    const { crn, convictionNumber } = req.params
+    const { instructions } = req.body
+
+    await services.allocationsService.setNotesCache(crn, convictionNumber, res.locals.user.username, {
+      instructions,
+    })
+
+    res.json(true)
+  })
+
   post('/pdu/:pduCode/:crn/convictions/:convictionNumber/case-view', async (req, res) => {
     const { crn, convictionNumber, pduCode } = req.params
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/choose-practitioner`)

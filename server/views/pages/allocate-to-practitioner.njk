@@ -1,7 +1,7 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "../components/pop/macro.njk" import pop %}
-{% from "../components/instructions/macro.njk" import instructions %}
+{% from "../components/instructions/macro.njk" import instructionsForm %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set offenderManagerDetails = data.staff.name.combinedName + (' (' + data.staff.grade + ')' if data.staff.grade) %}
@@ -55,13 +55,14 @@
     </div>
     <form data-validate-form="case-view">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        {{ instructions({
+        {{ instructionsForm({
             inGridRow: true,
             convictionNumber: convictionNumber,
             crn: crn,
             errorMessage: errors | findError('instructions'),
             rows: 10,
-            laoCase: laoCase
+            laoCase: laoCase,
+            instructions: instructions
         })
     }}
         <div class="govuk-form-group govuk-!-margin-top-7">

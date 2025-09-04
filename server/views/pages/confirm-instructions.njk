@@ -7,7 +7,7 @@
 {%- from "govuk/components/input/macro.njk" import govukInput -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "../components/instructions/macro.njk" import instructions %}
+{% from "../components/instructions/macro.njk" import instructionsForm %}
 {% from "../components/pop/macro.njk" import pop %}
 
 {% set emailCheckbox %}
@@ -16,7 +16,7 @@
     items: [{
         text: 'Tick the box if you do not want to receive a copy.',
         value: 'yes',
-        checked: confirmInstructionForm.emailCopyOptOut
+        checked: emailCopyOptOut
     }],
     classes: 'govuk-checkboxes--small'
 })}}
@@ -67,7 +67,7 @@
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
           {% if laoCase == false %}
             {{
-            instructions({
+            instructionsForm({
                 titleText: "Review your allocation notes",
                 html: ('<p class="govuk-body">These notes will be sent in the allocation email to <strong>' + data.staff.name.combinedName + '</strong> (<em>' + data.staff.email + '</em>).</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
                 convictionNumber: convictionNumber,
@@ -76,12 +76,13 @@
                 inGridRow: false,
                 rows: 20,
                 errorMessage: errors | findError('instructions'),
-                laoCase: laoCase
+                laoCase: laoCase,
+                instructions: instructions
             })
             }}
           {% else %}
             {{
-            instructions({
+            instructionsForm({
                 titleText: "Review your allocation notes",
                 html: ('<div class="moj-banner" role="region" aria-label="information" id="not-included-banner"><h2 class="govuk-heading-s" id="not-included-warning-text">These notes will not be included in the email to the probation practitioner as this is a restricted access case.</h2></div><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
                 convictionNumber: convictionNumber,
@@ -90,14 +91,15 @@
                 inGridRow: false,
                 rows: 20,
                 errorMessage: errors | findError('instructions'),
-                laoCase: laoCase
+                laoCase: laoCase,
+                instructions: instructions
             })
             }}
           {% endif %}
 
         </div>
         <div class="govuk-form-group govuk-allocations-emails-form">
-          {% if confirmInstructionForm.person.length === 0 %}
+          {% if person.length === 0 %}
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
               <h3 class="govuk-fieldset__heading">Does this contain sensitive information?</h3>
             </legend>
@@ -107,7 +109,7 @@
             items: [{
                 text: 'Yes, it contains sensitive information',
                 value: 'yes',
-                checked: confirmInstructionForm.isSensitive
+                checked: isSensitive
                 }],
             classes: 'govuk-checkboxes--medium margin-bottom-10'
         })}}
@@ -118,7 +120,7 @@
             </legend>
           {% endif %}
           <div class="govuk-email-list">
-            {% for person in confirmInstructionForm.person %}
+            {% for person in person %}
 
               <div class="govuk-email-list-item">
                 <div>
@@ -209,16 +211,16 @@
 
           </div>
         </div>
-        </form>
-      </div>
+      </form>
     </div>
   </div>
+</div>
 
 {% endblock %}
 
 {% block javascripts %}
-  <script src="/assets/accessible-autocomplete.min.js"></script>
-  <script id="autocomplete-script" src="/assets/js/autocomplete-email.js" {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}></script>
-  <script src="/assets/validator.js"></script>
-  <script src="/assets/validation.js"></script>
+<script src="/assets/accessible-autocomplete.min.js"></script>
+<script id="autocomplete-script" src="/assets/js/autocomplete-email.js" {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}></script>
+<script src="/assets/validator.js"></script>
+<script src="/assets/validation.js"></script>
 {% endblock %}

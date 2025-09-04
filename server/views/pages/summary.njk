@@ -3,8 +3,7 @@
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
 {% from "../components/risk-summary/macro.njk" import riskSummaryBadge %}
-{% from "../components/instructions/macro.njk" import instructions %}
-{% set documentTabHref = '/pdu/' + pduCode+ '/' + crn + '/convictions/' + convictionNumber + '/documents' %}
+{% set documentTabHref = '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/documents' %}
 {% set offenceData = data.offences %}
 {%- set offences = [] -%}
 {%- for offence in offenceData  if offenceData %}
@@ -79,14 +78,16 @@
                                     {{ offence.mainCategory }}
                                 </h3>
                                 <p class="govuk-body-s maw-secondary-text-col">
-                                    <strong>{{ offence.subCategory }}</strong></p>
+                                    <strong>{{ offence.subCategory }}</strong>
+                                </p>
                             {% endfor -%}
                         {% else %}
                             <ol class="govuk-list govuk-list--number">
                                 {%- for offence in offences  if offences %}
                                     <li>{{ offence.mainCategory }}</li>
                                     <p class="govuk-body-s maw-secondary-text-col">
-                                        <strong>{{ offence.subCategory }}</strong></p>
+                                        <strong>{{ offence.subCategory }}</strong>
+                                    </p>
                                 {% endfor -%}
                             </ol>
                         {% endif %}
@@ -115,10 +116,11 @@
                         <ul class="govuk-list govuk-list--bullet">
                             {%- for requirement in data.requirements  if data.requirements %}
                                 {% if requirement.subCategory %}
-                                    <li>{{ requirement.mainCategory }}: {{ requirement.subCategory }} {{ requirement.length }}</li>
+                                    <li>{{ requirement.mainCategory }}: {{ requirement.subCategory }}
+                                        {{ requirement.length }}</li>
                                 {% else %}
                                     <li>{{ requirement.mainCategory }}: {{ requirement.length }}</li>
-                                {% endif %} 
+                                {% endif %}
                             {% endfor -%}
                         </ul>
                         {%- for requirement in data.requirements if data.requirements %}
@@ -192,8 +194,4 @@
         </div>
     </section>
 
-
 {% endblock %}
-
-
-

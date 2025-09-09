@@ -37,3 +37,4 @@ jobs:
     with:
       environment: ${{ inputs.environment }}
       app_version: ${{ inputs.version }}
+      slack_notification: 'true'

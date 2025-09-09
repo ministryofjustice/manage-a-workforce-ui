@@ -6,9 +6,9 @@
 {% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-{% from "../components/instructions/macro.njk" import instructions %}
+{% from "../components/instructions/macro.njk" import instructionsForm %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "../components/instructions/macro.njk" import instructions %}
+
 {% from "../components/pop/macro.njk" import pop %}
 
 {% from "../components/pop/macro.njk" import pop %}
@@ -215,11 +215,12 @@
             }) }}
             </div>
 
-            {{ instructions({
+            {{ instructionsForm({
                 inGridRow: true,
                 convictionNumber: convictionNumber,
                 crn: crn,
-               errorMessage: errors | findError('instructions')
+               errorMessage: errors | findError('instructions'),
+               instructions: instructions
             })
         }}
 

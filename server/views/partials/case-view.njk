@@ -2,7 +2,7 @@
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "../components/pop/macro.njk" import pop %}
-{% from "../components/instructions/macro.njk" import instructions %}
+{% from "../components/instructions/macro.njk" import instructionsForm %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block beforeContent %}
@@ -71,13 +71,14 @@
     </div>
     <form data-validate-form="case-view" method="post" action="{{"/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/case-view"}}">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        {{ instructions({
+        {{ instructionsForm({ 
                 inGridRow: true,
                 convictionNumber: convictionNumber,
                 crn: crn,
                 errorMessage: errors | findError('instructions'),
-                laoCase: laoCase
-            })
+                laoCase: laoCase,
+                instructions: instructions
+            }) 
         }}
 
         {{ govukButton({

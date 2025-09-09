@@ -5,7 +5,7 @@
 {%- from "govuk/components/input/macro.njk" import govukInput -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "../components/instructions/macro.njk" import instructions %}
+{% from "../components/instructions/macro.njk" import instructionsForm %}
 {% from "../components/pop/macro.njk" import pop %}
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -47,17 +47,18 @@
             <form data-validate-form="spo-oversight" data-disable="yes" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-allocation' }}" method="post">
                 <div class="govuk-form-group">
                     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-                    {{ instructions({
-                titleText: "Create an SPO Oversight contact",
-                html: ('<p class="govuk-body">This should include the rationale for your allocation decision, and your notes to the practitioner about the case. It will be saved in NDelius</p>') | safe,
-                convictionNumber: convictionNumber,
-                hintText: ' ',
+                    {{ instructionsForm({
+                        titleText: "Create an SPO Oversight contact",
+                        html: ('<p class="govuk-body">This should include the rationale for your allocation decision, and your notes to the practitioner about the case. It will be saved in NDelius</p>') | safe,
+                        convictionNumber: convictionNumber,
+                        hintText: ' ',
 
-                crn: crn,
-                inGridRow: false,
-                rows: 20,
-                errorMessage: errors | findError('instructions')
-            }) }}
+                        crn: crn,
+                        inGridRow: false,
+                        rows: 20,
+                        errorMessage: errors | findError('instructions'),
+                        instructions: instructions
+                    }) }}
                 </div>
                 <div class="govuk-form-group">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
@@ -70,7 +71,7 @@
                         items: [{
                             text: 'Yes, it contains sensitive information',
                             value: 'yes',
-                            checked: confirmInstructionForm.isSensitive
+                            checked: isSensitive
                             }],
                         classes: 'govuk-checkboxes--medium margin-bottom-10'
                     }) }}

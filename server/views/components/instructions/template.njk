@@ -31,9 +31,9 @@
             <span class="govuk-visually-hidden">Error:</span>
             {{ params.errorMessage.text | safe if params.errorMessage.text }}
           </p>
-          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instructions-error"></textarea>
+          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}" aria-describedby="instructions-error">{{params.instructions}}</textarea>
         {% else %}
-          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}"></textarea>
+          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" data-conviction-number="{{ params.convictionNumber }}" id="instructions" name="instructions" rows="{{ params.rows if params.rows else 5}}">{{params.instructions}}</textarea>
         {% endif %}
 
       </div>
@@ -42,10 +42,13 @@
     </div>
   {% endif %}
   {% block javascripts %}
+    <script src="/assets/cache-instructions.js"></script>
+  {% endblock %}
+  {# {% block javascripts %}
     <script src="/assets/instructions.js"></script>
     {% if params.inGridRow %}
       <script src="/assets/instructions-persist-pop.js"></script>
     {% else %}
       <script src="/assets/instructions-persist-confirm-allocation.js"></script>
     {% endif %}
-  {% endblock %}
+  {% endblock %} #}

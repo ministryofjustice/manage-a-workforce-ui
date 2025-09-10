@@ -78,9 +78,6 @@ context('Allocate Complete', () => {
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage.panelTitle().should('contain', 'Case allocated')
     allocationCompletePage.mediumHeading().should('contain', 'What happens next')
-    allocationCompletePage.bulletedList().then($el => {
-      console.log('Bullet list text:', $el.text)
-    })
     allocationCompletePage
       .bulletedList()
       .should('exist')

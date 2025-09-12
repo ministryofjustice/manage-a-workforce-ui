@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   redis:
-    image: 'bitnami/redis:7.4'
+    image: 'redis/redis-stack-server:7.2.0-v18'
     networks:
       - hmpps_int
     environment:
@@ -16,8 +16,6 @@ services:
     restart: always
     ports:
       - '9090:8080'
-    volumes:
-      - ./wiremock/mappings/auth:/home/wiremock/mappings
   allocation-wiremock:
     image: wiremock/wiremock
     networks:
@@ -25,8 +23,6 @@ services:
     restart: always
     ports:
       - '9091:8080'
-    volumes:
-      - ./wiremock/mappings/allocation:/home/wiremock/mappings
   workload-wiremock:
     image: wiremock/wiremock
     networks:
@@ -34,8 +30,6 @@ services:
     restart: always
     ports:
       - '9092:8080'
-    volumes:
-      - ./wiremock/mappings/workload:/home/wiremock/mappings
   probation-estate-wiremock:
     image: wiremock/wiremock
     networks:
@@ -43,8 +37,6 @@ services:
     restart: always
     ports:
       - '9093:8080'
-    volumes:
-      - ./wiremock/mappings/probation-estate:/home/wiremock/mappings
   user-preference-wiremock:
     image: wiremock/wiremock
     networks:
@@ -52,8 +44,6 @@ services:
     restart: always
     ports:
       - '9094:8080'
-    volumes:
-      - ./wiremock/mappings/user-preference:/home/wiremock/mappings
   staff-lookup-wiremock:
     image: wiremock/wiremock
     networks:
@@ -68,7 +58,5 @@ services:
     restart: always
     ports:
       - '9096:8080'
-    volumes:
-      - ./wiremock/mappings/user:/home/wiremock/mappings
 networks:
   hmpps_int:

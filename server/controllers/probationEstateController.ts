@@ -4,11 +4,13 @@ import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 import RegionDetails from '../models/RegionDetails'
 import ProbationDeliveryUnitDetails from '../models/ProbationDeliveryUnitDetails'
+import AllocationsService from '../services/allocationsService'
 
 export default class ProbationEstateController {
   constructor(
     private readonly probationEstateService: ProbationEstateService,
     private readonly userPreferenceService: UserPreferenceService,
+    private readonly allocationsService: AllocationsService,
   ) {}
 
   async getPduTeams(req: Request, res: Response, pduCode, error = false) {
@@ -16,8 +18,15 @@ export default class ProbationEstateController {
       res.locals.user.token,
       pduCode,
     )
+
+    await this.allocationsService.getUserRegionAccessForRegion(
+      res.locals.user.token,
+      res.locals.user.username,
+      response.region.code,
+    )
+
     res.render('pages/select-teams', {
-      title: `Select your teams | Manage a workforce`,
+      title: 'Select your teams | Manage a workforce',
       data: response.teams.sort((a, b) => a.name.localeCompare(b.name)),
       error,
       pduName: response.name,
@@ -26,6 +35,8 @@ export default class ProbationEstateController {
   }
 
   async selectPduTeams(req: Request, res: Response, pduCode) {
+    await this.allocationsService.getUserRegionAccessForPdu(res.locals.user.token, res.locals.user.username, pduCode)
+
     const {
       body: { team },
     } = req
@@ -45,9 +56,17 @@ export default class ProbationEstateController {
 
   async getRegions(req: Request, res: Response, error = false) {
     const response: EstateRegion[] = await this.probationEstateService.getRegions(res.locals.user.token)
+    const userRegions = (
+      await this.allocationsService.getRegionsForUser(res.locals.user.token, res.locals.user.username)
+    ).regions
+
+    const regions = response.map(item => {
+      return { allowed: userRegions.includes(item.code), code: item.code, name: item.name }
+    })
+
     res.render('pages/select-region', {
-      title: `Select your region | Manage a workforce`,
-      data: response.sort((a, b) => a.name.localeCompare(b.name)),
+      title: 'Select your region | Manage a workforce',
+      data: regions.sort((a, b) => a.name.localeCompare(b.name)),
       error,
     })
   }
@@ -63,12 +82,17 @@ export default class ProbationEstateController {
   }
 
   async getProbationDeliveryUnitsByRegionCode(req: Request, res: Response, regionCode, error = false) {
+    await this.allocationsService.getUserRegionAccessForRegion(
+      res.locals.user.token,
+      res.locals.user.username,
+      regionCode,
+    )
     const response: RegionDetails = await this.probationEstateService.getRegionDetails(
       res.locals.user.token,
       regionCode,
     )
     res.render('pages/select-probation-delivery-unit', {
-      title: `Select your PDU | Manage a workforce`,
+      title: 'Select your PDU | Manage a workforce',
       regionName: response.name,
       probationDeliveryUnits: response.probationDeliveryUnits.sort((a, b) => a.name.localeCompare(b.name)),
       error,
@@ -76,6 +100,11 @@ export default class ProbationEstateController {
   }
 
   async selectProbationDeliveryUnit(req: Request, res: Response, regionCode) {
+    await this.allocationsService.getUserRegionAccessForRegion(
+      res.locals.user.token,
+      res.locals.user.username,
+      regionCode,
+    )
     const {
       body: { probationDeliveryUnit },
     } = req

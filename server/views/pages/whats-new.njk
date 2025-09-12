@@ -21,6 +21,17 @@
                 <li>{{ whatsNew }}</li>
             {% endif %}
             {% endfor%}
+            {% if technicalUpdate.heading === "30 May 2025" %}
+            <ul>
+              <li>We've made a change to allow you to view and allocate any type of LAO case as long as you are either:</li>
+                <ul>
+                  <li>not on an excluded list</li>
+                  <li>on a restricted list</li>
+                </ul>
+              <li>If you are excluded from viewing a case you will still be able to view the CRN in APoP but will not be able to view the case details.</li>
+            </ul>
+            {% endif %}
+
             {% if technicalUpdate.heading === "25 October 2023" %}
                 <li>Terms and conditions: We updated <a class="govuk-link" href="{{ workloadMeasurementUrl }}/terms-and-conditions">the T&Cs page for the Workload Management Tool (WMT)</a>.</li>
             {% endif %}

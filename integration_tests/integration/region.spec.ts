@@ -1,13 +1,15 @@
 import Page from '../pages/page'
 import RegionPage from '../pages/region'
-// import ProbationDeliveryUnitPage from '../pages/probationDeliveryUnit'
-
 import config from '../../server/config'
+import ProbationDeliveryUnitPage from '../pages/probationDeliveryUnit'
 
 context('Select region', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetAllRegions')
+    cy.task('stubForAllowedRegions', { staffId: 'USER1' })
+    cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 200 })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
     cy.signIn()
     cy.visit('/regions')
   })
@@ -73,17 +75,17 @@ context('Select region', () => {
     regionPage.continueButton().trimTextContent().should('equal', 'Continue')
   })
 
-  //  it('selecting no region and continuing causes error', () => {
-  //    const regionPage = Page.verifyOnPage(RegionPage)
-  //    regionPage.button().click()
-  //    regionPage.errorSummary().trimTextContent().should('equal', 'There is a problem Select a region')
-  //  })
+  it('selecting no region and continuing causes error', () => {
+    const regionPage = Page.verifyOnPage(RegionPage)
+    regionPage.continueButton().click()
+    regionPage.errorSummary().trimTextContent().should('equal', 'There is a problem Select a region')
+  })
 
-  //  it('selecting region and clicking continue goes to select PDU page', () => {
-  //    cy.task('stubGetRegionDetails')
-  //    const regionPage = Page.verifyOnPage(RegionPage)
-  //    regionPage.radio('RG1').click()
-  //    regionPage.button().click()
-  //    Page.verifyOnPage(ProbationDeliveryUnitPage)
-  //  })
+  it('selecting region and clicking continue goes to select PDU page', () => {
+    cy.task('stubGetRegionDetails')
+    const regionPage = Page.verifyOnPage(RegionPage)
+    regionPage.radio('RG1').click()
+    regionPage.continueButton().click()
+    Page.verifyOnPage(ProbationDeliveryUnitPage)
+  })
 })

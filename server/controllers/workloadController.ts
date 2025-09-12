@@ -46,19 +46,21 @@ export default class WorkloadController {
       await this.allocationService.getLaoStatus(crn, res.locals.user.token),
     ])
 
-    const { otherEmails, sendEmailCopyToAllocatingOfficer } = req.session.allocationForm || {
-      otherEmails: [],
-      sendEmailCopyToAllocatingOfficer: false,
-    }
+    const { person, sendEmailCopyToAllocatingOfficer } = await this.allocationService.getNotesCache(
+      crn,
+      `${convictionNumber}`,
+      res.locals.user.username,
+    )
+
     delete req.session.allocationForm
     allocationCompleteDetails.name.surname = unescapeApostrophe(allocationCompleteDetails.name.surname)
     allocationCompleteDetails.name.combinedName = unescapeApostrophe(allocationCompleteDetails.name.combinedName)
     return res.render('pages/allocation-complete', {
-      title: `${allocationCompleteDetails.name.combinedName} | Case allocated | Manage a workforce`,
+      title: 'Case allocated | Manage a Workforce',
       data: allocationCompleteDetails,
       crn,
       convictionNumber,
-      otherEmails,
+      otherEmails: person?.map(p => p.email),
       pduCode,
       sendEmailCopyToAllocatingOfficer,
       initialAppointmentDateDisplayResult: this.getInitialAppointmentDateDisplayResult(allocationCompleteDetails),

@@ -2,12 +2,15 @@ import Page from '../pages/page'
 import AllocateToPractitionerPage from '../pages/allocateToPractitioner'
 import AllocateToPractitionerRestrictedPage from '../pages/allocateToPractitionerRestricted'
 import ChoosePractitionerPage from '../pages/choosePractitioner'
+import ForbiddenPage from '../pages/forbidden'
 
 context('Allocate to Practitioner', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetPotentialOffenderManagerWorkload', {})
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
+    cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
   })
 
   it('can navigate to Allocate to Practitioner page from Choose Practitioner', () => {
@@ -60,6 +63,57 @@ context('Allocate to Practitioner', () => {
     allocatePage.breadCrumbsSection().within(() => {
       cy.get('li>a').first().should('have.attr', 'href').and('include', 'PDU1')
     })
+  })
+
+  it('Allocate to Practitioner page from Choose Practitioner shows forbidden if region access lost', () => {
+    cy.task('stubGetTeamDetails', {
+      code: 'TM1',
+      name: 'Wrexham Team 1',
+    })
+    cy.task('stubGetTeamsByCodes', {
+      code: 'TM1',
+      response: [
+        {
+          code: 'TM1',
+          name: 'Team 1',
+        },
+      ],
+    })
+    cy.task('stubChoosePractitioners', {
+      teamCodes: ['TM1'],
+      crn: 'J678910',
+      teams: {
+        TM1: [
+          {
+            code: 'OM3',
+            name: {
+              forename: 'Jane',
+              middleName: '',
+              surname: 'Doe',
+            },
+            email: 'j.doe@email.co.uk',
+            grade: 'PO',
+            workload: 19,
+            casesPastWeek: 2,
+            communityCases: 3,
+            custodyCases: 5,
+          },
+        ],
+      },
+    })
+    cy.task('stubGetPotentialOffenderManagerWorkload', { teamCode: 'TM1', staffCode: 'OM3' })
+
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.tabtable('all-teams').within(() => {
+      choosePractitionerPage.radio('TM1::OM3').click()
+    })
+    cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 403 })
+    choosePractitionerPage.allocateCaseButton().click()
+    const forbiddenPage = Page.verifyOnPage(ForbiddenPage)
+    forbiddenPage.message().should('exist')
+    forbiddenPage.heading().should('exist')
   })
 
   it('Section break is visible on page', () => {

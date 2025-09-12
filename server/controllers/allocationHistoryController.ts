@@ -15,6 +15,8 @@ export default class AllocationHistoryController {
 
   async getCasesAllocatedByTeam(req: Request, res: Response, pduCode): Promise<void> {
     const { token, username } = res.locals.user
+    await this.allocationService.getUserRegionAccessForPdu(res.locals.user.token, res.locals.user.username, pduCode)
+
     const [pduDetails, teamsUserPreference] = await Promise.all([
       this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode),
       this.userPreferenceService.getTeamsUserPreference(token, username),
@@ -54,7 +56,7 @@ export default class AllocationHistoryController {
     res.render('pages/case-allocation-history', {
       isFindUnalllocatedCasesPage: false,
       isCaseAllocationHistoryPage: true,
-      title: 'Cases allocated in last 7 days | Manage a workforce',
+      title: 'Cases allocated in last 30 days | Manage a workforce',
       pduCode,
       pduDetails,
       casesLength: 0,
@@ -68,6 +70,8 @@ export default class AllocationHistoryController {
 
   async getCasesAllocated(req: Request, res: Response, pduCode): Promise<void> {
     const { token } = res.locals.user
+
+    await this.allocationService.getUserRegionAccessForPdu(res.locals.user.token, res.locals.user.username, pduCode)
 
     const [pduDetails, caseAllocationHistory] = await Promise.all([
       this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode),
@@ -89,7 +93,7 @@ export default class AllocationHistoryController {
     res.render('pages/case-allocation-history', {
       isFindUnalllocatedCasesPage: false,
       isCaseAllocationHistoryPage: true,
-      title: 'Cases allocated in last 7 days | Manage a workforce',
+      title: 'Cases allocated in last 30 days | Manage a workforce',
       pduCode,
       pduDetails,
       casesLength: 0,

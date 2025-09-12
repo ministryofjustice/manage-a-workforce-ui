@@ -10,6 +10,7 @@ context('Active Cases', () => {
     cy.task('stubForStaffLaoStatusByCrns')
     cy.task('stubGetOffenderManagerCases')
     cy.task('stubGetTeamDetails', { code: 'TM2', name: 'Team Name 1' })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
     cy.signIn()
     cy.visit('/pdu/PDU1/TM2/OM2/active-cases')
     activeCasesPage = Page.verifyOnPage(ActiveCasesPage)

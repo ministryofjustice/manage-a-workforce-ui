@@ -17,6 +17,15 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="govuk-heading-l" id="forbidden-header">You can no longer access this case</h1>
-    <p class="govuk-body" id="forbidden-message">This is now a restricted access case. Check NDelius if you require access or further information.</p>
+    <h1 class="govuk-heading-l" id="forbidden-header">You do not have permission to view this page</h1>
+    <p class="govuk-body" id="forbidden-message">This could be because you're trying to view either:</p>
+    <ul class="govuk-body">
+    <li> a restricted access case</li>
+    <li> a region you do not have access to</li>
+    </ul>
+    <h2 class="govuk-heading-m" id="what-to-do-next-header">What to do next</h2>
+    <p class="govuk-body" id= "what-do-to-next-text">If this is a restricted access case you should check NDelius if you need access or further information.
+    </br>
+    </br>
+    If you do not have access to this region you should return to the <a href="/regions">Select your region page</a> to see which teams you can allocate cases to.</p>
 {% endblock %}

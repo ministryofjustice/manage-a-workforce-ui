@@ -73,7 +73,7 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
   })
 
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)
-  njkEnv.addGlobal('googleAnalyticsKey', config.googleAnalyticsKey)
+  njkEnv.addGlobal('tagManagerContainerId', config.analytics.tagManagerContainerId.trim())
   njkEnv.addGlobal('lastTechnicalUpdate', services.technicalUpdatesService.getLatestTechnicalUpdateHeading())
   njkEnv.addGlobal('instrumentationKey', config.instrumentationKey)
 }

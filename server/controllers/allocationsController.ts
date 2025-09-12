@@ -38,8 +38,19 @@ export default class AllocationsController {
       convictionNumber,
     )
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     const address = new DisplayAddress(response.address)
     response.name = unescapeApostrophe(response.name)
+    const { instructions } = await this.allocationsService.getNotesCache(
+      crn,
+      convictionNumber,
+      res.locals.user.username,
+    )
     res.render('pages/summary', {
       data: response,
       address,
@@ -47,11 +58,12 @@ export default class AllocationsController {
       tier: response.tier,
       name: response.name,
       convictionNumber: response.convictionNumber,
-      title: `${response.name} | Summary | Manage a workforce`,
+      title: 'Case summary | Manage a Workforce',
       pduCode,
       outOfAreaTransfer: response.outOfAreaTransfer,
       laoCase,
       errors: req.flash('errors') || [],
+      instructions,
     })
   }
 
@@ -61,6 +73,13 @@ export default class AllocationsController {
       await this.allocationsService.getProbationRecord(res.locals.user.token, crn, convictionNumber),
     ])
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
+
     const totalPreviousCount = probationRecord.previous.length
     const viewAll = totalPreviousCount <= 3 ? true : req.query.viewAll
     const amountToSlice = viewAll ? totalPreviousCount : 3
@@ -90,6 +109,11 @@ export default class AllocationsController {
       )
       .slice(0, amountToSlice)
     probationRecord.name = unescapeApostrophe(probationRecord.name)
+    const { instructions } = await this.allocationsService.getNotesCache(
+      crn,
+      convictionNumber,
+      res.locals.user.username,
+    )
     res.render('pages/probation-record', {
       name: probationRecord.name,
       crn: probationRecord.crn,
@@ -99,11 +123,12 @@ export default class AllocationsController {
       viewAll,
       totalPreviousCount,
       convictionNumber: probationRecord.convictionNumber,
-      title: `${probationRecord.name} | Probation record | Manage a workforce`,
+      title: 'Probation record | Manage a workforce',
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
       laoCase,
       errors: req.flash('errors') || [],
+      instructions,
     })
   }
 
@@ -113,9 +138,21 @@ export default class AllocationsController {
       await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
     ])
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
+
     risk.name = unescapeApostrophe(risk.name)
+    const { instructions } = await this.allocationsService.getNotesCache(
+      crn,
+      convictionNumber,
+      res.locals.user.username,
+    )
     res.render('pages/risk', {
-      title: `${risk.name} | Risk | Manage a workforce`,
+      title: 'Risk | Manage a workforce',
       data: risk,
       crn: risk.crn,
       tier: risk.tier,
@@ -125,6 +162,7 @@ export default class AllocationsController {
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
       laoCase,
       errors: req.flash('errors') || [],
+      instructions,
     })
   }
 
@@ -136,9 +174,20 @@ export default class AllocationsController {
     ])
     const documentRows = documents.map(document => new DocumentRow(document))
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     caseOverview.name = unescapeApostrophe(caseOverview.name)
+    const { instructions } = await this.allocationsService.getNotesCache(
+      crn,
+      convictionNumber,
+      res.locals.user.username,
+    )
     res.render('pages/documents', {
-      title: `${caseOverview.name} | Documents | Manage a workforce`,
+      title: 'Documents | Manage a workforce',
       crn: caseOverview.crn,
       tier: caseOverview.tier,
       name: caseOverview.name,
@@ -149,6 +198,7 @@ export default class AllocationsController {
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
       laoCase,
       errors: req.flash('errors') || [],
+      instructions,
     })
   }
 
@@ -157,6 +207,12 @@ export default class AllocationsController {
 
     const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const laoCase = await this.allocationsService.getLaoStatus(crn, token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     const [allocationInformationByTeam, allTeamDetails] = await Promise.all([
       await this.workloadService.getChoosePractitionerData(token, crn, teamCodesPreferences.items),
       await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
@@ -189,8 +245,13 @@ export default class AllocationsController {
     }
     const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
     const error = req.query.error === 'true'
+    const { instructions } = await this.allocationsService.getNotesCache(
+      crn,
+      convictionNumber,
+      res.locals.user.username,
+    )
     return res.render('pages/choose-practitioner', {
-      title: `${name} | Choose practitioner | Manage a workforce`,
+      title: 'Choose practitioner | Manage a workforce',
       name,
       crn: allocationInformationByTeam.crn,
       tier: allocationInformationByTeam.tier,
@@ -202,6 +263,7 @@ export default class AllocationsController {
       missingEmail,
       pduCode,
       laoCase,
+      instructions,
       errors: req.flash('errors') || [],
     })
   }
@@ -236,10 +298,21 @@ export default class AllocationsController {
       staffTeamCode,
     )
     const laoCase = await this.allocationsService.getLaoStatus(crn, req.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
     response.name.surname = unescapeApostrophe(response.name.surname)
+    const { instructions } = await this.allocationsService.getNotesCache(
+      crn,
+      convictionNumber,
+      res.locals.user.username,
+    )
     res.render('pages/allocate-to-practitioner', {
-      title: `${response.name.combinedName} | Allocate to practitioner | Manage a workforce`,
+      title: 'Allocate to practitioner | Manage a workforce',
       data: response,
       name: response.name.combinedName,
       crn,
@@ -249,6 +322,7 @@ export default class AllocationsController {
       staffTeamCode,
       pduCode,
       laoCase,
+      instructions,
       errors: req.flash('errors') || [],
     })
   }
@@ -270,16 +344,22 @@ export default class AllocationsController {
       staffCode,
     )
     const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
-    const confirmInstructionForm = {
-      ...req.session.confirmInstructionForm,
-      person: req.session.confirmInstructionForm?.person || [],
-    }
-
+    const { instructions, person, isSensitive, emailCopyOptOut } = await this.allocationsService.getNotesCache(
+      crn,
+      convictionNumber,
+      res.locals.user.username,
+    )
     res.render('pages/confirm-instructions', {
-      title: `${response.name.combinedName} | Review allocation notes | Manage a workforce`,
+      title: 'Review allocation notes | Manage a workforce',
       data: response,
       name: response.name.combinedName,
       crn: response.crn,
@@ -288,10 +368,13 @@ export default class AllocationsController {
       staffTeamCode,
       convictionNumber: response.convictionNumber,
       errors: req.flash('errors') || [],
-      confirmInstructionForm,
       pduCode,
       scrollToBottom,
       laoCase,
+      instructions,
+      person,
+      isSensitive,
+      emailCopyOptOut,
     })
   }
 
@@ -312,20 +395,32 @@ export default class AllocationsController {
       staffCode,
     )
     const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
-
+    const { instructions } = await this.allocationsService.getNotesCache(
+      crn,
+      convictionNumber,
+      res.locals.user.username,
+    )
     res.render('pages/check-edit-allocation-notes', {
       crn,
       staffCode,
       staffTeamCode,
       convictionNumber,
       pduCode,
+      title: 'Edit or save allocation notes | Manage a Workforce',
       tier: response.tier,
       name: response.name.combinedName,
       data: response,
       scrollToBottom,
       laoCase,
+      instructions,
     })
   }
 
@@ -353,7 +448,7 @@ export default class AllocationsController {
     }
 
     res.render(nextPage, {
-      title: `${response.forename} ${response.surname} | Workload | Manage a workforce`,
+      title: 'Practitioner workload | Manage a Workforce',
       data,
       officerTeamCode: offenderManagerTeamCode,
       convictionNumber,
@@ -399,7 +494,7 @@ export default class AllocationsController {
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
     res.render('pages/active-cases', {
-      title: `${response.name.combinedName} | Active cases | Manage a workforce`,
+      title: 'Active cases | Manage a workforce',
       data: response,
       officerTeamCode: offenderManagerTeamCode,
       cases,
@@ -433,31 +528,27 @@ export default class AllocationsController {
         emailCopyOptOut: form.emailCopyOptOut === 'yes',
       }),
     )
-    // const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
 
     if (form.remove !== undefined) {
       form.person.splice(form.remove, 1)
-      req.session.confirmInstructionForm = { ...confirmInstructionForm, person: form.person }
+    }
+
+    this.allocationsService.setNotesCache(crn, convictionNumber, res.locals.user.username, {
+      instructions: form.instructions,
+      isSensitive: confirmInstructionForm.isSensitive,
+      emailCopyOptOut: confirmInstructionForm.emailCopyOptOut,
+      person: form.person,
+    })
+
+    if (form.action === 'continue') {
       return res.redirect(
-        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`,
+        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/spo-oversight-contact-option`,
       )
     }
-    switch (form.action) {
-      case 'continue':
-        req.session.confirmInstructionForm = confirmInstructionForm
-        return res.redirect(
-          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/spo-oversight-contact-option`,
-        )
-      case 'add-another-person':
-        req.session.confirmInstructionForm = confirmInstructionForm
-        return res.redirect(
-          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`,
-        )
-      default:
-        return res.redirect(
-          `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`,
-        )
-    }
+
+    return res.redirect(
+      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`,
+    )
   }
 
   async submitSpoOversight(
@@ -481,27 +572,34 @@ export default class AllocationsController {
       },
     ).map(error => fixupArrayNotation(error))
 
-    const confirmInstructionForm = {
-      ...req.session.confirmInstructionForm,
-      person: req.session.confirmInstructionForm?.person || [],
-    }
+    const { instructions, person, isSensitive, emailCopyOptOut } = await this.allocationsService.getNotesCache(
+      crn,
+      `${convictionNumber}`,
+      res.locals.user.username,
+    )
 
     if (errors.length > 0) {
-      req.session.confirmInstructionForm = spoOversightForm
       req.flash('errors', errors)
       return res.redirect(
         `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffCode}/${staffTeamCode}/spo-oversight-contact-option`,
       )
     }
-    const sendEmailCopyToAllocatingOfficer = !confirmInstructionForm.emailCopyOptOut
-    const otherEmails = confirmInstructionForm.person.map(person => person.email).filter(email => email)
+
+    const sendEmailCopyToAllocatingOfficer = !emailCopyOptOut
+    const otherEmails = person?.map(p => p.email).filter(email => email)
 
     const spoOversightContact = spoOversightForm.instructions
     const spoOversightSensitive = spoOversightForm.isSensitive
-    const allocationNotes = confirmInstructionForm.instructions
-    const allocationNotesSensitive = confirmInstructionForm.isSensitive
+    const allocationNotes = instructions
+    const allocationNotesSensitive = isSensitive
     const isSPOOversightAccessed = 'true'
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber.toString(),
+    )
 
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
@@ -519,12 +617,11 @@ export default class AllocationsController {
       laoCase,
     )
 
-    req.session.allocationForm = {
-      otherEmails,
+    await this.allocationsService.setNotesCache(crn, `${convictionNumber}`, res.locals.user.username, {
       sendEmailCopyToAllocatingOfficer,
-    }
-
-    req.session.confirmInstructionForm = null
+      spoOversightContact,
+      spoOversightSensitive,
+    })
 
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
   }
@@ -539,19 +636,26 @@ export default class AllocationsController {
     form,
     pduCode,
   ) {
-    const confirmInstructionForm = {
-      ...req.session.confirmInstructionForm,
-      person: req.session.confirmInstructionForm?.person || [],
-    }
+    const { instructions, person, isSensitive, emailCopyOptOut } = await this.allocationsService.getNotesCache(
+      crn,
+      `${convictionNumber}`,
+      res.locals.user.username,
+    )
 
-    const sendEmailCopyToAllocatingOfficer = !confirmInstructionForm.emailCopyOptOut
-    const otherEmails = confirmInstructionForm.person.map(person => person.email).filter(email => email)
-    const spoOversightContact = confirmInstructionForm.instructions
-    const spoOversightSensitive = confirmInstructionForm.isSensitive
-    const allocationNotes = confirmInstructionForm.instructions
-    const allocationNotesSensitive = confirmInstructionForm.isSensitive
+    const sendEmailCopyToAllocatingOfficer = !emailCopyOptOut
+    const otherEmails = person?.map(p => p.email).filter(email => email)
+    const spoOversightContact = instructions
+    const spoOversightSensitive = isSensitive
+    const allocationNotes = instructions
+    const allocationNotesSensitive = isSensitive
     const isSPOOversightAccessed = 'false'
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
 
     await this.workloadService.allocateCaseToOffenderManager(
       res.locals.user.token,
@@ -569,12 +673,11 @@ export default class AllocationsController {
       laoCase,
     )
 
-    req.session.allocationForm = {
-      otherEmails,
+    await this.allocationsService.setNotesCache(crn, `${convictionNumber}`, res.locals.user.username, {
       sendEmailCopyToAllocatingOfficer,
-    }
-
-    req.session.confirmInstructionForm = null
+      spoOversightContact,
+      spoOversightSensitive,
+    })
 
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
   }
@@ -596,15 +699,21 @@ export default class AllocationsController {
     )
 
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
-    const confirmInstructionForm = {
-      ...req.session.confirmInstructionForm,
-      person: req.session.confirmInstructionForm?.person || [],
-    }
+    await this.allocationsService.getUserRegionAccessForCrn(
+      res.locals.user.token,
+      res.locals.user.username,
+      crn,
+      convictionNumber,
+    )
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
-
+    const { instructions, person, isSensitive, emailCopyOptOut } = await this.allocationsService.getNotesCache(
+      crn,
+      `${convictionNumber}`,
+      res.locals.user.username,
+    )
     res.render('pages/spo-oversight-contact', {
-      title: `${response.name.combinedName} | SPO Oversight Contact | Manage a workforce`,
+      title: 'Create an SPO Oversight contact | Manage a Workforce',
       data: response,
       name: response.name.combinedName,
       crn: response.crn,
@@ -613,9 +722,12 @@ export default class AllocationsController {
       staffTeamCode,
       convictionNumber,
       errors: req.flash('errors') || [],
-      confirmInstructionForm,
       pduCode,
       laoCase,
+      instructions,
+      person,
+      isSensitive,
+      emailCopyOptOut,
     })
   }
 }

@@ -44,8 +44,8 @@ export default {
   },
   apis: {
     hmppsAuth: {
-      url: get('HMPPS_AUTH_URL', 'http://127.0.0.1:9090/auth', requiredInProduction),
-      externalUrl: get('HMPPS_AUTH_EXTERNAL_URL', get('HMPPS_AUTH_URL', 'http://127.0.0.1:9090/auth')),
+      url: get('HMPPS_AUTH_URL', 'http://127.0.0.1:9091/auth', requiredInProduction),
+      externalUrl: get('HMPPS_AUTH_EXTERNAL_URL', get('HMPPS_AUTH_URL', 'http://127.0.0.1:9091/auth')),
       timeout: {
         response: Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 1000)),
       },
@@ -63,14 +63,14 @@ export default {
       retries: 2,
     },
     workloadService: {
-      url: get('WORKLOAD_SERVICE_URL', 'http://127.0.0.1:9092', requiredInProduction),
+      url: get('WORKLOAD_SERVICE_URL', 'http://127.0.0.1:9091', requiredInProduction),
       timeout: {
         response: 15000,
       },
       agent: new AgentConfig(15000),
     },
     probationEstateService: {
-      url: get('PROBATION_ESTATE_SERVICE_URL', 'http://127.0.0.1:9093', requiredInProduction),
+      url: get('PROBATION_ESTATE_SERVICE_URL', 'http://127.0.0.1:9091', requiredInProduction),
       timeout: {
         response: 3000,
       },
@@ -78,7 +78,7 @@ export default {
       retries: 2,
     },
     userPreferenceService: {
-      url: get('USER_PREFERENCE_SERVICE_URL', 'http://127.0.0.1:9094', requiredInProduction),
+      url: get('USER_PREFERENCE_SERVICE_URL', 'http://127.0.0.1:9091', requiredInProduction),
       timeout: {
         response: 2000,
       },
@@ -86,21 +86,21 @@ export default {
       retries: 2,
     },
     staffLookupService: {
-      url: get('STAFF_LOOKUP_SERVICE_URL', 'http://127.0.0.1:9095', requiredInProduction),
+      url: get('STAFF_LOOKUP_SERVICE_URL', 'http://127.0.0.1:9091', requiredInProduction),
       timeout: {
         response: 5000,
       },
       agent: new AgentConfig(5000),
     },
     manageUsersService: {
-      url: get('MANAGE_USERS_SERVICE_URL', 'http://127.0.0.1:9096', requiredInProduction),
+      url: get('MANAGE_USERS_SERVICE_URL', 'http://127.0.0.1:9091', requiredInProduction),
       timeout: {
         response: 5000,
       },
       agent: new AgentConfig(5000),
     },
     tokenVerification: {
-      url: get('TOKEN_VERIFICATION_API_URL', 'http://127.0.0.1:8100', requiredInProduction),
+      url: get('TOKEN_VERIFICATION_API_URL', 'http://127.0.0.1:9091', requiredInProduction),
       timeout: {
         response: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 8000)),
       },
@@ -110,7 +110,7 @@ export default {
   },
   nav: {
     workloadMeasurement: {
-      url: get('WORKLOAD_MEASUREMENT_URL', 'http://127.0.0.1:3010', requiredInProduction),
+      url: get('WORKLOAD_MEASUREMENT_URL', 'http://127.0.0.1:9091', requiredInProduction),
     },
   },
   domain: get('INGRESS_URL', 'http://127.0.0.1:3000', requiredInProduction),
@@ -121,7 +121,9 @@ export default {
     sinceDate.setDate(sinceDate.getDate() - 30)
     return sinceDate
   },
-  googleAnalyticsKey: get('GOOGLE_ANALYTICS_KEY', null),
+  analytics: {
+    tagManagerContainerId: get('TAG_MANAGER_CONTAINER_ID', ''),
+  },
   notification: {
     active: get('SHOW_NOTIFICATION', 'false'),
   },

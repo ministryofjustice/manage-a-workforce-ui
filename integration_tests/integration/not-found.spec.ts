@@ -4,6 +4,7 @@ import NotFoundPage from '../pages/notFound'
 context('Not found', () => {
   beforeEach(() => {
     cy.task('stubSetup')
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
   })
 
   it('Must show correct body text when 404', () => {

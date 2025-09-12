@@ -4,6 +4,7 @@
 generic-service:
 
   ingress:
+    className: modsec-non-prod
     host: workforce-management-preprod.hmpps.service.justice.gov.uk
 
   env:

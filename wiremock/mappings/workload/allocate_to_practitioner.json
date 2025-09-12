@@ -1,0 +1,100 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "Scenario getPotentialOffenderManagerWorkloadOverCapacity",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/team/TM2/offenderManager/OM2/impact/person/J678910"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json;charset=UTF-8" },
+        "jsonBody": {
+          "capacity": 100.2,
+          "potentialCapacity": 108.6,
+          "name": {
+            "forename": "Dylan",
+            "middleName": "Adam",
+            "surname": "Armstrong",
+            "combinedName": "Dylan Adam Armstrong"
+          },
+          "staff": {
+            "code": "OM2",
+            "name": {
+              "forename": "John",
+              "surname": "Doe",
+              "combinedName": "John Doe"
+            },
+            "grade": "PO"
+          },
+          "tier": "C1"
+        }
+      }
+    },
+    {
+      "scenarioName": "Scenario getPotentialOffenderManagerWorkload",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/team/TM2}/offenderManager/OM2/impact/person/J678910"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json;charset=UTF-8" },
+        "jsonBody": {
+          "capacity": 50.4,
+          "potentialCapacity": 64.8,
+          "name": {
+            "forename": "Dylan",
+            "middleName": "Adam",
+            "surname": "Armstrong",
+            "combinedName": "Dylan Adam Armstrong"
+          },
+          "staff": {
+            "code": "OM2",
+            "name": {
+              "forename": "John",
+              "surname": "Doe",
+              "combinedName": "John Doe"
+            },
+            "grade": "PO"
+          },
+          "tier": "C1"
+        }
+      }
+    },
+    {
+      "scenarioName": "Scenario getPotentialOffenderManagerWorkloadOverCapacitySamePoP",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/team/TM2/offenderManager/OM2/impact/person/J678910"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json;charset=UTF-8" },
+        "jsonBody": {
+          "capacity": 50.4,
+          "potentialCapacity": 50.4,
+          "name": {
+            "forename": "Dylan",
+            "middleName": "Adam",
+            "surname": "Armstrong",
+            "combinedName": "Dylan Adam Armstrong"
+          },
+          "staff": {
+            "code": "OM2",
+            "name": {
+              "forename": "John",
+              "surname": "Doe",
+              "combinedName": "John Doe"
+            },
+            "grade": "PO"
+          },
+          "tier": "C1"
+        }
+      }
+    }
+  ]
+}

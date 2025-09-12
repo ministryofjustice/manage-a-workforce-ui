@@ -1,0 +1,33 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "Scenario getEventManagerDetails",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/allocation/person/J678910/event/1/details"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json;charset=UTF-8" },
+        "jsonBody": {
+          "tier": "A3",
+          "personOnProbationFirstName": "Sally",
+          "personOnProbationSurname": "Smith"
+        }
+      }
+    },
+    {
+      "scenarioName": "Scenario notFoundEventManagerDetails",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/allocation/person/J678910/event/1/details"
+      },
+      "response": {
+        "status": 404,
+        "headers": { "Content-Type": "application/json;charset=UTF-8" }
+      }
+    }
+  ]
+}

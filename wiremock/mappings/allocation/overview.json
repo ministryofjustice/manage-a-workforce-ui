@@ -1,0 +1,24 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "Scenario 1",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/unallocated/${crn}/convictions/${convictionNumber}/overview"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": {
+          "name": "Dylan Adam Armstrong",
+          "crn": "${crn}",
+          "tier": "C1",
+          "convictionNumber": "${convictionNumber}"
+        }
+      }
+    }
+  ]
+}

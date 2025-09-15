@@ -1,0 +1,61 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "unrestricted",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/${crn}/restrictions"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": {
+          "crn": "${crn}",
+          "isRestricted": false,
+          "isRedacted": false
+        }
+      }
+    },
+    {
+      "scenarioName": "restricted",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/${crn}/restrictions"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": {
+          "crn": "${crn}",
+          "isRestricted": true,
+          "isRedacted": false
+        }
+      }
+    },
+    {
+      "scenarioName": "redacted",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/${crn}/restrictions"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": {
+          "crn": "${crn}",
+          "isRestricted": true,
+          "isRedacted": true
+        }
+      }
+    }
+  ]
+}

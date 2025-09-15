@@ -1,0 +1,59 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "Scenario 1",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/unallocated/${crn}/convictions/${convictionNumber}"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": {
+          "name": "Dylan Adam Armstrong",
+          "crn": "${crn}",
+          "tier": "C1",
+          "sentenceDate": "2021-09-01",
+          "gender": "Male",
+          "dateOfBirth": "1984-09-27",
+          "age": 37,
+          "offences": [
+            {
+              "mainOffence": true,
+              "mainCategory": "Common assault and battery",
+              "subCategory": "Contrary to section 39 of the Criminal Justice Act 1988."
+            }
+          ],
+          "expectedSentenceEndDate": "2021-09-28",
+          "sentenceLength": "6 Months",
+          "sentenceDescription": "SA2020 Suspended Sentence Order",
+          "requirements": [
+            {
+              "mainCategory": "Unpaid Work",
+              "subCategory": "Regular",
+              "length": "100 Hours"
+            }
+          ],
+          "pncNumber": "D/9874483AB",
+          "courtReport": {
+            "code": "CJF",
+            "description": "Fast",
+            "completedDate": "2022-01-27T10:54:32.868Z",
+            "documentId": "00000000-0000-0000-0000-000000000000"
+          },
+          "cpsPack": {
+            "completedDate": "2022-02-27T10:54:32.868Z",
+            "documentId": "11111111-1111-1111-1111-111111111111"
+          },
+          "assessment": {
+            "lastAssessedOn": "2022-01-27T10:54:32.869Z",
+            "type": "LAYER_3"
+          }
+        }
+      }
+    }
+  ]
+}

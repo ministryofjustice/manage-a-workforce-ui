@@ -1,0 +1,74 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "unrestricted",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "POST",
+        "urlPattern": "/cases/restrictions/crn/list",
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "crns": ["${crn1}", "${crn2}"]
+            }
+          }
+        ]
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": {
+          "access": [
+            {
+              "crn": "${crn1}",
+              "userRestricted": false,
+              "userExcluded": false
+            },
+            {
+              "crn": "${crn2}",
+              "userRestricted": false,
+              "userExcluded": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "scenarioName": "restrictions",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "POST",
+        "urlPattern": "/cases/restrictions/crn/list",
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "crns": ["${crn1}", "${crn2}"]
+            }
+          }
+        ]
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": {
+          "access": [
+            {
+              "crn": "${crn1}",
+              "userRestricted": false,
+              "userExcluded": true
+            },
+            {
+              "crn": "${crn2}",
+              "userRestricted": true,
+              "userExcluded": false
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

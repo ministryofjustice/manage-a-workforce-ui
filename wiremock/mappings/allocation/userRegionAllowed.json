@@ -1,0 +1,34 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "Allowed",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/user/${userId}/region/${region}/is-allowed"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": {}
+      }
+    },
+    {
+      "scenarioName": "Forbidden",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/user/${userId}/region/${region}/is-allowed"
+      },
+      "response": {
+        "status": "403",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": {}
+      }
+    }
+  ]
+}

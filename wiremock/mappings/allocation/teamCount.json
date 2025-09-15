@@ -1,0 +1,68 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "One team",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/unallocated/teamCount?teams=[${teamCode}]"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": [
+          {
+            "teamCode": "${teamCode}",
+            "caseCount": 100
+          }
+        ]
+      }
+    },
+    {
+      "scenarioName": "Zero count",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/unallocated/teamCount?teams=[${teamCode}]"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": [
+          {
+            "teamCode": "${teamCode}",
+            "caseCount": 0
+          }
+        ]
+      }
+    },
+    {
+      "scenarioName": "Two teams",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/unallocated/teamCount?teams=[${teamCode1}, $teamCode2]"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": [
+          {
+            "teamCode": "${teamCode1}",
+            "caseCount": 1
+          },
+          {
+            "teamCode": "${teamCode2}",
+            "caseCount": 2
+          }
+        ]
+      }
+    }
+  ]
+}

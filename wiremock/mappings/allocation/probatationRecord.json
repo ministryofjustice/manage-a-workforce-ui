@@ -1,0 +1,102 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "Scenario 1",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/unallocated/${crn}/record/exclude-conviction/${convictionNumber}"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": {
+          "name": "Dylan Adam Armstrong",
+          "crn": "${crn}",
+          "tier": "C1",
+          "convictionNumber": "${convictionNumber}",
+          "active": [
+            {
+              "description": "Adult Custody < 12m",
+              "length": "6 Months",
+              "startDate": "2019-11-17",
+              "offenderManager": {
+                "name": "Sheila Linda Hancock",
+                "grade": "PSO"
+              },
+              "offences": [
+                {
+                  "description": "Abstracting electricity - 04300",
+                  "mainOffence": true
+                }
+              ]
+            },
+            {
+              "description": "ORA Community Order",
+              "length": "18 Months",
+              "startDate": "2020-11-05",
+              "offences": [
+                {
+                  "description": "Common assault and battery - 10501",
+                  "mainOffence": true
+                }
+              ]
+            }
+          ],
+          "previous": [
+            {
+              "description": "Fine",
+              "length": 0,
+              "endDate": "2018-06-23",
+              "offenderManager": {
+                "name": "Sheila Linda Hancock",
+                "grade": "PSO"
+              },
+              "offences": [
+                {
+                  "description": "Abstracting electricity - 04300",
+                  "mainOffence": true
+                }
+              ]
+            },
+            {
+              "description": "ORA Community Order",
+              "length": "18 Months",
+              "endDate": "2020-11-05",
+              "offences": [
+                {
+                  "description": "Common assault and battery - 10501",
+                  "mainOffence": true
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "scenarioName": "No offences",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/unallocated/${crn}/record/exclude-conviction/${convictionNumber}"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": {
+          "name": "Dylan Adam Armstrong",
+          "crn": "${crn}",
+          "tier": "C1",
+          "convictionNumber": "${convictionNumber}",
+          "active": [],
+          "previous": []
+        }
+      }
+    }
+  ]
+}

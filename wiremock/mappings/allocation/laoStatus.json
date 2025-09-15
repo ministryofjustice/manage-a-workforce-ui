@@ -1,0 +1,49 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "Not restricted",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/unallocated/${crn}/restricted"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": "true"
+      }
+    },
+    {
+      "scenarioName": "restricted",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/unallocated/${crn}/restricted"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": "false"
+      }
+    },
+    {
+      "scenarioName": "Forbidden",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/unallocated/${crn}/restricted"
+      },
+      "response": {
+        "status": "403",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": "false"
+      }
+    }
+  ]
+}

@@ -8,7 +8,7 @@ loadInstructions = function (textArea, newInstructionsItem) {
     var storedInstructions = localStorage.getItem(newInstructionsItem)
     try {
       var lastInstructions = JSON.parse(storedInstructions)
-      textArea.value = lastInstructions.v
+      if (lastInstructions.v.length > 0) textArea.value = lastInstructions.v
     } catch (e) {
       // log so we can fix
       console.log(`Unable to read item ${key}`)

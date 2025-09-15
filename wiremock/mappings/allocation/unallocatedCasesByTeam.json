@@ -1,0 +1,44 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "response passed",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/team/${teamCode}/cases/unallocated"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": [
+          {
+            "teamCode": "${teamCode}",
+            "caseCount": "${caseCount}"
+          }
+        ]
+      }
+    },
+    {
+      "scenarioName": "scenario 100",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPattern": "/cases/${crn}/restrictions"
+      },
+      "response": {
+        "status": "200",
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "jsonBody": [
+          {
+            "teamCode": "${teamCode}",
+            "caseCount": 100
+          }
+        ]
+      }
+    }
+  ]
+}

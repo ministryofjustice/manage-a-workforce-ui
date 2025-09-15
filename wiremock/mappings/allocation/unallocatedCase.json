@@ -1,7 +1,7 @@
 {
   "mappings": [
     {
-      "scenarioName": "Scenario 1",
+      "scenarioName": "getUnallocatedCase",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",

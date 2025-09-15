@@ -1,7 +1,7 @@
 {
   "mappings": [
     {
-      "scenarioName": "All regions",
+      "scenarioName": "getRegionsForUser",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",
@@ -18,7 +18,7 @@
       }
     },
     {
-      "scenarioName": "One region",
+      "scenarioName": "getRegionsForUserOneRegion",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",
@@ -35,7 +35,7 @@
       }
     },
     {
-      "scenarioName": "No regions",
+      "scenarioName": "getRegionsForUserNoRegions",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",
@@ -47,7 +47,7 @@
           "Content-Type": "application/json;charset=UTF-8"
         },
         "jsonBody": {
-          "regions": ["N59"]
+          "regions": []
         }
       }
     }

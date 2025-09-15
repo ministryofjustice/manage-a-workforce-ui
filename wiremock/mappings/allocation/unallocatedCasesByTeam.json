@@ -1,7 +1,7 @@
 {
   "mappings": [
     {
-      "scenarioName": "response passed",
+      "scenarioName": "getCaseCountByTeamCodes",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",
@@ -21,7 +21,7 @@
       }
     },
     {
-      "scenarioName": "scenario 100",
+      "scenarioName": "getCaseCountByTeamCodes100",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",

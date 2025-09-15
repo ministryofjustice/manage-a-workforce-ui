@@ -1,7 +1,7 @@
 {
   "mappings": [
     {
-      "scenarioName": "All regions",
+      "scenarioName": "allRegions",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",
@@ -18,7 +18,7 @@
       }
     },
     {
-      "scenarioName": "One region",
+      "scenarioName": "oneRegion",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",
@@ -35,7 +35,7 @@
       }
     },
     {
-      "scenarioName": "No regions",
+      "scenarioName": "noRegions",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",

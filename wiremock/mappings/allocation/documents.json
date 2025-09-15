@@ -1,7 +1,7 @@
 {
   "mappings": [
     {
-      "scenarioName": "Scenario 1",
+      "scenarioName": "getDocuments",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",
@@ -91,7 +91,7 @@
       }
     },
     {
-      "scenarioName": "Documents empty",
+      "scenarioName": "noDocuments",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",

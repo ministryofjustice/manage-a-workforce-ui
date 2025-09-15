@@ -1,7 +1,7 @@
 {
   "mappings": [
     {
-      "scenarioName": "Scenario 1",
+      "scenarioName": "caseOverview",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",

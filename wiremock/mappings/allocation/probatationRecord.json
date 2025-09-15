@@ -1,7 +1,7 @@
 {
   "mappings": [
     {
-      "scenarioName": "Scenario 1",
+      "scenarioName": "probationRecord",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",
@@ -77,7 +77,7 @@
       }
     },
     {
-      "scenarioName": "No offences",
+      "scenarioName": "probationRecordNoOffences",
       "requiredScenarioState": "Started",
       "request": {
         "method": "GET",

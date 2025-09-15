@@ -1,7 +1,7 @@
 {
   "mappings": [
     {
-      "scenarioName": "scenario 1",
+      "scenarioName": "staffRestrictionsByCrn",
       "requiredScenarioState": "Started",
       "request": {
         "method": "POST",
@@ -39,7 +39,7 @@
       }
     },
     {
-      "scenarioName": "scenario 2",
+      "scenarioName": "noStaffRestrictionsByCrn",
       "requiredScenarioState": "Started",
       "request": {
         "method": "POST",

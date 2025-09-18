@@ -578,6 +578,10 @@ export default class AllocationsController {
       res.locals.user.username,
     )
 
+    if (!instructions) {
+      throw Error('Allocation instructions not set')
+    }
+
     if (errors.length > 0) {
       req.flash('errors', errors)
       return res.redirect(
@@ -641,6 +645,10 @@ export default class AllocationsController {
       `${convictionNumber}`,
       res.locals.user.username,
     )
+
+    if (!instructions) {
+      throw Error('Allocation instructions not set')
+    }
 
     const sendEmailCopyToAllocatingOfficer = !emailCopyOptOut
     const otherEmails = person?.map(p => p.email).filter(email => email)

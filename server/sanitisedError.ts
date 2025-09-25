@@ -5,6 +5,8 @@ export interface SanitisedError extends Error {
   stack: string
   message: string
   name: string
+  url: string
+  method: string
 }
 
 export type UnsanitisedError = AxiosError
@@ -16,11 +18,15 @@ export default function sanitise(error: UnsanitisedError): SanitisedError {
       message: error.message,
       stack: error.stack,
       name: error.name,
+      url: error.config.url,
+      method: error.config.method,
     }
   }
   return {
     message: error.message,
     stack: error.stack,
     name: error.name,
+    url: error.config.url,
+    method: error.config.method,
   }
 }

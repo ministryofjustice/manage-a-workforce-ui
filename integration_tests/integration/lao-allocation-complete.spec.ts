@@ -79,7 +79,7 @@ context('Allocate Complete', () => {
       .bulletedList()
       .should('contain', 'your allocation has been emailed to John Doe (john.doe@test.justice.gov.uk)')
       .and('contain', 'the case and SPO Oversight contact will be saved in NDelius within 5 minutes')
-    // .and('contain', 'the initial appointment is scheduled for 1 September 2021 with John Doe PO')
+      .and('contain', 'the initial appointment is scheduled for 1 September 2021 with John Doe PO')
   })
 
   it('What happens next with no additional emails supplied, opting out of copy content visible on page', () => {

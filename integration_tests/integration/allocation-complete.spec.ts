@@ -83,7 +83,7 @@ context('Allocate Complete', () => {
       .should('exist')
       .and('contain', 'the case and SPO Oversight contact will be saved in NDelius within 5 minutes')
       .and('contain', 'we have sent a copy of the allocation email to first@justice.gov.uk, second@justice.gov.uk')
-    // .and('contain', 'the initial appointment is scheduled for 1 September 2021 with John Doe PO')
+      .and('contain', 'the initial appointment is scheduled for 1 September 2021 with John Doe PO')
   })
 
   it('What happens next with multiple emails supplied, opting in of copy content visible on page', () => {
@@ -129,7 +129,7 @@ context('Allocate Complete', () => {
       .should('exist')
       .and('contain', 'your allocation notes have been emailed to John Doe (john.doe@test.justice.gov.uk)')
       .and('contain', 'the case and SPO Oversight contact will be saved in NDelius within 5 minutes')
-    // .and('contain', 'the initial appointment is scheduled for 1 September 2021 with John Doe PO')
+      .and('contain', 'the initial appointment is scheduled for 1 September 2021 with John Doe PO')
   })
 
   it('What happens next with no additional emails supplied, opting out of copy content visible on page', () => {

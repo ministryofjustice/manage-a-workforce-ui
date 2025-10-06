@@ -1,0 +1,39 @@
+name: E2E Tests
+on:
+  workflow_call:
+    inputs:
+      node_version_file:
+        description: 'Passed to setup-node action to specify where to source the version of node from'
+        required: false
+        type: string
+        default: '.nvmrc'
+permissions:
+  contents: read
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v5
+
+      - name: Checkout e2e tests repo
+        uses: actions/checkout@v5
+        with:
+          repository: ministryofjustice/manage-a-workforce-ui-e2e-tests
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ${{ inputs.node_version_file }}
+      - name: Run Docker Compose to start dependencies
+        run: |
+          cd e2e-tests
+          docker-compose up -d
+      - name: Install e2e dependencies
+        run: |
+          cd e2e-tests
+          npm ci
+      - name: Run e2e tests
+        run: |
+          cd e2e-tests
+          npm test # or npx cypress run, etc.

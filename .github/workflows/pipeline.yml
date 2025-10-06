@@ -58,10 +58,19 @@ jobs:
       additional_docker_tag: ${{ inputs.additional_docker_tag }}
       push: ${{ inputs.push || true }}
       docker_multiplatform: false
+  end-to-end-tests:
+    name: end to end tests
+    if: startsWith(github.ref, 'refs/heads/epic-e2e')
+    uses: ./.github/workflows/e2e_tests.yml # LOCAL_VERSION
+    needs:
+      - build
+      - helm_lint
+    secrets: inherit
   deploy_dev:
     name: Deploy to the dev environment
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/epic')
     needs:
+      - node_unit_tests
       - build
       - helm_lint
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@v2 # WORKFLOW_VERSION

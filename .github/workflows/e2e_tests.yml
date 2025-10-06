@@ -19,7 +19,7 @@ jobs:
       - name: Checkout e2e tests repo
         uses: actions/checkout@v5
         with:
-          repository: ministryofjustice/manage-a-workforce-ui-e2e-tests
+          repository: ministryofjustice/hmpps-manage-a-workforce-ui-e2e-tests
           path: e2e-tests
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main

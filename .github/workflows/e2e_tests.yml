@@ -20,20 +20,35 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: ministryofjustice/manage-a-workforce-ui-e2e-tests
+          path: e2e-tests
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: ${{ inputs.node_version_file }}
-      - name: Run Docker Compose to start dependencies
+      - name: Start maw-ui application
         run: |
-          cd e2e-tests
-          docker-compose up -d
-      - name: Install e2e dependencies
-        run: |
-          cd e2e-tests
+          cd ..
           npm ci
-      - name: Run e2e tests
+          npm run build
+          npm run start-external-test &
+      - name: Install e2e dependencies
+        run: npm ci
+        working-directory: e2e-tests
+      - name: Run Docker Compose to start dependencies
+        run: docker-compose up -d
+        working-directory: e2e-tests
+      - name: Wait for maw-ui application to be ready
         run: |
-          cd e2e-tests
-          npm test # or npx cypress run, etc.
+          for i in {1..60}; do
+            if curl -sSf http://localhost:3000/health; then exit 0; fi
+            sleep 5
+          done
+          echo "App failed to start" && exit 1
+      - name: Run e2e tests
+        run: npm run test:all
+        working-directory: e2e-tests
+      - name: Stop Docker Compose
+        if: always()
+        run: docker-compose down
+        working-directory: e2e-tests

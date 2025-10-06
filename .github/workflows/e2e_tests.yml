@@ -27,11 +27,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: ${{ inputs.node_version_file }}
+      - name: Install e2e dependencies
+        run: npm install
+        working-directory: e2e-tests
       - name: Start maw-ui application
         run: |
           npm install
           npm run build
           npm run start-external-test &
+        working-directory: .
       - name: Wait for maw-ui application to be ready
         run: |
           for i in {1..60}; do
@@ -39,9 +43,6 @@ jobs:
             sleep 5
           done
           echo "App failed to start" && exit 1
-      - name: Install e2e dependencies
-        run: npm install
-        working-directory: e2e-tests
       - name: Run Docker Compose to start dependencies
         run: docker compose up -d
         working-directory: e2e-tests

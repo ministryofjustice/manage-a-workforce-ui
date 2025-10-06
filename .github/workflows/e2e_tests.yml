@@ -29,7 +29,6 @@ jobs:
           node-version-file: ${{ inputs.node_version_file }}
       - name: Start maw-ui application
         run: |
-          cd ..
           npm install
           npm run build
           npm run start-external-test &
@@ -37,7 +36,7 @@ jobs:
         run: npm install
         working-directory: e2e-tests
       - name: Run Docker Compose to start dependencies
-        run: docker-compose up -d
+        run: docker compose up -d
         working-directory: e2e-tests
       - name: Wait for maw-ui application to be ready
         run: |
@@ -51,4 +50,4 @@ jobs:
         working-directory: e2e-tests
       - name: Stop Docker Compose
         if: always()
-        run: docker-compose down
+        run: docker compose down

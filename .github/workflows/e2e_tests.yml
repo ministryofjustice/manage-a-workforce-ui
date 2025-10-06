@@ -32,12 +32,6 @@ jobs:
           npm install
           npm run build
           npm run start-external-test &
-      - name: Install e2e dependencies
-        run: npm install
-        working-directory: e2e-tests
-      - name: Run Docker Compose to start dependencies
-        run: docker compose up -d
-        working-directory: e2e-tests
       - name: Wait for maw-ui application to be ready
         run: |
           for i in {1..60}; do
@@ -45,6 +39,13 @@ jobs:
             sleep 5
           done
           echo "App failed to start" && exit 1
+      - name: Install e2e dependencies
+        run: npm install
+        working-directory: e2e-tests
+      - name: Run Docker Compose to start dependencies
+        run: docker compose up -d
+        working-directory: e2e-tests
+
       - name: Run e2e tests
         run: npm run test:all
         working-directory: e2e-tests

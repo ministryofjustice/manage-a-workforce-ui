@@ -30,11 +30,11 @@ jobs:
       - name: Start maw-ui application
         run: |
           cd ..
-          npm ci
+          npm install
           npm run build
           npm run start-external-test &
       - name: Install e2e dependencies
-        run: npm ci
+        run: npm install
         working-directory: e2e-tests
       - name: Run Docker Compose to start dependencies
         run: docker-compose up -d

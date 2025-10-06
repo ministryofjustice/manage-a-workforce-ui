@@ -22,6 +22,7 @@ jobs:
           repository: ministryofjustice/manage-a-workforce-ui-e2e-tests
           path: e2e-tests
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -51,4 +52,3 @@ jobs:
       - name: Stop Docker Compose
         if: always()
         run: docker-compose down
-        working-directory: e2e-tests

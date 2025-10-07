@@ -70,7 +70,6 @@ jobs:
     name: Deploy to the dev environment
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/epic')
     needs:
-      - node_unit_tests
       - build
       - helm_lint
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@v2 # WORKFLOW_VERSION

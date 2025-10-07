@@ -1,0 +1,56 @@
+name: E2E Tests
+on:
+  workflow_call:
+    inputs:
+      node_version_file:
+        description: 'Passed to setup-node action to specify where to source the version of node from'
+        required: false
+        type: string
+        default: '.nvmrc'
+permissions:
+  contents: read
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v5
+
+      - name: Checkout e2e tests repo
+        uses: actions/checkout@v5
+        with:
+          repository: ministryofjustice/hmpps-manage-a-workforce-ui-e2e-tests
+          path: e2e-tests
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ${{ inputs.node_version_file }}
+      - name: Install e2e dependencies
+        run: npm install
+        working-directory: e2e-tests
+      - name: Start maw-ui application
+        run: |
+          npm install
+          npm run build
+          npm run start-external-test &
+        working-directory: .
+      - name: Wait for maw-ui application to be ready
+        run: |
+          for i in {1..60}; do
+            if curl -sSf http://localhost:3007/health; then exit 0; fi
+            sleep 5
+          done
+          echo "App failed to start" && exit 1
+      - name: Run Docker Compose to start dependencies
+        run: docker compose up -d
+        working-directory: e2e-tests
+
+        # uncomment when you have tests to run
+        # - name: Run e2e tests
+        # run: npm run test:all
+        # working-directory: e2e-tests
+      - name: Stop Docker Compose
+        if: always()
+        run: docker compose down

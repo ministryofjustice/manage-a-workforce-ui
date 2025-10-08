@@ -125,6 +125,9 @@ generic-service:
     elasticache-redis:
       REDIS_HOST: 'primary_endpoint_address'
       REDIS_AUTH_TOKEN: 'auth_token'
+    flipt:
+      FLIPT_API_KEY: 'API_KEY'
+      FLIPT_URL: 'URL'
 
   allowlist:
     groups:

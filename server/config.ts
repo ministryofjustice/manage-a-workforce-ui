@@ -105,7 +105,6 @@ export default {
         response: 5000,
       },
       agent: new AgentConfig(5000),
-      // apiClientId: get('FLIPT_API_KEY', 'manage-a-workforce-ui', requiredInProduction),
       // apiClientSecret: get('API_KEY', 'clientsecret', requiredInProduction),
     },
     tokenVerification: {

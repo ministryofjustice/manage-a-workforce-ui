@@ -18,6 +18,7 @@ generic-service:
     PROBATION_ESTATE_SERVICE_URL: "https://hmpps-probation-estate-api-preprod.hmpps.service.justice.gov.uk"
     USER_PREFERENCE_SERVICE_URL: "https://hmpps-user-preferences-preprod.hmpps.service.justice.gov.uk"
     STAFF_LOOKUP_SERVICE_URL: "https://hmpps-staff-lookup-service-preprod.hmpps.service.justice.gov.uk"
+    FLIPT_URL: "https://feature-toggles-preprod.hmpps.service.justice.gov.uk"
 
   scheduledDowntime:
     enabled: true

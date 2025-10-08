@@ -19,7 +19,7 @@ export const services = () => {
   const userPreferenceService = new UserPreferenceService(config.apis.userPreferenceService)
   const staffLookupService = new StaffLookupService(config.apis.staffLookupService)
   const technicalUpdatesService = new TechnicalUpdatesService()
-  const featureFlagService: FeatureFlagService = new FeatureFlagService(config.apis.featureFlagService)
+  const featureFlagService: FeatureFlagService = new FeatureFlagService()
   return {
     userService,
     allocationsService,

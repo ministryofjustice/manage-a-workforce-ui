@@ -1,7 +1,6 @@
 import RestClient from '../data/restClient'
 import { ApiConfig } from '../config'
 import FeatureFlagResponse from '../models/FeatureFlagResponse'
-import FeatureFlagRequest from '../models/FeatureFlagRequest'
 
 export default class FeatureFlagService {
   config: ApiConfig

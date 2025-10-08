@@ -28,6 +28,7 @@ export const services = () => {
     userPreferenceService,
     staffLookupService,
     technicalUpdatesService,
+    featureFlagService,
   }
 }
 

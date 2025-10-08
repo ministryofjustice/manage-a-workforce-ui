@@ -99,6 +99,15 @@ export default {
       },
       agent: new AgentConfig(5000),
     },
+    featureFlagService: {
+      url: get('FLIPT_URL', 'http://127.0.0.1:9091', requiredInProduction),
+      timeout: {
+        response: 5000,
+      },
+      agent: new AgentConfig(5000),
+      apiClientId: get('FLIPT_API_KEY', 'manage-a-workforce-ui', requiredInProduction),
+      apiClientSecret: get('API_KEY', 'clientsecret', requiredInProduction),
+    },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://127.0.0.1:9091', requiredInProduction),
       timeout: {

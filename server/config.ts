@@ -108,6 +108,7 @@ export default {
       },
       agent: new AgentConfig(5000),
     },
+    featureFlagService: {},
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://127.0.0.1:9091', requiredInProduction),
       timeout: {

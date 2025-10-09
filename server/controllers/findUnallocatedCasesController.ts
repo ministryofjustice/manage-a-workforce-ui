@@ -24,7 +24,7 @@ export default class FindUnallocatedCasesController {
   ) {}
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
-    // const featureFlag =await this.featureFlagService.isFeatureEnabled("Gary", "Gary")
+    const featureFlag = await this.featureFlagService.isFeatureEnabled('Gary', 'Gary')
     const { token, username } = res.locals.user
     const teamCodes = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const pduDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)

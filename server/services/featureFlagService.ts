@@ -1,5 +1,6 @@
 import { BooleanEvaluationResponse } from '@flipt-io/flipt-client-js'
 import { createClient } from '../data/fliptClient'
+import logger from '../../logger'
 
 const fliptClient = createClient()
 
@@ -18,6 +19,7 @@ export default class FeatureFlagService {
 
       return response.enabled
     } catch (error) {
+      logger.error(error, 'Failed to retrieve unallocated case count')
       return false
     }
   }

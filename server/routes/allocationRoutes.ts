@@ -21,7 +21,6 @@ export default function getAllocationRoutes(
     services.userPreferenceService,
     services.allocationsService,
     services.workloadService,
-    services.featureFlagService,
   )
 
   const allocationHistoryController = new AllocationHistoryController(

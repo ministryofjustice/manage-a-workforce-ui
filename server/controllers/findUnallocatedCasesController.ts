@@ -12,7 +12,6 @@ import UnallocatedCase from './data/UnallocatedCase'
 import WorkloadService from '../services/workloadService'
 import config from '../config'
 import { unescapeApostrophe } from '../utils/utils'
-import FeatureFlagService from '../services/featureFlagService'
 
 export default class FindUnallocatedCasesController {
   constructor(
@@ -20,11 +19,9 @@ export default class FindUnallocatedCasesController {
     private readonly userPreferenceService: UserPreferenceService,
     private readonly allocationsService: AllocationsService,
     private readonly workloadService: WorkloadService,
-    private readonly featureFlagService: FeatureFlagService,
   ) {}
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
-    const featureFlag = await this.featureFlagService.isFeatureEnabled('Gary', 'Gary')
     const { token, username } = res.locals.user
     const teamCodes = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const pduDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)

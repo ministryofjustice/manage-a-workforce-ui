@@ -20,7 +20,6 @@ generic-service:
     STAFF_LOOKUP_SERVICE_URL: "https://hmpps-staff-lookup-service-dev.hmpps.service.justice.gov.uk"
     FLIPT_URL: "https://feature-toggles-dev.hmpps.service.justice.gov.uk"
 
-
   scheduledDowntime:
     enabled: true
 

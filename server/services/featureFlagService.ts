@@ -20,6 +20,40 @@ export default class FeatureFlagService {
     }
   }
 
+  async isFeatureEnabledWithContext(code: string, flag: string, context: string): Promise<boolean> {
+    try {
+      const response = (await fliptClient).evaluateBoolean({
+        entityId: code,
+        flagKey: flag,
+        context: {
+          code: context,
+        },
+      }) as BooleanEvaluationResponse
+
+      return response.enabled
+    } catch (error) {
+      logger.error(error, `Feature flag not found for ${flag} /${code}`)
+      return false
+    }
+  }
+
+  async getFeatureVariantWithContext(code: string, flag: string, context: string): Promise<boolean> {
+    try {
+      const response = (await fliptClient).evaluateVariant({
+        entityId: code,
+        flagKey: flag,
+        context: {
+          code: context,
+        },
+      }) as VariantEvaluationResponse
+
+      return response.match
+    } catch (error) {
+      logger.error(error, `Feature flag not found for ${flag} /${code}`)
+      return false
+    }
+  }
+
   async getFeatureVariant(code: string, flag: string): Promise<boolean> {
     try {
       const response = (await fliptClient).evaluateVariant({

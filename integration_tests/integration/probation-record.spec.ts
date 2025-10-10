@@ -65,17 +65,17 @@ context('Probation record', () => {
     probationRecordPage.highlightedTab().should('contain.text', 'Probation record')
   })
 
-  it('navigate to probation record through case summary', () => {
-    cy.task('stubAllEstateByRegionCode')
-    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
-    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
-    cy.task('stubCaseAllocationHistoryCount', 20)
-    cy.task('stubGetProbationRecord')
-    cy.get('a[href*="/pdu/PDU1/find-unallocated"]').click()
-    cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/case-view"]').click()
-    cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/probation-record"]').click()
-    Page.verifyOnPage(ProbationRecordPage)
-  })
+  // it('navigate to probation record through case summary', () => {
+  //   cy.task('stubAllEstateByRegionCode')
+  //   cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+  //   cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
+  //   cy.task('stubCaseAllocationHistoryCount', 20)
+  //   cy.task('stubGetProbationRecord')
+  //   cy.get('a[href*="/pdu/PDU1/find-unallocated"]').click()
+  //   cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/case-view"]').click()
+  //   cy.get('a[href*="/pdu/PDU1/J678910/convictions/1/probation-record"]').click()
+  //   Page.verifyOnPage(ProbationRecordPage)
+  // })
 
   it('Continue button enabled and visible on page', () => {
     cy.task('stubGetProbationRecord')

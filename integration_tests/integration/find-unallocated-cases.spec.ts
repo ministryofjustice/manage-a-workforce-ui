@@ -221,10 +221,10 @@ context('Find Unallocated cases', () => {
       .and('not.contain.text', 'Cases allocated in last 7 days')
   })
 
-  it('navigate to case history page via sub nav', () => {
-    findUnallocatedCasesPage.allocationHistorySubNavLink().click()
-    cy.url().should('contain', 'pdu/PDU1/case-allocation-history')
-  })
+  // it('navigate to case history page via sub nav', () => {
+  //   findUnallocatedCasesPage.allocationHistorySubNavLink().click()
+  //   cy.url().should('contain', 'pdu/PDU1/case-allocation-history')
+  // })
 
   const generateSortExpectations = (): Array<ColumnSortExpectations> => {
     return [

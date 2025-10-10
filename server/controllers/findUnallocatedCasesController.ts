@@ -12,6 +12,7 @@ import UnallocatedCase from './data/UnallocatedCase'
 import WorkloadService from '../services/workloadService'
 import config from '../config'
 import { unescapeApostrophe } from '../utils/utils'
+import FeatureFlagService from '../services/featureFlagService'
 
 export default class FindUnallocatedCasesController {
   constructor(
@@ -19,9 +20,11 @@ export default class FindUnallocatedCasesController {
     private readonly userPreferenceService: UserPreferenceService,
     private readonly allocationsService: AllocationsService,
     private readonly workloadService: WorkloadService,
+    private readonly featureFlagService: FeatureFlagService,
   ) {}
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
+    const featureFlag = await this.featureFlagService.isFeatureEnabled('Gary', 'Gary')
     const { token, username } = res.locals.user
     const teamCodes = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const pduDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)
@@ -71,7 +74,7 @@ export default class FindUnallocatedCasesController {
     const unallocatedCases = unallocatedCasesByTeam.map(
       value =>
         new UnallocatedCase(
-          unescapeApostrophe(value.name),
+          unescapeApostrophe(value.name + featureFlag),
           value.crn,
           value.tier,
           value.sentenceDate,
@@ -110,7 +113,7 @@ export default class FindUnallocatedCasesController {
       isFindUnalllocatedCasesPage: true,
       isCaseAllocationHistoryPage: false,
       pduDetails,
-      title: 'Unallocated cases | Manage a workforce',
+      title: `Unallocated cases | Manage a workforce${featureFlag}`,
       errors: req.flash('errors') || [],
       dropDownSelectionData: JSON.stringify(allEstate),
       pduOptions,
@@ -120,7 +123,7 @@ export default class FindUnallocatedCasesController {
       casesLength: unallocatedCases.length,
       teamCode: savedAllocationDemandSelection.team,
       teamSelected: allocationDemandSelection.team,
-      pduCode,
+      pduCode: `${pduCode}[${featureFlag}`,
       allocatedCasesCount: allocatedCasesCount.caseCount,
     })
   }

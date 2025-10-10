@@ -37,14 +37,12 @@ export default class FeatureFlagService {
     }
   }
 
-  async isFeatureEnabledWithContext(code: string, flag: string, context: string): Promise<boolean> {
+  async isFeatureEnabledWithContext(code: string, flag: string, context: Record<string, string>): Promise<boolean> {
     try {
       const response = (await this.fliptClient()).evaluateBoolean({
         entityId: code,
         flagKey: flag,
-        context: {
-          code: context,
-        },
+        context,
       }) as BooleanEvaluationResponse
 
       return response.enabled
@@ -54,14 +52,12 @@ export default class FeatureFlagService {
     }
   }
 
-  async getFeatureVariantWithContext(code: string, flag: string, context: string): Promise<boolean> {
+  async getFeatureVariantWithContext(code: string, flag: string, context: Record<string, string>): Promise<boolean> {
     try {
       const response = (await this.fliptClient()).evaluateVariant({
         entityId: code,
         flagKey: flag,
-        context: {
-          code: context,
-        },
+        context,
       }) as VariantEvaluationResponse
 
       return response.match

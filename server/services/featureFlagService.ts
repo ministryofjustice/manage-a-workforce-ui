@@ -1,13 +1,30 @@
-import { BooleanEvaluationResponse, VariantEvaluationResponse } from '@flipt-io/flipt-client-js'
-import { createClient } from '../data/fliptClient'
+import { BooleanEvaluationResponse, FliptClient, VariantEvaluationResponse } from '@flipt-io/flipt-client-js'
 import logger from '../../logger'
-
-const fliptClient = createClient()
+import config from '../config'
 
 export default class FeatureFlagService {
+  client: FliptClient
+
+  async fliptClient(): Promise<FliptClient> {
+    if (!this.client) {
+      this.client = await FliptClient.init({
+        namespace: config.fliptClient.namespace,
+        url: config.fliptClient.url,
+        authentication: {
+          clientToken: config.fliptClient.apiClientSecret,
+        },
+      }).catch(error => {
+        logger.error(error, `Unable to connect to feature flag service`)
+        throw Error(`Unable to connect to feature flag service`)
+      })
+    }
+
+    return this.client
+  }
+
   async isFeatureEnabled(code: string, flag: string): Promise<boolean> {
     try {
-      const response = (await fliptClient).evaluateBoolean({
+      const response = (await this.fliptClient()).evaluateBoolean({
         entityId: code,
         flagKey: flag,
         context: {},
@@ -22,7 +39,7 @@ export default class FeatureFlagService {
 
   async isFeatureEnabledWithContext(code: string, flag: string, context: string): Promise<boolean> {
     try {
-      const response = (await fliptClient).evaluateBoolean({
+      const response = (await this.fliptClient()).evaluateBoolean({
         entityId: code,
         flagKey: flag,
         context: {
@@ -39,7 +56,7 @@ export default class FeatureFlagService {
 
   async getFeatureVariantWithContext(code: string, flag: string, context: string): Promise<boolean> {
     try {
-      const response = (await fliptClient).evaluateVariant({
+      const response = (await this.fliptClient()).evaluateVariant({
         entityId: code,
         flagKey: flag,
         context: {
@@ -56,7 +73,7 @@ export default class FeatureFlagService {
 
   async getFeatureVariant(code: string, flag: string): Promise<boolean> {
     try {
-      const response = (await fliptClient).evaluateVariant({
+      const response = (await this.fliptClient()).evaluateVariant({
         entityId: code,
         flagKey: flag,
         context: {},

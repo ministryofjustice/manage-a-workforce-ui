@@ -39,7 +39,7 @@ export default {
     tls_enabled: get('REDIS_TLS_ENABLED', 'false'),
   },
   fliptClient: {
-    url: get('FLIPT_URL', 'http://127.0.0.1:9091', requiredInProduction),
+    url: get('FLIPT_URL', 'http://127.0.0.1:9089', requiredInProduction),
     namespace: 'ManageAWorkforce',
     timeout: {
       response: 5000,

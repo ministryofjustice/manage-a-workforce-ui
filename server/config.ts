@@ -38,6 +38,15 @@ export default {
     password: process.env.REDIS_AUTH_TOKEN,
     tls_enabled: get('REDIS_TLS_ENABLED', 'false'),
   },
+  fliptClient: {
+    url: get('FLIPT_URL', 'http://127.0.0.1:9089', requiredInProduction),
+    namespace: 'ManageAWorkforce',
+    timeout: {
+      response: 60000,
+    },
+    agent: new AgentConfig(5000),
+    apiClientSecret: get('FLIPT_API_KEY', 'clientsecret', requiredInProduction),
+  },
   session: {
     secret: get('SESSION_SECRET', 'app-insecure-default-session', requiredInProduction),
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 120)),
@@ -99,6 +108,7 @@ export default {
       },
       agent: new AgentConfig(5000),
     },
+    featureFlagService: {},
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://127.0.0.1:9091', requiredInProduction),
       timeout: {

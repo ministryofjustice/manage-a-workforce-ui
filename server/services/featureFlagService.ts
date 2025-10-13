@@ -10,6 +10,7 @@ export default class FeatureFlagService {
       this.client = await FliptClient.init({
         namespace: config.fliptClient.namespace,
         url: config.fliptClient.url,
+        updateInterval: config.fliptClient.timeout.response,
         authentication: {
           clientToken: config.fliptClient.apiClientSecret,
         },

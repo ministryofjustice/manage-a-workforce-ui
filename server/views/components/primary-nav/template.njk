@@ -15,9 +15,11 @@
                             {% endif %}</a>
                     </li>
 
+                  {% if featureFlag %}
                     <li class="moj-primary-navigation__item">
-                       <a class="moj-primary-navigation__link" href="/reallocations">Reallocations</a>
+                       <a class="moj-primary-navigation__link" href="#">Reallocations</a>
                     </li>
+                  {% endif %}
 
                     <li class="moj-primary-navigation__item">
                         <a class="moj-primary-navigation__link" href="{{ workloadMeasurementUrl }}/probation/hmpps/0" id="offender-management-link">Offender Management</a>

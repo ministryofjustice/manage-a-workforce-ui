@@ -48,7 +48,9 @@ export default async function nunjucksSetup(
     },
   )
 
-  const featureFlag = await services.featureFlagService.isFeatureEnabled('reallocations', 'Reallocations')
+  const featureFlag = services.featureFlagService
+    ? await services.featureFlagService.isFeatureEnabled('reallocations', 'Reallocations')
+    : false
 
   njkEnv.addFilter('initialiseName', initialiseName)
 

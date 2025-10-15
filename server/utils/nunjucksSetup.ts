@@ -14,7 +14,11 @@ type Error = {
   text: string
 }
 
-export default function nunjucksSetup(app: express.Express, path: pathModule.PlatformPath, services: Services): void {
+export default async function nunjucksSetup(
+  app: express.Express,
+  path: pathModule.PlatformPath,
+  services: Services,
+): Promise<void> {
   app.set('view engine', 'njk')
   app.locals.asset_path = '/assets/'
   app.locals.applicationName = 'Manage A Workforce Ui'
@@ -43,6 +47,10 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
       express: app,
     },
   )
+
+  const featureFlag = services.featureFlagService
+    ? await services.featureFlagService.isFeatureEnabled('reallocations', 'Reallocations')
+    : false
 
   njkEnv.addFilter('initialiseName', initialiseName)
 
@@ -76,4 +84,5 @@ export default function nunjucksSetup(app: express.Express, path: pathModule.Pla
   njkEnv.addGlobal('tagManagerContainerId', config.analytics.tagManagerContainerId.trim())
   njkEnv.addGlobal('lastTechnicalUpdate', services.technicalUpdatesService.getLatestTechnicalUpdateHeading())
   njkEnv.addGlobal('instrumentationKey', config.instrumentationKey)
+  njkEnv.addGlobal('featureFlag', featureFlag)
 }

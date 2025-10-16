@@ -54,13 +54,6 @@ export default class FeatureFlagService {
   }
 
   async isFeatureEnabled(code: string, flag: string): Promise<boolean> {
-    const cacheKey = `${flag}:${code}`
-    const now = Date.now()
-
-    const cached = cache.get(cacheKey)
-    if (cached && cached.expiresAt > now) {
-      return cached.value
-    }
     try {
       const response = (await this.fliptClient()).evaluateBoolean({
         entityId: code,
@@ -68,10 +61,7 @@ export default class FeatureFlagService {
         context: {},
       }) as BooleanEvaluationResponse
 
-      const value = response?.enabled ?? false
-
-      cache.set(cacheKey, { value, expiresAt: now + cacheTtl })
-      return value
+      return response.enabled
     } catch (error) {
       logger.error(error, `Feature flag not found for ${flag} /${code}`)
       return false

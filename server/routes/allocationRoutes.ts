@@ -58,4 +58,9 @@ export default function getAllocationRoutes(
     const { pduCode } = req.params
     await allocationHistoryController.getCasesAllocatedByTeam(req, res, pduCode)
   })
+
+  get('/pdu/:pduCode/:teamCode/reallocations/team-workload', async (req, res) => {
+    const { teamCode, pduCode } = req.params
+    await allocateCasesController.getReallocationTeamWorkload(req, res, pduCode, teamCode)
+  })
 }

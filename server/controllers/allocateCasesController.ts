@@ -51,7 +51,17 @@ export default class AllocateCasesController {
     })
   }
 
-  async getTeamWorkload(_req: Request, res: Response, pduCode: string, teamCode: string) {
+  async getReallocationTeamWorkload(_req: Request, res: Response, pduCode: string, teamCode: string) {
+    await this.getTeamWorkload(_req, res, pduCode, teamCode, 'pages/reallocations-team-workload')
+  }
+
+  async getTeamWorkload(
+    _req: Request,
+    res: Response,
+    pduCode: string,
+    teamCode: string,
+    view: string = 'pages/team-workload',
+  ) {
     const { token } = res.locals.user
 
     const teamDetails = await this.probationEstateService.getTeamDetails(token, teamCode)
@@ -68,7 +78,7 @@ export default class AllocateCasesController {
     const workload = teamWorkload[teamCode].teams.map(team => ({ ...team, gradeOrder: setGradeOrder(team.grade) }))
     workload.sort(sortPractitionersByGrade)
 
-    res.render('pages/team-workload', {
+    res.render(view, {
       title: 'Team workload | Manage a workforce',
       teamDetails,
       teamCode,

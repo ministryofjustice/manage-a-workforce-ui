@@ -23,6 +23,7 @@ export default class FindUnallocatedCasesController {
 
   async findUnallocatedCases(req: Request, res: Response, pduCode: string): Promise<void> {
     const { token, username } = res.locals.user
+    const crntest = await this.allocationsService.getCrn(token, 'X958723')
     const teamCodes = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const pduDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)
     await this.allocationsService.getUserRegionAccessForRegion(

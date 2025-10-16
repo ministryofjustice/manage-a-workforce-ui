@@ -48,10 +48,6 @@ export default async function nunjucksSetup(
     },
   )
 
-  const featureFlag = services.featureFlagService
-    ? await services.featureFlagService.isFeatureEnabled('reallocations', 'Reallocations')
-    : false
-
   njkEnv.addFilter('initialiseName', initialiseName)
 
   njkEnv.addFilter('dateFormat', (date: string) => {
@@ -84,5 +80,4 @@ export default async function nunjucksSetup(
   njkEnv.addGlobal('tagManagerContainerId', config.analytics.tagManagerContainerId.trim())
   njkEnv.addGlobal('lastTechnicalUpdate', services.technicalUpdatesService.getLatestTechnicalUpdateHeading())
   njkEnv.addGlobal('instrumentationKey', config.instrumentationKey)
-  njkEnv.addGlobal('featureFlag', featureFlag)
 }

@@ -59,7 +59,7 @@
 {% for offenderManager in teamWorkload %}
     {%- set tableRow = [
             {
-                html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/reallocations/cases/' + offenderManager.code + '">' + offenderManager.name.forename + ' ' + offenderManager.name.surname,
+                html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/reallocations/cases/' + offenderManager.code + '" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.forename + ' ' + offenderManager.name.surname,
                 attributes: {
                     "data-sort-value": offenderManager.name.forename + ' ' + offenderManager.name.surname
                 }

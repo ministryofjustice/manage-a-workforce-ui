@@ -112,6 +112,12 @@ export default class AllocationsService {
     })) as string
   }
 
+  async getCrn(token: string, crn: string): Promise<string> {
+    return (await this.restClient(token).get({
+      path: `/allocated/crn/${crn}`,
+    })) as string
+  }
+
   async getUserRegionAccessForPdu(token: string, staffId: string, pdu: string): Promise<string> {
     return (await this.restClient(token).get({
       path: `/user/${staffId}/pdu/${pdu}/is-allowed`,

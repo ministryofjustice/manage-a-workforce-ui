@@ -3,6 +3,7 @@ import AllocationsService from '../services/allocationsService'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 import WorkloadService from '../services/workloadService'
+import FeatureFlagService from '../services/featureFlagService'
 
 export default class AllocateCasesController {
   constructor(
@@ -10,6 +11,7 @@ export default class AllocateCasesController {
     private readonly probationEstateService: ProbationEstateService,
     private readonly userPreferenceService: UserPreferenceService,
     private readonly workloadService: WorkloadService,
+    private readonly featureFlagService: FeatureFlagService,
   ) {}
 
   async getDataByTeams(req: Request, res: Response, pduCode: string) {
@@ -51,7 +53,23 @@ export default class AllocateCasesController {
     })
   }
 
-  async getTeamWorkload(_req: Request, res: Response, pduCode: string, teamCode: string) {
+  async getReallocationTeamWorkload(_req: Request, res: Response, pduCode: string, teamCode: string) {
+    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Gary', 'Gary')
+
+    if (reallocationEnabledFlag) {
+      await this.getTeamWorkload(_req, res, pduCode, teamCode, 'pages/reallocations-team-workload')
+    } else {
+      res.redirect(`/pdu/${pduCode}/teams`)
+    }
+  }
+
+  async getTeamWorkload(
+    _req: Request,
+    res: Response,
+    pduCode: string,
+    teamCode: string,
+    view: string = 'pages/team-workload',
+  ) {
     const { token } = res.locals.user
 
     const teamDetails = await this.probationEstateService.getTeamDetails(token, teamCode)
@@ -68,7 +86,7 @@ export default class AllocateCasesController {
     const workload = teamWorkload[teamCode].teams.map(team => ({ ...team, gradeOrder: setGradeOrder(team.grade) }))
     workload.sort(sortPractitionersByGrade)
 
-    res.render('pages/team-workload', {
+    res.render(view, {
       title: 'Team workload | Manage a workforce',
       teamDetails,
       teamCode,

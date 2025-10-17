@@ -15,6 +15,7 @@ export default function getAllocationRoutes(
     services.probationEstateService,
     services.userPreferenceService,
     services.workloadService,
+    services.featureFlagService,
   )
   const findUnallocatedCasesController = new FindUnallocatedCasesController(
     services.probationEstateService,
@@ -57,5 +58,10 @@ export default function getAllocationRoutes(
   get('/pdu/:pduCode/case-allocation-history', async (req, res) => {
     const { pduCode } = req.params
     await allocationHistoryController.getCasesAllocatedByTeam(req, res, pduCode)
+  })
+
+  get('/pdu/:pduCode/:teamCode/reallocations/team-workload', async (req, res) => {
+    const { teamCode, pduCode } = req.params
+    await allocateCasesController.getReallocationTeamWorkload(req, res, pduCode, teamCode)
   })
 }

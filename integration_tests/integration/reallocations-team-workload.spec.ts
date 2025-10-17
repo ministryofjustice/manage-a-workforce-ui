@@ -1,6 +1,3 @@
-import Page from '../pages/page'
-import TeamWorkloadPage from '../pages/reallocationsTeamWorkload'
-
 context('Team Workload', () => {
   let teamWorkloadPage
 

@@ -24,6 +24,7 @@ import getUnallocatedCasesCount from './middleware/getUnallocatedCasesCount'
 import checkCaseAlreadyAllocated from './middleware/checkCaseAlreadyAllocated'
 import unless from './utils/middlewareUtils'
 import config from './config'
+import featureFlagMiddleware from './middleware/featureFlagMiddleware'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -35,6 +36,8 @@ export default function createApp(services: Services): express.Application {
   app.locals.notification = {
     ...config.notification,
   }
+
+  app.use(featureFlagMiddleware)
 
   app.use((req, res, next) => {
     res.locals.pageUrl = encodeURI(`${req.protocol}://${req.headers.host}${req.url}`)

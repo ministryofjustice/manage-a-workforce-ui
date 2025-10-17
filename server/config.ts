@@ -42,7 +42,7 @@ export default {
     url: get('FLIPT_URL', 'http://127.0.0.1:9089', requiredInProduction),
     namespace: 'ManageAWorkforce',
     timeout: {
-      response: 60000,
+      response: 30,
     },
     agent: new AgentConfig(5000),
     apiClientSecret: get('FLIPT_API_KEY', 'clientsecret', requiredInProduction),

@@ -15,6 +15,7 @@ export default function getAllocationRoutes(
     services.probationEstateService,
     services.userPreferenceService,
     services.workloadService,
+    services.featureFlagService,
   )
   const findUnallocatedCasesController = new FindUnallocatedCasesController(
     services.probationEstateService,

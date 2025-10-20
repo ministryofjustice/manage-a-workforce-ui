@@ -110,6 +110,11 @@ export default function allocationsControllerRoutes(
     )
   })
 
+  get('/pdu/:pduCode/:teamCode/reallocations/cases/:offenderManagerCode', async (req, res) => {
+    const { teamCode, offenderManagerCode, pduCode } = req.params
+    await allocationsController.getCasesForReallocation(req, res, teamCode, offenderManagerCode, pduCode)
+  })
+
   get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/history-officer-view', async (req, res) => {
     const { convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
     await allocationsController.getOverview(

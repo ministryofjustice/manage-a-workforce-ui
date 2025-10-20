@@ -1,0 +1,84 @@
+{% extends "partials/reallocation-officer-view.njk" %}
+{%- from "../components/doubleCell/macro.njk" import doubleCell -%}
+{%- from "../components/caseLoadCase/macro.njk" import caseLoadCase -%}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% set officerName = data.name.combinedName %}
+{% set officerGrade =  data.grade %}
+{% set officerCode =  data.code %}
+{% set officerTotalCases = data.activeCases | length %}
+
+{% set tableData = {
+    caption: 'Active cases HA HA HA',
+    captionClasses: 'govuk-heading-l',
+    attributes: {
+        'data-module': 'moj-sortable-table',
+        'data-persistent-id': 'active-cases'
+    },
+    head: [
+        { text: 'Name / CRN',
+            attributes: {
+            "aria-sort": "none",
+            'data-persistent-id': 'active-cases-name-crn'
+        }
+        },
+        { text: 'Tier',
+            attributes: {
+            "aria-sort": "none",
+            'data-persistent-id': 'active-cases-tier'
+        }
+        },
+        { text: 'Type of case',
+            attributes: {
+            "aria-sort": "none",
+            'data-persistent-id': 'active-cases-type-of-case'
+        }
+        },
+        { text: 'Date of initial allocation',
+            attributes: {
+            "aria-sort": "none",
+            'data-persistent-id': 'active-cases-initial-allocation-date'
+        }
+        }
+    ],
+    rows: []
+} %}
+
+{% for item in cases %}
+    {% if item.redacted == true %}
+        {%- set tableRow = [
+            {
+                text: caseLoadCase(item),
+                attributes: { "data-sort-value": item.crn }
+            },
+            { text: 'This is a restricted access case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 3 }
+        ] -%}
+    {% elif item.excluded === true %}
+        {%- set tableRow = [
+            {
+                text: caseLoadCase(item),
+                attributes: { "data-sort-value": item.crn }
+            },
+            { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+            { text: (item.type | capitalize)}
+        ] -%}
+    {% else %}
+        {%- set tableRow = [
+            {
+                text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' ),
+                attributes: { "data-sort-value": item.crn }
+            },
+            { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+            { text: (item.type | capitalize)}
+        ] -%}
+    {% endif %}
+
+    {{ tableData.rows.push(tableRow) }}
+
+{% endfor %}
+
+
+{% block officerContent %}
+    {{ govukTable(tableData) }}
+{% endblock %}
+

@@ -1,15 +1,104 @@
-{% extends "partials/reallocation-officer-view.njk" %}
-{%- from "../components/doubleCell/macro.njk" import doubleCell -%}
-{%- from "../components/caseLoadCase/macro.njk" import caseLoadCase -%}
+{% extends "partials/layout.njk" %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "../components/card/macro.njk" import card %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
 
 {% set officerName = data.name.combinedName %}
 {% set officerGrade =  data.grade %}
 {% set officerCode =  data.code %}
-{% set officerTotalCases = data.activeCases | length %}
+{% set officerTotalCases = overviewData.activeCases | length %}
+
+{% block beforeContent %}
+    {{ govukBackLink({
+      text: "Back",
+      attributes: {
+       "data-back" : undefined
+      }
+    }) }}
+{% endblock %}
 
 {% set tableData = {
-    caption: 'Active cases HA HA HA',
+    firstCellIsHeader: false,
+    head: [
+        {
+            text: "Tier"
+        }, {
+            text: "Number of cases"
+        }
+    ],
+    rows: [
+        [
+            {
+                text: "A"
+            }, {
+                text: overviewData.caseTotals.a
+            }
+        ],
+        [
+            {
+                text: "B"
+            }, {
+                text: overviewData.caseTotals.b
+            }
+        ],
+        [
+            {
+                text: "C"
+            }, {
+                text: overviewData.caseTotals.c
+            }
+        ],
+        [
+            {
+                text: "D"
+            }, {
+                text: overviewData.caseTotals.d
+            }
+        ],
+        [
+            {
+                text: "AS"
+            }, {
+                text: overviewData.caseTotals.as
+            }
+        ],
+        [
+            {
+                text: "BS"
+            }, {
+                text: overviewData.caseTotals.bs
+            }
+        ],
+        [
+            {
+                text: "CS"
+            }, {
+                text: overviewData.caseTotals.cs
+            }
+        ],
+        [
+            {
+                text: "DS"
+            }, {
+                text: overviewData.caseTotals.ds
+            }
+        ],
+        [
+            {
+                text: "Untiered"
+            }, {
+                text: overviewData.caseTotals.untiered
+            }
+        ]
+    ]
+} %}
+
+{% set caseTableData = {
+    caption: 'Active cases ',
     captionClasses: 'govuk-heading-l',
     attributes: {
         'data-module': 'moj-sortable-table',
@@ -39,6 +128,12 @@
             "aria-sort": "none",
             'data-persistent-id': 'active-cases-initial-allocation-date'
         }
+        },
+        { text: 'Reallocate',
+            attributes: {
+            "aria-sort": "none",
+            'data-persistent-id': 'active-cases-initial-allocation-date'
+        }
         }
     ],
     rows: []
@@ -60,7 +155,9 @@
                 attributes: { "data-sort-value": item.crn }
             },
             { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
-            { text: (item.type | capitalize)}
+            { text: (item.type | capitalize)},
+            { text: (item.initialAllocation)}
+
         ] -%}
     {% else %}
         {%- set tableRow = [
@@ -69,16 +166,100 @@
                 attributes: { "data-sort-value": item.crn }
             },
             { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
-            { text: (item.type | capitalize)}
+            { text: (item.type | capitalize)},
+            { text: (item.initialAllocation)}
         ] -%}
     {% endif %}
 
-    {{ tableData.rows.push(tableRow) }}
+    {{ caseTableData.rows.push(tableRow) }}
 
 {% endfor %}
 
 
+
+{% block content %}
+
 {% block officerContent %}
-    {{ govukTable(tableData) }}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <span class="govuk-caption-xl">{{ teamName }}</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ officerName }}
+                <span class="maw-secondary-text-col govuk-!-display-block">{{ officerGrade }}</span>
+            </h1>
+        </div>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible page-width">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            <h2 class="govuk-heading-l govuk-!-margin-bottom-0">Workload</h2>
+            <p class="govuk-body-s govuk-!-margin-bottom-2">Last updated: {{ data.lastUpdatedOn | dateFormat }} at {{ data.lastUpdatedOn | timeFormat }}</p>
+
+            <div class="govuk-grid-row">
+                <div class="card__layout">
+                    {{ card({
+                        classes: 'card-total',
+                        titleHtml: (overviewData.totalCases + '<p class="govuk-body">' + "cases"  + '</p>')
+                    }) }}
+                </div>
+                <div class="card__layout">
+                    {{ card({
+                        classes: 'card-total-subset ' + ('over-capacity' if data.capacity > 99 else 'under-capacity'),
+                        titleHtml: (overviewData.capacity + '%' + '<p class="govuk-body">' + "workload"  + '</p>')
+                    }) }}
+                </div>
+
+            </div>
+
+            {{ govukDetails({
+                summaryText: "View as points",
+                text: govukSummaryList({
+                    rows: [
+                        {
+                            key: {
+                            text: "Points available"
+                        },
+                            value: {
+                            text: overviewData.pointsAvailable
+                        }
+                        },
+                        {
+                            key: {
+                            text: "Points used"
+                        },
+                            value: {
+                            text: overviewData.pointsUsed
+                        }
+                        },
+                        {
+                            key: {
+                            text: "Points remaining"
+                        },
+                            value: {
+                            text: overviewData.pointsRemaining
+                        }
+                        }
+                    ]
+                })
+            }) }}
+
+
+        </div>
+
+        <div class="govuk-grid-column-one-third">
+            <h3 class="govuk-heading-m">Case mix by tier</h3>
+
+            {{ govukTable(tableData) }}
+
+        </div>
+
+    </div>
 {% endblock %}
 
+{{ govukTable(caseTableData) }}
+
+
+{% endblock %}

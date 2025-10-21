@@ -6,7 +6,16 @@
         {%- from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner -%}
         {% from "govuk/components/button/macro.njk" import govukButton %}
 
-        {% set mainTitle = "Allocations" %}
+      {% for js in feComponents.jsIncludes %}
+        <script src="{{ js }}" nonce="{{ cspNonce }}"></script>
+      {% endfor %}
+
+      {% for css in feComponents.cssIncludes %}
+        <link href="{{ css }}" nonce="{{ cspNonce }}" rel="stylesheet" />
+      {% endfor %}
+
+
+      {% set mainTitle = "Allocations" %}
 
         {% block head %}
             <meta charset="utf-8"/>
@@ -317,7 +326,11 @@
         {% block bodyStart %}{% endblock %}
 
         {% block header %}
-            {% include "./header.njk" %}
+          {% if featureFlag %}
+          {{ feComponents.header | safe }}
+          {% else %}
+          {% include "./header.njk" %}
+          {% endif %}
         {% endblock %}
 
         {% block technicalUpdatesBanner %}
@@ -413,12 +426,11 @@
         {%- endif -%}
 
         {% block footer %}
-            {%- from "govuk/components/footer/macro.njk" import govukFooter -%}
-            {{ govukFooter({
-        meta: {
-            items: footerItems
-        }
-    }) }}
+          {% if featureFlag %}
+          {{ feComponents.footer | safe }}
+          {% else %}
+          {%- from "govuk/components/footer/macro.njk" import govukFooter -%}
+          {% endif %}
         {% endblock %}
 
         {% block bodyEnd %}

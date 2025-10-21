@@ -19,6 +19,7 @@ generic-service:
     USER_PREFERENCE_SERVICE_URL: "https://hmpps-user-preferences-preprod.hmpps.service.justice.gov.uk"
     STAFF_LOOKUP_SERVICE_URL: "https://hmpps-staff-lookup-service-preprod.hmpps.service.justice.gov.uk"
     FLIPT_URL: "https://feature-toggles-preprod.hmpps.service.justice.gov.uk"
+    COMPONENT_API_URL: "https://probation-frontend-components-preprod.hmpps.service.justice.gov.uk"
 
   scheduledDowntime:
     enabled: true

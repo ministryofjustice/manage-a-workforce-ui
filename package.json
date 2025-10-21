@@ -20,7 +20,6 @@
     "watch-node-feature": "export $(cat feature.env) && nodemon -r dotenv/config --watch dist/ $NODE_DEBUG_OPTION dist/server.js | bunyan -o short",
     "start-feature:dev": "npm run build && concurrently -k -p \"[{name}]\" -n \"Views,TypeScript,Node,Sass\" -c \"yellow.bold,cyan.bold,green.bold,blue.bold\" \"npm run watch-views\" \"npm run watch-ts\" \"npm run watch-node-feature\" \"npm run watch-sass\"",
     "record-build-info": "node ./bin/record-build-info",
-    "start-external-test": "export $(cat test.env) && node $NODE_DEBUG_OPTION dist/server.js | bunyan -o short",
     "watch-external-test": "export $(cat test.env) && nodemon -r dotenv/config --watch dist/ $NODE_DEBUG_OPTION dist/server.js | bunyan -o short",
     "start-external-test:dev": "npm run build && concurrently -k -p \"[{name}]\" -n \"Views,TypeScript,Node,Sass\" -c \"yellow.bold,cyan.bold,green.bold,blue.bold\" \"npm run watch-views\" \"npm run watch-ts\" \"npm run watch-external-test\" \"npm run watch-sass\"",
     "lint": "eslint . --cache --max-warnings 0",
@@ -34,7 +33,7 @@
   },
   "engines": {
     "node": "^22",
-    "npm": "^10"
+    "npm": ">=10"
   },
   "jest": {
     "transform": {
@@ -98,7 +97,8 @@
   "dependencies": {
     "@babel/traverse": "7.28.3",
     "@flipt-io/flipt-client-js": "^0.2.0",
-    "@ministryofjustice/frontend": "1.8.1",
+    "@ministryofjustice/frontend": "6.0.0",
+    "@ministryofjustice/hmpps-probation-frontend-components": "1.0.0",
     "accessible-autocomplete": "3.0.1",
     "agentkeepalive": "4.6.0",
     "applicationinsights": "2.9.8",
@@ -115,7 +115,7 @@
     "dayjs": "1.11.13",
     "express": "5.1.0",
     "express-session": "1.18.2",
-    "govuk-frontend": "5.11.1",
+    "govuk-frontend": "^5.11.1",
     "helmet": "8.1.0",
     "http-errors": "2.0.0",
     "jquery": "3.7.1",

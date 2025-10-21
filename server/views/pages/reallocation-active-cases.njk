@@ -7,8 +7,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {%- from "../components/doubleCell/macro.njk" import doubleCell -%}
 {%- from "../components/allocatedCaseLink/macro.njk" import allocatedCaseLink -%}
-
-
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% set officerName = data.name.combinedName %}
 {% set officerGrade =  data.grade %}
@@ -16,11 +15,21 @@
 {% set officerTotalCases = overviewData.activeCases | length %}
 
 {% block beforeContent %}
-    {{ govukBackLink({
-      text: "Back",
-      attributes: {
-       "data-back" : undefined
-      }
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Your teams",
+                href: "/pdu/" + pduCode + "/teams"
+            },
+            {
+                text: teamName,
+                href: '/pdu/' + pduCode + '/' + officerTeamCode + '/reallocations/team-workload'
+            },
+            {
+                text: officerName,
+                href: '/pdu/' + pduCode + '/' + officerTeamCode + '/reallocations/cases/' + officerCode
+            }
+        ]
     }) }}
 {% endblock %}
 

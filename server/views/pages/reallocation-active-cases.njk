@@ -160,7 +160,7 @@
                 text: caseLoadCase(item),
                 attributes: { "data-sort-value": item.crn }
             },
-            { text: 'This is a restricted access case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 3 }
+            { text: 'This is a restricted access case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 4 }
         ] -%}
     {% elif item.excluded === true %}
         {%- set tableRow = [

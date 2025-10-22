@@ -430,6 +430,11 @@
     {{ feComponents.footer | safe }}
   {% else %}
     {%- from "govuk/components/footer/macro.njk" import govukFooter -%}
+    {{ govukFooter({
+      meta: {
+        items: footerItems
+      }
+    }) }}
   {% endif %}
 {% endblock %}
 

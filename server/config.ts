@@ -109,6 +109,14 @@ export default {
       agent: new AgentConfig(5000),
     },
     featureFlagService: {},
+    probationApi: {
+      url: get(
+        'COMPONENT_API_URL',
+        'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk',
+        requiredInProduction,
+      ),
+      healthPath: '/health/ping',
+    },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://127.0.0.1:9091', requiredInProduction),
       timeout: {

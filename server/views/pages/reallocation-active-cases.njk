@@ -170,8 +170,8 @@
             },
             { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
             { text: (item.type | capitalize)},
-            { text: (item.initialAllocation)},
-            { text: allocatedCaseLink(item, pduCode) }
+            { text: item.initialAllocation, attributes: { "data-sort-value": item.initialAllocation } },
+            { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
 
         ] -%}
     {% else %}

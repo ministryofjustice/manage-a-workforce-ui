@@ -69,11 +69,10 @@ export default function getAllocationRoutes(
     await allocationHistoryController.getCasesAllocatedByTeam(req, res, pduCode)
   })
 
-<<<<<<< HEAD
   get('/pdu/:pduCode/:teamCode/reallocations/team-workload', async (req, res) => {
     const { teamCode, pduCode } = req.params
     await allocateCasesController.getReallocationTeamWorkload(req, res, pduCode, teamCode)
-=======
+  })
   get('/allocations/crn-lookup', async (req, res) => {
     const crn = req.query.crn as string
     await allocationsController.lookupCrnDetailsForAllocations(
@@ -83,6 +82,5 @@ export default function getAllocationRoutes(
       res.locals.user.staffCode,
       res.locals.user.pduCode,
     )
->>>>>>> 0504794 (wfp-3375 initial commit)
   })
 }

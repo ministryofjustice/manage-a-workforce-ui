@@ -16,6 +16,7 @@ import AllocationLAOStatus from '../models/AllocationLAOStatus'
 import LaoStatusList from '../models/LaoStatusList'
 import RegionList from '../models/RegionList'
 import { createRedisClient } from '../data/redisClient'
+import CrnDetails from '../models/ReallocationCrnDetails'
 
 interface CachedValue {
   instructions?: string
@@ -194,5 +195,9 @@ export default class AllocationsService {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/confirm-instructions?staffCode=${staffCode}`,
     })) as PersonOnProbationStaffDetails
+  }
+
+  async getLookupforCrn(crn: string, token: string): Promise<CrnDetails[]> {
+    return (await this.restClient(token).get({ path: `/allocated/crn/${crn}` })) as CrnDetails[]
   }
 }

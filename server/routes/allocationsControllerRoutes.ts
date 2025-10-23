@@ -14,6 +14,7 @@ export default function allocationsControllerRoutes(
     services.workloadService,
     services.userPreferenceService,
     services.probationEstateService,
+    services.featureFlagService,
   )
 
   allocationsControllerCaseViewRoutes(services, get, post, allocationsController)

@@ -512,6 +512,7 @@ export default class AllocationsController {
 
     if (!reallocationEnabledFlag) {
       res.redirect(`/pdu/${pduCode}/teams`)
+      return
     }
 
     const [response, teamDetails, casesOverview] = await Promise.all([

@@ -20,6 +20,7 @@ generic-service:
     USER_PREFERENCE_SERVICE_URL: "https://hmpps-user-preferences.hmpps.service.justice.gov.uk"
     STAFF_LOOKUP_SERVICE_URL: "https://hmpps-staff-lookup-service.hmpps.service.justice.gov.uk"
     FLIPT_URL: "https://feature-toggles.hmpps.service.justice.gov.uk"
+    COMPONENT_API_URL: "https://probation-frontend-components.hmpps.service.justice.gov.uk"
 
 generic-prometheus-alerts:
   alertSeverity: workforce-management-prod-alerts

@@ -44,12 +44,9 @@ context('Unallocated', () => {
     const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
     allocateCasesByTeamPage
       .footer()
-      .should('contain', 'Accessibility statement')
-      .and('contain', 'Cookies')
-      .and('contain', 'Privacy')
-      .and('contain', "What's new")
-      .and('contain', 'Open Government Licence v3.0')
-      .and('contain', '© Crown copyright')
+      .should('contain', 'Accessibility')
+      .and('contain', 'Cookies policy')
+      .and('contain', 'Privacy policy')
   })
 
   it('technical updates banner visible on page', () => {

@@ -326,11 +326,7 @@
 {% block bodyStart %}{% endblock %}
 
 {% block header %}
-  {% if featureFlag %}
     {{ feComponents.header | safe }}
-  {% else %}
-    {% include "./header.njk" %}
-  {% endif %}
 {% endblock %}
 
 {% block technicalUpdatesBanner %}
@@ -395,22 +391,6 @@
   </main>
 </div>
 
-{% set footerItems = [
-  {
-    href: "/accessibility-statement",
-    text: "Accessibility statement"
-  },
-  {
-    href: "/cookie-policy",
-    text: "Cookies"
-  },
-  {
-    href: "/privacy-notice",
-    text: "Privacy"
-  }
-]
-%}
-
 <div class="govuk-width-container">
   <div class="govuk-width-row feedback-prompt">
     <h2 class="feedback-prompt-text feedback-container">
@@ -421,21 +401,8 @@
   </div>
 </div>
 
-{%- if canAllocate -%}
-  {% set footerItems = (footerItems.push({href: "/whats-new",text: "What's new"}), footerItems) %}
-{%- endif -%}
-
 {% block footer %}
-  {% if featureFlag %}
     {{ feComponents.footer | safe }}
-  {% else %}
-    {%- from "govuk/components/footer/macro.njk" import govukFooter -%}
-    {{ govukFooter({
-      meta: {
-        items: footerItems
-      }
-    }) }}
-  {% endif %}
 {% endblock %}
 
 {% block bodyEnd %}

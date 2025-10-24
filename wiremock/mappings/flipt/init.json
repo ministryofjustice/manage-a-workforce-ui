@@ -1,0 +1,53 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "url": "/internal/v1/evaluation/snapshot/namespace/ManageAWorkforce"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "namespace": {
+            "key": "ManageAWorkforce"
+          },
+          "flags": [
+            {
+              "key": "Gary",
+              "name": "Gary",
+              "description": "",
+              "enabled": true,
+              "type": "BOOLEAN_FLAG_TYPE",
+              "createdAt": "2025-10-09T10:09:52.475021Z",
+              "updatedAt": "2025-10-10T14:44:42.112284Z",
+              "rules": [],
+              "rollouts": []
+            },
+            {
+              "key": "GaryV",
+              "name": "GaryV",
+              "description": "",
+              "enabled": false,
+              "type": "VARIANT_FLAG_TYPE",
+              "createdAt": "2025-10-09T10:39:30.676357Z",
+              "updatedAt": "2025-10-09T10:39:30.676357Z",
+              "rules": [],
+              "rollouts": []
+            },
+            {
+              "key": "Reallocations",
+              "name": "Reallocations",
+              "description": "Flag for reallocations work",
+              "enabled": true,
+              "type": "BOOLEAN_FLAG_TYPE",
+              "createdAt": "2025-10-13T12:59:53.136978Z",
+              "updatedAt": "2025-10-21T11:34:42.350567Z",
+              "rules": [],
+              "rollouts": []
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -63,9 +63,11 @@ services:
     networks:
       - hmpps_int
     restart: always
-    command: ["--verbose"]
+    command: ['--verbose']
     ports:
       - '9097:8080'
+    volumes:
+      - ./wiremock/mappings/flipt:/home/wiremock/mappings
 
 networks:
   hmpps_int:

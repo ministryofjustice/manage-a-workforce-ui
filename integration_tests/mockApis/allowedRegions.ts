@@ -6,6 +6,7 @@ import {
   stubForCrnAllowedUserRegion,
   stubForPduAllowedForUser,
   stubForRegionAllowedForUser,
+  stubForFeatureflagEnabled,
 } from './wiremock'
 
 export default {

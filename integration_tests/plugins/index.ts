@@ -11,7 +11,6 @@ import {
   resetLaoStubs403,
   resetStaffLaoStatusByCrns,
   resetStaffLaoStatusByCrnsRestricted,
-  resetFeatureflag,
 } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'

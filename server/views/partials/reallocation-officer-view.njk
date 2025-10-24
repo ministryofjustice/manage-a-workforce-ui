@@ -6,7 +6,9 @@
 {% block beforeContent %}
     {{ govukBackLink({
       text: "Back",
-      href: "/pdu/" + pduCode + "/case-allocation-history#" + officerTeamCode
+      attributes: {
+       "data-back" : undefined
+      }
     }) }}
 {% endblock %}
 
@@ -31,22 +33,6 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            {{ mojSubNavigation({
-                label: 'Sub navigation',
-                items: [
-                    {
-                        text: 'Overview',
-                        href: '/pdu/' + pduCode + '/' + officerTeamCode + '/' + officerCode + '/officer-view',
-                        active: isOverview
-                    },
-                    {
-                        text: 'Active cases (' + officerTotalCases + ')',
-                        href: '/pdu/' + pduCode + '/' + officerTeamCode + '/' + officerCode + '/active-cases',
-                        active: isActiveCases
-                    }
-                ]
-            }) }}
-
             {% block officerContent %}{% endblock %}
 
         </div>

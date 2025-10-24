@@ -14,6 +14,7 @@ export default function allocationsControllerRoutes(
     services.workloadService,
     services.userPreferenceService,
     services.probationEstateService,
+    services.featureFlagService,
   )
 
   allocationsControllerCaseViewRoutes(services, get, post, allocationsController)
@@ -108,6 +109,11 @@ export default function allocationsControllerRoutes(
       pduCode,
       false,
     )
+  })
+
+  get('/pdu/:pduCode/:teamCode/reallocations/cases/:offenderManagerCode', async (req, res) => {
+    const { teamCode, offenderManagerCode, pduCode } = req.params
+    await allocationsController.getCasesForReallocation(req, res, teamCode, offenderManagerCode, pduCode)
   })
 
   get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/history-officer-view', async (req, res) => {

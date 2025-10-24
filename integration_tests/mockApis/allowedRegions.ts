@@ -5,6 +5,7 @@ import {
   stubForOneAllowedRegion,
   stubForCrnAllowedUserRegion,
   stubForPduAllowedForUser,
+  stubForRegionAllowedForUser,
 } from './wiremock'
 
 export default {

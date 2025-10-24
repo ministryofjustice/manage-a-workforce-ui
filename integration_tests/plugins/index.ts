@@ -11,6 +11,7 @@ import {
   resetLaoStubs403,
   resetStaffLaoStatusByCrns,
   resetStaffLaoStatusByCrnsRestricted,
+  resetFeatureflag,
 } from '../mockApis/wiremock'
 
 import auth from '../mockApis/auth'
@@ -33,6 +34,7 @@ import logging from '../mockApis/logging'
 import laoStatus from '../mockApis/laoStatus'
 import laoStatus403 from '../mockApis/laoStatus403'
 import allowedRegions from '../mockApis/allowedRegions'
+import featureFlags from '../mockApis/featureFlags'
 
 const redisService = new RedisService()
 
@@ -113,6 +115,7 @@ export default (on: (string, Record) => void): void => {
     ...laoStatus,
     ...laoStatus403,
     ...allowedRegions,
+    ...featureFlags,
     ...logging,
   })
 }

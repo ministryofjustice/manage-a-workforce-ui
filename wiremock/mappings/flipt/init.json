@@ -13,28 +13,6 @@
           },
           "flags": [
             {
-              "key": "Gary",
-              "name": "Gary",
-              "description": "",
-              "enabled": true,
-              "type": "BOOLEAN_FLAG_TYPE",
-              "createdAt": "2025-10-09T10:09:52.475021Z",
-              "updatedAt": "2025-10-10T14:44:42.112284Z",
-              "rules": [],
-              "rollouts": []
-            },
-            {
-              "key": "GaryV",
-              "name": "GaryV",
-              "description": "",
-              "enabled": false,
-              "type": "VARIANT_FLAG_TYPE",
-              "createdAt": "2025-10-09T10:39:30.676357Z",
-              "updatedAt": "2025-10-09T10:39:30.676357Z",
-              "rules": [],
-              "rollouts": []
-            },
-            {
               "key": "Reallocations",
               "name": "Reallocations",
               "description": "Flag for reallocations work",

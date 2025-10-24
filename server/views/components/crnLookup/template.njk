@@ -1,0 +1,61 @@
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% if data %}
+  {% set name = data.names.combinedName %}
+  {% set crn = data.crn %}
+  {% set dob = data.dob %}
+  {% set currentlyManagedby = data.currentlyManagedBy %}
+  {% set tableData = {
+    attributes: {
+        'data-module': 'moj-sortable-table',
+        'data-persistent-id': 'reallocation-case'
+    },
+    head: [
+        { text: 'Name',
+            attributes: {
+            "aria-sort": "none",
+            'data-persistent-id': 'reallocation-case-name'
+        }
+        },
+        { text: 'CRN',
+            attributes: {
+            "aria-sort": "none",
+            'data-persistent-id': 'reallocation-case-CRN'
+        }
+        },
+        { text: 'Date of birth',
+            attributes: {
+            "aria-sort": "none",
+            'data-persistent-id': 'reallocation-case-date-of-birth'
+        },
+        { text: 'Currently managed by',
+            attributes: {
+            "aria-sort": "none",
+            'data-persistent-id': 'reallocation-case-currently-managed-by'
+        }
+        }
+    ],
+    rows: []
+  } %}
+  {%- set tableRow = [
+            { text: name },
+            { text: crn },
+            { text: dob },
+            { text: currentlyManagedby }
+        ] -%}
+{% endif %}
+
+<div id="crn-lookup-component" class="maw-search-box govuk-!-margin-top-8 govuk-!-margin-bottom-8 govuk-!-margin-left-4 govuk-!-margin-right-4">
+  <label id="crn-lookup-heading" class="govuk-heading-with-caption-xl govuk-!-margin-top-5 govuk-!-margin-bottom-5" for="crn-input" >
+    Find a person on probation to reallocate
+  </label>
+  <form method="GET" action="/allocations/crn-lookup" class="govuk-form-group">
+    <input class="govuk-input govuk-input--width-20" id="crn-input" name="crn" type="text" hint="You can search by CRN" aria-describedby="crn-lookup-heading" />
+    <button type="submit" class="govuk-button govuk-!-margin-top-3">Search</button>
+  </form>
+  {% if data %}
+    <div id ="crn-lookup-results" class="govuk-!-margin-top-4 govuk-!-margin-bottom-8 govuk-!-margin-left-4 govuk-!-margin-right-4">
+      {{ govukTable(tableData.update({'rows': tableData.rows.append(tableRow)})) }}
+    </div>
+  {% endif %}
+</div>

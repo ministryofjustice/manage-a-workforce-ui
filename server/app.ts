@@ -37,7 +37,7 @@ export default function createApp(services: Services): express.Application {
     ...config.notification,
   }
 
-  app.use(featureFlagMiddleware)
+  app.use(featureFlagMiddleware('Reallocations', 'Reallocations'))
 
   app.use((req, res, next) => {
     res.locals.pageUrl = encodeURI(`${req.protocol}://${req.headers.host}${req.url}`)

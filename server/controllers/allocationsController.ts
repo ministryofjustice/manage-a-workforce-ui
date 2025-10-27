@@ -23,6 +23,7 @@ import EstateTeam from '../models/EstateTeam'
 import { unescapeApostrophe } from '../utils/utils'
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
 import FeatureFlagService from '../services/featureFlagService'
+import CrnDetails from '../models/ReallocationCrnDetails'
 
 export default class AllocationsController {
   constructor(
@@ -66,6 +67,22 @@ export default class AllocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+    })
+  }
+
+  async lookupCrnDetailsForAllocations(req: Request, res: Response, crn: string, staffCode: string, pduCode: string) {
+    const response: CrnDetails[] = await this.allocationsService.getLookupforCrn(crn, res.locals.user.token)
+    res.render('pages/find-person-to-reallocate', {
+      title: 'Find person to reallocate | Manage a Workforce',
+      crn,
+      staffCode,
+      pduCode,
+      data: {
+        name: response.length > 0 ? `${response[0].name.forename} ${response[0].name.surname}` : '',
+        dob: response.length > 0 ? response[0].dateOfBirth : '',
+        manager: response.length > 0 ? `${response[0].manager.name.forename} ${response[0].manager.name.surname}` : '',
+        hasActiveOrder: response.length > 0 ? response[0].hasActiveOrder : false,
+      },
     })
   }
 

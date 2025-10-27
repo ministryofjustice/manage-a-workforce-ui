@@ -54,7 +54,7 @@ export default class AllocateCasesController {
   }
 
   async getReallocationTeamWorkload(_req: Request, res: Response, pduCode: string, teamCode: string) {
-    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Gary', 'Gary')
+    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
 
     if (reallocationEnabledFlag) {
       await this.getTeamWorkload(_req, res, pduCode, teamCode, 'pages/reallocations-team-workload')

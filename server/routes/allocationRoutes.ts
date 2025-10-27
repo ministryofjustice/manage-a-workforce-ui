@@ -37,6 +37,7 @@ export default function getAllocationRoutes(
     services.workloadService,
     services.userPreferenceService,
     services.probationEstateService,
+    services.featureFlagService,
   )
 
   get('/pdu/:pduCode/find-unallocated', async (req, res) => {

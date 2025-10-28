@@ -1,0 +1,9 @@
+{% macro allocatedCaseLink(item, pduCode) -%}
+    <div>
+        {% if item.apopExcluded !== true %}
+            <a href="{{'/pdu/' + pduCode +'/' + item.crn +'/reallocation-case-view'}}" class="govuk-link--no-visited-state" data-qa-link="{{item.crn}}">Reallocate</a>
+        {% else %}
+            <strong>{{item.name}}</strong>
+        {% endif %}
+    </div>
+{%- endmacro %}

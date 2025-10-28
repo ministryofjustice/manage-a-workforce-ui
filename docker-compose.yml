@@ -58,6 +58,16 @@ services:
     restart: always
     ports:
       - '9096:8080'
+  feature-flage-wiremock:
+    image: wiremock/wiremock
+    networks:
+      - hmpps_int
+    restart: always
+    command: ['--verbose']
+    ports:
+      - '9097:8080'
+    volumes:
+      - ./wiremock/mappings/flipt:/home/wiremock/mappings
 
 networks:
   hmpps_int:

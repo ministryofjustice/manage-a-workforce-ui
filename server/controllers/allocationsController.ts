@@ -22,6 +22,8 @@ import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetai
 import EstateTeam from '../models/EstateTeam'
 import { unescapeApostrophe } from '../utils/utils'
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
+import FeatureFlagService from '../services/featureFlagService'
+import CrnDetails from '../models/ReallocationCrnDetails'
 
 export default class AllocationsController {
   constructor(
@@ -29,6 +31,7 @@ export default class AllocationsController {
     private readonly workloadService: WorkloadService,
     private readonly userPreferenceService: UserPreferenceService,
     private readonly probationEstateService: ProbationEstateService,
+    private readonly featureFlagService: FeatureFlagService,
   ) {}
 
   async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
@@ -64,6 +67,22 @@ export default class AllocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+    })
+  }
+
+  async lookupCrnDetailsForAllocations(req: Request, res: Response, crn: string, staffCode: string, pduCode: string) {
+    const response: CrnDetails[] = await this.allocationsService.getLookupforCrn(crn, res.locals.user.token)
+    res.render('pages/find-person-to-reallocate', {
+      title: 'Find person to reallocate | Manage a Workforce',
+      crn,
+      staffCode,
+      pduCode,
+      data: {
+        name: response.length > 0 ? `${response[0].name.forename} ${response[0].name.surname}` : '',
+        dob: response.length > 0 ? response[0].dateOfBirth : '',
+        manager: response.length > 0 ? `${response[0].manager.name.forename} ${response[0].manager.name.surname}` : '',
+        hasActiveOrder: response.length > 0 ? response[0].hasActiveOrder : false,
+      },
     })
   }
 
@@ -499,6 +518,67 @@ export default class AllocationsController {
       officerTeamCode: offenderManagerTeamCode,
       cases,
       convictionNumber,
+      isActiveCases: true,
+      pduCode,
+      teamName: teamDetails.name,
+    })
+  }
+
+  async getCasesForReallocation(_, res: Response, offenderManagerTeamCode, offenderManagerCode, pduCode) {
+    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
+
+    if (!reallocationEnabledFlag) {
+      res.redirect(`/pdu/${pduCode}/teams`)
+      return
+    }
+
+    const [response, teamDetails, casesOverview] = await Promise.all([
+      this.workloadService.getOffenderManagerCases(res.locals.user.token, offenderManagerCode, offenderManagerTeamCode),
+      this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
+      this.workloadService.getOffenderManagerOverview(
+        res.locals.user.token,
+        offenderManagerCode,
+        offenderManagerTeamCode,
+      ),
+    ])
+
+    const data: OfficerView = new OfficerView(casesOverview)
+
+    const caseList = response.activeCases.map(activeCase => activeCase.crn)
+
+    let restrictedList: string[] = []
+    let excludedList: string[] = []
+
+    if (caseList.length > 0) {
+      const crnRestrictions = await this.allocationsService.getRestrictedStatusByCrns(res.locals.user.token, caseList)
+      restrictedList = crnRestrictions.access
+        .filter(restriction => restriction.userRestricted)
+        .map(restriction => restriction.crn)
+
+      excludedList = crnRestrictions.access
+        .filter(restriction => restriction.userExcluded)
+        .map(restrictions => restrictions.crn)
+    }
+
+    const cases = response.activeCases.map(
+      activeCase =>
+        new Case(
+          activeCase.crn,
+          activeCase.tier,
+          activeCase.type,
+          activeCase.name.combinedName,
+          excludedList.includes(activeCase.crn),
+          restrictedList.includes(activeCase.crn),
+        ),
+    )
+    response.name.surname = unescapeApostrophe(response.name.surname)
+    response.name.combinedName = unescapeApostrophe(response.name.combinedName)
+    res.render('pages/reallocation-active-cases', {
+      title: 'Active cases | Manage a workforce',
+      data: response,
+      overviewData: data,
+      officerTeamCode: offenderManagerTeamCode,
+      cases,
       isActiveCases: true,
       pduCode,
       teamName: teamDetails.name,

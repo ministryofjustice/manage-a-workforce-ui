@@ -53,6 +53,7 @@ const workloadUrl = 'http://127.0.0.1:9092/__admin'
 const userPreferenceUrl = 'http://127.0.0.1:9094/__admin'
 const staffLookupUrl = 'http://127.0.0.1:9095/__admin'
 const manageUsersLookupUrl = 'http://127.0.0.1:9096/__admin'
+const featureFlagUrl = 'http://127.0.0.1:9097/__admin'
 
 const { stubFor: stubForAuth, getRequests: getAuthRequests } = wiremock(authUrl)
 export { stubForAuth, getAuthRequests }
@@ -68,6 +69,9 @@ export { stubForLaoStatus, resetLaoStubs }
 
 const { stubFor: stubForAllowedRegions, resetStubs: resetAllowedRegions } = wiremock(allocationUrl)
 export { stubForAllowedRegions, resetAllowedRegions }
+
+const { stubFor: stubForFeatureflags, resetStubs: resetFeatureflags } = wiremock(featureFlagUrl)
+export { stubForFeatureflags, resetFeatureflags }
 
 const { stubFor: stubForNoAllowedRegions, resetStubs: resetNoAllowedRegions } = wiremock(allocationUrl)
 export { stubForNoAllowedRegions, resetNoAllowedRegions }
@@ -122,6 +126,12 @@ export {
   verifyRequestForUserPreference,
   stubForUserPreferenceScenario,
 }
+const {
+  stubFor: stubForFeatureflag,
+  getRequests: getFeatureflag,
+  resetStubs: resetFeatureflag,
+} = wiremock(featureFlagUrl)
+export { stubForFeatureflag, getFeatureflag, resetFeatureflag }
 
 const {
   stubFor: stubForStaffLookup,

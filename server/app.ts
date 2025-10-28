@@ -27,6 +27,7 @@ import checkCaseAlreadyAllocated from './middleware/checkCaseAlreadyAllocated'
 import unless from './utils/middlewareUtils'
 import config from './config'
 import featureFlagMiddleware from './middleware/featureFlagMiddleware'
+import logger from '../logger'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -60,6 +61,7 @@ export default function createApp(services: Services): express.Application {
   app.use(
     pdsComponents.getPageComponents({
       pdsUrl: config.apis.probationApi.url,
+      logger,
     }),
   )
   app.use(

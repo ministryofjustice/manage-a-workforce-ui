@@ -3,6 +3,8 @@ import express from 'express'
 import path from 'path'
 import createError from 'http-errors'
 
+import pdsComponents from '@ministryofjustice/hmpps-probation-frontend-components'
+
 import nunjucksSetup from './utils/nunjucksSetup'
 import errorHandler from './errorHandler'
 import authorisationMiddleware from './middleware/authorisationMiddleware'
@@ -25,6 +27,7 @@ import checkCaseAlreadyAllocated from './middleware/checkCaseAlreadyAllocated'
 import unless from './utils/middlewareUtils'
 import config from './config'
 import featureFlagMiddleware from './middleware/featureFlagMiddleware'
+import logger from '../logger'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -55,6 +58,12 @@ export default function createApp(services: Services): express.Application {
   app.use(authorisationMiddleware(['ROLE_MANAGE_A_WORKFORCE_ALLOCATE']))
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
+  app.use(
+    pdsComponents.getPageComponents({
+      pdsUrl: config.apis.probationApi.url,
+      logger,
+    }),
+  )
   app.use(
     unless('/staff-lookup', getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService)),
   )

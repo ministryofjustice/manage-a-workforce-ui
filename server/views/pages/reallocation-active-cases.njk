@@ -146,7 +146,7 @@
         { text: 'Reallocate',
             attributes: {
             "aria-sort": "none",
-            'data-persistent-id': 'active-cases-initial-allocation-date'
+            'data-persistent-id': 'active-cases-reallocate'
         }
         }
     ],
@@ -163,29 +163,60 @@
             { text: 'This is a restricted access case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 4 }
         ] -%}
     {% elif item.excluded === true %}
-        {%- set tableRow = [
-            {
-                text: caseLoadCase(item),
-                attributes: { "data-sort-value": item.crn }
-            },
-            { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
-            { text: (item.type | capitalize)},
-            { text: item.initialAllocation, attributes: { "data-sort-value": item.initialAllocation } },
-            { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
+      {% if item.initialAllocationDate === '' %}
+          {%- set tableRow = [
+              {
+                  text: caseLoadCase(item),
+                  attributes: { "data-sort-value": item.crn }
+              },
+              { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+              { text: (item.type | capitalize)},
+              { text: '', attributes: { "data-sort-value": item.initialAllocationDate } },
+              { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
 
-        ] -%}
+          ] -%}
+       {% else %}
+          {%- set tableRow = [
+              {
+                  text: caseLoadCase(item),
+                  attributes: { "data-sort-value": item.crn }
+              },
+              { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+              { text: (item.type | capitalize)},
+              { text: (item.initialAllocationDate | dateFormat), attributes: { "data-sort-value": item.initialAllocationDate } },
+              { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
+
+          ] -%}
+       {% endif %}
     {% else %}
-        {%- set tableRow = [
-            {
-                text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' ),
-                attributes: { "data-sort-value": item.crn }
-            },
-            { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
-            { text: (item.type | capitalize)},
-            { text: (item.initialAllocation)},
-            { text: allocatedCaseLink(item, pduCode) }
+        {% if item.initialAllocationDate === '' %}
 
-        ] -%}
+          {%- set tableRow = [
+              {
+                  text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' ),
+                  attributes: { "data-sort-value": item.crn }
+              },
+              { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+              { text: (item.type | capitalize)},
+              { text: '', attributes: { "data-sort-value": item.initialAllocationDate } },
+              { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
+
+          ] -%}
+       {% else %}
+             {%- set tableRow = [
+                 {
+                     text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' ),
+                     attributes: { "data-sort-value": item.crn }
+                 },
+                 { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+                 { text: (item.type | capitalize)},
+                 { text: (item.initialAllocationDate | dateFormat), attributes: { "data-sort-value": item.initialAllocationDate } },
+                 { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
+
+             ] -%}
+
+       {% endif %}
+
     {% endif %}
 
     {{ caseTableData.rows.push(tableRow) }}
@@ -275,7 +306,6 @@
 
     </div>
 {% endblock %}
-
 {{ govukTable(caseTableData) }}
 
 

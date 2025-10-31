@@ -569,6 +569,7 @@ export default class AllocationsController {
           activeCase.name.combinedName,
           excludedList.includes(activeCase.crn),
           restrictedList.includes(activeCase.crn),
+          activeCase.initialAllocationDate,
         ),
     )
     response.name.surname = unescapeApostrophe(response.name.surname)

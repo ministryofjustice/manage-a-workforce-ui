@@ -15,7 +15,17 @@ export default class Case {
 
   redacted: boolean
 
-  constructor(crn: string, tier: string, type: string, name: string, isExcluded: boolean, isRedacted: boolean) {
+  initialAllocationDate?: string
+
+  constructor(
+    crn: string,
+    tier: string,
+    type: string,
+    name: string,
+    isExcluded: boolean,
+    isRedacted: boolean,
+    initialAllocationDate: string = '',
+  ) {
     this.name = name
     this.crn = crn
     this.tier = tier
@@ -23,5 +33,6 @@ export default class Case {
     this.type = type
     this.excluded = isExcluded
     this.redacted = isRedacted
+    this.initialAllocationDate = initialAllocationDate
   }
 }

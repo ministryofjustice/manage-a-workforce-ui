@@ -1,8 +1,6 @@
 import Page from '../pages/page'
 import ActiveCasesPage from '../pages/reallocationActiveCases'
 
-import { sortDataAndAssertSortExpectations } from './helper/sort-helper'
-
 context('Active Cases', () => {
   let activeCasesPage
   beforeEach(() => {

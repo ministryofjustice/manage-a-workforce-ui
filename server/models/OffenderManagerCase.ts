@@ -5,4 +5,5 @@ export default interface OffenderManagerCase {
   crn: string
   tier: string
   type: string
+  initialAllocationDate?: string
 }

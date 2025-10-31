@@ -17,18 +17,17 @@ context('Active Cases', () => {
     cy.visit('/pdu/PDU1/TM2/reallocations/cases/OM2')
     activeCasesPage = Page.verifyOnPage(ActiveCasesPage)
   })
-  //
-  // it('Officer details visible on page', () => {
-  //   activeCasesPage.captionText().should('contain', 'Team Name 1')
-  //   activeCasesPage.secondaryText().should('contain', 'PO')
-  // })
-  //
-  // it('Heading is visible on page', () => {
-  //   activeCasesPage.heading().should('contain', 'Active cases')
-  // })
+
+  it('Officer details visible on page', () => {
+    activeCasesPage.captionText().should('contain', 'Team Name 1')
+    activeCasesPage.secondaryText().should('contain', 'PO')
+  })
+
+  it('Heading is visible on page', () => {
+    activeCasesPage.heading().should('contain', 'Active cases')
+  })
 
   it('Table visible on page', () => {
-    activeCasesPage.caseTableRows().should('have.length', 14)
     cy.get('table')
       .eq(1)
       .getTable()
@@ -37,11 +36,15 @@ context('Active Cases', () => {
           'Name / CRN': 'Dylan Adam Armstrong            CRN1111',
           Tier: 'B3',
           'Type of case': 'Custody',
+          'Date of initial allocation': '',
+          Reallocate: 'Reallocate',
         },
         {
           'Name / CRN': 'Cindy Smith            CRN2222',
           Tier: 'A0',
           'Type of case': 'License',
+          'Date of initial allocation': '17 May 2025',
+          Reallocate: 'Reallocate',
         },
       ])
   })

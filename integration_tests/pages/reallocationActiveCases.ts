@@ -9,7 +9,7 @@ export default class ActiveCasesPage extends Page {
 
   secondaryText = (): PageElement => cy.get('.maw-secondary-text-col')
 
-  caseTableRows = (): PageElement => cy.get('.govuk-table tbody tr').eq(2)
+  caseTableRows = (): PageElement => cy.get('.govuk-table tbody tr').eq(1)
 
   heading = (): PageElement => cy.get('caption.govuk-heading-l')
 }

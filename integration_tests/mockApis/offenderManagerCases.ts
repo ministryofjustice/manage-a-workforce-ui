@@ -31,7 +31,6 @@ export default {
               crn: 'CRN1111',
               tier: 'B3',
               type: 'CUSTODY',
-              initialAllocationDate: '2025-05-17',
             },
             {
               name: {

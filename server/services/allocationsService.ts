@@ -41,10 +41,18 @@ export default class AllocationsService {
     this.redisClient = await createRedisClient().connect()
   }
 
+  async getCrnOnlyNotesCache(crn: string, staffCode: string): Promise<CachedValue> {
+    return this.getNotesCache(crn, '', staffCode)
+  }
+
   async getNotesCache(crn: string, convictionNumber: string, staffCode: string): Promise<CachedValue> {
     const cacheKey = `allocation_notes:${crn}:${convictionNumber}:${staffCode}`
     const cachedValue = await this.redisClient.json.get(cacheKey)
     return (cachedValue ?? {}) as CachedValue
+  }
+
+  async setCrnOnlyNotesCache(crn: string, staffCode: string, value: CachedValue): Promise<void> {
+    this.setNotesCache(crn, '', staffCode, value)
   }
 
   async setNotesCache(crn: string, convictionNumber: string, staffCode: string, value: CachedValue): Promise<void> {
@@ -57,6 +65,10 @@ export default class AllocationsService {
     })
 
     await this.redisClient.expire(cacheKey, 60 * 60 * 24 * 7)
+  }
+
+  async clearCrnNotesCache(crn: string, convictionNumber: string, staffCode: string) {
+    this.clearNotesCache(crn, '', staffCode)
   }
 
   async clearNotesCache(crn: string, convictionNumber: string, staffCode: string) {

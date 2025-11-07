@@ -18,9 +18,16 @@
               Make notes for the practitioner who will be allocated this case. You can continue to edit notes which will be retained as you move through and review the case details.
             {% endif %}
           </div>
+          <div id="more-detail-hint" class="govuk-hint">
+            {% if false == laoCase %}
+              {{ params.hintText | safe if params.hintText else "These notes are sent to the practitioner in the allocation email. They will also be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes." }}
+            {% else %}
+              {{ params.hintText | safe if params.hintText else "These notes will be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes." }}
+            {% endif %}
+          </div>
         </label>
         {% if params.errorMessage %}
-          <p id="reallocationNotes-error" class="govuk-error-message">
+          <p id="instructions-error" class="govuk-error-message">
             <span class="govuk-visually-hidden">Error:</span>
             {{ params.errorMessage.text | safe if params.errorMessage.text }}
           </p>

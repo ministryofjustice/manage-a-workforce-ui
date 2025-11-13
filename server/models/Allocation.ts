@@ -8,11 +8,10 @@ export default interface Allocation {
   name: string
   crn: string
   tier: string
-  sentenceDate: string
-  status: string
-  gender: string
+  gender?: string
   dateOfBirth: string
   age: number
+  nextAppointmentDate?: string
   offences: Offence[]
   expectedSentenceEndDate: string
   requirements: Requirement[]
@@ -22,7 +21,7 @@ export default interface Allocation {
   assessment: Assessment
   caseType: string
   preConvictionDocument: Document
-  address: Address
+  address?: Address
   sentenceLength: string
   convictionNumber: number
   outOfAreaTransfer: boolean

@@ -2,7 +2,7 @@
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "../components/pop/macro.njk" import pop %}
-{% from "../components/instructions/macro.njk" import instructionsForm %}
+{% from "../components/reallocationInstructions/macro.njk" import instructionsForm %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block beforeContent %}
@@ -43,23 +43,28 @@
                 label: 'Sub navigation',
                 items: [
                     {
-                        text: 'Summary',
-                        href: '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/case-view',
+                        text: 'Reallocation',
+                        href: '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view',
                         active: 'Case summary' in title
                     },
                     {
+                        text: 'Personal details',
+                        href: '/pdu/' + pduCode + '/' + crn + '/reallocation-personal-details',
+                        active: 'Personal details' in title
+                    },
+                    {
                         text: 'Probation record',
-                        href: '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/probation-record',
+                        href: '/pdu/' + pduCode + '/' + crn +'/reallocation-probation-record',
                         active: 'Probation record' in title
                     },
                     {
                         text: 'Risk',
-                        href: '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/risk',
+                        href: '/pdu/' + pduCode + '/' + crn + '/reallocation-risk',
                         active: 'Risk' in title
                     },
                     {
                         text: 'Documents',
-                        href: '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/documents',
+                        href: '/pdu/' + pduCode + '/' + crn + '/reallocation-documents',
                         active: 'Documents' in title
                     }
                 ]
@@ -73,7 +78,7 @@
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         {{ instructionsForm({
                 inGridRow: true,
-                convictionNumber: convictionNumber,
+                showHintText: false,
                 crn: crn,
                 errorMessage: errors | findError('instructions'),
                 laoCase: laoCase,

@@ -1,0 +1,66 @@
+{% extends "partials/reallocation-case-view.njk" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "../components/documentCell/macro.njk" import documentCell %}
+{% from "../components/doubleCell/macro.njk" import doubleCell %}
+{% from "../components/risk-summary/macro.njk" import riskSummaryBadge %}
+{% set documentTabHref = '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/documents' %}
+{% set offenceData = data.offences %}
+{%- set offences = [] -%}
+{%- for offence in offenceData  if offenceData %}
+    {{ offences.push(offence) }}
+{% endfor -%}
+
+{% block caseContent %}
+
+    <h2 class="govuk-heading-l">Summary</h2>
+    <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id="personal-details">
+        <header class="app-summary-card__header">
+            <h2 class="app-summary-card__title">Personal details</h2>
+        </header>
+        <div class="app-summary-card__body">
+            {{ govukSummaryList({
+                rows: [
+                    {
+                        key: {
+                        text: "Name"
+                    },
+                        value: {
+                        text: data.name
+                    }
+                    },
+                    {
+                        key: {
+                        text: "Gender"
+                    },
+                        value: {
+                        text: data.gender
+                    }
+                    },
+                    {
+                        key: {
+                        text: "Date of birth"
+                    },
+                        value: {
+                        text: data.dateOfBirth  | dateFormat + ' (' + data.age + ' years old)'
+                    }
+                    },
+                    {
+                        key: {
+                        text: "PNC"
+                    },
+                        value: {
+                        text: data.pncNumber
+                    }
+                    },
+                    {
+                        key: { text: "Main address" },
+                        value: {
+                            html: address.rows | join("<br>")
+                        }
+                    }
+                ]
+            })}}
+        </div>
+    </section>
+
+{% endblock %}

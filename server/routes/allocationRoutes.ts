@@ -84,4 +84,9 @@ export default function getAllocationRoutes(
       res.locals.user.pduCode,
     )
   })
+
+  get('/pdu/:pduCode/:crn/reallocation-case-view', async (req, res) => {
+    const { pduCode, crn } = req.params
+    await allocationsController.getAllocatedCase(req, res, crn, pduCode)
+  })
 }

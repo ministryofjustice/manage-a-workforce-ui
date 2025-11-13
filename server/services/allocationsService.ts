@@ -17,6 +17,7 @@ import LaoStatusList from '../models/LaoStatusList'
 import RegionList from '../models/RegionList'
 import { createRedisClient } from '../data/redisClient'
 import CrnDetails from '../models/ReallocationCrnDetails'
+import AllocatedCase from '../models/AllocatedCase'
 
 interface CachedValue {
   instructions?: string
@@ -131,6 +132,12 @@ export default class AllocationsService {
     })) as string
   }
 
+  async getCrnAccess(token: string, staffId: string, crn: string): Promise<string> {
+    return (await this.restClient(token).get({
+      path: `/user/${staffId}/crn/${crn}/is-allowed`,
+    })) as string
+  }
+
   async getUserRegionAccessForPdu(token: string, staffId: string, pdu: string): Promise<string> {
     return (await this.restClient(token).get({
       path: `/user/${staffId}/pdu/${pdu}/is-allowed`,
@@ -158,6 +165,13 @@ export default class AllocationsService {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionNumber}`,
     })) as Allocation
+  }
+
+  async getAllocatedCase(token: string, crn): Promise<AllocatedCase> {
+    logger.info(`Getting allocated case for crn ${crn}`)
+    return (await this.restClient(token).get({
+      path: `/cases/allocated/${crn}`,
+    })) as AllocatedCase
   }
 
   async getProbationRecord(token: string, crn, convictionNumber): Promise<ProbationRecord> {

@@ -24,6 +24,7 @@ import { unescapeApostrophe } from '../utils/utils'
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
 import FeatureFlagService from '../services/featureFlagService'
 import CrnDetails from '../models/ReallocationCrnDetails'
+import AllocatedCase from '../models/AllocatedCase'
 
 export default class AllocationsController {
   constructor(
@@ -61,6 +62,28 @@ export default class AllocationsController {
       tier: response.tier,
       name: response.name,
       convictionNumber: response.convictionNumber,
+      title: 'Case summary | Manage a Workforce',
+      pduCode,
+      outOfAreaTransfer: response.outOfAreaTransfer,
+      laoCase,
+      errors: req.flash('errors') || [],
+      instructions,
+    })
+  }
+
+  async getAllocatedCase(req: Request, res: Response, crn, pduCode): Promise<void> {
+    const response: AllocatedCase = await this.allocationsService.getAllocatedCase(res.locals.user.token, crn)
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
+    const address = new DisplayAddress(response.address)
+    response.name = unescapeApostrophe(response.name)
+    const { instructions } = await this.allocationsService.getCrnOnlyNotesCache(crn, res.locals.user.username)
+    res.render('pages/reallocation-summary', {
+      data: response,
+      address,
+      crn: response.crn,
+      tier: response.tier,
+      name: response.name,
       title: 'Case summary | Manage a Workforce',
       pduCode,
       outOfAreaTransfer: response.outOfAreaTransfer,

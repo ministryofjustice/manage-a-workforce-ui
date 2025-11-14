@@ -3,6 +3,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "../components/pop/macro.njk" import pop %}
 {% from "../components/reallocationInstructions/macro.njk" import instructionsForm %}
+{% from "../components/reallocationReason/macro.njk" import reallocationReason %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block beforeContent %}
@@ -45,7 +46,7 @@
                     {
                         text: 'Reallocation',
                         href: '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view',
-                        active: 'Case summary' in title
+                        active: 'Reallocation' in title
                     },
                     {
                         text: 'Personal details',

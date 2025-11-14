@@ -84,7 +84,29 @@ export default class AllocationsController {
       crn: response.crn,
       tier: response.tier,
       name: response.name,
-      title: 'Case summary | Manage a Workforce',
+      title: 'Reallocation | Manage a Workforce',
+      pduCode,
+      outOfAreaTransfer: response.outOfAreaTransfer,
+      laoCase,
+      errors: req.flash('errors') || [],
+      instructions,
+    })
+  }
+
+  async getAllocatedPersonalDetails(req: Request, res: Response, crn, pduCode): Promise<void> {
+    const response: AllocatedCase = await this.allocationsService.getAllocatedCase(res.locals.user.token, crn)
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
+    const address = new DisplayAddress(response.address)
+    response.name = unescapeApostrophe(response.name)
+    const { instructions } = await this.allocationsService.getCrnOnlyNotesCache(crn, res.locals.user.username)
+    res.render('pages/personal-details', {
+      data: response,
+      address,
+      crn: response.crn,
+      tier: response.tier,
+      name: response.name,
+      title: 'Personal details | Manage a Workforce',
       pduCode,
       outOfAreaTransfer: response.outOfAreaTransfer,
       laoCase,
@@ -207,6 +229,40 @@ export default class AllocationsController {
       instructions,
     })
   }
+
+  // async getReallocationRisk(req: Request, res: Response, crn: string, convictionNumber, pduCode: string) {
+  //   const [unallocatedCase, risk] = await Promise.all([
+  //     await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
+  //     await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
+  //   ])
+  //   const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+  //   await this.allocationsService.getUserRegionAccessForCrn(
+  //     res.locals.user.token,
+  //     res.locals.user.username,
+  //     crn,
+  //     convictionNumber,
+  //   )
+  //
+  //   risk.name = unescapeApostrophe(risk.name)
+  //   const { instructions } = await this.allocationsService.getNotesCache(
+  //     crn,
+  //     convictionNumber,
+  //     res.locals.user.username,
+  //   )
+  //   res.render('pages/risk', {
+  //     title: 'Risk | Manage a workforce',
+  //     data: risk,
+  //     crn: risk.crn,
+  //     tier: risk.tier,
+  //     name: risk.name,
+  //     convictionNumber: risk.convictionNumber,
+  //     pduCode,
+  //     outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
+  //     laoCase,
+  //     errors: req.flash('errors') || [],
+  //     instructions,
+  //   })
+  // }
 
   async getDocuments(req: Request, res: Response, crn: string, convictionNumber, pduCode: string) {
     const [unallocatedCase, caseOverview, documents] = await Promise.all([

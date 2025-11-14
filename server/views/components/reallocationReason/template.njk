@@ -1,6 +1,6 @@
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 
-const reasonOptions = [
+{% set reasonOptions = [
   {
     value: "select",
     text: "Select a reallocation reason",
@@ -44,10 +44,11 @@ const reasonOptions = [
   }
 
 ]
+%}
 
 {{ govukSelect({
   id: "reason",
   name: "reason",
   items: reasonOptions,
-  errorMessage: errors | findError('reason')
+  errorMessage: params.errors | findError('reason')
 }) }}

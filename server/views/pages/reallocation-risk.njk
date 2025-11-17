@@ -1,0 +1,105 @@
+{% extends "partials/reallocation-case-view.njk" %}
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "../components/rosh-widget/macro.njk" import roshWidget %}
+{% from "../components/rsr-widget/macro.njk" import rsrWidget %}
+{% from "../components/ogrs-widget/macro.njk" import ogrsWidget %}
+
+{% set activeRegistrationsData = {
+    classes: 'active-registrations-table',
+    caption: 'Active registrations',
+    captionClasses: 'govuk-table__caption--m',
+    firstCellIsHeader: true,
+    head: [
+        { text: 'Flag'},
+        { text: 'Type'},
+        { text: 'Registered'},
+        { text: 'Notes'}
+    ],
+    rows: []
+} %}
+
+{% for registration in data.activeRegistrations %}
+    {{
+    activeRegistrationsData.rows.push([
+        { text: registration.flag.description },
+        { text: registration.type,
+          classes: 'govuk-table__header'
+        },
+        { text: registration.registered | dateFormat },
+        { text: registration.notes if registration.notes | length else '-'}
+    ])
+    }}
+{% endfor %}
+
+{% set inactiveRegistrationsData = {
+    classes: 'inactive-registrations-table',
+    caption: 'Inactive registrations',
+    captionClasses: 'govuk-table__caption--m',
+    firstCellIsHeader: true,
+    head: [
+        { text: 'Flag'},
+        { text: 'Type'},
+        { text: 'Registered'},
+        { text: 'End date'},
+        { text: 'Notes'}
+    ],
+    rows: []
+} %}
+
+{% for registration in data.inactiveRegistrations %}
+    {{
+    inactiveRegistrationsData.rows.push([
+        { text: registration.flag.description },
+        { text: registration.type,
+          classes: 'govuk-table__header'
+        },
+        { text: registration.registered | dateFormat},
+        { text: registration.endDate | dateFormat},
+        { text: registration.notes if registration.notes | length else '-'}
+    ])
+    }}
+{% endfor %}
+
+{% block caseContent %}
+
+    <h2 class="govuk-heading-l">Risk</h2>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h3 class="govuk-heading-m">Registers</h3>
+            {{ govukTabs({
+                items: [
+                    {
+                        label: "Active registrations (" + (data.activeRegistrations | length) + ")",
+                        id: "active-registrations",
+                        panel: {
+                        html: (govukTable(activeRegistrationsData) if data.activeRegistrations | length > 0 else '<div class="govuk-body">There are no active registrations.</div>')
+                    }
+                    },
+                    {
+                        label: "Inactive registrations (" + (data.inactiveRegistrations | length) + ")",
+                        id: "inactive-registrations",
+                        panel: {
+                        html: (govukTable(inactiveRegistrationsData) if data.inactiveRegistrations | length > 0 else '<div class="govuk-body">There are no inactive registrations.</div>')
+                    }
+                    }
+                ]
+            }) }}
+
+
+        </div>
+
+        <div class="govuk-grid-column-one-third">
+            <h3 class="govuk-heading-m">Assessment tools</h3>
+
+            {{ roshWidget(data) }}
+
+            {{ rsrWidget(data) }}
+
+            {{ ogrsWidget(data) }}
+        </div>
+
+</div>
+{% endblock %}
+

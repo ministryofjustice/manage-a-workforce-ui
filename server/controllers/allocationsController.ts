@@ -77,7 +77,9 @@ export default class AllocationsController {
     await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
     const address = new DisplayAddress(response.address)
     response.name = unescapeApostrophe(response.name)
+
     const { instructions } = await this.allocationsService.getCrnOnlyNotesCache(crn, res.locals.user.username)
+
     res.render('pages/reallocation-summary', {
       data: response,
       address,
@@ -100,6 +102,7 @@ export default class AllocationsController {
     const address = new DisplayAddress(response.address)
     response.name = unescapeApostrophe(response.name)
     const { instructions } = await this.allocationsService.getCrnOnlyNotesCache(crn, res.locals.user.username)
+
     res.render('pages/personal-details', {
       data: response,
       address,
@@ -196,6 +199,61 @@ export default class AllocationsController {
     })
   }
 
+  async getAllocatedProbationRecord(req: Request, res: Response, crn, pduCode): Promise<void> {
+    const allocatedCase = await this.allocationsService.getAllocatedCase(res.locals.user.token, crn)
+    const convictionNumber = allocatedCase.activeEvents.reverse()[0].number
+
+    const probationRecord = await this.allocationsService.getProbationRecord(res.locals.user.token, crn, 1)
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
+
+    const totalPreviousCount = probationRecord.previous.length
+    const viewAll = totalPreviousCount <= 3 ? true : req.query.viewAll
+    const amountToSlice = viewAll ? totalPreviousCount : 3
+    const currentSentences = probationRecord.active
+      .sort((a: Conviction, b: Conviction) => Date.parse(b.startDate) - Date.parse(a.startDate))
+      .map(
+        activeRecord =>
+          new Sentence(
+            activeRecord.description,
+            activeRecord.length,
+            activeRecord.offences,
+            activeRecord.startDate,
+            activeRecord.offenderManager,
+          ),
+      )
+    const previousSentences = probationRecord.previous
+      .sort((a: Conviction, b: Conviction) => Date.parse(b.endDate) - Date.parse(a.endDate))
+      .map(
+        activeRecord =>
+          new Sentence(
+            activeRecord.description,
+            activeRecord.length,
+            activeRecord.offences,
+            activeRecord.endDate,
+            activeRecord.offenderManager,
+          ),
+      )
+      .slice(0, amountToSlice)
+    probationRecord.name = unescapeApostrophe(probationRecord.name)
+    const { instructions } = await this.allocationsService.getCrnOnlyNotesCache(crn, res.locals.user.username)
+    res.render('pages/reallocation-probation-record', {
+      name: probationRecord.name,
+      crn: probationRecord.crn,
+      tier: probationRecord.tier,
+      currentSentences,
+      previousSentences,
+      viewAll,
+      totalPreviousCount,
+      title: 'Probation record | Manage a workforce',
+      pduCode,
+      outOfAreaTransfer: allocatedCase.outOfAreaTransfer,
+      laoCase,
+      errors: req.flash('errors') || [],
+      instructions,
+    })
+  }
+
   async getRisk(req: Request, res: Response, crn: string, convictionNumber, pduCode: string) {
     const [unallocatedCase, risk] = await Promise.all([
       await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
@@ -230,39 +288,30 @@ export default class AllocationsController {
     })
   }
 
-  // async getReallocationRisk(req: Request, res: Response, crn: string, convictionNumber, pduCode: string) {
-  //   const [unallocatedCase, risk] = await Promise.all([
-  //     await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
-  //     await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
-  //   ])
-  //   const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
-  //   await this.allocationsService.getUserRegionAccessForCrn(
-  //     res.locals.user.token,
-  //     res.locals.user.username,
-  //     crn,
-  //     convictionNumber,
-  //   )
-  //
-  //   risk.name = unescapeApostrophe(risk.name)
-  //   const { instructions } = await this.allocationsService.getNotesCache(
-  //     crn,
-  //     convictionNumber,
-  //     res.locals.user.username,
-  //   )
-  //   res.render('pages/risk', {
-  //     title: 'Risk | Manage a workforce',
-  //     data: risk,
-  //     crn: risk.crn,
-  //     tier: risk.tier,
-  //     name: risk.name,
-  //     convictionNumber: risk.convictionNumber,
-  //     pduCode,
-  //     outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
-  //     laoCase,
-  //     errors: req.flash('errors') || [],
-  //     instructions,
-  //   })
-  // }
+  async getAllocatedRisk(req: Request, res: Response, crn: string, pduCode: string) {
+    const [allocatedCase, risk] = await Promise.all([
+      await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
+      await this.allocationsService.getRisk(res.locals.user.token, crn, 1),
+    ])
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
+
+    risk.name = unescapeApostrophe(risk.name)
+    const { instructions } = await this.allocationsService.getCrnOnlyNotesCache(crn, res.locals.user.username)
+
+    res.render('pages/reallocation-risk', {
+      title: 'Risk | Manage a workforce',
+      data: risk,
+      crn: risk.crn,
+      tier: risk.tier,
+      name: risk.name,
+      pduCode,
+      outOfAreaTransfer: allocatedCase.outOfAreaTransfer,
+      laoCase,
+      errors: req.flash('errors') || [],
+      instructions,
+    })
+  }
 
   async getDocuments(req: Request, res: Response, crn: string, convictionNumber, pduCode: string) {
     const [unallocatedCase, caseOverview, documents] = await Promise.all([
@@ -294,6 +343,31 @@ export default class AllocationsController {
       documents: documentRows,
       documentsCount: documentRows.length,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
+      laoCase,
+      errors: req.flash('errors') || [],
+      instructions,
+    })
+  }
+
+  async getAllocatedDocuments(req: Request, res: Response, crn: string, pduCode: string) {
+    const [allocatedCase, documents] = await Promise.all([
+      await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
+      await this.allocationsService.getDocuments(res.locals.user.token, crn),
+    ])
+    const documentRows = documents.map(document => new DocumentRow(document))
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
+    allocatedCase.name = unescapeApostrophe(allocatedCase.name)
+    const { instructions } = await this.allocationsService.getCrnOnlyNotesCache(crn, res.locals.user.username)
+    res.render('pages/reallocation-documents', {
+      title: 'Documents | Manage a workforce',
+      crn: allocatedCase.crn,
+      tier: allocatedCase.tier,
+      name: allocatedCase.name,
+      pduCode,
+      documents: documentRows,
+      documentsCount: documentRows.length,
+      outOfAreaTransfer: allocatedCase.outOfAreaTransfer,
       laoCase,
       errors: req.flash('errors') || [],
       instructions,

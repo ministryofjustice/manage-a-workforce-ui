@@ -5,19 +5,14 @@
 {% from "../components/reallocationInstructions/macro.njk" import instructionsForm %}
 {% from "../components/reallocationReason/macro.njk" import reallocationReason %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% block beforeContent %}
-    {{ govukBreadcrumbs({
-        items: [
-            {
-                text: "Home",
-                href: "/pdu/" + pduCode + "/teams"
-            },
-            {
-                text: "Unallocated cases",
-                href: '/pdu/' + pduCode + '/find-unallocated'
-            }
-        ]
+    {{ govukBackLink({
+      text: "Back",
+      attributes: {
+       "data-back" : undefined
+      }
     }) }}
 {% endblock %}
 

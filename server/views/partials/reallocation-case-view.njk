@@ -70,7 +70,7 @@
 
         </div>
     </div>
-    <form data-validate-form="case-view" method="post" action="{{"/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/case-view"}}">
+    <form data-validate-form="case-view" method="post" action="{{"/pdu/" + pduCode + "/" + crn + "/case-view"}}">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         {{ instructionsForm({
                 inGridRow: true,

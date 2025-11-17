@@ -72,6 +72,12 @@ export default class AllocationsController {
   }
 
   async getAllocatedCase(req: Request, res: Response, crn, pduCode): Promise<void> {
+    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
+
+    if (!reallocationEnabledFlag) {
+      res.redirect(`/pdu/${pduCode}/teams`)
+      return
+    }
     const response: AllocatedCase = await this.allocationsService.getAllocatedCase(res.locals.user.token, crn)
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
@@ -96,6 +102,13 @@ export default class AllocationsController {
   }
 
   async getAllocatedPersonalDetails(req: Request, res: Response, crn, pduCode): Promise<void> {
+    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
+
+    if (!reallocationEnabledFlag) {
+      res.redirect(`/pdu/${pduCode}/teams`)
+      return
+    }
+
     const response: AllocatedCase = await this.allocationsService.getAllocatedCase(res.locals.user.token, crn)
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
@@ -200,6 +213,13 @@ export default class AllocationsController {
   }
 
   async getAllocatedProbationRecord(req: Request, res: Response, crn, pduCode): Promise<void> {
+    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
+
+    if (!reallocationEnabledFlag) {
+      res.redirect(`/pdu/${pduCode}/teams`)
+      return
+    }
+
     const allocatedCase = await this.allocationsService.getAllocatedCase(res.locals.user.token, crn)
     const convictionNumber = allocatedCase.activeEvents.reverse()[0].number
 
@@ -289,6 +309,13 @@ export default class AllocationsController {
   }
 
   async getAllocatedRisk(req: Request, res: Response, crn: string, pduCode: string) {
+    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
+
+    if (!reallocationEnabledFlag) {
+      res.redirect(`/pdu/${pduCode}/teams`)
+      return
+    }
+
     const [allocatedCase, risk] = await Promise.all([
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
       await this.allocationsService.getRisk(res.locals.user.token, crn, 1),
@@ -350,6 +377,13 @@ export default class AllocationsController {
   }
 
   async getAllocatedDocuments(req: Request, res: Response, crn: string, pduCode: string) {
+    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
+
+    if (!reallocationEnabledFlag) {
+      res.redirect(`/pdu/${pduCode}/teams`)
+      return
+    }
+
     const [allocatedCase, documents] = await Promise.all([
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
       await this.allocationsService.getDocuments(res.locals.user.token, crn),

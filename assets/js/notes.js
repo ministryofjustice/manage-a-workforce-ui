@@ -3,12 +3,17 @@ makeNotesKey = function (crn) {
   return `${notesKeyPrefix}-${crn}`
 }
 
-loadNotes = function (textArea, newNotesItem) {
+loadNotes = function (textArea, reason, newNotesItem) {
   if (localStorage[newNotesItem]) {
     var storedInstructions = localStorage.getItem(newNotesItem)
     try {
       var lastInstructions = JSON.parse(storedInstructions)
-      if (lastInstructions.v.length > 0) textArea.value = lastInstructions.v
+
+      if (lastInstructions.v.length > 0) {
+        var savedValues = JSON.parse(lastInstructions.v)
+        textArea.value = savedValues.instructions
+        reason.value = savedValues.reason
+      }
     } catch (e) {
       // log so we can fix
       console.log(`Unable to read item ${key}`)
@@ -16,8 +21,9 @@ loadNotes = function (textArea, newNotesItem) {
   }
 }
 
-saveNotes = function (textArea, newNotesItem, currentTimeInSeconds) {
-  var item = { v: textArea.value, t: currentTimeInSeconds }
+saveNotes = function (textArea, reason, newNotesItem, currentTimeInSeconds) {
+  var values = JSON.stringify({ instructions: textArea.value, reason: reason.value })
+  var item = { v: values, t: currentTimeInSeconds }
   localStorage.setItem(newNotesItem, JSON.stringify(item))
 }
 

@@ -223,7 +223,11 @@ export default class AllocationsController {
     const allocatedCase = await this.allocationsService.getAllocatedCase(res.locals.user.token, crn)
     const convictionNumber = allocatedCase.activeEvents.reverse()[0].number
 
-    const probationRecord = await this.allocationsService.getProbationRecord(res.locals.user.token, crn, 1)
+    const probationRecord = await this.allocationsService.getProbationRecord(
+      res.locals.user.token,
+      crn,
+      convictionNumber,
+    )
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
 

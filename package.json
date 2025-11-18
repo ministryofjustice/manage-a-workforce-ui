@@ -128,7 +128,7 @@
     "passport": "0.7.0",
     "passport-oauth2": "1.8.0",
     "redis": "^5.8.1",
-    "uuid": "11.1.0",
+    "uuid": "13.0.0",
     "validatorjs": "3.22.1"
   },
   "devDependencies": {

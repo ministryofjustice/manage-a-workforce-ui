@@ -14,6 +14,13 @@ export default class ReallocationsController {
   ) {}
 
   async getSearch(req, res, pduCode: string) {
+    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
+
+    if (!reallocationEnabledFlag) {
+      res.redirect(`/pdu/${pduCode}/teams`)
+      return
+    }
+
     const { search } = req.query
     const { token, username } = res.locals.user
     const [teamsUserPreference, probationDeliveryUnitDetails] = await Promise.all([

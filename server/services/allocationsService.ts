@@ -200,4 +200,12 @@ export default class AllocationsService {
   async getLookupforCrn(crn: string, token: string): Promise<CrnDetails[]> {
     return (await this.restClient(token).get({ path: `/allocated/crn/${crn}` })) as CrnDetails[]
   }
+
+  async getCrnForReallocation(crn: string, token: string): Promise<CrnDetails> {
+    return (await this.restClient(token)
+      .get({ path: `/allocated/crn/${crn}` })
+      .catch(() => {
+        throw new Error('Invalid CRN')
+      })) as CrnDetails
+  }
 }

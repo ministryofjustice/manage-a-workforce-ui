@@ -5,22 +5,22 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set notification %}
-  <p class="govuk-notification-banner__heading">
+<p class="govuk-notification-banner__heading">
   <p class="govuk-body">
-  {% if featureFlag %}
-    <strong>You can now reallocate cases using this service</strong>
-    <br/>
+    {% if featureFlag %}
+      <strong>You can now reallocate cases using this service</strong>
+      <br/>
     We've made a change to enable the reallocation of cases between practitioners in the same probation delivery unit (PDU).
     <br/>
-  {% else %}
-    <strong>Changes to limited access offender (LAO) cases</strong>
-    <br/>
+    {% else %}
+      <strong>Changes to limited access offender (LAO) cases</strong>
+      <br/>
     If you are not excluded from accessing any LAO case you will now be able to view and allocate all cases of this type.
     <br/>
-  {% endif %}
+    {% endif %}
     <a class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold" href={{"/whats-new"}}>Read more about this change</a>.
   </p>
-  </p>
+</p>
 {% endset %}
 
 {% set tableRows = [] %}
@@ -41,18 +41,18 @@
         }}
   {% else %}
     {{ tableRows.push(
-              [
-              {
-                html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/team-workload" class="govuk-link">' + team.teamName + '</a>'
-              },
-              {
-                text: team.workload
-              },
-              {
-                text: team.caseCount
-              }
-            ])
-            }}
+      [
+      {
+        html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/team-workload" class="govuk-link">' + team.teamName + '</a>'
+      },
+      {
+        text: team.workload
+      },
+      {
+        text: team.caseCount
+      }
+    ])
+    }}
   {% endif %}
 {% endfor %}
 
@@ -106,10 +106,10 @@
     href: '/pdu/' + pduCode + '/find-unallocated'
   }) }}
 
-  {% if featureFlag  %}
-  <div class="govuk-!-margin-top-9">
+  {% if featureFlag %}
+    <div class="govuk-!-margin-top-9">
       <h2 class="govuk-heading-l">Reallocating a case</h2>
       <p class="govuk-body">You can <a href="#" class="govuk-link">reallocate cases between practitioners</a> in the same PDU by searching for the person on probation or viewing a practitioner's active caseload within their team.</p>
-  </div>
+    </div>
   {% endif %}
 {% endblock %}

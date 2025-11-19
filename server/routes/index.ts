@@ -9,6 +9,7 @@ import TechnicalUpdatesController from '../controllers/technicalUpdatesControlle
 import getAllocationRoutes from './allocationRoutes'
 import probationEstateRoutes from './ProbationEstateRoutes'
 import allocationsControllerRoutes from './allocationsControllerRoutes'
+import reallocationsRoutes from './reallocationsRoutes'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -30,6 +31,7 @@ export default function routes(services: Services): Router {
   getAllocationRoutes(services, get, post)
   allocationsControllerRoutes(services, get, post)
   probationEstateRoutes(services, get, post)
+  reallocationsRoutes(services, get)
 
   get('/staff-lookup', async (req, res) => {
     const { searchString } = req.query

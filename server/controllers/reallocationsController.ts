@@ -3,7 +3,6 @@ import FeatureFlagService from '../services/featureFlagService'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 import WorkloadService from '../services/workloadService'
-import { unescapeApostrophe } from '../utils/utils'
 
 export default class ReallocationsController {
   constructor(
@@ -28,8 +27,7 @@ export default class ReallocationsController {
     if (search) {
       try {
         searchData = await this.allocationsService.getCrnForReallocation(search, token)
-        console.log(searchData)
-      } catch (e) {
+      } catch {
         error = true
       }
     }

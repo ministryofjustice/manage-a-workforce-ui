@@ -1,0 +1,120 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "../../components/crnLookup/macro.njk" import crnLookup %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% set checkboxItems = [] %}
+{% for item in data %}
+  {{ checkboxItems.push({
+        value: item.code,
+        text: item.name
+    }) }}
+{% endfor %}
+
+{% set tableRows = [] %}
+{% for team in teams %}
+  {% if team.workload == '-%' %}
+    {{ tableRows.push(
+          [
+          {
+            text: team.teamName
+          },
+          {
+            text: team.workload
+          },
+          {
+            text: team.caseCount
+          }
+        ])
+        }}
+  {% else %}
+    {{ tableRows.push(
+              [
+              {
+                html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/team-workload" class="govuk-link">' + team.teamName + '</a>'
+              },
+              {
+                text: team.workload
+              },
+              {
+                text: team.caseCount
+              }
+            ])
+            }}
+  {% endif %}
+{% endfor %}
+
+{% block content %}
+
+  {% if error %}
+    {{ govukErrorSummary({
+            titleText: "There is a problem",
+            errorList: [
+                {
+                text: "No result found for this CRN.",
+                href: "#crn-error"
+                }
+            ]
+        }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <span class="govuk-caption-xl">{{ regionName }}</span>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ pduName }}</h1>
+      <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible govuk-!-margin-bottom-5">
+    </div>
+  </div>
+
+  {{ crnLookup({
+        data: searchData,
+        action: "/pdu/" + pduCode + "/reallocations",
+        value: search,
+        errorMessage: { text: "No result found for this CRN."} if error
+    }) }}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <fieldset class="govuk-fieldset" aria-describedby="team-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            Select a team to reallocate cases between practitioners
+          </h1>
+        </legend>
+        <div id="team-hint" class="govuk-hint">
+          Once you select a team you can choose a practitioner and view their active caseload
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+        You can add and remove teams by <a class="govuk-link--no-visited-state" href="/pdu/{{pduCode}}/select-teams" data-qa-link="edit-teams">editing your teams list</a>.
+    </strong>
+  </div>
+
+  {{ govukTable({
+  firstCellIsHeader: true,
+  head: [
+    {
+      text: "Name"
+    },
+    {
+      text: "Workload"
+    },
+    {
+      text: "Cases"
+    }
+  ],
+  rows: tableRows
+  })
+}}
+
+{% endblock %}
+{% block javascripts %}
+  <script src="/assets/validator.js"></script>
+  <script src="/assets/validation.js"></script>
+{% endblock %}

@@ -152,8 +152,10 @@ window.addEventListener('load', () => {
   Validator.register(
     'nourl',
     value =>
-      !/((https?|ftp|smtp):\/\/|www\.)([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g.test(value)
+      !/((https?|ftp|smtp):\/\/|www\.)([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g.test(value),
   )
+
+  Validator.register('crn', value => /([a-z]|[A-Z]){1}[0-9]{6}/g.test(value))
 
   Validator.register('empty', value => value.length < 1)
 
@@ -195,6 +197,14 @@ window.addEventListener('load', () => {
       {
         required: 'Select a probation practitioner',
         nourl: 'You cannot include links in the allocation notes',
+      },
+    ],
+    'crn-lookup': [
+      {
+        search: 'crn',
+      },
+      {
+        crn: 'Enter a valid CRN to search',
       },
     ],
   }

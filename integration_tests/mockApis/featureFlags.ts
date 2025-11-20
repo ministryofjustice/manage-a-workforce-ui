@@ -2,7 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForFeatureflags } from './wiremock'
 
 export default {
-  stubForFeatureflagEnabled: (): SuperAgentRequest => {
+  stubForFeatureflagEnabled: (enabled: boolean = true): SuperAgentRequest => {
     return stubForFeatureflags({
       request: {
         method: 'GET',
@@ -22,7 +22,7 @@ export default {
               key: 'Reallocations',
               name: 'Reallocations',
               description: 'Flag for reallocations work',
-              enabled: true,
+              enabled,
               type: 'BOOLEAN_FLAG_TYPE',
               createdAt: '2025-10-13T12:59:53.136978Z',
               updatedAt: '2025-10-21T11:34:42.350567Z',

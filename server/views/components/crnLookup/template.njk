@@ -1,10 +1,23 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
-{% if data %}
-  {% set name = data.names.combinedName %}
-  {% set crn = data.crn %}
-  {% set dob = data.dob %}
-  {% set currentlyManagedby = data.currentlyManagedBy %}
+{% if params.data %}
+  {% set name = params.data.name.combinedName %}
+  {% set crn = params.data.crn %}
+  {% set dob = params.data.dateOfBirth %}
+  {% set currentlyManagedby = params.data.manager.name.combinedName %}
+
+  {% if params.data.apopExcluded !== true %}
+    {% set nameField = '<a href="' + '/pdu/' + pduCode + '/' + params.data.crn + '/convictions/' + params.data.convictionNumber + '/case-view' + '" class="govuk-link--no-visited-state" data-qa-link="' + params.data.crn + '-' + params.data.convictionNumber + '">' + params.data.name.combinedName + '</a>' %}
+  {% else %}
+    {% set nameField = "<strong>" + params.data.name.combinedName + "</strong>" %}
+  {% endif %}
+
+  {%- set tableRow = [
+      { html: nameField },
+      { text: crn },
+      { text: dob | dateFormat },
+      { text: currentlyManagedby }
+  ] -%}
   {% set tableData = {
     attributes: {
         'data-module': 'moj-sortable-table',
@@ -26,7 +39,9 @@
         { text: 'Date of birth',
             attributes: {
             "aria-sort": "none",
-            'data-persistent-id': 'reallocation-case-date-of-birth'
+            'data-persistent-id': 'reallocation-case-date-of-birth',
+            "data-type": 'DATE'
+        }
         },
         { text: 'Currently managed by',
             attributes: {
@@ -35,27 +50,37 @@
         }
         }
     ],
-    rows: []
+    rows: [tableRow]
   } %}
-  {%- set tableRow = [
-            { text: name },
-            { text: crn },
-            { text: dob },
-            { text: currentlyManagedby }
-        ] -%}
 {% endif %}
-
-<div id="crn-lookup-component" class="maw-search-box govuk-!-margin-top-8 govuk-!-margin-bottom-8 govuk-!-margin-left-4 govuk-!-margin-right-4">
-  <label id="crn-lookup-heading" class="govuk-heading-with-caption-xl govuk-!-margin-top-5 govuk-!-margin-bottom-5" for="crn-input" >
+<div id="crn-lookup-component" class="maw-search-box govuk-!-padding-top-8 govuk-!-padding-bottom-8 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-margin-bottom-5">
+  <label id="crn-lookup-heading" class="govuk-heading-l govuk-!-margin-top-5 govuk-!-margin-bottom-5" for="crn-input">
     Find a person on probation to reallocate
   </label>
-  <form method="GET" action="/allocations/crn-lookup" class="govuk-form-group">
-    <input class="govuk-input govuk-input--width-20" id="crn-input" name="crn" type="text" hint="You can search by CRN" aria-describedby="crn-lookup-heading" />
-    <button type="submit" class="govuk-button govuk-!-margin-top-3">Search</button>
+
+  <span class="govuk-body">
+    You can search by CRN
+  </span>
+
+  <form method="GET" action="{{params.action}}" class="govuk-form-group govuk-!-margin-top-1 {{"govuk-form-group--error" if params.errorMessage}}" data-validate-form="crn-lookup">
+    {% if params.errorMessage %}
+      <p id="crn-error" class="govuk-error-message">{{params.errorMessage.text}}</p>
+    {% endif %}
+    <input 
+      class="govuk-input govuk-input--width-20" 
+      id="crn" 
+      name="search"
+      type="text"
+      hint="You can search by CRN"
+      aria-describedby="crn-lookup-heading"
+      value="{{params.value}}"
+/>
+    <button type="submit" class="govuk-button  govuk-!-margin-left-1" data-form-submit>Search</button>
   </form>
-  {% if data %}
-    <div id ="crn-lookup-results" class="govuk-!-margin-top-4 govuk-!-margin-bottom-8 govuk-!-margin-left-4 govuk-!-margin-right-4">
-      {{ govukTable(tableData.update({'rows': tableData.rows.append(tableRow)})) }}
+  {% if params.data %}
+    <div class ="crn-lookup-results" class="govuk-!-margin-top-4 govuk-!-margin-bottom-8 govuk-!-margin-left-4 govuk-!-margin-right-4">
+      {{ govukTable(tableData) }}
     </div>
   {% endif %}
+
 </div>

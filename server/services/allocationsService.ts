@@ -181,9 +181,22 @@ export default class AllocationsService {
     })) as ProbationRecord
   }
 
+  async getAllocatedProbationRecord(token: string, crn, convictionNumber): Promise<ProbationRecord> {
+    logger.info(`Getting probation record for crn ${crn}`)
+    return (await this.restClient(token).get({
+      path: `/cases/allocated/${crn}/record/exclude-conviction/${convictionNumber}`,
+    })) as ProbationRecord
+  }
+
   async getRisk(token: string, crn, convictionNumber): Promise<Risk> {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionNumber}/risks`,
+    })) as Risk
+  }
+
+  async getCaseRisk(token: string, crn): Promise<Risk> {
+    return (await this.restClient(token).get({
+      path: `/cases/allocated/${crn}/risks`,
     })) as Risk
   }
 

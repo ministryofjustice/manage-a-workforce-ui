@@ -331,6 +331,78 @@ export default {
       },
     })
   },
+  stubGetAllocatedCase: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/allocated/J678910`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          name: 'Dylan Adam Armstrong',
+          crn: 'J678910',
+          pncNumber: 'D/9874483AB',
+          gender: 'Male',
+          dateOfBirth: '1984-09-27',
+          age: 37,
+          tier: 'C1',
+          address: null,
+          nextAppointmentDate: null,
+          activeEvents: [
+            {
+              number: 1,
+              failureToComplyCount: 0,
+              failureToComplyStartDate: '2025-10-15',
+              sentence: null,
+              offences: [],
+              requirements: [],
+            },
+            {
+              number: 2,
+              failureToComplyCount: 0,
+              failureToComplyStartDate: '2025-10-14',
+              sentence: {
+                description: 'ORA Community Order',
+                startDate: '2025-10-14',
+                endDate: '2026-04-13',
+                length: '6 Months',
+              },
+              offences: [
+                {
+                  mainOffence: true,
+                  mainCategory: 'Common assault and battery',
+                  subCategory: 'Contrary to section 39 of the Criminal Justice Act 1988.',
+                },
+              ],
+              requirements: [
+                {
+                  mainCategory: 'Unpaid Work',
+                  subCategory: 'Regular',
+                  length: '100 Hours',
+                },
+              ],
+            },
+          ],
+          outOfAreaTransfer: false,
+        },
+      },
+    })
+  },
+  stubGetCrnAccess: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/user/USER1/crn/J678910/is-allowed`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {},
+      },
+    })
+  },
   stubGetUnallocatedCaseWhereIsOutOfAreaTransfer: (): SuperAgentRequest => {
     return stubForAllocation({
       request: {

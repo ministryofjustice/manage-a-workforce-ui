@@ -40,7 +40,7 @@ export default class ReallocationsController {
 
     if (search) {
       try {
-        searchData = await this.allocationsService.getCrnForReallocation(search, token)
+        searchData = await this.allocationsService.getCrnForReallocation(search.toUpperCase(), token)
       } catch {
         error = true
       }
@@ -79,6 +79,7 @@ export default class ReallocationsController {
       regionName: probationDeliveryUnitDetails.region.name,
       error,
       title: 'Reallocations | Manage a Workforce',
+      journey: 'reallocations',
     })
   }
 

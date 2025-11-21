@@ -68,6 +68,6 @@ context('Reallocations Search', () => {
       .contains('tr', 'Team 1')
       .find('a')
       .should('have.attr', 'href')
-      .and('include', '/pdu/PDU1/TM1/team-workload')
+      .and('include', '/pdu/PDU1/TM1/reallocations/team-workload')
   })
 })

@@ -1,0 +1,76 @@
+{% extends "partials/reallocation-case-view.njk" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{%- from "../components/doubleCell/macro.njk" import doubleCell -%}
+{%- from "../components/downloadDocumentLink/macro.njk" import downloadDocumentLink -%}
+
+{% set tableData = {
+    attributes: {
+        'data-module': 'moj-sortable-table',
+        'data-persistent-id': 'documents'
+    },
+    head: [
+        { text: 'Name',
+            attributes: {
+                'aria-sort': 'none',
+                'data-persistent-id': 'documents-name'
+            },
+            classes: "govuk-!-width-one-third"
+        },
+        { text: 'Type',
+            attributes: {
+                "aria-sort": "none",
+                'data-persistent-id': 'documents-type'
+            }
+        },
+        { text: 'Event',
+            attributes: {
+                "aria-sort": "none",
+                'data-persistent-id': 'documents-event'
+            }
+        },
+        { html: 'Date created',
+            attributes: {
+                "aria-sort": "descending",
+                'data-persistent-id': 'documents-date-created'
+            }
+        }
+    ],
+    rows: []
+} %}
+
+{% for document in documents%}
+    {%- set tableRow = [
+        { html: doubleCell(downloadDocumentLink(crn, document.id,document.nameFirstLine,'', document.fileName) if document.id else document.nameFirstLine, document.nameSecondLine, 'govuk-!-font-size-16 govuk-!-font-weight-regular') + ('<br><strong class="govuk-tag--orange">SENSITIVE</strong>' if document.displaySensitive)},
+        { text: document.type },
+        { html: doubleCell(document.eventFirstLine, document.eventSecondLine, 'govuk-!-font-size-16 govuk-!-font-weight-regular')},
+        { text:  document.dateCreated, attributes: {
+            "data-sort-value": document.dateSortValue
+        } }
+    ] -%}
+    {{ tableData.rows.push(tableRow) }}
+{% endfor %}
+
+{% block caseContent %}
+    <div>
+        {{
+            govukButton({
+                text: "Skip to reallocation notes",
+                href: '#allocation-notes',
+                classes: 'documents-sticky-button'
+            })
+
+        }}
+        <h2 class="govuk-heading-l">Documents</h2>
+
+        <p class="govuk-body">You can sort this list by date, event, document type, or name using the blue arrows at the top of each column. Selecting a document will download it to your device.</p>
+
+        {{ govukTable(tableData) }}
+
+        {% if documentsCount < 1 %}
+            <p class="govuk-heading-m">
+            There are no documents to display.
+        </p>
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"/>
+        {% endif %}
+    </div>
+{% endblock %}

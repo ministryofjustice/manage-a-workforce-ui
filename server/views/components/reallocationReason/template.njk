@@ -1,0 +1,54 @@
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+
+{% set reasonOptions = [
+  {
+    value: "select",
+    text: "Select a reallocation reason",
+    selected: true
+  },
+  {
+    value: "allocate",
+    text: "Allocate to a responsible officer"
+  },
+  {
+    value: "adjustment",
+    text: "Caseload adjustment"
+  },
+  {
+    value: "tier",
+    text: "Change in Tier/Risk"
+  },
+  {
+    value: "initial",
+    text: "Initial allocation"
+  },
+  {
+    value: "left",
+    text: "Officer left"
+  },
+  {
+    value: "other",
+    text: "Other"
+  },
+  {
+    value: "reset",
+    text: "Probation reset"
+  },
+  {
+    value: "risk",
+    text: "Risk to staff"
+  },
+  {
+    value: "transfer",
+    text: "Transfer in"
+  }
+
+]
+%}
+
+{{ govukSelect({
+  id: "reason",
+  name: "reason",
+  items: reasonOptions,
+  errorMessage: params.errors | findError('reason')
+}) }}

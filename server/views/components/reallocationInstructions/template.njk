@@ -1,0 +1,50 @@
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% if params.inGridRow %}
+  <div class="govuk-grid-row" id="allocation-notes">
+    <div class="govuk-grid-column-two-thirds">
+    {% endif %}
+    {% if params.errorMessage %}
+      <div class="govuk-form-group govuk-form-group--error">
+      {% else %}
+        <div class="govuk-form-group">
+        {% endif %}
+        <h2 class="govuk-heading-l">
+          {{ params.titleText | safe if params.titleText else "Reallocation notes" }}
+        </h2>
+        <label class="govuk-label govuk-label--l" for="reallocationNotes">
+
+          {% if not params.hideHintText  %}
+            <div id="more-detail-hint-header" class="govuk-hint">
+              {% if not params.hintText or params.hintText == "" %}
+                These notes are sent to the practitioner in the reallocation email.They will also be saved as a reallocation contact in NDelius. Your notes should align with the reallocation reason you select. Do not include links in the notes
+              {% else %}
+                 {{ params.hintText | safe if params.hintText}}
+              {% endif %}
+             </div>
+           {% endif %}
+        </label>
+        {% if params.errorMessage %}
+          <p id="reallocationNotes-error" class="govuk-error-message">git
+            <span class="govuk-visually-hidden">Error:</span>
+            {{ params.errorMessage.text | safe if params.errorMessage.text }}
+          </p>
+          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" id="reallocationNotes" name="reallocationNotes" rows="{{ params.rows if params.rows else 5}}" aria-describedby="reallocationNotes-error">{{params.instructions}}</textarea>
+        {% else %}
+          <textarea class="govuk-textarea" data-crn="{{ params.crn }}" id="reallocationNotes" name="reallocationNotes" rows="{{ params.rows if params.rows else 5}}">{{params.instructions}}</textarea>
+        {% endif %}
+      </div>
+      {% if params.inGridRow %}
+      </div>
+    </div>
+  {% endif %}
+  {#% block javascripts %}
+    <script src="/assets/cache-notes.js"></script>
+  {% endblock %#}
+  {% block javascripts %}
+    <script src="/assets/notes.js"></script>
+    {% if params.inGridRow %}
+      <script src="/assets/notes-persist-pop.js"></script>
+    {% else %}
+      <script src="/assets/notes-persist-confirm-allocation.js"></script>
+    {% endif %}
+  {% endblock %}

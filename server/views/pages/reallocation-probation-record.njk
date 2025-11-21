@@ -1,0 +1,83 @@
+{% extends "partials/reallocation-case-view.njk" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% set currentSentenceData = {
+                classes: 'current-sentences-table govuk-table-xl',
+                caption: 'Current sentences',
+                captionClasses: 'govuk-table__caption--m',
+                firstCellIsHeader: true,
+                head: [
+                    { text: 'Sentence'},
+                    { text: 'Offence'},
+                    { text: 'Start date'},
+                    { text: 'Probation practitioner'}
+                ],
+                rows: []
+ } %}
+
+{% for currentSentence in currentSentences %}
+    {{
+        currentSentenceData.rows.push([
+            { text: currentSentence.sentence },
+            { text: (currentSentence.offences[0] if currentSentence.offences | length == 1  else '<ol class="govuk-list govuk-list--number"><li>' +  currentSentence.offences | join("</li><li>") + '</li></ol>') | safe},
+            { text: currentSentence.date},
+            { text: currentSentence.probationPractitioner}
+        ])
+    }}
+
+{% endfor %}
+
+{% set previousSentenceData = {
+                classes: 'previous-sentences-table govuk-table-xl',
+                caption: 'Previous sentences',
+                captionClasses: 'govuk-table__caption--m',
+                firstCellIsHeader: true,
+                head: [
+                    { text: 'Sentence'},
+                    { text: 'Offence'},
+                    { text: 'End date'},
+                    { text: 'Probation practitioner'}
+                ],
+                rows: []
+ } %}
+
+{% for previousSentence in previousSentences %}
+    {{
+        previousSentenceData.rows.push([
+            { text: previousSentence.sentence },
+            { text: (previousSentence.offences[0] if previousSentence.offences | length == 1  else '<ol class="govuk-list govuk-list--number"><li>' +  previousSentence.offences | join("</li><li>") + '</li></ol>') | safe},
+            { text: previousSentence.date},
+            { text: previousSentence.probationPractitioner}
+        ])
+    }}
+
+{% endfor %}
+
+{% block caseContent %}
+
+    <h2 class="govuk-heading-l">Probation record</h2>
+
+    {% if currentSentences | length > 0 %}
+        {{ govukTable(currentSentenceData) }}
+    {% else %}
+
+        <h3 class="govuk-heading-m">Current sentences</h3>
+        <p class="govuk-body">No current sentences.</p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    {% endif %}
+
+    {% if previousSentences | length > 0 %}
+        <div class="govuk-!-margin-bottom-9">
+            {{ govukTable(previousSentenceData) }}
+            {% if not viewAll %}
+                <a href="{{ '/pdu/' + pduCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state view-all-link govuk-body">View all previous sentences ({{ totalPreviousCount }})</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <h3 class="govuk-heading-m">Previous sentences</h3>
+        <p class="govuk-body">No previous sentences.</p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    {% endif %}
+
+{% endblock %}

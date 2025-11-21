@@ -17,6 +17,7 @@ import LaoStatusList from '../models/LaoStatusList'
 import RegionList from '../models/RegionList'
 import { createRedisClient } from '../data/redisClient'
 import CrnDetails from '../models/ReallocationCrnDetails'
+import AllocatedCase from '../models/AllocatedCase'
 
 interface CachedValue {
   instructions?: string
@@ -41,10 +42,18 @@ export default class AllocationsService {
     this.redisClient = await createRedisClient().connect()
   }
 
+  async getCrnOnlyNotesCache(crn: string, staffCode: string): Promise<CachedValue> {
+    return this.getNotesCache(crn, '', staffCode)
+  }
+
   async getNotesCache(crn: string, convictionNumber: string, staffCode: string): Promise<CachedValue> {
     const cacheKey = `allocation_notes:${crn}:${convictionNumber}:${staffCode}`
     const cachedValue = await this.redisClient.json.get(cacheKey)
     return (cachedValue ?? {}) as CachedValue
+  }
+
+  async setCrnOnlyNotesCache(crn: string, staffCode: string, value: CachedValue): Promise<void> {
+    this.setNotesCache(crn, '', staffCode, value)
   }
 
   async setNotesCache(crn: string, convictionNumber: string, staffCode: string, value: CachedValue): Promise<void> {
@@ -57,6 +66,10 @@ export default class AllocationsService {
     })
 
     await this.redisClient.expire(cacheKey, 60 * 60 * 24 * 7)
+  }
+
+  async clearCrnNotesCache(crn: string, convictionNumber: string, staffCode: string) {
+    this.clearNotesCache(crn, '', staffCode)
   }
 
   async clearNotesCache(crn: string, convictionNumber: string, staffCode: string) {
@@ -119,6 +132,12 @@ export default class AllocationsService {
     })) as string
   }
 
+  async getCrnAccess(token: string, staffId: string, crn: string): Promise<string> {
+    return (await this.restClient(token).get({
+      path: `/user/${staffId}/crn/${crn}/is-allowed`,
+    })) as string
+  }
+
   async getUserRegionAccessForPdu(token: string, staffId: string, pdu: string): Promise<string> {
     return (await this.restClient(token).get({
       path: `/user/${staffId}/pdu/${pdu}/is-allowed`,
@@ -146,6 +165,13 @@ export default class AllocationsService {
     return (await this.restClient(token).get({
       path: `/cases/unallocated/${crn}/convictions/${convictionNumber}`,
     })) as Allocation
+  }
+
+  async getAllocatedCase(token: string, crn): Promise<AllocatedCase> {
+    logger.info(`Getting allocated case for crn ${crn}`)
+    return (await this.restClient(token).get({
+      path: `/cases/allocated/${crn}`,
+    })) as AllocatedCase
   }
 
   async getProbationRecord(token: string, crn, convictionNumber): Promise<ProbationRecord> {

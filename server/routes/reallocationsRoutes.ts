@@ -29,4 +29,29 @@ export default function getReallocationsRoutes(
     const { pduCode } = req.params
     await reallocationsController.getSearch(req, res, pduCode)
   })
+
+  get('/pdu/:pduCode/:crn/reallocation-case-view', async (req, res) => {
+    const { pduCode, crn } = req.params
+    await reallocationsController.getAllocatedCase(req, res, crn, pduCode)
+  })
+
+  get('/pdu/:pduCode/:crn/reallocation-personal-details', async (req, res) => {
+    const { pduCode, crn } = req.params
+    await reallocationsController.getAllocatedPersonalDetails(req, res, crn, pduCode)
+  })
+
+  get('/pdu/:pduCode/:crn/reallocation-probation-record', async (req, res) => {
+    const { pduCode, crn } = req.params
+    await reallocationsController.getAllocatedProbationRecord(req, res, crn, pduCode)
+  })
+
+  get('/pdu/:pduCode/:crn/reallocation-risk', async (req, res) => {
+    const { pduCode, crn } = req.params
+    await reallocationsController.getAllocatedRisk(req, res, crn, pduCode)
+  })
+
+  get('/pdu/:pduCode/:crn/reallocation-documents', async (req, res) => {
+    const { pduCode, crn } = req.params
+    await reallocationsController.getAllocatedDocuments(req, res, crn, pduCode)
+  })
 }

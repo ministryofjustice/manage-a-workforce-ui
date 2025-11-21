@@ -7,7 +7,7 @@
   {% set currentlyManagedby = params.data.manager.name.combinedName %}
 
   {% if params.data.apopExcluded !== true %}
-    {% set nameField = '<a href="' + '/pdu/' + pduCode + '/' + params.data.crn + '/convictions/' + params.data.convictionNumber + '/case-view' + '" class="govuk-link--no-visited-state" data-qa-link="' + params.data.crn + '-' + params.data.convictionNumber + '">' + params.data.name.combinedName + '</a>' %}
+    {% set nameField = '<a href="' + '/pdu/' + params.pduCode + '/' + params.data.crn + '/reallocation-case-view' + '" class="govuk-link--no-visited-state" data-qa-link="' + params.data.crn + '-' + params.data.convictionNumber + '">' + params.data.name.combinedName + '</a>' %}
   {% else %}
     {% set nameField = "<strong>" + params.data.name.combinedName + "</strong>" %}
   {% endif %}
@@ -66,9 +66,9 @@
     {% if params.errorMessage %}
       <p id="crn-error" class="govuk-error-message">{{params.errorMessage.text}}</p>
     {% endif %}
-    <input 
-      class="govuk-input govuk-input--width-20" 
-      id="crn" 
+    <input
+      class="govuk-input govuk-input--width-20"
+      id="crn"
       name="search"
       type="text"
       hint="You can search by CRN"

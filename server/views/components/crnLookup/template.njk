@@ -5,9 +5,11 @@
   {% set crn = params.data.crn %}
   {% set dob = params.data.dateOfBirth %}
   {% set currentlyManagedby = params.data.manager.name.combinedName %}
+  {% set pduCode = params.pduCode %}
+  {% set convictionNumber = params.data.convictionNumber %}
 
   {% if params.data.apopExcluded !== true %}
-    {% set nameField = '<a href="' + '/pdu/' + pduCode + '/' + params.data.crn + '/convictions/' + params.data.convictionNumber + '/case-view' + '" class="govuk-link--no-visited-state" data-qa-link="' + params.data.crn + '-' + params.data.convictionNumber + '">' + params.data.name.combinedName + '</a>' %}
+    {% set nameField = '<a href="' + '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view' + '" class="govuk-link--no-visited-state" data-qa-link="' + crn + '-' + convictionNumber + '">' + name + '</a>' %}
   {% else %}
     {% set nameField = "<strong>" + params.data.name.combinedName + "</strong>" %}
   {% endif %}

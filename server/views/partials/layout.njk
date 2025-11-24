@@ -14,7 +14,6 @@
     <link href="{{ css }}" nonce="{{ cspNonce }}" rel="stylesheet" />
   {% endfor %}
 
-
   {% set mainTitle = "Allocations" %}
 
   {% block head %}
@@ -363,7 +362,7 @@
 {% endblock %}
 
 {% block navigation %}
-  {{ mawPrimaryNav({unallocatedCaseCount: unallocatedCaseCount, featureFlag: featureFlag }) }}
+      {{ mawPrimaryNav({unallocatedCaseCount: unallocatedCaseCount, featureFlag: featureFlag, journey: journey }) }}
 {% endblock %}
 
 <div class="govuk-width-container">

@@ -1,7 +1,10 @@
 {% extends "partials/reallocation-case-view.njk" %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
+{% from "../components/risk-summary/macro.njk" import riskSummaryBadge %}
+
 {% set events = data.activeEvents %}
 
 {% block caseContent %}
@@ -13,6 +16,40 @@
      <header class="app-summary-card__header">
          <h2 class="app-summary-card__title">{{name}}</h2>
      </header>
+
+      {{ govukSummaryList({
+                     rows: [
+                         {
+                             key: {
+                             text: "Tier"
+                           },
+                               value: {
+                               text: tier
+                           }
+                         },
+                         {
+                             key: {
+                             text: "Risks/Mappa"
+                           },
+                               value: {
+                                html: riskSummaryBadge(data.risk)
+                           }
+                         },
+                        {
+                            key: {
+                            html: 'OASys TBA???'
+                        },
+                            value: {
+                            text: doubleCell('<strong class="govuk-tag">CHECK OASYS???</strong>', 'Updated ' + data.risk.assessment.lastAssessedOn | dateFormat if data.assessment.lastAssessedOn)
+                        }
+                        }
+                     ]
+                 })}}
+
+                 {{ govukInsetText({
+                   text: "Reallocating a case will move all active orders associated with the person on proation. Requirements that are allocated to a different practitioner will remain with that practitioner after the reallocation has taken place."
+                 }) }}
+
     {% for event in events %}
 
       {%- set offenceData = event.offences %}

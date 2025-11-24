@@ -90,6 +90,12 @@ export default class ReallocationsController {
       return
     }
     const response: AllocatedCase = await this.allocationsService.getAllocatedCase(res.locals.user.token, crn)
+
+    const [allocatedCase, risk] = await Promise.all([
+      await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
+      await this.allocationsService.getCaseRisk(res.locals.user.token, crn),
+    ])
+
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
     const address = new DisplayAddress(response.address)
@@ -99,6 +105,7 @@ export default class ReallocationsController {
 
     res.render('pages/reallocation-summary', {
       data: response,
+      risk,
       address,
       crn: response.crn,
       tier: response.tier,

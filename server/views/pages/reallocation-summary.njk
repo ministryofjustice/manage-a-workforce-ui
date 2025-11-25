@@ -13,11 +13,11 @@
 
     <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id="sentence">
 
-        <header class="app-summary-card__header">
+        <header class="app-summary-card__header app-summary-card__blue_header">
             <h2 class="app-summary-card__title">{{name}}</h2>
         </header>
 
-        <div class="govuk-!-padding-6">
+        <div class="govuk-!-padding-4">
 
             {{ govukSummaryList({
                      rows: [
@@ -44,23 +44,33 @@
                             value: {
                             text: doubleCell('<strong class="govuk-tag">CHECK OASYS???</strong>', 'Updated ' + data.risk.assessment.lastAssessedOn | dateFormat if data.assessment.lastAssessedOn)
                         }
+                        },
+                       {
+                            key: {
+                            text: ''
+                        },
+                            value: {
+                            text: ''
+                        }
                         }
                      ]
                  })}}
 
+            <div class="blue-background">
             {{ govukInsetText({
                    text: "Reallocating a case will move all active orders associated with the person on proation. Requirements that are allocated to a different practitioner will remain with that practitioner after the reallocation has taken place."
                  }) }}
+            </div>
 
             {% for event in events %}
 
                 {%- set offenceData = event.offences %}
 
-                <section class="app-summary-card app-summary-card--large-title {{"govuk-!-margin-top-6" if loop.index > 0}}" id="sentence">
+                <section class="app-summary-card app-summary-card--large-title {{"govuk-!-margin-top-4" if loop.index > 0}} app-summary-card-pad" id="sentence">
 
                     <div class="app-summary-card__body">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row">
+                            <div class="govuk-summary-list__row govuk-summary-list__row_greyback">
                                 <dt class="govuk-summary-list__key">Offence</dt>
                                 <dd class="govuk-summary-list__value">
                                     {% if offenceData | length == 1 %}
@@ -141,7 +151,6 @@
                                     </p>
                                 </dd>
                             </div>
-              end dl
               </dl>
                     </div>
                 </section>

@@ -11,13 +11,15 @@
 
     <h2 class="govuk-heading-l">Reallocation review information</h2>
 
- <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id="sentence">
+    <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id="sentence">
 
-     <header class="app-summary-card__header">
-         <h2 class="app-summary-card__title">{{name}}</h2>
-     </header>
+        <header class="app-summary-card__header">
+            <h2 class="app-summary-card__title">{{name}}</h2>
+        </header>
 
-      {{ govukSummaryList({
+        <div class="govuk-!-padding-6">
+
+            {{ govukSummaryList({
                      rows: [
                          {
                              key: {
@@ -46,102 +48,107 @@
                      ]
                  })}}
 
-                 {{ govukInsetText({
+            {{ govukInsetText({
                    text: "Reallocating a case will move all active orders associated with the person on proation. Requirements that are allocated to a different practitioner will remain with that practitioner after the reallocation has taken place."
                  }) }}
 
-    {% for event in events %}
+            {% for event in events %}
 
-      {%- set offenceData = event.offences %}
+                {%- set offenceData = event.offences %}
 
-      <section class="app-summary-card govuk-!-margin-bottom-6 app-summary-card--large-title" id="sentence">
+                <section class="app-summary-card app-summary-card--large-title {{"govuk-!-margin-top-6" if loop.index > 0}}" id="sentence">
 
-          <div class="app-summary-card__body">
-              <dl class="govuk-summary-list">
-                  <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">Offence</dt>
-                      <dd class="govuk-summary-list__value">
-                          {% if offenceData | length == 1 %}
-                              {%- for offence in offenceData  if offenceData %}
-                                  <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
-                                      {{ offence.mainCategory }}
-                                  </h3>
-                                  <p class="govuk-body-s maw-secondary-text-col">
-                                      <strong>{{ offence.subCategory }}</strong>
-                                  </p>
-                              {% endfor -%}
-                          {% else %}
-                              <ol class="govuk-list govuk-list--number">
-                                  {%- for offence in offenceData  if offenceData %}
-                                      <li>{{ offence.mainCategory }}</li>
-                                      <p class="govuk-body-s maw-secondary-text-col">
-                                          <strong>{{ offence.subCategory }}</strong>
-                                      </p>
-                                  {% endfor -%}
-                              </ol>
-                          {% endif %}
-                      </dd>
-                  </div>
+                    <div class="app-summary-card__body">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">Offence</dt>
+                                <dd class="govuk-summary-list__value">
+                                    {% if offenceData | length == 1 %}
+                                        {%- for offence in offenceData  if offenceData %}
+                                            <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
+                                                {{ offence.mainCategory }}
+                                            </h3>
+                                            <p class="govuk-body-s maw-secondary-text-col">
+                                                <strong>{{ offence.subCategory }}</strong>
+                                            </p>
+                                        {% endfor -%}
+                                    {% else %}
+                                        <ol class="govuk-list govuk-list--number">
+                                            {%- for offence in offenceData  if offenceData %}
+                                                <li>{{ offence.mainCategory }}</li>
+                                                <p class="govuk-body-s maw-secondary-text-col">
+                                                    <strong>{{ offence.subCategory }}</strong>
+                                                </p>
+                                            {% endfor -%}
+                                        </ol>
+                                    {% endif %}
+                                </dd>
+                            </div>
 
-                  <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">Order</dt>
-                      <dd class="govuk-summary-list__value">
-                          <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
-                              {{ event.sentence.description }}
-                              {% if event.sentence.length %}
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">Order</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
+                                        {{ event.sentence.description }}
+                                        {% if event.sentence.length %}
                                   ({{ event.sentence.length }})
                               {% endif %}
-                          </h3>
-                          <ul class="govuk-list govuk-list--bullet">
-                              <li>Start date: {{ event.sentence.startDate | dateFormat }}</li>
-                              <li>End date: {{ event.sentence.endDate | dateFormat }}</li>
-                          </ul>
-                      </dd>
-                  </div>
+                                    </h3>
+                                    <ul class="govuk-list govuk-list--bullet">
+                                        <li>Start date: {{ event.sentence.startDate | dateFormat }}</li>
+                                        <li>End date: {{ event.sentence.endDate | dateFormat }}</li>
+                                    </ul>
+                                </dd>
+                            </div>
 
-                  <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">Requirements</dt>
-                      <dd class="govuk-summary-list__value">
-                          <ul class="govuk-list govuk-list--bullet">
-                              {%- for requirement in event.requirements  if event.requirements %}
-                                  {% if requirement.subCategory %}
-                                      <li>{{ requirement.mainCategory }}: {{ requirement.subCategory }}
-                                          {{ requirement.length }}</li>
-                                  {% else %}
-                                      <li>{{ requirement.mainCategory }}: {{ requirement.length }}</li>
-                                  {% endif %}
-                              {% endfor -%}
-                          </ul>
-                          {%- for requirement in event.requirements if event.requirements %}
-                          {% else -%}
-                              <p>There are no requirements to display.</p>
-                          {% endfor -%}
-                      </dd>
-                  </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">Requirements</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list govuk-list--bullet">
+                                        {%- for requirement in event.requirements  if event.requirements %}
+                                            {% if requirement.subCategory %}
+                                                <li>{{ requirement.mainCategory }}: {{ requirement.subCategory }}
+                                                    {{ requirement.length }}</li>
+                                            {% else %}
+                                                <li>{{ requirement.mainCategory }}: {{ requirement.length }}</li>
+                                            {% endif %}
+                                        {% endfor -%}
+                                    </ul>
+                                    {%- for requirement in event.requirements if event.requirements %}
+                                    {% else -%}
+                                        <p>There are no requirements to display.</p>
+                                    {% endfor -%}
+                                </dd>
+                            </div>
 
-                  <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">Next Appointment</dt>
-                      <dd class="govuk-summary-list__value">
-                                {% if data.nextAppointmentDate %}
-                                  <p>  {{ data.nextAppointmentDate | dateFormat }} </p>
-                                {% else %}
-                                    <p>None available</p>
-                                {% endif %}
-                      </dd>
-                  </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">Next Appointment</dt>
+                                <dd class="govuk-summary-list__value">
+                                    {% if data.nextAppointmentDate %}
+                                        <p>
+                                            {{ data.nextAppointmentDate | dateFormat }}
+                                        </p>
+                                    {% else %}
+                                        <p>None available</p>
+                                    {% endif %}
+                                </dd>
+                            </div>
 
-                  <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">Failure to Comply since {{ event.failureToComplyStartDate | dateFormat  }}</dt>
-                      <dd class="govuk-summary-list__value">
-                              <p>{{ event.failureToComplyCount }} </p>
-                      </dd>
-                  </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">Failure to Comply since {{ event.failureToComplyStartDate | dateFormat  }}</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <p>{{ event.failureToComplyCount }}
+                                    </p>
+                                </dd>
+                            </div>
               end dl
               </dl>
-          </div>
-      </section>
+                    </div>
+                </section>
 
-    {% endfor -%}
+            {% endfor -%}
+
+        </div>
     </section>
 
 {% endblock %}

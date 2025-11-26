@@ -56,11 +56,10 @@
                      ]
                  })}}
 
-            <div class="blue-background">
             {{ govukInsetText({
-                   text: "Reallocating a case will move all active orders associated with the person on proation. Requirements that are allocated to a different practitioner will remain with that practitioner after the reallocation has taken place."
+                   classes: "blue-background",
+                   text: "Reallocating a case will move all active orders associated with the person on probation. Requirements that are allocated to a different practitioner will remain with that practitioner after the reallocation has taken place."
                  }) }}
-            </div>
 
             {% for event in events %}
 

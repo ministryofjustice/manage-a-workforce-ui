@@ -90,9 +90,8 @@ export default class ReallocationsController {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
-    const response: AllocatedCase = await this.allocationsService.getAllocatedCase(res.locals.user.token, crn)
 
-    const [allocatedCase, risk] = await Promise.all([
+    const [response, risk] = await Promise.all([
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
       await this.allocationsService.getCaseRisk(res.locals.user.token, crn),
     ])

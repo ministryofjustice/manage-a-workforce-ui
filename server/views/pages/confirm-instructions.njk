@@ -99,12 +99,12 @@
 
         </div>
         <div class="govuk-form-group govuk-allocations-emails-form">
-          {% if person.length === 0 %}
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-              <h3 class="govuk-fieldset__heading">Does this contain sensitive information?</h3>
-            </legend>
-            <p class="govuk-hint">This is information that would cause harm or undermine the investigation of a crime if it were disclosed to a person on probation. For example, a victim's personal details.</p>
-            {{ govukCheckboxes({
+
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h3 class="govuk-fieldset__heading">Does this contain sensitive information?</h3>
+          </legend>
+          <p class="govuk-hint">This is information that would cause harm or undermine the investigation of a crime if it were disclosed to a person on probation. For example, a victim's personal details.</p>
+          {{ govukCheckboxes({
             name: 'isSensitive',
             items: [{
                 text: 'Yes, it contains sensitive information',
@@ -114,11 +114,10 @@
             classes: 'govuk-checkboxes--medium margin-bottom-10'
         })}}
 
-          {% else %}
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-              <h3 class="govuk-fieldset__heading">Additional recipients</h3>
-            </legend>
-          {% endif %}
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h3 class="govuk-fieldset__heading">Additional recipients</h3>
+          </legend>
+
           <div class="govuk-email-list">
             {% for person in person %}
 

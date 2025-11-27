@@ -18,6 +18,7 @@ import RegionList from '../models/RegionList'
 import { createRedisClient } from '../data/redisClient'
 import CrnDetails from '../models/ReallocationCrnDetails'
 import AllocatedCase from '../models/AllocatedCase'
+import AssessmentDate from '../models/AssessmentDate'
 
 interface CachedValue {
   instructions?: string
@@ -198,6 +199,13 @@ export default class AllocationsService {
     return (await this.restClient(token).get({
       path: `/cases/allocated/${crn}/risks`,
     })) as Risk
+  }
+
+  async getAssessmentDate(token: string, crn): Promise<AssessmentDate> {
+    logger.info(`Getting assessment date for crn ${crn}`)
+    return (await this.restClient(token).get({
+      path: `/cases/${crn}/assessmentDate`,
+    })) as AssessmentDate
   }
 
   async getDocuments(token: string, crn: string): Promise<DocumentDetails[]> {

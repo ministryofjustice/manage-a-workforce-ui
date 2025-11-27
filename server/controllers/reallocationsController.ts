@@ -91,9 +91,10 @@ export default class ReallocationsController {
       return
     }
 
-    const [response, risk] = await Promise.all([
+    const [response, risk, assessmentDate] = await Promise.all([
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
       await this.allocationsService.getCaseRisk(res.locals.user.token, crn),
+      await this.allocationsService.getAssessmentDate(res.locals.user.token, crn),
     ])
 
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
@@ -105,6 +106,7 @@ export default class ReallocationsController {
 
     res.render('pages/reallocation-summary', {
       data: response,
+      assessment: assessmentDate,
       risk,
       address,
       crn: response.crn,

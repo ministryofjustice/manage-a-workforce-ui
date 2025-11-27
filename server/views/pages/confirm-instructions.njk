@@ -113,11 +113,11 @@
                 }],
             classes: 'govuk-checkboxes--medium margin-bottom-10'
         })}}
-
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h3 class="govuk-fieldset__heading">Additional recipients</h3>
-          </legend>
-
+          {% if person.length > 0 %}
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h3 class="govuk-fieldset__heading">Additional recipients</h3>
+            </legend>
+          {% endif %}
           <div class="govuk-email-list">
             {% for person in person %}
 

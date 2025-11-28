@@ -104,6 +104,18 @@ export default class ReallocationsController {
 
     const { instructions } = await this.allocationsService.getCrnOnlyNotesCache(crn, res.locals.user.username)
 
+    if (risk.roshRisk) {
+      risk.roshLevel = risk.roshRisk.overallRisk
+    }
+
+    if (risk.rsr) {
+      risk.rsrLevel = risk.rsr.level
+    }
+
+    if (risk.ogrs) {
+      risk.ogrsScore = risk.ogrs.score
+    }
+
     res.render('pages/reallocation-summary', {
       data: response,
       assessment: assessmentDate,

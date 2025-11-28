@@ -34,7 +34,7 @@
                              text: "Risks/Mappa"
                            },
                                value: {
-                                html: riskSummaryBadge(data.risk)
+                                html: riskSummaryBadge(risk)
                            }
                          },
                         {
@@ -144,7 +144,7 @@
                             </div>
 
                             <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">Failure to Comply since {{ event.failureToComplyStartDate | dateFormat  }}</dt>
+                                <dt class="govuk-summary-list__key">Failure to comply since {{ event.failureToComplyStartDate | dateFormat  }}</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p>{{ event.failureToComplyCount }}
                                     </p>

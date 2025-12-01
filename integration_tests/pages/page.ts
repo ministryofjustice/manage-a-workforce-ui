@@ -63,6 +63,8 @@ export default abstract class Page {
 
   instructionsTextArea = (): PageElement => cy.get(`#instructions`)
 
+  notesTextArea = (): PageElement => cy.get(`#reallocationNotes`)
+
   technicalUpdatesBanner = (): PageElement => cy.get(`#technical-updates-banner`)
 
   hideMessageLink = (): PageElement => cy.get('#hide-message')

@@ -70,7 +70,7 @@
         <div class="govuk-!-margin-bottom-9">
             {{ govukTable(previousSentenceData) }}
             {% if not viewAll %}
-                <a href="{{ '/pdu/' + pduCode +'/' + crn + '/convictions/'+ convictionNumber +'/probation-record?viewAll=true' }}" class="govuk-link--no-visited-state view-all-link govuk-body">View all previous sentences ({{ totalPreviousCount }})</a>
+                <a href="{{ '/pdu/' + pduCode +'/' + crn +'/reallocation-probation-record?viewAll=true' }}" class="govuk-link--no-visited-state view-all-link govuk-body">View all previous sentences ({{ totalPreviousCount }})</a>
             {% endif %}
         </div>
     {% else %}

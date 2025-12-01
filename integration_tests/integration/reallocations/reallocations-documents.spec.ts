@@ -45,7 +45,7 @@ context('Documents', () => {
     documentsPage
       .subNav()
       .should('contain', 'Reallocation')
-      .should('contain', 'Personal details')
+      .and('contain', 'Personal details')
       .and('contain', 'Probation record')
       .and('contain', 'Risk')
       .and('contain', 'Documents')

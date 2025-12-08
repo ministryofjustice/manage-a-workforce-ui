@@ -1,0 +1,254 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/label/macro.njk" import govukLabel %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% from "../../components/reallocationInstructions/macro.njk" import instructionsForm %}
+{% from "../../components/reallocationReason/macro.njk" import reallocationReason %}
+{% from "../../components/pop/macro.njk" import pop %}
+{% from "../../components/pop/macro.njk" import pop %}
+
+{% set perTeamsTableData = [] %}
+
+{% for teamData in offenderManagersToAllocatePerTeam %}
+    {%- set teamTableData = {
+        attributes: {
+            'data-module': 'moj-sortable-table',
+            'data-persistent-id': teamData.teamCode + '-choose-practitioner'
+        },
+        head: [
+            { text: 'Select' },
+            { text: 'Name',
+                attributes: {
+                    "aria-sort": "none",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-name'
+                }
+            },
+            { text: 'Team',
+                classes: 'govuk-visually-hidden' if teamData.isPerTeam,
+                attributes: {
+                    "aria-sort": "none",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-team'
+                }
+            },
+            { text: 'Grade',
+                attributes: {
+                    "aria-sort": "descending",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-grade'
+                }
+            },
+            { text: 'Workload %',
+                format: "numeric",
+                attributes: {
+                    "aria-sort": "none",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-workload'
+                }
+            },
+            { text: 'Cases in past 7 days',
+                format: "numeric",
+                attributes: {
+                    "aria-sort": "none",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-cases-in-past-30-days'
+                }
+            },
+            { text: 'Community cases',
+                format: "numeric",
+                attributes: {
+                    "aria-sort": "none",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-community-cases'
+                }
+            },
+            { text: 'Custody cases',
+                format: "numeric",
+                attributes: {
+                    "aria-sort": "none",
+                    'data-persistent-id': teamData.teamCode + '-choose-practitioner-custody-cases'
+                }
+            }
+        ],
+        rows: []
+    } -%}
+
+    {% for offenderManager in teamData.offenderManagersToAllocate %}
+        {%- set tableRow = [
+            { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name + ' to allocate to</span></label></div></div>')
+                if offenderManager.email and true != offenderManager.laoCase},
+            { html: ('<a href="/pdu/'+ pduCode +'/' + offenderManager.teamCode + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name + '</a>' ) | safe,
+                attributes: {
+                    "data-sort-value": offenderManager.name
+                }
+            },
+            { text: offenderManager.teamName,
+                classes: 'govuk-visually-hidden' if teamData.isPerTeam
+            },
+            { html: ('<div class="tooltip">' + offenderManager.grade + '<span class="tooltiptext">' + offenderManager.gradeTip + '</span></div>'),
+                attributes: {
+                    "data-sort-value": offenderManager.gradeOrder
+                }
+            },
+            { text: ((offenderManager.capacity | round(1)) + '%'),format: "numeric",
+            classes: ('percentage-extra-over' if offenderManager.capacity > 100),
+                attributes: {
+                    "data-sort-value": offenderManager.capacity
+                }
+            },
+            { text: offenderManager.totalCasesInLastWeek, format: "numeric",
+                attributes: {
+                    "data-sort-value": offenderManager.totalCasesInLastWeek
+                }
+            },
+            { text: offenderManager.communityCases, format: "numeric",
+                attributes: {
+                    "data-sort-value": offenderManager.communityCases
+                }
+            },
+            { text: offenderManager.custodyCases, format: "numeric",
+                attributes: {
+                    "data-sort-value": offenderManager.custodyCases
+                }
+            }
+        ] -%}
+        {{ teamTableData.rows.push(tableRow) }}
+    {% endfor %}
+
+    {%- set teamData = {
+        name: teamData.teamName,
+        id: teamData.teamCode,
+        tableData: teamTableData
+    } -%}
+    {{ perTeamsTableData.push(teamData) }}
+
+{% endfor %}
+
+{%- set govukTabItems = [] -%}
+
+{% for teamDetails in perTeamsTableData %}
+    {% set perTeamsTableHtml %}
+    {{ govukTable(teamDetails.tableData) }}
+    {% endset -%}
+    {%- set perTeamTabItem = {
+        label: teamDetails.name,
+        id: teamDetails.id,
+        panel: {
+           html: perTeamsTableHtml
+        }
+    } -%}
+    {{ govukTabItems.push(perTeamTabItem) }}
+{% endfor %}
+
+{% set offenderManagerDetails = ' by ' + offenderManager.forenames + ' ' + offenderManager.surname + (' (' + offenderManager.grade + ')' if offenderManager.grade) if offenderManager%}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home",
+                href: "/pdu/" + pduCode + "/teams"
+            },
+            {
+                text: "Unallocated cases",
+                href: "/pdu/" + pduCode + "/find-unallocated"
+            },
+            {
+                text: "Case details",
+                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/case-view"
+            }
+        ]
+    }) }}
+    {% if errors | length > 0 %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errors
+      }) }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if missingEmail%}
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                {{ govukNotificationBanner({
+                         html: '
+                     <p class="govuk-notification-banner__heading">If you cannot allocate to a probation practitioner, it’s because their email address is not linked to their staff code in NDelius.</p>
+                     <p class="govuk-notification-banner__heading">Report the issue via Service Desk as an \'unlinked officer code\'.</p>'
+             }) }}
+            </div>
+        </div>
+    {% endif %}
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Reallocate to a probation practitioner</h1>
+    <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{pduCode}}/select-teams">Edit my teams list</a>
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
+
+    {% if (probationStatus == 'Currently managed' and offenderManagerDetails) 
+        or probationStatus == 'Previously managed' %}
+        <div class="govuk-warning-text govuk-!-margin-bottom-0">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+                <span class="govuk-warning-text__assistive">Warning</span>
+                {% if probationStatus == 'Previously managed' %}
+                    {{ name }} was previously managed{{ offenderManagerDetails }}.
+                {% else %}
+                    {{ name }} is currently managed{{ offenderManagerDetails }}.
+                {% endif %}
+            </strong>
+        </div>
+    {% endif %}
+
+    {% if error %}
+        <div class="govuk-form-group govuk-form-group--error">
+            <p id="select-probation-practitioner" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> Select a probation practitioner
+            </p>
+        {% endif %}
+        <form data-validate-form="choose-practitioner" method="post">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <div class="govuk-form-group govuk-!-margin-top-6">
+                {{ govukTabs({
+                items: govukTabItems
+            }) }}
+            </div>
+
+            <div class="govuk-width-container">
+
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        {{
+                            instructionsForm({
+                            
+                            })
+                        }}
+                        {{
+                            reallocationReason({ errors: errors })
+                        }}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="govuk-button-group">
+                {{ govukButton({
+                text: 'Continue',
+                attributes: {
+                    'data-form-submit': undefined
+                }
+            }) }}
+                <a id="clearSelection" class="govuk-button govuk-button--secondary" href="{{'/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner'}}">           Clear selection </a>
+            </div>
+        </form>
+        {% if error %}
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/assets/validator.js"></script>
+    <script src="/assets/validation.js"></script>
+{% endblock %}

@@ -31,7 +31,7 @@ export default function routes(services: Services): Router {
   getAllocationRoutes(services, get, post)
   allocationsControllerRoutes(services, get, post)
   probationEstateRoutes(services, get, post)
-  reallocationsRoutes(services, get)
+  reallocationsRoutes(services, get, post)
 
   get('/staff-lookup', async (req, res) => {
     const { searchString } = req.query

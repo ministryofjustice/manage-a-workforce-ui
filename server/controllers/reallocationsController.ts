@@ -303,12 +303,7 @@ export default class ReallocationsController {
     const { token, username } = res.locals.user
     const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const laoCase = await this.allocationsService.getLaoStatus(crn, token)
-    // await this.allocationsService.getUserRegionAccessForCrn(
-    //   res.locals.user.token,
-    //   res.locals.user.username,
-    //   crn,
-    //   convictionNumber,
-    // )
+    await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
     const [allocationInformationByTeam, allTeamDetails] = await Promise.all([
       await this.workloadService.getChoosePractitionerData(token, crn, teamCodesPreferences.items),
       await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
@@ -329,16 +324,16 @@ export default class ReallocationsController {
       allTeamDetails,
     )
     const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(offenderManagersToAllocateByTeam)
-    const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams].concat(
-      offenderManagersToAllocateByTeam,
-    )
+    const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams, ...offenderManagersToAllocateByTeam]
 
     const name = `${allocationInformationByTeam.name.forename} ${allocationInformationByTeam.name.surname}`
     const offenderManager = allocationInformationByTeam.communityPersonManager && {
+      code: allocationInformationByTeam.communityPersonManager.code,
       forenames: allocationInformationByTeam.communityPersonManager.name.forename,
       surname: allocationInformationByTeam.communityPersonManager.name.surname,
       grade: allocationInformationByTeam.communityPersonManager.grade,
     }
+
     const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
     const error = req.query.error === 'true'
 
@@ -351,7 +346,7 @@ export default class ReallocationsController {
       journey: 'reallocations',
       offenderManagersToAllocatePerTeam,
       name,
-      offenderManager,
+      currentOffenderManager: offenderManager,
       missingEmail,
       error,
       laoCase,

@@ -155,7 +155,7 @@ window.addEventListener('load', () => {
       !/((https?|ftp|smtp):\/\/|www\.)([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g.test(value),
   )
 
-  Validator.register('crn', value => /([a-z]|[A-Z]){1}[0-9]{6}/g.test(value))
+  Validator.register('crn', value => /^([a-z]|[A-Z]){1}[0-9]{6}$/g.test(value))
 
   Validator.register('empty', value => value.length < 1)
 

@@ -16,34 +16,25 @@
 {% set tableRows = [] %}
 {% for team in teams %}
   {% if team.workload == '-%' %}
-    {{ tableRows.push(
-          [
-          {
-            text: team.teamName
-          },
-          {
-            text: team.workload
-          },
-          {
-            text: team.caseCount
-          }
-        ])
-        }}
+    {% set nameRow = {
+      text: team.teamName
+    } %}
   {% else %}
-    {{ tableRows.push(
-              [
-              {
-                html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/reallocations/team-workload" class="govuk-link">' + team.teamName + '</a>'
-              },
-              {
-                text: team.workload
-              },
-              {
-                text: team.caseCount
-              }
-            ])
-            }}
+    {% set nameRow = {
+      html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/reallocations/team-workload" class="govuk-link">' + team.teamName + '</a>'
+    } %}
   {% endif %}
+  {{ tableRows.push([
+        nameRow,
+        {
+          text: team.workload
+        },
+        {
+          text: team.caseCount
+        }
+      ])
+  }}
+
 {% endfor %}
 
 {% block content %}
@@ -98,19 +89,19 @@
   </div>
 
   {{ govukTable({
-  firstCellIsHeader: true,
-  head: [
-    {
-      text: "Name"
-    },
-    {
-      text: "Workload"
-    },
-    {
-      text: "Cases"
-    }
-  ],
-  rows: tableRows
+    firstCellIsHeader: true,
+    head: [
+      {
+        text: "Name"
+      },
+      {
+        text: "Workload"
+      },
+      {
+        text: "Cases"
+      }
+    ],
+    rows: tableRows
   })
 }}
 

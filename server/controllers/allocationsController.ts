@@ -841,7 +841,7 @@ function fixupArrayNotation({ text, href }: { text: string; href: string }) {
   return { text, href: toArrayNotation(href) }
 }
 
-function getChoosePractitionerDataByTeam(
+export function getChoosePractitionerDataByTeam(
   allocationInformationByTeam: ChoosePractitionerData,
   estateTeams: EstateTeam[],
 ): TeamOffenderManagersToAllocate[] {
@@ -869,7 +869,7 @@ function getChoosePractitionerDataByTeam(
   return practitionerTeams
 }
 
-function getChoosePractitionerDataAllTeams(
+export function getChoosePractitionerDataAllTeams(
   offenderManagersToAllocateByTeam: TeamOffenderManagersToAllocate[],
 ): TeamOffenderManagersToAllocate {
   const practitionersInAllTeams = offenderManagersToAllocateByTeam.reduce(
@@ -901,7 +901,7 @@ function mapPractitioner(practitionerData): OffenderManagerToAllocate {
   }
 }
 
-function setStaffRestrictions(
+export function setStaffRestrictions(
   practitionerData: Record<string, Practitioner[]>,
   staffRestrictions: CrnStaffRestrictions,
 ): Record<string, Practitioner[]> {
@@ -920,7 +920,7 @@ function setStaffRestrictions(
   return authorisedPractitioners
 }
 
-function getStaffCodes(practitionerData: Record<string, Practitioner[]>): string[] {
+export function getStaffCodes(practitionerData: Record<string, Practitioner[]>): string[] {
   /*
    iterate through practitioner data creating a list of staffCodes
    */

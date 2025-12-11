@@ -10,6 +10,12 @@ import DisplayAddress from './data/DisplayAddress'
 import Conviction from '../models/Conviction'
 import Sentence from './data/Sentence'
 import DocumentRow from './data/DocumentRow'
+import {
+  getChoosePractitionerDataAllTeams,
+  getChoosePractitionerDataByTeam,
+  getStaffCodes,
+  setStaffRestrictions,
+} from './allocationsController'
 
 export default class ReallocationsController {
   constructor(
@@ -290,6 +296,71 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+    })
+  }
+
+  async getPractitioners(req: Request, res: Response, crn: string, pduCode: string) {
+    const { token, username } = res.locals.user
+    const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
+    const laoCase = await this.allocationsService.getLaoStatus(crn, token)
+    await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
+    const [allocationInformationByTeam, allTeamDetails] = await Promise.all([
+      await this.workloadService.getChoosePractitionerData(token, crn, teamCodesPreferences.items),
+      await this.probationEstateService.getTeamsByCode(token, teamCodesPreferences.items),
+    ])
+
+    if (laoCase === true) {
+      // get the LAO status of each staffCode and add to allocation Information
+      const staffRestrictions = await this.allocationsService.getRestrictedStatusByCrnAndStaffCodes(
+        token,
+        crn,
+        getStaffCodes(allocationInformationByTeam.teams),
+      )
+      allocationInformationByTeam.teams = setStaffRestrictions(allocationInformationByTeam.teams, staffRestrictions)
+    }
+
+    const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
+      allocationInformationByTeam,
+      allTeamDetails,
+    )
+    const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(offenderManagersToAllocateByTeam)
+    const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams, ...offenderManagersToAllocateByTeam]
+
+    const name = `${allocationInformationByTeam.name.forename} ${allocationInformationByTeam.name.surname}`
+    const offenderManager = allocationInformationByTeam.communityPersonManager && {
+      code: allocationInformationByTeam.communityPersonManager.code,
+      forenames: allocationInformationByTeam.communityPersonManager.name.forename,
+      surname: allocationInformationByTeam.communityPersonManager.name.surname,
+      grade: allocationInformationByTeam.communityPersonManager.grade,
+    }
+
+    const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
+    const error = req.query.error === 'true'
+
+    res.render('pages/reallocations/choose-practitioner', {
+      crn: allocationInformationByTeam.crn,
+      tier: allocationInformationByTeam.tier,
+      pduCode,
+      errors: [],
+      title: 'Reallocations | Manage a Workforce',
+      journey: 'reallocations',
+      offenderManagersToAllocatePerTeam,
+      name,
+      currentOffenderManager: offenderManager,
+      missingEmail,
+      error,
+      laoCase,
+    })
+  }
+
+  async allocateToPractitioner(req: Request, res: Response, crn: string, pduCode: string) {
+    res.redirect(`/pdu/${pduCode}/${crn}/reallocations/confirm-reallocation`)
+  }
+
+  async reallocationComplete(req: Request, res: Response, crn: string, pduCode: string) {
+    res.render('pages/reallocations/reallocation-complete', {
+      crn,
+      pduCode,
     })
   }
 }

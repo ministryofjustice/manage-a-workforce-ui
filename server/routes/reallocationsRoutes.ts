@@ -6,6 +6,7 @@ import type { Services } from '../services'
 export default function getReallocationsRoutes(
   services: Services,
   get: (path: string, handler: e.RequestHandler) => e.Router,
+  post: (path: string, handler: e.RequestHandler) => e.Router,
 ): void {
   const reallocationsController = new ReallocationsController(
     services.allocationsService,
@@ -53,5 +54,25 @@ export default function getReallocationsRoutes(
   get('/pdu/:pduCode/:crn/reallocation-documents', async (req, res) => {
     const { pduCode, crn } = req.params
     await reallocationsController.getAllocatedDocuments(req, res, crn, pduCode)
+  })
+
+  post('/pdu/:pduCode/:crn/reallocation-case-view', async (req, res) => {
+    const { pduCode, crn } = req.params
+    res.redirect(`/pdu/${pduCode}/${crn}/reallocations/choose-practitioner`)
+  })
+
+  get('/pdu/:pduCode/:crn/reallocations/choose-practitioner', async (req, res) => {
+    const { pduCode, crn } = req.params
+    await reallocationsController.getPractitioners(req, res, crn, pduCode)
+  })
+
+  post('/pdu/:pduCode/:crn/reallocations/choose-practitioner', async (req, res) => {
+    const { pduCode, crn } = req.params
+    await reallocationsController.allocateToPractitioner(req, res, crn, pduCode)
+  })
+
+  get('/pdu/:pduCode/:crn/reallocations/reallocation-complete', async (req, res) => {
+    const { pduCode, crn } = req.params
+    await reallocationsController.reallocationComplete(req, res, crn, pduCode)
   })
 }

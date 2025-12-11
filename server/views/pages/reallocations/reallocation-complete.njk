@@ -1,0 +1,36 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {{ govukPanel({
+            titleText: "Case reallocated",
+            html: data.name.combinedName + " (" + crn + ") has been reallocated to <strong>" + data.staff.name.combinedName + " (" + data.staff.grade + ")</strong>"
+        }) }}
+
+            <h2 class="govuk-heading-m">What happens next</h2>
+
+            <ul class="govuk-list govuk-list--bullet">
+                <li>this case will be updated in NDelius within 5 minutes</li>
+                <li>
+                    <strong>{{ data.staff.name.combinedName }}</strong> (<em>{{ data.staff.email }}</em>) has been notified, and we've sent you a copy of your reallocation instructions
+                </li>
+            </ul>
+
+            <p class="govuk-body">
+                <a class="govuk-link--no-visited-state" href="/pdu/{{ pduCode }}/find-unallocated">Return to unallocated cases</a>
+            </p>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script nonce="{{ cspNonce }}">
+        localStorage.removeItem('instructions-save-{{ crn }}-{{ convictionNumber }}')
+    </script>
+{% endblock %}

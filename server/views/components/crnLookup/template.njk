@@ -8,10 +8,12 @@
   {% set pduCode = params.pduCode %}
   {% set convictionNumber = params.data.convictionNumber %}
 
-  {% if params.data.apopExcluded !== true %}
-    {% set nameField = '<a href="' + '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view' + '" class="govuk-link--no-visited-state" data-qa-link="' + crn + '-' + convictionNumber + '">' + name + '</a>' %}
+  {% if params.data.apopExcluded === true %}
+    {% set nameField = '<span>**********************</span><br /><span class="govuk-tag govuk-tag--orange">Restricted access</span>' %}
+  {% elseif params.data.excluded === true %}
+    {% set nameField = '<p class="govuk-!-margin-bottom-2 govuk-!-margin-top-0"><a href="' + '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="' + crn + '-' + convictionNumber + '">' + name + '</a></p><span class="govuk-tag govuk-tag--orange">Restricted access</span>' %}
   {% else %}
-    {% set nameField = "<strong>" + params.data.name.combinedName + "</strong>" %}
+    {% set nameField = '<a href="' + '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view' + '" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="' + crn + '-' + convictionNumber + '">' + name + '</a>' %}
   {% endif %}
 
   {%- set tableRow = [

@@ -70,7 +70,7 @@
 
         </div>
     </div>
-    <form data-validate-form="case-view" method="post" action="{{"/pdu/" + pduCode + "/" + crn + "/reallocations/choose-practitioner"}}">
+    <form data-validate-form="case-view" method="post" action="{{"/pdu/" + pduCode + "/" + crn + "/reallocation-case-view"}}">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         {{ instructionsForm({
                 inGridRow: true,
@@ -82,7 +82,7 @@
             })
         }}
 
-      {{ reallocationReason({ errors: errors }) }}
+        {{ reallocationReason({ errors: errors }) }}
 
         {{ govukButton({
             text: "Continue",

@@ -56,6 +56,11 @@ export default function getReallocationsRoutes(
     await reallocationsController.getAllocatedDocuments(req, res, crn, pduCode)
   })
 
+  post('/pdu/:pduCode/:crn/reallocation-case-view', async (req, res) => {
+    const { pduCode, crn } = req.params
+    res.redirect(`/pdu/${pduCode}/${crn}/reallocations/choose-practitioner`)
+  })
+
   get('/pdu/:pduCode/:crn/reallocations/choose-practitioner', async (req, res) => {
     const { pduCode, crn } = req.params
     await reallocationsController.getPractitioners(req, res, crn, pduCode)

@@ -354,7 +354,7 @@ export default class ReallocationsController {
   }
 
   async allocateToPractitioner(req: Request, res: Response, crn: string, pduCode: string) {
-    res.redirect(`/pdu/${pduCode}/${crn}/reallocations/reallocation-complete`)
+    res.redirect(`/pdu/${pduCode}/${crn}/reallocations/confirm-reallocation`)
   }
 
   async reallocationComplete(req: Request, res: Response, crn: string, pduCode: string) {

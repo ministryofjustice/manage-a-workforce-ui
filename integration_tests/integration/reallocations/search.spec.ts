@@ -70,8 +70,12 @@ context('Reallocations Search', () => {
         cy.get('td').should('contain.text', '**********************')
         cy.get('td').should('contain.text', 'Restricted access')
         cy.get('td').should('contain.text', 'A123456')
-        cy.get('td').should('contain.text', '25 May 1958')
-        cy.get('td').should('contain.text', 'Unallocated Staff')
+        cy.get('td').should('not.contain.text', '25 May 1958')
+        cy.get('td').should('not.contain.text', 'Unallocated Staff')
+        cy.get('td').should(
+          'contain.text',
+          'This is a restricted case. Check NDelius if you require access or further information.',
+        )
       })
   })
 

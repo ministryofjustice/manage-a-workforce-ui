@@ -9,19 +9,25 @@
   {% set convictionNumber = params.data.convictionNumber %}
 
   {% if params.data.apopExcluded === true %}
-    {% set nameField = '<span>**********************</span><br /><span class="govuk-tag govuk-tag--orange">Restricted access</span>' %}
-  {% elseif params.data.excluded === true %}
-    {% set nameField = '<p class="govuk-!-margin-bottom-2 govuk-!-margin-top-0"><a href="' + '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="' + crn + '-' + convictionNumber + '">' + name + '</a></p><span class="govuk-tag govuk-tag--orange">Restricted access</span>' %}
+    {%- set tableRow = [
+      { html: '<span>**********************</span><br /><span class="govuk-tag govuk-tag--orange">Restricted access</span>' },
+      { text: crn },
+      { text: 'This is a restricted case. Check NDelius if you require access or further information.', colspan: 2 }
+    ] -%}
   {% else %}
-    {% set nameField = '<a href="' + '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view' + '" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="' + crn + '-' + convictionNumber + '">' + name + '</a>' %}
-  {% endif %}
-
-  {%- set tableRow = [
+    {% if params.data.excluded === true %}
+      {% set nameField = '<p class="govuk-!-margin-bottom-2 govuk-!-margin-top-0"><a href="' + '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="' + crn + '-' + convictionNumber + '">' + name + '</a></p><span class="govuk-tag govuk-tag--orange">Restricted access</span>' %}
+    {% else %}
+      {% set nameField = '<a href="' + '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view' + '" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="' + crn + '-' + convictionNumber + '">' + name + '</a>' %}
+    {% endif %}
+    {%- set tableRow = [
       { html: nameField },
       { text: crn },
       { text: dob | dateFormat },
       { text: currentlyManagedby }
-  ] -%}
+    ] -%}
+  {% endif %}
+
   {% set tableData = {
     attributes: {
         'data-module': 'moj-sortable-table',

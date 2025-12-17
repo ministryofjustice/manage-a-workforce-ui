@@ -16,7 +16,7 @@
           {% if not params.hideHintText  %}
             <div id="more-detail-hint-header" class="govuk-hint">
               {% if not params.hintText or params.hintText == "" %}
-                These notes are sent to the practitioner in the reallocation email.They will also be saved as a reallocation contact in NDelius. Your notes should align with the reallocation reason you select. Do not include links in the notes
+                These notes are sent to the practitioner in the reallocation email.They will also be saved as a reallocation contact in NDelius. Your notes should align with the reallocation reason you select. Do not include links in the notes.
               {% else %}
                  {{ params.hintText | safe if params.hintText}}
               {% endif %}

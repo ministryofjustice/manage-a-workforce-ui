@@ -224,6 +224,10 @@
             })
         }}
 
+          {{ reallocationReason({
+            errorMessage: errors | findError('reason')
+          }) }}
+
             <div class="govuk-button-group">
                 {{ govukButton({
                 text: 'Continue',

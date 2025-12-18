@@ -9,7 +9,7 @@
 
 {% block caseContent %}
 
-    <h2 class="govuk-heading-l">Reallocation review information</h2>
+    <h2 class="govuk-heading-l">Review reallocation information</h2>
 
     <section class="app-summary-card app-summary-card-blue govuk-!-margin-bottom-6 app-summary-card--large-title" id="sentence">
 
@@ -42,7 +42,7 @@
                             html: 'OASys'
                         },
                             value: {
-                            text: doubleCell('<strong class="govuk-tag">CHECK OASYS</strong>', 'Updated ' + assessment.updatedDate | dateFormat if assessment.updatedDate)
+                            text: doubleCell('<strong class="govuk-tag govuk-blue-box">CHECK OASYS</strong>', 'Updated ' + assessment.updatedDate | dateFormat if assessment.updatedDate)
                         }
                         },
                        {

@@ -6,6 +6,7 @@
 {% from "../components/reallocationReason/macro.njk" import reallocationReason %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block beforeContent %}
     {{ govukBackLink({
@@ -14,6 +15,12 @@
        "data-back" : undefined
       }
     }) }}
+  {% if errors | length > 0 %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: errors
+    }) }}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -76,13 +83,15 @@
                 inGridRow: true,
                 showHintText: false,
                 crn: crn,
-                errorMessage: errors | findError('instructions'),
+                errorMessage: errors | findError('reallocationNotes'),
                 laoCase: laoCase,
                 instructions: instructions
             })
         }}
 
-        {{ reallocationReason({ errors: errors }) }}
+        {{ reallocationReason({
+          errorMessage: errors | findError('reason')
+        }) }}
 
         {{ govukButton({
             text: "Continue",

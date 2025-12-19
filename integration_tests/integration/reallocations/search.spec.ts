@@ -99,6 +99,26 @@ context('Reallocations Search', () => {
       })
   })
 
+  it('correctly displays Out of Area cases', () => {
+    cy.task('stubOoaCrnLookup', { crn: 'A123456' })
+    reallocationsSearchPage.search().get('input#crn').type('A123456')
+    reallocationsSearchPage.search().get('button').click()
+
+    reallocationsSearchPage.case().should('exist')
+
+    reallocationsSearchPage
+      .case()
+      .get('tbody tr')
+      .first()
+      .within(() => {
+        cy.get('td').should('contain.text', 'Jane Doe')
+        cy.get('td').should('contain.text', 'Out of region')
+        cy.get('td').should('contain.text', 'A123456')
+        cy.get('td').should('contain.text', '25 May 1958')
+        cy.get('td').should('contain.text', 'Unallocated Staff')
+      })
+  })
+
   it('team data displayed in table', () => {
     cy.get('table')
       .getTable()

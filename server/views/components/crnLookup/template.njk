@@ -1,30 +1,44 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
-{% if params.data %}
-  {% set name = params.data.name.combinedName %}
-  {% set crn = params.data.crn %}
-  {% set dob = params.data.dateOfBirth %}
-  {% set currentlyManagedby = params.data.manager.name.combinedName %}
-  {% set pduCode = params.pduCode %}
-  {% set convictionNumber = params.data.convictionNumber %}
+{% macro nameField(params) %}
+  {% if params.data.apopExcluded === true %}
+    <span>**********************</span><br/>
+    <span class="govuk-tag govuk-tag--orange">Restricted access</span>
+  {% elseif params.data.excluded === true or params.data.outOfAreaTransfer === true %}
+    <p class="govuk-!-margin-bottom-2 govuk-!-margin-top-0">
+      <a href="/pdu/{{params.pduCode}}/{{params.data.crn}}/reallocation-case-view" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="{{params.data.crn}}-{{params.data.convictionNumber}}">
+        {{params.data.name.combinedName}}
+      </a>
+    </p>
+    {% if params.data.excluded === true %}
+      <p class="govuk-!-display-block govuk-!-margin-top-3 govuk-!-margin-bottom-0">
+        <span class="govuk-tag govuk-tag--orange">Restricted access</span></p>
+    {% endif %}
+    {% if params.data.outOfAreaTransfer === true %}
+      <p class="govuk-!-display-block govuk-!-margin-top-3 govuk-!-margin-bottom-0">
+        <span class="govuk-tag govuk-tag--blue">Out of region</span></p>
+    {% endif %}
 
+  {% else %}
+    <a href="/pdu/{{params.pduCode}}/{{params.data.crn}}/reallocation-case-view" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="{{params.data.crn}}-{{params.data.convictionNumber}}">
+      {{params.data.name.combinedName}}
+    </a>
+  {% endif %}
+{% endmacro %}
+
+{% if params.data %}
   {% if params.data.apopExcluded === true %}
     {%- set tableRow = [
-      { html: '<span>**********************</span><br /><span class="govuk-tag govuk-tag--orange">Restricted access</span>' },
-      { text: crn },
+      { html: nameField(params) },
+      { text: params.data.crn },
       { text: 'This is a restricted case. Check NDelius if you require access or further information.', colspan: 2 }
     ] -%}
   {% else %}
-    {% if params.data.excluded === true %}
-      {% set nameField = '<p class="govuk-!-margin-bottom-2 govuk-!-margin-top-0"><a href="' + '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="' + crn + '-' + convictionNumber + '">' + name + '</a></p><span class="govuk-tag govuk-tag--orange">Restricted access</span>' %}
-    {% else %}
-      {% set nameField = '<a href="' + '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view' + '" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="' + crn + '-' + convictionNumber + '">' + name + '</a>' %}
-    {% endif %}
     {%- set tableRow = [
-      { html: nameField },
-      { text: crn },
-      { text: dob | dateFormat },
-      { text: currentlyManagedby }
+      { html: nameField(params) },
+      { text: params.data.crn },
+      { text: params.data.dateOfBirth | dateFormat },
+      { text: params.data.manager.name.combinedName }
     ] -%}
   {% endif %}
 

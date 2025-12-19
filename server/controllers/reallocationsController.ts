@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { ReallocationCaseSummaryForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
 import FeatureFlagService from '../services/featureFlagService'
 import ProbationEstateService from '../services/probationEstateService'
@@ -16,6 +17,8 @@ import {
   getStaffCodes,
   setStaffRestrictions,
 } from './allocationsController'
+import trimForm from '../utils/trim'
+import validate from '../validation/validation'
 
 export default class ReallocationsController {
   constructor(
@@ -108,7 +111,10 @@ export default class ReallocationsController {
     const address = new DisplayAddress(response.address)
     response.name = unescapeApostrophe(response.name)
 
-    const { instructions } = await this.allocationsService.getCrnOnlyNotesCache(crn, res.locals.user.username)
+    const { instructions: cachedInstructions } = await this.allocationsService.getCrnOnlyNotesCache(
+      crn,
+      res.locals.user.username,
+    )
 
     if (risk.roshRisk) {
       risk.roshLevel = risk.roshRisk.overallRisk
@@ -121,6 +127,12 @@ export default class ReallocationsController {
     if (risk.ogrs) {
       risk.ogrsScore = risk.ogrs.score
     }
+
+    const formData = req.session.caseSummaryForm || {}
+    req.session.caseSummaryForm = null
+
+    const instructions = formData.reallocationNotes || cachedInstructions || ''
+    const reason = formData.reason || ''
 
     res.render('pages/reallocation-summary', {
       data: response,
@@ -136,6 +148,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      reason,
     })
   }
 
@@ -355,6 +368,26 @@ export default class ReallocationsController {
 
   async allocateToPractitioner(req: Request, res: Response, crn: string, pduCode: string) {
     res.redirect(`/pdu/${pduCode}/${crn}/reallocations/confirm-reallocation`)
+  }
+
+  async submitCaseSummary(req: Request, res: Response, pduCode: string, crn: string, form) {
+    const caseSummaryForm = trimForm<ReallocationCaseSummaryForm>(form)
+    const errors = validate(
+      caseSummaryForm,
+      { reallocationNotes: 'nourl', reason: 'required' },
+      {
+        nourl: 'You cannot include links in the allocation notes',
+        'required.reason': 'Select a reallocation reason',
+      },
+    )
+
+    if (errors.length > 0) {
+      req.session.caseSummaryForm = caseSummaryForm
+      req.flash('errors', errors)
+      return res.redirect(`/pdu/${pduCode}/${crn}/reallocation-case-view`)
+    }
+
+    return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/choose-practitioner`)
   }
 
   async reallocationComplete(req: Request, res: Response, crn: string, pduCode: string) {

@@ -2,7 +2,7 @@
 
 {% set reasonOptions = [
   {
-    value: "select",
+    value: "",
     text: "Select a reallocation reason",
     selected: true
   },
@@ -42,7 +42,6 @@
     value: "TRANSFER_IN",
     text: "Transfer in"
   }
-
 ]
 %}
 
@@ -50,5 +49,5 @@
   id: "reason",
   name: "reason",
   items: reasonOptions,
-  errorMessage: params.errors | findError('reason')
+  errorMessage: params.errorMessage
 }) }}

@@ -24,7 +24,7 @@
            {% endif %}
         </label>
         {% if params.errorMessage %}
-          <p id="reallocationNotes-error" class="govuk-error-message">git
+          <p id="reallocationNotes-error" class="govuk-error-message">
             <span class="govuk-visually-hidden">Error:</span>
             {{ params.errorMessage.text | safe if params.errorMessage.text }}
           </p>

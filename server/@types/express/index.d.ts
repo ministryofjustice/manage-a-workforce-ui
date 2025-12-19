@@ -1,4 +1,4 @@
-import type { ConfirmInstructionForm, DecisionEvidenceForm } from 'forms'
+import type { ConfirmInstructionForm, DecisionEvidenceForm, ReallocationCaseSummaryForm } from 'forms'
 
 export default {}
 
@@ -19,6 +19,7 @@ declare module 'express-session' {
       otherEmails: string[]
       sendEmailCopyToAllocatingOfficer: boolean
     }
+    caseSummaryForm: ReallocationCaseSummaryForm
   }
 }
 

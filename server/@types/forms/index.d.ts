@@ -12,4 +12,9 @@ declare module 'forms' {
     ldu?: string
     team?: string
   }
+
+  export interface ReallocationCaseSummaryForm {
+    reallocationNotes?: string
+    reason?: string
+  }
 }

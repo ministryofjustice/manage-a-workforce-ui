@@ -14,7 +14,11 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "typeRoots": ["./server/@types", "./node_modules/@types"]
+    "typeRoots": ["./server/@types", "./node_modules/@types"],
+    "baseUrl": ".",
+    "paths": {
+      "forms": ["server/@types/forms/index"]
+    }
   },
   "exclude": [
     "node_modules",

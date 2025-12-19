@@ -219,14 +219,10 @@
                 inGridRow: true,
                 convictionNumber: convictionNumber,
                 crn: crn,
-               errorMessage: errors | findError('reallocationNotes'),
+               errorMessage: errors | findError('instructions'),
                instructions: instructions
             })
         }}
-
-          {{ reallocationReason({
-            errorMessage: errors | findError('reason')
-          }) }}
 
             <div class="govuk-button-group">
                 {{ govukButton({

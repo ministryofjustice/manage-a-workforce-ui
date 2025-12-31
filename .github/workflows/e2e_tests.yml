@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Checkout e2e tests repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: ministryofjustice/hmpps-manage-a-workforce-ui-e2e-tests
           path: e2e-tests

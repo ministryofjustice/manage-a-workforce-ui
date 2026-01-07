@@ -20,7 +20,6 @@
     "watch-node-feature": "export $(cat feature.env) && nodemon -r dotenv/config --watch dist/ $NODE_DEBUG_OPTION dist/server.js | bunyan -o short",
     "start-feature:dev": "npm run build && concurrently -k -p \"[{name}]\" -n \"Views,TypeScript,Node,Sass\" -c \"yellow.bold,cyan.bold,green.bold,blue.bold\" \"npm run watch-views\" \"npm run watch-ts\" \"npm run watch-node-feature\" \"npm run watch-sass\"",
     "record-build-info": "node ./bin/record-build-info",
-    "start-external-test": "export $(cat test.env) && node $NODE_DEBUG_OPTION dist/server.js | bunyan -o short",
     "watch-external-test": "export $(cat test.env) && nodemon -r dotenv/config --watch dist/ $NODE_DEBUG_OPTION dist/server.js | bunyan -o short",
     "start-external-test:dev": "npm run build && concurrently -k -p \"[{name}]\" -n \"Views,TypeScript,Node,Sass\" -c \"yellow.bold,cyan.bold,green.bold,blue.bold\" \"npm run watch-views\" \"npm run watch-ts\" \"npm run watch-external-test\" \"npm run watch-sass\"",
     "lint": "eslint . --cache --max-warnings 0",
@@ -30,7 +29,8 @@
     "security_audit": "npx audit-ci --config audit-ci.json",
     "int-test": "cypress run --config video=false --config-file=integration_tests/cypress.config.ts",
     "int-test-ui": "cypress open --config-file=integration_tests/cypress.config.ts",
-    "clean": "rm -rf dist build stylesheets"
+    "clean": "rm -rf dist build stylesheets",
+    "setup": "npm ci && hmpps-npm-script-run-allowlist"
   },
   "engines": {
     "node": "^22",
@@ -123,7 +123,7 @@
     "jquery-ui": "1.14.1",
     "jwt-decode": "4.0.0",
     "nocache": "4.0.0",
-    "node": "^24.0.0",
+    "node": "^22.0.0",
     "nunjucks": "3.2.4",
     "passport": "0.7.0",
     "passport-oauth2": "1.8.0",
@@ -133,6 +133,7 @@
   },
   "devDependencies": {
     "@ministryofjustice/eslint-config-hmpps": "0.0.3",
+    "@ministryofjustice/hmpps-npm-script-allowlist": "0.0.3",
     "@types/bunyan": "1.8.11",
     "@types/bunyan-format": "0.2.9",
     "@types/compression": "1.8.1",

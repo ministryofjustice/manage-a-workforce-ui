@@ -2,13 +2,13 @@ name: Pipeline [test -> build -> deploy]
 on:
   push:
     branches:
-      - "**"
+      - '**'
   workflow_dispatch:
     inputs:
       additional_docker_tag:
         description: Additional docker tag that can be used to specify stable or testing tags
         required: false
-        default: ""
+        default: ''
         type: string
       push:
         description: Push docker image to registry flag
@@ -26,6 +26,8 @@ jobs:
     name: node build
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/node_build.yml@v2 # WORKFLOW_VERSION
     secrets: inherit
+    with:
+      install_command: 'npm run setup'
   node_unit_tests:
     name: node unit tests
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/node_unit_tests.yml@v2 # WORKFLOW_VERSION
@@ -39,7 +41,7 @@ jobs:
   helm_lint:
     strategy:
       matrix:
-        environments: ["dev", "preprod", "prod"]
+        environments: ['dev', 'preprod', 'prod']
     name: helm lint
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/test_helm_lint.yml@v2 # WORKFLOW_VERSION
     secrets: inherit
@@ -53,8 +55,8 @@ jobs:
       - node_integration_tests
       - node_unit_tests
     with:
-      docker_registry: "ghcr.io"
-      registry_org: "ministryofjustice"
+      docker_registry: 'ghcr.io'
+      registry_org: 'ministryofjustice'
       additional_docker_tag: ${{ inputs.additional_docker_tag }}
       push: ${{ inputs.push || true }}
       docker_multiplatform: false
@@ -68,9 +70,9 @@ jobs:
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@v2 # WORKFLOW_VERSION
     secrets: inherit
     with:
-      environment: "dev"
-      app_version: "${{ needs.build.outputs.app_version }}"
-      helm_timeout: "5m"
+      environment: 'dev'
+      app_version: '${{ needs.build.outputs.app_version }}'
+      helm_timeout: '5m'
   deploy_preprod:
     name: Deploy to the preprod environment
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/epic')
@@ -81,9 +83,9 @@ jobs:
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@v2 # WORKFLOW_VERSION
     secrets: inherit
     with:
-      environment: "preprod"
-      app_version: "${{ needs.build.outputs.app_version }}"
-      helm_timeout: "5m"
+      environment: 'preprod'
+      app_version: '${{ needs.build.outputs.app_version }}'
+      helm_timeout: '5m'
   deploy_prod:
     name: Deploy to the prod environment
     if: github.ref == 'refs/heads/main'
@@ -94,6 +96,6 @@ jobs:
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@v2 # WORKFLOW_VERSION
     secrets: inherit
     with:
-      environment: "prod"
-      app_version: "${{ needs.build.outputs.app_version }}"
-      helm_timeout: "5m"
+      environment: 'prod'
+      app_version: '${{ needs.build.outputs.app_version }}'
+      helm_timeout: '5m'

@@ -28,8 +28,6 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           name: npm_build_artifacts
-      - name: Init testing framework if necessary
-        run: npm run int-test-init:ci --if-present
       - name: restore cache
         id: restore-cache
         uses: actions/cache/restore@v4

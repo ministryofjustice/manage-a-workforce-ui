@@ -53,22 +53,7 @@ export default class FeatureFlagService {
     }
   }
 
-  async isFeatureEnabled(code: string, flag: string): Promise<boolean> {
-    try {
-      const response = (await this.fliptClient()).evaluateBoolean({
-        entityId: code,
-        flagKey: flag,
-        context: {},
-      }) as BooleanEvaluationResponse
-
-      return response.enabled
-    } catch (error) {
-      logger.error(error, `Feature flag not found for ${flag} /${code}`)
-      return false
-    }
-  }
-
-  async isFeatureEnabledWithContext(code: string, flag: string, context: Record<string, string>): Promise<boolean> {
+  async isFeatureEnabled(code: string, flag: string, context: Record<string, string> = {}): Promise<boolean> {
     try {
       const response = (await this.fliptClient()).evaluateBoolean({
         entityId: code,
@@ -83,22 +68,7 @@ export default class FeatureFlagService {
     }
   }
 
-  async getFeatureVariant(code: string, flag: string): Promise<boolean> {
-    try {
-      const response = (await this.fliptClient()).evaluateVariant({
-        entityId: code,
-        flagKey: flag,
-        context: {},
-      }) as VariantEvaluationResponse
-
-      return response.match
-    } catch (error) {
-      logger.error(error, `Feature flag not found for ${flag} /${code}`)
-      return false
-    }
-  }
-
-  async getFeatureVariantWithContext(code: string, flag: string, context: Record<string, string>): Promise<boolean> {
+  async getFeatureVariant(code: string, flag: string, context: Record<string, string> = {}): Promise<boolean> {
     try {
       const response = (await this.fliptClient()).evaluateVariant({
         entityId: code,

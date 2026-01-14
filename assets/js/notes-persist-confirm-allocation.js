@@ -3,7 +3,7 @@ window.addEventListener('load', function () {
   var currentTimeInSeconds = Math.floor(Date.now() / 1000)
   removeExpiredNotes(FOUR_WEEKS_IN_SECONDS, currentTimeInSeconds)
   const textArea = document.getElementById('reallocationNotes')
-  const reason = document.getElementById('reason').value()
+  const reason = document.getElementById('reason')
   const crn = textArea.getAttribute('data-crn')
   const newNotesItem = makeNotesKey(crn)
   window.onbeforeunload = function () {

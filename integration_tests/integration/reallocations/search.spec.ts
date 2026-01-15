@@ -112,7 +112,7 @@ context('Reallocations Search', () => {
       .first()
       .within(() => {
         cy.get('td').should('contain.text', 'Jane Doe')
-        cy.get('td').should('contain.text', 'Out of region')
+        cy.get('td').should('contain.text', 'Not in region')
         cy.get('td').should('contain.text', 'A123456')
         cy.get('td').should('contain.text', '25 May 1958')
         cy.get('td').should('contain.text', 'Unallocated Staff')

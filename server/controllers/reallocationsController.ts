@@ -53,6 +53,14 @@ export default class ReallocationsController {
       } catch {
         error = true
       }
+
+      if (searchData) {
+        try {
+          await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, searchData.crn)
+        } catch {
+          searchData.outOfAreaTransfer = true
+        }
+      }
     }
 
     const teamCodes = teamsUserPreference.items

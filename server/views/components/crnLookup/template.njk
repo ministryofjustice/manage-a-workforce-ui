@@ -4,11 +4,15 @@
   {% if params.data.apopExcluded === true %}
     <span>**********************</span><br/>
     <span class="govuk-tag govuk-tag--orange">Restricted access</span>
-  {% elseif params.data.excluded === true or params.data.outOfAreaTransfer === true %}
+  {% else %}
     <p class="govuk-!-margin-bottom-2 govuk-!-margin-top-0">
-      <a href="/pdu/{{params.pduCode}}/{{params.data.crn}}/reallocation-case-view" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="{{params.data.crn}}-{{params.data.convictionNumber}}">
-        {{params.data.name.combinedName}}
-      </a>
+      {% if params.data.outOfAreaTransfer === true %}
+        <span class="govuk-!-font-weight-bold">{{params.data.name.combinedName}}</span><br/>
+      {% else %}
+        <a href="/pdu/{{params.pduCode}}/{{params.data.crn}}/reallocation-case-view" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="{{params.data.crn}}-{{params.data.convictionNumber}}">
+          {{params.data.name.combinedName}}
+        </a>
+      {% endif %}
     </p>
     {% if params.data.excluded === true %}
       <p class="govuk-!-display-block govuk-!-margin-top-3 govuk-!-margin-bottom-0">
@@ -16,13 +20,8 @@
     {% endif %}
     {% if params.data.outOfAreaTransfer === true %}
       <p class="govuk-!-display-block govuk-!-margin-top-3 govuk-!-margin-bottom-0">
-        <span class="govuk-tag govuk-tag--blue">Out of region</span></p>
+        <span class="govuk-tag govuk-tag--orange">Not in region</span></p>
     {% endif %}
-
-  {% else %}
-    <a href="/pdu/{{params.pduCode}}/{{params.data.crn}}/reallocation-case-view" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="{{params.data.crn}}-{{params.data.convictionNumber}}">
-      {{params.data.name.combinedName}}
-    </a>
   {% endif %}
 {% endmacro %}
 

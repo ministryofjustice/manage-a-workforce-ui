@@ -1,12 +1,12 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/tabs/macro.njk" import govukTabs %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% from "../../components/reallocationInstructions/macro.njk" import instructionsForm %}
 {% from "../../components/reallocationReason/macro.njk" import reallocationReason %}
@@ -146,27 +146,17 @@
 {% set offenderManagerDetails = ' by ' + currentOffenderManager.forenames + ' ' + currentOffenderManager.surname + (' (' + currentOffenderManager.grade + ')' if currentOffenderManager.grade) if currentOffenderManager%}
 
 {% block beforeContent %}
-    {{ govukBreadcrumbs({
-        items: [
-            {
-                text: "Home",
-                href: "/pdu/" + pduCode + "/teams"
-            },
-            {
-                text: "Unallocated cases",
-                href: "/pdu/" + pduCode + "/find-unallocated"
-            },
-            {
-                text: "Case details",
-                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/case-view"
-            }
-        ]
+    {{ govukBackLink({
+      text: "Back",
+      attributes: {
+       "data-back" : undefined
+      }
     }) }}
     {% if errors | length > 0 %}
         {{ govukErrorSummary({
-          titleText: "There is a problem",
-          errorList: errors
-      }) }}
+      titleText: "There is a problem",
+      errorList: errors
+    }) }}
     {% endif %}
 {% endblock %}
 
@@ -203,18 +193,19 @@
 
             <div class="govuk-width-container">
 
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds">
-                        {{
+                {{
                             instructionsForm({
-                            
+                                inGridRow: true,
+                                showHintText: false,
+                                crn: crn,
+                                errorMessage: errors | findError('reallocationNotes'),
+                                laoCase: laoCase,
+                                instructions: instructions
                             })
                         }}
-                        {{
+                {{
                             reallocationReason({ errors: errors })
                         }}
-                    </div>
-                </div>
 
             </div>
 
@@ -225,7 +216,6 @@
                     'data-form-submit': undefined
                 }
             }) }}
-                <a id="clearSelection" class="govuk-button govuk-button--secondary" href="{{'/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner'}}">           Clear selection </a>
             </div>
         </form>
         {% if error %}

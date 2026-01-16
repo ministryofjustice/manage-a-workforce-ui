@@ -75,20 +75,6 @@ export default function getReallocationsRoutes(
     const { pduCode, crn } = req.params
     await reallocationsController.reallocationComplete(req, res, crn, pduCode)
   })
-  get('/pdu/:pduCode/:crn/reallocations/:staffTeamCode/:staffCode/allocate-to-practitioner', async (req, res) => {
-    const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-    await reallocationsController
-      .reviewReallocationPractitioner
-      // TODO
-      // req,
-      // res,
-      // crn,
-      // staffTeamCode,
-      // staffCode,
-      // convictionNumber,
-      // pduCode,
-      ()
-  })
 
   post('/pdu/:pduCode/:crn/allocate/:staffTeamCode/:staffCode/save-reallocation', async (req, res) => {
     const { crn, staffTeamCode, staffCode, pduCode } = req.params

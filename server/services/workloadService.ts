@@ -5,6 +5,7 @@ import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotential
 import OffenderManagerCases from '../models/OffenderManagerCases'
 import OffenderManagerOverview from '../models/OffenderManagerOverview'
 import OffenderManagerAllocatedCase from '../models/OffenderManagerAllocatedCase'
+import OffenderManagerReallocatedCase from '../models/OffenderManagerReallocatedCase'
 import WorkloadByTeam from '../models/workloadByTeam'
 import EventManagerDetails from '../models/EventManagerDetails'
 import ChoosePractitionerData from '../models/ChoosePractitionerData'
@@ -141,6 +142,41 @@ export default class WorkloadService {
       path: `/team/${teamCode}/offenderManager/${staffCode}/case`,
       data: allocationData,
     })) as OffenderManagerAllocatedCase
+  }
+
+  async reallocateCaseToOffenderManager(
+    token: string,
+    crn,
+    previousStaffCode,
+    emailPreviousOfficer: boolean,
+    staffCode,
+    teamCode,
+    emailTo,
+    reallocationNotes: string,
+    sensitiveNotes: boolean,
+    laoCase: boolean,
+    allocationReason,
+    nextAppointmentDate: string,
+    lastOasysAssessmentDate: string,
+    failureToComply: string,
+  ): Promise<OffenderManagerReallocatedCase> {
+    const allocationData = {
+      crn,
+      emailTo,
+      emailPreviousOfficer,
+      reallocationNotes,
+      sensitiveNotes,
+      laoCase,
+      allocationReason,
+      nextAppointmentDate,
+      lastOasysAssessmentDate,
+      failureToComply,
+    }
+
+    return (await this.restClient(token).post({
+      path: `/team/${teamCode}/offenderManager/${staffCode}/${previousStaffCode}/case`,
+      data: allocationData,
+    })) as OffenderManagerReallocatedCase
   }
 
   async getWorkloadByTeams(token: string, teamCodes: string[]): Promise<WorkloadByTeam[]> {

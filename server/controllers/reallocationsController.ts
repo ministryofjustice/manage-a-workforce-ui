@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { ReallocationCaseSummaryForm } from 'forms'
+import { ConfirmReallocationForm, ReallocationCaseSummaryForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
 import FeatureFlagService from '../services/featureFlagService'
 import ProbationEstateService from '../services/probationEstateService'
@@ -388,6 +388,52 @@ export default class ReallocationsController {
     }
 
     return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/choose-practitioner`)
+  }
+
+  async reviewReallocationPractitioner(req: Request, res: Response, crn, staffTeamCode, staffCode, form, pduCode) {
+    // TODO get team and code and practitioner code from form or maybe it is passed
+    // TODO call page to display all details and allow submit
+  }
+
+  async submitCaseReallocation(req: Request, res: Response, crn, staffTeamCode, staffCode, form, pduCode) {
+    const confirmReallocationForm = trimForm<ConfirmReallocationForm>(form)
+
+    // get information from form
+    const { emailPreviousOfficer } = confirmReallocationForm
+    const otherEmails = confirmReallocationForm.person?.map(p => p.email).filter(email => email)
+    const { reallocationNotes } = confirmReallocationForm
+    const sensitiveNotes = confirmReallocationForm.isSensitive
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+    const { previousStaffCode } = confirmReallocationForm
+    const allocationReason = confirmReallocationForm.reasonCode
+    const { nextAppointmentDate } = confirmReallocationForm
+    const { lastOasysAssessmentDate } = confirmReallocationForm
+    const { failureToComply } = confirmReallocationForm
+
+    await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
+
+    await this.workloadService.reallocateCaseToOffenderManager(
+      res.locals.user.token,
+      crn,
+      previousStaffCode,
+      emailPreviousOfficer,
+      staffCode,
+      staffTeamCode,
+      otherEmails,
+      reallocationNotes,
+      sensitiveNotes,
+      laoCase,
+      allocationReason,
+      nextAppointmentDate,
+      lastOasysAssessmentDate,
+      failureToComply,
+    )
+
+    this.allocationsService.setCrnOnlyNotesCache(crn, res.locals.user.username, {
+      instructions: reallocationNotes,
+    })
+
+    return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/reallocation-complete`)
   }
 
   async reallocationComplete(req: Request, res: Response, crn: string, pduCode: string) {

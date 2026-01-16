@@ -77,19 +77,21 @@ export default function getReallocationsRoutes(
   })
   get('/pdu/:pduCode/:crn/reallocations/:staffTeamCode/:staffCode/allocate-to-practitioner', async (req, res) => {
     const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-    await reallocationsController.reviewReallocationPractitioner(
-      req,
-      res,
-      crn,
-      staffTeamCode,
-      staffCode,
-      convictionNumber,
-      pduCode,
-    )
+    await reallocationsController
+      .reviewReallocationPractitioner
+      // TODO
+      // req,
+      // res,
+      // crn,
+      // staffTeamCode,
+      // staffCode,
+      // convictionNumber,
+      // pduCode,
+      ()
   })
 
   post('/pdu/:pduCode/:crn/allocate/:staffTeamCode/:staffCode/save-reallocation', async (req, res) => {
-    const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+    const { crn, staffTeamCode, staffCode, pduCode } = req.params
     await reallocationsController.submitCaseReallocation(req, res, crn, staffTeamCode, staffCode, req.body, pduCode)
   })
 }

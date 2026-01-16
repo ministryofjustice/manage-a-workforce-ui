@@ -390,7 +390,7 @@ export default class ReallocationsController {
     return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/choose-practitioner`)
   }
 
-  async reviewReallocationPractitioner(req: Request, res: Response, crn, staffTeamCode, staffCode, form, pduCode) {
+  async reviewReallocationPractitioner() {
     // TODO get team and code and practitioner code from form or maybe it is passed
     // TODO call page to display all details and allow submit
   }

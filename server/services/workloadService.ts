@@ -12,6 +12,7 @@ import ChoosePractitionerData from '../models/ChoosePractitionerData'
 import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
 import AllocationHistory from '../models/AllocationHistory'
 import AllocationHistoryCount from '../models/AllocationHistoryCount'
+import ReallocationData from '../models/ReallocationData'
 import { createRedisClient } from '../data/redisClient'
 
 export default class WorkloadService {
@@ -144,38 +145,27 @@ export default class WorkloadService {
     })) as OffenderManagerAllocatedCase
   }
 
-  async reallocateCaseToOffenderManager(
-    token: string,
-    crn,
-    previousStaffCode,
-    emailPreviousOfficer: boolean,
-    staffCode,
-    teamCode,
-    emailTo,
-    reallocationNotes: string,
-    sensitiveNotes: boolean,
-    laoCase: boolean,
-    allocationReason,
-    nextAppointmentDate: string,
-    lastOasysAssessmentDate: string,
-    failureToComply: string,
-  ): Promise<OffenderManagerReallocatedCase> {
-    const allocationData = {
-      crn,
-      emailTo,
-      emailPreviousOfficer,
-      reallocationNotes,
-      sensitiveNotes,
-      laoCase,
-      allocationReason,
-      nextAppointmentDate,
-      lastOasysAssessmentDate,
-      failureToComply,
+  async reallocateCaseToOffenderManager(reallocationData: ReallocationData): Promise<OffenderManagerReallocatedCase> {
+    const data = {
+      token: reallocationData.token,
+      crn: reallocationData.crn,
+      previousStaffCode: reallocationData.previousStaffCode,
+      emailPreviousOfficer: reallocationData.emailPreviousOfficer,
+      staffCode: reallocationData.staffCode,
+      teamCode: reallocationData.teamCode,
+      emailTo: reallocationData.emailTo,
+      reallocationNotes: reallocationData.reallocationNotes,
+      sensitiveNotes: reallocationData.sensitiveNotes,
+      laoCase: reallocationData.laoCase,
+      allocationReason: reallocationData.allocationReason,
+      nextAppointmentDate: reallocationData.nextAppointmentDate,
+      lastOasysAssessmentDate: reallocationData.lastOasysAssessmentDate,
+      failureToComply: reallocationData.failureToComply,
     }
 
-    return (await this.restClient(token).post({
-      path: `/team/${teamCode}/offenderManager/${staffCode}/${previousStaffCode}/case`,
-      data: allocationData,
+    return (await this.restClient(reallocationData.token).post({
+      path: `/team/${reallocationData.teamCode}/offenderManager/${reallocationData.staffCode}/${reallocationData.previousStaffCode}/case`,
+      data,
     })) as OffenderManagerReallocatedCase
   }
 

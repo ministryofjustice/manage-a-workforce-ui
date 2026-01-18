@@ -19,6 +19,7 @@ import {
 } from './allocationsController'
 import trimForm from '../utils/trim'
 import validate from '../validation/validation'
+import ReallocationData from '../models/ReallocationData'
 
 export default class ReallocationsController {
   constructor(
@@ -399,27 +400,30 @@ export default class ReallocationsController {
     const confirmReallocationForm = trimForm<ConfirmReallocationForm>(form)
 
     // get information from form
-    const { emailPreviousOfficer } = confirmReallocationForm
-    const otherEmails = confirmReallocationForm.person?.map(p => p.email).filter(email => email)
-    const { reallocationNotes } = confirmReallocationForm
-    const sensitiveNotes = confirmReallocationForm.isSensitive
+    const {
+      emailPreviousOfficer,
+      reallocationNotes,
+      isSensitive: sensitiveNotes,
+      previousStaffCode,
+      reasonCode: allocationReason,
+      nextAppointmentDate,
+      lastOasysAssessmentDate,
+      failureToComply,
+    } = confirmReallocationForm
+
+    const emailTo = confirmReallocationForm.person?.map(p => p.email).filter(email => email)
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
-    const { previousStaffCode } = confirmReallocationForm
-    const allocationReason = confirmReallocationForm.reasonCode
-    const { nextAppointmentDate } = confirmReallocationForm
-    const { lastOasysAssessmentDate } = confirmReallocationForm
-    const { failureToComply } = confirmReallocationForm
 
     await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
 
-    await this.workloadService.reallocateCaseToOffenderManager(
-      res.locals.user.token,
+    const reallocationData: ReallocationData = {
+      token: res.locals.user.token,
       crn,
       previousStaffCode,
       emailPreviousOfficer,
       staffCode,
-      staffTeamCode,
-      otherEmails,
+      teamCode: staffTeamCode,
+      emailTo,
       reallocationNotes,
       sensitiveNotes,
       laoCase,
@@ -427,7 +431,9 @@ export default class ReallocationsController {
       nextAppointmentDate,
       lastOasysAssessmentDate,
       failureToComply,
-    )
+    }
+
+    await this.workloadService.reallocateCaseToOffenderManager(reallocationData)
 
     this.allocationsService.setCrnOnlyNotesCache(crn, res.locals.user.username, {
       instructions: reallocationNotes,

@@ -75,4 +75,9 @@ export default function getReallocationsRoutes(
     const { pduCode, crn } = req.params
     await reallocationsController.reallocationComplete(req, res, crn, pduCode)
   })
+
+  post('/pdu/:pduCode/:crn/allocate/:staffTeamCode/:staffCode/save-reallocation', async (req, res) => {
+    const { crn, staffTeamCode, staffCode, pduCode } = req.params
+    await reallocationsController.submitCaseReallocation(req, res, crn, staffTeamCode, staffCode, req.body, pduCode)
+  })
 }

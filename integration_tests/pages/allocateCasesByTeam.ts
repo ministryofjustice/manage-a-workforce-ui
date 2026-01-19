@@ -18,4 +18,6 @@ export default class AllocateCasesByTeamPage extends Page {
   feedbackYes = (): PageElement => cy.get('#feedbackYes')
 
   feedbackNo = (): PageElement => cy.get('#feedbackNo')
+
+  reallocationLink = (): PageElement => cy.get(`a[href*="/reallocations"].govuk-link`)
 }

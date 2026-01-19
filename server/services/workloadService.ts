@@ -146,26 +146,9 @@ export default class WorkloadService {
   }
 
   async reallocateCaseToOffenderManager(reallocationData: ReallocationData): Promise<OffenderManagerReallocatedCase> {
-    const data = {
-      token: reallocationData.token,
-      crn: reallocationData.crn,
-      previousStaffCode: reallocationData.previousStaffCode,
-      emailPreviousOfficer: reallocationData.emailPreviousOfficer,
-      staffCode: reallocationData.staffCode,
-      teamCode: reallocationData.teamCode,
-      emailTo: reallocationData.emailTo,
-      reallocationNotes: reallocationData.reallocationNotes,
-      sensitiveNotes: reallocationData.sensitiveNotes,
-      laoCase: reallocationData.laoCase,
-      allocationReason: reallocationData.allocationReason,
-      nextAppointmentDate: reallocationData.nextAppointmentDate,
-      lastOasysAssessmentDate: reallocationData.lastOasysAssessmentDate,
-      failureToComply: reallocationData.failureToComply,
-    }
-
     return (await this.restClient(reallocationData.token).post({
       path: `/team/${reallocationData.teamCode}/offenderManager/${reallocationData.staffCode}/${reallocationData.previousStaffCode}/case`,
-      data,
+      data: { ...reallocationData },
     })) as OffenderManagerReallocatedCase
   }
 

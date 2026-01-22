@@ -2,7 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForAllocation } from './wiremock'
 
 export default {
-  stubCrnLookup: ({ crn, allocated }: { crn: string; allocated: boolean }): SuperAgentRequest => {
+  stubCrnLookup: ({ crn, allocated }: { crn: string; allocated?: boolean }): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',

@@ -449,7 +449,11 @@ export default {
       },
     })
   },
-  stubGetCrnAccess: ({ crn, user, status }: { crn?: string; user?: string; status?: number }): SuperAgentRequest => {
+  stubGetCrnAccess: ({
+    crn,
+    user,
+    status,
+  }: { crn?: string; user?: string; status?: number } = {}): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',

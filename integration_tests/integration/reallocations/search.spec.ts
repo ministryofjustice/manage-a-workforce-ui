@@ -48,7 +48,7 @@ context('Reallocations Search', () => {
   it('should display case details when a valid CRN is entered', () => {
     cy.task('stubCrnLookup', { crn: 'A123456' })
     cy.task('stubForStaffLaoStatusByCrns', [{ crn: 'A123456' }])
-    cy.task('stubGetCrnAccess', 'A123456')
+    cy.task('stubGetCrnAccess', { crn: 'A123456' })
 
     reallocationsSearchPage.search().get('input#crn').type('A123456')
     reallocationsSearchPage.search().get('button').click()

@@ -51,7 +51,7 @@ export default {
       },
     })
   },
-  stubForStaffLaoStatusByCrns: (crns: LaoStatus[] = []): SuperAgentRequest => {
+  stubForStaffLaoStatusByCrns: (crns?: LaoStatus[]): SuperAgentRequest => {
     const crnStrings = (crns ?? [{ crn: 'CRN1111' }, { crn: 'CRN2222' }]).map(c => c.crn)
     return stubForLaoStatus({
       request: {

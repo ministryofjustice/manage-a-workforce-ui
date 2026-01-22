@@ -30,6 +30,16 @@ context('Reallocations Search', () => {
   })
 
   it('should display an error when case not found', () => {
+    cy.task('stubCrnLookupError', { crn: 'A123456' })
+    cy.task('stubForStaffLaoStatusByCrns', ['A123456'])
+    reallocationsSearchPage.search().get('input#crn').type('A123456')
+    reallocationsSearchPage.search().get('button').click()
+    reallocationsSearchPage.search().should('contain.text', 'No result found for this CRN.')
+  })
+
+  it('should display an error when case is unallocated', () => {
+    cy.task('stubCrnLookup', { crn: 'A123456', allocated: false })
+    cy.task('stubForStaffLaoStatusByCrns', ['A123456'])
     reallocationsSearchPage.search().get('input#crn').type('A123456')
     reallocationsSearchPage.search().get('button').click()
     reallocationsSearchPage.search().should('contain.text', 'No result found for this CRN.')
@@ -37,6 +47,9 @@ context('Reallocations Search', () => {
 
   it('should display case details when a valid CRN is entered', () => {
     cy.task('stubCrnLookup', { crn: 'A123456' })
+    cy.task('stubForStaffLaoStatusByCrns', [{ crn: 'A123456' }])
+    cy.task('stubGetCrnAccess', 'A123456')
+
     reallocationsSearchPage.search().get('input#crn').type('A123456')
     reallocationsSearchPage.search().get('button').click()
 
@@ -50,12 +63,14 @@ context('Reallocations Search', () => {
         cy.get('td').should('contain.text', 'Jane Doe')
         cy.get('td').should('contain.text', 'A123456')
         cy.get('td').should('contain.text', '25 May 1958')
-        cy.get('td').should('contain.text', 'Unallocated Staff')
+        cy.get('td').should('contain.text', 'John Doe')
       })
   })
 
   it('correctly displays excluded cases', () => {
-    cy.task('stubExcludedCrnLookup', { crn: 'A123456' })
+    cy.task('stubCrnLookup', { crn: 'A123456' })
+    cy.task('stubForStaffLaoStatusByCrns', [{ crn: 'A123456', userRestricted: true, userExcluded: false }])
+    cy.task('stubGetCrnAccess', { crn: 'A123456' })
     reallocationsSearchPage.search().get('input#crn').type('A123456')
     reallocationsSearchPage.search().get('button').click()
 
@@ -80,7 +95,9 @@ context('Reallocations Search', () => {
   })
 
   it('correctly displays LAO cases', () => {
-    cy.task('stubLaoCrnLookup', { crn: 'A123456' })
+    cy.task('stubCrnLookup', { crn: 'A123456' })
+    cy.task('stubForStaffLaoStatusByCrns', [{ crn: 'A123456', userRestricted: false, userExcluded: true }])
+    cy.task('stubGetCrnAccess', { crn: 'A123456' })
     reallocationsSearchPage.search().get('input#crn').type('A123456')
     reallocationsSearchPage.search().get('button').click()
 
@@ -95,12 +112,14 @@ context('Reallocations Search', () => {
         cy.get('td').should('contain.text', 'Restricted access')
         cy.get('td').should('contain.text', 'A123456')
         cy.get('td').should('contain.text', '25 May 1958')
-        cy.get('td').should('contain.text', 'Unallocated Staff')
+        cy.get('td').should('contain.text', 'John Doe')
       })
   })
 
   it('correctly displays Out of Area cases', () => {
-    cy.task('stubOoaCrnLookup', { crn: 'A123456' })
+    cy.task('stubCrnLookup', { crn: 'A123456' })
+    cy.task('stubForStaffLaoStatusByCrns', [{ crn: 'A123456' }])
+    cy.task('stubGetCrnAccess', { crn: 'A123456', status: 403 })
     reallocationsSearchPage.search().get('input#crn').type('A123456')
     reallocationsSearchPage.search().get('button').click()
 
@@ -115,7 +134,7 @@ context('Reallocations Search', () => {
         cy.get('td').should('contain.text', 'Not in region')
         cy.get('td').should('contain.text', 'A123456')
         cy.get('td').should('contain.text', '25 May 1958')
-        cy.get('td').should('contain.text', 'Unallocated Staff')
+        cy.get('td').should('contain.text', 'John Doe')
       })
   })
 

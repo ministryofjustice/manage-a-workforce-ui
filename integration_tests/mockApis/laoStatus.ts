@@ -1,6 +1,8 @@
 import { SuperAgentRequest } from 'superagent'
 import { stubForLaoStatus } from './wiremock'
 
+import LaoStatus from '../../server/models/LaoStatus'
+
 export default {
   stubForLaoStatus: ({ crn, response }): SuperAgentRequest => {
     return stubForLaoStatus({
@@ -49,14 +51,15 @@ export default {
       },
     })
   },
-  stubForStaffLaoStatusByCrns: (): SuperAgentRequest => {
+  stubForStaffLaoStatusByCrns: (crns?: LaoStatus[]): SuperAgentRequest => {
+    const crnStrings = (crns ?? [{ crn: 'CRN1111' }, { crn: 'CRN2222' }]).map(c => c.crn)
     return stubForLaoStatus({
       request: {
         method: 'POST',
         urlPattern: `/cases/restrictions/crn/list`,
         bodyPatterns: [
           {
-            equalToJson: `{ "crns": ["CRN1111", "CRN2222"]}`,
+            equalToJson: `{ "crns": ${JSON.stringify(crnStrings)} }`,
           },
         ],
       },
@@ -64,14 +67,14 @@ export default {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          access: [
+          access: crns ?? [
             {
-              crn: 'CRN11111',
+              crn: 'CRN1111',
               userRestricted: false,
               userExcluded: false,
             },
             {
-              crn: 'CRN11111',
+              crn: 'CRN2222',
               userRestricted: false,
               userExcluded: false,
             },

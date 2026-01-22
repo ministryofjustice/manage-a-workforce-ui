@@ -51,11 +51,28 @@ export default class ReallocationsController {
     if (search) {
       try {
         searchData = await this.allocationsService.getCrnForReallocation(search.toUpperCase(), token)
+
+        if (searchData.manager && !searchData.manager?.allocated) {
+          searchData = null
+          error = true
+        }
       } catch {
         error = true
       }
 
       if (searchData) {
+        const { access } = await this.allocationsService.getRestrictedStatusByCrns(res.locals.user.token, [
+          searchData.crn,
+        ])
+
+        if (access.length > 0) {
+          searchData = {
+            ...searchData,
+            apopExcluded: access[0].userRestricted,
+            excluded: access[0].userExcluded,
+          }
+        }
+
         try {
           await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, searchData.crn)
         } catch {

@@ -449,14 +449,14 @@ export default {
       },
     })
   },
-  stubGetCrnAccess: (): SuperAgentRequest => {
+  stubGetCrnAccess: ({ crn, user, status }: { crn?: string; user?: string; status?: number }): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/user/USER1/crn/J678910/is-allowed`,
+        urlPattern: `/user/${user ?? 'USER1'}/crn/${crn ?? 'J678910'}/is-allowed`,
       },
       response: {
-        status: 200,
+        status: status ?? 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {},
       },

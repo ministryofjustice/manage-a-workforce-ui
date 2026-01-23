@@ -473,6 +473,7 @@ export default class ReallocationsController {
       pduCode,
       data: crnDetails,
       staffData: { ...staffDetails, combinedName },
+      laoRestricted,
     })
   }
 }

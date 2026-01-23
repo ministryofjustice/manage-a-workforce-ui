@@ -450,10 +450,29 @@ export default class ReallocationsController {
     return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/reallocation-complete`)
   }
 
-  async reallocationComplete(req: Request, res: Response, crn: string, pduCode: string) {
+  async reallocationComplete(
+    req: Request,
+    res: Response,
+    crn: string,
+    pduCode: string,
+    teamCode: string,
+    staffCode: string,
+  ) {
+    const [crnDetails, laoRestricted, staffDetails] = await Promise.all([
+      await this.allocationsService.getCrn(res.locals.user.token, crn),
+      await this.allocationsService.getLaoStatus(crn, res.locals.user.token),
+      await this.workloadService.getOffenderManagerOverview(res.locals.user.token, staffCode, teamCode),
+    ])
+
+    crnDetails.name.surname = unescapeApostrophe(crnDetails.name.surname)
+    crnDetails.name.combinedName = unescapeApostrophe(crnDetails.name.combinedName)
+    const combinedName = `${staffDetails.forename} ${staffDetails.surname}`
+
     res.render('pages/reallocations/reallocation-complete', {
       crn,
       pduCode,
+      data: crnDetails,
+      staffData: { ...staffDetails, combinedName },
     })
   }
 }

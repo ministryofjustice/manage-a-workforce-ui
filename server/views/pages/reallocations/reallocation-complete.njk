@@ -9,7 +9,7 @@
         <div class="govuk-grid-column-two-thirds">
             {{ govukPanel({
             titleText: "Case reallocated",
-            html: data.name.combinedName + " (" + crn + ") has been reallocated to <strong>" + staffData.combinedName + " (" + staffData.grade + ")</strong>"
+            html: data.name.combinedName + " (" + crn + ") has been reallocated to <strong>" + staffData.name.combinedName + " (" + staffData.grade + ")</strong>"
         }) }}
 
             <h2 class="govuk-heading-m">What happens next</h2>
@@ -17,7 +17,7 @@
             <ul class="govuk-list govuk-list--bullet">
                 <li>this case will be updated in NDelius within 5 minutes</li>
                 <li>
-                    <strong>{{ staffData.combinedName }}</strong> (<em>{{ staffData.email }}</em>) has been notified, and we've sent a copy of your reallocation instructions
+                    <strong>{{ staffData.name.combinedName }}</strong> (<em>{{ staffData.email }}</em>) has been notified, and we've sent a copy of your reallocation instructions
                 </li>
             </ul>
 

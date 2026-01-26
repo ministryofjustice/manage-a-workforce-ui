@@ -475,6 +475,7 @@ export default class ReallocationsController {
       data: crnDetails,
       staffData: { ...staffDetails, combinedName },
       laoRestricted,
+      journey: 'reallocations',
     })
   }
 }

@@ -462,40 +462,6 @@ export default {
       },
     })
   },
-  stubGetCrn: (): SuperAgentRequest => {
-    return stubForAllocation({
-      request: {
-        method: 'GET',
-        urlPattern: `/allocated/crn/J678910`,
-      },
-      response: {
-        status: 200,
-        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: {
-          crn: 'J678910',
-          name: {
-            forename: 'Dylan',
-            middleName: 'Adam',
-            surname: 'Armstrong',
-            combinedName: 'Dylan Adam Armstrong',
-          },
-          dateOfBirth: '2020-01-22',
-          manager: {
-            code: 'OM1',
-            name: {
-              forename: 'John',
-              middleName: '',
-              surname: 'Doe',
-            },
-            teamCode: 'TM1',
-            grade: 'PO',
-            allocated: true,
-          },
-          hasActiveOrder: true,
-        },
-      },
-    })
-  },
   stubGetUnallocatedCaseWhereIsOutOfAreaTransfer: (): SuperAgentRequest => {
     return stubForAllocation({
       request: {

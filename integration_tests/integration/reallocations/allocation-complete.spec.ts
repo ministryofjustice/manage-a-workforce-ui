@@ -4,7 +4,7 @@ import AllocationCompletePage from '../../pages/reallocations/allocationComplete
 context('Reallocate Complete', () => {
   beforeEach(() => {
     cy.task('stubSetup')
-    cy.task('stubGetCrn')
+    cy.task('stubCrnLookup', { crn: 'J678910' })
     cy.task('stubGetOverview')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
@@ -16,8 +16,6 @@ context('Reallocate Complete', () => {
     cy.visit('/pdu/PDU1/J678910/reallocations/TM2/OM2/reallocation-complete')
     const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
     allocationCompletePage.panelTitle().should('contain', 'Case reallocated')
-    allocationCompletePage
-      .panelBody()
-      .should('contain', 'Dylan Adam Armstrong (J678910) has been reallocated to John Doe (PO)')
+    allocationCompletePage.panelBody().should('contain', 'Jane Doe (J678910) has been reallocated to John Doe (PO)')
   })
 })

@@ -469,6 +469,7 @@ export default class ReallocationsController {
     const combinedName = `${staffDetails.forename} ${staffDetails.surname}`
 
     res.render('pages/reallocations/reallocation-complete', {
+      title: 'Case reallocated | Manage a workforce',
       crn,
       pduCode,
       data: crnDetails,

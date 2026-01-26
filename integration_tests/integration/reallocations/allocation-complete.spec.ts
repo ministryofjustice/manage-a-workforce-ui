@@ -1,0 +1,23 @@
+import Page from '../../pages/page'
+import AllocationCompletePage from '../../pages/reallocations/allocationComplete'
+
+context('Reallocate Complete', () => {
+  beforeEach(() => {
+    cy.task('stubSetup')
+    cy.task('stubGetCrn')
+    cy.task('stubGetOverview')
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
+    cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
+  })
+
+  it('panel visible on page with correct information', () => {
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/reallocations/TM2/OM2/reallocation-complete')
+    const allocationCompletePage = Page.verifyOnPage(AllocationCompletePage)
+    allocationCompletePage.panelTitle().should('contain', 'Case reallocated')
+    allocationCompletePage
+      .panelBody()
+      .should('contain', 'Dylan Adam Armstrong (J678910) has been reallocated to John Doe (PO)')
+  })
+})

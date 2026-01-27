@@ -175,6 +175,7 @@ export default class ReallocationsController {
       errors: req.flash('errors') || [],
       instructions,
       reason,
+      journey: 'reallocations',
     })
   }
 
@@ -205,6 +206,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 
@@ -271,6 +273,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 
@@ -303,6 +306,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 
@@ -335,6 +339,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 
@@ -467,30 +472,28 @@ export default class ReallocationsController {
     return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/reallocation-complete`)
   }
 
-  async reallocationComplete(
-    req: Request,
-    res: Response,
-    crn: string,
-    pduCode: string,
-    teamCode: string,
-    staffCode: string,
-  ) {
-    const [crnDetails, laoRestricted, staffDetails] = await Promise.all([
+  async reallocationComplete(req: Request, res: Response, crn: string, pduCode: string) {
+    const [crnDetails, laoRestricted, allocatedCase] = await Promise.all([
       await this.allocationsService.getCrn(res.locals.user.token, crn),
       await this.allocationsService.getLaoStatus(crn, res.locals.user.token),
-      await this.workloadService.getOffenderManagerOverview(res.locals.user.token, staffCode, teamCode),
+      await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
     ])
+    const convictionNumber = allocatedCase.activeEvents[0].number
+    const allocationCompleteDetails = await this.workloadService.getAllocationCompleteDetails(
+      res.locals.user.token,
+      crn,
+      convictionNumber,
+    )
 
     crnDetails.name.surname = unescapeApostrophe(crnDetails.name.surname)
     crnDetails.name.combinedName = unescapeApostrophe(crnDetails.name.combinedName)
-    const combinedName = `${staffDetails.forename} ${staffDetails.surname}`
 
     res.render('pages/reallocations/reallocation-complete', {
       title: 'Case reallocated | Manage a workforce',
       crn,
       pduCode,
       data: crnDetails,
-      staffData: { ...staffDetails, combinedName },
+      staffData: allocationCompleteDetails.staff,
       laoRestricted,
       journey: 'reallocations',
     })

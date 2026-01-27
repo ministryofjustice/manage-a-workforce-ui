@@ -94,6 +94,7 @@ export default class AllocateCasesController {
       teamWorkload: workload,
       totalCases,
       averageWorkload: teamWorkloadData[0].workload,
+      journey: 'reallocations',
     })
   }
 }

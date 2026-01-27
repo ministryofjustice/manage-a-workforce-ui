@@ -467,20 +467,13 @@ export default class ReallocationsController {
     return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/reallocation-complete`)
   }
 
-  async reallocationComplete(
-    req: Request,
-    res: Response,
-    crn: string,
-    pduCode: string,
-    teamCode: string,
-    staffCode: string,
-  ) {
+  async reallocationComplete(req: Request, res: Response, crn: string, pduCode: string) {
     const [crnDetails, laoRestricted, allocatedCase] = await Promise.all([
       await this.allocationsService.getCrn(res.locals.user.token, crn),
       await this.allocationsService.getLaoStatus(crn, res.locals.user.token),
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
     ])
-    const convictionNumber = allocatedCase.activeEvents.reverse()[0].number
+    const convictionNumber = allocatedCase.activeEvents[0].number
     const allocationCompleteDetails = await this.workloadService.getAllocationCompleteDetails(
       res.locals.user.token,
       crn,

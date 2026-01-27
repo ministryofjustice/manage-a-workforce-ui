@@ -175,6 +175,7 @@ export default class ReallocationsController {
       errors: req.flash('errors') || [],
       instructions,
       reason,
+      journey: 'reallocations',
     })
   }
 
@@ -205,6 +206,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 
@@ -271,6 +273,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 
@@ -303,6 +306,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 
@@ -335,6 +339,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 

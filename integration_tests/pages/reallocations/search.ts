@@ -2,7 +2,7 @@ import Page, { PageElement } from '../page'
 
 export default class ReallocationsSearchPage extends Page {
   constructor() {
-    super('Reallocations')
+    super('Search')
   }
 
   heading = (): PageElement => cy.get('h1.govuk-heading-xl')

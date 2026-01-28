@@ -414,7 +414,6 @@ export default class ReallocationsController {
     const formData: ReallocationCaseSummaryForm = req.session.confirmReallocationForm || {}
 
     const instructions = formData.reallocationNotes || cachedInstructions || ''
-    const reason = formData.reason || req.session.reason || ''
 
     const { currentOffenderManager } = req.session
 
@@ -481,8 +480,6 @@ export default class ReallocationsController {
         'required.reason': 'Select a reallocation reason',
       },
     )
-
-    console.log('errors:', errors)
 
     if (errors.length) {
       req.session.choosePractitionerForm = choosePractitionerForm

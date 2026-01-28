@@ -179,6 +179,16 @@ window.addEventListener('load', () => {
         'required.instructions': 'Enter allocation notes',
       },
     ],
+    'confirm-reallocation': [
+      {
+        instructions: 'nourl',
+        person_placeholder: 'empty',
+      },
+      {
+        empty: 'Find and select a justice.gov.uk email address',
+        nourl: 'You cannot include links in the allocation notes',
+      },
+    ],
     'spo-oversight': [
       {
         instructions: 'nourl|required|max:3500',
@@ -197,6 +207,18 @@ window.addEventListener('load', () => {
       {
         required: 'Select a probation practitioner',
         nourl: 'You cannot include links in the allocation notes',
+      },
+    ],
+    'choose-practitioner-reallocation': [
+      {
+        instructions: 'nourl',
+        allocatedOfficer: 'required',
+        reason: 'required',
+      },
+      {
+        required: 'Select a probation practitioner',
+        nourl: 'You cannot include links in the allocation notes',
+        'required.reason': 'Select a reason for reallocation',
       },
     ],
     'crn-lookup': [

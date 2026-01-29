@@ -147,7 +147,7 @@ export default class WorkloadService {
 
   async reallocateCaseToOffenderManager(reallocationData: ReallocationData): Promise<OffenderManagerReallocatedCase> {
     return (await this.restClient(reallocationData.token).post({
-      path: `/team/${reallocationData.teamCode}/offenderManager/${reallocationData.staffCode}/${reallocationData.previousStaffCode}/case`,
+      path: `/team/${reallocationData.teamCode}/offenderManager/${reallocationData.newStaffCode}/${reallocationData.previousStaffCode}/case`,
       data: { ...reallocationData },
     })) as OffenderManagerReallocatedCase
   }

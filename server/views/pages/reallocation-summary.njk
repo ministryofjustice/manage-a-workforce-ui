@@ -65,12 +65,11 @@
 
                 {%- set offenceData = event.offences %}
 
-                <section class="app-summary-card app-summary-card--large-title {{"govuk-!-margin-top-4" if loop.index > 0}} app-summary-card-pad" id="sentence">
+                <section class="app-summary-card app-summary-card--large-title {{"govuk-!-margin-top-4" if loop.index > 0}} app-summary-card-pad govuk-!-margin-bottom-6" id="sentence">
 
-                    <div class="app-summary-card__body">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row govuk-summary-list__row_greyback">
-                                <dt class="govuk-summary-list__key">Offence</dt>
+                                <dt class="govuk-summary-list__key govuk-!-padding-left-3">Offence</dt>
                                 <dd class="govuk-summary-list__value">
                                     {% if offenceData | length == 1 %}
                                         {%- for offence in offenceData  if offenceData %}
@@ -95,7 +94,7 @@
                             </div>
 
                             <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">Order</dt>
+                                <dt class="govuk-summary-list__key govuk-!-padding-left-3">Order</dt>
                                 <dd class="govuk-summary-list__value">
                                     <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
                                         {{ event.sentence.description }}
@@ -111,7 +110,7 @@
                             </div>
 
                             <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">Requirements</dt>
+                                <dt class="govuk-summary-list__key govuk-!-padding-left-3">Requirements</dt>
                                 <dd class="govuk-summary-list__value">
                                     <ul class="govuk-list govuk-list--bullet">
                                         {%- for requirement in event.requirements  if event.requirements %}
@@ -131,7 +130,7 @@
                             </div>
 
                             <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">Next Appointment</dt>
+                                <dt class="govuk-summary-list__key govuk-!-padding-left-3">Next Appointment</dt>
                                 <dd class="govuk-summary-list__value">
                                     {% if data.nextAppointmentDate %}
                                         <p>
@@ -144,14 +143,13 @@
                             </div>
 
                             <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">Failure to comply since {{ event.failureToComplyStartDate | dateFormat  }}</dt>
+                                <dt class="govuk-summary-list__key govuk-!-padding-left-3">Failure to comply since {{ event.failureToComplyStartDate | dateFormat  }}</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p>{{ event.failureToComplyCount }}
                                     </p>
                                 </dd>
                             </div>
               </dl>
-                    </div>
                 </section>
 
             {% endfor -%}

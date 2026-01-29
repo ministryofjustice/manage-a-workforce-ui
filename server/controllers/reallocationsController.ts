@@ -54,11 +54,28 @@ export default class ReallocationsController {
     if (search) {
       try {
         searchData = await this.allocationsService.getCrnForReallocation(search.toUpperCase(), token)
+
+        if (searchData.manager && !searchData.manager?.allocated) {
+          searchData = null
+          error = true
+        }
       } catch {
         error = true
       }
 
       if (searchData) {
+        const { access } = await this.allocationsService.getRestrictedStatusByCrns(res.locals.user.token, [
+          searchData.crn,
+        ])
+
+        if (access.length > 0) {
+          searchData = {
+            ...searchData,
+            apopExcluded: access[0].userRestricted,
+            excluded: access[0].userExcluded,
+          }
+        }
+
         try {
           await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, searchData.crn)
         } catch {
@@ -148,6 +165,7 @@ export default class ReallocationsController {
       errors: req.flash('errors') || [],
       instructions,
       reason,
+      journey: 'reallocations',
     })
   }
 
@@ -178,6 +196,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 
@@ -244,6 +263,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 
@@ -276,6 +296,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 
@@ -308,6 +329,7 @@ export default class ReallocationsController {
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
+      journey: 'reallocations',
     })
   }
 
@@ -587,10 +609,29 @@ export default class ReallocationsController {
   }
 
   async reallocationComplete(req: Request, res: Response, crn: string, pduCode: string) {
+    const [crnDetails, laoRestricted, allocatedCase] = await Promise.all([
+      await this.allocationsService.getCrn(res.locals.user.token, crn),
+      await this.allocationsService.getLaoStatus(crn, res.locals.user.token),
+      await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
+    ])
+    const convictionNumber = allocatedCase.activeEvents[0].number
+    const allocationCompleteDetails = await this.workloadService.getAllocationCompleteDetails(
+      res.locals.user.token,
+      crn,
+      convictionNumber,
+    )
+
+    crnDetails.name.surname = unescapeApostrophe(crnDetails.name.surname)
+    crnDetails.name.combinedName = unescapeApostrophe(crnDetails.name.combinedName)
+
     res.render('pages/reallocations/reallocation-complete', {
+      title: 'Case reallocated | Manage a workforce',
       crn,
       pduCode,
       title: 'Reallocation complete | Manage a Workforce',
+      data: crnDetails,
+      staffData: allocationCompleteDetails.staff,
+      laoRestricted,
       journey: 'reallocations',
     })
   }

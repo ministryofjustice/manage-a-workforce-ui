@@ -128,10 +128,10 @@ export default class AllocationsService {
     })) as string
   }
 
-  async getCrn(token: string, crn: string): Promise<string> {
+  async getCrn(token: string, crn: string): Promise<CrnDetails> {
     return (await this.restClient(token).get({
       path: `/allocated/crn/${crn}`,
-    })) as string
+    })) as CrnDetails
   }
 
   async getCrnAccess(token: string, staffId: string, crn: string): Promise<string> {

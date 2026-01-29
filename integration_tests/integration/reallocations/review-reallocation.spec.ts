@@ -65,7 +65,7 @@ context('Review reallocation', () => {
     Page.verifyOnPage(ReviewReallocationsPage)
   })
 
-  it('Reallocating to, from and reason visible on page', () => {
+  it('reallocating details visible on page', () => {
     cy.contains('h1', 'Review reallocation').should('be.visible')
 
     cy.contains('.govuk-summary-list__key', 'Reallocating from')

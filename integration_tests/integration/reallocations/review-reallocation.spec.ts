@@ -3,7 +3,6 @@ import Page from '../../pages/page'
 import ChoosePractitionerPage from '../../pages/choosePractitioner'
 
 context('Review reallocation', () => {
-  let reviewReallocationsPage: ReviewReallocationsPage
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetPotentialOffenderManagerWorkload', {})

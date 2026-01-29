@@ -71,10 +71,21 @@ export default function getReallocationsRoutes(
     await reallocationsController.selectAllocatePractitioner(req, res, crn, pduCode)
   })
 
-  get('/pdu/:pduCode/:crn/reallocations/:staffTeamCode/:currentStaffCode/:newStaffCode/review-reallocation', async (req, res) => {
+  get(
+    '/pdu/:pduCode/:crn/reallocations/:staffTeamCode/:currentStaffCode/:newStaffCode/review-reallocation',
+    async (req, res) => {
       const { pduCode, crn, staffTeamCode, currentStaffCode, newStaffCode } = req.params
-      await reallocationsController.getReviewReallocation(req, res, crn, pduCode, staffTeamCode, currentStaffCode, newStaffCode)
-  })
+      await reallocationsController.getReviewReallocation(
+        req,
+        res,
+        crn,
+        pduCode,
+        staffTeamCode,
+        currentStaffCode,
+        newStaffCode,
+      )
+    },
+  )
 
   get('/pdu/:pduCode/:crn/reallocations/:staffTeamCode/:staffCode/reallocation-complete', async (req, res) => {
     const { pduCode, crn } = req.params

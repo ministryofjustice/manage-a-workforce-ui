@@ -628,7 +628,6 @@ export default class ReallocationsController {
       title: 'Case reallocated | Manage a workforce',
       crn,
       pduCode,
-      title: 'Reallocation complete | Manage a Workforce',
       data: crnDetails,
       staffData: allocationCompleteDetails.staff,
       laoRestricted,

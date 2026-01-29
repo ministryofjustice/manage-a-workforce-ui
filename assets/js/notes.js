@@ -16,7 +16,7 @@ loadNotes = function (textArea, reason, newNotesItem) {
       }
     } catch (e) {
       // log so we can fix
-      console.log(`Unable to read item ${key}`)
+      console.log(`Unable to read item ${newNotesItem}`)
     }
   }
 }
@@ -36,7 +36,7 @@ removeExpiredNotes = function (timeoutInSeconds, currentTimeInSeconds) {
       var storedInstructions = JSON.parse(value)
     } catch (e) {
       // not json - assume old style value
-      console.log(`Porting old instructios: ${key}`)
+      console.log(`Porting old instructions: ${key}`)
       var item = { v: value, t: currentTimeInSeconds }
       localStorage.setItem(key, JSON.stringify(item))
       continue

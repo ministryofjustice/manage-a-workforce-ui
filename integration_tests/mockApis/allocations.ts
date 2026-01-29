@@ -1201,4 +1201,20 @@ export default {
       },
     })
   },
+
+  stubGetAssessmentDate: (): SuperAgentRequest => {
+    return stubForAllocation({
+      request: {
+        method: 'GET',
+        urlPattern: `/cases/J678910/assessmentDate`,
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          updatedDate: '2026-05-29T08:26:05.390Z',
+        },
+      },
+    })
+  },
 }

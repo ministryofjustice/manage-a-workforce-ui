@@ -88,8 +88,10 @@
       aria-describedby="crn-lookup-heading"
       value="{{params.value}}"
 />
+
+    <button type="submit" class="govuk-button  govuk-!-margin-left-1" data-form-submit>Search</button>
     {% if params.notFound %}
-      <p class="govuk-body govuk-!-margin-top-7">No results found for this CRN</p>
+      <p class="govuk-body">No results found for this CRN</p>
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -102,7 +104,6 @@
       </div>
 
     {% endif %}
-    <button type="submit" class="govuk-button  govuk-!-margin-left-1" data-form-submit>Search</button>
   </form>
   {% if params.data %}
     <div class ="crn-lookup-results" class="govuk-!-margin-top-4 govuk-!-margin-bottom-8 govuk-!-margin-left-4 govuk-!-margin-right-4">

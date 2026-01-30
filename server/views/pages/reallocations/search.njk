@@ -60,12 +60,12 @@
   </div>
 
   {{ crnLookup({
-        data: searchData,
-        action: "/pdu/" + pduCode + "/reallocations",
-        value: search,
-        errorMessage: { text: "No result found for this CRN."} if error,
-        pduCode: pduCode
-    }) }}
+      data: searchData,
+      action: "/pdu/" + pduCode + "/reallocations",
+      value: search,
+      notFound: notFound,
+      pduCode: pduCode
+  }) }}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <fieldset class="govuk-fieldset" aria-describedby="team-hint">

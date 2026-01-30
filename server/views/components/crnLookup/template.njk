@@ -1,4 +1,5 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% macro nameField(params) %}
   {% if params.data.apopExcluded === true %}
@@ -6,21 +7,13 @@
     <span class="govuk-tag govuk-tag--orange">Restricted access</span>
   {% else %}
     <p class="govuk-!-margin-bottom-2 govuk-!-margin-top-0">
-      {% if params.data.outOfAreaTransfer === true %}
-        <span class="govuk-!-font-weight-bold">{{params.data.name.combinedName}}</span><br/>
-      {% else %}
-        <a href="/pdu/{{params.pduCode}}/{{params.data.crn}}/reallocation-case-view" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="{{params.data.crn}}-{{params.data.convictionNumber}}">
-          {{params.data.name.combinedName}}
-        </a>
-      {% endif %}
+      <a href="/pdu/{{params.pduCode}}/{{params.data.crn}}/reallocation-case-view" class="govuk-link--no-visited-state govuk-!-font-weight-bold" data-qa-link="{{params.data.crn}}-{{params.data.convictionNumber}}">
+        {{params.data.name.combinedName}}
+      </a>
     </p>
     {% if params.data.excluded === true %}
       <p class="govuk-!-display-block govuk-!-margin-top-3 govuk-!-margin-bottom-0">
         <span class="govuk-tag govuk-tag--orange">Restricted access</span></p>
-    {% endif %}
-    {% if params.data.outOfAreaTransfer === true %}
-      <p class="govuk-!-display-block govuk-!-margin-top-3 govuk-!-margin-bottom-0">
-        <span class="govuk-tag govuk-tag--orange">Not in region</span></p>
     {% endif %}
   {% endif %}
 {% endmacro %}
@@ -86,9 +79,6 @@
   </span>
 
   <form method="GET" action="{{params.action}}" class="govuk-form-group govuk-!-margin-top-1 {{"govuk-form-group--error" if params.errorMessage}}" data-validate-form="crn-lookup">
-    {% if params.errorMessage %}
-      <p id="crn-error" class="govuk-error-message">{{params.errorMessage.text}}</p>
-    {% endif %}
     <input
       class="govuk-input govuk-input--width-20"
       id="crn"
@@ -98,6 +88,20 @@
       aria-describedby="crn-lookup-heading"
       value="{{params.value}}"
 />
+    {% if params.notFound %}
+      <p class="govuk-body govuk-!-margin-top-7">No results found for this CRN</p>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          {{ govukDetails({
+                classes: "crn-lookup-not-found-details",
+                summaryText: "Help with reallocations search",
+                html: "No searches will be returned for cases: <ul><li>that have not been allocated yet</li><li>with no active orders</li><li>outside your region</li></ul>"
+              }) }}
+        </div>
+      </div>
+
+    {% endif %}
     <button type="submit" class="govuk-button  govuk-!-margin-left-1" data-form-submit>Search</button>
   </form>
   {% if params.data %}

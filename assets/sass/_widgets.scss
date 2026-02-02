@@ -210,3 +210,7 @@ $unavailable-score-background-colour: #ffffff;
     }
   }
 }
+
+.crn-lookup-not-found-details[open] {
+  background-color: govuk-colour('white');
+}

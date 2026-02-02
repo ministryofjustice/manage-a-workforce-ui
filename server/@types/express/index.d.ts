@@ -32,7 +32,6 @@ declare module 'express-session' {
     allocatedOfficer: string
     reason: string
     currentOffenderManager: CurrentOffenderManagerForm
-    reallocationConfirmation: object
   }
 }
 

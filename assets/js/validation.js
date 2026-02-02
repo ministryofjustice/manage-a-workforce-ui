@@ -209,18 +209,6 @@ window.addEventListener('load', () => {
         nourl: 'You cannot include links in the allocation notes',
       },
     ],
-    'choose-practitioner-reallocation': [
-      {
-        instructions: 'nourl',
-        allocatedOfficer: 'required',
-        reason: 'required',
-      },
-      {
-        required: 'Select a probation practitioner',
-        nourl: 'You cannot include links in the allocation notes',
-        'required.reason': 'Select a reason for reallocation',
-      },
-    ],
     'crn-lookup': [
       {
         search: 'crn',

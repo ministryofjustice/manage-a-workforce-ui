@@ -6,6 +6,8 @@
 {% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% from "../../components/reallocationInstructions/macro.njk" import instructionsForm %}
 {% from "../../components/reallocationReason/macro.njk" import reallocationReason %}
@@ -176,7 +178,7 @@
     <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{ pduCode }}/select-teams">Edit my teams list</a>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
-        <form method="post">
+        <form data-validate-form="choose-practitioner" method="post">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             <div class="govuk-form-group govuk-!-margin-top-6">
                 {{ govukTabs({

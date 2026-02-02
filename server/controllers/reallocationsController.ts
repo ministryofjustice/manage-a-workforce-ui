@@ -600,7 +600,7 @@ export default class ReallocationsController {
         instructions: reallocationNotes,
       })
 
-      return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/:staffTeamCode/:staffCode/reallocation-complete`)
+      return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/${staffTeamCode}/${newStaffCode}/reallocation-complete`)
     }
 
     return res.redirect(

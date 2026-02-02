@@ -27,3 +27,28 @@ export const unescapeApostrophe = (name?: string): string | null => {
 
   return name.replace('&#39;', "'")
 }
+
+type HasPersonWithEmail = {
+  person?: Array<{ email?: string }>
+}
+
+export function filterEmptyEmails<T extends HasPersonWithEmail>(form: T): T {
+  return {
+    ...form,
+    person: form.person?.filter(person => person.email),
+  }
+}
+
+/**
+ * Converts a validator-style string like "person.0.email" to "person[0][email]"
+ */
+export function toArrayNotation(href: string): string {
+  return href.split('.').reduce((acc, text) => `${acc}[${text}]`)
+}
+
+/**
+ * Converts an object { text, href } and fixes the href to array notation
+ */
+export function fixupArrayNotation({ text, href }: { text: string; href: string }) {
+  return { text, href: toArrayNotation(href) }
+}

@@ -5,7 +5,7 @@ import FeatureFlagService from '../services/featureFlagService'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 import WorkloadService from '../services/workloadService'
-import { unescapeApostrophe } from '../utils/utils'
+import { unescapeApostrophe, filterEmptyEmails, fixupArrayNotation } from '../utils/utils'
 import AllocatedCase from '../models/AllocatedCase'
 import DisplayAddress from './data/DisplayAddress'
 import Conviction from '../models/Conviction'
@@ -637,10 +637,6 @@ export default class ReallocationsController {
   }
 }
 
-function filterEmptyEmails(form: ConfirmReallocationForm): ConfirmReallocationForm {
-  return { ...form, person: form.person?.filter(person => person.email) }
-}
-
 function flattenRiskLevels(risk: Risk): Risk {
   return {
     ...risk,
@@ -648,20 +644,4 @@ function flattenRiskLevels(risk: Risk): Risk {
     rsrLevel: risk.rsr?.level,
     ogrsScore: risk.ogrs?.score,
   }
-}
-
-function toArrayNotation(href: string) {
-  /*
-  validator returns:
-  "person.0.email"
-  we want:
-  "person[0][email]"
-  as ID
-  */
-  const parts = href.split(/\./)
-  return parts.reduce((acc, text) => `${acc}[${text}]`)
-}
-
-function fixupArrayNotation({ text, href }: { text: string; href: string }) {
-  return { text, href: toArrayNotation(href) }
 }

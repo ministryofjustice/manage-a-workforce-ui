@@ -20,7 +20,7 @@ import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
-import { unescapeApostrophe } from '../utils/utils'
+import { unescapeApostrophe, filterEmptyEmails, fixupArrayNotation } from '../utils/utils'
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
 import FeatureFlagService from '../services/featureFlagService'
 import CrnDetails from '../models/ReallocationCrnDetails'
@@ -819,26 +819,6 @@ export default class AllocationsController {
       emailCopyOptOut,
     })
   }
-}
-
-function filterEmptyEmails(form: ConfirmInstructionForm): ConfirmInstructionForm {
-  return { ...form, person: form.person?.filter(person => person.email) }
-}
-
-function toArrayNotation(href: string) {
-  /*
-  validator returns:
-  "person.0.email"
-  we want:
-  "person[0][email]"
-  as ID
-  */
-  const parts = href.split(/\./)
-  return parts.reduce((acc, text) => `${acc}[${text}]`)
-}
-
-function fixupArrayNotation({ text, href }: { text: string; href: string }) {
-  return { text, href: toArrayNotation(href) }
 }
 
 export function getChoosePractitionerDataByTeam(

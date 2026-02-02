@@ -115,7 +115,8 @@ export default class ReallocationsController {
       teams: caseInformationByTeam,
       pduName: probationDeliveryUnitDetails.name,
       regionName: probationDeliveryUnitDetails.region.name,
-      error,
+      error: notFound,
+      notFound,
       title: 'Search | Manage a Workforce',
       journey: 'reallocations',
     })

@@ -145,22 +145,12 @@
 {% set offenderManagerDetails = ' by ' + currentOffenderManager.forenames + ' ' + currentOffenderManager.surname + (' (' + currentOffenderManager.grade + ')' if currentOffenderManager.grade) if currentOffenderManager%}
 
 {% block beforeContent %}
-    {{ govukBreadcrumbs({
-        items: [
-            {
-                text: "Home",
-                href: "/pdu/" + pduCode + "/teams"
-            },
-            {
-                text: "Unallocated cases",
-                href: "/pdu/" + pduCode + "/find-unallocated"
-            },
-            {
-                text: "Case details",
-                href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/case-view"
-            }
-        ]
-    }) }}
+  {{ govukBackLink({
+    text: "Back",
+    attributes: {
+      "data-back" : undefined
+    }
+  }) }}
     {% if errors | length > 0 %}
         {{ govukErrorSummary({
           titleText: "There is a problem",

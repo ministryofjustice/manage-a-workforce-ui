@@ -34,7 +34,7 @@ context('Reallocations Search', () => {
     cy.task('stubForStaffLaoStatusByCrns', ['A123456'])
     reallocationsSearchPage.search().get('input#crn').type('A123456')
     reallocationsSearchPage.search().get('button').click()
-    reallocationsSearchPage.search().should('contain.text', 'No result found for this CRN.')
+    reallocationsSearchPage.search().should('contain.text', 'Help with reallocations search')
   })
 
   it('should display an error when case is unallocated', () => {
@@ -42,7 +42,7 @@ context('Reallocations Search', () => {
     cy.task('stubForStaffLaoStatusByCrns', ['A123456'])
     reallocationsSearchPage.search().get('input#crn').type('A123456')
     reallocationsSearchPage.search().get('button').click()
-    reallocationsSearchPage.search().should('contain.text', 'No result found for this CRN.')
+    reallocationsSearchPage.search().should('contain.text', 'Help with reallocations search')
   })
 
   it('should display case details when a valid CRN is entered', () => {
@@ -122,20 +122,8 @@ context('Reallocations Search', () => {
     cy.task('stubGetCrnAccess', { crn: 'A123456', status: 403 })
     reallocationsSearchPage.search().get('input#crn').type('A123456')
     reallocationsSearchPage.search().get('button').click()
-
-    reallocationsSearchPage.case().should('exist')
-
-    reallocationsSearchPage
-      .case()
-      .get('tbody tr')
-      .first()
-      .within(() => {
-        cy.get('td').should('contain.text', 'Jane Doe')
-        cy.get('td').should('contain.text', 'Not in region')
-        cy.get('td').should('contain.text', 'A123456')
-        cy.get('td').should('contain.text', '25 May 1958')
-        cy.get('td').should('contain.text', 'John Doe')
-      })
+    reallocationsSearchPage.case().should('not.exist')
+    reallocationsSearchPage.search().should('contain.text', 'Help with reallocations search')
   })
 
   it('team data displayed in table', () => {

@@ -49,18 +49,17 @@ export default class ReallocationsController {
     ])
 
     let searchData
-    let error: boolean = false
+    let notFound: boolean = false
 
     if (search) {
       try {
         searchData = await this.allocationsService.getCrnForReallocation(search.toUpperCase(), token)
-
-        if (searchData.manager && !searchData.manager?.allocated) {
+        if ((searchData.manager && !searchData.manager?.allocated) || !searchData.hasActiveOrder) {
           searchData = null
-          error = true
+          notFound = true
         }
       } catch {
-        error = true
+        notFound = true
       }
 
       if (searchData) {
@@ -79,7 +78,8 @@ export default class ReallocationsController {
         try {
           await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, searchData.crn)
         } catch {
-          searchData.outOfAreaTransfer = true
+          searchData = null
+          notFound = true
         }
       }
     }

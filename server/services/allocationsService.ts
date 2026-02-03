@@ -24,6 +24,7 @@ interface CachedValue {
   instructions?: string
   isSensitive?: boolean
   emailCopyOptOut?: boolean
+  emailPreviousOfficer?: boolean
   person?: { email: string }[]
   sendEmailCopyToAllocatingOfficer?: boolean
   spoOversightContact?: string

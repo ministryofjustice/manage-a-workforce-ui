@@ -18,6 +18,12 @@ declare module 'forms' {
     reason?: string
   }
 
+  export interface ReallocationChoosePractitionerForm {
+    allocatedOfficer?: string
+    reallocationNotes?: string
+    reason?: string
+  }
+
   export interface ConfirmReallocationForm {
     reallocationNotes?: string
     previousStaffCode: string
@@ -27,8 +33,12 @@ declare module 'forms' {
     }[]
     isSensitive: boolean
     emailPreviousOfficer: boolean
-    nextAppointmentDate?: string
-    lastOasysAssessmentDate?: string
-    failureToComply?: string
+  }
+
+  export interface CurrentOffenderManagerForm {
+    code: string
+    forenames: string
+    surname: string
+    grade: string
   }
 }

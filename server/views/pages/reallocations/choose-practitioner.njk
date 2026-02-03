@@ -5,7 +5,6 @@
 {% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% from "../../components/reallocationInstructions/macro.njk" import instructionsForm %}
@@ -146,17 +145,17 @@
 {% set offenderManagerDetails = ' by ' + currentOffenderManager.forenames + ' ' + currentOffenderManager.surname + (' (' + currentOffenderManager.grade + ')' if currentOffenderManager.grade) if currentOffenderManager%}
 
 {% block beforeContent %}
-    {{ govukBackLink({
-      text: "Back",
-      attributes: {
-       "data-back" : undefined
-      }
-    }) }}
+  {{ govukBackLink({
+    text: "Back",
+    attributes: {
+      "data-back" : undefined
+    }
+  }) }}
     {% if errors | length > 0 %}
         {{ govukErrorSummary({
-      titleText: "There is a problem",
-      errorList: errors
-    }) }}
+          titleText: "There is a problem",
+          errorList: errors
+      }) }}
     {% endif %}
 {% endblock %}
 
@@ -174,15 +173,9 @@
     {% endif %}
 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Reallocate to a probation practitioner</h1>
-    <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{pduCode}}/select-teams">Edit my teams list</a>
+    <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{ pduCode }}/select-teams">Edit my teams list</a>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
-    {% if error %}
-        <div class="govuk-form-group govuk-form-group--error">
-            <p id="select-probation-practitioner" class="govuk-error-message">
-                <span class="govuk-visually-hidden">Error:</span> Select a probation practitioner
-            </p>
-        {% endif %}
         <form data-validate-form="choose-practitioner" method="post">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             <div class="govuk-form-group govuk-!-margin-top-6">
@@ -193,19 +186,23 @@
 
             <div class="govuk-width-container">
 
-                {{
-                            instructionsForm({
-                                inGridRow: true,
-                                showHintText: false,
-                                crn: crn,
-                                errorMessage: errors | findError('reallocationNotes'),
-                                laoCase: laoCase,
-                                instructions: instructions
-                            })
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        {{
+                        instructionsForm({
+                          inGridRow: true,
+                          showHintText: false,
+                          crn: crn,
+                          errorMessage: errors | findError('reallocationNotes'),
+                          laoCase: laoCase,
+                          instructions: instructions
+                        })
                         }}
-                {{
-                            reallocationReason({ errors: errors })
-                        }}
+                        {{ reallocationReason({
+                          errorMessage: errors | findError('reason')
+                        }) }}
+                    </div>
+                </div>
 
             </div>
 
@@ -218,10 +215,6 @@
             }) }}
             </div>
         </form>
-        {% if error %}
-        </div>
-    {% endif %}
-
 {% endblock %}
 
 {% block javascripts %}

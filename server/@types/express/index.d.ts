@@ -1,4 +1,11 @@
-import type { ConfirmInstructionForm, DecisionEvidenceForm, ReallocationCaseSummaryForm } from 'forms'
+import {
+  ConfirmInstructionForm,
+  DecisionEvidenceForm,
+  ReallocationCaseSummaryForm,
+  CurrentOffenderManagerForm,
+  ConfirmReallocationForm,
+  ReallocationChoosePractitionerForm,
+} from 'forms'
 
 export default {}
 
@@ -20,6 +27,11 @@ declare module 'express-session' {
       sendEmailCopyToAllocatingOfficer: boolean
     }
     caseSummaryForm: ReallocationCaseSummaryForm
+    confirmReallocationForm: ConfirmReallocationForm
+    choosePractitionerForm: ReallocationChoosePractitionerForm
+    allocatedOfficer: string
+    reason: string
+    currentOffenderManager: CurrentOffenderManagerForm
   }
 }
 

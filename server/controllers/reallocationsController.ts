@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
-import { ConfirmReallocationForm, ReallocationCaseSummaryForm } from 'forms'
+import { ConfirmReallocationForm, ReallocationCaseSummaryForm, ReallocationChoosePractitionerForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
 import FeatureFlagService from '../services/featureFlagService'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 import WorkloadService from '../services/workloadService'
-import { unescapeApostrophe } from '../utils/utils'
+import { unescapeApostrophe, filterEmptyEmails, fixupArrayNotation } from '../utils/utils'
 import AllocatedCase from '../models/AllocatedCase'
 import DisplayAddress from './data/DisplayAddress'
 import Conviction from '../models/Conviction'
@@ -20,6 +20,9 @@ import {
 import trimForm from '../utils/trim'
 import validate from '../validation/validation'
 import ReallocationData from '../models/ReallocationData'
+import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
+import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
+import Risk from '../models/Risk'
 
 export default class ReallocationsController {
   constructor(
@@ -114,7 +117,7 @@ export default class ReallocationsController {
       regionName: probationDeliveryUnitDetails.region.name,
       error: notFound,
       notFound,
-      title: 'Reallocations | Manage a Workforce',
+      title: 'Search | Manage a Workforce',
       journey: 'reallocations',
     })
   }
@@ -129,7 +132,7 @@ export default class ReallocationsController {
 
     const [response, risk, assessmentDate] = await Promise.all([
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
-      await this.allocationsService.getCaseRisk(res.locals.user.token, crn),
+      flattenRiskLevels(await this.allocationsService.getCaseRisk(res.locals.user.token, crn)),
       await this.allocationsService.getAssessmentDate(res.locals.user.token, crn),
     ])
 
@@ -143,20 +146,7 @@ export default class ReallocationsController {
       res.locals.user.username,
     )
 
-    if (risk.roshRisk) {
-      risk.roshLevel = risk.roshRisk.overallRisk
-    }
-
-    if (risk.rsr) {
-      risk.rsrLevel = risk.rsr.level
-    }
-
-    if (risk.ogrs) {
-      risk.ogrsScore = risk.ogrs.score
-    }
-
     const formData = req.session.caseSummaryForm || {}
-    req.session.caseSummaryForm = null
 
     const instructions = formData.reallocationNotes || cachedInstructions || ''
     const reason = formData.reason || ''
@@ -169,7 +159,7 @@ export default class ReallocationsController {
       crn: response.crn,
       tier: response.tier,
       name: response.name,
-      title: 'Reallocation | Manage a Workforce',
+      title: 'Summary | Manage a Workforce',
       pduCode,
       outOfAreaTransfer: response.outOfAreaTransfer,
       laoCase,
@@ -378,28 +368,107 @@ export default class ReallocationsController {
       surname: allocationInformationByTeam.communityPersonManager.name.surname,
       grade: allocationInformationByTeam.communityPersonManager.grade,
     }
+    const currentManagerCode = allocationInformationByTeam.communityPersonManager.code
 
     const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
-    const error = req.query.error === 'true'
+
+    req.session.currentOffenderManager = offenderManager
 
     res.render('pages/reallocations/choose-practitioner', {
       crn: allocationInformationByTeam.crn,
       tier: allocationInformationByTeam.tier,
       pduCode,
-      errors: [],
-      title: 'Reallocations | Manage a Workforce',
+      title: 'Choose practitioner | Manage a Workforce',
       journey: 'reallocations',
       offenderManagersToAllocatePerTeam,
       name,
       currentOffenderManager: offenderManager,
       missingEmail,
-      error,
+      errors: req.flash('errors') || [],
       laoCase,
+      currentManagerCode,
     })
   }
 
-  async allocateToPractitioner(req: Request, res: Response, crn: string, pduCode: string) {
-    res.redirect(`/pdu/${pduCode}/${crn}/reallocations/confirm-reallocation`)
+  async getReviewReallocation(
+    req: Request,
+    res: Response,
+    crn: string,
+    pduCode: string,
+    staffTeamCode: string,
+    currentStaffCode: string,
+    newStaffCode: string,
+  ): Promise<void> {
+    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
+
+    if (!reallocationEnabledFlag) {
+      res.redirect(`/pdu/${pduCode}/teams`)
+      return
+    }
+
+    const [response, risk, assessmentDate] = await Promise.all([
+      await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
+      flattenRiskLevels(await this.allocationsService.getCaseRisk(res.locals.user.token, crn)),
+      await this.allocationsService.getAssessmentDate(res.locals.user.token, crn),
+    ])
+
+    const workload: OffenderManagerPotentialWorkload = await this.workloadService.getCaseAllocationImpact(
+      res.locals.user.token,
+      crn,
+      newStaffCode,
+      staffTeamCode,
+    )
+
+    workload.staff.name.combinedName = unescapeApostrophe(workload.staff.name.combinedName)
+    workload.staff.name.surname = unescapeApostrophe(workload.staff.name.surname)
+
+    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+
+    const address = new DisplayAddress(response.address)
+    response.name = unescapeApostrophe(response.name)
+
+    const {
+      instructions: cachedInstructions,
+      person,
+      isSensitive,
+      emailPreviousOfficer,
+    } = await this.allocationsService.getCrnOnlyNotesCache(crn, res.locals.user.username)
+
+    const formData: ReallocationCaseSummaryForm = req.session.confirmReallocationForm || {}
+
+    const instructions = formData.reallocationNotes || cachedInstructions || ''
+
+    const { currentOffenderManager } = req.session
+
+    const currentOffenderManagerName = `${currentOffenderManager.forenames} ${currentOffenderManager.surname}`
+    const chosenOffenderManagerName = workload.staff.name.combinedName
+
+    res.render('pages/reallocations/review-reallocation.njk', {
+      data: response,
+      assessment: assessmentDate,
+      risk,
+      address,
+      newStaffCode,
+      staffTeamCode,
+      currentStaffCode,
+      crn: response.crn,
+      tier: response.tier,
+      name: response.name,
+      title: 'Review reallocation | Manage a Workforce',
+      journey: 'reallocations',
+      pduCode,
+      outOfAreaTransfer: response.outOfAreaTransfer,
+      laoCase,
+      currentOffenderManagerName,
+      currentOffenderManager,
+      chosenOffenderManagerName,
+      instructions,
+      reason: req.session.reason,
+      person,
+      isSensitive,
+      emailPreviousOfficer,
+      errors: req.flash('errors') || [],
+    })
   }
 
   async submitCaseSummary(req: Request, res: Response, pduCode: string, crn: string, form) {
@@ -422,24 +491,77 @@ export default class ReallocationsController {
     return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/choose-practitioner`)
   }
 
-  async reviewReallocationPractitioner() {
-    // TODO get team and code and practitioner code from form or maybe it is passed
-    // TODO call page to display all details and allow submit
+  async selectAllocatePractitioner(req: Request, res: Response, crn, pduCode) {
+    const choosePractitionerForm = trimForm<ReallocationChoosePractitionerForm>(req.body)
+
+    const errors = validate(
+      choosePractitionerForm,
+      { allocatedOfficer: 'required', reallocationNotes: 'nourl', reason: 'required' },
+      {
+        'required.allocatedOfficer': 'Select a practitioner',
+        'nourl.reallocationNotes': 'You cannot include links in the allocation notes',
+        'required.reason': 'Select a reallocation reason',
+      },
+    )
+
+    if (errors.length) {
+      req.session.choosePractitionerForm = choosePractitionerForm
+      req.flash('errors', errors)
+      return this.getPractitioners(req, res, crn, pduCode)
+    }
+
+    const { allocatedOfficer: teamAndStaffCode } = req.body
+
+    if (!teamAndStaffCode) {
+      req.flash('errors', [{ text: 'Select a practitioner', href: '#allocatedOfficer' }])
+      return this.getPractitioners(req, res, crn, pduCode)
+    }
+
+    const { teamCode: staffTeamCode, staffCode: newStaffCode } = TeamAndStaffCode.decode(teamAndStaffCode)
+
+    const { currentOffenderManager } = req.session
+    const currentStaffCode = currentOffenderManager.code
+
+    req.session.reason = choosePractitionerForm.reason || ''
+    req.session.allocatedOfficer = choosePractitionerForm.allocatedOfficer || ''
+
+    return res.redirect(
+      `/pdu/${pduCode}/${crn}/reallocations/${staffTeamCode}/${currentStaffCode}/${newStaffCode}/review-reallocation`,
+    )
   }
 
-  async submitCaseReallocation(req: Request, res: Response, crn, staffTeamCode, staffCode, form, pduCode) {
-    const confirmReallocationForm = trimForm<ConfirmReallocationForm>(form)
+  async submitCaseReallocation(req: Request, res: Response, crn, staffTeamCode, newStaffCode, form, pduCode) {
+    const confirmReallocationForm = filterEmptyEmails(
+      trimForm<ConfirmReallocationForm>({
+        ...form,
+        isSensitive: form.isSensitive === 'yes',
+        emailPreviousOfficer: form.emailPreviousOfficer === 'yes',
+      }),
+    )
 
-    // get information from form
+    const errors = validate(
+      confirmReallocationForm,
+      { reallocationNotes: 'nourl', 'person.*.email': 'email' },
+      {
+        'nourl.reallocationNotes': 'You cannot include links in the allocation notes',
+        email: 'Enter an email address in the correct format, like name@example.com',
+      },
+    ).map(error => fixupArrayNotation(error))
+
+    if (errors.length) {
+      req.session.confirmReallocationForm = confirmReallocationForm
+      req.flash('errors', errors)
+      return res.redirect(
+        `/pdu/${pduCode}/${crn}/reallocations/${staffTeamCode}/${confirmReallocationForm.previousStaffCode}/${newStaffCode}/review-reallocation`,
+      )
+    }
+
     const {
       emailPreviousOfficer,
       reallocationNotes,
       isSensitive: sensitiveNotes,
       previousStaffCode,
       reasonCode: allocationReason,
-      nextAppointmentDate,
-      lastOasysAssessmentDate,
-      failureToComply,
     } = confirmReallocationForm
 
     const emailTo = confirmReallocationForm.person?.map(p => p.email).filter(email => email)
@@ -447,30 +569,44 @@ export default class ReallocationsController {
 
     await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
 
-    const reallocationData: ReallocationData = {
-      token: res.locals.user.token,
-      crn,
-      previousStaffCode,
-      emailPreviousOfficer,
-      staffCode,
-      teamCode: staffTeamCode,
-      emailTo,
-      reallocationNotes,
-      sensitiveNotes,
-      laoCase,
-      allocationReason,
-      nextAppointmentDate,
-      lastOasysAssessmentDate,
-      failureToComply,
+    if (form.remove !== undefined) {
+      form.person.splice(form.remove, 1)
     }
 
-    await this.workloadService.reallocateCaseToOffenderManager(reallocationData)
-
     this.allocationsService.setCrnOnlyNotesCache(crn, res.locals.user.username, {
-      instructions: reallocationNotes,
+      instructions: form.instructions,
+      isSensitive: confirmReallocationForm.isSensitive,
+      emailPreviousOfficer: confirmReallocationForm.emailPreviousOfficer,
+      person: form.person,
     })
 
-    return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/reallocation-complete`)
+    if (form.action === 'continue') {
+      const reallocationData: ReallocationData = {
+        token: res.locals.user.token,
+        crn,
+        emailPreviousOfficer,
+        previousStaffCode,
+        newStaffCode,
+        teamCode: staffTeamCode,
+        emailTo,
+        reallocationNotes,
+        sensitiveNotes,
+        laoCase,
+        allocationReason,
+      }
+
+      await this.workloadService.reallocateCaseToOffenderManager(reallocationData)
+
+      await this.allocationsService.setCrnOnlyNotesCache(crn, res.locals.user.username, {
+        instructions: reallocationNotes,
+      })
+
+      return res.redirect(`/pdu/${pduCode}/${crn}/reallocations/${staffTeamCode}/${newStaffCode}/reallocation-complete`)
+    }
+
+    return res.redirect(
+      `/pdu/${pduCode}/${crn}/reallocations/${staffTeamCode}/${previousStaffCode}/${newStaffCode}/review-reallocation`,
+    )
   }
 
   async reallocationComplete(req: Request, res: Response, crn: string, pduCode: string) {
@@ -498,5 +634,14 @@ export default class ReallocationsController {
       laoRestricted,
       journey: 'reallocations',
     })
+  }
+}
+
+function flattenRiskLevels(risk: Risk): Risk {
+  return {
+    ...risk,
+    roshLevel: risk.roshRisk?.overallRisk,
+    rsrLevel: risk.rsr?.level,
+    ogrsScore: risk.ogrs?.score,
   }
 }

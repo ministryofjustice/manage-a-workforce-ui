@@ -68,15 +68,31 @@ export default function getReallocationsRoutes(
 
   post('/pdu/:pduCode/:crn/reallocations/choose-practitioner', async (req, res) => {
     const { pduCode, crn } = req.params
-    await reallocationsController.allocateToPractitioner(req, res, crn, pduCode)
+    await reallocationsController.selectAllocatePractitioner(req, res, crn, pduCode)
   })
+
+  get(
+    '/pdu/:pduCode/:crn/reallocations/:staffTeamCode/:currentStaffCode/:newStaffCode/review-reallocation',
+    async (req, res) => {
+      const { pduCode, crn, staffTeamCode, currentStaffCode, newStaffCode } = req.params
+      await reallocationsController.getReviewReallocation(
+        req,
+        res,
+        crn,
+        pduCode,
+        staffTeamCode,
+        currentStaffCode,
+        newStaffCode,
+      )
+    },
+  )
 
   get('/pdu/:pduCode/:crn/reallocations/:staffTeamCode/:staffCode/reallocation-complete', async (req, res) => {
     const { pduCode, crn } = req.params
     await reallocationsController.reallocationComplete(req, res, crn, pduCode)
   })
 
-  post('/pdu/:pduCode/:crn/allocate/:staffTeamCode/:staffCode/save-reallocation', async (req, res) => {
+  post('/pdu/:pduCode/:crn/reallocations/:staffTeamCode/:staffCode/save-reallocation', async (req, res) => {
     const { crn, staffTeamCode, staffCode, pduCode } = req.params
     await reallocationsController.submitCaseReallocation(req, res, crn, staffTeamCode, staffCode, req.body, pduCode)
   })

@@ -179,6 +179,16 @@ window.addEventListener('load', () => {
         'required.instructions': 'Enter allocation notes',
       },
     ],
+    'confirm-reallocation': [
+      {
+        instructions: 'nourl',
+        person_placeholder: 'empty',
+      },
+      {
+        empty: 'Find and select a justice.gov.uk email address',
+        nourl: 'You cannot include links in the allocation notes',
+      },
+    ],
     'spo-oversight': [
       {
         instructions: 'nourl|required|max:3500',

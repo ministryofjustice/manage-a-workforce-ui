@@ -59,14 +59,10 @@ export default async function nunjucksSetup(
     return dayjs(time).format('h:mma')
   })
 
-  njkEnv.addFilter('findError', (array: Error[], formFieldId: string) => {
+  njkEnv.addFilter('findError', (array: Error[] | undefined, formFieldId: string) => {
+    if (!array) return null
     const item = array.find(error => error.href === `#${formFieldId}`)
-    if (item) {
-      return {
-        text: item.text,
-      }
-    }
-    return null
+    return item ? { text: item.text } : null
   })
 
   njkEnv.addFilter('getCaseCount', (cases: number) => {

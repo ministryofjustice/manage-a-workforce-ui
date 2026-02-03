@@ -1,4 +1,5 @@
 import Address from './Address'
+import Manager from './Manager'
 
 export default interface AllocatedCase {
   name: string
@@ -7,6 +8,7 @@ export default interface AllocatedCase {
   gender?: string
   dateOfBirth: string
   age: number
+  manager?: Manager
   nextAppointmentDate?: string
   activeEvents: AllocatedEvent[]
   pncNumber: string

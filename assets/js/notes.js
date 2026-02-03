@@ -16,13 +16,16 @@ loadNotes = function (textArea, reason, newNotesItem) {
       }
     } catch (e) {
       // log so we can fix
-      console.log(`Unable to read item ${key}`)
+      console.log(`Unable to read item ${newNotesItem}`)
     }
   }
 }
 
 saveNotes = function (textArea, reason, newNotesItem, currentTimeInSeconds) {
-  var values = JSON.stringify({ instructions: textArea.value, reason: reason.value })
+  const instructionsValue = textArea?.value || ''
+  const reasonValue = reason?.value || ''
+
+  var values = JSON.stringify({ instructions: instructionsValue, reason: reasonValue })
   var item = { v: values, t: currentTimeInSeconds }
   localStorage.setItem(newNotesItem, JSON.stringify(item))
 }
@@ -36,7 +39,7 @@ removeExpiredNotes = function (timeoutInSeconds, currentTimeInSeconds) {
       var storedInstructions = JSON.parse(value)
     } catch (e) {
       // not json - assume old style value
-      console.log(`Porting old instructios: ${key}`)
+      console.log(`Porting old instructions: ${key}`)
       var item = { v: value, t: currentTimeInSeconds }
       localStorage.setItem(key, JSON.stringify(item))
       continue

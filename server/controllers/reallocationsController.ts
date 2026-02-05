@@ -539,6 +539,7 @@ export default class ReallocationsController {
       }),
     )
 
+    const reallocationReason = form.reason
     const errors = validate(
       confirmReallocationForm,
       { reallocationNotes: 'nourl', 'person.*.email': 'email' },
@@ -561,7 +562,6 @@ export default class ReallocationsController {
       reallocationNotes,
       isSensitive: sensitiveNotes,
       previousStaffCode,
-      reasonCode: allocationReason,
     } = confirmReallocationForm
 
     const emailTo = confirmReallocationForm.person?.map(p => p.email).filter(email => email)
@@ -592,7 +592,7 @@ export default class ReallocationsController {
         reallocationNotes,
         sensitiveNotes,
         laoCase,
-        allocationReason,
+        allocationReason: reallocationReason,
       }
 
       await this.workloadService.reallocateCaseToOffenderManager(reallocationData)

@@ -27,7 +27,6 @@ declare module 'forms' {
   export interface ConfirmReallocationForm {
     reallocationNotes?: string
     previousStaffCode: string
-    reasonCode: string
     person: {
       email?: string
     }[]

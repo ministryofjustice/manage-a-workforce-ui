@@ -22,9 +22,11 @@ loadNotes = function (textArea, reason, newNotesItem) {
 }
 
 saveNotes = function (textArea, reason, newNotesItem, currentTimeInSeconds) {
-  const instructionsValue = textArea?.value || ''
-  const reasonValue = reason?.value || ''
-
+  if (!textArea || !reason) {
+    return
+  }
+  const instructionsValue = textArea.value || ''
+  const reasonValue = reason.value || ''
   var values = JSON.stringify({ instructions: instructionsValue, reason: reasonValue })
   var item = { v: values, t: currentTimeInSeconds }
   localStorage.setItem(newNotesItem, JSON.stringify(item))

@@ -338,12 +338,12 @@
 
       <div class="govuk-form-group govuk-!-margin-top-4">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h3 class="govuk-fieldset__heading">Include the previous practitioner</h3>
+        <h3 class="govuk-fieldset__heading">Do you want to send this to the previous practitioner?</h3>
       </legend>
       {{ govukCheckboxes({
         name: 'emailPreviousOfficer',
         items: [{
-          text: 'Tick the box if you do not want to send it to the previous practitioner.',
+          text: 'Yes, I want to send it to the previous practitioner',
           value: 'yes',
           checked: emailPreviousOfficer
         }],

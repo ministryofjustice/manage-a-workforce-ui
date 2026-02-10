@@ -54,6 +54,7 @@
 
 {% block content %}
 
+  {% if featureFlag %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {{ govukNotificationBanner({
@@ -61,6 +62,7 @@
       }) }}
     </div>
   </div>
+  {% endif %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">

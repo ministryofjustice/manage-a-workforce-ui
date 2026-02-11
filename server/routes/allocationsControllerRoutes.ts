@@ -1,4 +1,4 @@
-import e, { type RequestHandler } from 'express'
+import e from 'express'
 
 import AllocationsController from '../controllers/allocationsController'
 import type { Services } from '../services'
@@ -14,7 +14,6 @@ export default function allocationsControllerRoutes(
     services.workloadService,
     services.userPreferenceService,
     services.probationEstateService,
-    services.featureFlagService,
   )
 
   allocationsControllerCaseViewRoutes(services, get, post, allocationsController)

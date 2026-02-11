@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { ConfirmReallocationForm, ReallocationCaseSummaryForm, ReallocationChoosePractitionerForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
-import FeatureFlagService from '../services/featureFlagService'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
 import WorkloadService from '../services/workloadService'
@@ -30,13 +29,10 @@ export default class ReallocationsController {
     private readonly workloadService: WorkloadService,
     private readonly userPreferenceService: UserPreferenceService,
     private readonly probationEstateService: ProbationEstateService,
-    private readonly featureFlagService: FeatureFlagService,
   ) {}
 
   async getSearch(req, res, pduCode: string) {
-    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
-
-    if (!reallocationEnabledFlag) {
+    if (!res.locals.featureFlags.Reallocations) {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
@@ -123,9 +119,7 @@ export default class ReallocationsController {
   }
 
   async getAllocatedCase(req: Request, res: Response, crn, pduCode): Promise<void> {
-    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
-
-    if (!reallocationEnabledFlag) {
+    if (!res.locals.featureFlags.Reallocations) {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
@@ -171,9 +165,7 @@ export default class ReallocationsController {
   }
 
   async getAllocatedPersonalDetails(req: Request, res: Response, crn, pduCode): Promise<void> {
-    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
-
-    if (!reallocationEnabledFlag) {
+    if (!res.locals.featureFlags.Reallocations) {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
@@ -202,9 +194,7 @@ export default class ReallocationsController {
   }
 
   async getAllocatedProbationRecord(req: Request, res: Response, crn, pduCode): Promise<void> {
-    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
-
-    if (!reallocationEnabledFlag) {
+    if (!res.locals.featureFlags.Reallocations) {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
@@ -269,9 +259,7 @@ export default class ReallocationsController {
   }
 
   async getAllocatedRisk(req: Request, res: Response, crn: string, pduCode: string) {
-    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
-
-    if (!reallocationEnabledFlag) {
+    if (!res.locals.featureFlags.Reallocations) {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
@@ -302,9 +290,7 @@ export default class ReallocationsController {
   }
 
   async getAllocatedDocuments(req: Request, res: Response, crn: string, pduCode: string) {
-    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
-
-    if (!reallocationEnabledFlag) {
+    if (!res.locals.featureFlags.Reallocations) {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
@@ -335,6 +321,11 @@ export default class ReallocationsController {
   }
 
   async getPractitioners(req: Request, res: Response, crn: string, pduCode: string) {
+    if (!res.locals.featureFlags.Reallocations) {
+      res.redirect(`/pdu/${pduCode}/teams`)
+      return
+    }
+
     const { token, username } = res.locals.user
     const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const laoCase = await this.allocationsService.getLaoStatus(crn, token)
@@ -399,9 +390,7 @@ export default class ReallocationsController {
     currentStaffCode: string,
     newStaffCode: string,
   ): Promise<void> {
-    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
-
-    if (!reallocationEnabledFlag) {
+    if (!res.locals.featureFlags.Reallocations) {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }

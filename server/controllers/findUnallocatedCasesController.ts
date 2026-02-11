@@ -25,6 +25,7 @@ export default class FindUnallocatedCasesController {
     const { token, username } = res.locals.user
     const teamCodes = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const pduDetails = await this.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)
+
     await this.allocationsService.getUserRegionAccessForRegion(
       res.locals.user.token,
       res.locals.user.username,

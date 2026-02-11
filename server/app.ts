@@ -40,8 +40,6 @@ export default function createApp(services: Services): express.Application {
     ...config.notification,
   }
 
-  app.use(featureFlagMiddleware('Reallocations', 'Reallocations'))
-
   app.use((req, res, next) => {
     res.locals.pageUrl = encodeURI(`${req.protocol}://${req.headers.host}${req.url}`)
     next()
@@ -52,8 +50,9 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpWebSession())
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
-  nunjucksSetup(app, path, services)
   app.use(setUpAuthentication())
+  app.use(featureFlagMiddleware(services, 'Reallocations', 'Reallocations'))
+  nunjucksSetup(app, path, services)
   app.use(unauthenticatedRoutes())
   app.use(authorisationMiddleware(['ROLE_MANAGE_A_WORKFORCE_ALLOCATE']))
   app.use(setUpCsrf())
@@ -67,6 +66,7 @@ export default function createApp(services: Services): express.Application {
   app.use(
     unless('/staff-lookup', getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService)),
   )
+
   app.use(routes(services))
   app.use((req, res, next) => next(createError(404, 'Not found')))
   app.use((req, res, next) => next(createError(403, 'Forbidden')))

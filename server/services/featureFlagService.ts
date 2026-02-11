@@ -26,7 +26,11 @@ export default class FeatureFlagService {
     return this.client
   }
 
-  async getCachedFeatureflag(flagKey: string, entityId: string): Promise<boolean> {
+  async getCachedFeatureflag(
+    flagKey: string,
+    entityId: string,
+    context: Record<string, string> = {},
+  ): Promise<boolean> {
     const cacheKey = `${flagKey}:${entityId}`
     const now = Date.now()
 
@@ -40,7 +44,7 @@ export default class FeatureFlagService {
       const response = await client.evaluateBoolean({
         entityId,
         flagKey,
-        context: {},
+        context,
       })
 
       const value = response?.enabled ?? false

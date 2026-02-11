@@ -102,7 +102,7 @@
                   f = !0, t = h, s = function () {
                   var e = {},
                     t = d.connectionString;
-                  if (t)
+                  if (t) 
                     for (var n = t.split(";"), a = 0; a < n.length; a++) {
                       var i = n[a].split("=");
                       2 === i.length && (e[i[0][b]()] = i[1])
@@ -147,7 +147,7 @@
                 function (e, t) {
                   if (JSON) {
                     var n = T.fetch;
-                    if (n && !y.useXhr)
+                    if (n && !y.useXhr) 
                       n(t, {
                         method: N,
                         body: JSON.stringify(e),
@@ -194,7 +194,7 @@
               m.cookie = l.cookie
             } catch (p) {}
             function t(e) {
-              for (; e.length;)
+              for (; e.length;) 
                 !function (t) {
                   m[t] = function () {
                     var e = arguments;
@@ -362,7 +362,7 @@
     {% endblock %}
 
     {% block navigation %}
-      {{ mawPrimaryNav({unallocatedCaseCount: unallocatedCaseCount, featureFlag: featureFlag, journey: journey }) }}
+      {{ mawPrimaryNav({unallocatedCaseCount: unallocatedCaseCount, featureFlag: featureFlags.Reallocations, journey: journey }) }}
     {% endblock %}
 
     <div class="govuk-width-container">
@@ -379,8 +379,8 @@
                 {% endset %}
 
                 {{ govukNotificationBanner({
-              html: html
-            }) }}
+                  html: html
+                }) }}
               {% endif %}
             </div>
           </div>

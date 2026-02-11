@@ -13,7 +13,6 @@ export default function getReallocationsRoutes(
     services.workloadService,
     services.userPreferenceService,
     services.probationEstateService,
-    services.featureFlagService,
   )
 
   get('/reallocations', async (_req, res) => {

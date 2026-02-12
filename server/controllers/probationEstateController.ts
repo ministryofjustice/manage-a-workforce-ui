@@ -76,6 +76,7 @@ export default class ProbationEstateController {
       body: { region },
     } = req
     if (region) {
+      res.locals.regionCode = region
       return res.redirect(`/region/${region}/probationDeliveryUnits`)
     }
     return this.getRegions(req, res, true)

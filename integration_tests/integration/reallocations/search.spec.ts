@@ -7,6 +7,7 @@ context('Reallocations Search', () => {
     cy.task('stubSetup')
     cy.task('stubGetTeamDetails', { code: 'TM2', name: 'Team Name 1' })
     cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
+    cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 200 })
     cy.signIn()
     cy.visit('/reallocations')
     reallocationsSearchPage = Page.verifyOnPage(ReallocationsSearchPage)

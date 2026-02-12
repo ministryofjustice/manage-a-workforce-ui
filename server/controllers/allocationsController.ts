@@ -22,7 +22,6 @@ import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetai
 import EstateTeam from '../models/EstateTeam'
 import { unescapeApostrophe, filterEmptyEmails, fixupArrayNotation } from '../utils/utils'
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
-import FeatureFlagService from '../services/featureFlagService'
 import CrnDetails from '../models/ReallocationCrnDetails'
 
 export default class AllocationsController {
@@ -31,7 +30,6 @@ export default class AllocationsController {
     private readonly workloadService: WorkloadService,
     private readonly userPreferenceService: UserPreferenceService,
     private readonly probationEstateService: ProbationEstateService,
-    private readonly featureFlagService: FeatureFlagService,
   ) {}
 
   async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
@@ -525,9 +523,7 @@ export default class AllocationsController {
   }
 
   async getCasesForReallocation(_, res: Response, offenderManagerTeamCode, offenderManagerCode, pduCode) {
-    const reallocationEnabledFlag = await this.featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations')
-
-    if (!reallocationEnabledFlag) {
+    if (!res.locals.featureFlags.Reallocations) {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }

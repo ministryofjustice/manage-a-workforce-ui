@@ -1,4 +1,4 @@
-import e, { type RequestHandler } from 'express'
+import e from 'express'
 
 import AllocateCasesController from '../controllers/allocateCasesController'
 import FindUnallocatedCasesController from '../controllers/findUnallocatedCasesController'
@@ -16,7 +16,6 @@ export default function getAllocationRoutes(
     services.probationEstateService,
     services.userPreferenceService,
     services.workloadService,
-    services.featureFlagService,
   )
   const findUnallocatedCasesController = new FindUnallocatedCasesController(
     services.probationEstateService,
@@ -37,7 +36,6 @@ export default function getAllocationRoutes(
     services.workloadService,
     services.userPreferenceService,
     services.probationEstateService,
-    services.featureFlagService,
   )
 
   get('/pdu/:pduCode/find-unallocated', async (req, res) => {
@@ -74,6 +72,7 @@ export default function getAllocationRoutes(
     const { teamCode, pduCode } = req.params
     await allocateCasesController.getReallocationTeamWorkload(req, res, pduCode, teamCode)
   })
+
   get('/allocations/crn-lookup', async (req, res) => {
     const crn = req.query.crn as string
     await allocationsController.lookupCrnDetailsForAllocations(

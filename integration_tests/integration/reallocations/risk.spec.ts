@@ -7,6 +7,7 @@ context('Risk', () => {
     cy.task('stubSetup')
     cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
     cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
+    cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 200 })
     cy.task('stubForFeatureflagEnabled')
     cy.task('stubGetCrnAccess')
     cy.signIn()

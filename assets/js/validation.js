@@ -211,10 +211,11 @@ window.addEventListener('load', () => {
     ],
     'crn-lookup': [
       {
-        search: 'crn',
+        search: 'crn|required',
       },
       {
         crn: 'Enter a valid CRN to search',
+        required: 'Enter a valid CRN to search',
       },
     ],
   }

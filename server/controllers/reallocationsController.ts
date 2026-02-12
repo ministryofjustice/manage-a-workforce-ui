@@ -45,17 +45,26 @@ export default class ReallocationsController {
     ])
 
     let searchData
-    let notFound: boolean = false
+    let errors = []
 
-    if (search) {
+    if (search !== undefined) {
+      errors = validate(
+        { search },
+        { search: 'crn|required' },
+        {
+          crn: 'Enter a valid CRN to search',
+          required: 'Enter a valid CRN to search',
+        },
+      ).map(error => fixupArrayNotation(error))
+
       try {
         searchData = await this.allocationsService.getCrnForReallocation(search.toUpperCase(), token)
         if ((searchData.manager && !searchData.manager?.allocated) || !searchData.hasActiveOrder) {
           searchData = null
-          notFound = true
+          errors = [{ text: 'Enter a valid CRN to search', href: '#search' }]
         }
       } catch {
-        notFound = true
+        errors = [{ text: 'Enter a valid CRN to search', href: '#search' }]
       }
 
       if (searchData) {
@@ -75,7 +84,7 @@ export default class ReallocationsController {
           await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, searchData.crn)
         } catch {
           searchData = null
-          notFound = true
+          errors = [{ text: 'Enter a valid CRN to search', href: '#search' }]
         }
       }
     }
@@ -111,8 +120,7 @@ export default class ReallocationsController {
       teams: caseInformationByTeam,
       pduName: probationDeliveryUnitDetails.name,
       regionName: probationDeliveryUnitDetails.region.name,
-      error: notFound,
-      notFound,
+      errors,
       title: 'Search | Manage a Workforce',
       journey: 'reallocations',
     })

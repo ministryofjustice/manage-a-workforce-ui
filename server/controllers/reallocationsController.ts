@@ -370,6 +370,15 @@ export default class ReallocationsController {
     }
     const currentManagerCode = allocationInformationByTeam.communityPersonManager.code
 
+    const { instructions: cachedInstructions } = await this.allocationsService.getCrnOnlyNotesCache(
+      crn,
+      res.locals.user.username,
+    )
+
+    const formData: ReallocationCaseSummaryForm = req.session.confirmReallocationForm || {}
+
+    const instructions = formData.reallocationNotes || cachedInstructions || ''
+
     const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
 
     req.session.currentOffenderManager = offenderManager
@@ -387,6 +396,7 @@ export default class ReallocationsController {
       errors: req.flash('errors') || [],
       laoCase,
       currentManagerCode,
+      instructions,
     })
   }
 

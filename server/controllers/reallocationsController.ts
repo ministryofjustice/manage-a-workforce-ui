@@ -59,11 +59,31 @@ export default class ReallocationsController {
 
       try {
         searchData = await this.allocationsService.getCrnForReallocation(search.toUpperCase(), token)
+
         if ((searchData.manager && !searchData.manager?.allocated) || !searchData.hasActiveOrder) {
-          searchData = null
-          errors = [{ text: 'Enter a valid CRN to search', href: '#search' }]
+          throw Error()
+        } else {
+          const { probationDeliveryUnit } = await this.probationEstateService.getTeamDetails(
+            token,
+            searchData.manager.teamCode,
+          )
+
+          const { region: userRegion } = await this.probationEstateService.getProbationDeliveryUnitDetails(
+            token,
+            pduCode,
+          )
+
+          const { region: caseRegion } = await this.probationEstateService.getProbationDeliveryUnitDetails(
+            token,
+            probationDeliveryUnit.code,
+          )
+
+          if (userRegion.code !== caseRegion.code) {
+            throw Error()
+          }
         }
       } catch {
+        searchData = null
         errors = [{ text: 'Enter a valid CRN to search', href: '#search' }]
       }
 

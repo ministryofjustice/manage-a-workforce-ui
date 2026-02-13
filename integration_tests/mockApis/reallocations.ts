@@ -21,14 +21,14 @@ export default {
           },
           dateOfBirth: '1958-05-25',
           manager: {
-            code: 'T35T1NG',
+            code: 'TM2',
             name: {
               forename: 'John',
               middleName: '',
               surname: 'Doe',
               combinedName: 'John Doe',
             },
-            teamCode: 'T35T1NG',
+            teamCode: 'TM2',
             grade: null,
             allocated: allocated ?? true,
           },

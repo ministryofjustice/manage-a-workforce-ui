@@ -38,17 +38,11 @@
 {% endfor %}
 
 {% block content %}
-
-  {% if error %}
+  {% if errors | length > 0 %}
     {{ govukErrorSummary({
-            titleText: "There is a problem",
-            errorList: [
-                {
-                text: "No result found for this CRN.",
-                href: "#crn-error"
-                }
-            ]
-        }) }}
+        titleText: "There is a problem",
+        errorList: errors
+    }) }}
   {% endif %}
 
   <div class="govuk-grid-row">
@@ -63,7 +57,7 @@
       data: searchData,
       action: "/pdu/" + pduCode + "/reallocations",
       value: search,
-      notFound: notFound,
+      errorMessage: errors | findError("search"),
       pduCode: pduCode
   }) }}
   <div class="govuk-grid-row">

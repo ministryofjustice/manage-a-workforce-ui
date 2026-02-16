@@ -16,15 +16,15 @@
 
             <ul class="govuk-list govuk-list--bullet">
                 <li>this case will be updated in NDelius within 5 minutes</li>
-                 {% if laoRestricted == false %}
+                {% if laoRestricted == false %}
                     <li>
                         <strong>{{ staffData.name.combinedName }}</strong> (<em>{{ staffData.email }}</em>) has been notified, and we've sent a copy of your reallocation instructions
                     </li>
-                  {% else %}
+                {% else %}
                     <li>
                         <strong>{{ staffData.name.combinedName }}</strong> (<em>{{ staffData.email }}</em>) has been notified, and we've sent a copy of your reallocation confirmation
                     </li>
-                  {% endif %}
+                {% endif %}
             </ul>
 
             <p class="govuk-body">
@@ -38,5 +38,23 @@
 {% block javascripts %}
     <script nonce="{{ cspNonce }}">
         localStorage.removeItem('instructions-save-{{ crn }}-{{ convictionNumber }}')
+    </script>
+    <script nonce="{{ cspNonce }}" id="ss-popup-1771663">
+        (function (d, w) {
+            var s,
+                ss;
+            ss = d.createElement("script");
+            ss.type = "text/javascript";
+            ss.async = true;
+            ss.type = "module";
+            ss.src = (
+                "https:" == d.location.protocol
+                ? "https://"
+                : "http://") + "embed.smartsurvey.io/index.js?popupCode=NDLVKJ";
+            s = d.getElementsByTagName("script")[0];
+            s
+                .parentNode
+                .insertBefore(ss, s);
+        })(document, window);
     </script>
 {% endblock %}

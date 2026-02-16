@@ -13,10 +13,8 @@ const loadNotes = (textArea, reason, newNotesItem) => {
     if (lastInstructions.v) {
       const savedValues = JSON.parse(lastInstructions.v)
 
-      // Load saved instructions into textarea
       textArea.value = savedValues.instructions || textArea.value
 
-      // Load saved reason into hidden input, or keep existing value if none
       if (reason) reason.value = savedValues.reason || reason.value
     }
   } catch (e) {
@@ -60,7 +58,6 @@ const removeExpiredNotes = timeoutInSeconds => {
   })
 }
 
-// Initialise on page load
 window.addEventListener('load', () => {
   const FOUR_WEEKS_IN_SECONDS = 4 * 7 * 24 * 3600
   removeExpiredNotes(FOUR_WEEKS_IN_SECONDS)
@@ -68,7 +65,6 @@ window.addEventListener('load', () => {
   const textArea = document.getElementById('reallocationNotes')
   if (!textArea) return
 
-  // Try to find reason by id, fallback to hidden input
   let reason = document.getElementById('reason')
   if (!reason) {
     reason = document.querySelector('input[name="reason"]')
@@ -79,11 +75,9 @@ window.addEventListener('load', () => {
 
   const newNotesItem = makeNotesKey(crn)
 
-  // Save on page unload
   window.addEventListener('beforeunload', () => {
     saveNotes(textArea, reason, newNotesItem)
   })
 
-  // Load notes immediately
   loadNotes(textArea, reason, newNotesItem)
 })

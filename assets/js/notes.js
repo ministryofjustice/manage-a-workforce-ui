@@ -1,62 +1,89 @@
 const notesKeyPrefix = 'reallocation-notes-save'
-makeNotesKey = function (crn) {
-  return `${notesKeyPrefix}-${crn}`
-}
 
-loadNotes = function (textArea, reason, newNotesItem) {
-  if (localStorage[newNotesItem]) {
-    var storedInstructions = localStorage.getItem(newNotesItem)
-    try {
-      var lastInstructions = JSON.parse(storedInstructions)
+const makeNotesKey = crn => `${notesKeyPrefix}-${crn}`
 
-      if (lastInstructions.v.length > 0) {
-        var savedValues = JSON.parse(lastInstructions.v)
-        textArea.value = savedValues.instructions
-        reason.value = savedValues.reason
-      }
-    } catch (e) {
-      // log so we can fix
-      console.log(`Unable to read item ${newNotesItem}`)
+const loadNotes = (textArea, reason, newNotesItem) => {
+  if (!textArea || !newNotesItem) return
+
+  const storedItem = localStorage.getItem(newNotesItem)
+  if (!storedItem) return
+
+  try {
+    const lastInstructions = JSON.parse(storedItem)
+    if (lastInstructions.v) {
+      const savedValues = JSON.parse(lastInstructions.v)
+
+      // Load saved instructions into textarea
+      textArea.value = savedValues.instructions || textArea.value
+
+      // Load saved reason into hidden input, or keep existing value if none
+      if (reason) reason.value = savedValues.reason || reason.value
     }
+  } catch (e) {
+    console.log(`Unable to read item ${newNotesItem}:`, e)
   }
 }
 
-saveNotes = function (textArea, reason, newNotesItem, currentTimeInSeconds) {
-  if (!textArea || !reason) {
-    return
-  }
+const saveNotes = (textArea, reason, newNotesItem) => {
+  if (!textArea || !newNotesItem) return
+
+  const currentTimeInSeconds = Math.floor(Date.now() / 1000)
   const instructionsValue = textArea.value || ''
-  const reasonValue = reason.value || ''
-  var values = JSON.stringify({ instructions: instructionsValue, reason: reasonValue })
-  var item = { v: values, t: currentTimeInSeconds }
+  const reasonValue = reason ? reason.value : ''
+  const values = JSON.stringify({ instructions: instructionsValue, reason: reasonValue })
+  const item = { v: values, t: currentTimeInSeconds }
+
   localStorage.setItem(newNotesItem, JSON.stringify(item))
 }
 
-removeExpiredNotes = function (timeoutInSeconds, currentTimeInSeconds) {
-  var allStoredInstructions = Object.keys(localStorage).filter(key => key.startsWith(notesKeyPrefix))
-  for (var i = 0; i < allStoredInstructions.length; i++) {
-    var key = allStoredInstructions[i]
-    var value = localStorage.getItem(key)
+const removeExpiredNotes = timeoutInSeconds => {
+  const currentTimeInSeconds = Math.floor(Date.now() / 1000)
+  const keys = Object.keys(localStorage).filter(key => key.startsWith(notesKeyPrefix))
+
+  keys.forEach(key => {
+    const value = localStorage.getItem(key)
+    if (!value) return
+
     try {
-      var storedInstructions = JSON.parse(value)
-    } catch (e) {
-      // not json - assume old style value
-      console.log(`Porting old instructions: ${key}`)
-      var item = { v: value, t: currentTimeInSeconds }
-      localStorage.setItem(key, JSON.stringify(item))
-      continue
-    }
-    try {
-      if ('v' in storedInstructions && 't' in storedInstructions) {
-        var timestamp = storedInstructions.t
-        if (currentTimeInSeconds - timestamp > timeoutInSeconds) {
+      const stored = JSON.parse(value)
+      if (stored.v && stored.t) {
+        if (currentTimeInSeconds - stored.t > timeoutInSeconds) {
           localStorage.removeItem(key)
-          console.log(`Removed item ${key}`)
+          console.log(`Removed expired notes: ${key}`)
         }
       }
     } catch (e) {
-      // skip this item
-      console.log(`Unable to remove item ${key}`)
+      // If old style value, port it
+      console.log(`Porting old notes: ${key}`)
+      localStorage.setItem(key, JSON.stringify({ v: value, t: currentTimeInSeconds }))
     }
-  }
+  })
 }
+
+// Initialise on page load
+window.addEventListener('load', () => {
+  const FOUR_WEEKS_IN_SECONDS = 4 * 7 * 24 * 3600
+  removeExpiredNotes(FOUR_WEEKS_IN_SECONDS)
+
+  const textArea = document.getElementById('reallocationNotes')
+  if (!textArea) return
+
+  // Try to find reason by id, fallback to hidden input
+  let reason = document.getElementById('reason')
+  if (!reason) {
+    reason = document.querySelector('input[name="reason"]')
+  }
+
+  const crn = textArea.getAttribute('data-crn')
+  if (!crn) return
+
+  const newNotesItem = makeNotesKey(crn)
+
+  // Save on page unload
+  window.addEventListener('beforeunload', () => {
+    saveNotes(textArea, reason, newNotesItem)
+  })
+
+  // Load notes immediately
+  loadNotes(textArea, reason, newNotesItem)
+})

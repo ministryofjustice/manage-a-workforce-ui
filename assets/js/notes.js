@@ -57,27 +57,3 @@ const removeExpiredNotes = timeoutInSeconds => {
     }
   })
 }
-
-window.addEventListener('load', () => {
-  const FOUR_WEEKS_IN_SECONDS = 4 * 7 * 24 * 3600
-  removeExpiredNotes(FOUR_WEEKS_IN_SECONDS)
-
-  const textArea = document.getElementById('reallocationNotes')
-  if (!textArea) return
-
-  let reason = document.getElementById('reason')
-  if (!reason) {
-    reason = document.querySelector('input[name="reason"]')
-  }
-
-  const crn = textArea.getAttribute('data-crn')
-  if (!crn) return
-
-  const newNotesItem = makeNotesKey(crn)
-
-  window.addEventListener('beforeunload', () => {
-    saveNotes(textArea, reason, newNotesItem)
-  })
-
-  loadNotes(textArea, reason, newNotesItem)
-})

@@ -1,5 +1,5 @@
 {% macro getOverallRiskLevelClass(level) %}
-{% if level == 'VERY_HIGH' %}
+    {% if level == 'VERY_HIGH' %}
 rosh-widget--very-high
 {% elif level == 'HIGH' %}
 rosh-widget--high
@@ -11,7 +11,7 @@ rosh-widget--low
 {% endmacro %}
 
 {% macro getRiskLevelText(level) %}
-{% if level == 'VERY_HIGH' %}
+    {% if level == 'VERY_HIGH' %}
 Very high
 {% elif level == 'HIGH' %}
 High
@@ -22,21 +22,24 @@ Low
 {% endif %}
 {% endmacro %}
 
-{% if params.rsr.level == 'NOT_FOUND' %}
-<div class="rosh-widget rosh-widget--none">
-    <h3 class="govuk-heading-m">No RSR</h3>
-    <p class="govuk-body-m">Risk of serious recidivism<br><span class="govuk-body-s govuk-hint">An RSR summary has not been completed for this individual. Check OASys for this person's current assessment status.</span></p>
-</div>
-{% elif params.rsr.level == 'UNAVAILABLE' %}
-<div class="rosh-widget rosh-widget--unavailable">
-    <h3 class="govuk-heading-m">Unknown RSR</h3>
-    <p class="govuk-body-m">Risk of serious recidivism<br><span class="govuk-body-s govuk-hint">Something went wrong. We are unable to show RSR at this time. Try again later.</span></p>
-</div>
+{% if params.scoreLevel == 'NOT_FOUND' %}
+    <div class="rosh-widget rosh-widget--none">
+        <h3 class="govuk-heading-m">No RSR</h3>
+        <p class="govuk-body-m">Risk of serious recidivism<br>
+            <span class="govuk-body-s govuk-hint">An RSR summary has not been completed for this individual. Check OASys for this person's current assessment status.</span></p>
+    </div>
+{% elif params.scoreLevel == 'UNAVAILABLE' %}
+    <div class="rosh-widget rosh-widget--unavailable">
+        <h3 class="govuk-heading-m">Unknown RSR</h3>
+        <p class="govuk-body-m">Risk of serious recidivism<br>
+            <span class="govuk-body-s govuk-hint">Something went wrong. We are unable to show RSR at this time. Try again later.</span></p>
+    </div>
 
 {% else %}
-<div class="rosh-widget {{ getOverallRiskLevelClass(params.rsr.level) }}">
-    <h3 class="govuk-heading-m"><strong>{{ getRiskLevelText(params.rsr.level) }}</strong> RSR <span>{{ params.rsr.percentage }}%</span></h3>
-    <p class="govuk-body-m">Risk of serious recidivism<br><span class="govuk-body-s govuk-hint">Last updated: {{ params.rsr.lastUpdatedOn | dateFormat | default("Not known") }}</span></p>
-</div>
+    <div class="rosh-widget {{ getOverallRiskLevelClass(params.scoreLevel) }}">
+        <h3 class="govuk-heading-m">
+            <strong>{{ getRiskLevelText(params.scoreLevel) }}</strong> RSR <span>{{ params.percentageScore }}%</span></h3>
+        <p class="govuk-body-m">Risk of serious recidivism<br>
+            <span class="govuk-body-s govuk-hint">Last updated: {{ completedDate | dateFormat | default("Not known") }}</span></p>
+    </div>
 {% endif %}
-

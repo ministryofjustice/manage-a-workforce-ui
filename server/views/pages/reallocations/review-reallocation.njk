@@ -301,6 +301,8 @@
         <h3 class="govuk-fieldset__heading moj-add-another__title">Add another recipient</h3>
       </legend>
 
+      <p class="govuk-hint">Type to find and select a justice.gov.uk email address.</p>
+
       <div class="govuk-email-list-item">
         <div>
           {{ govukSelect({
@@ -308,7 +310,6 @@
             name: 'person_placeholder',
             items: [],
             classes: 'hidden govuk-autocomplete',
-            hint: { text: 'Type to find and select a justice.gov.uk email address.' },
             label: {
               text: 'Email address',
               classes: 'govuk-!-font-weight-bold'

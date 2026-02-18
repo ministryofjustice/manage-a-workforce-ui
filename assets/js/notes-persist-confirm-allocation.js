@@ -1,4 +1,4 @@
-window.addEventListener('load', function () {
+window.addEventListener('load', () => {
   const FOUR_WEEKS_IN_SECONDS = 4 * 7 * 24 * 3600
   const currentTimeInSeconds = Math.floor(Date.now() / 1000)
 
@@ -9,7 +9,7 @@ window.addEventListener('load', function () {
   const crn = textArea.getAttribute('data-crn')
   const newNotesItem = makeNotesKey(crn)
 
-  window.addEventListener('pagehide', () => {
+  window.addEventListener('beforeunload', () => {
     saveNotes(textArea, reason, newNotesItem, currentTimeInSeconds)
   })
 

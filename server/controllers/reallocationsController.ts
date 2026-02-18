@@ -21,6 +21,7 @@ import validate from '../validation/validation'
 import ReallocationData from '../models/ReallocationData'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
+import Risk from '../models/Risk'
 
 export default class ReallocationsController {
   constructor(
@@ -175,7 +176,7 @@ export default class ReallocationsController {
     res.render('pages/reallocation-summary', {
       data: response,
       assessment: assessmentDate,
-      risk,
+      risk: this.flattenRiskLevels(risk),
       address,
       crn: response.crn,
       tier: response.tier,
@@ -472,7 +473,7 @@ export default class ReallocationsController {
     res.render('pages/reallocations/review-reallocation.njk', {
       data: response,
       assessment: assessmentDate,
-      risk,
+      risk: this.flattenRiskLevels(risk),
       address,
       newStaffCode,
       staffTeamCode,
@@ -660,5 +661,18 @@ export default class ReallocationsController {
       laoRestricted,
       journey: 'reallocations',
     })
+  }
+
+  flattenRiskLevels(data: Risk) {
+    switch (data.riskVersion) {
+      case '1':
+        return {
+          roshLevel: data.risk.roshRisk?.overallRisk,
+          rsrLevel: data.risk.riskOfSeriousRecidivismScore?.scoreLevel,
+          ogrsScore: data.risk.groupReconvictionScore?.twoYears,
+        }
+      default:
+        return {}
+    }
   }
 }

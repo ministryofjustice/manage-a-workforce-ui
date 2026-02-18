@@ -154,7 +154,7 @@ export default class ReallocationsController {
 
     const [response, risk, assessmentDate] = await Promise.all([
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
-      flattenRiskLevels(await this.allocationsService.getCaseRisk(res.locals.user.token, crn)),
+      await this.allocationsService.getCaseRisk(res.locals.user.token, crn),
       await this.allocationsService.getAssessmentDate(res.locals.user.token, crn),
     ])
 
@@ -435,7 +435,7 @@ export default class ReallocationsController {
 
     const [response, risk, assessmentDate] = await Promise.all([
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
-      flattenRiskLevels(await this.allocationsService.getCaseRisk(res.locals.user.token, crn)),
+      await this.allocationsService.getCaseRisk(res.locals.user.token, crn),
       await this.allocationsService.getAssessmentDate(res.locals.user.token, crn),
     ])
 
@@ -661,14 +661,5 @@ export default class ReallocationsController {
       laoRestricted,
       journey: 'reallocations',
     })
-  }
-}
-
-function flattenRiskLevels(risk: Risk): Risk {
-  return {
-    ...risk,
-    roshLevel: risk.roshRisk?.overallRisk,
-    rsrLevel: risk.rsr?.level,
-    ogrsScore: risk.ogrs?.score,
   }
 }

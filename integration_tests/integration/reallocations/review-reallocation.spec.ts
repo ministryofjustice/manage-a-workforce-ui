@@ -12,7 +12,7 @@ context('Review reallocation', () => {
     cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 200 })
     cy.task('stubGetAllocatedCase')
     cy.task('stubGetAssessmentDate')
-    cy.task('stubCrnGetRisk')
+    cy.task('stubGetAllocatedRiskV1')
     cy.task('stubForFeatureflagEnabled')
     cy.task('stubGetCrnAccess', {
       crn: 'J678910',

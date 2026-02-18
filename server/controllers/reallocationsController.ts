@@ -21,7 +21,6 @@ import validate from '../validation/validation'
 import ReallocationData from '../models/ReallocationData'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
-import Risk from '../models/Risk'
 
 export default class ReallocationsController {
   constructor(

@@ -87,19 +87,14 @@
                 ]
             }) }}
 
-
         </div>
 
         <div class="govuk-grid-column-one-third">
             <h3 class="govuk-heading-m">Assessment tools</h3>
-
-            {{ roshWidget(data) }}
-
-            {{ rsrWidget(data) }}
-
-            {{ ogrsWidget(data) }}
+            {{ roshWidget(data.risk.roshRisk, data.completedDate) }}
+            {{ rsrWidget(data.risk.riskOfSeriousRecidivismScore, data.completedDate) }}
+            {{ ogrsWidget(data.risk.groupReconvictionScore, data.completedDate) }}
         </div>
 
-</div>
+    </div>
 {% endblock %}
-

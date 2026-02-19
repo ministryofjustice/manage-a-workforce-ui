@@ -1,19 +1,56 @@
 import Registration from './Registration'
 import RoshRisk from './RoshRisk'
-import Rsr from './Rsr'
-import Ogrs from './Ogrs'
 
-export default interface Risk {
+interface RiskCommon {
   name: string
   crn: string
   tier: string
-  active: Registration[]
-  previous: Registration[]
-  roshRisk: RoshRisk
-  rsr?: Rsr
-  ogrs?: Ogrs
-  roshLevel?: string
-  rsrLevel?: string
-  ogrsScore?: number
-  convictionNumber: number
+  completedDate: string
+  activeRegistrations: Registration[]
+  inactiveRegistrations: Registration[]
+  convictionNumber: string | null
+  roshLevel: string
+  rsrLevel: string
+  ogrsScore: number
 }
+
+interface RiskV1 extends RiskCommon {
+  riskVersion: '1'
+  risk: {
+    roshRisk: RoshRisk
+    groupReconvictionScore: {
+      oneYear: number
+      twoYears: number
+      scoreLevel: string
+    }
+    riskOfSeriousRecidivismScore: {
+      percentageScore: number
+      staticOrDynamic: string
+      source: string
+      algorithmVersion: string
+      scoreLevel: string
+    }
+  }
+}
+
+interface RiskV2 extends RiskCommon {
+  riskVersion: '2'
+  risk: {
+    roshRisk: RoshRisk
+    allReoffendingPredictor: {
+      staticOrDynamic: string
+      score: number
+      band: string
+    }
+    combinedSeriousReoffendingPredictor: {
+      algorithmVersion: string
+      staticOrDynamic: string
+      score: number
+      band: string
+    }
+  }
+}
+
+type Risk = RiskV1 | RiskV2
+
+export default Risk

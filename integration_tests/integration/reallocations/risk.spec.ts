@@ -15,7 +15,7 @@ context('Risk', () => {
 
   it('Caption text visible on page', () => {
     cy.task('stubGetAllocatedCase')
-    cy.task('stubCrnGetRisk')
+    cy.task('stubGetAllocatedRiskV1')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/reallocation-risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -24,7 +24,7 @@ context('Risk', () => {
 
   it('Risk header visible on page and out of area transfer banner is not visible on page', () => {
     cy.task('stubGetAllocatedCase')
-    cy.task('stubCrnGetRisk')
+    cy.task('stubGetAllocatedRiskV1')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/reallocation-risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -34,7 +34,7 @@ context('Risk', () => {
 
   it('Sub nav visible on page', () => {
     cy.task('stubGetAllocatedCase')
-    cy.task('stubCrnGetRisk')
+    cy.task('stubGetAllocatedRiskV1')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/reallocation-risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -49,7 +49,7 @@ context('Risk', () => {
 
   it('Risk tab is highlighted', () => {
     cy.task('stubGetAllocatedCase')
-    cy.task('stubCrnGetRisk')
+    cy.task('stubGetAllocatedRiskV1')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/reallocation-risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -58,7 +58,7 @@ context('Risk', () => {
 
   it('Active registrations visible on page', () => {
     cy.task('stubGetAllocatedCase')
-    cy.task('stubCrnGetRisk')
+    cy.task('stubGetAllocatedRiskV1')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/reallocation-risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -89,7 +89,7 @@ context('Risk', () => {
 
   it('Inactive registrations visible on page', () => {
     cy.task('stubGetAllocatedCase')
-    cy.task('stubCrnGetRisk')
+    cy.task('stubGetAllocatedRiskV1')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/reallocation-risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -116,7 +116,20 @@ context('Risk', () => {
 
   it('Display text when no registrations on the page', () => {
     cy.task('stubGetAllocatedCase')
-    cy.task('stubCrnGetRiskNoRegistrations')
+    cy.task('stubGetAllocatedRiskV1', {
+      activeRegistrations: [],
+      inactiveRegistrations: [],
+      risk: {
+        roshRisk: {
+          overallRisk: 'NOT_FOUND',
+          riskInCommunity: {},
+        },
+        riskOfSeriousRecidivismScore: {
+          scoreLevel: 'NOT_FOUND',
+          percentageScore: -2147483648,
+        },
+      },
+    })
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/reallocation-risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -128,7 +141,7 @@ context('Risk', () => {
 
   it('Displays Assessments when returned', () => {
     cy.task('stubGetAllocatedCase')
-    cy.task('stubCrnGetRisk')
+    cy.task('stubGetAllocatedRiskV1')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/reallocation-risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -137,7 +150,7 @@ context('Risk', () => {
       .trimTextContent()
       .should(
         'equal',
-        'Very high RoSH Risk of serious harmLast updated: 7 October 2022 Risk of serious harm in Community Risk to Community Children Low Known adult Medium Public High Staff Very high',
+        'Very high RoSH Risk of serious harm Last updated: 1 December 2025 Risk of serious harm in Community Risk to Community Children Very high Known adult Very high Public Very high Staff Very high',
       )
     riskPage
       .roshDetail()
@@ -151,16 +164,29 @@ context('Risk', () => {
     riskPage
       .rsrWidget()
       .trimTextContent()
-      .should('equal', 'Medium RSR 3.8% Risk of serious recidivismLast updated: 12 February 2019')
+      .should('equal', 'High RSR 8.47% Risk of serious recidivism Last updated: 1 December 2025')
     riskPage
       .ogrsWidget()
       .trimTextContent()
-      .should('equal', 'High OGRS 85% Offender group reconviction scaleLast updated: 17 November 2018')
+      .should('equal', 'LOW OGRS 26% Offender group reconviction scale Last updated: 1 December 2025')
   })
 
   it('Displays Not Found Assessment', () => {
     cy.task('stubGetAllocatedCase')
-    cy.task('stubCrnGetNotFoundRisk')
+    cy.task('stubGetAllocatedRiskV1', {
+      activeRegistrations: [],
+      inactiveRegistrations: [],
+      risk: {
+        roshRisk: {
+          overallRisk: 'NOT_FOUND',
+          riskInCommunity: {},
+        },
+        riskOfSeriousRecidivismScore: {
+          scoreLevel: 'NOT_FOUND',
+          percentageScore: -2147483648,
+        },
+      },
+    })
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/reallocation-risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -171,27 +197,38 @@ context('Risk', () => {
       .trimTextContent()
       .should(
         'equal',
-        "Unknown RoSH Risk of serious harmA RoSH summary has not been completed for this individual. Check OASys for this person's current assessment status.",
+        "Unknown RoSH Risk of serious harm A RoSH summary has not been completed for this individual. Check OASys for this person's current assessment status.",
       )
     riskPage
       .rsrWidget()
       .trimTextContent()
       .should(
         'equal',
-        "No RSR Risk of serious recidivismAn RSR summary has not been completed for this individual. Check OASys for this person's current assessment status.",
+        "No RSR Risk of serious recidivism An RSR summary has not been completed for this individual. Check OASys for this person's current assessment status.",
       )
     riskPage
       .ogrsWidget()
       .trimTextContent()
       .should(
         'equal',
-        "No OGRS Offender group reconviction scaleAn OGRS summary has not been completed for this individual. Check NDelius for this person's current assessment status.",
+        "No OGRS Offender group reconviction scale An OGRS summary has not been completed for this individual. Check NDelius for this person's current assessment status.",
       )
   })
 
   it('Displays Unavailable Assessment', () => {
     cy.task('stubGetAllocatedCase')
-    cy.task('stubCrnGetUnavailableRisk')
+    cy.task('stubGetAllocatedRiskV1', {
+      risk: {
+        roshRisk: {
+          overallRisk: 'UNAVAILABLE',
+          riskInCommunity: {},
+        },
+        riskOfSeriousRecidivismScore: {
+          scoreLevel: 'UNAVAILABLE',
+          percentageScore: -2147483648,
+        },
+      },
+    })
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/reallocation-risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -201,7 +238,7 @@ context('Risk', () => {
       .trimTextContent()
       .should(
         'equal',
-        'Unknown RoSH Risk of serious harmSomething went wrong. We are unable to show RoSH at this time. Try again later.',
+        'Unknown RoSH Risk of serious harm Something went wrong. We are unable to show RoSH at this time. Try again later.',
       )
     riskPage.rsrWidget().should('have.class', 'rosh-widget--unavailable')
     riskPage
@@ -209,7 +246,7 @@ context('Risk', () => {
       .trimTextContent()
       .should(
         'equal',
-        'Unknown RSR Risk of serious recidivismSomething went wrong. We are unable to show RSR at this time. Try again later.',
+        'Unknown RSR Risk of serious recidivism Something went wrong. We are unable to show RSR at this time. Try again later.',
       )
   })
 })

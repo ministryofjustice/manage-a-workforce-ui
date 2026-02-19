@@ -1,5 +1,5 @@
 {% macro getRiskLevelText(score) %}
-{% if (score < 50) %}
+    {% if (score < 50) %}
 Low
 {% elif score > 49 and score < 75 %}
 Medium
@@ -11,7 +11,7 @@ Very high
 {% endmacro %}
 
 {% macro getOgrsBandingClass(score) %}
-{% if (score < 50) %}
+    {% if (score < 50) %}
     rosh-widget--low
 {% elif score > 49 and score < 75 %}
     rosh-widget--medium
@@ -22,15 +22,18 @@ Very high
 {% endif %}
 {% endmacro %}
 
-{% if params.ogrs %}
-<div class="rosh-widget {{ getOgrsBandingClass(params.ogrs.score) }}">
-    <h3 class="govuk-heading-m"><strong>{{ getRiskLevelText(params.ogrs.score) }}</strong> OGRS <span>{{ params.ogrs.score }}%</span></h3>
-    <p class="govuk-body-m">Offender group reconviction scale<br><span class="govuk-body-s govuk-hint">Last updated: {{ params.ogrs.lastUpdatedOn | dateFormat | default("Not known") }}</span></p>
-</div>
+{% if params %}
+    <div class="rosh-widget {{ getOgrsBandingClass(params.score) }}">
+        <h3 class="govuk-heading-m">
+            <strong>{{ params.scoreLevel }}</strong> OGRS <span>{{ params.twoYears }}%</span></h3>
+        <p class="govuk-body-m">Offender group reconviction scale<br>
+            <span class="govuk-body-s govuk-hint">Last updated: {{ completedDate | dateFormat | default("Not known") }}</span></p>
+    </div>
 {% else %}
-<div class="rosh-widget rosh-widget--none">
-    <h3 class="govuk-heading-m">No OGRS</h3>
-    <p class="govuk-body-m">Offender group reconviction scale<br><span class="govuk-body-s govuk-hint">An OGRS summary has not been completed for this individual. Check NDelius for this person's current assessment status.</span></p>
-</div>
+    <div class="rosh-widget rosh-widget--none">
+        <h3 class="govuk-heading-m">No OGRS</h3>
+        <p class="govuk-body-m">Offender group reconviction scale<br>
+            <span class="govuk-body-s govuk-hint">An OGRS summary has not been completed for this individual. Check NDelius for this person's current assessment status.</span>
+        </p>
+    </div>
 {% endif %}
-

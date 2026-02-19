@@ -154,7 +154,7 @@ export default class ReallocationsController {
 
     const [response, risk, assessmentDate] = await Promise.all([
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
-      flattenRiskLevels(await this.allocationsService.getCaseRisk(res.locals.user.token, crn)),
+      await this.allocationsService.getCaseRisk(res.locals.user.token, crn),
       await this.allocationsService.getAssessmentDate(res.locals.user.token, crn),
     ])
 
@@ -176,7 +176,7 @@ export default class ReallocationsController {
     res.render('pages/reallocation-summary', {
       data: response,
       assessment: assessmentDate,
-      risk,
+      risk: this.flattenRiskLevels(risk),
       address,
       crn: response.crn,
       tier: response.tier,
@@ -435,7 +435,7 @@ export default class ReallocationsController {
 
     const [response, risk, assessmentDate] = await Promise.all([
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
-      flattenRiskLevels(await this.allocationsService.getCaseRisk(res.locals.user.token, crn)),
+      await this.allocationsService.getCaseRisk(res.locals.user.token, crn),
       await this.allocationsService.getAssessmentDate(res.locals.user.token, crn),
     ])
 
@@ -473,7 +473,7 @@ export default class ReallocationsController {
     res.render('pages/reallocations/review-reallocation.njk', {
       data: response,
       assessment: assessmentDate,
-      risk,
+      risk: this.flattenRiskLevels(risk),
       address,
       newStaffCode,
       staffTeamCode,
@@ -662,13 +662,17 @@ export default class ReallocationsController {
       journey: 'reallocations',
     })
   }
-}
 
-function flattenRiskLevels(risk: Risk): Risk {
-  return {
-    ...risk,
-    roshLevel: risk.roshRisk?.overallRisk,
-    rsrLevel: risk.rsr?.level,
-    ogrsScore: risk.ogrs?.score,
+  flattenRiskLevels(data: Risk) {
+    switch (data.riskVersion) {
+      case '1':
+        return {
+          roshLevel: data.risk.roshRisk?.overallRisk,
+          rsrLevel: data.risk.riskOfSeriousRecidivismScore?.scoreLevel,
+          ogrsScore: data.risk.groupReconvictionScore?.twoYears,
+        }
+      default:
+        return {}
+    }
   }
 }

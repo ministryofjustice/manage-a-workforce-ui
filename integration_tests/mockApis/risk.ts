@@ -1,11 +1,12 @@
 import { SuperAgentRequest } from 'superagent'
 import { stubForAllocation } from './wiremock'
 
-const risk = {
+const riskV1 = {
   name: 'Dylan Adam Armstrong',
   crn: 'J678910',
   tier: 'C1',
   completedDate: '2025-12-01T09:11:59',
+  riskVersion: '1',
   activeRegistrations: [
     {
       type: 'Suicide/self-harm',
@@ -94,7 +95,7 @@ export default {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          ...risk,
+          ...riskV1,
           ...overrides,
         },
       },
@@ -110,7 +111,7 @@ export default {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          ...risk,
+          ...riskV1,
           ...overrides,
         },
       },

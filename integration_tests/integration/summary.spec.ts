@@ -9,6 +9,7 @@ context('Summary', () => {
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
     cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
+    cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 200 })
     cy.task('stubGetUnallocatedCase')
     cy.signIn()
   })
@@ -160,7 +161,10 @@ context('Summary', () => {
 
   it('Unavailable Risk visible on page', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
-    cy.task('stubGetUnallocatedCaseUnavailableRisk')
+    cy.task('stubGetUnallocatedCase', {
+      risk: { roshLevel: 'UNAVAILABLE', rsrLevel: 'UNAVAILABLE', ogrsScore: null },
+      activeRiskRegistration: null,
+    })
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.riskTitle().should('have.text', 'Risk')
@@ -178,7 +182,10 @@ context('Summary', () => {
 
   it('Not Found Risk visible on page', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
-    cy.task('stubGetUnallocatedCaseNotFoundRisk')
+    cy.task('stubGetUnallocatedCase', {
+      risk: { roshLevel: 'NOT_FOUND', rsrLevel: 'NOT_FOUND', ogrsScore: null },
+      activeRiskRegistration: null,
+    })
     cy.reload()
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.riskTitle().should('have.text', 'Risk')

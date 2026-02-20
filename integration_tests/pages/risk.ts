@@ -20,4 +20,6 @@ export default class RiskPage extends Page {
   rsrWidget = (): PageElement => cy.get('.rosh-widget').eq(1)
 
   ogrsWidget = (): PageElement => cy.get('.rosh-widget').eq(2)
+
+  v2Widget = (): PageElement => cy.get('.expanded-predictor-badge__dynamic')
 }

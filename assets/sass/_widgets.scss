@@ -1,15 +1,11 @@
 $low-score-colour: #485b10;
 $low-score-border-colour: #85994b;
-$low-score-badge-colour: #dee9bd;
 $medium-score-colour: #a34e00;
 $medium-score-border-colour: #f47738;
-$medium-score-badge-colour: #f9e8bd;
 $high-score-colour: #942514;
 $high-score-border-colour: #d4351c;
-$high-score-badge-colour: #f6d7d2;
 $very-high-score-colour: #711a0d;
 $very-high-score-border-colour: #942514;
-$very-high-score-badge-colour: #ffac9f;
 $mappa-colour: #4c2c92;
 
 .rosh-widget,
@@ -218,70 +214,6 @@ $unavailable-score-background-colour: #ffffff;
 .crn-lookup-not-found-details[open] {
   background-color: govuk-colour('white');
 }
-
-// .csr-widget {
-//   padding: govuk-spacing(4);
-//   margin-bottom: govuk-spacing(4);
-
-//   &.csr-widget--low {
-//     border: 2px solid $low-score-border-colour;
-
-//     .govuk-heading-m.csr-band {
-//       color: $low-score-border-colour;
-//     }
-
-//     .banded-score {
-//       background-color: $low-score-badge-colour;
-//     }
-//   }
-
-//   &.csr-widget--medium {
-//     border: 2px solid $medium-score-border-colour;
-
-//     .govuk-heading-m.csr-band {
-//       color: $medium-score-border-colour;
-//     }
-
-//     .banded-score {
-//       background-color: $medium-score-badge-colour;
-//     }
-//   }
-
-//   &.csr-widget--high {
-//     border: 2px solid $high-score-border-colour;
-
-//     .govuk-heading-m.csr-band {
-//       color: $high-score-border-colour;
-//     }
-
-//     .banded-score {
-//       background-color: $high-score-badge-colour;
-//     }
-//   }
-
-//   &.csr-widget--very-high {
-//     border: 2px solid $very-high-score-border-colour;
-
-//     .govuk-heading-m.csr-band {
-//       color: $very-high-score-border-colour;
-//     }
-
-//     .banded-score {
-//       background-color: $very-high-score-badge-colour;
-//     }
-//   }
-
-//   .banded-score,
-//   .static-or-dynamic {
-//     padding: govuk-spacing(1);
-//     color: $govuk-text-colour;
-//   }
-
-//   .static-or-dynamic {
-//     font-weight: normal;
-//     background-color: #e5e6e7;
-//   }
-// }
 
 $very-high-score-colour: #942514;
 $very-high-score-colour--light: #ffac9f;

@@ -4,6 +4,7 @@
 {% from "../components/rosh-widget/macro.njk" import roshWidget %}
 {% from "../components/rsr-widget/macro.njk" import rsrWidget %}
 {% from "../components/ogrs-widget/macro.njk" import ogrsWidget %}
+{% from "../components/risk-v2-widget/macro.njk" import RiskV2Widget %}
 
 {% set activeRegistrationsData = {
     classes: 'active-registrations-table',
@@ -92,8 +93,13 @@
         <div class="govuk-grid-column-one-third">
             <h3 class="govuk-heading-m">Assessment tools</h3>
             {{ roshWidget(data.risk.roshRisk, data.completedDate) }}
-            {{ rsrWidget(data.risk.riskOfSeriousRecidivismScore, data.completedDate) }}
-            {{ ogrsWidget(data.risk.groupReconvictionScore, data.completedDate) }}
+            {% if data.riskVersion === '1' %}
+                {{ rsrWidget(data.risk.riskOfSeriousRecidivismScore, data.completedDate) }}
+                {{ ogrsWidget(data.risk.groupReconvictionScore, data.completedDate) }}
+            {% elif data.riskVersion === '2' %}
+                {{ RiskV2Widget('Combined Serious Reoffending Predictor', data.risk.combinedSeriousReoffendingPredictor, data.completedDate) }}
+                {{ RiskV2Widget('All Reoffending Predictor', data.risk.allReoffendingPredictor, data.completedDate) }}
+            {% endif %}
         </div>
 
     </div>

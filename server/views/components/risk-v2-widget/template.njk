@@ -1,0 +1,53 @@
+{% macro getOverallRiskLevelClass(level) %}
+    {% if level == 'VERY_HIGH' %}
+    expanded-predictor-badge--very-high
+    {% elif level == 'HIGH' %}
+    expanded-predictor-badge--high
+    {% elif level == 'MEDIUM' %}
+    expanded-predictor-badge--medium
+    {% elif level == 'LOW' %}
+    expanded-predictor-badge--low
+    {% else %}
+    expanded-predictor-badge--default
+    {% endif %}
+{% endmacro %}
+
+{% macro getRiskLevelText(level) %}
+    {% if level == 'VERY_HIGH' %}
+    VERY HIGH
+    {% elif level == 'HIGH' %}
+    HIGH
+    {% elif level == 'MEDIUM' %}
+    MEDIUM
+    {% elif level == 'LOW' %}
+    LOW
+    {% elif level == 'NOT_FOUND' %}
+    UNKNOWN
+    {% elif level == 'UNAVAILABLE' %}
+    NOT APPLICABLE
+    {% endif %}
+{% endmacro %}
+
+{% macro getStaticOrDynamic(level) %}
+    {% if level == 'DYNAMIC' %}
+    Dynamic
+    {% elif level == 'STATIC' %}
+    Static
+    {% endif %}
+{% endmacro %}
+
+{% set showScore = params.band !== 'UNAVAILABLE' and params.band !== 'NOT_FOUND' %}
+
+<div class="govuk-!-margin-bottom-4">
+    <div class="{{getOverallRiskLevelClass(params.band)}} expanded-predictor-badge__dynamic">
+        <span class="predictor-badge__type">{{ label }}</span>
+        <div class="predictor-badge__stats">
+            <span class="predictor-badge__level">{{ getRiskLevelText(params.band) }}</span>
+            {% if showScore %}
+                <span class="predictor-badge__score">{{params.score}}%</span>
+                <span class="predictor-badge__static_or_dynamic">{{ getStaticOrDynamic(params.staticOrDynamic) }}</span>
+            {% endif %}
+        </div>
+        <span class="predictor-badge__last_updated">Last updated: {{ completedDate | dateFormat | default("Not known") }}</span>
+    </div>
+</div>

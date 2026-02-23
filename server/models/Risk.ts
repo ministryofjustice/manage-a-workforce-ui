@@ -8,10 +8,8 @@ interface RiskCommon {
   completedDate: string
   activeRegistrations: Registration[]
   inactiveRegistrations: Registration[]
-  convictionNumber: string | null
-  roshLevel: string
-  rsrLevel: string
-  ogrsScore: number
+  convictionNumber: string | number | null
+  laoCase: boolean
 }
 
 interface RiskV1 extends RiskCommon {

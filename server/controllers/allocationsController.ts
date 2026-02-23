@@ -168,6 +168,7 @@ export default class AllocationsController {
       convictionNumber,
       res.locals.user.username,
     )
+
     res.render('pages/risk', {
       title: 'Risk | Manage a workforce',
       data: risk,

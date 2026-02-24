@@ -6,6 +6,7 @@ context('Probation record', () => {
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubGetRiskV1')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: 'false' })
     cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 200 })
     cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 200 })

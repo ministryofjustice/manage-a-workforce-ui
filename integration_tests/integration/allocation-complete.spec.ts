@@ -187,6 +187,7 @@ context('Allocate Complete', () => {
     cy.task('stubErrorAllocateOffenderManagerToCase')
     cy.task('stubSearchStaff')
     cy.signIn()
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
 
     const instructionsConfirmPage = Page.verifyOnPage(InstructionsConfirmPage)

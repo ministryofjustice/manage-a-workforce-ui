@@ -1,0 +1,21 @@
+<div class="govuk-!-margin-bottom-4">
+    <div class="{{getRiskLevelClass(params.risk.groupReconvictionScore.scoreLevel)}}">
+        <span class="predictor-badge__type_and_level">OGRS <strong>{{getRiskLevelText(params.risk.groupReconvictionScore.scoreLevel)}}</strong>
+        </span>
+        <span class="predictor-badge__static_or_dynamic">Static</span>
+    </div>
+</div>
+<div class="govuk-!-margin-bottom-4">
+    <div class="{{getRiskLevelClass(params.risk.roshRisk.overallRisk)}}">
+        <span class="predictor-badge__type_and_level">ROSH <strong>{{getRiskLevelText(params.risk.roshRisk.overallRisk)}}</strong>
+        </span>
+        <span class="predictor-badge__static_or_dynamic">Static</span>
+    </div>
+</div>
+<div class="govuk-!-margin-bottom-4">
+    <div class="{{getRiskLevelClass(params.risk.riskOfSeriousRecidivismScore.scoreLevel)}}">
+        <span class="predictor-badge__type_and_level">RSR <strong>{{getRiskLevelText(params.risk.riskOfSeriousRecidivismScore.scoreLevel)}}</strong>
+        </span>
+        <span class="predictor-badge__static_or_dynamic">Static</span>
+    </div>
+</div>

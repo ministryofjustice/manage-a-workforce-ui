@@ -176,7 +176,7 @@ export default class ReallocationsController {
     res.render('pages/reallocation-summary', {
       data: response,
       assessment: assessmentDate,
-      risk: this.flattenRiskLevels(risk),
+      risk,
       address,
       crn: response.crn,
       tier: response.tier,
@@ -473,7 +473,7 @@ export default class ReallocationsController {
     res.render('pages/reallocations/review-reallocation.njk', {
       data: response,
       assessment: assessmentDate,
-      risk: this.flattenRiskLevels(risk),
+      risk,
       address,
       newStaffCode,
       staffTeamCode,
@@ -661,18 +661,5 @@ export default class ReallocationsController {
       laoRestricted,
       journey: 'reallocations',
     })
-  }
-
-  flattenRiskLevels(data: Risk) {
-    switch (data.riskVersion) {
-      case '1':
-        return {
-          roshLevel: data.risk.roshRisk?.overallRisk,
-          rsrLevel: data.risk.riskOfSeriousRecidivismScore?.scoreLevel,
-          ogrsScore: data.risk.groupReconvictionScore?.twoYears,
-        }
-      default:
-        return {}
-    }
   }
 }

@@ -1,0 +1,21 @@
+<div class="govuk-!-margin-bottom-4">
+    <div class="{{getRiskLevelClass(params.risk.allReoffendingPredictor.band)}}">
+        <span class="predictor-badge__type_and_level">All Reoffending Predictor <strong>{{getRiskLevelText(params.risk.allReoffendingPredictor.band)}}</strong>
+        </span>
+        <span class="predictor-badge__static_or_dynamic">{{getStaticOrDynamic(params.risk.allReoffendingPredictor.staticOrDynamic)}}</span>
+    </div>
+</div>
+<div class="govuk-!-margin-bottom-4">
+    <div class="{{getRiskLevelClass(params.risk.roshRisk.overallRisk)}}">
+        <span class="predictor-badge__type_and_level">RISK OF SERIOUS HARM <strong>{{getRiskLevelText(params.risk.roshRisk.overallRisk)}}</strong>
+        </span>
+        <span class="predictor-badge__static_or_dynamic">{{getStaticOrDynamic(params.risk.roshRisk.staticOrDynamic)}}</span>
+    </div>
+</div>
+<div class="govuk-!-margin-bottom-4">
+    <div class="{{getRiskLevelClass(params.risk.combinedSeriousReoffendingPredictor.band)}}">
+        <span class="predictor-badge__type_and_level">Combined Serious Reoffending Predictor <strong>{{getRiskLevelText(params.risk.combinedSeriousReoffendingPredictor.band)}}</strong>
+        </span>
+        <span class="predictor-badge__static_or_dynamic">{{getStaticOrDynamic(params.risk.combinedSeriousReoffendingPredictor.staticOrDynamic)}}</span>
+    </div>
+</div>

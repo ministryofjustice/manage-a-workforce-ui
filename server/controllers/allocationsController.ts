@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import type { ConfirmInstructionForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
-import Allocation from '../models/Allocation'
 import Sentence from './data/Sentence'
 import Conviction from '../models/Conviction'
 import { gradeOrder, gradeTips } from './data/AllocateOffenderManager'

@@ -15,12 +15,14 @@ context('Summary', () => {
   })
 
   it('Caption text visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
   })
 
   it('Summary header visible on page and out of area transfer banner is not visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.summaryHeading().should('contain', 'Summary')
@@ -28,6 +30,7 @@ context('Summary', () => {
   })
 
   it('Out of area transfer banner is visible on page and continue button is disabled when case is out of area transfer case', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseWhereIsOutOfAreaTransfer')
     cy.reload()
@@ -39,6 +42,7 @@ context('Summary', () => {
   })
 
   it('Sub nav visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage
@@ -50,12 +54,14 @@ context('Summary', () => {
   })
 
   it('Summary tab is highlighted', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.highlightedTab().should('contain.text', 'Summary')
   })
 
   it('Continue button enabled and visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.button().should('contain', 'Continue')
@@ -63,6 +69,7 @@ context('Summary', () => {
   })
 
   it('Personal details visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.personalDetailsTitle().should('have.text', 'Personal details')
@@ -77,6 +84,7 @@ context('Summary', () => {
   })
 
   it('Personal details no fixed abode address visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
@@ -92,6 +100,7 @@ context('Summary', () => {
   })
 
   it('Sentence visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.sentenceTitle().should('have.text', 'Sentence')
@@ -103,6 +112,7 @@ context('Summary', () => {
   })
 
   it('No requirements sentence visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseNoRequirements')
     cy.reload()
@@ -116,6 +126,7 @@ context('Summary', () => {
   })
 
   it('Sentence visible on page when invalid end date', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseInvalidEndDate')
     cy.reload()
@@ -129,6 +140,7 @@ context('Summary', () => {
   })
 
   it('Sentence visible on page with multiple offences and requirements', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
@@ -143,23 +155,57 @@ context('Summary', () => {
     })
   })
 
-  it('Risk visible on page', () => {
+  it('Risk V1 visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.riskTitle().should('have.text', 'Risk')
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
-      'Risk assessment': 'VERY HIGH RoSH MEDIUM RSR HIGH OGRS',
+      'Risk assessment': 'OGRS LOW Static ROSH VERY HIGH Static RSR HIGH Static',
       'Active risk registrations': 'ALT Under MAPPA Arrangements, Suicide/self-harm',
       OASys: 'CHECK OASYS Uploaded 27 January 2022',
     })
-    summaryPage.riskSummaryBadge().then($data => {
-      expect($data.get(0).className).to.contain('risk-badge--very-high')
-      expect($data.get(1).className).to.contain('risk-badge--medium')
-      expect($data.get(2).className).to.contain('risk-badge--high')
+    cy.get('#risk .predictor-badge--very-high').should('exist')
+    cy.get('#risk .predictor-badge--low').should('exist')
+    cy.get('#risk .predictor-badge--high').should('exist')
+  })
+
+  it('Risk V2 visible on page', () => {
+    cy.task('stubGetRiskV2')
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.riskTitle().should('have.text', 'Risk')
+    cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
+      'Risk assessment':
+        'All Reoffending Predictor MEDIUM Dynamic RISK OF SERIOUS HARM VERY HIGH Static Combined Serious Reoffending Predictor HIGH Dynamic',
+      'Active risk registrations': 'ALT Under MAPPA Arrangements, Suicide/self-harm',
+      OASys: 'CHECK OASYS Uploaded 27 January 2022',
     })
+
+    cy.get('#risk .predictor-badge--very-high').should('exist')
+    cy.get('#risk .predictor-badge--medium').should('exist')
+    cy.get('#risk .predictor-badge--high').should('exist')
   })
 
   it('Unavailable Risk visible on page', () => {
+    cy.task('stubGetRiskV1', {
+      activeRegistrations: [],
+      inactiveRegistrations: [],
+      risk: {
+        roshRisk: {
+          overallRisk: 'UNAVAILABLE',
+          riskInCommunity: {},
+        },
+        groupReconvictionScore: {
+          scoreLevel: 'UNAVAILABLE',
+          percentageScore: -2147483648,
+        },
+        riskOfSeriousRecidivismScore: {
+          scoreLevel: 'UNAVAILABLE',
+          percentageScore: -2147483648,
+        },
+      },
+    })
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCase', {
       risk: { roshLevel: 'UNAVAILABLE', rsrLevel: 'UNAVAILABLE', ogrsScore: null },
@@ -169,18 +215,33 @@ context('Summary', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.riskTitle().should('have.text', 'Risk')
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
-      'Risk assessment': 'Unknown RoSH Unknown RSR No OGRS',
+      'Risk assessment': 'OGRS NOT APPLICABLE Static ROSH NOT APPLICABLE Static RSR NOT APPLICABLE Static',
       'Active risk registrations': 'There are no active registrations.',
       OASys: 'CHECK OASYS Uploaded 27 January 2022',
     })
-    summaryPage.riskSummaryBadge().then($data => {
-      expect($data.get(0).className).to.contain('risk-badge--unavailable')
-      expect($data.get(1).className).to.contain('risk-badge--unavailable')
-      expect($data.get(2).className).to.contain('risk-badge--none')
-    })
+
+    cy.get('#risk .predictor-badge--default').should('have.length', 3)
   })
 
   it('Not Found Risk visible on page', () => {
+    cy.task('stubGetRiskV1', {
+      activeRegistrations: [],
+      inactiveRegistrations: [],
+      risk: {
+        roshRisk: {
+          overallRisk: 'NOT_FOUND',
+          riskInCommunity: {},
+        },
+        groupReconvictionScore: {
+          scoreLevel: 'NOT_FOUND',
+          percentageScore: -2147483648,
+        },
+        riskOfSeriousRecidivismScore: {
+          scoreLevel: 'NOT_FOUND',
+          percentageScore: -2147483648,
+        },
+      },
+    })
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCase', {
       risk: { roshLevel: 'NOT_FOUND', rsrLevel: 'NOT_FOUND', ogrsScore: null },
@@ -190,18 +251,15 @@ context('Summary', () => {
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.riskTitle().should('have.text', 'Risk')
     cy.get('#risk .govuk-summary-list').getSummaryList().should('deep.equal', {
-      'Risk assessment': 'Unknown RoSH No RSR No OGRS',
+      'Risk assessment': 'OGRS UNKNOWN Static ROSH UNKNOWN Static RSR UNKNOWN Static',
       OASys: 'CHECK OASYS Uploaded 27 January 2022',
       'Active risk registrations': 'There are no active registrations.',
     })
-    summaryPage.riskSummaryBadge().then($data => {
-      expect($data.get(0).className).to.contain('risk-badge--none')
-      expect($data.get(1).className).to.contain('risk-badge--none')
-      expect($data.get(2).className).to.contain('risk-badge--none')
-    })
+    cy.get('#risk .predictor-badge--default').should('have.length', 3)
   })
 
   it('Documents visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedDocumentsTitle().should('have.text', 'Documents')
@@ -218,6 +276,7 @@ context('Summary', () => {
   })
 
   it('Documents visible on page with no reports or assessments', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     cy.task('stubGetUnallocatedCaseMultiOffences')
     cy.reload()
@@ -236,30 +295,35 @@ context('Summary', () => {
   })
 
   it('Breadcrumbs visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.breadCrumbs().should('contain', 'Home').and('contain', 'Unallocated cases')
   })
 
   it('Instructions textArea should be visible on page', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().should('exist')
   })
 
   it('Documents page link exists', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedDocumentsLink().should('exist')
   })
 
   it('Risk page link exists', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.associatedRiskLink().should('exist')
   })
 
   it('entering link in allocation notes errors', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().type('https://bbc.co.uk/noway')
@@ -271,6 +335,7 @@ context('Summary', () => {
   })
 
   it('entering link without scheme but with www in allocation notes errors', () => {
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
     summaryPage.instructionsTextArea().type('www.bbc.co.uk/noway')
@@ -282,6 +347,7 @@ context('Summary', () => {
   })
 
   it('when lao case restricted label visible', () => {
+    cy.task('stubGetRiskV1')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryRestrictedPage)
@@ -289,6 +355,7 @@ context('Summary', () => {
   })
 
   it('when lao case restricted hint text amended', () => {
+    cy.task('stubGetRiskV1')
     cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryRestrictedPage)

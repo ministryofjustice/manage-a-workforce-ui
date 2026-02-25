@@ -1,3 +1,45 @@
 {% macro riskSummaryBadge(params) %}
-  {%- include "./template.njk" -%}
+  {% macro getRiskLevelText(level) %}
+    {% if level == 'VERY_HIGH' %}
+    VERY HIGH
+    {% elif level == 'HIGH' %}
+    HIGH
+    {% elif level == 'MEDIUM' %}
+    MEDIUM
+    {% elif level == 'LOW' %}
+    LOW
+    {% elif level == 'UNAVAILABLE' %}
+    NOT APPLICABLE
+    {% else %}
+    UNKNOWN
+    {% endif %}
+  {% endmacro %}
+
+  {% macro getRiskLevelClass(level) %}
+    {% if level == 'VERY_HIGH' %}
+    predictor-badge--very-high
+    {% elif level == 'HIGH' %}
+    predictor-badge--high
+    {% elif level == 'MEDIUM' %}
+    predictor-badge--medium
+    {% elif level == 'LOW' %}
+    predictor-badge--low
+    {% else %}
+    predictor-badge--default
+    {% endif %}
+  {% endmacro %}
+
+  {% macro getStaticOrDynamic(level) %}
+    {% if level == 'DYNAMIC' %}
+    Dynamic
+    {% else %}
+    Static
+    {% endif %}
+  {% endmacro %}
+
+  {% if params.riskVersion === '2' %}
+    {%- include "./template-v2.njk" -%}
+  {% else %}
+    {%- include "./template-v1.njk" -%}
+  {% endif %}
 {% endmacro %}

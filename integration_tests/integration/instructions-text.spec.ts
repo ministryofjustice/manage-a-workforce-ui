@@ -32,6 +32,7 @@ context('Instructions text', () => {
 
   it('Instructions text should save and display when switching to probation record page', () => {
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubGetRiskV1')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -48,6 +49,7 @@ context('Instructions text', () => {
 
   it('Instructions text should save and display when switching to risk page', () => {
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubGetRiskV1')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -64,6 +66,7 @@ context('Instructions text', () => {
 
   it('Instructions text should save and display when switching to documents page', () => {
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubGetRiskV1')
     cy.signIn()
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
@@ -83,6 +86,7 @@ context('Instructions text', () => {
 
   it('Instructions hint text should display header text', () => {
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubGetRiskV1')
     cy.signIn()
     cy.clock()
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')

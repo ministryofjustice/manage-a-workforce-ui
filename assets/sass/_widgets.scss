@@ -249,7 +249,7 @@ $default-colour__text: govuk-colour('black');
     background-color: $secondary-colour;
     border-left: 2px solid $primary-colour;
 
-    padding: 2px 2px;
+    padding: 2px;
     align-content: center;
   }
 
@@ -260,7 +260,7 @@ $default-colour__text: govuk-colour('black');
     background-color: #e5e6e7;
     border-left: 2px solid $primary-colour;
 
-    padding: 2px 2px;
+    padding: 2px;
     align-content: center;
   }
 }

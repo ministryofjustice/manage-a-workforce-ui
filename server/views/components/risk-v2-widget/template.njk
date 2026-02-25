@@ -21,10 +21,10 @@
     MEDIUM
     {% elif level == 'LOW' %}
     LOW
-    {% elif level == 'NOT_FOUND' %}
-    UNKNOWN
     {% elif level == 'UNAVAILABLE' %}
     NOT APPLICABLE
+    {% else %}
+    UNKNOWN
     {% endif %}
 {% endmacro %}
 
@@ -36,7 +36,7 @@
     {% endif %}
 {% endmacro %}
 
-{% set showScore = params.band !== 'UNAVAILABLE' and params.band !== 'NOT_FOUND' %}
+{% set showScore = params and params.band !== 'UNAVAILABLE' and params.band !== 'NOT_FOUND' %}
 
 <div class="govuk-!-margin-bottom-4">
     <div class="{{getOverallRiskLevelClass(params.band)}} expanded-predictor-badge__dynamic">
@@ -48,6 +48,10 @@
                 <span class="predictor-badge__static_or_dynamic">{{ getStaticOrDynamic(params.staticOrDynamic) }}</span>
             {% endif %}
         </div>
-        <span class="predictor-badge__last_updated">Last updated: {{ completedDate | dateFormat | default("Not known") }}</span>
+        {% if completedDate %}
+            <span class="predictor-badge__last_updated">Last updated: {{ completedDate | dateFormat | default("Not known") }}</span>
+        {% else %}
+            <span class="predictor-badge__last_updated">Last updated: Not known</span>
+        {% endif %}
     </div>
 </div>

@@ -164,7 +164,7 @@ context('Risk', () => {
     riskPage
       .rsrWidget()
       .trimTextContent()
-      .should('equal', 'High RSR 8.47% Risk of serious recidivism Last updated: 1 December 2025')
+      .should('equal', 'HIGH RSR 8.47% Risk of serious recidivism Last updated: 1 December 2025')
     riskPage
       .ogrsWidget()
       .trimTextContent()

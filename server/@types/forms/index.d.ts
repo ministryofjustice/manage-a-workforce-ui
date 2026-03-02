@@ -32,6 +32,7 @@ declare module 'forms' {
     }[]
     isSensitive: boolean
     emailPreviousOfficer: boolean
+    lastOasysAssessmentDate: string
   }
 
   export interface CurrentOffenderManagerForm {

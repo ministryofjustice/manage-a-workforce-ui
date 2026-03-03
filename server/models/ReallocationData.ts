@@ -10,4 +10,5 @@ export default interface ReallocationData {
   sensitiveNotes: boolean
   laoCase: boolean
   allocationReason: string
+  lastOasysAssessmentDate: string
 }

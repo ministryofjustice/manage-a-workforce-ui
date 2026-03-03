@@ -595,6 +595,8 @@ export default class ReallocationsController {
 
     await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
 
+    const assessmentDate = await this.allocationsService.getAssessmentDate(res.locals.user.token, crn)
+
     if (form.remove !== undefined) {
       form.person.splice(form.remove, 1)
     }
@@ -611,7 +613,7 @@ export default class ReallocationsController {
         token: res.locals.user.token,
         crn,
         emailPreviousOfficer,
-        previousStaffCode,
+        previousStaffCode: staffTeamCode,
         newStaffCode,
         teamCode: staffTeamCode,
         emailTo,
@@ -619,6 +621,7 @@ export default class ReallocationsController {
         sensitiveNotes,
         laoCase,
         allocationReason: reallocationReason,
+        lastOasysAssessmentDate: assessmentDate.updatedDate,
       }
 
       await this.workloadService.reallocateCaseToOffenderManager(reallocationData)

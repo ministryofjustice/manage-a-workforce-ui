@@ -30,19 +30,18 @@
 
 {% block content %}
 
-    <h1 class="govuk-heading-xl">Review reallocation</h1>
+  <h1 class="govuk-heading-xl">Review reallocation</h1>
 
   <form data-validate-form="confirm-reallocation" action="{{ '/pdu/' + pduCode + '/' + crn + '/reallocations/' + staffTeamCode + '/' + newStaffCode +'/save-reallocation' }}" method="post">
 
-  <section class="app-summary-card app-summary-card-blue govuk-!-margin-bottom-6 app-summary-card--large-title" id="sentence">
-        <header class="app-summary-card__header app-summary-card__blue_header">
-        </header>
+    <section class="app-summary-card app-summary-card-blue govuk-!-margin-bottom-6 app-summary-card--large-title" id="sentence">
+      <header class="app-summary-card__header app-summary-card__blue_header"></header>
 
-        <div class="govuk-!-margin-4">
-          <div class="govuk-!-margin-bottom-6">
+      <div class="govuk-!-margin-4">
+        <div class="govuk-!-margin-bottom-6">
           <h2 class="govuk-heading-l">Practitioner details</h2>
 
-            {{ govukSummaryList({
+          {{ govukSummaryList({
                      rows: [
                          {
                              key: {
@@ -70,9 +69,9 @@
                         }
                      ]
                  })}}
-          </div>
+        </div>
 
-          <div class="govuk-!-margin-bottom-6">
+        <div class="govuk-!-margin-bottom-6">
 
           <h2 class="govuk-heading-l">Person on probation details</h2>
 
@@ -120,104 +119,100 @@
               }
             ]
           })}}
-          </div>
+        </div>
 
-            {% for event in events %}
+        {% for event in events %}
 
-                {%- set offenceData = event.offences %}
+          {%- set offenceData = event.offences %}
 
-                <section class="app-summary-card app-summary-card--large-title {{"govuk-!-margin-top-4" if loop.index > 0}} app-summary-card-pad" id="sentence">
-                       <div class="govuk-!-margin-bottom-6">
-                  <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row govuk-summary-list__row_greyback">
-                                <dt class="govuk-summary-list__key govuk-!-padding-left-3">Offence</dt>
-                                <dd class="govuk-summary-list__value">
-                                    {% if offenceData | length == 1 %}
-                                        {%- for offence in offenceData  if offenceData %}
-                                            <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
-                                                {{ offence.mainCategory }}
-                                            </h3>
-                                            <p class="govuk-body-s maw-secondary-text-col">
-                                                <strong>{{ offence.subCategory }}</strong>
-                                            </p>
-                                        {% endfor -%}
-                                    {% else %}
-                                        <ol class="govuk-list govuk-list--number">
-                                            {%- for offence in offenceData  if offenceData %}
-                                                <li>{{ offence.mainCategory }}</li>
-                                                <p class="govuk-body-s maw-secondary-text-col">
-                                                    <strong>{{ offence.subCategory }}</strong>
-                                                </p>
-                                            {% endfor -%}
-                                        </ol>
-                                    {% endif %}
-                                </dd>
-                            </div>
+          <section class="app-summary-card app-summary-card--large-title {{"govuk-!-margin-top-4" if loop.index > 0}} app-summary-card-pad" id="sentence">
+            <div class="govuk-!-margin-bottom-6">
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row_greyback">
+                  <dt class="govuk-summary-list__key govuk-!-padding-left-3">Offence</dt>
+                  <dd class="govuk-summary-list__value">
+                    {% if offenceData | length == 1 %}
+                      {%- for offence in offenceData  if offenceData %}
+                        <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
+                          {{ offence.mainCategory }}
+                        </h3>
+                        <p class="govuk-body-s maw-secondary-text-col">
+                          <strong>{{ offence.subCategory }}</strong>
+                        </p>
+                      {% endfor -%}
+                    {% else %}
+                      <ol class="govuk-list govuk-list--number">
+                        {%- for offence in offenceData  if offenceData %}
+                          <li>{{ offence.mainCategory }}</li>
+                          <p class="govuk-body-s maw-secondary-text-col">
+                            <strong>{{ offence.subCategory }}</strong>
+                          </p>
+                        {% endfor -%}
+                      </ol>
+                    {% endif %}
+                  </dd>
+                </div>
 
-                            <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key govuk-!-padding-left-3">Order</dt>
-                                <dd class="govuk-summary-list__value">
-                                    <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
-                                        {{ event.sentence.description }}
-                                        {% if event.sentence.length %}
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key govuk-!-padding-left-3">Order</dt>
+                  <dd class="govuk-summary-list__value">
+                    <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-1">
+                      {{ event.sentence.description }}
+                      {% if event.sentence.length %}
                                   ({{ event.sentence.length }})
                               {% endif %}
-                                    </h3>
-                                    <ul class="govuk-list govuk-list--bullet">
-                                        <li>Start date: {{ event.sentence.startDate | dateFormat }}</li>
-                                        <li>End date: {{ event.sentence.endDate | dateFormat }}</li>
-                                    </ul>
-                                </dd>
-                            </div>
+                    </h3>
+                    <ul class="govuk-list govuk-list--bullet">
+                      <li>Start date: {{ event.sentence.startDate | dateFormat }}</li>
+                      <li>End date: {{ event.sentence.endDate | dateFormat }}</li>
+                    </ul>
+                  </dd>
+                </div>
 
-                            <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key govuk-!-padding-left-3">Requirements</dt>
-                                <dd class="govuk-summary-list__value">
-                                    <ul class="govuk-list govuk-list--bullet">
-                                        {%- for requirement in event.requirements  if event.requirements %}
-                                            {% if requirement.subCategory %}
-                                                <li>{{ requirement.mainCategory }}: {{ requirement.subCategory }}
-                                                    {{ requirement.length }}</li>
-                                            {% else %}
-                                                <li>{{ requirement.mainCategory }}: {{ requirement.length }}</li>
-                                            {% endif %}
-                                        {% endfor -%}
-                                    </ul>
-                                    {%- for requirement in event.requirements if event.requirements %}
-                                    {% else -%}
-                                        <p>There are no requirements to display.</p>
-                                    {% endfor -%}
-                                </dd>
-                            </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key govuk-!-padding-left-3">Requirements</dt>
+                  <dd class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                      {%- for requirement in event.requirements  if event.requirements %}
+                        {% if requirement.subCategory %}
+                          <li>{{ requirement.mainCategory }}: {{ requirement.subCategory }}
+                            {{ requirement.length }}</li>
+                        {% else %}
+                          <li>{{ requirement.mainCategory }}: {{ requirement.length }}</li>
+                        {% endif %}
+                      {% endfor -%}
+                    </ul>
+                    {%- for requirement in event.requirements if event.requirements %}
+                    {% else -%}
+                        There are no requirements to display.
+                    {% endfor -%}
+                  </dd>
+                </div>
 
-                            <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key govuk-!-padding-left-3">Next Appointment</dt>
-                                <dd class="govuk-summary-list__value">
-                                    {% if data.nextAppointmentDate %}
-                                        <p>
-                                            {{ data.nextAppointmentDate | dateFormat }}
-                                        </p>
-                                    {% else %}
-                                        <p>None available</p>
-                                    {% endif %}
-                                </dd>
-                            </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key govuk-!-padding-left-3">Next Appointment</dt>
+                  <dd class="govuk-summary-list__value">
+                    {% if data.nextAppointmentDate %}
+                      {{ data.nextAppointmentDate | dateFormat }}
+                    {% else %}
+                      None available
+                    {% endif %}
+                  </dd>
+                </div>
 
-                            <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key govuk-!-padding-left-3">Failure to comply since {{ event.failureToComplyStartDate | dateFormat  }}</dt>
-                                <dd class="govuk-summary-list__value">
-                                    <p>{{ event.failureToComplyCount }}
-                                    </p>
-                                </dd>
-                            </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key govuk-!-padding-left-3">Failure to comply since {{ event.failureToComplyStartDate | dateFormat  }}</dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ event.failureToComplyCount }}
+                  </dd>
+                </div>
               </dl>
-                       </div>
-                  </section>
+            </div>
+          </section>
 
+        {% endfor -%}
 
-            {% endfor -%}
-
-          <div class="govuk-!-margin-top-6">
+        <div class="govuk-!-margin-top-6">
 
           {{ instructionsForm({
             titleText: "Review your reallocation notes",
@@ -231,26 +226,25 @@
           }}
         </div>
 
-
-        </div>
+      </div>
     </section>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
-      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-      <input type="hidden" name="chosenStaffCode" value="{{ newStaffCode }}">
-      <input type="hidden" name="chosenStaffTeamCode" value="{{ staffTeamCode }}">
-      <input type="hidden" name="chosenOffenderManagerName" value="{{ chosenOffenderManagerName }}">
-      <input type="hidden" name="previousStaffCode" value="{{ currentStaffCode }}">
-      <input type="hidden" name="reason" value="{{ reason }}">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <input type="hidden" name="chosenStaffCode" value="{{ newStaffCode }}">
+        <input type="hidden" name="chosenStaffTeamCode" value="{{ staffTeamCode }}">
+        <input type="hidden" name="chosenOffenderManagerName" value="{{ chosenOffenderManagerName }}">
+        <input type="hidden" name="previousStaffCode" value="{{ currentStaffCode }}">
+        <input type="hidden" name="reason" value="{{ reason }}">
 
-    <div class="govuk-form-group govuk-allocations-emails-form">
+        <div class="govuk-form-group govuk-allocations-emails-form">
 
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h3 class="govuk-fieldset__heading">Does this contain sensitive information?</h3>
-      </legend>
-      <p class="govuk-hint">This is information that would cause harm or undermine the investigation of a crime if it were disclosed to a person on probation. For example, a victim's personal details.</p>
-      {{ govukCheckboxes({
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h3 class="govuk-fieldset__heading">Does this contain sensitive information?</h3>
+          </legend>
+          <p class="govuk-hint">This is information that would cause harm or undermine the investigation of a crime if it were disclosed to a person on probation. For example, a victim's personal details.</p>
+          {{ govukCheckboxes({
         name: 'isSensitive',
         items: [{
           text: 'Yes, it contains sensitive information',
@@ -259,17 +253,17 @@
         }],
         classes: 'govuk-checkboxes--medium margin-bottom-10'
       })}}
-      {% if person.length > 0 %}
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <h3 class="govuk-fieldset__heading">Additional recipients</h3>
-        </legend>
-      {% endif %}
-      <div class="govuk-email-list">
-        {% for person in person %}
+          {% if person.length > 0 %}
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h3 class="govuk-fieldset__heading">Additional recipients</h3>
+            </legend>
+          {% endif %}
+          <div class="govuk-email-list">
+            {% for person in person %}
 
-          <div class="govuk-email-list-item">
-            <div>
-              {{ govukInput({
+              <div class="govuk-email-list-item">
+                <div>
+                  {{ govukInput({
                 id: 'person[' +loop.index0 +'][email]',
                 name: 'person[' +loop.index0 +'][email]',
                 value: person.email,
@@ -283,30 +277,30 @@
                 },
                 errorMessage: errors | findError('person[' +loop.index0 +'][email]')
               }) }}
-            </div>
-            <div>
-              {{ govukButton({
+                </div>
+                <div>
+                  {{ govukButton({
                 text: 'Remove',
                 type: 'submit',
                 name: 'remove',
                 value: loop.index0,
                 classes: 'govuk-button govuk-button--secondary govuk-!-margin-0'
               }) }}
-            </div>
+                </div>
+              </div>
+
+            {% endfor %}
           </div>
 
-        {% endfor %}
-      </div>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h3 class="govuk-fieldset__heading moj-add-another__title">Add another recipient</h3>
+          </legend>
 
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h3 class="govuk-fieldset__heading moj-add-another__title">Add another recipient</h3>
-      </legend>
+          <p class="govuk-hint">Type to find and select a justice.gov.uk email address.</p>
 
-      <p class="govuk-hint">Type to find and select a justice.gov.uk email address.</p>
-
-      <div class="govuk-email-list-item">
-        <div>
-          {{ govukSelect({
+          <div class="govuk-email-list-item">
+            <div>
+              {{ govukSelect({
             id: 'person',
             name: 'person_placeholder',
             items: [],
@@ -316,33 +310,33 @@
               classes: 'govuk-!-font-weight-bold'
             }
           }) }}
-        </div>
-        <div id="remove-email-placeholder">
-          {{ govukButton({
+            </div>
+            <div id="remove-email-placeholder">
+              {{ govukButton({
             text: 'Remove',
             type: 'button',
             name: 'remove',
             value: loop.index0,
             classes: 'govuk-button govuk-button--secondary govuk-!-margin-0'
           }) }}
-        </div>
-      </div>
+            </div>
+          </div>
 
-      <div id="add-another-person" class="moj-button-action">
-        {{ govukButton({
+          <div id="add-another-person" class="moj-button-action">
+            {{ govukButton({
           text: 'Add another person',
           type: 'submit',
           name: 'action',
           value: 'add-another-person',
           classes: 'govuk-button--secondary  govuk-!-margin-top-3'
         }) }}
-      </div>
+          </div>
 
-      <div class="govuk-form-group govuk-!-margin-top-4">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h3 class="govuk-fieldset__heading">Do you want to send this to the previous practitioner?</h3>
-      </legend>
-      {{ govukCheckboxes({
+          <div class="govuk-form-group govuk-!-margin-top-4">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h3 class="govuk-fieldset__heading">Do you want to send this to the previous practitioner?</h3>
+            </legend>
+            {{ govukCheckboxes({
         name: 'emailPreviousOfficer',
         items: [{
           text: 'Yes, I want to send it to the previous practitioner',
@@ -351,10 +345,10 @@
         }],
         classes: 'govuk-checkboxes--medium margin-bottom-10'
       })}}
-      </div>
+          </div>
 
-      <div class="govuk-button-group govuk-!-margin-top-4">
-        {{
+          <div class="govuk-button-group govuk-!-margin-top-4">
+            {{
         govukButton({
           text: 'Reallocate',
           classes: 'allocate',
@@ -368,14 +362,13 @@
           }
         })
         }}
-        <a id="clearSelection" class="govuk-button govuk-button--secondary" href="{{'/pdu/' + pduCode + '/' + crn + '/reallocations/choose-practitioner'}}">Choose a different practitioner</a>
+            <a id="clearSelection" class="govuk-button govuk-button--secondary" href="{{'/pdu/' + pduCode + '/' + crn + '/reallocations/choose-practitioner'}}">Choose a different practitioner</a>
 
-
-        <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/reallocations' }}">Cancel reallocation</a>
+            <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/reallocations' }}">Cancel reallocation</a>
+          </div>
+        </div>
       </div>
     </div>
-    </div>
-  </div>
   </form>
 
 {% endblock %}

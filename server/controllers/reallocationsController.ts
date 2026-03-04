@@ -613,7 +613,7 @@ export default class ReallocationsController {
         token: res.locals.user.token,
         crn,
         emailPreviousOfficer,
-        previousStaffCode: staffTeamCode,
+        previousStaffCode,
         newStaffCode,
         teamCode: staffTeamCode,
         emailTo,

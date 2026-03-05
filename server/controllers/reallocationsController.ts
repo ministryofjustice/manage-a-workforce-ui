@@ -1,5 +1,8 @@
 import { Request, Response } from 'express'
 import { ConfirmReallocationForm, ReallocationCaseSummaryForm, ReallocationChoosePractitionerForm } from 'forms'
+import dayjs from 'dayjs'
+
+import config from '../config'
 import AllocationsService from '../services/allocationsService'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
@@ -21,7 +24,6 @@ import validate from '../validation/validation'
 import ReallocationData from '../models/ReallocationData'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import OffenderManagerPotentialWorkload from '../models/OffenderManagerPotentialWorkload'
-import Risk from '../models/Risk'
 
 export default class ReallocationsController {
   constructor(
@@ -154,7 +156,7 @@ export default class ReallocationsController {
 
     const [response, risk, assessmentDate] = await Promise.all([
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
-      flattenRiskLevels(await this.allocationsService.getCaseRisk(res.locals.user.token, crn)),
+      await this.allocationsService.getCaseRisk(res.locals.user.token, crn),
       await this.allocationsService.getAssessmentDate(res.locals.user.token, crn),
     ])
 
@@ -435,7 +437,7 @@ export default class ReallocationsController {
 
     const [response, risk, assessmentDate] = await Promise.all([
       await this.allocationsService.getAllocatedCase(res.locals.user.token, crn),
-      flattenRiskLevels(await this.allocationsService.getCaseRisk(res.locals.user.token, crn)),
+      await this.allocationsService.getCaseRisk(res.locals.user.token, crn),
       await this.allocationsService.getAssessmentDate(res.locals.user.token, crn),
     ])
 
@@ -596,6 +598,8 @@ export default class ReallocationsController {
 
     await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
 
+    const assessmentDate = await this.allocationsService.getAssessmentDate(res.locals.user.token, crn)
+
     if (form.remove !== undefined) {
       form.person.splice(form.remove, 1)
     }
@@ -620,6 +624,7 @@ export default class ReallocationsController {
         sensitiveNotes,
         laoCase,
         allocationReason: reallocationReason,
+        lastOasysAssessmentDate: dayjs(assessmentDate.updatedDate).format(config.dateFormat),
       }
 
       await this.workloadService.reallocateCaseToOffenderManager(reallocationData)
@@ -661,14 +666,5 @@ export default class ReallocationsController {
       laoRestricted,
       journey: 'reallocations',
     })
-  }
-}
-
-function flattenRiskLevels(risk: Risk): Risk {
-  return {
-    ...risk,
-    roshLevel: risk.roshRisk?.overallRisk,
-    rsrLevel: risk.rsr?.level,
-    ogrsScore: risk.ogrs?.score,
   }
 }

@@ -107,6 +107,7 @@ context('Choose Practitioner', () => {
   })
 
   it('navigate to allocate page through case view', () => {
+    cy.task('stubGetRiskV1')
     cy.task('stubGetCurrentlyManagedCaseForChoosePractitioner')
     cy.task('stubGetUnallocatedCase')
     cy.signIn()

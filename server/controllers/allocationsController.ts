@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import type { ConfirmInstructionForm } from 'forms'
 import AllocationsService from '../services/allocationsService'
-import Allocation from '../models/Allocation'
 import Sentence from './data/Sentence'
 import Conviction from '../models/Conviction'
 import { gradeOrder, gradeTips } from './data/AllocateOffenderManager'
@@ -33,11 +32,11 @@ export default class AllocationsController {
   ) {}
 
   async getUnallocatedCase(req: Request, res: Response, crn, convictionNumber, pduCode): Promise<void> {
-    const response: Allocation = await this.allocationsService.getUnallocatedCase(
-      res.locals.user.token,
-      crn,
-      convictionNumber,
-    )
+    const [unallocatedCase, risk] = await Promise.all([
+      await this.allocationsService.getUnallocatedCase(res.locals.user.token, crn, convictionNumber),
+      await this.allocationsService.getRisk(res.locals.user.token, crn, convictionNumber),
+    ])
+
     const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
     await this.allocationsService.getUserRegionAccessForCrn(
       res.locals.user.token,
@@ -45,23 +44,25 @@ export default class AllocationsController {
       crn,
       convictionNumber,
     )
-    const address = new DisplayAddress(response.address)
-    response.name = unescapeApostrophe(response.name)
+    const address = new DisplayAddress(unallocatedCase.address)
+    unallocatedCase.name = unescapeApostrophe(unallocatedCase.name)
     const { instructions } = await this.allocationsService.getNotesCache(
       crn,
       convictionNumber,
       res.locals.user.username,
     )
+
     res.render('pages/summary', {
-      data: response,
+      data: unallocatedCase,
       address,
-      crn: response.crn,
-      tier: response.tier,
-      name: response.name,
-      convictionNumber: response.convictionNumber,
+      crn: unallocatedCase.crn,
+      tier: unallocatedCase.tier,
+      name: unallocatedCase.name,
+      risk,
+      convictionNumber: unallocatedCase.convictionNumber,
       title: 'Case summary | Manage a Workforce',
       pduCode,
-      outOfAreaTransfer: response.outOfAreaTransfer,
+      outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
       laoCase,
       errors: req.flash('errors') || [],
       instructions,
@@ -168,6 +169,7 @@ export default class AllocationsController {
       convictionNumber,
       res.locals.user.username,
     )
+
     res.render('pages/risk', {
       title: 'Risk | Manage a workforce',
       data: risk,

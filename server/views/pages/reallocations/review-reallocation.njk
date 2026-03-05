@@ -237,6 +237,7 @@
         <input type="hidden" name="chosenOffenderManagerName" value="{{ chosenOffenderManagerName }}">
         <input type="hidden" name="previousStaffCode" value="{{ currentStaffCode }}">
         <input type="hidden" name="reason" value="{{ reason }}">
+        <input type="hidden" name="lastOasysAssessmentDate" value="{{ assessment.updatedDate  }}">
 
         <div class="govuk-form-group govuk-allocations-emails-form">
 
@@ -337,14 +338,14 @@
               <h3 class="govuk-fieldset__heading">Do you want to send this to the previous practitioner?</h3>
             </legend>
             {{ govukCheckboxes({
-        name: 'emailPreviousOfficer',
-        items: [{
-          text: 'Yes, I want to send it to the previous practitioner',
-          value: 'yes',
-          checked: emailPreviousOfficer
-        }],
-        classes: 'govuk-checkboxes--medium margin-bottom-10'
-      })}}
+              name: 'emailPreviousOfficer',
+              items: [{
+                text: 'Yes, I want to send it to the previous practitioner',
+                value: 'yes',
+                checked: emailPreviousOfficer
+              }],
+              classes: 'govuk-checkboxes--medium margin-bottom-10'
+            })}}
           </div>
 
           <div class="govuk-button-group govuk-!-margin-top-4">

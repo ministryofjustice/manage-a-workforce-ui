@@ -15,7 +15,7 @@ context('Instructions text', () => {
 
   it('Instructions text should save and display when switching to summary page', () => {
     cy.task('stubGetUnallocatedCase')
-    cy.task('stubGetRisk')
+    cy.task('stubGetRiskV1')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
@@ -32,6 +32,7 @@ context('Instructions text', () => {
 
   it('Instructions text should save and display when switching to probation record page', () => {
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubGetRiskV1')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -48,6 +49,7 @@ context('Instructions text', () => {
 
   it('Instructions text should save and display when switching to risk page', () => {
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubGetRiskV1')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
@@ -56,7 +58,7 @@ context('Instructions text', () => {
     summaryPage.instructionsTextArea().type('Test Risk')
     /* eslint-disable-next-line cypress/no-unnecessary-waiting */
     cy.wait(1000)
-    cy.task('stubGetRisk')
+    cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
     riskPage.instructionsTextArea().should('have.value', 'Test Risk')
@@ -64,6 +66,7 @@ context('Instructions text', () => {
 
   it('Instructions text should save and display when switching to documents page', () => {
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubGetRiskV1')
     cy.signIn()
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
@@ -83,6 +86,7 @@ context('Instructions text', () => {
 
   it('Instructions hint text should display header text', () => {
     cy.task('stubGetUnallocatedCase')
+    cy.task('stubGetRiskV1')
     cy.signIn()
     cy.clock()
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')

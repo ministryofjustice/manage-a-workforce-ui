@@ -4,6 +4,14 @@
 {% from "../components/pop/macro.njk" import pop %}
 {% from "../components/instructions/macro.njk" import instructionsForm %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% set notificationHtml %}
+<p class="govuk-body">
+    <strong>We're changing how we show risk scores.</strong>
+    <br/>From now until Monday 9 March, you may need to check OASys for an updated risk score.
+  </p>
+{% endset %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -21,6 +29,11 @@
 {% endblock %}
 
 {% block content %}
+
+    {{ govukNotificationBanner({
+        html: notificationHtml
+    }) }}
+
     {% if outOfAreaTransfer == true %}
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">

@@ -184,7 +184,7 @@
                     </ul>
                     {%- for requirement in event.requirements if event.requirements %}
                     {% else -%}
-                      <p>There are no requirements to display.</p>
+                        There are no requirements to display.
                     {% endfor -%}
                   </dd>
                 </div>
@@ -193,11 +193,9 @@
                   <dt class="govuk-summary-list__key govuk-!-padding-left-3">Next Appointment</dt>
                   <dd class="govuk-summary-list__value">
                     {% if data.nextAppointmentDate %}
-                      <p>
-                        {{ data.nextAppointmentDate | dateFormat }}
-                      </p>
+                      {{ data.nextAppointmentDate | dateFormat }}
                     {% else %}
-                      <p>None available</p>
+                      None available
                     {% endif %}
                   </dd>
                 </div>
@@ -205,8 +203,7 @@
                 <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key govuk-!-padding-left-3">Failure to comply since {{ event.failureToComplyStartDate | dateFormat  }}</dt>
                   <dd class="govuk-summary-list__value">
-                    <p>{{ event.failureToComplyCount }}
-                    </p>
+                    {{ event.failureToComplyCount }}
                   </dd>
                 </div>
               </dl>
@@ -218,8 +215,9 @@
         <div class="govuk-!-margin-top-6">
 
           {{ instructionsForm({
+            titleText: "Review your reallocation notes",
             inGridRow: false,
-            showHintText: false,
+            hideHintText: true,
             crn: crn,
             errorMessage: errors | findError('reallocationNotes'),
             laoCase: laoCase,
@@ -308,7 +306,6 @@
             name: 'person_placeholder',
             items: [],
             classes: 'hidden govuk-autocomplete',
-            hint: { text: 'Type to find and select a justice.gov.uk email address.' },
             label: {
               text: 'Email address',
               classes: 'govuk-!-font-weight-bold'

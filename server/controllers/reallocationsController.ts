@@ -1,5 +1,8 @@
 import { Request, Response } from 'express'
 import { ConfirmReallocationForm, ReallocationCaseSummaryForm, ReallocationChoosePractitionerForm } from 'forms'
+import dayjs from 'dayjs'
+
+import config from '../config'
 import AllocationsService from '../services/allocationsService'
 import ProbationEstateService from '../services/probationEstateService'
 import UserPreferenceService from '../services/userPreferenceService'
@@ -621,7 +624,7 @@ export default class ReallocationsController {
         sensitiveNotes,
         laoCase,
         allocationReason: reallocationReason,
-        lastOasysAssessmentDate: assessmentDate.updatedDate,
+        lastOasysAssessmentDate: dayjs(assessmentDate.updatedDate).format(config.dateFormat),
       }
 
       await this.workloadService.reallocateCaseToOffenderManager(reallocationData)

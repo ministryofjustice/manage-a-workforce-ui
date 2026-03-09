@@ -581,6 +581,7 @@ export default class AllocationsController {
       isActiveCases: true,
       pduCode,
       teamName: teamDetails.name,
+      journey: 'reallocations',
     })
   }
 

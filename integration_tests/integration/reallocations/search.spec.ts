@@ -20,7 +20,7 @@ context('Reallocations Search', () => {
 
   it('should display the search component', () => {
     reallocationsSearchPage.search().should('contain.text', 'Find a person on probation to reallocate')
-    reallocationsSearchPage.search().should('contain.text', 'You can search by CRN')
+    reallocationsSearchPage.search().should('contain.text', 'Search by CRN')
     reallocationsSearchPage.search().get('input#crn').should('be.visible')
   })
 

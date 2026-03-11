@@ -53,7 +53,7 @@ export default class AllocateCasesController {
 
   async getReallocationTeamWorkload(_req: Request, res: Response, pduCode: string, teamCode: string) {
     if (res.locals.featureFlags.Reallocations) {
-      await this.getTeamWorkload(_req, res, pduCode, teamCode, 'pages/reallocations-team-workload')
+      await this.getTeamWorkload(_req, res, pduCode, teamCode, 'pages/reallocations-team-workload', 'reallocations')
     } else {
       res.redirect(`/pdu/${pduCode}/teams`)
     }
@@ -65,6 +65,7 @@ export default class AllocateCasesController {
     pduCode: string,
     teamCode: string,
     view: string = 'pages/team-workload',
+    journey: string = 'allocations',
   ) {
     const { token } = res.locals.user
 
@@ -90,7 +91,7 @@ export default class AllocateCasesController {
       teamWorkload: workload,
       totalCases,
       averageWorkload: teamWorkloadData[0].workload,
-      journey: 'reallocations',
+      journey,
     })
   }
 }

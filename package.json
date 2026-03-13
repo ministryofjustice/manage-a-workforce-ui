@@ -150,7 +150,7 @@
     "@types/passport-oauth2": "1.8.0",
     "@types/redis": "4.0.11",
     "@types/superagent": "8.1.9",
-    "@types/supertest": "6.0.3",
+    "@types/supertest": "7.2.0",
     "audit-ci": "7.1.0",
     "concurrently": "9.2.0",
     "cypress": "^15.0.0",

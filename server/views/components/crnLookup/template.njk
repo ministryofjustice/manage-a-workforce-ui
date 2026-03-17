@@ -36,7 +36,6 @@
 
   {% set tableData = {
     attributes: {
-        'data-module': 'moj-sortable-table',
         'data-persistent-id': 'reallocation-case'
     },
     head: [
@@ -75,7 +74,7 @@
   </label>
 
   <span class="govuk-body">
-    You can search by CRN
+    Search by CRN
   </span>
 
   <form method="GET" action="{{params.action}}" class="govuk-form-group govuk-!-margin-top-1 {% if params.errorMessage %}govuk-form-group--error{% endif %}">
@@ -84,8 +83,8 @@
       id="search"
       name="search"
       type="text"
-      hint="You can search by CRN"
-      aria-describedby="crn-lookup-heading {% if params.errorMessage %}search-error{% endif %}"
+      hint="Search by CRN"
+      aria-describedby="crn-lookup-heading"
       value="{{params.value}}"
 />
 

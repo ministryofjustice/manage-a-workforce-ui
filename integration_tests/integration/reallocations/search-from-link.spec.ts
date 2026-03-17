@@ -54,7 +54,7 @@ context('Reallocations Search', () => {
 
     it('Link in footer should take us to rellocation page', () => {
       reallocationsSearchPage = Page.verifyOnPage(ReallocationsSearchPage)
-      reallocationsSearchPage.search().should('contain.text', 'You can search by CRN')
+      reallocationsSearchPage.search().should('contain.text', 'Search by CRN')
     })
   })
 })

@@ -39,7 +39,9 @@ export default class ReallocationsController {
       return
     }
 
-    const { search } = req.query
+    const searchQuery = req.query.search as string
+    const search = searchQuery?.trim()
+
     const { token, username } = res.locals.user
     const [teamsUserPreference, probationDeliveryUnitDetails] = await Promise.all([
       this.userPreferenceService.getTeamsUserPreference(token, username),

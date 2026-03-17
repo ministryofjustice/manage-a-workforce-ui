@@ -21,11 +21,11 @@ context('Reallocations Search', () => {
   it('should display the search component', () => {
     reallocationsSearchPage.search().should('contain.text', 'Find a person on probation to reallocate')
     reallocationsSearchPage.search().should('contain.text', 'Search by CRN')
-    reallocationsSearchPage.search().get('input#crn').should('be.visible')
+    reallocationsSearchPage.search().get('input#search').should('be.visible')
   })
 
   it('should display an error for an invalid CRN', () => {
-    reallocationsSearchPage.search().get('input#crn').type('BADCRN')
+    reallocationsSearchPage.search().get('input#search').type('BADCRN')
     reallocationsSearchPage.search().get('button').click()
     reallocationsSearchPage.search().should('contain.text', 'Enter a valid CRN to search')
   })
@@ -33,7 +33,7 @@ context('Reallocations Search', () => {
   it('should display an error when case not found', () => {
     cy.task('stubCrnLookupError', { crn: 'A123456' })
     cy.task('stubForStaffLaoStatusByCrns', ['A123456'])
-    reallocationsSearchPage.search().get('input#crn').type('A123456')
+    reallocationsSearchPage.search().get('input#search').type('A123456')
     reallocationsSearchPage.search().get('button').click()
     reallocationsSearchPage.search().should('contain.text', 'Help with reallocations search')
   })
@@ -41,7 +41,7 @@ context('Reallocations Search', () => {
   it('should display an error when case is unallocated', () => {
     cy.task('stubCrnLookup', { crn: 'A123456', allocated: false })
     cy.task('stubForStaffLaoStatusByCrns', ['A123456'])
-    reallocationsSearchPage.search().get('input#crn').type('A123456')
+    reallocationsSearchPage.search().get('input#search').type('A123456')
     reallocationsSearchPage.search().get('button').click()
     reallocationsSearchPage.search().should('contain.text', 'Help with reallocations search')
   })
@@ -51,7 +51,7 @@ context('Reallocations Search', () => {
     cy.task('stubForStaffLaoStatusByCrns', [{ crn: 'A123456' }])
     cy.task('stubGetCrnAccess', { crn: 'A123456' })
 
-    reallocationsSearchPage.search().get('input#crn').type('A123456')
+    reallocationsSearchPage.search().get('input#search').type('A123456')
     reallocationsSearchPage.search().get('button').click()
 
     reallocationsSearchPage.case().should('exist')
@@ -72,7 +72,7 @@ context('Reallocations Search', () => {
     cy.task('stubCrnLookup', { crn: 'A123456' })
     cy.task('stubForStaffLaoStatusByCrns', [{ crn: 'A123456', userRestricted: true, userExcluded: false }])
     cy.task('stubGetCrnAccess', { crn: 'A123456' })
-    reallocationsSearchPage.search().get('input#crn').type('A123456')
+    reallocationsSearchPage.search().get('input#search').type('A123456')
     reallocationsSearchPage.search().get('button').click()
 
     reallocationsSearchPage.case().should('exist')
@@ -99,7 +99,7 @@ context('Reallocations Search', () => {
     cy.task('stubCrnLookup', { crn: 'A123456' })
     cy.task('stubForStaffLaoStatusByCrns', [{ crn: 'A123456', userRestricted: false, userExcluded: true }])
     cy.task('stubGetCrnAccess', { crn: 'A123456' })
-    reallocationsSearchPage.search().get('input#crn').type('A123456')
+    reallocationsSearchPage.search().get('input#search').type('A123456')
     reallocationsSearchPage.search().get('button').click()
 
     reallocationsSearchPage.case().should('exist')
@@ -121,7 +121,7 @@ context('Reallocations Search', () => {
     cy.task('stubCrnLookup', { crn: 'A123456' })
     cy.task('stubForStaffLaoStatusByCrns', [{ crn: 'A123456' }])
     cy.task('stubGetCrnAccess', { crn: 'A123456', status: 403 })
-    reallocationsSearchPage.search().get('input#crn').type('A123456')
+    reallocationsSearchPage.search().get('input#search').type('A123456')
     reallocationsSearchPage.search().get('button').click()
     reallocationsSearchPage.case().should('not.exist')
     reallocationsSearchPage.search().should('contain.text', 'Help with reallocations search')

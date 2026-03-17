@@ -77,10 +77,10 @@
     Search by CRN
   </span>
 
-  <form method="GET" action="{{params.action}}" class="govuk-form-group govuk-!-margin-top-1">
+  <form method="GET" action="{{params.action}}" class="govuk-form-group govuk-!-margin-top-1 {% if params.errorMessage %}govuk-form-group--error{% endif %}">
     <input
-      class="govuk-input govuk-input--width-20"
-      id="crn"
+      class="govuk-input govuk-input--width-20 {% if params.errorMessage %}govuk-input--error{% endif %}"
+      id="search"
       name="search"
       type="text"
       hint="Search by CRN"
@@ -90,7 +90,10 @@
 
     <button type="submit" class="govuk-button  govuk-!-margin-left-1" data-form-submit>Search</button>
     {% if params.errorMessage %}
-      <p class="govuk-body">{{ params.errorMessage.text }}</p>
+      <p id="search-error" class="govuk-error-message">
+        <span class="govuk-visually-hidden">Error:</span>
+        {{ params.errorMessage.text }}
+      </p>
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

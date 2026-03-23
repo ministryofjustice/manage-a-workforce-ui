@@ -114,7 +114,7 @@
                 html: 'OASys'
               },
                 value: {
-                text: doubleCell('<strong class="govuk-tag govuk-blue-box">CHECK OASYS</strong>', 'Updated ' + assessment.updatedDate | dateFormat if assessment.updatedDate)
+                text: doubleCell('<strong class="govuk-tag govuk-blue-box">CHECK OASYS</strong>', '<p class="govuk-!-margin-top-2">Updated ' + assessment.updatedDate | dateFormat if assessment.updatedDate + '</p>')
               }
               }
             ]

@@ -12,6 +12,8 @@
     }) }}
 {% endblock %}
 
+{% macro activeCasesHref(pduCode, officerTeamCode, code) %}{% endmacro %}
+
 {% block content %}
     {% if not data.email %}
         <div class="govuk-grid-row">
@@ -38,12 +40,12 @@
                 items: [
                     {
                         text: 'Overview',
-                        href: '/pdu/' + pduCode + '/' + officerTeamCode + '/' + officerCode + '/officer-view',
+                        href: '/pdu/'+ pduCode + '/' + officerTeamCode + '/' + officerCode + ('/reallocations/officer-view' if journey == 'reallocations' else '/officer-view'),
                         active: isOverview
                     },
                     {
                         text: 'Active cases (' + officerTotalCases + ')',
-                        href: '/pdu/' + pduCode + '/' + officerTeamCode + '/' + officerCode + '/active-cases',
+                        href: '/pdu/'+ pduCode + '/' + officerTeamCode + '/' + officerCode + ('/reallocations/active-cases' if journey == 'reallocations' else '/active-cases'),
                         active: isActiveCases
                     }
                 ]

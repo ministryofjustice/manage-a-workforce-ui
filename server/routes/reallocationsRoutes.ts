@@ -1,6 +1,7 @@
 import e from 'express'
 
 import ReallocationsController from '../controllers/reallocationsController'
+import AllocationsController from '../controllers/allocationsController'
 import type { Services } from '../services'
 
 export default function getReallocationsRoutes(
@@ -9,6 +10,13 @@ export default function getReallocationsRoutes(
   post: (path: string, handler: e.RequestHandler) => e.Router,
 ): void {
   const reallocationsController = new ReallocationsController(
+    services.allocationsService,
+    services.workloadService,
+    services.userPreferenceService,
+    services.probationEstateService,
+  )
+
+  const allocationsController = new AllocationsController(
     services.allocationsService,
     services.workloadService,
     services.userPreferenceService,
@@ -68,6 +76,33 @@ export default function getReallocationsRoutes(
   post('/pdu/:pduCode/:crn/reallocations/choose-practitioner', async (req, res) => {
     const { pduCode, crn } = req.params
     await reallocationsController.selectAllocatePractitioner(req, res, crn, pduCode)
+  })
+
+  get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/reallocations/officer-view', async (req, res) => {
+    const { convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
+    await allocationsController.getOverview(
+      req,
+      res,
+      offenderManagerTeamCode,
+      offenderManagerCode,
+      convictionNumber,
+      pduCode,
+      false,
+      true,
+    )
+  })
+
+  get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/reallocations/active-cases', async (req, res) => {
+    const { convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
+    await allocationsController.getActiveCases(
+      req,
+      res,
+      offenderManagerTeamCode,
+      offenderManagerCode,
+      convictionNumber,
+      pduCode,
+      true,
+    )
   })
 
   get(

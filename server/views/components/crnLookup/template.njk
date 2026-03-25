@@ -69,7 +69,7 @@
   } %}
 {% endif %}
 <div id="crn-lookup-component" class="maw-search-box govuk-!-padding-top-8 govuk-!-padding-bottom-8 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-margin-bottom-5">
-  <label id="crn-lookup-heading" class="govuk-heading-l govuk-!-margin-top-5 govuk-!-margin-bottom-5" for="crn-input">
+  <label id="crn-lookup-heading" class="govuk-heading-l govuk-!-margin-top-5 govuk-!-margin-bottom-5" for="search">
     Find a person on probation to reallocate
   </label>
 
@@ -78,34 +78,32 @@
   </span>
 
   <form method="GET" action="{{params.action}}" class="govuk-form-group govuk-!-margin-top-1 {% if params.errorMessage %}govuk-form-group--error{% endif %}">
+    {% if params.errorMessage %}
+      <p id="search-error" class="govuk-error-message">
+        <span class="govuk-visually-hidden">Error:</span>
+        {{ params.errorMessage.text }}
+      </p>
+    {% endif %}
     <input
       class="govuk-input govuk-input--width-20 {% if params.errorMessage %}govuk-input--error{% endif %}"
       id="search"
       name="search"
       type="text"
       hint="Search by CRN"
-      aria-describedby="crn-lookup-heading"
+      aria-describedby="crn-lookup-heading {% if params.errorMessage %}search-error{% endif %}"
       value="{{params.value}}"
 />
 
     <button type="submit" class="govuk-button  govuk-!-margin-left-1" data-form-submit>Search</button>
-    {% if params.errorMessage %}
-      <p id="search-error" class="govuk-error-message">
-        <span class="govuk-visually-hidden">Error:</span>
-        {{ params.errorMessage.text }}
-      </p>
-
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
           {{ govukDetails({
                 classes: "crn-lookup-not-found-details",
-                summaryText: "Help with reallocations search",
-                html: "No searches will be returned for cases: <ul><li>that have not been allocated yet</li><li>with no active orders</li><li>outside your region</li></ul>"
+                summaryText: "Why your search didn’t work",
+                html: "You cannot search for cases: <ul><li>that have not been allocated yet</li><li>with no active orders</li><li>outside your region</li></ul>"
               }) }}
         </div>
       </div>
-
-    {% endif %}
   </form>
   {% if params.data %}
     <div class ="crn-lookup-results" class="govuk-!-margin-top-4 govuk-!-margin-bottom-8 govuk-!-margin-left-4 govuk-!-margin-right-4">

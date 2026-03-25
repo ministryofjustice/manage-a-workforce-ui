@@ -355,7 +355,7 @@ export default class ReallocationsController {
     }
 
     const { token, username } = res.locals.user
-    const { allocatedOfficer: teamAndStaffCode } = req.body
+    const { allocatedOfficer: teamAndStaffCode } = req.body ?? {}
     const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const laoCase = await this.allocationsService.getLaoStatus(crn, token)
     await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)

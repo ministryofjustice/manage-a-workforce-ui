@@ -78,7 +78,7 @@
             {%- set tableRow = [
                 { html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name + ' to allocate to</span></label></div></div>')
                     if offenderManager.email and true != offenderManager.laoCase},
-                { html: ('<a href="/pdu/'+ pduCode +'/' + offenderManager.teamCode + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name + '</a>' ) | safe,
+                { html: ('<a href="/pdu/'+ pduCode + '/' + offenderManager.teamCode + '/' + offenderManager.code + '/reallocations/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name + '</a>' ) | safe,
                     attributes: {
                         "data-sort-value": offenderManager.name
                     }
@@ -145,7 +145,7 @@
 {% set offenderManagerDetails = ' by ' + currentOffenderManager.forenames + ' ' + currentOffenderManager.surname + (' (' + currentOffenderManager.grade + ')' if currentOffenderManager.grade) if currentOffenderManager%}
 
 {% block beforeContent %}
-  {{ govukBackLink({
+    {{ govukBackLink({
     text: "Back",
     attributes: {
       "data-back" : undefined
@@ -176,19 +176,19 @@
     <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{ pduCode }}/select-teams">Edit my teams list</a>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
-        <form data-validate-form="choose-practitioner" method="post">
-            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-            <div class="govuk-form-group govuk-!-margin-top-6">
-                {{ govukTabs({
+    <form data-validate-form="choose-practitioner" method="post">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <div class="govuk-form-group govuk-!-margin-top-6">
+            {{ govukTabs({
                 items: govukTabItems
             }) }}
-            </div>
+        </div>
 
-            <div class="govuk-width-container">
+        <div class="govuk-width-container">
 
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds">
-                        {{
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    {{
                         instructionsForm({
                           inGridRow: true,
                           showHintText: false,
@@ -198,23 +198,23 @@
                           instructions: instructions
                         })
                         }}
-                        {{ reallocationReason({
+                    {{ reallocationReason({
                           errorMessage: errors | findError('reason')
                         }) }}
-                    </div>
                 </div>
-
             </div>
 
-            <div class="govuk-button-group">
-                {{ govukButton({
+        </div>
+
+        <div class="govuk-button-group">
+            {{ govukButton({
                 text: 'Continue',
                 attributes: {
                     'data-form-submit': undefined
                 }
             }) }}
-            </div>
-        </form>
+        </div>
+    </form>
 {% endblock %}
 
 {% block javascripts %}

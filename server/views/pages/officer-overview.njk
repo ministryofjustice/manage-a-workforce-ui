@@ -85,6 +85,10 @@
     ]
 } %}
 
+{% macro activeCasesHref(pduCode, officerTeamCode, code) %}
+    {{'/pdu/'+ pduCode + '/' + officerTeamCode + '/' + code + ('/reallocations/active-cases' if journey == 'reallocations' else '/active-cases')}}
+{% endmacro %}
+
 {% block officerContent %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -96,7 +100,7 @@
                 <div class="card__layout">
                     {{ card({
                         classes: 'card-total',
-                        titleHtml: ('<a href="/pdu/'+ pduCode + '/' + officerTeamCode + '/' + data.code + '/active-cases" class="govuk-link--no-visited-state" aria-label="Total cases">' + data.totalCases + '<br>' + '<p class="govuk-body">' + "cases"  + '</p>' + '</a>')
+                        titleHtml: ('<a href="' + activeCasesHref(pduCode, officerTeamCode, data.code) + '" class="govuk-link--no-visited-state" aria-label="Total cases">' + data.totalCases + '<br>' + '<p class="govuk-body">' + "cases"  + '</p>' + '</a>')
                     }) }}
                 </div>
                 <div class="card__layout">

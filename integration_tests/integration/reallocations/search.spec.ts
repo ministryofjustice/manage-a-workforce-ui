@@ -35,7 +35,7 @@ context('Reallocations Search', () => {
     cy.task('stubForStaffLaoStatusByCrns', ['A123456'])
     reallocationsSearchPage.search().get('input#search').type('A123456')
     reallocationsSearchPage.search().get('button').click()
-    reallocationsSearchPage.search().should('contain.text', 'Help with reallocations search')
+    reallocationsSearchPage.search().should('contain.text', 'Why your search didn’t work')
   })
 
   it('should display an error when case is unallocated', () => {
@@ -43,7 +43,7 @@ context('Reallocations Search', () => {
     cy.task('stubForStaffLaoStatusByCrns', ['A123456'])
     reallocationsSearchPage.search().get('input#search').type('A123456')
     reallocationsSearchPage.search().get('button').click()
-    reallocationsSearchPage.search().should('contain.text', 'Help with reallocations search')
+    reallocationsSearchPage.search().should('contain.text', 'Why your search didn’t work')
   })
 
   it('should display case details when a valid CRN is entered', () => {
@@ -124,7 +124,7 @@ context('Reallocations Search', () => {
     reallocationsSearchPage.search().get('input#search').type('A123456')
     reallocationsSearchPage.search().get('button').click()
     reallocationsSearchPage.case().should('not.exist')
-    reallocationsSearchPage.search().should('contain.text', 'Help with reallocations search')
+    reallocationsSearchPage.search().should('contain.text', 'Why your search didn’t work')
   })
 
   it('team data displayed in table', () => {

@@ -451,6 +451,7 @@ export default class AllocationsController {
     convictionNumber,
     pduCode,
     history,
+    reallocations = false,
   ) {
     const [response, teamDetails] = await Promise.all([
       this.workloadService.getOffenderManagerOverview(
@@ -474,10 +475,19 @@ export default class AllocationsController {
       isOverview: true,
       pduCode,
       teamName: teamDetails.name,
+      journey: reallocations ? 'reallocations' : undefined,
     })
   }
 
-  async getActiveCases(_, res: Response, offenderManagerTeamCode, offenderManagerCode, convictionNumber, pduCode) {
+  async getActiveCases(
+    _,
+    res: Response,
+    offenderManagerTeamCode,
+    offenderManagerCode,
+    convictionNumber,
+    pduCode,
+    reallocations = false,
+  ) {
     const [response, teamDetails] = await Promise.all([
       this.workloadService.getOffenderManagerCases(res.locals.user.token, offenderManagerCode, offenderManagerTeamCode),
       this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
@@ -521,6 +531,7 @@ export default class AllocationsController {
       isActiveCases: true,
       pduCode,
       teamName: teamDetails.name,
+      journey: reallocations ? 'reallocations' : undefined,
     })
   }
 

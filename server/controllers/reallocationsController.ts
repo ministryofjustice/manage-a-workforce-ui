@@ -13,12 +13,7 @@ import DisplayAddress from './data/DisplayAddress'
 import Conviction from '../models/Conviction'
 import Sentence from './data/Sentence'
 import DocumentRow from './data/DocumentRow'
-import {
-  getChoosePractitionerDataAllTeams,
-  getChoosePractitionerDataByTeam,
-  getStaffCodes,
-  setStaffRestrictions,
-} from './allocationsController'
+import { getStaffCodes, setStaffRestrictions } from './allocationsController'
 import { gradeOrder, gradeTips } from './data/AllocateOffenderManager'
 import trimForm from '../utils/trim'
 import validate from '../validation/validation'

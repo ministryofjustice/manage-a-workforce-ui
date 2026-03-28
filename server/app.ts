@@ -51,7 +51,6 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
   app.use(setUpAuthentication())
-  app.use(featureFlagMiddleware(services, 'Reallocations', 'Reallocations'))
   nunjucksSetup(app, path, services)
   app.use(unauthenticatedRoutes())
   app.use(authorisationMiddleware(['ROLE_MANAGE_A_WORKFORCE_ALLOCATE']))
@@ -63,6 +62,9 @@ export default function createApp(services: Services): express.Application {
       logger,
     }),
   )
+
+  app.use(featureFlagMiddleware(services, 'Reallocations', 'Reallocations'))
+
   app.use(
     unless('/staff-lookup', getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService)),
   )

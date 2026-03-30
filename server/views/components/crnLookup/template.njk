@@ -95,6 +95,7 @@
 />
 
     <button type="submit" class="govuk-button  govuk-!-margin-left-1" data-form-submit>Search</button>
+    {% if params.errorMessage %}
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
           {{ govukDetails({
@@ -104,6 +105,7 @@
               }) }}
         </div>
       </div>
+    {% endif %}
   </form>
   {% if params.data %}
     <div class ="crn-lookup-results" class="govuk-!-margin-top-4 govuk-!-margin-bottom-8 govuk-!-margin-left-4 govuk-!-margin-right-4">

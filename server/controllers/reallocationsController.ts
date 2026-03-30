@@ -13,12 +13,8 @@ import DisplayAddress from './data/DisplayAddress'
 import Conviction from '../models/Conviction'
 import Sentence from './data/Sentence'
 import DocumentRow from './data/DocumentRow'
-import {
-  getChoosePractitionerDataAllTeams,
-  getChoosePractitionerDataByTeam,
-  getStaffCodes,
-  setStaffRestrictions,
-} from './allocationsController'
+import { getStaffCodes, setStaffRestrictions } from './allocationsController'
+import { gradeOrder, gradeTips } from './data/AllocateOffenderManager'
 import trimForm from '../utils/trim'
 import validate from '../validation/validation'
 import ReallocationData from '../models/ReallocationData'
@@ -39,7 +35,9 @@ export default class ReallocationsController {
       return
     }
 
-    const { search } = req.query
+    const searchQuery = req.query.search as string
+    const search = searchQuery?.trim()
+
     const { token, username } = res.locals.user
     const [teamsUserPreference, probationDeliveryUnitDetails] = await Promise.all([
       this.userPreferenceService.getTeamsUserPreference(token, username),
@@ -357,6 +355,7 @@ export default class ReallocationsController {
     }
 
     const { token, username } = res.locals.user
+    const { allocatedOfficer: teamAndStaffCode } = req.body ?? {}
     const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const laoCase = await this.allocationsService.getLaoStatus(crn, token)
     await this.allocationsService.getCrnAccess(res.locals.user.token, res.locals.user.username, crn)
@@ -375,14 +374,8 @@ export default class ReallocationsController {
       allocationInformationByTeam.teams = setStaffRestrictions(allocationInformationByTeam.teams, staffRestrictions)
     }
 
-    const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
-      allocationInformationByTeam,
-      allTeamDetails,
-    )
-    const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(offenderManagersToAllocateByTeam)
-    const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams, ...offenderManagersToAllocateByTeam]
-
     const name = `${allocationInformationByTeam.name.forename} ${allocationInformationByTeam.name.surname}`
+
     const offenderManager = allocationInformationByTeam.communityPersonManager && {
       code: allocationInformationByTeam.communityPersonManager.code,
       forenames: allocationInformationByTeam.communityPersonManager.name.forename,
@@ -397,12 +390,25 @@ export default class ReallocationsController {
     )
 
     const formData: ReallocationCaseSummaryForm = req.session.confirmReallocationForm || {}
-
     const instructions = formData.reallocationNotes || cachedInstructions || ''
 
-    const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
-
     req.session.currentOffenderManager = offenderManager
+
+    const offenderManagers = Object.entries(allocationInformationByTeam.teams).reduce(
+      (acc, [teamCode, ps]) => [
+        ...acc,
+        ...ps.map(p => ({
+          gradeTip: gradeTips.get(p.grade),
+          gradeOrder: gradeOrder.get(p.grade) || 0,
+          team: allTeamDetails.find(team => team.code === teamCode),
+          selectionCode: TeamAndStaffCode.encode(teamCode, p.code),
+          ...p,
+        })),
+      ],
+      [],
+    )
+
+    const missingEmail = offenderManagers.some(i => !i.email)
 
     res.render('pages/reallocations/choose-practitioner', {
       crn: allocationInformationByTeam.crn,
@@ -410,7 +416,8 @@ export default class ReallocationsController {
       pduCode,
       title: 'Choose practitioner | Manage a Workforce',
       journey: 'reallocations',
-      offenderManagersToAllocatePerTeam,
+      offenderManagers,
+      allTeamDetails,
       name,
       currentOffenderManager: offenderManager,
       missingEmail,
@@ -418,6 +425,7 @@ export default class ReallocationsController {
       laoCase,
       currentManagerCode,
       instructions,
+      teamAndStaffCode,
     })
   }
 

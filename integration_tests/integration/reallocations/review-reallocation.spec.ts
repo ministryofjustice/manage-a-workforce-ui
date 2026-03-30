@@ -56,7 +56,7 @@ context('Review reallocation', () => {
     cy.visit('/pdu/PDU1/J678910/reallocations/choose-practitioner')
 
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.tabtable('all-teams').within(() => {
+    choosePractitionerPage.practitionersTable().within(() => {
       choosePractitionerPage.radio('TM1::OM3').click()
     })
 

@@ -19,6 +19,8 @@ export default class ChoosePractitionerPage extends Page {
 
   tabtable = (id: string): PageElement => cy.get(`[id="${id}"]`).find('table')
 
+  practitionersTable = (): PageElement => cy.get(`#practitioners-table`)
+
   officerLink = (id: string): PageElement => cy.get(`[data-qa-link="${id}"]`)
 
   table = (): PageElement => cy.get('table')

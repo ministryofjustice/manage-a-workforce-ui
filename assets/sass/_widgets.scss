@@ -200,12 +200,14 @@ $unavailable-score-background-colour: #ffffff;
     thead {
       tr > th {
         border-bottom: 0;
+        padding-left: govuk-spacing(6);
       }
     }
 
     tbody {
       tr > td {
         padding-bottom: govuk-spacing(6);
+        padding-left: govuk-spacing(6);
       }
     }
   }

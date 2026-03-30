@@ -15,12 +15,12 @@
        "data-back" : undefined
       }
     }) }}
-  {% if errors | length > 0 %}
-    {{ govukErrorSummary({
-      titleText: "There is a problem",
-      errorList: errors
-    }) }}
-  {% endif %}
+    {% if errors | length > 0 %}
+        {{ govukErrorSummary({
+            titleText: "There is a problem",
+            errorList: errors
+        }) }}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -48,7 +48,7 @@
                     {
                         text: 'Reallocation',
                         href: '/pdu/' + pduCode + '/' + crn + '/reallocation-case-view',
-                        active: 'Reallocation' in title
+                        active: 'Summary' in title
                     },
                     {
                         text: 'Personal details',

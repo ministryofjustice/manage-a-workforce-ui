@@ -13,11 +13,11 @@ export default class ChoosePractitionerPage extends Page {
 
   captionText = (): PageElement => cy.get('.govuk-caption-l')
 
-  tabs = (): PageElement => cy.get('[data-module="govuk-tabs"]')
+  tabs = (): PageElement => cy.get('#team-tabs')
 
-  tab = (id: string): PageElement => cy.get(`[id="tab_${id}"]`)
+  tab = (id: string): PageElement => cy.get(`.govuk-tabs__tab[data-team-code="${id}"]`)
 
-  tabtable = (id: string): PageElement => cy.get(`[id="${id}"]`).find('table')
+  tabtable = (id: string): PageElement => cy.get(`table#practitioners-table`)
 
   practitionersTable = (): PageElement => cy.get(`#practitioners-table`)
 

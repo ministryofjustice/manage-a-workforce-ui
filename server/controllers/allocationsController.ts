@@ -268,8 +268,6 @@ export default class AllocationsController {
       [],
     )
 
-    console.log(offenderManagers[0])
-
     const missingEmail = offenderManagers.some(i => !i.email)
     const error = req.query.error === 'true'
     const { instructions } = await this.allocationsService.getNotesCache(

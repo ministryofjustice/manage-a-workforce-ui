@@ -202,7 +202,7 @@ context('Choose Practitioner', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage
-      .tabtable('ALL-TEAMS')
+      .tabtable()
       .should('not.have.attr', 'class', 'govuk-tabs__panel--hidden')
       .getTable()
       .should('deep.equal', [
@@ -256,7 +256,7 @@ context('Choose Practitioner', () => {
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tab('N03F02').click()
     choosePractitionerPage
-      .tabtable('N03F02')
+      .tabtable()
       .get('tr:not(.govuk-visually-hidden')
       .should('contain.text', 'Team 2')
       .should('not.contain.text', 'Team 1')
@@ -278,7 +278,7 @@ context('Choose Practitioner', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tab('N03F02').click()
-    choosePractitionerPage.tabtable('N03F02').within(() => {
+    choosePractitionerPage.tabtable().within(() => {
       cy.get('input:first').should('have.value', 'N03F02::OM3')
     })
   })
@@ -299,7 +299,7 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.tabtable('ALL-TEAMS').within(() => {
+    choosePractitionerPage.tabtable().within(() => {
       choosePractitionerPage.radio('N03F01::OM1').check()
       choosePractitionerPage.checkedRadioButton().should('have.value', 'N03F01::OM1')
       choosePractitionerPage.radio('N03F02::OM3').check()
@@ -341,12 +341,12 @@ context('Choose Practitioner', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
     choosePractitionerPage.tab('N03F02').click()
-    choosePractitionerPage.tabtable('N03F02').within(() => {
+    choosePractitionerPage.tabtable().within(() => {
       choosePractitionerPage.radio('N03F02::OM3').check()
       choosePractitionerPage.checkedRadioButton().should('have.value', 'N03F02::OM3')
     })
     choosePractitionerPage.clearSelectionButton().click()
-    choosePractitionerPage.tabtable('N03F02').within(() => {
+    choosePractitionerPage.tabtable().within(() => {
       choosePractitionerPage.checkedRadioButton().should('not.exist')
     })
   })
@@ -355,7 +355,7 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.tabtable('ALL-TEAMS').within(() => {
+    choosePractitionerPage.tabtable().within(() => {
       choosePractitionerPage.radio('N03F02::OM2').should('not.exist')
     })
   })

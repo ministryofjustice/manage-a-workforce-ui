@@ -247,22 +247,28 @@ export default class AllocationsController {
       allocationInformationByTeam.teams = setStaffRestrictions(allocationInformationByTeam.teams, staffRestrictions)
     }
 
-    const offenderManagersToAllocateByTeam = getChoosePractitionerDataByTeam(
-      allocationInformationByTeam,
-      allTeamDetails,
-    )
-    const offenderManagersToAllocateAllTeams = getChoosePractitionerDataAllTeams(offenderManagersToAllocateByTeam)
-    const offenderManagersToAllocatePerTeam = [offenderManagersToAllocateAllTeams].concat(
-      offenderManagersToAllocateByTeam,
-    )
-
     const name = `${allocationInformationByTeam.name.forename} ${allocationInformationByTeam.name.surname}`
     const offenderManager = allocationInformationByTeam.communityPersonManager && {
       forenames: allocationInformationByTeam.communityPersonManager.name.forename,
       surname: allocationInformationByTeam.communityPersonManager.name.surname,
       grade: allocationInformationByTeam.communityPersonManager.grade,
     }
-    const missingEmail = offenderManagersToAllocateAllTeams.offenderManagersToAllocate.some(i => !i.email)
+
+    const offenderManagers = Object.entries(allocationInformationByTeam.teams).reduce(
+      (acc, [teamCode, ps]) => [
+        ...acc,
+        ...ps.map(p => ({
+          gradeTip: gradeTips.get(p.grade),
+          gradeOrder: gradeOrder.get(p.grade) || 0,
+          team: allTeamDetails.find(team => team.code === teamCode),
+          selectionCode: TeamAndStaffCode.encode(teamCode, p.code),
+          ...p,
+        })),
+      ],
+      [],
+    )
+
+    const missingEmail = offenderManagers.some(i => !i.email)
     const error = req.query.error === 'true'
     const { instructions } = await this.allocationsService.getNotesCache(
       crn,
@@ -277,7 +283,8 @@ export default class AllocationsController {
       convictionNumber,
       probationStatus: allocationInformationByTeam.probationStatus.description,
       offenderManager,
-      offenderManagersToAllocatePerTeam,
+      offenderManagers,
+      allTeamDetails,
       error,
       missingEmail,
       pduCode,

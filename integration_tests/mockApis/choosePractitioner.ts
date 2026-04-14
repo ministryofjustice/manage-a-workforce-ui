@@ -263,6 +263,7 @@ export default {
             forename: 'Jane',
             middleName: '',
             surname: 'Doe',
+            combinedName: 'Jane Doe',
           },
           email: 'j.doe@email.co.uk',
           grade: 'PQiP',
@@ -278,6 +279,7 @@ export default {
           name: {
             forename: 'Sam',
             surname: 'Smam',
+            combinedName: 'Sam Smam',
           },
           grade: 'SPO',
           workload: 32,
@@ -290,6 +292,7 @@ export default {
           name: {
             forename: 'Jim',
             surname: 'Jam',
+            combinedName: 'Jim Jam',
           },
           email: 'j.jam@email.co.uk',
           grade: 'PO',

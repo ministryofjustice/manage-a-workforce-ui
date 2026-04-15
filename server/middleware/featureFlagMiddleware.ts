@@ -4,7 +4,7 @@ import logger from '../../logger'
 
 const featureFlagService = new FeatureFlagService()
 
-export default function featureFlagMiddleware(services, flagKey, flagName) {
+export default function featureFlagMiddleware(services) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { token, username } = res.locals.user
@@ -13,28 +13,32 @@ export default function featureFlagMiddleware(services, flagKey, flagName) {
 
       const pduDetails = await services.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)
 
-      await services.allocationsService.getUserRegionAccessForRegion(
-        res.locals.user.token,
-        res.locals.user.username,
-        pduDetails.region.code,
-      )
+      const regionCode = pduDetails.region.code
 
-      const flag = await featureFlagService.isFeatureEnabled(flagKey, flagName, {
-        regionCode: pduDetails.region.code,
-      })
+      await services.allocationsService.getUserRegionAccessForRegion(token, username, regionCode)
+
+      const [reallocations, email] = await Promise.all([
+        featureFlagService.isFeatureEnabled(regionCode, 'Reallocations', { regionCode }),
+        featureFlagService.isFeatureEnabled(regionCode, 'email', { regionCode }),
+      ])
 
       res.locals.featureFlags = {
         ...res.locals.featureFlags,
-        [flagKey]: flag,
+        reallocations,
+        email,
       }
+
+      next()
     } catch (error) {
+      logger.error(error, 'Error fetching feature flags')
+
       res.locals.featureFlags = {
         ...res.locals.featureFlags,
-        [flagKey]: null,
+        reallocations: false,
+        email: false,
       }
 
-      logger.error(`Error fetching feature flag ${flagKey}`, error)
+      next()
     }
-    next()
   }
 }

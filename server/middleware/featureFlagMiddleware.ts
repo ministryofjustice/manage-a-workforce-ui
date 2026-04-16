@@ -18,8 +18,8 @@ export default function featureFlagMiddleware(services) {
       await services.allocationsService.getUserRegionAccessForRegion(token, username, regionCode)
 
       const [reallocations, enableEmailList] = await Promise.all([
-        featureFlagService.isFeatureEnabled(regionCode, 'Reallocations', { regionCode }),
-        featureFlagService.isFeatureEnabled(regionCode, 'enableEmailList', { regionCode }),
+        featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations', { regionCode }),
+        featureFlagService.isFeatureEnabled('enableEmailList', 'enableEmailList', { regionCode }),
       ])
 
       res.locals.featureFlags = {

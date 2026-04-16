@@ -17,17 +17,16 @@ export default function featureFlagMiddleware(services) {
 
       await services.allocationsService.getUserRegionAccessForRegion(token, username, regionCode)
 
-      const [reallocations, email] = await Promise.all([
+      const [reallocations, enableEmailList] = await Promise.all([
         featureFlagService.isFeatureEnabled(regionCode, 'Reallocations', { regionCode }),
-        featureFlagService.isFeatureEnabled(regionCode, 'email', { regionCode }),
+        featureFlagService.isFeatureEnabled(regionCode, 'enableEmailList', { regionCode }),
       ])
 
       res.locals.featureFlags = {
         ...res.locals.featureFlags,
-        reallocations,
-        email,
+        Reallocations: reallocations,
+        enableEmailList,
       }
-
       next()
     } catch (error) {
       logger.error(error, 'Error fetching feature flags')
@@ -37,7 +36,6 @@ export default function featureFlagMiddleware(services) {
         reallocations: false,
         email: false,
       }
-
       next()
     }
   }

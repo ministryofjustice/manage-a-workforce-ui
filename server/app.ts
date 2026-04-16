@@ -51,12 +51,12 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
   app.use(setUpAuthentication())
-  app.use(featureFlagMiddleware(services))
   nunjucksSetup(app, path, services)
   app.use(unauthenticatedRoutes())
   app.use(authorisationMiddleware(['ROLE_MANAGE_A_WORKFORCE_ALLOCATE']))
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
+  app.use(featureFlagMiddleware(services))
   app.use(
     pdsComponents.getPageComponents({
       pdsUrl: config.apis.probationApi.url,

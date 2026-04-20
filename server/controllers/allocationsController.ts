@@ -406,7 +406,13 @@ export default class AllocationsController {
     pduCode,
     scrollToBottom = false,
   ) {
-    const { response, laoCase, instructions } = await this.getAllocationPageData(res, crn, convictionNumber, staffCode)
+    const { laoCase, instructions, name, tier, ...response } = await this.getAllocationPageData(
+      res,
+      crn,
+      convictionNumber,
+      staffCode,
+    )
+
     res.render('pages/check-edit-allocation-notes', {
       crn,
       staffCode,
@@ -414,8 +420,8 @@ export default class AllocationsController {
       convictionNumber,
       pduCode,
       title: 'Edit or save allocation notes | Manage a Workforce',
-      tier: response.tier,
-      name: response.name.combinedName,
+      tier,
+      name: name.combinedName,
       data: response,
       scrollToBottom,
       laoCase,
@@ -437,7 +443,12 @@ export default class AllocationsController {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
-    const { response, laoCase, instructions } = await this.getAllocationPageData(res, crn, convictionNumber, staffCode)
+    const { name, tier, laoCase, instructions, ...response } = await this.getAllocationPageData(
+      res,
+      crn,
+      convictionNumber,
+      staffCode,
+    )
     res.render('pages/choose-email-recipients', {
       crn,
       staffCode,
@@ -445,8 +456,8 @@ export default class AllocationsController {
       convictionNumber,
       pduCode,
       title: 'Choose email recipients | Manage a Workforce',
-      tier: response.tier,
-      name: response.name.combinedName,
+      tier,
+      name: name.combinedName,
       data: response,
       scrollToBottom,
       laoCase,
@@ -455,8 +466,7 @@ export default class AllocationsController {
   }
 
   private async getAllocationPageData(res: Response, crn, convictionNumber, staffCode) {
-    const { token } = res.locals.user
-    const { username } = res.locals.user
+    const { token, username } = res.locals.user
 
     const response: PersonOnProbationStaffDetails = await this.allocationsService.getConfirmInstructions(
       token,
@@ -475,7 +485,7 @@ export default class AllocationsController {
     const { instructions } = await this.allocationsService.getNotesCache(crn, convictionNumber, username)
 
     return {
-      response,
+      ...response,
       laoCase,
       instructions,
     }

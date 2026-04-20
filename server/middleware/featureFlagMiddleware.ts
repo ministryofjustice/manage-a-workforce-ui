@@ -6,6 +6,11 @@ const featureFlagService = new FeatureFlagService()
 
 export default function featureFlagMiddleware(services) {
   return async (req: Request, res: Response, next: NextFunction) => {
+    const flags = {
+      Reallocations: false,
+      enableEmailList: false,
+    }
+
     try {
       const { token, username } = res.locals.user
       const { items: pduSelection } = await services.userPreferenceService.getPduUserPreference(token, username)
@@ -22,21 +27,16 @@ export default function featureFlagMiddleware(services) {
         featureFlagService.isFeatureEnabled('enableEmailList', 'enableEmailList', { regionCode }),
       ])
 
-      res.locals.featureFlags = {
-        ...res.locals.featureFlags,
-        Reallocations: reallocations,
-        enableEmailList,
-      }
-      next()
+      flags.Reallocations = reallocations
+      flags.enableEmailList = enableEmailList
     } catch (error) {
       logger.error(error, 'Error fetching feature flags')
-
-      res.locals.featureFlags = {
-        ...res.locals.featureFlags,
-        reallocations: false,
-        email: false,
-      }
-      next()
     }
+
+    res.locals.featureFlags = {
+      ...res.locals.featureFlags,
+      ...flags,
+    }
+    next()
   }
 }

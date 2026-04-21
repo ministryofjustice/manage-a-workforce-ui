@@ -446,7 +446,7 @@ export default class AllocationsController {
     pduCode,
     scrollToBottom = false,
   ) {
-    if (!res.locals.featureFlags.email) {
+    if (!res.locals.featureFlags.enableEmailList) {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
@@ -671,13 +671,8 @@ export default class AllocationsController {
       trimForm<ConfirmInstructionForm>({
         ...form,
         isSensitive: form.isSensitive === 'yes',
-        emailCopyOptOut: form.emailCopyOptOut === 'yes',
       }),
     )
-
-    if (form.remove !== undefined) {
-      form.person.splice(form.remove, 1)
-    }
 
     this.allocationsService.setNotesCache(crn, convictionNumber, res.locals.user.username, {
       instructions: form.instructions,
@@ -689,7 +684,7 @@ export default class AllocationsController {
     const basePath = `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}`
 
     if (form.action === 'continue') {
-      if (!res.locals.featureFlags.email) {
+      if (!res.locals.featureFlags.enableEmailList) {
         return res.redirect(`${basePath}/spo-oversight-contact-option`)
       }
 

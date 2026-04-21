@@ -69,7 +69,7 @@
             {{
             instructionsForm({
                 titleText: "Review your allocation notes",
-                html: ('<p class="govuk-body">These notes will be sent in the allocation email to <strong>' + data.staff.name.combinedName + '</strong> (<em>' + data.staff.email + '</em>).</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
+                html: ('<p class="govuk-body">These notes are sent to the practitioner in the allocation email. They will also be saved as an SPO Oversight contact in NDelius. Do not include links in the notes.') | safe,
                 convictionNumber: convictionNumber,
                 hintText: ' ',
                 crn: crn,
@@ -113,82 +113,7 @@
                 }],
             classes: 'govuk-checkboxes--medium margin-bottom-10'
         })}}
-          {% if person.length > 0 %}
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-              <h3 class="govuk-fieldset__heading">Additional recipients</h3>
-            </legend>
-          {% endif %}
-          <div class="govuk-email-list">
-            {% for person in person %}
 
-              <div class="govuk-email-list-item">
-                <div>
-                  {{ govukInput({
-                      id: 'person[' +loop.index0 +'][email]',
-                      name: 'person[' +loop.index0 +'][email]',
-                      value: person.email,
-                      type: 'hidden',
-                      label: {
-                        text: person.email,
-                        classes: 'govuk-!-font-weight-bold govuk-recipient__label'
-                      },
-                      attributes: {
-                        readonly: true
-                      },
-                      errorMessage: errors | findError('person[' +loop.index0 +'][email]')
-                    }) }}
-                </div>
-                <div>
-                  {{ govukButton({
-                    text: 'Remove',
-                    type: 'submit',
-                    name: 'remove',
-                    value: loop.index0,
-                    classes: 'govuk-button govuk-button--secondary govuk-!-margin-0'
-                  }) }}
-                </div>
-              </div>
-
-            {% endfor %}
-          </div>
-
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h3 class="govuk-fieldset__heading moj-add-another__title">Add another recipient</h3>
-          </legend>
-
-          <div class="govuk-email-list-item">
-            <div>
-              {{ govukSelect({
-                    id: 'person',
-                    name: 'person_placeholder',
-                    items: [],
-                    classes: 'hidden govuk-autocomplete',
-                    hint: { text: 'Type to find and select a justice.gov.uk email address.' },
-                    label: {
-                      text: 'Email address',
-                      classes: 'govuk-!-font-weight-bold'
-                    }
-                  }) }}
-            </div>
-            <div id="remove-email-placeholder">
-              {{ govukButton({
-                    text: 'Remove',
-                    type: 'button',
-                    name: 'remove',
-                    value: loop.index0,
-                    classes: 'govuk-button govuk-button--secondary govuk-!-margin-0'
-                  }) }}
-            </div>
-          </div>
-
-          <div id="add-another-person" class="moj-button-action">
-            {{ govukButton({
-                    text: 'Add another person',
-                    type: 'submit',
-                    name: 'action',
-                    value: 'add-another-person',
-                    classes: 'govuk-button--secondary  govuk-!-margin-top-3'
-                  }) }}
           </div>
 
           <div class="govuk-button-group govuk-!-margin-top-4">
@@ -218,8 +143,6 @@
 {% endblock %}
 
 {% block javascripts %}
-<script src="/assets/accessible-autocomplete.min.js"></script>
-<script id="autocomplete-script" src="/assets/js/autocomplete-email.js" {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}></script>
 <script src="/assets/validator.js"></script>
 <script src="/assets/validation.js"></script>
 {% endblock %}

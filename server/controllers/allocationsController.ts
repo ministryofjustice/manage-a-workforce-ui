@@ -378,6 +378,8 @@ export default class AllocationsController {
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
+    const emailListFlag = res.locals.featureFlags.enableEmailList
+
     const { instructions, person, isSensitive, emailCopyOptOut } = await this.allocationsService.getNotesCache(
       crn,
       convictionNumber,
@@ -389,6 +391,7 @@ export default class AllocationsController {
       name: response.name.combinedName,
       crn: response.crn,
       tier: response.tier,
+      emailListFlag,
       staffCode,
       staffTeamCode,
       convictionNumber: response.convictionNumber,
@@ -446,7 +449,7 @@ export default class AllocationsController {
     pduCode,
     scrollToBottom = false,
   ) {
-    if (!res.locals.featureFlags.email) {
+    if (!res.locals.featureFlags.enableEmailList) {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
@@ -689,7 +692,7 @@ export default class AllocationsController {
     const basePath = `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}`
 
     if (form.action === 'continue') {
-      if (!res.locals.featureFlags.email) {
+      if (!res.locals.featureFlags.enableEmailList) {
         return res.redirect(`${basePath}/spo-oversight-contact-option`)
       }
 

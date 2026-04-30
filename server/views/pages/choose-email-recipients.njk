@@ -84,4 +84,22 @@
 {% block javascripts %}
   <script src="/assets/validator.js"></script>
   <script src="/assets/validation.js"></script>
+  <script nonce="{{ cspNonce }}" id="ss-popup-1806352">
+    (function (d, w) {
+      var s,
+        ss;
+      ss = d.createElement("script");
+      ss.type = "text/javascript";
+      ss.async = true;
+      ss.type = "module";
+      ss.src = (
+        "https:" == d.location.protocol
+          ? "https://"
+          : "http://") + "embed.smartsurvey.io/index.js?popupCode=C35KQ2";
+      s = d.getElementsByTagName("script")[0];
+      s
+        .parentNode
+        .insertBefore(ss, s);
+    })(document, window);
+  </script>
 {% endblock %}

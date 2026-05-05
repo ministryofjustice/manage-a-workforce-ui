@@ -95,6 +95,18 @@ generic-service:
         pass,\
         nolog,\
         ctl:ruleRemoveById=941370"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
+        "id:1015,\
+        phase:2,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveById=932235"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
+        "id:1016,\
+        phase:2,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveById=932370"
   livenessProbe:
     httpGet:
       path: /ping

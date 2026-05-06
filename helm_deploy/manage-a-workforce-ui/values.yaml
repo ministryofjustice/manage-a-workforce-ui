@@ -34,91 +34,20 @@ generic-service:
       SecRuleUpdateTargetById 942450 "!REQUEST_COOKIES:/connect.sid/"
       SecRuleUpdateTargetById 930120 "!REQUEST_COOKIES:/connect.sid/"
       SecRuleUpdateTargetById 942210 "!REQUEST_COOKIES:/connect.sid/"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1004,\
-        phase:1,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:instructions"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1005,\
-        phase:1,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveTargetByTag=platform-windows;ARGS:instructions"
-      SecAction \
-        "id:900000,\
-        phase:1,\
-        nolog,\
-        pass,\
-        t:none,\
-        setvar:tx.paranoia_level=2"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1006,\
-        phase:1,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveTargetByTag=attack-rce;ARGS:instructions"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1007,\
-        phase:2,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveById=921110"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1010,\
-        phase:1,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveTargetByTag=language-php;ARGS:instructions"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1011,\
-        phase:1,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:reallocationNotes"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1012,\
-        phase:1,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveTargetByTag=platform-windows;ARGS:reallocationNotes"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1013,\
-        phase:1,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveTargetByTag=attack-rce;ARGS:reallocationNotes"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1014,\
-        phase:1,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveTargetByTag=language-php;ARGS:reallocationNotes"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1015,\
-        phase:2,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveById=941130"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1016,\
-        phase:2,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveById=941340"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1017,\
-        phase:2,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveById=920271"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1018,\
-        phase:2,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveById=941370"
+      SecAction "id:900000, phase:1, nolog, pass, t:none, setvar:tx.paranoia_level=2"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1001, phase:2, pass, nolog, ctl:ruleRemoveById=921110"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1002, phase:1, pass, nolog, ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:instructions"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1003, phase:1, pass, nolog, ctl:ruleRemoveTargetByTag=platform-windows;ARGS:instructions"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1004, phase:1, pass, nolog, ctl:ruleRemoveTargetByTag=attack-rce;ARGS:instructions"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1005, phase:1, pass, nolog, ctl:ruleRemoveTargetByTag=language-php;ARGS:instructions"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1006, phase:1, pass, nolog, ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:reallocationNotes"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1007, phase:1, pass, nolog, ctl:ruleRemoveTargetByTag=platform-windows;ARGS:reallocationNotes"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1008, phase:1, pass, nolog, ctl:ruleRemoveTargetByTag=attack-rce;ARGS:reallocationNotes"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1009, phase:1, pass, nolog, ctl:ruleRemoveTargetByTag=language-php;ARGS:reallocationNotes"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1010, phase:2, pass, nolog, ctl:ruleRemoveById=941130"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1011, phase:2, pass, nolog, ctl:ruleRemoveById=941340"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1012, phase:2, pass, nolog, ctl:ruleRemoveById=920271"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" "id:1013, phase:2, pass, nolog, ctl:ruleRemoveById=941370"
   livenessProbe:
     httpGet:
       path: /ping

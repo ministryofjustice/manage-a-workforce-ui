@@ -72,6 +72,30 @@ generic-service:
         nolog,\
         ctl:ruleRemoveTargetByTag=language-php;ARGS:instructions"
       SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
+        "id:1004,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:reallocationNotes"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
+        "id:1005,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=platform-windows;ARGS:reallocationNotes"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
+        "id:1006,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=attack-rce;ARGS:reallocationNotes"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
+        "id:1010,\
+        phase:1,\
+        pass,\
+        nolog,\
+        ctl:ruleRemoveTargetByTag=language-php;ARGS:reallocationNotes"
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
         "id:1011,\
         phase:2,\
         pass,\
@@ -95,12 +119,6 @@ generic-service:
         pass,\
         nolog,\
         ctl:ruleRemoveById=941370"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1015,\
-        phase:2,\
-        pass,\
-        nolog,\
-        ctl:ruleRemoveById=932235"
   livenessProbe:
     httpGet:
       path: /ping

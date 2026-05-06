@@ -46,7 +46,7 @@ generic-service:
         ctl:ruleRemoveTargetByTag=attack-rce;ARGS:reallocationNotes, \
         ctl:ruleRemoveTargetByTag=language-php;ARGS:reallocationNotes"
       SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation))$" \
-        "id:1002, phase:2, pass, nolog, 
+        "id:1002, phase:2, pass, nolog, \
         ctl:ruleRemoveById=921110, \
         ctl:ruleRemoveById=941130, \
         ctl:ruleRemoveById=941340, \

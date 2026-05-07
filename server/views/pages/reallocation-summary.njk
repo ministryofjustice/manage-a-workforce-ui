@@ -59,10 +59,21 @@
                      ]
                  })}}
 
+            {% set reallocationInsetHtml %}
+              <p class="govuk-body">
+                Reallocating a case will move all active orders associated with the person on probation.
+                Requirements that are allocated to a different practitioner will remain with that practitioner
+                after the reallocation has taken place.
+              </p>
+              <p class="govuk-body govuk-!-margin-bottom-0">
+                You cannot reallocate licence conditions or NSIs using this service. You must do this in NDelius.
+              </p>
+            {% endset %}
+
             {{ govukInsetText({
-                   classes: "blue-background",
-                   text: "Reallocating a case will move all active orders associated with the person on probation. Requirements that are allocated to a different practitioner will remain with that practitioner after the reallocation has taken place."
-                 }) }}
+              classes: "blue-background",
+              html: reallocationInsetHtml
+            }) }}
 
             {% for event in events %}
 

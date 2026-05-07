@@ -23,6 +23,8 @@ function removeNoScriptElements() {
 }
 
 window.addEventListener('load', function () {
+  console.log('Loading autocomplete')
+
   removeNoScriptElements()
 
   document.getElementById('add-another-person').style.display = 'none'
@@ -92,7 +94,7 @@ window.addEventListener('load', function () {
 
                 document.getElementById('add-another-person').style.display = 'none'
                 document.getElementById('remove-email-placeholder').style.display = 'none'
-              })
+              }),
           )
         })
       },

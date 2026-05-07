@@ -223,7 +223,6 @@ export default class AllocationsController {
 
   async choosePractitioner(req: Request, res: Response, crn, convictionNumber, pduCode) {
     const { token, username } = res.locals.user
-
     const teamCodesPreferences = await this.userPreferenceService.getTeamsUserPreference(token, username)
     const laoCase = await this.allocationsService.getLaoStatus(crn, token)
     await this.allocationsService.getUserRegionAccessForCrn(
@@ -379,6 +378,8 @@ export default class AllocationsController {
     response.name.surname = unescapeApostrophe(response.name.surname)
     response.name.combinedName = unescapeApostrophe(response.name.combinedName)
 
+    const emailListFlag = res.locals.featureFlags.enableEmailList
+
     const { instructions, person, isSensitive, emailCopyOptOut } = await this.allocationsService.getNotesCache(
       crn,
       convictionNumber,
@@ -390,6 +391,7 @@ export default class AllocationsController {
       name: response.name.combinedName,
       crn: response.crn,
       tier: response.tier,
+      emailListFlag,
       staffCode,
       staffTeamCode,
       convictionNumber: response.convictionNumber,
@@ -414,26 +416,13 @@ export default class AllocationsController {
     pduCode,
     scrollToBottom = false,
   ) {
-    const response: PersonOnProbationStaffDetails = await this.allocationsService.getConfirmInstructions(
-      res.locals.user.token,
+    const { laoCase, instructions, name, tier, ...response } = await this.getAllocationPageData(
+      res,
       crn,
       convictionNumber,
       staffCode,
     )
-    const laoCase = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
-    await this.allocationsService.getUserRegionAccessForCrn(
-      res.locals.user.token,
-      res.locals.user.username,
-      crn,
-      convictionNumber,
-    )
-    response.name.surname = unescapeApostrophe(response.name.surname)
-    response.name.combinedName = unescapeApostrophe(response.name.combinedName)
-    const { instructions } = await this.allocationsService.getNotesCache(
-      crn,
-      convictionNumber,
-      res.locals.user.username,
-    )
+
     res.render('pages/check-edit-allocation-notes', {
       crn,
       staffCode,
@@ -441,13 +430,75 @@ export default class AllocationsController {
       convictionNumber,
       pduCode,
       title: 'Edit or save allocation notes | Manage a Workforce',
-      tier: response.tier,
-      name: response.name.combinedName,
+      tier,
+      name: name.combinedName,
       data: response,
       scrollToBottom,
       laoCase,
       instructions,
     })
+  }
+
+  async getChooseEmailRecipients(
+    req: Request,
+    res: Response,
+    crn,
+    staffTeamCode,
+    staffCode,
+    convictionNumber,
+    pduCode,
+    scrollToBottom = false,
+  ) {
+    if (!res.locals.featureFlags.enableEmailList) {
+      res.redirect(`/pdu/${pduCode}/teams`)
+      return
+    }
+    const { name, tier, laoCase, instructions, ...response } = await this.getAllocationPageData(
+      res,
+      crn,
+      convictionNumber,
+      staffCode,
+    )
+    res.render('pages/choose-email-recipients', {
+      crn,
+      staffCode,
+      staffTeamCode,
+      convictionNumber,
+      pduCode,
+      title: 'Choose email recipients | Manage a Workforce',
+      tier,
+      name: name.combinedName,
+      data: response,
+      scrollToBottom,
+      laoCase,
+      instructions,
+    })
+  }
+
+  private async getAllocationPageData(res: Response, crn, convictionNumber, staffCode) {
+    const { token, username } = res.locals.user
+
+    const response: PersonOnProbationStaffDetails = await this.allocationsService.getConfirmInstructions(
+      token,
+      crn,
+      convictionNumber,
+      staffCode,
+    )
+
+    const laoCase = await this.allocationsService.getLaoStatus(crn, token)
+
+    await this.allocationsService.getUserRegionAccessForCrn(token, username, crn, convictionNumber)
+
+    response.name.surname = unescapeApostrophe(response.name.surname)
+    response.name.combinedName = unescapeApostrophe(response.name.combinedName)
+
+    const { instructions } = await this.allocationsService.getNotesCache(crn, convictionNumber, username)
+
+    return {
+      ...response,
+      laoCase,
+      instructions,
+    }
   }
 
   async getOverview(
@@ -638,15 +689,17 @@ export default class AllocationsController {
       person: form.person,
     })
 
+    const basePath = `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}`
+
     if (form.action === 'continue') {
-      return res.redirect(
-        `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/spo-oversight-contact-option`,
-      )
+      if (!res.locals.featureFlags.enableEmailList) {
+        return res.redirect(`${basePath}/spo-oversight-contact-option`)
+      }
+
+      return res.redirect(`${basePath}/choose-email-recipients`)
     }
 
-    return res.redirect(
-      `/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocate/${staffTeamCode}/${staffCode}/allocation-notes`,
-    )
+    return res.redirect(`${basePath}/allocation-notes`)
   }
 
   async submitSpoOversight(
@@ -728,16 +781,7 @@ export default class AllocationsController {
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
   }
 
-  async submitNoSpoOversight(
-    req: Request,
-    res: Response,
-    crn,
-    staffTeamCode,
-    staffCode,
-    convictionNumber,
-    form,
-    pduCode,
-  ) {
+  async submitAllocation(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, form, pduCode) {
     const { instructions, person, isSensitive, emailCopyOptOut } = await this.allocationsService.getNotesCache(
       crn,
       `${convictionNumber}`,

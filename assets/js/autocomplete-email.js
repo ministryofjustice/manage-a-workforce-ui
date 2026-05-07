@@ -23,8 +23,6 @@ function removeNoScriptElements() {
 }
 
 window.addEventListener('load', function () {
-  console.log('Loading autocomplete')
-
   removeNoScriptElements()
 
   document.getElementById('add-another-person').style.display = 'none'

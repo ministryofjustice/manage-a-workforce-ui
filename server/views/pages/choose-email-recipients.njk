@@ -7,6 +7,8 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
 {% from "../components/pop/macro.njk" import pop %}
 
@@ -51,39 +53,99 @@
 
   <div class="govuk-grid-row">
 
-    <div class="govuk-grid-column-one-half">
-      <form data-validate-form method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation' }}" method="post">
+    <form data-validate-form method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation-v2' }}" method="post">
+      <div class="govuk-grid-column-two-thirds">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        <h2 class="govuk-heading-l">
-          Choose email recipients
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-2">
+          Choose who will receive these allocation notes
         </h2>
-        <p class="govuk-body">These notes will be sent in the allocation email to <strong>{{ data.staff.name.combinedName }}</strong> (<em>{{ data.staff.email }}</em>).</p>
+        <p class="govuk-body">Select one or more recipients to send the email to.</p>
+        <div class="govuk-email-list-item">
+          {{ govukSelect({
+              id: 'autocomplete',
+              name: 'autocomplete',
+              items: [
+              ],
+              classes: 'hidden govuk-autocomplete',
+              hint: { text: 'Enter the email address you want to send this email to' },
+              label: {
+                text: 'Add a new email address',
+                classes: 'govuk-!-font-weight-bold'
+              }
+            }) }}
+        </div>
+
+        <div>
+          {{ govukCheckboxes({
+              name: 'saveEmail',
+              items: [{
+                  text: 'Save this email for future allocations',
+                  value: 'yes',
+                  checked: isSensitive
+                  }],
+              classes: 'govuk-checkboxes--medium margin-bottom-10'
+          })}}
+        </div>
+        <div>
+          {{ 
+            govukButton({
+              text: 'Add recipient',
+              type: 'button',
+              name: 'action',
+              value: 'add-another-person',
+              id: 'add-recipient',
+              classes: 'govuk-button--secondary'
+            })
+          }}
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div>
+          <h3 class="govuk-label govuk-!-font-weight-bold govuk-!-margin-bottom-2">Selected recipients</h3>
+          <p class="govuk-hint govuk-!-margin-top-0">This email will be sent to:</p>
+          <ul id="govuk-recipient-list">
+            <li class="govuk-body">{{staff.name.combinedName}} (allocated practitioner), {{staff.email}}</li>
+          </ul>
+          {{ 
+            govukCheckboxes({
+              name: 'emailCopyOptIn',
+              items: [
+                {
+                  text: 'Send me a copy of this email',
+                  value: 'yes',
+                  checked: isSensitive
+                }
+              ],
+              classes: 'govuk-checkboxes--small margin-bottom-10'
+            })
+          }}
+        </div>
         <div class="govuk-button-group govuk-!-margin-top-4">
           {{
-          govukButton({
-            text: 'Allocate case',
-            classes: 'allocate',
-            type: 'submit',
-            name: 'action',
-            value: 'continue',
-            preventDoubleClick: true,
-            attributes: {
-              id: convictionNumber,
-              'data-form-submit': undefined
-            }
-          })
+            govukButton({
+              text: 'Allocate case',
+              classes: 'allocate',
+              type: 'submit',
+              name: 'action',
+              value: 'continue',
+              preventDoubleClick: true,
+              attributes: {
+                id: convictionNumber,
+                'data-form-submit': undefined
+              }
+            })
           }}
           <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Back to select practitioner</a>
-
         </div>
-      </form>
-    </div>
+
+      </div>
+    </form>
   </div>
 
 {% endblock %}
 {% block javascripts %}
-  <script src="/assets/validator.js"></script>
-  <script src="/assets/validation.js"></script>
+  <script src="/assets/accessible-autocomplete.min.js"></script>
+  <script id="autocomplete-script" src="/assets/js/autocomplete-email-v2.js" {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}></script>
   <script nonce="{{ cspNonce }}" id="ss-popup-1806352">
     (function (d, w) {
       var s,
@@ -94,8 +156,8 @@
       ss.type = "module";
       ss.src = (
         "https:" == d.location.protocol
-          ? "https://"
-          : "http://") + "embed.smartsurvey.io/index.js?popupCode=C35KQ2";
+        ? "https://"
+        : "http://") + "embed.smartsurvey.io/index.js?popupCode=C35KQ2";
       s = d.getElementsByTagName("script")[0];
       s
         .parentNode

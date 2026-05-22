@@ -59,43 +59,61 @@
   {{ pop({name: name, crn: crn, tier: tier, laoCase: laoCase}) }}
 
   <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
       <form data-validate-form="confirm-allocation" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/confirm-instructions' }}" method="post">
         <div class="govuk-form-group">
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-          {% if laoCase == false %}
-            {{
-            instructionsForm({
-                titleText: "Review your allocation notes",
-                html: ('<p class="govuk-body">These notes will be sent in the allocation email to <strong>' + data.staff.name.combinedName + '</strong> (<em>' + data.staff.email + '</em>).</p><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
-                convictionNumber: convictionNumber,
-                hintText: ' ',
-                crn: crn,
-                inGridRow: false,
-                rows: 20,
-                errorMessage: errors | findError('instructions'),
-                laoCase: laoCase,
-                instructions: instructions
-            })
-            }}
-          {% else %}
-            {{
-            instructionsForm({
-                titleText: "Review your allocation notes",
-                html: ('<div class="moj-banner" role="region" aria-label="information" id="not-included-banner"><h2 class="govuk-heading-s" id="not-included-warning-text">These notes will not be included in the email to the probation practitioner as this is a restricted access case.</h2></div><div class="govuk-!-margin-bottom-5">' + emailCheckbox + '</div>') | safe,
-                convictionNumber: convictionNumber,
-                hintText: ' ',
-                crn: crn,
-                inGridRow: false,
-                rows: 20,
-                errorMessage: errors | findError('instructions'),
-                laoCase: laoCase,
-                instructions: instructions
-            })
-            }}
-          {% endif %}
+          {% set html %}
+
+            {% if emailListFlag %}
+
+              <p class="govuk-body">
+                These notes are sent to the practitioner in the allocation email.
+                They will also be saved as an SPO Oversight contact in NDelius.
+                Do not include links in the notes.
+              </p>
+
+            {% else %}
+
+              {% if laoCase %}
+
+                <div class="moj-banner" role="region" aria-label="information" id="not-included-banner">
+                  <h2 class="govuk-heading-s" id="not-included-warning-text">
+                    These notes will not be included in the email to the probation practitioner as this is a restricted access case.
+                  </h2>
+                </div>
+
+              {% else %}
+
+                <p class="govuk-body">
+                  These notes will be sent in the allocation email to
+                  <strong>{{ data.staff.name.combinedName }}</strong>
+                  (<em>{{ data.staff.email }}</em>).
+                </p>
+
+              {% endif %}
+
+              <div class="govuk-!-margin-bottom-5">
+                {{ emailCheckbox | safe }}
+              </div>
+
+            {% endif %}
+
+          {% endset %}
+
+          {{ instructionsForm({
+            titleText: "Review your allocation notes",
+            html: html | safe,
+            convictionNumber: convictionNumber,
+            hintText: ' ',
+            crn: crn,
+            inGridRow: false,
+            rows: 20,
+            errorMessage: errors | findError('instructions'),
+            laoCase: laoCase,
+            instructions: instructions
+          }) }}
 
         </div>
         <div class="govuk-form-group govuk-allocations-emails-form">
@@ -113,6 +131,7 @@
                 }],
             classes: 'govuk-checkboxes--medium margin-bottom-10'
         })}}
+          {% if not emailListFlag %}
           {% if person.length > 0 %}
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
               <h3 class="govuk-fieldset__heading">Additional recipients</h3>
@@ -190,6 +209,8 @@
                     classes: 'govuk-button--secondary  govuk-!-margin-top-3'
                   }) }}
           </div>
+
+          {% endif %}
 
           <div class="govuk-button-group govuk-!-margin-top-4">
             {{

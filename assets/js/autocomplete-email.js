@@ -92,7 +92,7 @@ window.addEventListener('load', function () {
 
                 document.getElementById('add-another-person').style.display = 'none'
                 document.getElementById('remove-email-placeholder').style.display = 'none'
-              })
+              }),
           )
         })
       },

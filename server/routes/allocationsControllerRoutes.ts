@@ -59,6 +59,7 @@ export default function allocationsControllerRoutes(
       )
     },
   )
+
   get('/pdu/:pduCode/:crn/convictions/:convictionNumber/check-edit-allocation-notes', async (req, res) => {
     const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
 
@@ -80,11 +81,46 @@ export default function allocationsControllerRoutes(
       await allocationsController.getSpoOversight(req, res, crn, staffTeamCode, staffCode, convictionNumber, pduCode)
     },
   )
+
+  get(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/choose-email-recipients',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+
+      await allocationsController.getChooseEmailRecipients(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        convictionNumber,
+        pduCode,
+      )
+    },
+  )
+
   post(
     '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/save-allocation',
     async (req, res) => {
       const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
-      await allocationsController.submitNoSpoOversight(
+      await allocationsController.submitAllocation(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        convictionNumber,
+        req.body,
+        pduCode,
+      )
+    },
+  )
+
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/save-allocation-v2',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.submitAllocationV2(
         req,
         res,
         crn,

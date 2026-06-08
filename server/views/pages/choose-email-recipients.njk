@@ -53,14 +53,34 @@
 
   <div class="govuk-grid-row">
 
-    <form data-validate-form method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation-v2' }}" method="post">
+    <form data-validate-form method="post" method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation' }}">
       <div class="govuk-grid-column-two-thirds">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
         <h2 class="govuk-heading-l govuk-!-margin-bottom-2">
           Choose who will receive these allocation notes
         </h2>
-        <p class="govuk-body">Select one or more recipients to send the email to.</p>
+        <p class="govuk-hint">Select one or more recipients to send the email to.</p>
+
+        <div id="saved-recipients" class="hidden govuk-!-margin-top-9 govuk-!-margin-bottom-7">
+          <h2 class="govuk-heading-s">
+            Add recipients from saved list
+          </h2>
+          <p class="govuk-hint">Select one or more recipients</p>
+          <p id="passport-issued-error" class="govuk-error-message hidden">
+            <span class="govuk-visually-hidden">Error:</span> Saved list has not been updated due to server error. Try again later
+          </p>
+          <ul id="govuk-saved-emails-list" class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes"></ul>
+
+          <div class="spinner hidden">
+            <div id="saved-emails-spinner" class="govuk-spinner govuk-body">
+              Updating saved list
+            </div>
+          </div>
+        </div>
         <div class="govuk-email-list-item">
+
+          <input name="email" id="new-email" type="hidden"/>
           {{ govukSelect({
               id: 'autocomplete',
               name: 'autocomplete',
@@ -90,9 +110,9 @@
           {{ 
             govukButton({
               text: 'Add recipient',
-              type: 'button',
+              type: 'submit',
               name: 'action',
-              value: 'add-another-person',
+              value: 'add-email',
               id: 'add-recipient',
               classes: 'govuk-button--secondary'
             })
@@ -100,12 +120,20 @@
         </div>
       </div>
       <div class="govuk-grid-column-one-half">
-        <div>
+        <div id="recipient-list-container">
           <h3 class="govuk-label govuk-!-font-weight-bold govuk-!-margin-bottom-2">Selected recipients</h3>
           <p class="govuk-hint govuk-!-margin-top-0">This email will be sent to:</p>
+          <p id="passport-issued-error" class="govuk-error-message hidden">
+            <span class="govuk-visually-hidden">Error:</span> Recipient list has not been updated due to server error. Try again later
+          </p>
           <ul id="govuk-recipient-list">
-            <li class="govuk-body">{{staff.name.combinedName}} (allocated practitioner), {{staff.email}}</li>
+            <li class="govuk-body" data-allocated-practitioner>{{staff.name.combinedName}} (allocated practitioner), {{staff.email}}</li>
           </ul>
+          <div class="spinner hidden">
+            <div id="saved-emails-spinner" class="govuk-spinner govuk-body">
+              Updating selected recipients
+            </div>
+          </div>
           {{ 
             govukCheckboxes({
               name: 'emailCopyOptIn',
@@ -145,7 +173,12 @@
 {% endblock %}
 {% block javascripts %}
   <script src="/assets/accessible-autocomplete.min.js"></script>
-  <script id="autocomplete-script" src="/assets/js/autocomplete-email-v2.js" {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}></script>
+  <script
+    id="autocomplete-script"
+    src="/assets/js/autocomplete-email-v2.js"
+    {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}
+    data-crn="{{crn}}"
+    data-conviction-number="{{convictionNumber}}"></script>
   <script nonce="{{ cspNonce }}" id="ss-popup-1806352">
     (function (d, w) {
       var s,

@@ -98,6 +98,17 @@ export default class RestClient {
     }
   }
 
+  async delete({ path = null, data = {} }: PutRequest = {}): Promise<unknown> {
+    try {
+      return this.axiosClient.delete(path, {
+        headers: { 'Accept-Encoding': 'application/json', Authorization: `Bearer ${this.token}` },
+        data,
+      })
+    } catch (error) {
+      throw sanitiseError(error)
+    }
+  }
+
   stream({ path = null, headers = {} }: StreamRequest = {}): Promise<FileDownload> {
     return this.axiosClient
       .get(path, {

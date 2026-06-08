@@ -209,7 +209,56 @@ p.capacity-notes-screen
   color: #1D70B8
   background-color: #ffffff
 
-#govuk-recipient-list .new-recipient
-  display: flex
-  justify-content: space-between
-  margin-bottom: 5px
+#govuk-recipient-list 
+  padding-left: 0
+
+  li
+    list-style: none
+    margin-left: 0
+  
+  li:not(:first-of-type)
+    border-bottom: 1px solid #CECECE
+    margin-bottom: 5px
+    padding-bottom: 5px
+
+  .new-recipient
+    display: flex
+    justify-content: space-between
+    margin-bottom: 5px
+
+#govuk-saved-emails-list 
+  padding-left: 0
+
+  li 
+    list-style: none
+    margin-left: 0
+
+  .saved-email
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+@keyframes loading-spinner-animation
+  0%
+    transform: rotate(0deg);
+  100%
+    transform: rotate(360deg);
+
+.govuk-spinner
+  margin-top: 42px
+  margin-bottom: 42px
+  display: inline-flex
+  flex-direction: column
+  align-items: center
+
+  &::before 
+    content: ""
+    display: block
+    margin-bottom: 10px
+    border: 12px solid #dee0e2;
+    border-radius: 50%;
+    border-top-color: #1d70b8;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: loading-spinner-animation 2s linear infinite;
+    animation: loading-spinner-animation 2s linear infinite;

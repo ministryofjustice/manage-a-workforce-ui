@@ -19,6 +19,7 @@ import { createRedisClient } from '../data/redisClient'
 import CrnDetails from '../models/ReallocationCrnDetails'
 import AllocatedCase from '../models/AllocatedCase'
 import AssessmentDate from '../models/AssessmentDate'
+import SavedEmail from '../models/SavedEmail'
 
 interface CachedValue {
   instructions?: string
@@ -255,5 +256,29 @@ export default class AllocationsService {
       .catch(() => {
         throw new Error('Invalid CRN')
       })) as CrnDetails
+  }
+
+  async getSavedEmails(userId: string, token: string) {
+    return (await this.restClient(token)
+      .get({ path: `/user/${userId}/savedEmails` })
+      .catch(() => {
+        throw new Error('Invalid User ID')
+      })) as string[]
+  }
+
+  async postSavedEmail(userId: string, email: string, token: string) {
+    return (await this.restClient(token)
+      .post({ path: `/user/savedEmails`, data: { userId, email } })
+      .catch(() => {
+        throw new Error('Invalid User ID')
+      })) as SavedEmail
+  }
+
+  async deleteSavedEmail(userId: string, email: string, token: string) {
+    return (await this.restClient(token)
+      .delete({ path: `/user/savedEmails`, data: { userId, email } })
+      .catch(() => {
+        throw new Error('Invalid User ID')
+      })) as SavedEmail
   }
 }

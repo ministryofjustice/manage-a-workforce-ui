@@ -1,4 +1,3 @@
-import SavedEmail from 'server/models/SavedEmail'
 import AllocationsService from '../services/allocationsService'
 
 export default class EmailRecipientsController {

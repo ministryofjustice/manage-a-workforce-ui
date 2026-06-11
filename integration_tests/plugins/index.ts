@@ -35,6 +35,7 @@ import laoStatus403 from '../mockApis/laoStatus403'
 import allowedRegions from '../mockApis/allowedRegions'
 import featureFlags from '../mockApis/featureFlags'
 import reallocations from '../mockApis/reallocations'
+import savedEmails from '../mockApis/savedEmails'
 
 const redisService = new RedisService()
 
@@ -118,5 +119,6 @@ export default (on: (string, Record) => void): void => {
     ...featureFlags,
     ...logging,
     ...reallocations,
+    ...savedEmails,
   })
 }

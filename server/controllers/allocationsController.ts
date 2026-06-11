@@ -460,6 +460,12 @@ export default class AllocationsController {
       staffCode,
     )
 
+    const { username, token } = res.locals.user
+
+    const savedEmails = await this.allocationsService.getSavedEmails(username, token)
+
+    const { person } = await this.allocationsService.getNotesCache(crn, convictionNumber, username)
+
     res.render('pages/choose-email-recipients', {
       crn,
       staff,
@@ -467,6 +473,8 @@ export default class AllocationsController {
       staffTeamCode,
       convictionNumber,
       pduCode,
+      savedEmails,
+      addedEmails: (person ?? []).map(p => p.email),
       title: 'Choose email recipients | Manage a Workforce',
       tier,
       name: name.combinedName,

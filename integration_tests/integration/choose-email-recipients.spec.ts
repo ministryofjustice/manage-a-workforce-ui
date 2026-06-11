@@ -15,7 +15,6 @@ context('Choose email recipients', () => {
     cy.task('stubForFeatureflagEnabled')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/choose-email-recipients', { failOnStatusCode: false })
-    // /pdu/WPTNWS/Y001203/convictions/2/allocate/N03C01/N57A042/choose-email-recipients
   })
 
   it('display email recipient page', () => {

@@ -268,7 +268,7 @@ window.addEventListener('load', function () {
 
       checkbox.addEventListener('change', event => {
         if (event.target.checked) {
-          addEmail(e.email, false, 'foo')
+          addEmail(e.email, false)
         } else {
           removeEmail(e.email)
         }

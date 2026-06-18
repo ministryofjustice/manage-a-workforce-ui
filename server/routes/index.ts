@@ -17,7 +17,6 @@ export default function routes(services: Services): Router {
 
   const get = (path: string, handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (path: string, handler: RequestHandler) => router.post(path, asyncMiddleware(handler))
-  const put = (path: string, handler: RequestHandler) => router.put(path, asyncMiddleware(handler))
 
   const homeController = new HomeController(services.userPreferenceService)
 
@@ -35,7 +34,7 @@ export default function routes(services: Services): Router {
   allocationsControllerRoutes(services, get, post)
   probationEstateRoutes(services, get, post)
   reallocationsRoutes(services, get, post)
-  emailRecipientsRoutes(services, get, post, put)
+  emailRecipientsRoutes(services, get, post)
 
   get('/staff-lookup', async (req, res) => {
     const { searchString } = req.query

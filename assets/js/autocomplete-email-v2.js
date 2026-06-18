@@ -186,7 +186,7 @@ window.addEventListener('load', function () {
     clearLists()
 
     const request = new XMLHttpRequest()
-    request.open('PUT', `/email-recipients/${crn}/${convictionNumber}`)
+    request.open('POST', `/email-recipients/${crn}/${convictionNumber}/remove`)
     request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
     request.onreadystatechange = function () {
       // XHR client readyState DONE

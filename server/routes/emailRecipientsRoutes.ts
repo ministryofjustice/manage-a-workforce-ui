@@ -7,7 +7,6 @@ export default function emailRecipientsRoutes(
   services: Services,
   get: (path: string, handler: e.RequestHandler) => e.Router,
   post: (path: string, handler: e.RequestHandler) => e.Router,
-  put: (path: string, handler: e.RequestHandler) => e.Router,
 ): void {
   const emailRecipientsController = new EmailRecipientsController(services.allocationsService)
 
@@ -17,7 +16,7 @@ export default function emailRecipientsRoutes(
     return response
   })
 
-  put('/email-recipients/:crn/:convictionNumber', async (req, res) => {
+  post('/email-recipients/:crn/:convictionNumber/remove', async (req, res) => {
     const { crn, convictionNumber } = req.params
     const response = await emailRecipientsController.removeEmailRecipient(req, res, crn, convictionNumber)
     return response

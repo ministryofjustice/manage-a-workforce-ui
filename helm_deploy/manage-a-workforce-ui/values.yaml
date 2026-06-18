@@ -35,7 +35,7 @@ generic-service:
       SecRuleUpdateTargetById 930120 "!REQUEST_COOKIES:/connect.sid/"
       SecRuleUpdateTargetById 942210 "!REQUEST_COOKIES:/connect.sid/"
       SecAction "id:900000, phase:1, nolog, pass, t:none, setvar:tx.paranoia_level=2"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|(reallocation-)?case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation)|(email-recipients\/\w+\/\d+))$" \
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|(reallocation-)?case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation)|(email-recipients\/\w+\/\d+(\/remove)?))$" \
         "id:1001, phase:1, pass, nolog, \
         ctl:ruleRemoveTargetByTag=attack-sqli;ARGS:instructions, \
         ctl:ruleRemoveTargetByTag=platform-windows;ARGS:instructions, \
@@ -45,7 +45,7 @@ generic-service:
         ctl:ruleRemoveTargetByTag=platform-windows;ARGS:reallocationNotes, \
         ctl:ruleRemoveTargetByTag=attack-rce;ARGS:reallocationNotes, \
         ctl:ruleRemoveTargetByTag=language-php;ARGS:reallocationNotes"
-      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|(reallocation-)?case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation)|(email-recipients\/\w+\/\d+))$" \
+      SecRule REQUEST_URI "@rx \/((confirm-allocation|choose-practitioner|confirm-instructions|(reallocation-)?case-view|probation-record|documents|risk|personal-details)|(notes\/\w+\/\d+)|(reallocations|review-reallocation|reallocation-complete|save-reallocation)|(email-recipients\/\w+\/\d+(\/remove)?))$" \
         "id:1002, phase:2, pass, nolog, \
         ctl:ruleRemoveById=921110, \
         ctl:ruleRemoveById=941130, \

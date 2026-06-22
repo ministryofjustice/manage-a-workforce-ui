@@ -69,9 +69,7 @@
             {% if emailListFlag %}
 
               <p class="govuk-body">
-                These notes are sent to the practitioner in the allocation email.
-                They will also be saved as an SPO Oversight contact in NDelius.
-                Do not include links in the notes.
+                These will also be saved as an SPO Oversight contact in NDelius.
               </p>
 
             {% else %}
@@ -112,8 +110,11 @@
             rows: 20,
             errorMessage: errors | findError('instructions'),
             laoCase: laoCase,
-            instructions: instructions
+            instructions: instructions,
+            classes: 'govuk-!-margin-bottom-1'
           }) }}
+
+          <p class="govuk-hint govuk-!-margin-top-0">You have 3,500 characters remaining</p>
 
         </div>
         <div class="govuk-form-group govuk-allocations-emails-form">

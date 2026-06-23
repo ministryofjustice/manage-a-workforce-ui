@@ -6,7 +6,6 @@
 {% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
@@ -62,12 +61,42 @@
         </h2>
         <p class="govuk-hint">Select one or more recipients to send the email to.</p>
 
+        {{ govukErrorSummary({
+          attributes: {
+            id: 'autocomplete-errors'
+          },
+          classes: 'hidden',
+          titleText: "There is a problem",
+          errorList: [
+            {
+              text: "Saved list has not been updated due to server error. Try again later",
+              href: "#saved-recipients",
+              attributes: {
+                class: 'hidden'
+              }
+            },
+            {
+              text: "Email has not been added due to server error. Try again later",
+              href: "#autocomplete",
+              attributes: {
+                class: 'hidden'
+              }
+            },
+            {
+              text: "Recipient list has not been updated due to server error. Try again later",
+              href: "#govuk-recipient-list",
+              attributes: {
+                class: 'hidden'
+              }
+            }
+          ]
+        }) }}
         <div id="saved-recipients" class="hidden govuk-!-margin-top-9 govuk-!-margin-bottom-7">
           <h2 class="govuk-heading-s">
             Add recipients from saved list
           </h2>
           <p class="govuk-hint">Select one or more recipients</p>
-          <p id="passport-issued-error" class="govuk-error-message hidden">
+          <p class="govuk-error-message hidden">
             <span class="govuk-visually-hidden">Error:</span> Saved list has not been updated due to server error. Try again later
           </p>
           <ul id="govuk-saved-emails-list" class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes"></ul>
@@ -78,52 +107,55 @@
             </div>
           </div>
         </div>
-        <div class="govuk-email-list-item">
 
-          <input name="email" id="new-email" type="hidden"/>
-          {{ govukSelect({
-              id: 'autocomplete',
-              name: 'autocomplete',
-              items: [
-              ],
-              classes: 'hidden govuk-autocomplete',
-              hint: { text: 'Enter the email address you want to send this email to' },
-              label: {
-                text: 'Add a new email address',
-                classes: 'govuk-!-font-weight-bold'
-              }
-            }) }}
-        </div>
+        <div id="email-autocomplete-container" class="govuk-form-group--error">
+          <div class="govuk-email-list-item">
 
-        <div>
-          {{ govukCheckboxes({
-              name: 'saveEmail',
-              items: [{
-                  text: 'Save this email for future allocations',
-                  value: 'yes',
-                  checked: isSensitive
-                  }],
-              classes: 'govuk-checkboxes--medium margin-bottom-10'
-          })}}
-        </div>
-        <div>
-          {{ 
-            govukButton({
-              text: 'Add recipient',
-              type: 'submit',
-              name: 'action',
-              value: 'add-email',
-              id: 'add-recipient',
-              classes: 'govuk-button--secondary'
-            })
-          }}
+            <input name="email" id="new-email" type="hidden"/>
+            {{ govukSelect({
+                id: 'autocomplete',
+                name: 'autocomplete',
+                items: [
+                ],
+                classes: 'hidden govuk-autocomplete',
+                hint: { text: 'Enter the email address you want to send this email to' },
+                label: {
+                  text: 'Add a new email address',
+                  classes: 'govuk-!-font-weight-bold'
+                }
+              }) }}
+          </div>
+
+          <div>
+            {{ govukCheckboxes({
+                name: 'saveEmail',
+                items: [{
+                    text: 'Save this email for future allocations',
+                    value: 'yes',
+                    checked: isSensitive
+                    }],
+                classes: 'govuk-checkboxes--medium margin-bottom-10'
+            })}}
+          </div>
+          <div>
+            {{ 
+              govukButton({
+                text: 'Add recipient',
+                type: 'submit',
+                name: 'action',
+                value: 'add-email',
+                id: 'add-recipient',
+                classes: 'govuk-button--secondary'
+              })
+            }}
+          </div>
         </div>
       </div>
       <div class="govuk-grid-column-one-half">
         <div id="recipient-list-container">
           <h3 class="govuk-label govuk-!-font-weight-bold govuk-!-margin-bottom-2">Selected recipients</h3>
           <p class="govuk-hint govuk-!-margin-top-0">This email will be sent to:</p>
-          <p id="passport-issued-error" class="govuk-error-message hidden">
+          <p class="govuk-error-message hidden">
             <span class="govuk-visually-hidden">Error:</span> Recipient list has not been updated due to server error. Try again later
           </p>
           <ul id="govuk-recipient-list">

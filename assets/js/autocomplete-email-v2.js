@@ -33,6 +33,9 @@ window.addEventListener('load', function () {
   var spinners = document.getElementsByClassName('spinner')
   var savedEmailsContainer = document.getElementById('saved-recipients')
   var recipientsContainer = document.getElementById('recipient-list-container')
+  var errorList = document.getElementById('autocomplete-errors')
+  var autocompleteHint = document.getElementById('autocomplete-hint')
+  var autocompleteContainer = document.getElementById('email-autocomplete-container')
   const { crn, convictionNumber } = document.getElementById('autocomplete-script').dataset
 
   accessibleAutocomplete.enhanceSelectElement({
@@ -81,6 +84,12 @@ window.addEventListener('load', function () {
     },
   })
 
+  var autocompleteError = document.createElement('p')
+  autocompleteError.className = 'govuk-error-message hidden'
+  autocompleteError.innerHTML =
+    '<span class="govuk-visually-hidden">Error:</span> Saved list has not been updated due to server error. Try again later'
+  autocompleteHint.after(autocompleteError)
+
   document.getElementById('add-recipient').addEventListener('click', function (event) {
     event.preventDefault()
 
@@ -94,6 +103,54 @@ window.addEventListener('load', function () {
       selectedEmail = null
     })
   })
+
+  var errors = {
+    saved: false,
+    search: false,
+    current: false,
+  }
+
+  function toggleErrors(newErrors) {
+    errors = Object.assign(errors, newErrors)
+
+    var errorMessages = errorList.querySelectorAll('li > a')
+
+    if (Object.values(errors).some(e => e === true)) {
+      errorList.classList.remove('hidden')
+    } else {
+      errorList.classList.add('hidden')
+    }
+
+    if (errors.saved) {
+      errorMessages[0].classList.remove('hidden')
+      savedEmailsContainer.classList.add('govuk-form-group--error')
+      savedEmailsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.remove('hidden'))
+    } else {
+      errorMessages[0].classList.add('hidden')
+      savedEmailsContainer.classList.remove('govuk-form-group--error')
+      savedEmailsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.add('hidden'))
+    }
+
+    if (errors.search) {
+      errorMessages[0].classList.remove('hidden')
+      autocompleteContainer.classList.add('govuk-form-group--error')
+      autocompleteContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.remove('hidden'))
+    } else {
+      errorMessages[0].classList.add('hidden')
+      autocompleteContainer.classList.remove('govuk-form-group--error')
+      autocompleteContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.add('hidden'))
+    }
+
+    if (errors.current) {
+      errorMessages[2].classList.remove('hidden')
+      recipientsContainer.classList.add('govuk-form-group--error')
+      recipientsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.remove('hidden'))
+    } else {
+      errorMessages[2].classList.add('hidden')
+      recipientsContainer.classList.remove('govuk-form-group--error')
+      recipientsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.add('hidden'))
+    }
+  }
 
   function addEmail(email, save, onComplete) {
     clearLists()
@@ -109,15 +166,9 @@ window.addEventListener('load', function () {
             onComplete()
           }
           loadEmails()
-          savedEmailsContainer.classList.remove('govuk-form-group--error')
-          savedEmailsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.add('hidden'))
-          recipientsContainer.classList.remove('govuk-form-group--error')
-          recipientsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.add('hidden'))
+          toggleErrors({ search: false })
         } else {
-          savedEmailsContainer.classList.add('govuk-form-group--error')
-          savedEmailsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.remove('hidden'))
-          recipientsContainer.classList.add('govuk-form-group--error')
-          recipientsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.remove('hidden'))
+          toggleErrors({ search: true })
         }
       }
     }
@@ -138,10 +189,7 @@ window.addEventListener('load', function () {
       // XHR client readyState DONE
       if (request.readyState === 4) {
         if (request.status === 200) {
-          savedEmailsContainer.classList.remove('govuk-form-group--error')
-          savedEmailsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.add('hidden'))
-          recipientsContainer.classList.remove('govuk-form-group--error')
-          recipientsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.add('hidden'))
+          toggleErrors({ saved: false, current: false })
 
           const response = request.responseText
           const json = JSON.parse(response)
@@ -149,11 +197,7 @@ window.addEventListener('load', function () {
           populateSavedEmails(json.saved)
           populateEmails(json.recipients)
         } else {
-          savedEmailsContainer.classList.add('govuk-form-group--error')
-          savedEmailsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.remove('hidden'))
-          recipientsContainer.classList.add('govuk-form-group--error')
-          recipientsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.remove('hidden'))
-          savedEmailsContainer.classList.remove('hidden')
+          toggleErrors({ saved: true, current: true })
         }
 
         Array.from(spinners).at(0).classList.add('hidden')
@@ -193,15 +237,9 @@ window.addEventListener('load', function () {
       if (request.readyState === 4) {
         if (request.status === 200) {
           loadEmails()
-          savedEmailsContainer.classList.remove('govuk-form-group--error')
-          savedEmailsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.add('hidden'))
-          recipientsContainer.classList.remove('govuk-form-group--error')
-          recipientsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.add('hidden'))
+          toggleErrors({ saved: false, current: false })
         } else {
-          savedEmailsContainer.classList.add('govuk-form-group--error')
-          savedEmailsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.remove('hidden'))
-          recipientsContainer.classList.add('govuk-form-group--error')
-          recipientsContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.remove('hidden'))
+          toggleErrors({ saved: true, current: true })
         }
       }
     }

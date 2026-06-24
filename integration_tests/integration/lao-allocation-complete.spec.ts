@@ -66,7 +66,7 @@ context('Allocate Complete', () => {
     allocationCompletePage.mediumHeading().should('contain', 'What happens next')
     allocationCompletePage
       .bulletedList()
-      .should('contain', 'we have sent a copy of the allocation email to first@justice.gov.uk, second@justice.gov.uk')
+      .should('contain', "we've sent a copy of the allocation email to first@justice.gov.uk, second@justice.gov.uk")
       .and('contain', 'your allocation has been emailed to John Doe (john.doe@test.justice.gov.uk)')
   })
 

@@ -110,6 +110,16 @@ window.addEventListener('load', function () {
     current: false,
   }
 
+  function toggleSpinners(show) {
+    Array.from(spinners).forEach(spinner => {
+      if (show) {
+        spinner.classList.remove('hidden')
+      } else {
+        spinner.classList.add('hidden')
+      }
+    })
+  }
+
   function toggleErrors(newErrors) {
     errors = Object.assign(errors, newErrors)
 
@@ -169,6 +179,7 @@ window.addEventListener('load', function () {
           toggleErrors({ search: false })
         } else {
           toggleErrors({ search: true })
+          toggleSpinners(false)
         }
       }
     }
@@ -200,8 +211,7 @@ window.addEventListener('load', function () {
           toggleErrors({ saved: true, current: true })
         }
 
-        Array.from(spinners).at(0).classList.add('hidden')
-        Array.from(spinners).at(-1).classList.add('hidden')
+        toggleSpinners(false)
       }
     }
     request.send()
@@ -221,9 +231,7 @@ window.addEventListener('load', function () {
       }
     })
 
-    Array.from(spinners).forEach(spinner => {
-      spinner.classList.remove('hidden')
-    })
+    toggleSpinners(true)
   }
 
   function removeEmail(email, saved) {
@@ -240,6 +248,7 @@ window.addEventListener('load', function () {
           toggleErrors({ saved: false, current: false })
         } else {
           toggleErrors({ saved: true, current: true })
+          toggleSpinners(false)
         }
       }
     }

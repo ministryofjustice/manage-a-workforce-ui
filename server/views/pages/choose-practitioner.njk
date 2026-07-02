@@ -11,7 +11,6 @@
 
 {% from "../components/pop/macro.njk" import pop %}
 {% from '../components/practitioner-list/macro.njk' import practitionerList %}
-{% from "../components/pop/macro.njk" import pop %}
 
 {% set perTeamsTableData = [] %}
 
@@ -62,7 +61,7 @@
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
 
-    {% if (probationStatus == 'Currently managed' and offenderManagerDetails) 
+    {% if (probationStatus == 'Currently managed' and offenderManagerDetails)
         or probationStatus == 'Previously managed' %}
         <div class="govuk-warning-text govuk-!-margin-bottom-0">
             <span class="govuk-warning-text__icon" aria-hidden="true">!</span>

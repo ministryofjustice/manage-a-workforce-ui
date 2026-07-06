@@ -63,7 +63,9 @@ export default function createApp(services: Services): express.Application {
       logger,
     }),
   )
-  app.use(unless('/staff-lookup', getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService)))
+  app.use(
+    unless('/staff-lookup', getUnallocatedCasesCount(services.userPreferenceService, services.allocationsService)),
+  )
 
   app.use(routes(services))
   app.use((req, res, next) => next(createError(404, 'Not found')))

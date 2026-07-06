@@ -4,8 +4,13 @@ import logger from '../../logger'
 
 const featureFlagService = new FeatureFlagService()
 
-export default function featureFlagMiddleware(services, flagKey, flagName) {
+export default function featureFlagMiddleware(services) {
   return async (req: Request, res: Response, next: NextFunction) => {
+    const flags = {
+      Reallocations: false,
+      enableEmailList: false,
+    }
+
     try {
       const { token, username } = res.locals.user
       const { items: pduSelection } = await services.userPreferenceService.getPduUserPreference(token, username)
@@ -13,27 +18,24 @@ export default function featureFlagMiddleware(services, flagKey, flagName) {
 
       const pduDetails = await services.probationEstateService.getProbationDeliveryUnitDetails(token, pduCode)
 
-      await services.allocationsService.getUserRegionAccessForRegion(
-        res.locals.user.token,
-        res.locals.user.username,
-        pduDetails.region.code,
-      )
+      const regionCode = pduDetails.region.code
 
-      const flag = await featureFlagService.isFeatureEnabled(flagKey, flagName, {
-        regionCode: pduDetails.region.code,
-      })
+      await services.allocationsService.getUserRegionAccessForRegion(token, username, regionCode)
 
-      res.locals.featureFlags = {
-        ...res.locals.featureFlags,
-        [flagKey]: flag,
-      }
+      const [reallocations, enableEmailList] = await Promise.all([
+        featureFlagService.isFeatureEnabled('Reallocations', 'Reallocations', { regionCode }),
+        featureFlagService.isFeatureEnabled('enableEmailList', 'enableEmailList', { regionCode }),
+      ])
+
+      flags.Reallocations = reallocations
+      flags.enableEmailList = enableEmailList
     } catch (error) {
-      res.locals.featureFlags = {
-        ...res.locals.featureFlags,
-        [flagKey]: null,
-      }
+      logger.error(error, 'Error fetching feature flags')
+    }
 
-      logger.error(`Error fetching feature flag ${flagKey}`, error)
+    res.locals.featureFlags = {
+      ...res.locals.featureFlags,
+      ...flags,
     }
     next()
   }

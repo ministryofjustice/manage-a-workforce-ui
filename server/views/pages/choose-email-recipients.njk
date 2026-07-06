@@ -1,0 +1,232 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/label/macro.njk" import govukLabel %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{% from "../components/pop/macro.njk" import pop %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/pdu/" + pduCode + "/teams"
+      },
+      {
+        text: "Unallocated cases",
+        href: "/pdu/" + pduCode + "/find-unallocated"
+      },
+      {
+        text: "Case details",
+        href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/case-view"
+      },
+      {
+        text: "Choose practitioner",
+        href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/choose-practitioner"
+      },
+      {
+        text: "Allocate to practitioner",
+        href: "/pdu/" + pduCode + "/" + crn + "/convictions/" + convictionNumber + "/allocate/" + staffTeamCode + '/' + staffCode + "/allocate-to-practitioner"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
+
+    </div>
+  </div>
+
+  <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+  <div class="govuk-grid-row">
+
+    <form data-validate-form method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation' }}">
+      <div class="govuk-grid-column-two-thirds">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-2">
+          Choose who will receive these allocation notes
+        </h2>
+        <p class="govuk-hint">Select one or more recipients to send the email to</p>
+
+        {{ govukErrorSummary({
+          attributes: {
+            id: 'autocomplete-errors'
+          },
+          classes: 'hidden',
+          titleText: "There is a problem",
+          errorList: [
+            {
+              text: "Saved list has not been updated due to server error. Try again later",
+              href: "#saved-recipients",
+              attributes: {
+                class: 'hidden'
+              }
+            },
+            {
+              text: "Email has not been added due to server error. Try again later",
+              href: "#autocomplete",
+              attributes: {
+                class: 'hidden'
+              }
+            },
+            {
+              text: "Recipient list has not been updated due to server error. Try again later",
+              href: "#govuk-recipient-list",
+              attributes: {
+                class: 'hidden'
+              }
+            }
+          ]
+        }) }}
+        <div id="saved-recipients" class="hidden govuk-!-margin-top-9 govuk-!-margin-bottom-7">
+          <h2 class="govuk-heading-s">
+            Add recipients from saved list
+          </h2>
+          <p class="govuk-hint">Select one or more recipients</p>
+          <p class="govuk-error-message hidden">
+            <span class="govuk-visually-hidden">Error:</span> Saved list has not been updated due to server error. Try again later
+          </p>
+          <ul id="govuk-saved-emails-list" class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes"></ul>
+
+          <div class="spinner hidden">
+            <div id="saved-emails-spinner" class="govuk-spinner govuk-body">
+              Updating saved list
+            </div>
+          </div>
+        </div>
+
+        <div id="email-autocomplete-container" class="govuk-form-group">
+          <div class="govuk-email-list-item">
+
+            <input name="email" id="new-email" type="hidden"/>
+            {{ govukSelect({
+                id: 'autocomplete',
+                name: 'autocomplete',
+                items: [
+                ],
+                classes: 'hidden govuk-autocomplete',
+                hint: { text: 'Enter the email address you want to send this email to' },
+                label: {
+                  text: 'Add a new email address',
+                  classes: 'govuk-!-font-weight-bold'
+                }
+              }) }}
+          </div>
+
+          <div>
+            {{ govukCheckboxes({
+                name: 'saveEmail',
+                items: [{
+                    text: 'Save this email for future allocations',
+                    value: 'yes',
+                    checked: false
+                    }],
+                classes: 'govuk-checkboxes--medium margin-bottom-10'
+            })}}
+          </div>
+          <div>
+            {{ 
+              govukButton({
+                text: 'Add recipient',
+                type: 'submit',
+                name: 'action',
+                value: 'add-email',
+                id: 'add-recipient',
+                classes: 'govuk-button--secondary'
+              })
+            }}
+          </div>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div id="recipient-list-container">
+          <h3 class="govuk-label govuk-!-font-weight-bold govuk-!-margin-bottom-2">Selected recipients</h3>
+          <p class="govuk-hint govuk-!-margin-top-0">This email will be sent to:</p>
+          <p class="govuk-error-message hidden">
+            <span class="govuk-visually-hidden">Error:</span> Recipient list has not been updated due to server error. Try again later
+          </p>
+          <ul id="govuk-recipient-list">
+            <li class="govuk-body" data-allocated-practitioner>{{staff.name.combinedName}} (allocated practitioner), {{staff.email}}</li>
+          </ul>
+          <div class="spinner hidden">
+            <div id="recipient-list-spinner" class="govuk-spinner govuk-body">
+              Updating selected recipients
+            </div>
+          </div>
+          {{ 
+            govukCheckboxes({
+              name: 'emailCopyOptIn',
+              items: [
+                {
+                  text: 'Send me a copy of this email',
+                  value: 'yes',
+                  checked: false
+                }
+              ],
+              classes: 'govuk-checkboxes--small margin-bottom-10'
+            })
+          }}
+        </div>
+        <div class="govuk-button-group govuk-!-margin-top-4">
+          {{
+            govukButton({
+              text: 'Allocate case',
+              classes: 'allocate',
+              type: 'submit',
+              name: 'action',
+              value: 'continue',
+              preventDoubleClick: true,
+              attributes: {
+                id: convictionNumber,
+                'data-form-submit': undefined
+              }
+            })
+          }}
+          <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/choose-practitioner' }}">Back to select practitioner</a>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+{% endblock %}
+{% block javascripts %}
+  <script src="/assets/accessible-autocomplete.min.js"></script>
+  <script
+    id="autocomplete-script"
+    src="/assets/js/autocomplete-email-v2.js"
+    {%- if scrollToBottom %} data-scroll-to-bottom="true" {% endif %}
+    data-crn="{{crn}}"
+    data-conviction-number="{{convictionNumber}}"></script>
+  <script nonce="{{ cspNonce }}" id="ss-popup-1806352">
+    (function (d, w) {
+      var s,
+        ss;
+      ss = d.createElement("script");
+      ss.type = "text/javascript";
+      ss.async = true;
+      ss.type = "module";
+      ss.src = (
+        "https:" == d.location.protocol
+        ? "https://"
+        : "http://") + "embed.smartsurvey.io/index.js?popupCode=C35KQ2";
+      s = d.getElementsByTagName("script")[0];
+      s
+        .parentNode
+        .insertBefore(ss, s);
+    })(document, window);
+  </script>
+{% endblock %}

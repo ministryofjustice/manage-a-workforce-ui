@@ -82,7 +82,7 @@ context('Allocate Complete', () => {
       .bulletedList()
       .should('exist')
       .and('contain', 'the case and SPO Oversight contact will be saved in NDelius within 5 minutes')
-      .and('contain', 'we have sent a copy of the allocation email to first@justice.gov.uk, second@justice.gov.uk')
+      .and('contain', "we've sent a copy of the allocation email to first@justice.gov.uk, second@justice.gov.uk")
     // .and('contain', 'the initial appointment is scheduled for 1 September 2021 with John Doe PO')
   })
 
@@ -116,7 +116,7 @@ context('Allocate Complete', () => {
     allocationCompletePage.mediumHeading().should('contain', 'What happens next')
     allocationCompletePage
       .bulletedList()
-      .should('contain', 'we have sent a copy of the allocation email to first@justice.gov.uk, second@justice.gov.uk')
+      .should('contain', "we've sent a copy of the allocation email to first@justice.gov.uk, second@justice.gov.uk")
   })
 
   it('What happens next with no additional emails supplied, opting in of copy content visible on page', () => {

@@ -10,9 +10,11 @@ import getAllocationRoutes from './allocationRoutes'
 import probationEstateRoutes from './ProbationEstateRoutes'
 import allocationsControllerRoutes from './allocationsControllerRoutes'
 import reallocationsRoutes from './reallocationsRoutes'
+import emailRecipientsRoutes from './emailRecipientsRoutes'
 
 export default function routes(services: Services): Router {
   const router = Router()
+
   const get = (path: string, handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (path: string, handler: RequestHandler) => router.post(path, asyncMiddleware(handler))
 
@@ -32,6 +34,7 @@ export default function routes(services: Services): Router {
   allocationsControllerRoutes(services, get, post)
   probationEstateRoutes(services, get, post)
   reallocationsRoutes(services, get, post)
+  emailRecipientsRoutes(services, get, post)
 
   get('/staff-lookup', async (req, res) => {
     const { searchString } = req.query

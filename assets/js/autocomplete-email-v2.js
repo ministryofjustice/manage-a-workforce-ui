@@ -142,11 +142,11 @@ window.addEventListener('load', function () {
     }
 
     if (errors.search) {
-      errorMessages[0].classList.remove('hidden')
+      errorMessages[1].classList.remove('hidden')
       autocompleteContainer.classList.add('govuk-form-group--error')
       autocompleteContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.remove('hidden'))
     } else {
-      errorMessages[0].classList.add('hidden')
+      errorMessages[1].classList.add('hidden')
       autocompleteContainer.classList.remove('govuk-form-group--error')
       autocompleteContainer.querySelectorAll('.govuk-error-message').forEach(msg => msg.classList.add('hidden'))
     }

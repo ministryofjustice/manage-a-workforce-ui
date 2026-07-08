@@ -1,30 +1,8 @@
 import { SuperAgentRequest } from 'superagent'
+import type { Practitioner } from '../../server/models/ChoosePractitionerData'
 import { stubForWorkload } from './wiremock'
 
-const defaultTierCaseTotals = {
-  untiered: 3,
-  a: 1,
-  b: 4,
-  c: 2,
-  d: 0,
-  as: 1,
-  bs: 0,
-  cs: 2,
-  ds: 0,
-}
-
-const defaultPractitionerMetrics = {
-  allocatedCasesPastWeek: 0,
-  reallocatedCasesPastWeek: 0,
-  ispsDueInNext14Days: 0,
-  activeCases: 0,
-  contactSuspendedCases: 0,
-  custodyReleasesInNext7Days: 0,
-  paroleReportsInNext28Days: 0,
-  otherReportsInNext14Days: 0,
-  licenseCases: 0,
-  tierCaseTotals: defaultTierCaseTotals,
-}
+type PractitionerTeams = Record<string, Practitioner[]>
 
 export default {
   stubGetCurrentlyManagedCaseForChoosePractitioner: (
@@ -471,7 +449,7 @@ export default {
   }: {
     teamCodes?: string[]
     crn?: string
-    teams?: Record<string, unknown>
+    teams?: PractitionerTeams
   }): SuperAgentRequest => {
     return stubForWorkload({
       request: {

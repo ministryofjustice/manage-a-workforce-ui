@@ -2,6 +2,7 @@ interface PersonName {
   forename: string
   middleName?: string
   surname: string
+  combinedName?: string
 }
 
 interface ProbationStatus {

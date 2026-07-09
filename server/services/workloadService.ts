@@ -13,6 +13,7 @@ import AllocationCompleteDetails from '../models/AllocationCompleteDetails'
 import AllocationHistory from '../models/AllocationHistory'
 import AllocationHistoryCount from '../models/AllocationHistoryCount'
 import ReallocationData from '../models/ReallocationData'
+import TeamWorkloadData from '../models/TeamWorkloadData'
 import { createRedisClient } from '../data/redisClient'
 
 export default class WorkloadService {
@@ -200,9 +201,9 @@ export default class WorkloadService {
     })) as AllocationHistoryCount
   }
 
-  async getTeamWorkload(token: string, teamCode: string) {
-    return this.restClient(token).get({
+  async getTeamWorkload(token: string, teamCode: string): Promise<TeamWorkloadData> {
+    return (await this.restClient(token).get({
       path: `/team/practitioner-workloadcases?teamCode=${teamCode}`,
-    })
+    })) as TeamWorkloadData
   }
 }

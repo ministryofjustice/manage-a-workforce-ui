@@ -27,32 +27,25 @@
                 'data-persistent-id': 'choose-practitioner-grade'
             }
         },
-        { text: 'Workload %',
+        { text: 'Allocations in APoP last 7 days',
             format: "numeric",
             attributes: {
                 "aria-sort": "none",
-                'data-persistent-id': 'choose-practitioner-workload'
+                'data-persistent-id': 'choose-practitioner-allocations-last-7-days'
             }
         },
-        { text: 'Cases in past 7 days',
+        { text: 'Reallocations in APoP last 7 days',
             format: "numeric",
             attributes: {
                 "aria-sort": "none",
-                'data-persistent-id': 'choose-practitioner-cases-in-past-30-days'
+                'data-persistent-id': 'choose-practitioner-reallocations-last-7-days'
             }
         },
-        { text: 'Community cases',
+        { text: 'ISPs due next 14 days',
             format: "numeric",
             attributes: {
                 "aria-sort": "none",
-                'data-persistent-id': 'choose-practitioner-community-cases'
-            }
-        },
-        { text: 'Custody cases',
-            format: "numeric",
-            attributes: {
-                "aria-sort": "none",
-                'data-persistent-id': 'choose-practitioner-custody-cases'
+                'data-persistent-id': 'choose-practitioner-isps-due-next-14-days'
             }
         }
     ],
@@ -61,59 +54,52 @@
 
 {% for offenderManager in params.offenderManagers %}
     {% if offenderManager.code !== params.currentOffenderManager.code %}
-        {%- set tableRow = [
-            { 
-                html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"' + (' checked' if params.teamAndStaffCode == offenderManager.selectionCode) + '><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name.combinedName + ' to allocate to</span></label></div></div>')
-                if offenderManager.email and true != offenderManager.laoCase
-            },
-            { 
-                html: ('<a href="/pdu/'+ params.pduCode +'/' + offenderManager.team.code + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.combinedName + '</a>' ) | safe,
-                attributes: {
-                    "data-sort-value": offenderManager.name.combinedName
-                }
-            },
-            { text: offenderManager.team.name,
-                classes: 'govuk-visually-hidden' if params.teamData.isPerTeam,
-                attributes: {
-                    'data-team-code': offenderManager.team.code
-                }
-            },
-            { 
-                html: ('<div class="tooltip">' + offenderManager.grade + '<span class="tooltiptext">' + offenderManager.gradeTip + '</span></div>'),
-                attributes: {
-                    "data-sort-value": offenderManager.gradeOrder
-                }
-            },
-            { 
-                text: ((offenderManager.workload | round(1)) + '%'),
-                format: "numeric",
-                classes: ('percentage-extra-over' if offenderManager.workload > 100),
-                attributes: {
-                    "data-sort-value": offenderManager.workload
-                }
-            },
-            { 
-                text: offenderManager.casesPastWeek,
-                format: "numeric",
-                attributes: {
-                    "data-sort-value": offenderManager.casesPastWeek
-                }
-            },
-            { 
-                text: offenderManager.communityCases,
-                format: "numeric",
-                attributes: {
-                    "data-sort-value": offenderManager.communityCases
-                }
-            },
-            { 
-                text: offenderManager.custodyCases, 
-                format: "numeric",
-                attributes: {
-                    "data-sort-value": offenderManager.custodyCases
-                }
-            }
-        ] -%}
+      {%- set tableRow = [
+        {
+          html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"' + (' checked' if params.teamAndStaffCode == offenderManager.selectionCode) + '><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name.combinedName + ' to allocate to</span></label></div></div>')
+          if offenderManager.email and true != offenderManager.laoCase
+        },
+        {
+          html: ('<a href="/pdu/'+ params.pduCode +'/' + offenderManager.team.code + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.combinedName + '</a>' ) | safe,
+          attributes: {
+          "data-sort-value": offenderManager.name.combinedName
+          }
+        },
+        {
+          text: offenderManager.team.name,
+          classes: 'govuk-visually-hidden' if params.teamData.isPerTeam,
+          attributes: {
+          'data-team-code': offenderManager.team.code
+          }
+        },
+        {
+          html: ('<div class="tooltip">' + offenderManager.grade + '<span class="tooltiptext">' + offenderManager.gradeTip + '</span></div>'),
+          attributes: {
+          "data-sort-value": offenderManager.gradeOrder
+          }
+        },
+        {
+          text: offenderManager.allocatedCasesPastWeek,
+          format: "numeric",
+          attributes: {
+          "data-sort-value": offenderManager.allocatedCasesPastWeek
+          }
+        },
+        {
+          text: offenderManager.reallocatedCasesPastWeek,
+          format: "numeric",
+          attributes: {
+          "data-sort-value": offenderManager.reallocatedCasesPastWeek
+          }
+        },
+        {
+          text: offenderManager.ispsDueInNext14Days,
+          format: "numeric",
+          attributes: {
+          "data-sort-value": offenderManager.ispsDueInNext14Days
+          }
+        }
+      ] -%}
         {% set blank = offenderManagerTableData
             .rows
             .push(tableRow)

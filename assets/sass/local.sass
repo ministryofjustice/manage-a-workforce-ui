@@ -272,3 +272,21 @@ p.capacity-notes-screen
 
 .workload-inline span
   white-space: nowrap
+
+#practitioners-table tbody>tr 
+    position: relative
+
+    > td:has(.workload-details)
+      padding-bottom: 45px
+
+      &:has(.workload-details[open])
+        padding-bottom: 460px
+
+.workload-details
+  position: absolute
+  top: 100%
+  left: 0
+  right: 0
+  padding: 20px 0
+  margin-left: 75px
+  transform: translate(0, -100%)

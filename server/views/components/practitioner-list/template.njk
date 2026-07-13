@@ -1,4 +1,5 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from '../workloadDetails/macro.njk' import workloadDetails %}
 
 {%- set offenderManagerTableData = {
     attributes: {
@@ -61,9 +62,35 @@
 
 {% for offenderManager in params.offenderManagers %}
     {% if offenderManager.code !== params.currentOffenderManager.code %}
+        {%- set workloadDetailsHtml -%}
+
+        {{ 
+            workloadDetails({
+                caseTotals: {
+                    a: 1,
+                    b: 2,
+                    c: 3,
+                    d: 4,
+                    e: 5,
+                    f: 6,
+                    g: 7
+                },
+                communityCases: 1,
+                licenseCases: 2,
+                custodyCases: 3,
+                activeCases: 1,
+                contactSuspendedCases: 2,
+                custodyReleasesInNext7Days: 3,
+                paroleReportsInNext28Days: 4,
+                otherReportsInNext14Days: 5
+            }) 
+        }}
+
+        {%- endset -%}
+
         {%- set tableRow = [
             { 
-                html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"' + (' checked' if params.teamAndStaffCode == offenderManager.selectionCode) + '><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name.combinedName + ' to allocate to</span></label></div></div>')
+                html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"' + (' checked' if params.teamAndStaffCode == offenderManager.selectionCode) + '><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name.combinedName + ' to allocate to</span></label></div></div>' + workloadDetailsHtml)
                 if offenderManager.email and true != offenderManager.laoCase
             },
             { 

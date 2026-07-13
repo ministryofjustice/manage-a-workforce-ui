@@ -1,47 +1,62 @@
-{% from "govuk/components/details/macro.njk" import govukDetails %}
+<details class="govuk-details workload-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+                    View workload
+                </span>
+  </summary>
+  <div class="govuk-details__text">
 
-  {% call govukDetails({
-    summaryText: "View workload"
-  }) %}
+    <div class="workload-section">
+      <h3 class="govuk-heading-s">Case mix by tier</h3>
 
-    <div class="workload-details">
-
-      <div class="workload-section">
-        <h3 class="govuk-heading-s">Case mix by tier</h3>
-
-        <div class="workload-inline">
-          <span><strong>{{ params.caseTotals.a }}</strong> in A</span>
-          <span><strong>{{ params.caseTotals.b }}</strong> in B</span>
-          <span><strong>{{ params.caseTotals.c }}</strong> in C</span>
-          <span><strong>{{ params.caseTotals.d }}</strong> in D</span>
-          <span><strong>{{ params.caseTotals.e }}</strong> in E</span>
-          <span><strong>{{ params.caseTotals.f }}</strong> in F</span>
-          <span><strong>{{ params.caseTotals.g }}</strong> in G</span>
-        </div>
+      <div class="workload-inline">
+        <span>
+          <strong>{{ params.caseTotals.a }}</strong> in A</span>
+        <span>
+          <strong>{{ params.caseTotals.b }}</strong> in B</span>
+        <span>
+          <strong>{{ params.caseTotals.c }}</strong> in C</span>
+        <span>
+          <strong>{{ params.caseTotals.d }}</strong> in D</span>
+        <span>
+          <strong>{{ params.caseTotals.e }}</strong> in E</span>
+        <span>
+          <strong>{{ params.caseTotals.f }}</strong> in F</span>
+        <span>
+          <strong>{{ params.caseTotals.g }}</strong> in G</span>
       </div>
-
-      <div class="workload-section">
-        <h3 class="govuk-heading-s">Case mix by type</h3>
-
-        <div class="workload-inline">
-          <span><strong>{{ params.communityCases }}</strong> in community</span>
-          <span><strong>{{ params.licenseCases }}</strong> on licence</span>
-          <span><strong>{{ params.custodyCases }}</strong> in custody</span>
-        </div>
-      </div>
-
-      <div class="workload-section">
-        <h3 class="govuk-heading-s">Caseload volume and reports due</h3>
-
-        <ul class="govuk-list">
-          <li><strong>{{ params.activeCases }}</strong> active cases</li>
-          <li><strong>{{ params.contactSuspendedCases }}</strong> contact suspended cases</li>
-          <li><strong>{{ params.custodyReleasesInNext7Days }}</strong> custody releases in next 7 days</li>
-          <li><strong>{{ params.paroleReportsInNext28Days }}</strong> parole report in next 28 days</li>
-          <li><strong>{{ params.otherReportsInNext14Days }}</strong> other reports in next 14 days</li>
-        </ul>
-      </div>
-
     </div>
 
-  {% endcall %}
+    <div class="workload-section">
+      <h3 class="govuk-heading-s">Case mix by type</h3>
+
+      <div class="workload-inline">
+        <span>
+          <strong>{{ params.communityCases }}</strong> in community</span>
+        <span>
+          <strong>{{ params.licenseCases }}</strong> on licence</span>
+        <span>
+          <strong>{{ params.custodyCases }}</strong> in custody</span>
+      </div>
+    </div>
+
+    <div class="workload-section">
+      <h3 class="govuk-heading-s">Caseload volume and reports due</h3>
+
+      <ul class="govuk-list">
+        <li>
+          <strong>{{ params.activeCases }}</strong> active cases</li>
+        <li>
+          <strong>{{ params.contactSuspendedCases }}</strong> contact suspended cases</li>
+        <li>
+          <strong>{{ params.custodyReleasesInNext7Days }}</strong> custody releases in next 7 days</li>
+        <li>
+          <strong>{{ params.paroleReportsInNext28Days }}</strong> parole report in next 28 days</li>
+        <li>
+          <strong>{{ params.otherReportsInNext14Days }}</strong> other reports in next 14 days</li>
+      </ul>
+    </div>
+
+  </div>
+
+</details>

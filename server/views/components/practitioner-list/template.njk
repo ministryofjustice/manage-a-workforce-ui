@@ -63,26 +63,25 @@
 {% for offenderManager in params.offenderManagers %}
     {% if offenderManager.code !== params.currentOffenderManager.code %}
         {%- set workloadDetailsHtml -%}
-
         {{ 
             workloadDetails({
-                caseTotals: {
-                    a: 1,
-                    b: 2,
-                    c: 3,
-                    d: 4,
-                    e: 5,
-                    f: 6,
-                    g: 7
+                tierCaseTotals: {
+                    a: offenderManager.tierCaseTotals.a,
+                    b: offenderManager.tierCaseTotals.b,
+                    c: offenderManager.tierCaseTotals.c,
+                    d: offenderManager.tierCaseTotals.d,
+                    e: offenderManager.tierCaseTotals.as,
+                    f: offenderManager.tierCaseTotals.bs,
+                    g: offenderManager.tierCaseTotals.cs
                 },
-                communityCases: 1,
-                licenseCases: 2,
-                custodyCases: 3,
-                activeCases: 1,
-                contactSuspendedCases: 2,
-                custodyReleasesInNext7Days: 3,
-                paroleReportsInNext28Days: 4,
-                otherReportsInNext14Days: 5
+                communityCases: offenderManager.communityCases,
+                licenseCases: offenderManager.licenseCases,
+                custodyCases: offenderManager.custodyCases,
+                activeCases: offenderManager.activeCases,
+                contactSuspendedCases: offenderManager.contactSuspendedCases,
+                custodyReleasesInNext7Days: offenderManager.custodyReleasesInNext7Days,
+                paroleReportsInNext28Days: offenderManager.paroleReportsInNext28Days,
+                otherReportsInNext14Days: offenderManager.otherReportsInNext14Days
             }) 
         }}
 

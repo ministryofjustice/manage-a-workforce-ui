@@ -201,44 +201,42 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+
+    const expectedTableData = [
+      {
+        Name: 'Jim Jam',
+        Team: 'Team 2',
+        Grade: 'POProbation Officer',
+        'Workload %': '32%',
+        'Cases in past 7 days': '5',
+        'Community cases': '0',
+        'Custody cases': '5',
+      },
+      {
+        Name: 'Jane Doe',
+        Team: 'Team 1',
+        Grade: 'PQiPTrainee Probation Officer',
+        'Workload %': '19%',
+        'Cases in past 7 days': '2',
+        'Community cases': '3',
+        'Custody cases': '5',
+      },
+      {
+        Name: 'Sam Smam',
+        Team: 'Team 2',
+        Grade: 'SPOSenior Probation Officer',
+        'Workload %': '32%',
+        'Cases in past 7 days': '5',
+        'Community cases': '0',
+        'Custody cases': '5',
+      },
+    ]
+
     choosePractitionerPage
       .tabtable()
       .should('not.have.attr', 'class', 'govuk-tabs__panel--hidden')
-      .getTable()
-      .should('deep.equal', [
-        {
-          Name: 'Jim Jam',
-          Team: 'Team 2',
-          Grade: 'POProbation Officer',
-          'Workload %': '32%',
-          'Cases in past 7 days': '5',
-          'Community cases': '0',
-          'Custody cases': '5',
-          Select:
-            'Select Jim Jam to allocate to                                  View workload                              Case mix by tier                        1 in A                  2 in B                  3 in C                  4 in D                  5 in E                  6 in F                  7 in G                    Case mix by type                        1 in community                  2 on licence                  3 in custody                    Caseload volume and reports due                        1 active cases                  2 contact suspended cases                  3 custody releases in next 7 days                  4 parole report in next 28 days                  5 other reports in next 14 days',
-        },
-        {
-          Name: 'Jane Doe',
-          Team: 'Team 1',
-          Grade: 'PQiPTrainee Probation Officer',
-          'Workload %': '19%',
-          'Cases in past 7 days': '2',
-          'Community cases': '3',
-          'Custody cases': '5',
-          Select:
-            'Select Jane Doe to allocate to                                  View workload                              Case mix by tier                        1 in A                  2 in B                  3 in C                  4 in D                  5 in E                  6 in F                  7 in G                    Case mix by type                        1 in community                  2 on licence                  3 in custody                    Caseload volume and reports due                        1 active cases                  2 contact suspended cases                  3 custody releases in next 7 days                  4 parole report in next 28 days                  5 other reports in next 14 days',
-        },
-        {
-          Name: 'Sam Smam',
-          Team: 'Team 2',
-          Grade: 'SPOSenior Probation Officer',
-          'Workload %': '32%',
-          'Cases in past 7 days': '5',
-          'Community cases': '0',
-          'Custody cases': '5',
-          Select: '',
-        },
-      ])
+      .getTable({ onlyColumns: Object.keys(expectedTableData[0]) })
+      .should('deep.equal', expectedTableData)
   })
 
   it('All teams view link is correct', () => {

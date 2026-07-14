@@ -214,7 +214,8 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '5',
           'Community cases': '0',
           'Custody cases': '5',
-          Select: 'Select Jim Jam to allocate to',
+          Select:
+            'Select Jim Jam to allocate to                                  View workload                              Case mix by tier                        1 in A                  2 in B                  3 in C                  4 in D                  5 in E                  6 in F                  7 in G                    Case mix by type                        1 in community                  2 on licence                  3 in custody                    Caseload volume and reports due                        1 active cases                  2 contact suspended cases                  3 custody releases in next 7 days                  4 parole report in next 28 days                  5 other reports in next 14 days',
         },
         {
           Name: 'Jane Doe',
@@ -224,7 +225,8 @@ context('Choose Practitioner', () => {
           'Cases in past 7 days': '2',
           'Community cases': '3',
           'Custody cases': '5',
-          Select: 'Select Jane Doe to allocate to',
+          Select:
+            'Select Jane Doe to allocate to                                  View workload                              Case mix by tier                        1 in A                  2 in B                  3 in C                  4 in D                  5 in E                  6 in F                  7 in G                    Case mix by type                        1 in community                  2 on licence                  3 in custody                    Caseload volume and reports due                        1 active cases                  2 contact suspended cases                  3 custody releases in next 7 days                  4 parole report in next 28 days                  5 other reports in next 14 days',
         },
         {
           Name: 'Sam Smam',

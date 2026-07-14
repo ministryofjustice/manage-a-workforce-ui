@@ -2,23 +2,6 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-
-{% set notification %}
-{% if featureFlags.Reallocations %}
-  <p class="govuk-notification-banner__heading">
-
-    <p class="govuk-body">
-      <strong>You can now reallocate cases using this service</strong>
-      <br/>
-        We've made a change to enable the reallocation of cases between practitioners in the same probation delivery unit (PDU).
-        <br/>
-      <a class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold" href={{"/whats-new"}}>Read more about this change</a>.
-      </p>
-  </p>
-{% endif %}
-{% endset %}
-
 {% set tableRows = [] %}
 {% for team in teams %}
   {% if team.workload == '-%' %}

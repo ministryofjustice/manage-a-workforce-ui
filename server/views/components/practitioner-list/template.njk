@@ -1,4 +1,5 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from '../workloadDetails/macro.njk' import workloadDetails %}
 
 {%- set offenderManagerTableData = {
     attributes: {
@@ -54,52 +55,77 @@
 
 {% for offenderManager in params.offenderManagers %}
     {% if offenderManager.code !== params.currentOffenderManager.code %}
-      {%- set tableRow = [
-        {
-          html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"' + (' checked' if params.teamAndStaffCode == offenderManager.selectionCode) + '><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name.combinedName + ' to allocate to</span></label></div></div>')
-          if offenderManager.email and true != offenderManager.laoCase
-        },
-        {
-          html: ('<a href="/pdu/'+ params.pduCode +'/' + offenderManager.team.code + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.combinedName + '</a>' ) | safe,
-          attributes: {
-          "data-sort-value": offenderManager.name.combinedName
-          }
-        },
-        {
-          text: offenderManager.team.name,
-          classes: 'govuk-visually-hidden' if params.teamData.isPerTeam,
-          attributes: {
-          'data-team-code': offenderManager.team.code
-          }
-        },
-        {
-          html: ('<div class="tooltip">' + offenderManager.grade + '<span class="tooltiptext">' + offenderManager.gradeTip + '</span></div>'),
-          attributes: {
-          "data-sort-value": offenderManager.gradeOrder
-          }
-        },
-        {
-          text: offenderManager.allocatedCasesPastWeek,
-          format: "numeric",
-          attributes: {
-          "data-sort-value": offenderManager.allocatedCasesPastWeek
-          }
-        },
-        {
-          text: offenderManager.reallocatedCasesPastWeek,
-          format: "numeric",
-          attributes: {
-          "data-sort-value": offenderManager.reallocatedCasesPastWeek
-          }
-        },
-        {
-          text: offenderManager.ispsDueInNext14Days,
-          format: "numeric",
-          attributes: {
-          "data-sort-value": offenderManager.ispsDueInNext14Days
-          }
-        }
-      ] -%}
+        {%- set workloadDetailsHtml -%}
+        {{ 
+            workloadDetails({
+                tierCaseTotals: {
+                    a: offenderManager.tierCaseTotals.a,
+                    b: offenderManager.tierCaseTotals.b,
+                    c: offenderManager.tierCaseTotals.c,
+                    d: offenderManager.tierCaseTotals.d,
+                    e: offenderManager.tierCaseTotals.as,
+                    f: offenderManager.tierCaseTotals.bs,
+                    g: offenderManager.tierCaseTotals.cs
+                },
+                communityCases: offenderManager.communityCases,
+                licenseCases: offenderManager.licenseCases,
+                custodyCases: offenderManager.custodyCases,
+                activeCases: offenderManager.activeCases,
+                contactSuspendedCases: offenderManager.contactSuspendedCases,
+                custodyReleasesInNext7Days: offenderManager.custodyReleasesInNext7Days,
+                paroleReportsInNext28Days: offenderManager.paroleReportsInNext28Days,
+                otherReportsInNext14Days: offenderManager.otherReportsInNext14Days
+            }) 
+        }}
+
+        {%- endset -%}
+
+        {%- set tableRow = [
+            { 
+                html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"' + (' checked' if params.teamAndStaffCode == offenderManager.selectionCode) + '><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name.combinedName + ' to allocate to</span></label></div></div>' + workloadDetailsHtml)
+                if offenderManager.email and true != offenderManager.laoCase
+            },
+            {
+                html: ('<a href="/pdu/'+ params.pduCode +'/' + offenderManager.team.code + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.combinedName + '</a>' ) | safe,
+                attributes: {
+                "data-sort-value": offenderManager.name.combinedName
+            }
+            },
+            {
+                text: offenderManager.team.name,
+                classes: 'govuk-visually-hidden' if params.teamData.isPerTeam,
+                attributes: {
+                'data-team-code': offenderManager.team.code
+            }
+            },
+            {
+                html: ('<div class="tooltip">' + offenderManager.grade + '<span class="tooltiptext">' + offenderManager.gradeTip + '</span></div>'),
+                attributes: {
+                "data-sort-value": offenderManager.gradeOrder
+            }
+            },
+            {
+                text: offenderManager.allocatedCasesPastWeek,
+                format: "numeric",
+                attributes: {
+                "data-sort-value": offenderManager.allocatedCasesPastWeek
+            }
+            },
+            {
+                text: offenderManager.reallocatedCasesPastWeek,
+                format: "numeric",
+                attributes: {
+                "data-sort-value": offenderManager.reallocatedCasesPastWeek
+            }
+            },
+            {
+                text: offenderManager.ispsDueInNext14Days,
+                format: "numeric",
+                attributes: {
+                "data-sort-value": offenderManager.ispsDueInNext14Days
+            }
+            }
+        ] -%}
         {% set blank = offenderManagerTableData
             .rows
             .push(tableRow)

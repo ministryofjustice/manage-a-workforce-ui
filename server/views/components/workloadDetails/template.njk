@@ -1,4 +1,8 @@
-<details class="govuk-details workload-details">
+<h3 id="workload-heading-{{ params.id }}" class="govuk-visually-hidden">
+{{ params.name }}’s workload
+</h3>
+
+<details aria-labelledby="workload-heading-{{ params.id }}" class="govuk-details workload-details">
   <summary class="govuk-details__summary">
     <span class="govuk-details__summary-text">
                     View workload
@@ -7,7 +11,7 @@
   <div class="govuk-details__text">
 
     <div class="workload-section">
-      <h3 class="govuk-heading-s">Case mix by tier</h3>
+      <h4 class="govuk-heading-s">Case mix by tier</h4>
 
       <div class="workload-inline">
         <span>
@@ -28,7 +32,7 @@
     </div>
 
     <div class="workload-section">
-      <h3 class="govuk-heading-s">Case mix by type</h3>
+      <h4 class="govuk-heading-s">Case mix by type</h4>
 
       <div class="workload-inline">
         <span>
@@ -41,19 +45,19 @@
     </div>
 
     <div class="workload-section">
-      <h3 class="govuk-heading-s">Caseload volume and reports due</h3>
+      <h4 class="govuk-heading-s">Caseload volume and reports due</h4>
 
       <ul class="govuk-list">
         <li>
-          <strong>{{ params.activeCases }}</strong> active cases</li>
+          <strong>{{ params.activeCases }}</strong> {{ params.activeCases | pluralise("active case") }}</li>
         <li>
-          <strong>{{ params.contactSuspendedCases }}</strong> contact suspended cases</li>
+          <strong>{{ params.contactSuspendedCases }}</strong> {{ params.contactSuspendedCases | pluralise("contact suspended case") }}</li>
         <li>
-          <strong>{{ params.custodyReleasesInNext7Days }}</strong> custody releases in next 7 days</li>
+          <strong>{{ params.custodyReleasesInNext7Days }}</strong> {{ params.custodyReleasesInNext7Days | pluralise("custody release") }} in next 7 days</li>
         <li>
-          <strong>{{ params.paroleReportsInNext28Days }}</strong> parole report in next 28 days</li>
+          <strong>{{ params.paroleReportsInNext28Days }}</strong> {{ params.paroleReportsInNext28Days | pluralise("parole report") }} in next 28 days</li>
         <li>
-          <strong>{{ params.otherReportsInNext14Days }}</strong> other reports in next 14 days</li>
+          <strong>{{ params.otherReportsInNext14Days }}</strong> {{ params.otherReportsInNext14Days | pluralise("other report") }} in next 14 days</li>
       </ul>
     </div>
 

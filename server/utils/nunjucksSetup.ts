@@ -73,6 +73,10 @@ export default async function nunjucksSetup(
     return Array.isArray(str)
   })
 
+  njkEnv.addFilter('pluralise', (count: number, singular: string, plural?: string) => {
+    return count === 1 ? singular : plural || `${singular}s`
+  })
+
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)
   njkEnv.addGlobal('tagManagerContainerId', config.analytics.tagManagerContainerId.trim())
   njkEnv.addGlobal('lastTechnicalUpdate', services.technicalUpdatesService.getLatestTechnicalUpdateHeading())

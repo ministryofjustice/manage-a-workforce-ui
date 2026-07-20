@@ -56,8 +56,9 @@
 {% for offenderManager in params.offenderManagers %}
     {% if offenderManager.code !== params.currentOffenderManager.code %}
         {%- set workloadDetailsHtml -%}
-        {{ 
+        {{
             workloadDetails({
+                name: offenderManager.name.combinedName,
                 tierCaseTotals: {
                     a: offenderManager.tierCaseTotals.a,
                     b: offenderManager.tierCaseTotals.b,
@@ -75,13 +76,13 @@
                 custodyReleasesInNext7Days: offenderManager.custodyReleasesInNext7Days,
                 paroleReportsInNext28Days: offenderManager.paroleReportsInNext28Days,
                 otherReportsInNext14Days: offenderManager.otherReportsInNext14Days
-            }) 
+            })
         }}
 
         {%- endset -%}
 
         {%- set tableRow = [
-            { 
+            {
                 html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"' + (' checked' if params.teamAndStaffCode == offenderManager.selectionCode) + '><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name.combinedName + ' to allocate to</span></label></div></div>' + workloadDetailsHtml)
                 if offenderManager.email and true != offenderManager.laoCase
             },

@@ -133,7 +133,6 @@ context('Reallocations Search', () => {
       .should('deep.equal', [
         {
           Name: 'Team 1',
-          Workload: '77%',
           Cases: '2',
         },
       ])

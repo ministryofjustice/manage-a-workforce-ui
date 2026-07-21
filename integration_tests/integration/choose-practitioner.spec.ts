@@ -244,7 +244,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', '/pdu/PDU1/N03F02/OM2/officer-view')
+      .and('include', '/pdu/PDU1/N03F02/OM2/active-cases')
   })
 
   it('Individual team visible on page when selected', () => {
@@ -267,7 +267,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', '/pdu/PDU1/N03F02/OM2/officer-view')
+      .and('include', '/pdu/PDU1/N03F02/OM2/active-cases')
   })
 
   it('Individual team select radio button contains the correct team', () => {

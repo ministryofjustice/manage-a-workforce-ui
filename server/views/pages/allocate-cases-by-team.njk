@@ -28,9 +28,6 @@
             text: team.teamName
           },
           {
-            text: team.workload
-          },
-          {
             text: team.caseCount
           }
         ])
@@ -40,9 +37,6 @@
       [
       {
         html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/team-workload" class="govuk-link">' + team.teamName + '</a>'
-      },
-      {
-        text: team.workload
       },
       {
         text: team.caseCount
@@ -88,9 +82,6 @@
   head: [
     {
       text: "Name"
-    },
-    {
-      text: "Workload"
     },
     {
       text: "Cases"

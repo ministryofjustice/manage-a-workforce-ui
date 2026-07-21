@@ -511,42 +511,6 @@ export default class AllocationsController {
     }
   }
 
-  async getOverview(
-    _,
-    res: Response,
-    offenderManagerTeamCode,
-    offenderManagerCode,
-    convictionNumber,
-    pduCode,
-    history,
-    reallocations = false,
-  ) {
-    const [response, teamDetails] = await Promise.all([
-      this.workloadService.getOffenderManagerOverview(
-        res.locals.user.token,
-        offenderManagerCode,
-        offenderManagerTeamCode,
-      ),
-      this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
-    ])
-    const data: OfficerView = new OfficerView(response)
-    let nextPage = 'pages/officer-overview'
-    if (history) {
-      nextPage = 'pages/history-officer-overview'
-    }
-
-    res.render(nextPage, {
-      title: 'Practitioner workload | Manage a Workforce',
-      data,
-      officerTeamCode: offenderManagerTeamCode,
-      convictionNumber,
-      isOverview: true,
-      pduCode,
-      teamName: teamDetails.name,
-      journey: reallocations ? 'reallocations' : undefined,
-    })
-  }
-
   async getActiveCases(
     _,
     res: Response,

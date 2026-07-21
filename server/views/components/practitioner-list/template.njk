@@ -87,7 +87,7 @@
                 if offenderManager.email and true != offenderManager.laoCase
             },
             {
-                html: ('<a href="/pdu/'+ params.pduCode +'/' + offenderManager.team.code + '/' + offenderManager.code + '/officer-view" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.combinedName + '</a>' ) | safe,
+                html: ('<a href="/pdu/'+ params.pduCode +'/' + offenderManager.team.code + '/' + offenderManager.code + '/active-cases" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.combinedName + '</a>' ) | safe,
                 attributes: {
                 "data-sort-value": offenderManager.name.combinedName
             }

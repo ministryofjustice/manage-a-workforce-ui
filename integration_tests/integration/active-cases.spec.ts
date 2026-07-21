@@ -56,10 +56,6 @@ context('Active Cases', () => {
     activeCasesPage.heading().should('contain', 'Active cases')
   })
 
-  it('Active cases tab is highlighted', () => {
-    activeCasesPage.highlightedTab().should('contain.text', 'Active cases').and('not.contain.text', 'Overview')
-  })
-
   it('Table visible on page', () => {
     cy.get('table')
       .getTable()

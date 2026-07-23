@@ -126,19 +126,17 @@
               }) }}
           </div>
 
-          <div>
-            {{ govukCheckboxes({
+          {{ govukCheckboxes({
                 name: 'saveEmail',
                 items: [{
                     text: 'Save this email for future allocations',
                     value: 'yes',
                     checked: false
                     }],
-                classes: 'govuk-checkboxes--medium margin-bottom-10'
+                classes: 'govuk-checkboxes--medium govuk-!-margin-bottom-6 govuk-!-margin-top-6'
             })}}
-          </div>
-          <div>
-            {{ 
+
+          {{ 
               govukButton({
                 text: 'Add recipient',
                 type: 'submit',
@@ -148,7 +146,7 @@
                 classes: 'govuk-button--secondary'
               })
             }}
-          </div>
+
         </div>
       </div>
       <div class="govuk-grid-column-one-half">

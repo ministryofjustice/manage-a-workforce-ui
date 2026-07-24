@@ -2,6 +2,17 @@
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {%- from "govuk/components/error-summary/macro.njk" import govukErrorSummary -%}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% set notification %}
+  <p class="govuk-body">
+    <strong>Changes to tiering model</strong>
+    <br/>
+    Each case now has a tier score of A to G. There are no changes to role boundaries. You should allocate cases with a Combined Serious Reoffending Predictor (CSRP) of 3 or above to a PO.
+    <br/>
+    <a class="govuk-link govuk-link--no-visited-state" class="govuk-link" rel="noreferrer noopener" target="_blank" href={{"https://articulateusercontent.com/rise/courses/d0BXQl-CIeK7i_PX_Zg0dcV2KSkmboTG/L-h-lZLJ_d2CSU92.png"}}>View table for guidance on allocations </a> (opens in a new tab).
+  </p>
+{% endset %}
 
 {% block content %}
 
@@ -11,6 +22,14 @@
             errorList: errors
         }) }}
     {% endif %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        {{ govukNotificationBanner({
+          html: notification
+        }) }}
+      </div>
+    </div>
 
     <div class="govuk-grid-row govuk-!-padding-bottom-5">
         <div class="govuk-grid-column-full">

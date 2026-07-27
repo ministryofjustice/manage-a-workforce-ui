@@ -209,13 +209,13 @@ p.capacity-notes-screen
   color: #1D70B8
   background-color: #ffffff
 
-#govuk-recipient-list 
+#govuk-recipient-list
   padding-left: 0
 
   li
     list-style: none
     margin-left: 0
-  
+
   li:not(:first-of-type)
     border-bottom: 1px solid #CECECE
     margin-bottom: 5px
@@ -226,10 +226,10 @@ p.capacity-notes-screen
     justify-content: space-between
     margin-bottom: 5px
 
-#govuk-saved-emails-list 
+#govuk-saved-emails-list
   padding-left: 0
 
-  li 
+  li
     list-style: none
     margin-left: 0
 
@@ -251,7 +251,7 @@ p.capacity-notes-screen
   flex-direction: column
   align-items: center
 
-  &::before 
+  &::before
     content: ""
     display: block
     margin-bottom: 10px
@@ -273,7 +273,7 @@ p.capacity-notes-screen
 .workload-inline span
   white-space: nowrap
 
-#practitioners-table tbody>tr 
+#practitioners-table tbody>tr
     position: relative
 
     > td:has(.workload-details)
@@ -282,7 +282,7 @@ p.capacity-notes-screen
       &:has(.workload-details[open])
         padding-bottom: 460px
 
-.workload-details
+#practitioners-table .workload-details
   position: absolute
   top: 100%
   left: 0
@@ -290,3 +290,19 @@ p.capacity-notes-screen
   padding: 20px 0
   margin-left: 75px
   transform: translate(0, -100%)
+
+.team-workload-name-wrapper
+  display: flex
+  flex-direction: column
+  gap: 10px
+
+.team-workload-name-wrapper > a
+  display: block
+
+#team-workload-table .workload-details
+  position: relative
+  top: auto
+  margin: 0
+  padding: 0
+  display: inline-block
+  width: 100%

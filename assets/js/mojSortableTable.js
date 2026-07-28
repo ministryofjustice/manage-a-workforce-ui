@@ -212,134 +212,139 @@ class PersistentSortOrder {
   }
 }
 
-$(() => {
-  const tables = document.getElementsByTagName('table')
-  if (tables.length === 0) {
-    console.warn('No tables found in document. Not setting up sortable table.')
+function sortStringAsc(valueA, valueB) {
+  if (valueA < valueB) {
+    return -1
+  }
+  if (valueA > valueB) {
+    return 1
+  }
+  return 0
+}
+
+function sortStringDesc(valueA, valueB) {
+  if (valueB < valueA) {
+    return -1
+  }
+  if (valueB > valueA) {
+    return 1
+  }
+  return 0
+}
+
+function sortDateAsc(date1String, date2String) {
+  const { date1, date2 } = convertDates(date1String, date2String)
+  if (date1 < date2) {
+    return -1
+  } else if (date1 > date2) {
+    return 1
+  }
+  return 0
+}
+
+function sortDateDesc(date1String, date2String) {
+  const { date1, date2 } = convertDates(date1String, date2String)
+  if (date2 < date1) {
+    return -1
+  }
+  if (date2 > date1) {
+    return 1
+  }
+  return 0
+}
+
+function valueIsSet(value) {
+  return value !== undefined && value !== '' && value !== 'N/A'
+}
+
+function convertDates(date1String, date2String) {
+  return {
+    date1: convertDate(date1String),
+    date2: convertDate(date2String),
+  }
+}
+
+function convertDate(dateString) {
+  const farInTheFutureDate = Date.parse('3000-01-01')
+  if (valueIsSet(dateString)) {
+    let convertedDate = Date.parse(dateString)
+    if (isNaN(convertedDate)) {
+      convertedDate = farInTheFutureDate
+    }
+    return convertedDate
+  }
+  return farInTheFutureDate
+}
+
+function isSortDataTypeADate(dataType) {
+  return dataType && (dataType === 'DATE' || dataType === 'DATE_ON_FIRST_LINE')
+}
+
+function getClickedColumn(columnIndex) {
+  let clickedColumn = {
+    columnIndex: columnIndex,
+    columnDataType: 'string',
+  }
+  const currentTableDTO = PersistentSortOrder.fetchCurrentTablePersistentIdDTO()
+  if (currentTableDTO) {
+    const matchingColumns = currentTableDTO.currentTableColumns.filter(
+      column => column.columnIndex.toString() === columnIndex,
+    )
+    if (matchingColumns.length > 0) {
+      clickedColumn = matchingColumns[0]
+    }
+  }
+  return clickedColumn
+}
+
+function sortRows($rows, columnNumber, sortDirection, getCellValueFn) {
+  const clickedColumn = getClickedColumn(columnNumber)
+  const sortDataTypeIsDate = isSortDataTypeADate(clickedColumn.columnDataType)
+
+  return $rows.sort(($rowA, $rowB) => {
+    const $tdA = $rowA.querySelectorAll('td, th')[columnNumber]
+    const $tdB = $rowB.querySelectorAll('td, th')[columnNumber]
+
+    if (!$tdA || !$tdB || !($tdA instanceof HTMLElement) || !($tdB instanceof HTMLElement)) {
+      return 0
+    }
+
+    const valueA = getCellValueFn($tdA)
+    const valueB = getCellValueFn($tdB)
+
+    if (sortDirection === 'ascending') {
+      if (sortDataTypeIsDate) {
+        return sortDateAsc(valueA, valueB)
+      } else {
+        return sortStringAsc(valueA, valueB)
+      }
+    } else {
+      if (sortDataTypeIsDate) {
+        return sortDateDesc(valueA, valueB)
+      } else {
+        return sortStringDesc(valueA, valueB)
+      }
+    }
+  })
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const tables = document.querySelectorAll('table[data-module="moj-sortable-table"]')
+  if (typeof MOJFrontend === 'undefined' || typeof MOJFrontend.SortableTable !== 'function') {
+    console.warn('MOJFrontend.SortableTable is unavailable; sortable tables were not initialised.')
     return
   }
 
-  function SortableTable(tableElement) {
-    // Calls the SortableTable constructor with `this` as its context
-    MOJFrontend.SortableTable.call(this, tableElement)
-  }
-  SortableTable.prototype = Object.create(MOJFrontend.SortableTable.prototype)
-
-  function sortStringAsc(valueA, valueB) {
-    if (valueA < valueB) {
-      return -1
-    }
-    if (valueA > valueB) {
-      return 1
-    }
-    return 0
+  // Keep custom date/string sorting behaviour used by tables.
+  MOJFrontend.SortableTable.prototype.sort = function ($rows, columnNumber, sortDirection) {
+    return sortRows($rows, columnNumber, sortDirection, this.getCellValue.bind(this))
   }
 
-  function sortStringDesc(valueA, valueB) {
-    if (valueB < valueA) {
-      return -1
+  tables.forEach(table => {
+    // `initAll()` may already have initialised this table.
+    if (!table.hasAttribute('data-moj-sortable-table-init')) {
+      new MOJFrontend.SortableTable(table)
     }
-    if (valueB > valueA) {
-      return 1
-    }
-    return 0
-  }
-
-  function sortDateAsc(date1String, date2String) {
-    const { date1, date2 } = convertDates(date1String, date2String)
-    if (date1 < date2) {
-      return -1
-    } else if (date1 > date2) {
-      return 1
-    }
-    return 0
-  }
-
-  function sortDateDesc(date1String, date2String) {
-    const { date1, date2 } = convertDates(date1String, date2String)
-    if (date2 < date1) {
-      return -1
-    }
-    if (date2 > date1) {
-      return 1
-    }
-    return 0
-  }
-
-  function valueIsSet(value) {
-    return value !== undefined && value !== '' && value !== 'N/A'
-  }
-
-  function convertDates(date1String, date2String) {
-    return {
-      date1: convertDate(date1String),
-      date2: convertDate(date2String),
-    }
-  }
-
-  function convertDate(dateString) {
-    const farInTheFutureDate = Date.parse('3000-01-01')
-    if (valueIsSet(dateString)) {
-      let convertedDate = Date.parse(dateString)
-      if (isNaN(convertedDate)) {
-        convertedDate = farInTheFutureDate
-      }
-      return convertedDate
-    }
-    return farInTheFutureDate
-  }
-
-  function isSortDataTypeADate(dataType) {
-    return dataType && (dataType === 'DATE' || dataType === 'DATE_ON_FIRST_LINE')
-  }
-
-  function getClickedColumn(columnIndex) {
-    let clickedColumn = {
-      columnIndex: columnIndex,
-      columnDataType: 'string',
-    }
-    const currentTableDTO = PersistentSortOrder.fetchCurrentTablePersistentIdDTO()
-    if (currentTableDTO) {
-      const matchingColumns = currentTableDTO.currentTableColumns.filter(
-        column => column.columnIndex.toString() === columnIndex
-      )
-      if (matchingColumns.length > 0) {
-        clickedColumn = matchingColumns[0]
-      }
-    }
-    return clickedColumn
-  }
-
-  MOJFrontend.SortableTable.prototype.sort = function (rows, columnIndex, sortDirection) {
-    const clickedColumn = getClickedColumn(columnIndex, sortDirection)
-    const sortDataTypeIsDate = isSortDataTypeADate(clickedColumn.columnDataType)
-    var newRows = rows.sort(
-      $.proxy(function (rowA, rowB) {
-        const tdA = $(rowA).find('td,th').eq(columnIndex)
-        const tdB = $(rowB).find('td,th').eq(columnIndex)
-        const valueA = this.getCellValue(tdA)
-        const valueB = this.getCellValue(tdB)
-        if (sortDirection === 'ascending') {
-          if (sortDataTypeIsDate) {
-            return sortDateAsc(valueA, valueB)
-          } else {
-            return sortStringAsc(valueA, valueB)
-          }
-        } else {
-          if (sortDataTypeIsDate) {
-            return sortDateDesc(valueA, valueB)
-          } else {
-            return sortStringDesc(valueA, valueB)
-          }
-        }
-      }, this)
-    )
-    return newRows
-  }
-  SortableTable.prototype.constructor = SortableTable
-
-  Array.from(tables).forEach(function (table) {
-    new SortableTable(table)
     PersistentSortOrder.activate(table)
   })
 })

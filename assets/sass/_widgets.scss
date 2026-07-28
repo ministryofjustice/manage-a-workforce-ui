@@ -193,6 +193,12 @@ $unavailable-score-background-colour: #ffffff;
   color: $unavailable-score-colour;
 }
 
+#practitioners-table {
+  thead th {
+    white-space: nowrap;
+  }
+}
+
 .crn-lookup-results {
   background-color: govuk-colour('white');
 

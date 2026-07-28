@@ -2,7 +2,7 @@ import type { Router } from 'express'
 import express from 'express'
 import passport from 'passport'
 import flash from 'connect-flash'
-import pdsComponents from '@ministryofjustice/hmpps-probation-frontend-components'
+import pdsComponents from '@ministryofjustice/hmpps-probation-frontend-components/dist/src'
 import config from '../config'
 import auth from '../authentication/auth'
 

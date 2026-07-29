@@ -74,7 +74,7 @@
       { text: (item.sentenceDate | dateFormat), attributes: {
           "data-sort-value": item.sentenceDate
       } },
-      { text: item.handoverDate, attributes: { "data-sort-value": item.handoverDate } },
+      { text: item.handoverDateFormatted, attributes: { "data-sort-value": item.handoverDate } },
       {
           colspan: "2",
           text: 'This case is sitting in a different area, and the transfer process must be completed in NDelius before it can be allocated through the service. You can still review the case details.', attributes: { "data-sort-value": item.tierOrder }
@@ -90,7 +90,7 @@
             { text: (item.sentenceDate | dateFormat), attributes: {
                 "data-sort-value": item.sentenceDate
             } },
-            { text: item.handoverDate, attributes: { "data-sort-value": item.handoverDate } },
+            { text: item.handoverDateFormatted, attributes: { "data-sort-value": item.handoverDate } },
             {
                 text: doubleCell(item.primaryInitialAppointment,item.secondaryInitialAppointment, 'maw-secondary' ),
                 attributes: { "data-sort-value": item.primaryInitialAppointment }

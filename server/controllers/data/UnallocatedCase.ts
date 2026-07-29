@@ -18,6 +18,8 @@ export default class UnallocatedCase {
 
   handoverDate: string
 
+  handoverDateFormatted: string
+
   primaryInitialAppointment: string
 
   secondaryInitialAppointment: string
@@ -85,9 +87,11 @@ export default class UnallocatedCase {
 
   setHandoverDate(handoverDate: string) {
     if (handoverDate) {
-      this.handoverDate = `${dayjs(handoverDate).format(config.dateFormat)}`
+      this.handoverDate = handoverDate
+      this.handoverDateFormatted = `${dayjs(handoverDate).format(config.dateFormat)}`
     } else {
       this.handoverDate = 'N/A'
+      this.handoverDateFormatted = 'N/A'
     }
   }
 

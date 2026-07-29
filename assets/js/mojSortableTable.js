@@ -288,7 +288,7 @@ function getClickedColumn(columnIndex) {
   const currentTableDTO = PersistentSortOrder.fetchCurrentTablePersistentIdDTO()
   if (currentTableDTO) {
     const matchingColumns = currentTableDTO.currentTableColumns.filter(
-      column => column.columnIndex.toString() === columnIndex,
+      column => column.columnIndex.toString() === columnIndex.toString(),
     )
     if (matchingColumns.length > 0) {
       clickedColumn = matchingColumns[0]

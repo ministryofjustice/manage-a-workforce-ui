@@ -102,7 +102,7 @@
                   f = !0, t = h, s = function () {
                   var e = {},
                     t = d.connectionString;
-                  if (t) 
+                  if (t)
                     for (var n = t.split(";"), a = 0; a < n.length; a++) {
                       var i = n[a].split("=");
                       2 === i.length && (e[i[0][b]()] = i[1])
@@ -147,7 +147,7 @@
                 function (e, t) {
                   if (JSON) {
                     var n = T.fetch;
-                    if (n && !y.useXhr) 
+                    if (n && !y.useXhr)
                       n(t, {
                         method: N,
                         body: JSON.stringify(e),
@@ -194,7 +194,7 @@
               m.cookie = l.cookie
             } catch (p) {}
             function t(e) {
-              for (; e.length;) 
+              for (; e.length;)
                 !function (t) {
                   m[t] = function () {
                     var e = arguments;
@@ -405,9 +405,10 @@
     {% endblock %}
 
     {% block bodyEnd %}
-      <script type="module" src="/assets/govuk/govuk-frontend.min.js"></script>
-      <script type="module" src="/assets/govukFrontendInit.js"></script>
-      <script src="/assets/moj/all.js"></script>
+      <script src="/assets/govuk/all.bundle.js"></script>
+      <script src="/assets/govukFrontendInit.js"></script>
+      <script src="/assets/moj/all.bundle.js"></script>
+      <script src="/assets/moj/components/sortable-table/sortable-table.bundle.js"></script>
       <script src="/assets/naturalSortableTable.js"></script>
       <script src="/assets/mojSortableTable.js"></script>
       <script src="/assets/mojFrontendInit.js"></script>

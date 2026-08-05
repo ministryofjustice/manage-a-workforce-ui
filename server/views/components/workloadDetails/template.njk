@@ -57,7 +57,12 @@
         <li>
           <strong>{{ params.paroleReportsInNext28Days }}</strong> {{ params.paroleReportsInNext28Days | pluralise("parole report") }} in next 28 days</li>
         <li>
-          <strong>{{ params.otherReportsInNext14Days }}</strong> {{ params.otherReportsInNext14Days | pluralise("other report") }} in next 14 days</li>
+          <strong>{{ params.otherReportsInNext14Days }}</strong>
+          <div class="tooltip">
+            {{ params.otherReportsInNext14Days | pluralise("other report") }}
+            <span class="tooltiptext">HDC, ROTL, Part B or Part C</span>
+          </div>
+           in next 14 days</li>
       </ul>
     </div>
 

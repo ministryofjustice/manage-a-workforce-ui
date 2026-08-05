@@ -8,20 +8,19 @@ export const sortDataAndAssertSortExpectations = (
   sortExpectations: Array<ColumnSortExpectations>,
   isMultiTabTable: boolean,
 ) => {
+  const normaliseHeaderText = (headerText: string) => headerText.replace(/\s+/g, ' ').trim()
+  const getTargetTable = () => (isMultiTabTable === true ? cy.get('table').eq(0) : cy.get('table').first())
+
   let columnNumber = firstSortableColumnNumber
   sortExpectations.forEach(columnSortExpectation => {
-    if (isMultiTabTable === true) {
-      cy.get('table')
-        .eq(0)
-        .within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
-    } else {
-      cy.get('table').within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
-    }
+    getTargetTable().within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
+
     // check the clicked heading is sorted and all others are not
-    cy.get('thead')
+    getTargetTable()
+      .find('thead')
       .find('th')
       .each($el => {
-        const sort = $el.text() === columnSortExpectation.columnHeaderName ? 'ascending' : 'none'
+        const sort = normaliseHeaderText($el.text()) === columnSortExpectation.columnHeaderName ? 'ascending' : 'none'
         cy.wrap($el).should('have.attr', { 'aria-sort': sort })
       })
 
@@ -29,7 +28,8 @@ export const sortDataAndAssertSortExpectations = (
     let rowNumber = 0
     columnSortExpectation.orderedData.forEach(expectedData => {
       if (expectedData) {
-        cy.get(`tr td:nth-child(${columnNumber})`) // gets the 1st column
+        getTargetTable()
+          .find(`tr td:nth-child(${columnNumber})`) // gets the requested column
           .eq(rowNumber) // grabs the 2nd row of that column
           .contains(expectedData) // asserts expectedColumnValue
       }
@@ -37,32 +37,21 @@ export const sortDataAndAssertSortExpectations = (
     })
 
     // clicking again sorts in the other direction
-    if (isMultiTabTable === true) {
-      cy.get('table')
-        .eq(0)
-        .within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
-      cy.get('table')
-        .eq(0)
-        .within(() =>
-          cy
-            .contains('button', columnSortExpectation.columnHeaderName)
-            .should('have.attr', { 'aria-sort': 'descending' }),
-        )
-    } else {
-      cy.get('table').within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
-      cy.get('table').within(() =>
-        cy
-          .contains('button', columnSortExpectation.columnHeaderName)
-          .should('have.attr', { 'aria-sort': 'descending' }),
-      )
-    }
+    getTargetTable().within(() => cy.contains('button', columnSortExpectation.columnHeaderName).click())
+    getTargetTable().within(() =>
+      cy
+        .contains('th[aria-sort] button', columnSortExpectation.columnHeaderName)
+        .parent('th')
+        .should('have.attr', { 'aria-sort': 'descending' }),
+    )
 
     // checks data for column is sorted descending
     rowNumber = 0
-    const orderedDataDescending = columnSortExpectation.orderedData.reverse()
+    const orderedDataDescending = [...columnSortExpectation.orderedData].reverse()
     orderedDataDescending.forEach(expectedData => {
       if (expectedData) {
-        cy.get(`tr td:nth-child(${columnNumber})`) // gets the 1st column
+        getTargetTable()
+          .find(`tr td:nth-child(${columnNumber})`) // gets the requested column
           .eq(rowNumber) // grabs the 2nd row of that column
           .contains(expectedData) // asserts expectedColumnValue
       }

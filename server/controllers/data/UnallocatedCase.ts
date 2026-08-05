@@ -18,7 +18,11 @@ export default class UnallocatedCase {
 
   handoverDate: string
 
+  handoverDateFormatted: string
+
   primaryInitialAppointment: string
+
+  initialAppointmentSortValue: string
 
   secondaryInitialAppointment: string
 
@@ -85,20 +89,24 @@ export default class UnallocatedCase {
 
   setHandoverDate(handoverDate: string) {
     if (handoverDate) {
-      this.handoverDate = `${dayjs(handoverDate).format(config.dateFormat)}`
+      this.handoverDate = handoverDate
+      this.handoverDateFormatted = `${dayjs(handoverDate).format(config.dateFormat)}`
     } else {
       this.handoverDate = 'N/A'
+      this.handoverDateFormatted = 'N/A'
     }
   }
 
   setInitialAppointment(initialAppointment: InitialAppointment, caseType: string, sentenceLength: string): void {
     if (caseType === 'CUSTODY' || caseType === 'LICENSE') {
       this.primaryInitialAppointment = 'Not needed'
+      this.initialAppointmentSortValue = this.primaryInitialAppointment
       this.secondaryInitialAppointment = 'Custody case'
       if (sentenceLength) {
         this.secondaryInitialAppointment += ` (${sentenceLength})`
       }
     } else if (initialAppointment?.date) {
+      this.initialAppointmentSortValue = initialAppointment.date
       this.primaryInitialAppointment = `${dayjs(initialAppointment.date).format(config.dateFormat)}`
       if (initialAppointment.staff?.name?.combinedName !== 'Unallocated Staff') {
         this.secondaryInitialAppointment = initialAppointment.staff?.name?.combinedName
@@ -107,6 +115,7 @@ export default class UnallocatedCase {
       }
     } else {
       this.primaryInitialAppointment = 'Not found'
+      this.initialAppointmentSortValue = this.primaryInitialAppointment
       this.secondaryInitialAppointment = 'Check with your team'
     }
   }

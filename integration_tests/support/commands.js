@@ -3,13 +3,19 @@ Cypress.Commands.add('signIn', (options = { failOnStatusCode: true }) => {
   cy.task('getSignInUrl').then(url => cy.visit(url, options))
 })
 
+const normaliseHeaderText = value =>
+  value
+    .replace(/\r?\n|\r|\n/g, ' ')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+
 const getTable = (subject, options = {}) => {
   if (subject.get().length > 1) {
     throw new Error(`Selector "${subject.selector}" returned more than 1 element.`)
   }
 
   const tableElement = subject.get()[0]
-  const headers = [...tableElement.querySelectorAll('thead th')].map(e => e.textContent.replace(/\s/g, ' '))
+  const headers = [...tableElement.querySelectorAll('thead th')].map(e => normaliseHeaderText(e.textContent))
 
   const rows = [...tableElement.querySelectorAll('tbody tr')].map(row => {
     return [...row.querySelectorAll('td, th')].map(e => e.textContent.replace(/\r?\n|\r|\n/g, '').trim())

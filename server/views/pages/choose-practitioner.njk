@@ -59,7 +59,7 @@
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Allocate to a probation practitioner</h1>
     <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{pduCode}}/select-teams">Edit my teams list</a>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-    {{ pop({name: name, crn: crn, tier: tier, state: 'provisional', popSize: 'lg', laoCase: laoCase }) }}
+    {{ pop({name: name, crn: crn, tier: tier, provisionalTier: provisionalTier, popSize: 'lg', laoCase: laoCase }) }}
 
     {% if (probationStatus == 'Currently managed' and offenderManagerDetails)
         or probationStatus == 'Previously managed' %}

@@ -37,20 +37,16 @@
             {% if true == laoCase %}
                 <span class="govuk-body govuk-tag--orange govuk-!-margin-top-2 govuk-!-margin-bottom-0 govuk-!-display-inline-block">Restricted access</span>
             {% endif %}
-            <p class="govuk-body-l govuk-!-margin-bottom-2 govuk-!-margin-top-9" id="impact-statement">
-                {% if data.capacity == data.potentialCapacity %}
-                Their workload will remain at <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> as they are already managing this case.
-                {% else %}
-                This will increase their workload from <span class="{{ 'percentage-extra-over' if data.capacity > 100 }}">{{ data.capacity | round(1)}}%</span> to <span class="{{ 'percentage-extra-over' if data.potentialCapacity > 100 }}">{{ data.potentialCapacity | round(1) }}%</span>.
-                {% endif %}
-            </p>
         </div>
     </div>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-    <div class="govuk-grid-row">
+
+    {{ pop({name: name, crn: crn, tier: tier, provisionalTier: provisionalTier, popSize: 'lg', laoCase: laoCase}) }}
+
+    <div class="govuk-grid-row -margin-top-40">
         <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-9">
             <h3 id="cleared" class="govuk-heading-m">Having considered the tier, risk scores and complexity of the case, if you're happy that this practitioner has the capabilities to manage it,  select ‘Continue’.</h3>
-            <p class="-margin-bottom-10 capacity-notes-screen govuk-body">If not, select ‘Choose a different probation practitioner’.</p>
+            <p class="-margin-bottom-10 govuk-body">If not, select ‘Choose a different probation practitioner’.</p>
         </div>
     </div>
     <form data-validate-form="case-view">

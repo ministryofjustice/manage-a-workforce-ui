@@ -211,6 +211,7 @@ export default class AllocationsController {
       tier: caseOverview.tier,
       name: caseOverview.name,
       convictionNumber: caseOverview.convictionNumber,
+      provisionalTier: caseOverview.provisionalTier,
       pduCode,
       documents: documentRows,
       documentsCount: documentRows.length,

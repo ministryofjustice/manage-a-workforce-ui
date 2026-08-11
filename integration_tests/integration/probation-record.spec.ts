@@ -18,7 +18,31 @@ context('Probation record', () => {
     cy.task('stubGetProbationRecord')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
+    probationRecordPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+  })
+
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubGetProbationRecord', {
+      tier: 'MISSING',
+    })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:')
+    probationRecordPage.redMissingTag().should('contain', 'Missing')
+    probationRecordPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubGetProbationRecord', {
+      provisionalTier: true,
+    })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    probationRecordPage.orangeProvisionalTag().should('contain', 'Provisional')
+    probationRecordPage
+      .tagCaption()
+      .should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
   })
 
   it('Apostrophes are handled correctly', () => {

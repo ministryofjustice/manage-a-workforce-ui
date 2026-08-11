@@ -1,4 +1,4 @@
-{% if 'lg' == params.popSize -%}
+{% if params.popSize == 'lg' -%}
     {% set marginClass = 'govuk-!-margin-bottom-0'  %}
     {% set captionClass = 'govuk-caption-l' %}
 {% else %}
@@ -8,7 +8,7 @@
 
 <div class="govuk-grid-row {{marginClass}}">
     <div class="govuk-grid-column-two-thirds">
-        {% if 'lg' !== params.popSize %}
+        {% if params.popSize !== 'lg' %}
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ params.name }}</h1>
         {% else %}
             <span class="govuk-caption-l govuk-!-margin-bottom-2">{{ params.name }}</span>
@@ -16,19 +16,19 @@
         <span class="{{captionClass}} govuk-!-margin-bottom-2">CRN: {{ params.crn }}</span>
         <div class="{{captionClass}}">
             <span class="govuk-!-margin-right-1">Tier:
-                {% if 'MISSING' !== params.tier %}
+                {%- if params.tier !== 'MISSING' %}
                     {{ params.tier }}
                 {% else %}
                     <span class="govuk-body govuk-tag--red govuk-!-padding-1">Missing</span>
                     <span class="govuk-caption-m govuk-!-margin-top-2">Tier cannot be calculated as key assessment data missing</span>
                 {% endif %}
             </span>
-          {% if true === params.provisionalTier %}
-              <span class="govuk-body govuk-tag--orange govuk-!-padding-1">Provisional</span>
-              <span class="govuk-caption-m govuk-!-margin-top-2">Tier is provisional until dynamic CSRP completed and ROSH confirmed</span>
-          {% endif %}
+            {% if params.provisionalTier === true %}
+                <span class="govuk-body govuk-tag--orange govuk-!-padding-1">Provisional</span>
+                <span class="govuk-caption-m govuk-!-margin-top-2">Tier is provisional until dynamic CSRP completed and ROSH confirmed</span>
+            {% endif %}
         </div>
-        {% if true == params.laoCase %}
+        {% if params.laoCase == true %}
             <span class="govuk-body govuk-tag--orange govuk-!-margin-top-2 govuk-!-margin-bottom-2 govuk-!-display-inline-block">Restricted access</span>
         {%- endif %}
     </div>

@@ -1027,7 +1027,7 @@ export default {
     })
   },
 
-  stubGetConfirmInstructions: (): SuperAgentRequest => {
+  stubGetConfirmInstructions: (overrides): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',
@@ -1045,6 +1045,7 @@ export default {
           },
           crn: 'J678910',
           tier: 'C1',
+          provisionalTier: false,
           convictionNumber: 1,
           staff: {
             code: 'OM1',
@@ -1056,6 +1057,7 @@ export default {
             },
             email: 'john.doe@test.justice.gov.uk',
           },
+          ...overrides,
         },
       },
     })

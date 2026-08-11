@@ -21,6 +21,43 @@ context('Choose email recipients', () => {
     Page.verifyOnPage(ChooseEmailRecipientsPage)
   })
 
+  it('Caption text visible on page', () => {
+    const chooseEmailRecipientsPage = Page.verifyOnPage(ChooseEmailRecipientsPage)
+    chooseEmailRecipientsPage
+      .captionTextL()
+      .should('contain', 'CRN: J678910')
+      .and('contain', 'Tier:')
+      .and('contain', 'C1')
+  })
+
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubGetConfirmInstructions', {
+      tier: 'MISSING',
+    })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/choose-email-recipients', { failOnStatusCode: false })
+    const chooseEmailRecipientsPage = Page.verifyOnPage(ChooseEmailRecipientsPage)
+    chooseEmailRecipientsPage.captionTextL().should('contain', 'CRN: J678910').and('contain', 'Tier:')
+    chooseEmailRecipientsPage.redMissingTag().should('contain', 'Missing')
+    chooseEmailRecipientsPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubGetConfirmInstructions', {
+      provisionalTier: true,
+    })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/choose-email-recipients', { failOnStatusCode: false })
+    const chooseEmailRecipientsPage = Page.verifyOnPage(ChooseEmailRecipientsPage)
+    chooseEmailRecipientsPage
+      .captionTextL()
+      .should('contain', 'CRN: J678910')
+      .and('contain', 'Tier:')
+      .and('contain', 'C1')
+    chooseEmailRecipientsPage.orangeProvisionalTag().should('contain', 'Provisional')
+    chooseEmailRecipientsPage
+      .tagCaption()
+      .should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
+  })
+
   it('displays saved emails', () => {
     const chooseEmailRecipientsPage = Page.verifyOnPage(ChooseEmailRecipientsPage)
     chooseEmailRecipientsPage.savedEmailsList().should('contain.text', 'first@justice.gov.uk')

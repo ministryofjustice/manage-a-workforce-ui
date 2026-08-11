@@ -2,7 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForAllocation } from './wiremock'
 
 export default {
-  stubGetProbationRecord: (): SuperAgentRequest => {
+  stubGetProbationRecord: (overrides): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',
@@ -15,6 +15,7 @@ export default {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
           tier: 'C1',
+          provisionalTier: false,
           convictionNumber: 1,
           active: [
             {
@@ -72,6 +73,7 @@ export default {
               ],
             },
           ],
+          ...overrides,
         },
       },
     })

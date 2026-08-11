@@ -170,7 +170,7 @@ context('Allocate to Practitioner', () => {
       .and('include', '/pdu/PDU1/J678910/convictions/1/choose-practitioner')
   })
 
-  it('Display Lao Restriced access badge if Lao Case', () => {
+  it('Display Lao Restricted access badge if Lao Case', () => {
     cy.signIn()
     cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
@@ -191,11 +191,21 @@ context('Allocate to Practitioner', () => {
       )
   })
 
-  it('should display the provisional tag on the tier when provisionalTier is true', () => {
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubGetPotentialOffenderManagerWorkload', { tier: 'MISSING' })
     cy.signIn()
-    cy.task('stubGetCaseOverviewWithProvisionalTier')
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
     const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
-    allocatePage.provisionalTierTag().should('contain', 'Provisional')
+    allocatePage.redMissingTag().should('contain', 'Missing')
+    allocatePage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubGetPotentialOffenderManagerWorkload', { provisionalTier: true })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
+    const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
+    allocatePage.orangeProvisionalTag().should('contain', 'Provisional')
+    allocatePage.tagCaption().should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
   })
 })

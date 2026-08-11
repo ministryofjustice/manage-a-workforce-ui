@@ -5,6 +5,7 @@ interface RiskCommon {
   name: string
   crn: string
   tier: string
+  provisionalTier: boolean
   completedDate: string
   activeRegistrations: Registration[]
   inactiveRegistrations: Registration[]

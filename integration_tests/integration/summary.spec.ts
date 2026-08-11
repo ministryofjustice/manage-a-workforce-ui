@@ -18,7 +18,31 @@ context('Summary', () => {
     cy.task('stubGetRiskV1')
     cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
     const summaryPage = Page.verifyOnPage(SummaryPage)
-    summaryPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
+    summaryPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+  })
+
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubGetRiskV1')
+    cy.task('stubGetUnallocatedCase', {
+      tier: 'MISSING',
+    })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:')
+    summaryPage.redMissingTag().should('contain', 'Missing')
+    summaryPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubGetRiskV1')
+    cy.task('stubGetUnallocatedCase', {
+      provisionalTier: true,
+    })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/case-view')
+    const summaryPage = Page.verifyOnPage(SummaryPage)
+    summaryPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    summaryPage.orangeProvisionalTag().should('contain', 'Provisional')
+    summaryPage.tagCaption().should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
   })
 
   it('Summary header visible on page and out of area transfer banner is not visible on page', () => {

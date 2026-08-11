@@ -17,7 +17,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Offender details visible on page', () => {
-    instructionsPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
+    instructionsPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
   })
 
   it('Section break is visible on page', () => {
@@ -121,5 +121,35 @@ context('Instructions Confirmation', () => {
         'contain',
         'These notes will not be included in the email to the probation practitioner as this is a restricted access case.',
       )
+  })
+
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubGetConfirmInstructions', {
+      tier: 'MISSING',
+    })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+    instructionsPageRestricted = Page.verifyOnPage(InstructionsConfirmPageRestricted)
+    instructionsPageRestricted.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:')
+    instructionsPageRestricted.redMissingTag().should('contain', 'Missing')
+    instructionsPageRestricted
+      .tagCaption()
+      .should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubGetConfirmInstructions', {
+      provisionalTier: true,
+    })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+    instructionsPageRestricted = Page.verifyOnPage(InstructionsConfirmPageRestricted)
+    instructionsPageRestricted
+      .captionText()
+      .should('contain', 'CRN: J678910')
+      .and('contain', 'Tier:')
+      .and('contain', 'C1')
+    instructionsPageRestricted.orangeProvisionalTag().should('contain', 'Provisional')
+    instructionsPageRestricted
+      .tagCaption()
+      .should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
   })
 })

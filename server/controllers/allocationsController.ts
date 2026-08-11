@@ -57,6 +57,7 @@ export default class AllocationsController {
       address,
       crn: unallocatedCase.crn,
       tier: unallocatedCase.tier,
+      provisionalTier: unallocatedCase.provisionalTier,
       name: unallocatedCase.name,
       risk,
       convictionNumber: unallocatedCase.convictionNumber,
@@ -136,6 +137,7 @@ export default class AllocationsController {
       name: probationRecord.name,
       crn: probationRecord.crn,
       tier: probationRecord.tier,
+      provisionalTier: probationRecord.provisionalTier,
       currentSentences,
       previousSentences,
       viewAll,
@@ -176,6 +178,7 @@ export default class AllocationsController {
       crn: risk.crn,
       tier: risk.tier,
       name: risk.name,
+      provisionalTier: risk.provisionalTier,
       convictionNumber: risk.convictionNumber,
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
@@ -343,6 +346,7 @@ export default class AllocationsController {
       name: response.name.combinedName,
       crn,
       tier: response.tier,
+      provisionalTier: response.provisionalTier,
       convictionNumber,
       staffCode,
       staffTeamCode,
@@ -392,6 +396,7 @@ export default class AllocationsController {
       name: response.name.combinedName,
       crn: response.crn,
       tier: response.tier,
+      provisionalTier: response.provisionalTier,
       emailListFlag,
       staffCode,
       staffTeamCode,
@@ -454,7 +459,7 @@ export default class AllocationsController {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
-    const { name, tier, laoCase, instructions, staff, ...response } = await this.getAllocationPageData(
+    const { name, tier, provisionalTier, laoCase, instructions, staff, ...response } = await this.getAllocationPageData(
       res,
       crn,
       convictionNumber,
@@ -478,6 +483,7 @@ export default class AllocationsController {
       addedEmails: (person ?? []).map(p => p.email),
       title: 'Choose email recipients | Manage a Workforce',
       tier,
+      provisionalTier,
       name: name.combinedName,
       data: response,
       scrollToBottom,

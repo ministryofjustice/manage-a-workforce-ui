@@ -19,7 +19,7 @@ context('Risk', () => {
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/reallocation-risk')
     const riskPage = Page.verifyOnPage(RiskPage)
-    riskPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
+    riskPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
   })
 
   it('Risk header visible on page and out of area transfer banner is not visible on page', () => {

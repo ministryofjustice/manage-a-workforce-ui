@@ -55,6 +55,7 @@ export default interface ChoosePractitionerData {
   crn: string
   name: PersonName
   tier: string
+  provisionalTier: boolean
   probationStatus: ProbationStatus
   communityPersonManager?: CommunityPersonManager
   teams: Record<string, Practitioner[]>

@@ -40,7 +40,7 @@
     {% endif %}
 {% endblock %}
 {% block content %}
-    {{ pop({name: name, crn: crn, tier: tier, laoCase: laoCase}) }}
+    {{ pop({name: name, crn: crn, tier: tier, provisionalTier: provisionalTier, laoCase: laoCase}) }}
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
@@ -91,8 +91,8 @@
                         }) }}
                         <a class="govuk-link" href="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/allocation-notes'  }}">Go back to review allocation notes</a>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}

@@ -103,7 +103,7 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
+    choosePractitionerPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
   })
 
   it('navigate to allocate page through case view', () => {
@@ -529,5 +529,25 @@ context('Choose Practitioner', () => {
     cy.get('table')
       .eq(0)
       .within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
+  })
+
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubChoosePractitioners', { tier: 'MISSING' })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.redMissingTag().should('contain', 'Missing')
+    choosePractitionerPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubChoosePractitioners', { provisionalTier: true })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.orangeProvisionalTag().should('contain', 'Provisional')
+    choosePractitionerPage
+      .tagCaption()
+      .should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
   })
 })

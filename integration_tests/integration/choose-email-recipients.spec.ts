@@ -24,7 +24,7 @@ context('Choose email recipients', () => {
   it('Caption text visible on page', () => {
     const chooseEmailRecipientsPage = Page.verifyOnPage(ChooseEmailRecipientsPage)
     chooseEmailRecipientsPage
-      .captionTextL()
+      .captionText()
       .should('contain', 'CRN: J678910')
       .and('contain', 'Tier:')
       .and('contain', 'C1')
@@ -36,7 +36,7 @@ context('Choose email recipients', () => {
     })
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/choose-email-recipients', { failOnStatusCode: false })
     const chooseEmailRecipientsPage = Page.verifyOnPage(ChooseEmailRecipientsPage)
-    chooseEmailRecipientsPage.captionTextL().should('contain', 'CRN: J678910').and('contain', 'Tier:')
+    chooseEmailRecipientsPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:')
     chooseEmailRecipientsPage.redMissingTag().should('contain', 'Missing')
     chooseEmailRecipientsPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
   })
@@ -48,7 +48,7 @@ context('Choose email recipients', () => {
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/choose-email-recipients', { failOnStatusCode: false })
     const chooseEmailRecipientsPage = Page.verifyOnPage(ChooseEmailRecipientsPage)
     chooseEmailRecipientsPage
-      .captionTextL()
+      .captionText()
       .should('contain', 'CRN: J678910')
       .and('contain', 'Tier:')
       .and('contain', 'C1')

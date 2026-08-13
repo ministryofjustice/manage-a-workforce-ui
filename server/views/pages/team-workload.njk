@@ -62,9 +62,9 @@
                 b: offenderManager.tierCaseTotals.b,
                 c: offenderManager.tierCaseTotals.c,
                 d: offenderManager.tierCaseTotals.d,
-                e: offenderManager.tierCaseTotals.as,
-                f: offenderManager.tierCaseTotals.bs,
-                g: offenderManager.tierCaseTotals.cs
+                e: offenderManager.tierCaseTotals.e,
+                f: offenderManager.tierCaseTotals.f,
+                g: offenderManager.tierCaseTotals.g
             },
             communityCases: offenderManager.communityCases,
             licenseCases: offenderManager.licenseCases,
@@ -80,37 +80,45 @@
 
     {%- set tableRow = [
       {
-        html: '<div class="team-workload-name-wrapper"><a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/' + offenderManager.code + '/active-cases">' + offenderManager.name.forename + ' ' + offenderManager.name.surname + '</a>' + workloadDetailsHtml + '</div>' | safe,
-        attributes: {
-        "data-sort-value": offenderManager.name.forename + ' ' + offenderManager.name.surname
-      }
+          html:  '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/' + offenderManager.code + '/active-cases">' + offenderManager.name.forename + ' ' + offenderManager.name.surname + '</a>'| safe,
+          attributes: {
+          "data-sort-value": offenderManager.name.forename + ' ' + offenderManager.name.surname
+          }
       },
-            {
-                text: offenderManager.grade,
-                attributes: {
-                    "data-sort-value": offenderManager.gradeOrder
-                }
-            },
-            {
-                text: offenderManager.allocatedCasesPastWeek,
-                attributes: {
-                    "data-sort-value": offenderManager.allocatedCasesPastWeek
-                }
-            },
-            {
-                text: offenderManager.reallocatedCasesPastWeek,
-                attributes: {
-                    "data-sort-value": offenderManager.reallocatedCasesPastWeek
-                }
-            },
-            {
-                text: offenderManager.ispsDueInNext14Days,
-                attributes: {
-                    "data-sort-value": offenderManager.ispsDueInNext14Days
-                }
-            }
-        ] -%}
+      {
+          text: offenderManager.grade,
+          attributes: {
+              "data-sort-value": offenderManager.gradeOrder
+          }
+      },
+      {
+          text: offenderManager.allocatedCasesPastWeek,
+          attributes: {
+              "data-sort-value": offenderManager.allocatedCasesPastWeek
+          }
+      },
+      {
+          text: offenderManager.reallocatedCasesPastWeek,
+          attributes: {
+              "data-sort-value": offenderManager.reallocatedCasesPastWeek
+          }
+      },
+      {
+          text: offenderManager.ispsDueInNext14Days,
+          attributes: {
+              "data-sort-value": offenderManager.ispsDueInNext14Days
+          }
+      }
+    ] -%}
     {{ teamTableData.rows.push(tableRow) }}
+
+    {%- set workloadDetailsRow = [
+      {
+          html: '<div class="team-workload-name-wrapper">' + workloadDetailsHtml + '</div>',
+          colspan: '5'
+      }
+    ] -%}
+    {{ teamTableData.rows.push(workloadDetailsRow) }}
 {% endfor %}
 
 {% block beforeContent %}
@@ -150,6 +158,6 @@
         </div>
     </div>
 
-  {{ govukTable(teamTableData) }}
+    {{ govukTable(teamTableData) }}
 
-    {%endblock%}
+{%endblock%}

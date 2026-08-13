@@ -61,9 +61,9 @@
                 b: offenderManager.tierCaseTotals.b,
                 c: offenderManager.tierCaseTotals.c,
                 d: offenderManager.tierCaseTotals.d,
-                e: offenderManager.tierCaseTotals.as,
-                f: offenderManager.tierCaseTotals.bs,
-                g: offenderManager.tierCaseTotals.cs
+                e: offenderManager.tierCaseTotals.e,
+                f: offenderManager.tierCaseTotals.f,
+                g: offenderManager.tierCaseTotals.g
             },
             communityCases: offenderManager.communityCases,
             licenseCases: offenderManager.licenseCases,
@@ -79,7 +79,7 @@
 
     {%- set tableRow = [
             {
-                html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/reallocations/cases/' + offenderManager.code + '" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.forename + ' ' + offenderManager.name.surname + '</a>' + workloadDetailsHtml + '</div>' | safe,
+                html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/reallocations/cases/' + offenderManager.code + '" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.forename + ' ' + offenderManager.name.surname + '</a>' | safe,
                 attributes: {
                     "data-sort-value": offenderManager.name.forename + ' ' + offenderManager.name.surname
                 }
@@ -110,6 +110,14 @@
             }
         ] -%}
     {{ teamTableData.rows.push(tableRow) }}
+
+    {%- set workloadDetailsRow = [
+      {
+        html: '<div class="team-workload-name-wrapper">' + workloadDetailsHtml + '</div>',
+        colspan: '5'
+      }
+    ] -%}
+    {{ teamTableData.rows.push(workloadDetailsRow) }}
 {% endfor %}
 
 {% block beforeContent %}

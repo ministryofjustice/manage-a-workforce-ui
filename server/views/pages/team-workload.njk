@@ -7,7 +7,7 @@
 {%- set teamTableData = {
     attributes: {
         'data-module': 'moj-sortable-table',
-        'data-persistent-id': teamData.teamCode + '-choose-practitioner',
+        'data-persistent-id': teamCode + '-choose-practitioner',
         id: 'team-workload-table'
     },
     captionClasses: "govuk-table__caption--l",
@@ -80,9 +80,10 @@
 
     {%- set tableRow = [
       {
-          html:  '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/' + offenderManager.code + '/active-cases">' + offenderManager.name.forename + ' ' + offenderManager.name.surname + '</a>'| safe,
+          html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/' + offenderManager.code + '/active-cases">' + offenderManager.name.forename + ' ' + offenderManager.name.surname + '</a>'
+                + '<div class="team-workload-name-wrapper">' + workloadDetailsHtml + '</div' | safe,
           attributes: {
-          "data-sort-value": offenderManager.name.forename + ' ' + offenderManager.name.surname
+            "data-sort-value": offenderManager.name.forename + ' ' + offenderManager.name.surname
           }
       },
       {
@@ -111,14 +112,6 @@
       }
     ] -%}
     {{ teamTableData.rows.push(tableRow) }}
-
-    {%- set workloadDetailsRow = [
-      {
-          html: '<div class="team-workload-name-wrapper">' + workloadDetailsHtml + '</div>',
-          colspan: '5'
-      }
-    ] -%}
-    {{ teamTableData.rows.push(workloadDetailsRow) }}
 {% endfor %}
 
 {% block beforeContent %}

@@ -111,7 +111,7 @@
     background-color: white
     color:  #005EA5
     font-weight: 600
-    margin-bottom: 0px
+    margin-bottom: 0
 
   .govuk-details__summary
     display: inline-block
@@ -300,34 +300,31 @@ p.capacity-notes-screen
   display: flex
   flex-direction: column
   gap: 10px
-
-.team-workload-name-wrapper > a
-  display: block
-
-#team-workload-table .workload-details
-  position: relative
-  top: auto
-  margin: 0
+  padding-top: 15px
   padding-bottom: 10px
-  display: inline-block
-  width: 100%
+
+  &:has(.workload-details[open])
+    position: absolute
+    width: 100%
 
 #team-workload-table tbody
   position: relative
-
-  > tr:nth-child(odd)
-    > th
-      border-bottom: none
-    > td
-      border-bottom: none
-
-  > tr:nth-child(even)
-    > th
-      border-top: none
 
   .govuk-details__text
     margin-left: 5px
     padding-bottom: 5px
 
+  > tr:has(.workload-details[open])
+    > td
+      padding-bottom: 450px
+
   .workload-section .govuk-list
     margin-bottom: 5px
+
+  .workload-details
+    position: relative
+    top: auto
+    margin: 0
+    padding: 0
+    display: inline-block
+    width: 100%

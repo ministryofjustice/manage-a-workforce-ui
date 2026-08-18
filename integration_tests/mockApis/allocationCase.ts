@@ -2,11 +2,11 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForAllocation } from './wiremock'
 
 export default {
-  stubGetCurrentlyManagedCaseOverview: (overrides, convictionNumber = '1'): SuperAgentRequest => {
+  stubGetCurrentlyManagedCaseOverview: (overrides): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',
-        urlPattern: `/cases/unallocated/J678910/convictions/${convictionNumber}/overview`,
+        urlPattern: `/cases/unallocated/J678910/convictions/1/overview`,
       },
       response: {
         status: 200,

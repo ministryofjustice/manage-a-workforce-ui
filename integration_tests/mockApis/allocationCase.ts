@@ -14,7 +14,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           convictionNumber: 1,
           ...overrides,
         },

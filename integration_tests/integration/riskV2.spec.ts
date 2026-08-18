@@ -17,7 +17,7 @@ context('Risk', () => {
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
-    riskPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    riskPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
   })
 
   it('Missing tier in header should display red tag', () => {
@@ -41,7 +41,7 @@ context('Risk', () => {
     cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
     cy.visit('/pdu/PDU1/J678910/convictions/1/risk')
     const riskPage = Page.verifyOnPage(RiskPage)
-    riskPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    riskPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
     riskPage.orangeProvisionalTag().should('contain', 'Provisional')
     riskPage.tagCaption().should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
   })

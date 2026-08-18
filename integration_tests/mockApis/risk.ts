@@ -57,7 +57,8 @@ const inactiveRegistrations = [
 const riskV1: Risk = {
   name: 'Dylan Adam Armstrong',
   crn: 'J678910',
-  tier: 'C1',
+  tier: 'C',
+  provisionalTier: false,
   completedDate: '2025-12-01T09:11:59',
   riskVersion: '1',
   activeRegistrations,
@@ -93,7 +94,8 @@ const riskV1: Risk = {
 const riskV2: Risk = {
   name: 'Dylan Adam Armstrong',
   crn: 'J678910',
-  tier: 'C1',
+  tier: 'C',
+  provisionalTier: false,
   completedDate: '2025-12-01T09:11:59',
   riskVersion: '2',
   activeRegistrations,

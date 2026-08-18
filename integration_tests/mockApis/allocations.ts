@@ -5,7 +5,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Dylan Adam Armstrong',
     crn: 'J678910',
-    tier: 'C1',
+    tier: 'C',
     sentenceDate: '2021-09-01',
     handoverDate: null,
     initialAppointment: {
@@ -32,7 +32,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Sofia Mitchell',
     crn: 'L786545',
-    tier: 'C1',
+    tier: 'C',
     sentenceDate: '2021-05-10',
     handoverDate: '2025-01-03',
     initialAppointment: null,
@@ -49,7 +49,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'John Smith',
     crn: 'P125643',
-    tier: 'C3',
+    tier: 'C',
     sentenceDate: '2023-07-23',
     handoverDate: null,
     initialAppointment: {
@@ -71,7 +71,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Kacey Ray',
     crn: 'E124321',
-    tier: 'C2',
+    tier: 'C',
     sentenceDate: '2022-02-16',
     handoverDate: null,
     initialAppointment: {
@@ -93,7 +93,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Andrew Williams',
     crn: 'P567654',
-    tier: 'C1',
+    tier: 'C',
     sentenceDate: '2021-06-01',
     handoverDate: null,
     initialAppointment: {
@@ -115,7 +115,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Sarah Siddall',
     crn: 'C567654',
-    tier: 'C2',
+    tier: 'C',
     sentenceDate: '2024-03-01',
     handoverDate: null,
     initialAppointment: {
@@ -137,7 +137,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Mick Jones',
     crn: 'C234432',
-    tier: 'C1',
+    tier: 'C',
     sentenceDate: '2021-05-25',
     handoverDate: null,
     initialAppointment: null,
@@ -149,7 +149,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Bill Turner',
     crn: 'F5635632',
-    tier: 'D1',
+    tier: 'D',
     sentenceDate: '2021-05-10',
     handoverDate: null,
     initialAppointment: {
@@ -175,7 +175,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Daffy Duck',
     crn: 'X768522',
-    tier: 'C1',
+    tier: 'C',
     sentenceDate: '2000-03-01',
     handoverDate: '2024-10-03',
     initialAppointment: null,
@@ -192,7 +192,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Paul Daniels',
     crn: 'XX89999',
-    tier: 'C1',
+    tier: 'C',
     sentenceDate: '2023-05-10',
     handoverDate: null,
     initialAppointment: '2024-04-10',
@@ -226,7 +226,7 @@ export default {
     const jsonBody = new Array(100).fill(0).map(() => ({
       name: 'Dylan Adam Armstrong',
       crn: 'J678910',
-      tier: 'C1',
+      tier: 'C',
       sentenceDate: '2021-10-17',
       initialAppointment: {
         date: '2021-10-22',
@@ -267,7 +267,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           sentenceDate: '2021-09-01',
           gender: 'Male',
           dateOfBirth: '1984-09-27',
@@ -350,7 +350,7 @@ export default {
           gender: 'Male',
           dateOfBirth: '1984-09-27',
           age: 37,
-          tier: 'C1',
+          tier: 'C',
           address: null,
           nextAppointmentDate: null,
           activeEvents: [
@@ -409,7 +409,7 @@ export default {
           gender: 'Male',
           dateOfBirth: '1984-09-27',
           age: 37,
-          tier: 'C1',
+          tier: 'C',
           address: null,
           nextAppointmentDate: null,
           activeEvents: [
@@ -481,7 +481,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           sentenceDate: '2021-09-01',
           gender: 'Male',
           dateOfBirth: '1984-09-27',
@@ -560,7 +560,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           sentenceDate: '2021-09-01',
           gender: 'Male',
           dateOfBirth: '1984-09-27',
@@ -624,7 +624,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           sentenceDate: '2021-09-01',
           gender: 'Male',
           dateOfBirth: '1984-09-27',
@@ -690,7 +690,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           sentenceDate: '2021-09-01',
           gender: 'Male',
           dateOfBirth: '1984-09-27',
@@ -741,7 +741,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           sentenceDate: '2021-09-01',
           gender: 'Male',
           dateOfBirth: '1984-09-27',
@@ -792,7 +792,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           sentenceDate: '2021-09-01',
           gender: 'Male',
           dateOfBirth: '1984-09-27',
@@ -847,7 +847,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'L786545',
-          tier: 'C1',
+          tier: 'C',
           sentenceDate: '2021-09-02',
           gender: 'Female',
           dateOfBirth: '1994-11-17',
@@ -1044,7 +1044,7 @@ export default {
             combinedName: 'Dylan Adam Armstrong',
           },
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           provisionalTier: false,
           convictionNumber: 1,
           staff: {

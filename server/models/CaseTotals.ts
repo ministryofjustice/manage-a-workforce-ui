@@ -3,9 +3,9 @@ export default interface CaseTotals {
   b: number
   c: number
   d: number
-  aS: number
-  bS: number
-  cS: number
-  dS: number
-  untiered: number
+  e: number
+  f: number
+  g: number
+  missing: number
+  notSupervised: number
 }

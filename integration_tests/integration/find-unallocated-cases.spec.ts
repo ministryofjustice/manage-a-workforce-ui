@@ -123,7 +123,7 @@ context('Find Unallocated cases', () => {
     const outOfAreaTransferCase = {
       name: 'John Doe',
       crn: 'X678911',
-      tier: 'C1',
+      tier: 'C',
       sentenceDate: '2023-12-01',
       handoverDate: null,
       initialAppointment: {
@@ -329,7 +329,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -357,7 +357,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -399,7 +399,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -426,7 +426,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -454,7 +454,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678912',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -482,7 +482,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678913',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -510,7 +510,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678914',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {

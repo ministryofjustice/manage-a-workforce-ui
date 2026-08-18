@@ -28,7 +28,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Offender details visible on page', () => {
-    spoOversightPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    spoOversightPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
   })
 
   it('Missing tier in header should display red tag', () => {

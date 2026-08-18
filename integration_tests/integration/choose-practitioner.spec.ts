@@ -103,7 +103,7 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    choosePractitionerPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
   })
 
   it('navigate to allocate page through case view', () => {
@@ -418,15 +418,15 @@ context('Choose Practitioner', () => {
             otherReportsInNext14Days: 3,
             licenseCases: 4,
             tierCaseTotals: {
-              untiered: 2,
+              notSupervised: 2,
               a: 3,
               b: 1,
               c: 3,
               d: 0,
-              as: 0,
-              bs: 1,
-              cs: 0,
-              ds: 1,
+              e: 0,
+              f: 1,
+              g: 0,
+              missing: 1,
             },
           },
         ],
@@ -453,15 +453,15 @@ context('Choose Practitioner', () => {
             otherReportsInNext14Days: 1,
             licenseCases: 4,
             tierCaseTotals: {
-              untiered: 1,
+              notSupervised: 1,
               a: 6,
               b: 0,
               c: 4,
               d: 0,
-              as: 0,
-              bs: 0,
-              cs: 1,
-              ds: 0,
+              e: 0,
+              f: 0,
+              g: 1,
+              missing: 0,
             },
           },
         ],

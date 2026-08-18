@@ -18,7 +18,7 @@ context('Probation record', () => {
     cy.task('stubGetProbationRecord')
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    probationRecordPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
   })
 
   it('Missing tier in header should display red tag', () => {
@@ -38,7 +38,7 @@ context('Probation record', () => {
     })
     cy.visit('/pdu/PDU1/J678910/convictions/1/probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    probationRecordPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
     probationRecordPage.orangeProvisionalTag().should('contain', 'Provisional')
     probationRecordPage
       .tagCaption()

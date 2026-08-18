@@ -21,8 +21,12 @@ context('Active Cases', () => {
     activeCasesPage.secondaryText().should('contain', 'PO')
   })
 
-  it('Back link is visible on page', () => {
-    activeCasesPage.backLink().should('contain', 'Back')
+  it('Breadcrumbs visible on page', () => {
+    activeCasesPage
+      .breadCrumbs()
+      .should('contain', 'Your teams')
+      .and('contain', 'Team Name 1')
+      .and('contain', 'John Doe')
   })
 
   it('notification banner is not visible when officer has an email', () => {

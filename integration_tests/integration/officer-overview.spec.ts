@@ -133,23 +133,23 @@ context('Overview', () => {
           'Number of cases': '14',
         },
         {
-          Tier: 'AS',
+          Tier: 'E',
           'Number of cases': '1',
         },
         {
-          Tier: 'BS',
+          Tier: 'F',
           'Number of cases': '3',
         },
         {
-          Tier: 'CS',
+          Tier: 'G',
           'Number of cases': '7',
         },
         {
-          Tier: 'DS',
+          Tier: 'Missing',
           'Number of cases': '11',
         },
         {
-          Tier: 'Untiered',
+          Tier: 'Not supervised',
           'Number of cases': '2',
         },
       ])
@@ -161,7 +161,7 @@ context('Overview', () => {
     cy.get('.availability').getSummaryList().should('deep.equal', {
       'Weekly hours': '22.5',
       Reductions: '10 hours until 3 November 2022',
-      'Last case allocated': '19 August 2022 (Tier A3, in community)',
+      'Last case allocated': '19 August 2022 (Tier A, in community)',
       'Cases due to end within next 4 weeks': '3',
       'Releases within next 4 weeks': '6',
       'Parole reports to complete within next 4 weeks': '5',

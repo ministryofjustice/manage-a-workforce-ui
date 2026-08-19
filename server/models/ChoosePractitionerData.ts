@@ -18,15 +18,15 @@ interface CommunityPersonManager {
 }
 
 interface TierCaseTotals {
-  untiered: number
+  notSupervised: number
   a: number
   b: number
   c: number
   d: number
-  as: number
-  bs: number
-  cs: number
-  ds: number
+  e: number
+  f: number
+  g: number
+  missing: number
 }
 
 export interface Practitioner {

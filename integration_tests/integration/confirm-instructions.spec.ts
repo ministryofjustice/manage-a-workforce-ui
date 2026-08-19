@@ -17,7 +17,7 @@ context('Instructions Confirmation', () => {
   })
 
   it('Offender details visible on page', () => {
-    instructionsPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    instructionsPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
   })
 
   it('Section break is visible on page', () => {
@@ -146,7 +146,7 @@ context('Instructions Confirmation', () => {
       .captionText()
       .should('contain', 'CRN: J678910')
       .and('contain', 'Tier:')
-      .and('contain', 'C1')
+      .and('contain', 'C')
     instructionsPageRestricted.orangeProvisionalTag().should('contain', 'Provisional')
     instructionsPageRestricted
       .tagCaption()

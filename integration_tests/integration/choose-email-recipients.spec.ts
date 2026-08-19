@@ -27,7 +27,7 @@ context('Choose email recipients', () => {
       .captionText()
       .should('contain', 'CRN: J678910')
       .and('contain', 'Tier:')
-      .and('contain', 'C1')
+      .and('contain', 'C')
   })
 
   it('Missing tier in header should display red tag', () => {
@@ -51,7 +51,7 @@ context('Choose email recipients', () => {
       .captionText()
       .should('contain', 'CRN: J678910')
       .and('contain', 'Tier:')
-      .and('contain', 'C1')
+      .and('contain', 'C')
     chooseEmailRecipientsPage.orangeProvisionalTag().should('contain', 'Provisional')
     chooseEmailRecipientsPage
       .tagCaption()

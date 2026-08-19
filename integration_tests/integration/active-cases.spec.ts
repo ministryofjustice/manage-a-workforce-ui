@@ -66,12 +66,12 @@ context('Active Cases', () => {
       .should('deep.equal', [
         {
           'Name / CRN': 'Dylan Adam Armstrong            CRN1111',
-          Tier: 'B3',
+          Tier: 'B',
           'Type of case': 'Custody',
         },
         {
           'Name / CRN': 'Cindy Smith            CRN2222',
-          Tier: 'A0',
+          Tier: 'A',
           'Type of case': 'License',
         },
       ])
@@ -85,8 +85,7 @@ context('Active Cases', () => {
       },
       {
         columnHeaderName: 'Tier',
-        // tier sorts by tierOrder which is different to the alpha chars below (which is wy B3 comes before A0)
-        orderedData: ['B3', 'A0'],
+        orderedData: ['A', 'B'],
       },
       {
         columnHeaderName: 'Type of case',

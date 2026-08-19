@@ -19,7 +19,7 @@ context('Documents', () => {
 
   it('Caption text visible on page', () => {
     const documentsPage = Page.verifyOnPage(DocumentsPage)
-    documentsPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    documentsPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
   })
 
   it('Missing tier in header should display red tag', () => {
@@ -39,7 +39,7 @@ context('Documents', () => {
     })
     cy.visit('/pdu/PDU1/J678910/convictions/1/documents')
     const documentsPage = Page.verifyOnPage(DocumentsPage)
-    documentsPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    documentsPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
     documentsPage.orangeProvisionalTag().should('contain', 'Provisional')
     documentsPage.tagCaption().should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
   })

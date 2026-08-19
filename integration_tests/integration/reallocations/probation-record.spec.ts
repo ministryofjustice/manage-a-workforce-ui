@@ -20,7 +20,7 @@ context('Probation record', () => {
     cy.task('stubGetAllocatedProbationRecord')
     cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
-    probationRecordPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+    probationRecordPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
   })
 
   it('Apostrophes are handled correctly', () => {

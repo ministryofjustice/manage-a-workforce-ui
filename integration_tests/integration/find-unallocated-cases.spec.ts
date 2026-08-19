@@ -123,7 +123,7 @@ context('Find Unallocated cases', () => {
     const outOfAreaTransferCase = {
       name: 'John Doe',
       crn: 'X678911',
-      tier: 'C1',
+      tier: 'C',
       sentenceDate: '2023-12-01',
       handoverDate: null,
       initialAppointment: {
@@ -246,8 +246,7 @@ context('Find Unallocated cases', () => {
       },
       {
         columnHeaderName: 'Tier',
-        // tier sorts by tierOrder which is different to the alpha chars below (which is wy D1 comes before C1)
-        orderedData: ['D1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C2', 'C2', 'C3'],
+        orderedData: ['A', 'B', 'C', 'C', 'D', 'E', 'E', 'F', 'G', '-'],
       },
       {
         columnHeaderName: 'Sentence date',
@@ -329,7 +328,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -357,7 +356,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -399,7 +398,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -426,7 +425,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -454,7 +453,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678912',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -482,7 +481,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678913',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -510,7 +509,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678914',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {

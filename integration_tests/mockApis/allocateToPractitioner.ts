@@ -5,7 +5,7 @@ export default {
   stubGetPotentialOffenderManagerWorkload: ({
     teamCode = 'TM2',
     staffCode = 'OM2',
-    tier = 'C1',
+    tier = 'C',
     provisionalTier = false,
   }: {
     teamCode?: string
@@ -72,7 +72,7 @@ export default {
             },
             grade: 'PO',
           },
-          tier: 'C1',
+          tier: 'C',
         },
       },
     })
@@ -104,7 +104,7 @@ export default {
             },
             grade: 'PO',
           },
-          tier: 'C1',
+          tier: 'C',
         },
       },
     })

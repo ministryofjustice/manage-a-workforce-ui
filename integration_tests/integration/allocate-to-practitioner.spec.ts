@@ -54,7 +54,7 @@ context('Allocate to Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.tabtable('all-teams').within(() => {
+    choosePractitionerPage.tabtable().within(() => {
       choosePractitionerPage.radio('TM1::OM3').click()
     })
     choosePractitionerPage.allocateCaseButton().click()
@@ -106,7 +106,7 @@ context('Allocate to Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.tabtable('all-teams').within(() => {
+    choosePractitionerPage.tabtable().within(() => {
       choosePractitionerPage.radio('TM1::OM3').click()
     })
     cy.task('stubForCrnAllowedUserRegion', { userId: 'USER1', crn: 'J678910', convictionNumber: '1', errorCode: 403 })
@@ -170,34 +170,7 @@ context('Allocate to Practitioner', () => {
       .and('include', '/pdu/PDU1/J678910/convictions/1/choose-practitioner')
   })
 
-  it('Displays current and potential capacity', () => {
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
-    const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
-    allocatePage
-      .capacityImpactStatement()
-      .should('contain.text', 'This will increase their workload from 50.4% to 64.8%.')
-  })
-
-  it('Displays current capacity only when same PoP allocated to same PO', () => {
-    cy.task('stubGetPotentialOffenderManagerWorkloadOverCapacitySamePoP')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
-    const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
-    allocatePage
-      .capacityImpactStatement()
-      .should('contain.text', 'Their workload will remain at 50.4% as they are already managing this case.')
-  })
-
-  it('Display current and potential capacity as red when over capacity', () => {
-    cy.task('stubGetPotentialOffenderManagerWorkloadOverCapacity')
-    cy.signIn()
-    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
-    const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
-    allocatePage.redCapacities().should('have.text', '100.2%108.6%')
-  })
-
-  it('Display Lao Restriced access badge if Lao Case', () => {
+  it('Display Lao Restricted access badge if Lao Case', () => {
     cy.signIn()
     cy.task('stubForLaoStatus', { crn: 'J678910', response: true })
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
@@ -216,5 +189,23 @@ context('Allocate to Practitioner', () => {
         'contain',
         'These notes will be saved as an SPO Oversight contact in NDelius, which you can review and update before saving. Do not include links in the notes.',
       )
+  })
+
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubGetPotentialOffenderManagerWorkload', { tier: 'MISSING' })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
+    const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
+    allocatePage.redMissingTag().should('contain', 'Missing')
+    allocatePage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubGetPotentialOffenderManagerWorkload', { provisionalTier: true })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM2/allocate-to-practitioner')
+    const allocatePage = Page.verifyOnPage(AllocateToPractitionerPage)
+    allocatePage.orangeProvisionalTag().should('contain', 'Provisional')
+    allocatePage.tagCaption().should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
   })
 })

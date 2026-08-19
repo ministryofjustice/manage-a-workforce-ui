@@ -5,9 +5,13 @@ export default {
   stubGetPotentialOffenderManagerWorkload: ({
     teamCode = 'TM2',
     staffCode = 'OM2',
+    tier = 'C1',
+    provisionalTier = false,
   }: {
     teamCode?: string
     staffCode?: string
+    tier?: string
+    provisionalTier?: boolean
   }): SuperAgentRequest => {
     return stubForWorkload({
       request: {
@@ -35,7 +39,8 @@ export default {
             },
             grade: 'PO',
           },
-          tier: 'C1',
+          tier,
+          provisionalTier,
         },
       },
     })

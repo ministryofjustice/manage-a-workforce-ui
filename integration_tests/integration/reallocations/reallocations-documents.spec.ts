@@ -22,7 +22,7 @@ context('Documents', () => {
 
   it('Caption text visible on page', () => {
     const documentsPage = Page.verifyOnPage(DocumentsPage)
-    documentsPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
+    documentsPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
   })
 
   it('header visible on page', () => {

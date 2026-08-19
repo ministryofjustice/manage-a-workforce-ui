@@ -28,7 +28,23 @@ context('Instructions Confirmation', () => {
   })
 
   it('Offender details visible on page', () => {
-    spoOversightPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
+    spoOversightPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C1')
+  })
+
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubGetConfirmInstructions', { tier: 'MISSING' })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+    spoOversightPage.redMissingTag().should('contain', 'Missing')
+    spoOversightPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubGetConfirmInstructions', { provisionalTier: true })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
+    spoOversightPage.orangeProvisionalTag().should('contain', 'Provisional')
+    spoOversightPage
+      .tagCaption()
+      .should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
   })
 
   it('Section break is visible on page', () => {

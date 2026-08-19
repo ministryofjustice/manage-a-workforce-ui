@@ -43,7 +43,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
+      {{ pop({name: name, crn: crn, tier: tier, provisionalTier: provisionalTier, laoCase: laoCase }) }}
 
     </div>
   </div>
@@ -136,7 +136,7 @@
                 classes: 'govuk-checkboxes--medium govuk-!-margin-bottom-6 govuk-!-margin-top-6'
             })}}
 
-          {{ 
+          {{
               govukButton({
                 text: 'Add recipient',
                 type: 'submit',
@@ -164,7 +164,7 @@
               Updating selected recipients
             </div>
           </div>
-          {{ 
+          {{
             govukCheckboxes({
               name: 'emailCopyOptIn',
               items: [

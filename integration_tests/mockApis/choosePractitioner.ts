@@ -446,10 +446,14 @@ export default {
         },
       ],
     },
+    tier = 'C1',
+    provisionalTier = false,
   }: {
     teamCodes?: string[]
     crn?: string
     teams?: PractitionerTeams
+    tier?: string
+    provisionalTier?: boolean
   }): SuperAgentRequest => {
     return stubForWorkload({
       request: {
@@ -477,7 +481,8 @@ export default {
             middleName: '',
             surname: 'Cole',
           },
-          tier: 'C1',
+          tier,
+          provisionalTier,
           probationStatus: {
             status: 'PREVIOUSLY_MANAGED',
             description: 'Previously managed',

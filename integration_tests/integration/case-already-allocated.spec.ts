@@ -13,7 +13,7 @@ context('Case Already Allocated', () => {
   })
   it('Caption Text visible on page', () => {
     const caseAlreadyAllocated = Page.verifyOnPage(CaseAlreadyAllocated)
-    caseAlreadyAllocated.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'A3')
+    caseAlreadyAllocated.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'A')
   })
 
   it('return link goes back to unallocated cases by team page', () => {

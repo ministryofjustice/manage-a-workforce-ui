@@ -246,8 +246,7 @@ context('Find Unallocated cases', () => {
       },
       {
         columnHeaderName: 'Tier',
-        // tier sorts by tierOrder which is different to the alpha chars below (which is wy D1 comes before C1)
-        orderedData: ['D1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C2', 'C2', 'C3'],
+        orderedData: ['A', 'B', 'C', 'C', 'D', 'E', 'E', 'F', 'G', '-'],
       },
       {
         columnHeaderName: 'Sentence date',

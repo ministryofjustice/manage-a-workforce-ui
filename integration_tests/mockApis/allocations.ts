@@ -32,7 +32,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Sofia Mitchell',
     crn: 'L786545',
-    tier: 'C',
+    tier: 'A',
     sentenceDate: '2021-05-10',
     handoverDate: '2025-01-03',
     initialAppointment: null,
@@ -49,7 +49,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'John Smith',
     crn: 'P125643',
-    tier: 'C',
+    tier: 'B',
     sentenceDate: '2023-07-23',
     handoverDate: null,
     initialAppointment: {
@@ -71,7 +71,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Kacey Ray',
     crn: 'E124321',
-    tier: 'C',
+    tier: 'E',
     sentenceDate: '2022-02-16',
     handoverDate: null,
     initialAppointment: {
@@ -93,7 +93,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Andrew Williams',
     crn: 'P567654',
-    tier: 'C',
+    tier: 'G',
     sentenceDate: '2021-06-01',
     handoverDate: null,
     initialAppointment: {
@@ -115,7 +115,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Sarah Siddall',
     crn: 'C567654',
-    tier: 'C',
+    tier: 'D',
     sentenceDate: '2024-03-01',
     handoverDate: null,
     initialAppointment: {
@@ -137,7 +137,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Mick Jones',
     crn: 'C234432',
-    tier: 'C',
+    tier: 'E',
     sentenceDate: '2021-05-25',
     handoverDate: null,
     initialAppointment: null,
@@ -149,7 +149,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Bill Turner',
     crn: 'F5635632',
-    tier: 'D',
+    tier: 'F',
     sentenceDate: '2021-05-10',
     handoverDate: null,
     initialAppointment: {
@@ -175,7 +175,7 @@ export const allocationsByTeamResponse = [
   {
     name: 'Daffy Duck',
     crn: 'X768522',
-    tier: 'C',
+    tier: '-',
     sentenceDate: '2000-03-01',
     handoverDate: '2024-10-03',
     initialAppointment: null,

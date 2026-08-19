@@ -64,9 +64,9 @@
                     b: offenderManager.tierCaseTotals.b,
                     c: offenderManager.tierCaseTotals.c,
                     d: offenderManager.tierCaseTotals.d,
-                    e: offenderManager.tierCaseTotals.as,
-                    f: offenderManager.tierCaseTotals.bs,
-                    g: offenderManager.tierCaseTotals.cs
+                    e: offenderManager.tierCaseTotals.e,
+                    f: offenderManager.tierCaseTotals.f,
+                    g: offenderManager.tierCaseTotals.g
                 },
                 communityCases: offenderManager.communityCases,
                 licenseCases: offenderManager.licenseCases,
@@ -78,7 +78,6 @@
                 otherReportsInNext14Days: offenderManager.otherReportsInNext14Days
             })
         }}
-
         {%- endset -%}
 
         {%- set tableRow = [
@@ -89,42 +88,42 @@
             {
                 html: ('<a href="/pdu/'+ params.pduCode +'/' + offenderManager.team.code + '/' + offenderManager.code + '/active-cases" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.combinedName + '</a>' ) | safe,
                 attributes: {
-                "data-sort-value": offenderManager.name.combinedName
-            }
+                    "data-sort-value": offenderManager.name.combinedName
+                }
             },
             {
                 text: offenderManager.team.name,
                 classes: 'govuk-visually-hidden' if params.teamData.isPerTeam,
                 attributes: {
-                'data-team-code': offenderManager.team.code
-            }
+                    'data-team-code': offenderManager.team.code
+                }
             },
             {
                 html: ('<div class="tooltip">' + offenderManager.grade + '<span class="tooltiptext">' + offenderManager.gradeTip + '</span></div>'),
                 attributes: {
-                "data-sort-value": offenderManager.gradeOrder
-            }
+                    "data-sort-value": offenderManager.gradeOrder
+                }
             },
             {
                 text: offenderManager.allocatedCasesPastWeek,
                 format: "numeric",
                 attributes: {
-                "data-sort-value": offenderManager.allocatedCasesPastWeek
-            }
+                    "data-sort-value": offenderManager.allocatedCasesPastWeek
+                }
             },
             {
                 text: offenderManager.reallocatedCasesPastWeek,
                 format: "numeric",
                 attributes: {
-                "data-sort-value": offenderManager.reallocatedCasesPastWeek
-            }
+                    "data-sort-value": offenderManager.reallocatedCasesPastWeek
+                }
             },
             {
                 text: offenderManager.ispsDueInNext14Days,
                 format: "numeric",
                 attributes: {
-                "data-sort-value": offenderManager.ispsDueInNext14Days
-            }
+                    "data-sort-value": offenderManager.ispsDueInNext14Days
+                }
             }
         ] -%}
         {% set blank = offenderManagerTableData

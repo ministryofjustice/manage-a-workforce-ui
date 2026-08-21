@@ -21,6 +21,12 @@ export default class ChoosePractitionerPage extends Page {
 
   practitionersTable = (): PageElement => cy.get(`#practitioners-table`)
 
+  workloadWrapper = (): PageElement => cy.get('.practitioners-list-workload-wrapper')
+
+  rows = (): PageElement => cy.get(`.govuk-table__row`)
+
+  visuallyHidden = (): PageElement => cy.get(`.govuk-visually-hidden`)
+
   officerLink = (id: string): PageElement => cy.get(`[data-qa-link="${id}"]`)
 
   table = (): PageElement => cy.get('table')

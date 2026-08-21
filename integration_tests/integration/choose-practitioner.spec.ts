@@ -204,7 +204,6 @@ context('Choose Practitioner', () => {
 
     const expectedTableData = [
       {
-        Name: 'Jim Jam',
         Team: 'Team 2',
         Grade: 'POProbation Officer',
         'Allocations in APoP last 7 days': '7',
@@ -212,7 +211,6 @@ context('Choose Practitioner', () => {
         'ISPs due next 14 days': '1',
       },
       {
-        Name: 'Jane Doe',
         Team: 'Team 1',
         Grade: 'PQiPTrainee Probation Officer',
         'Allocations in APoP last 7 days': '7',
@@ -220,7 +218,6 @@ context('Choose Practitioner', () => {
         'ISPs due next 14 days': '1',
       },
       {
-        Name: 'Sam Smam',
         Team: 'Team 2',
         Grade: 'SPOSenior Probation Officer',
         'Allocations in APoP last 7 days': '2',
@@ -234,6 +231,12 @@ context('Choose Practitioner', () => {
       .should('not.have.attr', 'class', 'govuk-tabs__panel--hidden')
       .getTable({ onlyColumns: Object.keys(expectedTableData[0]) })
       .should('deep.equal', expectedTableData)
+
+    choosePractitionerPage
+      .practitionersTable()
+      .should('contain', 'Jim Jam')
+      .should('contain', 'Jane Doe')
+      .should('contain', 'Sam Smam')
   })
 
   it('All teams view link is correct', () => {

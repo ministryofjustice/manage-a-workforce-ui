@@ -270,31 +270,49 @@ p.capacity-notes-screen
 .workload-inline span
   white-space: nowrap
 
-#practitioners-table .workload-details
+.practitioners-list-workload-wrapper
   position: relative
-  top: auto
+  display: flex
+  flex-direction: column
+  gap: 10px
+  padding-top: 15px
   padding-bottom: 10px
-  margin-left: 75px
-  margin-bottom: 0
-  display: inline-block
+
+  .govuk-details__summary
+    white-space: nowrap
+
+  &:has(.workload-details[open])
+    position: absolute
+    width: 100%
+
+#practitioners-table
+  .practitioners-list-name-column
+    width: 10em
 
 #practitioners-table tbody
   position: relative
-
-  > tr:nth-child(odd)
-    > td
-      border-bottom: none
-
-  > tr:nth-child(even)
-    > th
-      border-top: none
 
   .govuk-details__text
     margin-left: 5px
     padding-bottom: 5px
 
+  .tr
+    height: 80px
+
+  > tr:has(.workload-details[open])
+    > td
+      padding-bottom: 450px
+
   .workload-section .govuk-list
     margin-bottom: 5px
+
+  .workload-details
+    position: relative
+    top: auto
+    padding: 0
+    margin: 0
+    display: inline-block
+    width: 100%
 
 .team-workload-name-wrapper
   display: flex

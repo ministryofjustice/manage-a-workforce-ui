@@ -2,11 +2,31 @@
 {%- from "../components/doubleCell/macro.njk" import doubleCell -%}
 {%- from "../components/caseLoadCase/macro.njk" import caseLoadCase -%}
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% set officerName = data.name.combinedName %}
 {% set officerGrade =  data.grade %}
 {% set officerCode =  data.code %}
 {% set officerTotalCases = data.activeCases | length %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Your teams",
+        href: "/pdu/" + pduCode + "/teams"
+      },
+      {
+        text: teamName,
+        href: '/pdu/' + pduCode + '/' + officerTeamCode + '/team-workload'
+      },
+      {
+        text: officerName,
+        href: '/pdu/' + pduCode + '/' + officerTeamCode + '/' + officerCode + '/active-cases'
+      }
+    ]
+  }) }}
+{% endblock %}
 
 {% set tableData = {
     caption: 'Active cases',

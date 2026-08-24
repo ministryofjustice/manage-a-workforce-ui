@@ -1,19 +1,13 @@
-{% extends "partials/layout.njk" %}
+{% extends "partials/officer-view.njk" %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
-{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "../components/card/macro.njk" import card %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/details/macro.njk" import govukDetails %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {%- from "../components/doubleCell/macro.njk" import doubleCell -%}
 {%- from "../components/allocatedCaseLink/macro.njk" import allocatedCaseLink -%}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {%- from "../components/caseLoadCase/macro.njk" import caseLoadCase -%}
 
-
 {% set officerName = data.name.combinedName %}
-{% set officerGrade =  data.grade %}
-{% set officerCode =  data.code %}
+{% set officerGrade = data.grade %}
+{% set officerCode = data.code %}
 {% set officerTotalCases = overviewData.activeCases | length %}
 
 {% block beforeContent %}
@@ -163,8 +157,8 @@
             { text: 'This is a restricted access case. Check NDelius if you require access or further information.', attributes: { "data-sort-value": item.tierOrder }, colspan: 4 }
         ] -%}
     {% elif item.excluded === true %}
-      {% if item.initialAllocationDate === '' %}
-          {%- set tableRow = [
+        {% if item.initialAllocationDate === '' %}
+            {%- set tableRow = [
               {
                   text: caseLoadCase(item),
                   attributes: { "data-sort-value": item.crn }
@@ -175,8 +169,8 @@
               { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
 
           ] -%}
-       {% else %}
-          {%- set tableRow = [
+        {% else %}
+            {%- set tableRow = [
               {
                   text: caseLoadCase(item),
                   attributes: { "data-sort-value": item.crn }
@@ -187,11 +181,11 @@
               { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
 
           ] -%}
-       {% endif %}
+        {% endif %}
     {% else %}
         {% if item.initialAllocationDate === '' %}
 
-          {%- set tableRow = [
+            {%- set tableRow = [
               {
                   text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' ),
                   attributes: { "data-sort-value": item.crn }
@@ -202,8 +196,8 @@
               { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
 
           ] -%}
-       {% else %}
-             {%- set tableRow = [
+        {% else %}
+            {%- set tableRow = [
                  {
                      text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' ),
                      attributes: { "data-sort-value": item.crn }
@@ -215,7 +209,7 @@
 
              ] -%}
 
-       {% endif %}
+        {% endif %}
 
     {% endif %}
 
@@ -223,90 +217,6 @@
 
 {% endfor %}
 
-
-
-{% block content %}
-
 {% block officerContent %}
-
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <span class="govuk-caption-xl">{{ teamName }}</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ officerName }}
-                <span class="maw-secondary-text-col govuk-!-display-block">{{ officerGrade }}</span>
-            </h1>
-        </div>
-    </div>
-
-    <hr class="govuk-min-width-full govuk-section-break govuk-section-break--m govuk-section-break--visible page-width">
-
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-
-            <h2 class="govuk-heading-l govuk-!-margin-bottom-0">Workload</h2>
-            <p class="govuk-body-s govuk-!-margin-bottom-2">Last updated: {{ data.lastUpdatedOn | dateFormat }} at {{ data.lastUpdatedOn | timeFormat }}</p>
-
-            <div class="govuk-grid-row">
-                <div class="card__layout">
-                    {{ card({
-                        classes: 'card-total',
-                        titleHtml: (overviewData.totalCases + '<p class="govuk-body">' + "cases"  + '</p>')
-                    }) }}
-                </div>
-                <div class="card__layout">
-                    {{ card({
-                        classes: 'card-total-subset ' + ('over-capacity' if data.capacity > 99 else 'under-capacity'),
-                        titleHtml: (overviewData.capacity + '%' + '<p class="govuk-body">' + "workload"  + '</p>')
-                    }) }}
-                </div>
-
-            </div>
-
-            {{ govukDetails({
-                summaryText: "View as points",
-                text: govukSummaryList({
-                    rows: [
-                        {
-                            key: {
-                            text: "Points available"
-                        },
-                            value: {
-                            text: overviewData.pointsAvailable
-                        }
-                        },
-                        {
-                            key: {
-                            text: "Points used"
-                        },
-                            value: {
-                            text: overviewData.pointsUsed
-                        }
-                        },
-                        {
-                            key: {
-                            text: "Points remaining"
-                        },
-                            value: {
-                            text: overviewData.pointsRemaining
-                        }
-                        }
-                    ]
-                })
-            }) }}
-
-
-        </div>
-
-        <div class="govuk-grid-column-one-third">
-            <h3 class="govuk-heading-m">Case mix by tier</h3>
-
-            {{ govukTable(tableData) }}
-
-        </div>
-
-    </div>
-{% endblock %}
-{{ govukTable(caseTableData) }}
-
-
+    {{ govukTable(caseTableData) }}
 {% endblock %}

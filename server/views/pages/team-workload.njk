@@ -2,11 +2,13 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "../components/card/macro.njk" import card %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from '../components/workloadDetails/macro.njk' import workloadDetails %}
 
 {%- set teamTableData = {
     attributes: {
         'data-module': 'moj-sortable-table',
-        'data-persistent-id': teamData.teamCode + '-choose-practitioner'
+        'data-persistent-id': teamCode + '-choose-practitioner',
+        id: 'team-workload-table'
     },
     captionClasses: "govuk-table__caption--l",
     firstCellIsHeader: true,
@@ -26,76 +28,89 @@
             }
         },
         {
-            text: "Workload %",
+            text: "Allocations in APoP last 7 days",
             attributes: {
                 "aria-sort": "none",
-                'data-persistent-id': teamCode + '-team-workload-workload'
+                'data-persistent-id': teamCode + '-team-workload-allocations-in-apop-last-7-days'
             }
         },
         {
-            text: "Cases in past 7 days",
+            text: "Reallocations in APoP last 7 days",
             attributes: {
                 "aria-sort": "none",
-                'data-persistent-id': teamCode + '-team-workload-cases-past-week'
+                'data-persistent-id': teamCode + '-team-workload-reallocations-in-apop-last-7-days'
             }
         },
         {
-            text: "Community Cases",
+            text: "ISPs due next 14 days",
             attributes: {
                 "aria-sort": "none",
-                'data-persistent-id': teamCode + '-team-workload-community-cases'
-            }
-        },
-        {
-            text: "Custody Cases",
-            attributes: {
-                "aria-sort": "none",
-                'data-persistent-id': teamCode + '-team-workload-custody-cases'
+                'data-persistent-id': teamCode + '-team-workload-isps-due-next-14-days'
             }
         }
     ],
     rows: []
 } -%}
+
 {% for offenderManager in teamWorkload %}
+    {%- set workloadDetailsHtml -%}
+    {{
+        workloadDetails({
+            name: offenderManager.name.combinedName if offenderManager.name.combinedName else offenderManager.name.forename + ' ' + offenderManager.name.surname,
+            tierCaseTotals: {
+                a: offenderManager.tierCaseTotals.a,
+                b: offenderManager.tierCaseTotals.b,
+                c: offenderManager.tierCaseTotals.c,
+                d: offenderManager.tierCaseTotals.d,
+                e: offenderManager.tierCaseTotals.e,
+                f: offenderManager.tierCaseTotals.f,
+                g: offenderManager.tierCaseTotals.g
+            },
+            communityCases: offenderManager.communityCases,
+            licenseCases: offenderManager.licenseCases,
+            custodyCases: offenderManager.custodyCases,
+            activeCases: offenderManager.activeCases,
+            contactSuspendedCases: offenderManager.contactSuspendedCases,
+            custodyReleasesInNext7Days: offenderManager.custodyReleasesInNext7Days,
+            paroleReportsInNext28Days: offenderManager.paroleReportsInNext28Days,
+            otherReportsInNext14Days: offenderManager.otherReportsInNext14Days
+        })
+    }}
+    {%- endset -%}
+
     {%- set tableRow = [
-            { 
-                html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/' + offenderManager.code + '/officer-view">' + offenderManager.name.forename + ' ' + offenderManager.name.surname,
-                attributes: {
-                    "data-sort-value": offenderManager.name.forename + ' ' + offenderManager.name.surname
-                }   
-            },
-            { 
-                text: offenderManager.grade,
-                attributes: {
-                    "data-sort-value": offenderManager.gradeOrder
-                } 
-            },
-            { 
-                text: offenderManager.workload + '%',
-                classes: ('percentage-extra-over' if offenderManager.workload > 100),
-                attributes: {
-                    "data-sort-value": offenderManager.workload
-                }
-            },
-            {
-                text: offenderManager.casesPastWeek,
-                attributes: {
-                    "data-sort-value": offenderManager.casesPastWeek
-                }
-            },
-            {
-                text: offenderManager.communityCases,
-                attributes: {
-                    "data-sort-value": offenderManager.communityCases
-                }
-            },
-            {
-                text: offenderManager.custodyCases,
-                attributes: {
-                    "data-sort-value": offenderManager.custodyCases
-                }
-            }
-        ] -%}
+      {
+          html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/' + offenderManager.code + '/active-cases">' + offenderManager.name.forename + ' ' + offenderManager.name.surname + '</a>'
+                + '<div class="team-workload-name-wrapper">' + workloadDetailsHtml + '</div' | safe,
+          attributes: {
+            "data-sort-value": offenderManager.name.forename + ' ' + offenderManager.name.surname
+          }
+      },
+      {
+          text: offenderManager.grade,
+          attributes: {
+              "data-sort-value": offenderManager.gradeOrder
+          }
+      },
+      {
+          text: offenderManager.allocatedCasesPastWeek,
+          attributes: {
+              "data-sort-value": offenderManager.allocatedCasesPastWeek
+          }
+      },
+      {
+          text: offenderManager.reallocatedCasesPastWeek,
+          attributes: {
+              "data-sort-value": offenderManager.reallocatedCasesPastWeek
+          }
+      },
+      {
+          text: offenderManager.ispsDueInNext14Days,
+          attributes: {
+              "data-sort-value": offenderManager.ispsDueInNext14Days
+          }
+      }
+    ] -%}
     {{ teamTableData.rows.push(tableRow) }}
 {% endfor %}
 
@@ -134,15 +149,8 @@
                 titleHtml: (totalCases + '<br>' + '<p class="govuk-body">' + "cases"  + '</p>' + '</a>')
             }) }}
         </div>
-        <div class="card__layout">
-            {{ card({
-                classes: 'card-total-subset ' + ('over-capacity' if averageWorkload >= 100 else 'under-capacity'),
-                titleHtml: (averageWorkload + '%<p class="govuk-body">workload %</p>')
-            }) }}
-        </div>
-
     </div>
 
     {{ govukTable(teamTableData) }}
 
-    {%endblock%}
+{%endblock%}

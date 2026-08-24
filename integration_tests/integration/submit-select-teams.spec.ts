@@ -135,12 +135,10 @@ context('Select teams and show allocate cases by team', () => {
         .should('deep.equal', [
           {
             Name: 'Team 1',
-            Workload: '77%',
             Cases: '3',
           },
           {
             Name: 'Team 2',
-            Workload: '88%',
             Cases: '4',
           },
         ])

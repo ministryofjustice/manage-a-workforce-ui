@@ -111,7 +111,7 @@
     background-color: white
     color:  #005EA5
     font-weight: 600
-    margin-bottom: 0px
+    margin-bottom: 0
 
   .govuk-details__summary
     display: inline-block
@@ -270,5 +270,79 @@ p.capacity-notes-screen
 .workload-inline span
   white-space: nowrap
 
+.practitioners-list-workload-wrapper
+  position: relative
+  display: flex
+  flex-direction: column
+  gap: 10px
+  padding-top: 15px
+  padding-bottom: 10px
 
+  .govuk-details__summary
+    white-space: nowrap
 
+  &:has(.workload-details[open])
+    position: absolute
+    width: 100%
+
+#practitioners-table
+  .practitioners-list-name-column
+    width: 10em
+
+#practitioners-table tbody
+  position: relative
+
+  .govuk-details__text
+    margin-left: 5px
+    padding-bottom: 5px
+
+  .tr
+    height: 80px
+
+  > tr:has(.workload-details[open])
+    > td
+      padding-bottom: 450px
+
+  .workload-section .govuk-list
+    margin-bottom: 5px
+
+  .workload-details
+    position: relative
+    top: auto
+    padding: 0
+    margin: 0
+    display: inline-block
+    width: 100%
+
+.team-workload-name-wrapper
+  display: flex
+  flex-direction: column
+  gap: 10px
+  padding-top: 15px
+  padding-bottom: 10px
+
+  &:has(.workload-details[open])
+    position: absolute
+    width: 100%
+
+#team-workload-table tbody
+  position: relative
+
+  .govuk-details__text
+    margin-left: 5px
+    padding-bottom: 5px
+
+  > tr:has(.workload-details[open])
+    > td
+      padding-bottom: 450px
+
+  .workload-section .govuk-list
+    margin-bottom: 5px
+
+  .workload-details
+    position: relative
+    top: auto
+    margin: 0
+    padding: 0
+    display: inline-block
+    width: 100%

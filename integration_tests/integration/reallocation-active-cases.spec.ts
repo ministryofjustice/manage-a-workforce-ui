@@ -28,7 +28,6 @@ context('Active Cases', () => {
 
   it('Table visible on page', () => {
     cy.get('table')
-      .eq(1)
       .getTable()
       .should('deep.equal', [
         {

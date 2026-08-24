@@ -78,20 +78,6 @@ export default function getReallocationsRoutes(
     await reallocationsController.selectAllocatePractitioner(req, res, crn, pduCode)
   })
 
-  get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/reallocations/officer-view', async (req, res) => {
-    const { convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
-    await allocationsController.getOverview(
-      req,
-      res,
-      offenderManagerTeamCode,
-      offenderManagerCode,
-      convictionNumber,
-      pduCode,
-      false,
-      true,
-    )
-  })
-
   get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/reallocations/active-cases', async (req, res) => {
     const { convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
     await allocationsController.getActiveCases(

@@ -550,4 +550,21 @@ context('Find Unallocated cases', () => {
     cy.get('table').find('tr').last().should('not.contain.text', 'John Doe')
     cy.get('table').find('tr').last().find('td').should('have.length', 2)
   })
+
+  it('should display the label for missing tiers', () => {
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
+    cy.reload()
+
+    cy.get('table').within(() => cy.contains('button', 'Tier').click())
+    cy.get('table').within(() => cy.contains('button', 'Tier').should('have.attr', { 'aria-sort': 'ascending' }))
+    cy.get('table').within(() => cy.contains('button', 'Tier').click())
+    cy.get('table').within(() => cy.contains('button', 'Tier').should('have.attr', { 'aria-sort': 'descending' }))
+
+    cy.get('table')
+      .find('tr td:nth-child(2)') // gets the tier column
+      .eq(0) // grabs the first row of that column
+      .contains('-') // asserts dash for missing tier
+      .should('have.attr', 'aria-label', 'cannot be calculated because assessment data is missing') // asserts expectedColumnValue
+  })
 })

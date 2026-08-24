@@ -121,6 +121,7 @@ export default {
               crn: 'CRN1111',
               tier: 'B',
               type: 'CUSTODY',
+              initialAllocationDate: '2021-09-01',
             },
             {
               name: {
@@ -131,6 +132,7 @@ export default {
               crn: 'CRN2222',
               tier: 'A',
               type: 'LICENSE',
+              initialAllocationDate: '2023-07-23',
             },
             {
               name: {
@@ -141,6 +143,7 @@ export default {
               crn: 'L786545',
               tier: 'C',
               type: 'CUSTODY',
+              initialAllocationDate: null,
             },
             {
               name: {
@@ -151,6 +154,7 @@ export default {
               crn: 'E124321',
               tier: 'E',
               type: 'COMMUNITY',
+              initialAllocationDate: '2022-03-25',
             },
             {
               name: {
@@ -161,6 +165,7 @@ export default {
               crn: 'P567654',
               tier: 'G',
               type: 'COMMUNITY',
+              initialAllocationDate: '2021-06-15',
             },
             {
               name: {
@@ -171,6 +176,7 @@ export default {
               crn: 'C567654',
               tier: 'D',
               type: 'COMMUNITY',
+              initialAllocationDate: '2024-03-01',
             },
             {
               name: {
@@ -181,6 +187,7 @@ export default {
               crn: 'F5635632',
               tier: 'F',
               type: 'COMMUNITY',
+              initialAllocationDate: '2021-05-10',
             },
             {
               name: {
@@ -191,6 +198,7 @@ export default {
               crn: 'X768522',
               tier: '-',
               type: 'CUSTODY',
+              initialAllocationDate: null,
             },
           ],
         },

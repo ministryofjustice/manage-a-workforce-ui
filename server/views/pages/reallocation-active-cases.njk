@@ -148,6 +148,13 @@
 } %}
 
 {% for item in cases %}
+    {%- set tierRow = {
+        text: item.tier,
+        attributes: {
+            "data-sort-value": item.tierOrder,
+            "aria-label": "cannot be calculated because assessment data is missing" if item.tier == '-'
+        }
+    } -%}
     {% if item.redacted == true %}
         {%- set tableRow = [
             {
@@ -163,7 +170,7 @@
                   text: caseLoadCase(item),
                   attributes: { "data-sort-value": item.crn }
               },
-              { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+              tierRow,
               { text: (item.type | capitalize)},
               { text: '', attributes: { "data-sort-value": item.initialAllocationDate } },
               { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
@@ -175,7 +182,7 @@
                   text: caseLoadCase(item),
                   attributes: { "data-sort-value": item.crn }
               },
-              { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+              tierRow,
               { text: (item.type | capitalize)},
               { text: (item.initialAllocationDate | dateFormat), attributes: { "data-sort-value": item.initialAllocationDate } },
               { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
@@ -190,7 +197,7 @@
                   text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' ),
                   attributes: { "data-sort-value": item.crn }
               },
-              { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+              tierRow,
               { text: (item.type | capitalize)},
               { text: '', attributes: { "data-sort-value": item.initialAllocationDate } },
               { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }
@@ -202,7 +209,7 @@
                      text: doubleCell('<strong>' + item.name + '</strong>', item.crn, 'govuk-body-s' ),
                      attributes: { "data-sort-value": item.crn }
                  },
-                 { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+                 tierRow,
                  { text: (item.type | capitalize)},
                  { text: (item.initialAllocationDate | dateFormat), attributes: { "data-sort-value": item.initialAllocationDate } },
                  { text: allocatedCaseLink(item, pduCode), attributes: { "data-sort-value": item.redacted } }

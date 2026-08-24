@@ -1,7 +1,7 @@
 import Page from '../pages/page'
 import ActiveCasesPage from '../pages/activeCases'
 
-import { sortDataAndAssertSortExpectations } from './helper/sort-helper'
+import { ColumnSortExpectations, sortDataAndAssertSortExpectations } from './helper/sort-helper'
 
 context('Active Cases', () => {
   let activeCasesPage
@@ -104,4 +104,64 @@ context('Active Cases', () => {
 
     cy.get('table').within(() => cy.contains('button', 'Name / CRN').should('have.attr', { 'aria-sort': 'ascending' }))
   })
+})
+
+context('New tier system', () => {
+  beforeEach(() => {
+    cy.task('stubSetup')
+    cy.task('stubForStaffLaoStatusByCrnsNewTiers')
+    cy.task('stubGetOffenderManagerCasesForAllTiers')
+    cy.task('stubGetTeamDetails', { code: 'TM2', name: 'Team Name 1' })
+    cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/TM2/OM2/active-cases')
+  })
+
+  it('should display the label for missing tiers', () => {
+    cy.get('table').within(() => cy.contains('button', 'Tier').click())
+    cy.get('table').within(() => cy.contains('button', 'Tier').should('have.attr', { 'aria-sort': 'ascending' }))
+    cy.get('table').within(() => cy.contains('button', 'Tier').click())
+    cy.get('table').within(() => cy.contains('button', 'Tier').should('have.attr', { 'aria-sort': 'descending' }))
+
+    cy.get('table')
+      .find('tr td:nth-child(2)') // gets the tier column
+      .eq(0) // grabs the first row of that column
+      .contains('-') // asserts dash for missing tier
+      .should('have.attr', 'aria-label', 'cannot be calculated because assessment data is missing') // asserts expectedColumnValue
+  })
+
+  it('should correctly sort the new tiers', () => {
+    cy.get('table').within(() => cy.contains('button', 'Tier').click())
+    cy.get('table').within(() => cy.contains('button', 'Tier').should('have.attr', { 'aria-sort': 'ascending' }))
+
+    const sortExpectations = generateSortExpectations()
+    sortDataAndAssertSortExpectations(1, sortExpectations, false)
+  })
+
+  const generateSortExpectations = (): Array<ColumnSortExpectations> => {
+    return [
+      {
+        columnHeaderName: 'Name / CRN',
+        orderedData: [
+          // we order by CRN not name in this column
+          'C567654',
+          'CRN1111',
+          'CRN2222',
+          'E124321',
+          'F5635632',
+          'L786545',
+          'P567654',
+          'X768522',
+        ],
+      },
+      {
+        columnHeaderName: 'Tier',
+        orderedData: ['A', 'B', 'C', 'D', 'E', 'F', 'G', '-'],
+      },
+      {
+        columnHeaderName: 'Type of case',
+        orderedData: ['Community', 'Community', 'Community', 'Community', 'Custody', 'Custody', 'Custody', 'License'],
+      },
+    ]
+  }
 })

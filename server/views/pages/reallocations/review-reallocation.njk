@@ -10,17 +10,7 @@
 {% from "../../components/reallocationInstructions/macro.njk" import instructionsForm %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-
-{% macro tierField(tier, provisionalTier) %}
-  {%- if tier !== 'MISSING' %}
-    {{ tier }}
-  {% else %}
-    <span class="govuk-body govuk-tag--red govuk-!-padding-1">Missing</span>
-  {% endif %}
-  {% if provisionalTier === true %}
-    <span class="govuk-body govuk-tag--orange govuk-!-padding-1 govuk-!-margin-left-3">Provisional</span>
-  {% endif %}
-{% endmacro %}
+{% from "../../components/tierTag/macro.njk" import tierTag %}
 
 {% block beforeContent %}
   {{ govukBackLink({
@@ -109,7 +99,7 @@
                 text: 'Tier'
               },
                 value: {
-                html: tierField(tier, provisionalTier)
+                html: tierTag(tier, provisionalTier)
               }
               },
               {

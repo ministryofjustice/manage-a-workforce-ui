@@ -4,19 +4,9 @@
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
 {% from "../components/risk-summary/macro.njk" import riskSummaryBadge %}
+{% from "../components/tierTag/macro.njk" import tierTag %}
 
 {% set events = data.activeEvents %}
-
-{% macro tierField(tier, provisionalTier) %}
-  {%- if tier !== 'MISSING' %}
-    {{ tier }}
-  {% else %}
-    <span class="govuk-body govuk-tag--red govuk-!-padding-1">Missing</span>
-  {% endif %}
-  {% if provisionalTier === true %}
-    <span class="govuk-body govuk-tag--orange govuk-!-padding-1 govuk-!-margin-left-3">Provisional</span>
-  {% endif %}
-{% endmacro %}
 
 {% block caseContent %}
 
@@ -37,7 +27,7 @@
                              text: "Tier"
                            },
                                value: {
-                               html: tierField(tier, provisionalTier)
+                               html: tierTag(tier, provisionalTier)
                            }
                          },
                          {

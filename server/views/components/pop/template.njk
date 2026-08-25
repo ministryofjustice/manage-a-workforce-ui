@@ -6,7 +6,7 @@
     {% set captionClass = 'govuk-caption-xl' %}
 {%- endif %}
 
-<div class="govuk-grid-row {{marginClass}}">
+<div class="govuk-grid-row {{marginClass}}" id="pop-header">
     <div class="govuk-grid-column-two-thirds">
         {% if params.popSize !== 'lg' %}
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ params.name }}</h1>

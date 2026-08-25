@@ -77,4 +77,24 @@ context('Reallocation Choose Practitioner', () => {
     choosePractitionerPage.tabtable().get('tr:not(.govuk-visually-hidden').eq(2).should('contain', 'Jane Doe')
     choosePractitionerPage.tabtable().get('tr:not(.govuk-visually-hidden').eq(3).should('contain.text', 'Sam Smam')
   })
+
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubChoosePractitioners', { tier: 'MISSING' })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/reallocations/choose-practitioner')
+    choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.redMissingTag().should('contain', 'Missing')
+    choosePractitionerPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubChoosePractitioners', { provisionalTier: true })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/reallocations/choose-practitioner')
+    choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.orangeProvisionalTag().should('contain', 'Provisional')
+    choosePractitionerPage
+      .tagCaption()
+      .should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
+  })
 })

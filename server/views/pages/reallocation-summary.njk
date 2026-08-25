@@ -7,6 +7,17 @@
 
 {% set events = data.activeEvents %}
 
+{% macro tierField(tier, provisionalTier) %}
+  {%- if tier !== 'MISSING' %}
+    {{ tier }}
+  {% else %}
+    <span class="govuk-body govuk-tag--red govuk-!-padding-2">Missing</span>
+  {% endif %}
+  {% if provisionalTier === true %}
+    <span class="govuk-body govuk-tag--orange govuk-!-padding-1">Provisional</span>
+  {% endif %}
+{% endmacro %}
+
 {% block caseContent %}
 
     <h2 class="govuk-heading-l">Review reallocation information</h2>
@@ -26,7 +37,7 @@
                              text: "Tier"
                            },
                                value: {
-                               text: tier
+                               html: tierField(tier, provisionalTier)
                            }
                          },
                          {

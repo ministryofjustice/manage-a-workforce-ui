@@ -4,6 +4,7 @@
 {% from "../components/documentCell/macro.njk" import documentCell %}
 {% from "../components/doubleCell/macro.njk" import doubleCell %}
 {% from "../components/risk-summary/macro.njk" import riskSummaryBadge %}
+{% from "../components/tierTag/macro.njk" import tierTag %}
 
 {% set events = data.activeEvents %}
 
@@ -26,7 +27,7 @@
                              text: "Tier"
                            },
                                value: {
-                               text: tier
+                               html: tierTag(tier, provisionalTier)
                            }
                          },
                          {

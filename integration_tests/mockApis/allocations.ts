@@ -334,7 +334,7 @@ export default {
       },
     })
   },
-  stubGetAllocatedCase: (): SuperAgentRequest => {
+  stubGetAllocatedCase: (overrides): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',
@@ -351,6 +351,7 @@ export default {
           dateOfBirth: '1984-09-27',
           age: 37,
           tier: 'C',
+          provisionalTier: false,
           address: null,
           nextAppointmentDate: null,
           activeEvents: [
@@ -389,6 +390,7 @@ export default {
             },
           ],
           outOfAreaTransfer: false,
+          ...overrides,
         },
       },
     })

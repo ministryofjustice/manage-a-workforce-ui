@@ -43,7 +43,7 @@
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Reallocate to a probation practitioner</h1>
     <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{ pduCode }}/select-teams">Edit my teams list</a>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-    {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
+    {{ pop({name: name, crn: crn, tier: tier, provisionalTier: provisionalTier, popSize: 'lg', laoCase: laoCase }) }}
     <form data-validate-form="choose-practitioner" method="post">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         {{

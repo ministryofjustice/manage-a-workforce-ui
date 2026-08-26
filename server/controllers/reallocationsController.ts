@@ -180,6 +180,7 @@ export default class ReallocationsController {
       address,
       crn: response.crn,
       tier: response.tier,
+      provisionalTier: response.provisionalTier,
       name: response.name,
       title: 'Summary | Manage a Workforce',
       pduCode,
@@ -413,6 +414,7 @@ export default class ReallocationsController {
     res.render('pages/reallocations/choose-practitioner', {
       crn: allocationInformationByTeam.crn,
       tier: allocationInformationByTeam.tier,
+      provisionalTier: allocationInformationByTeam.provisionalTier,
       pduCode,
       title: 'Choose practitioner | Manage a Workforce',
       journey: 'reallocations',
@@ -490,6 +492,7 @@ export default class ReallocationsController {
       currentStaffCode,
       crn: response.crn,
       tier: response.tier,
+      provisionalTier: response.provisionalTier,
       name: response.name,
       title: 'Review reallocation | Manage a Workforce',
       journey: 'reallocations',

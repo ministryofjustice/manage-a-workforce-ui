@@ -4,6 +4,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "../../components/crnLookup/macro.njk" import crnLookup %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "../../components/tierBanner/macro.njk" import tierBanner %}
 
 {% set checkboxItems = [] %}
 {% for item in data %}
@@ -35,6 +36,9 @@
 {% endfor %}
 
 {% block content %}
+
+  {{ tierBanner('reallocate') }}
+
   {% if errors | length > 0 %}
     {{ govukErrorSummary({
         titleText: "There is a problem",

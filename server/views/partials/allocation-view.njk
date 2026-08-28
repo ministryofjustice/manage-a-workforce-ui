@@ -2,6 +2,7 @@
 {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
 {%- from "govuk/components/error-summary/macro.njk" import govukErrorSummary -%}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "../components/tierBanner/macro.njk" import tierBanner %}
 
 {% block content %}
 
@@ -11,6 +12,8 @@
             errorList: errors
         }) }}
     {% endif %}
+
+    {{ tierBanner('allocate') }}
 
     <div class="govuk-grid-row govuk-!-padding-bottom-5">
         <div class="govuk-grid-column-full">

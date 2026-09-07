@@ -29,6 +29,12 @@
                 'data-persistent-id': 'choose-practitioner-grade'
             }
         },
+        { text: 'Total caseload',
+            attributes: {
+                "aria-sort": "none",
+                'data-persistent-id': 'choose-practitioner-total-caseload'
+            }
+        },
         { text: 'Allocations in APoP last 7 days',
             attributes: {
                 "aria-sort": "none",
@@ -101,6 +107,12 @@
                 html: ('<div class="tooltip">' + offenderManager.grade + '<span class="tooltiptext">' + offenderManager.gradeTip + '</span></div>'),
                 attributes: {
                     "data-sort-value": offenderManager.gradeOrder
+                }
+            },
+            {
+                text: offenderManager.totalCases,
+                attributes: {
+                    "data-sort-value": offenderManager.totalCases
                 }
             },
             {

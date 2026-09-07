@@ -42,6 +42,7 @@ export interface Practitioner {
   laoCase?: boolean
   allocatedCasesPastWeek: number
   reallocatedCasesPastWeek: number
+  totalCases: number
   ispsDueInNext14Days: number
   activeCases: number
   contactSuspendedCases: number

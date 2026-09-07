@@ -494,6 +494,10 @@ context('Choose Practitioner', () => {
         orderedData: ['SPO', 'PQiP', 'PO'],
       },
       {
+        columnHeaderName: 'Total caseload',
+        orderedData: ['6', '7', '9'],
+      },
+      {
         columnHeaderName: 'Allocations in APoP last 7 days',
         orderedData: ['2', '7', '7'],
       },

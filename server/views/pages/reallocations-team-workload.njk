@@ -28,6 +28,13 @@
             }
         },
         {
+            text: "Total caseload",
+            attributes: {
+                "aria-sort": "none",
+                'data-persistent-id': teamCode + '-team-workload-total-caseload'
+            }
+        },
+        {
             text: "Allocations in APoP last 7 days",
             attributes: {
                 "aria-sort": "none",
@@ -89,6 +96,12 @@
                 text: offenderManager.grade,
                 attributes: {
                     "data-sort-value": offenderManager.gradeOrder
+                }
+            },
+            {
+                text: offenderManager.totalCases,
+                attributes: {
+                    "data-sort-value": offenderManager.totalCases
                 }
             },
             {

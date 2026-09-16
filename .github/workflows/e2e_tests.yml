@@ -48,7 +48,7 @@ jobs:
         working-directory: e2e-tests
 
       - name: Run e2e tests
-        run: npm run test:all
+        run: npm run test:ci
         working-directory: e2e-tests
         env:
           HEADLESS: true

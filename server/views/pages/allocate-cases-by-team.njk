@@ -1,6 +1,7 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "../components/tierBanner/macro.njk" import tierBanner %}
 
 {% set tableRows = [] %}
 {% for team in teams %}
@@ -30,6 +31,8 @@
 {% endfor %}
 
 {% block content %}
+
+  {{ tierBanner('allocate') }}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">

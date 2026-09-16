@@ -926,6 +926,14 @@ export default class AllocationsController {
       emailCopyOptOut,
     })
   }
+
+  async getCaseAllocationGuidance(req: Request, res: Response, pduCode: string) {
+    res.render('pages/case-allocation-guidance', {
+      title: 'Case allocation guidance | Manage a Workforce',
+      referrer: req.get('Referrer'),
+      pduCode,
+    })
+  }
 }
 
 export function getChoosePractitionerDataByTeam(

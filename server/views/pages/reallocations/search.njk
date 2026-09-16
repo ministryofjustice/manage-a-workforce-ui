@@ -37,7 +37,7 @@
 
 {% block content %}
 
-  {{ tierBanner('reallocate') }}
+  {{ tierBanner({ action: 'reallocate', pduCode: pduCode }) }}
 
   {% if errors | length > 0 %}
     {{ govukErrorSummary({

@@ -59,7 +59,7 @@ describe('Case allocation guidance', () => {
         cy.task('stubForPduAllowedForUser', { userId: 'USER1', pdu: 'PDU1', errorCode: 200 })
         cy.task('stubForRegionAllowedForUser', { userId: 'USER1', region: 'RG1', errorCode: 200 })
         cy.signIn()
-        cy.visit('/reallocations')
+        cy.visit('/pdu/PDU1/reallocations')
       },
     },
   ]
@@ -84,7 +84,7 @@ describe('Case allocation guidance', () => {
         cy.get('#case-allocation-guidance-page').should('be.visible')
       })
 
-      it('should have the correct home breadcrumb link', () => {
+      it('should have the correct back link', () => {
         cy.get('#tier-banner-guidance-link').invoke('removeAttr', 'target').click()
         cy.url().should('include', '/pdu/PDU1/case-allocation-guidance')
         cy.get('#case-allocation-guidance-page').should('be.visible')

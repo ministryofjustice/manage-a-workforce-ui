@@ -22,7 +22,7 @@ jobs:
           repository: ministryofjustice/hmpps-manage-a-workforce-ui-e2e-tests
           path: e2e-tests
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: main
+          ref: WFP-3307-1
       - name: Set up Node.js
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
@@ -47,10 +47,25 @@ jobs:
         run: docker compose up -d
         working-directory: e2e-tests
 
-        # uncomment when you have tests to run
-        # - name: Run e2e tests
-        # run: npm run test:all
-        # working-directory: e2e-tests
+      - name: Run e2e tests
+        run: npm run test:all
+        working-directory: e2e-tests
+        env:
+          HEADLESS: true
+          
+      - name: upload results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: playwright tests results
+          path: |
+            integration_tests/videos/
+            integration_tests/screenshots/
+            coverage/
+            test_results/
+            ctrf/
+      
+            
       - name: Stop Docker Compose
         if: always()
         run: docker compose down

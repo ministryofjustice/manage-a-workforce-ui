@@ -53,13 +53,18 @@ jobs:
         env:
           HEADLESS: true
           
-      - name: Archive screenshots & trace
-        if: always()
-        uses: actions/upload-artifact@v7
+      - name: upload results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: screenshots-playwright
+          name: playwright tests results
           path: |
-            test-results/
+            integration_tests/videos/
+            integration_tests/screenshots/
+            coverage/
+            test_results/
+            ctrf/
+      
             
       - name: Stop Docker Compose
         if: always()

@@ -167,8 +167,7 @@ export default function allocationsControllerRoutes(
     },
   )
 
-  get('/pdu/:pduCode/case-allocation-guidance', async (req, res) => {
-    const { pduCode } = req.params
-    await allocationsController.getCaseAllocationGuidance(req, res, pduCode)
+  get('/case-allocation-guidance', async (req, res) => {
+    await allocationsController.getCaseAllocationGuidance(req, res)
   })
 }

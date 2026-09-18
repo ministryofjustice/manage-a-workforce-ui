@@ -76,18 +76,18 @@ describe('Case allocation guidance', () => {
         cy.get('#tier-banner-header').should('contain.text', 'Changes to tiering model')
         cy.get('#tier-banner-guidance-link')
           .should('contain.text', 'View guidance')
-          .and('have.attr', 'href', '/pdu/PDU1/case-allocation-guidance')
+          .and('have.attr', 'href', '/case-allocation-guidance')
       })
 
       it('should open the guidance page in a new tab', () => {
         cy.get('#tier-banner-guidance-link').invoke('removeAttr', 'target').click()
-        cy.url().should('include', '/pdu/PDU1/case-allocation-guidance')
+        cy.url().should('include', '/case-allocation-guidance')
         cy.get('#case-allocation-guidance-page').should('be.visible')
       })
 
       it('should have the correct back link', () => {
         cy.get('#tier-banner-guidance-link').invoke('removeAttr', 'target').click()
-        cy.url().should('include', '/pdu/PDU1/case-allocation-guidance')
+        cy.url().should('include', '/case-allocation-guidance')
         cy.get('#case-allocation-guidance-page').should('be.visible')
         cy.get('.govuk-back-link').should('have.attr', 'href').and('include', expectedHomeLink)
       })

@@ -927,11 +927,10 @@ export default class AllocationsController {
     })
   }
 
-  async getCaseAllocationGuidance(req: Request, res: Response, pduCode: string) {
+  async getCaseAllocationGuidance(req: Request, res: Response) {
     res.render('pages/case-allocation-guidance', {
       title: 'Case allocation guidance | Manage a Workforce',
       referrer: req.get('Referrer'),
-      pduCode,
     })
   }
 }

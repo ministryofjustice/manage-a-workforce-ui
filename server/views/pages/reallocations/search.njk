@@ -37,7 +37,7 @@
 
 {% block content %}
 
-  {{ tierBanner('reallocate') }}
+  {{ tierBanner({ action: 'reallocate' }) }}
 
   {% if errors | length > 0 %}
     {{ govukErrorSummary({

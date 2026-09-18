@@ -1,0 +1,69 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: referrer
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-width-container" id="case-allocation-guidance-page">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">Case allocation guidance</h1>
+        <div class="govuk-body" id="guidance-tier">
+          <h2 class="govuk-heading-l" id="guidance-tier-name">Tier A</h2>
+          <span>You must allocate to a PO</span>
+        </div>
+        <div class="govuk-body" id="guidance-tier">
+          <h2 class="govuk-heading-l" id="guidance-tier-name">Tier B</h2>
+          <span>You can allocate to a PSO unless the case has: </span>
+          <ul class="govuk-list govuk-list--bullet" id="guidance-tier-details">
+            <li>a combined serious reoffending predictor (CSRP) of 3% or above (high or above) </li>
+            <li>a risk of serious harm (ROSH) of high or above </li>
+          </ul>
+        </div>
+        <div class="govuk-body" id="guidance-tier">
+          <h2 class="govuk-heading-l" id="guidance-tier-name">Tier C</h2>
+          <span>You can allocate to a PSO unless the case has: </span>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>a CSRP of 3% or above (high or above) </li>
+            <li>a ROSH of high or above </li>
+          </ul>
+        </div>
+        <div class="govuk-body" id="guidance-tier">
+          <h2 class="govuk-heading-l" id="guidance-tier-name">Tier D</h2>
+          <span>You can allocate to a PSO unless the case has a ROSH of high </span>
+        </div>
+        <div class="govuk-body" id="guidance-tier">
+          <h2 class="govuk-heading-l" id="guidance-tier-name">Tier E</h2>
+          <span>You can allocate to a PSO unless the case has: </span>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>is a person convicted of a sexual offence with a ROSH of medium or above </li>
+            <li>has a child protection plan in place </li>
+          </ul>
+        </div>
+        <div class="govuk-body" id="guidance-tier">
+          <h2 class="govuk-heading-l" id="guidance-tier-name">Tier F</h2>
+          <span>You can allocate to a PSO unless the case has a child protection plan in place </span>
+        </div>
+        <div class="govuk-body" id="guidance-tier">
+          <h2 class="govuk-heading-l" id="guidance-tier-name">Tier G</h2>
+          <span>You should allocate to a PSO</span>
+        </div>
+
+        <div class="govuk-body">
+          <h2 class="govuk-heading-m">Additional guidance</h2>
+          <span>You should also allocate these to a PO, regardless of their tier: </span>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Parole Board report cases </li>
+            <li>People convicted of a sexual offence that are medium risk, subject to existing exceptions </li>
+            <li>significant safeguarding or public protection cases </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

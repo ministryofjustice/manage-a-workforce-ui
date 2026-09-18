@@ -22,7 +22,7 @@ jobs:
           repository: ministryofjustice/hmpps-manage-a-workforce-ui-e2e-tests
           path: e2e-tests
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: main
+          ref: WFP-3307
       - name: Set up Node.js
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:

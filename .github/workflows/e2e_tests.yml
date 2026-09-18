@@ -54,12 +54,13 @@ jobs:
           HEADLESS: true
           
       - name: Archive screenshots & trace
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: screenshots-playwright
           path: |
-            test-results/**/*
+            test-results/
+            
       - name: Stop Docker Compose
         if: always()
         run: docker compose down

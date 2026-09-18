@@ -52,6 +52,14 @@ jobs:
         working-directory: e2e-tests
         env:
           HEADLESS: true
+          
+      - name: Archive screenshots & trace
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: screenshots-playwright
+          path: |
+            test-results/**/*
       - name: Stop Docker Compose
         if: always()
         run: docker compose down

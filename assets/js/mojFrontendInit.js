@@ -1,7 +1,8 @@
 // Initialise MOJ Frontend components (except SortableTable which is handled in mojSortableTable.js)
 // We need to manually initialise components since we override SortableTable initialisation
 if (typeof window.MOJFrontend !== 'undefined' && typeof window.MOJFrontend.initAll === 'function') {
-  window.MOJFrontend.initAll()
+  const main = document.querySelector('main')
+  window.MOJFrontend.initAll({ scope: main })
 }
 
 // Initialise natural sortable tables if they exist

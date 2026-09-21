@@ -166,4 +166,8 @@ export default function allocationsControllerRoutes(
       )
     },
   )
+
+  get('/case-allocation-guidance', async (req, res) => {
+    await allocationsController.getCaseAllocationGuidance(req, res)
+  })
 }

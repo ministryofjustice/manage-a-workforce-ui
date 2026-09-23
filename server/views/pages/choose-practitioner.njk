@@ -61,20 +61,34 @@
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
 
-    {% if (probationStatus == 'Currently managed' and offenderManagerDetails)
-        or probationStatus == 'Previously managed' %}
-        <div class="govuk-warning-text govuk-!-margin-bottom-0">
-            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-            <strong class="govuk-warning-text__text">
-                <span class="govuk-warning-text__assistive">Warning</span>
-                {% if probationStatus == 'Previously managed' %}
-                    {{ name }} was previously managed{{ offenderManagerDetails }}.
-                {% else %}
-                    {{ name }} is currently managed{{ offenderManagerDetails }}.
-                {% endif %}
-            </strong>
-        </div>
-    {% endif %}
+    <div class="govuk-warning-text govuk-!-margin-bottom-0 govuk-!-margin-top-2">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <strong> Workload percentage last updated Friday 25 September. </strong>
+        {% if probationStatus == 'Previously managed' %}
+          <br>
+          {{ name }} was previously managed{{ offenderManagerDetails }}.
+        {% elif probationStatus == 'Currently managed' and offenderManagerDetails %}
+          <br>
+          {{ name }} is currently managed{{ offenderManagerDetails }}.
+        {% endif %}
+      </strong>
+    </div>
+
+{#    {% if (probationStatus == 'Currently managed' and offenderManagerDetails)#}
+{#        or probationStatus == 'Previously managed' %}#}
+{#        <div class="govuk-warning-text govuk-!-margin-bottom-0">#}
+{#            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>#}
+{#            <strong class="govuk-warning-text__text">#}
+{#                <span class="govuk-warning-text__assistive">Warning</span>#}
+{#                {% if probationStatus == 'Previously managed' %}#}
+{#                    {{ name }} was previously managed{{ offenderManagerDetails }}.#}
+{#                {% else %}#}
+{#                    {{ name }} is currently managed{{ offenderManagerDetails }}.#}
+{#                {% endif %}#}
+{#            </strong>#}
+{#        </div>#}
+{#    {% endif %}#}
 
     {% if error %}
         <div class="govuk-form-group govuk-form-group--error">

@@ -76,8 +76,7 @@ export default class AllocateCasesController {
     let totalCases = 0
 
     teamWorkload[teamCode].teams.forEach(team => {
-      totalCases += team.custodyCases
-      totalCases += team.communityCases
+      totalCases += team.totalCases
     })
 
     const workload = teamWorkload[teamCode].teams.map(team => ({ ...team, gradeOrder: setGradeOrder(team.grade) }))

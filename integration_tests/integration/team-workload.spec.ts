@@ -38,7 +38,7 @@ context('Team Workload', () => {
       response: [
         {
           teamCode: 'N03F01',
-          totalCases: 210,
+          totalCases: 260,
           workload: 75,
         },
       ],
@@ -46,7 +46,7 @@ context('Team Workload', () => {
     cy.visit('/pdu/PDU1/N03F01/team-workload')
 
     teamWorkloadPage = Page.verifyOnPage(TeamWorkloadPage)
-    teamWorkloadPage.totalCases().should('contain.text', '210')
+    teamWorkloadPage.totalCases().should('contain.text', '260')
   })
 
   it('shows the right number of rows in the table', () => {

@@ -11,6 +11,7 @@
 {% from "../../components/pop/macro.njk" import pop %}
 {% from "../../components/pop/macro.njk" import pop %}
 {% from '../../components/practitioner-list/macro.njk' import practitionerList %}
+{%- from "govuk/components/warning-text/macro.njk" import govukWarningText -%}
 
 {% block beforeContent %}
     {{ govukBackLink({
@@ -44,6 +45,12 @@
     <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{ pduCode }}/select-teams">Edit my teams list</a>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
+
+    {{ govukWarningText({
+      text: "Workload percentage last updated Friday 25 September.",
+      classes: "govuk-!-margin-top-2"
+    }) }}
+
     <form data-validate-form="choose-practitioner" method="post">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         {{

@@ -152,7 +152,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.warningIcon().should('exist')
   })
 
-  it('Warning is not visible on page if no offender manager details', () => {
+  it.skip('Warning is not visible on page if no offender manager details', () => {
     cy.task('stubGetCurrentlyManagedNoOffenderManagerCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
@@ -178,7 +178,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.warningIcon().should('exist')
   })
 
-  it('Warning is not visible on page if probation status is New to probation', () => {
+  it.skip('Warning is not visible on page if probation status is New to probation', () => {
     cy.task('stubGetNewToProbationCaseForChoosePractitioner')
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')

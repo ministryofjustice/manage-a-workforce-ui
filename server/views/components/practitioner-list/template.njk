@@ -10,14 +10,14 @@
     head: [
         { text: 'Select' },
         { text: 'Name',
-            classes: 'practitioners-list-name-column',
+            classes: 'practitioners-list-name-column practitioners-list-small-column',
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': 'choose-practitioner-name'
             }
         },
         { text: 'Team',
-            classes: 'govuk-visually-hidden' if params.teamData.isPerTeam,
+            classes: 'practitioners-list-small-column '+ ('govuk-visually-hidden' if params.teamData.isPerTeam),
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': 'choose-practitioner-team'
@@ -30,24 +30,28 @@
             }
         },
         { text: 'Total caseload',
+          classes: "practitioners-list-small-column",
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': 'choose-practitioner-total-caseload'
             }
         },
         { text: 'Allocations in APoP last 7 days',
+          classes: "practitioners-list-small-column",
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': 'choose-practitioner-allocations-last-7-days'
             }
         },
         { text: 'Reallocations in APoP last 7 days',
+          classes: "practitioners-list-small-column",
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': 'choose-practitioner-reallocations-last-7-days'
             }
         },
         { text: 'ISPs due next 14 days',
+          classes: "practitioners-list-small-column",
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': 'choose-practitioner-isps-due-next-14-days'
@@ -158,7 +162,11 @@
             {% endfor %}
         </ul>
         <div class="govuk-tabs__panel">
-            {{ govukTable(offenderManagerTableData) }}
+            <div class="moj-scrollable-pane">
+                <div class="moj-scrollable-pane__wrapper">
+                    {{ govukTable(offenderManagerTableData) }}
+                </div>
+            </div>
         </div>
     </div>
 </div>

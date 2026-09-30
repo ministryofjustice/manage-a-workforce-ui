@@ -21,7 +21,7 @@ context('Active Cases', () => {
       .should('deep.equal', [
         {
           'Name / CRN': 'Dylan Adam Armstrong                CRN1111            Restricted access',
-          Tier: 'B3',
+          Tier: 'B',
           'Type of case': 'Custody',
         },
         {

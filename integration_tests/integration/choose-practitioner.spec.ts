@@ -103,7 +103,7 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
-    choosePractitionerPage.captionText().should('contain', 'Tier: C1').and('contain', 'CRN: J678910')
+    choosePractitionerPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
   })
 
   it('navigate to allocate page through case view', () => {
@@ -201,42 +201,42 @@ context('Choose Practitioner', () => {
     cy.signIn()
     cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
     const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+
+    const expectedTableData = [
+      {
+        Team: 'Team 2',
+        Grade: 'POProbation Officer',
+        'Allocations in APoP last 7 days': '7',
+        'Reallocations in APoP last 7 days': '4',
+        'ISPs due next 14 days': '1',
+      },
+      {
+        Team: 'Team 1',
+        Grade: 'PQiPTrainee Probation Officer',
+        'Allocations in APoP last 7 days': '7',
+        'Reallocations in APoP last 7 days': '4',
+        'ISPs due next 14 days': '1',
+      },
+      {
+        Team: 'Team 2',
+        Grade: 'SPOSenior Probation Officer',
+        'Allocations in APoP last 7 days': '2',
+        'Reallocations in APoP last 7 days': '2',
+        'ISPs due next 14 days': '0',
+      },
+    ]
+
     choosePractitionerPage
       .tabtable()
       .should('not.have.attr', 'class', 'govuk-tabs__panel--hidden')
-      .getTable()
-      .should('deep.equal', [
-        {
-          Name: 'Jim Jam',
-          Team: 'Team 2',
-          Grade: 'POProbation Officer',
-          'Workload %': '32%',
-          'Cases in past 7 days': '5',
-          'Community cases': '0',
-          'Custody cases': '5',
-          Select: 'Select Jim Jam to allocate to',
-        },
-        {
-          Name: 'Jane Doe',
-          Team: 'Team 1',
-          Grade: 'PQiPTrainee Probation Officer',
-          'Workload %': '19%',
-          'Cases in past 7 days': '2',
-          'Community cases': '3',
-          'Custody cases': '5',
-          Select: 'Select Jane Doe to allocate to',
-        },
-        {
-          Name: 'Sam Smam',
-          Team: 'Team 2',
-          Grade: 'SPOSenior Probation Officer',
-          'Workload %': '32%',
-          'Cases in past 7 days': '5',
-          'Community cases': '0',
-          'Custody cases': '5',
-          Select: '',
-        },
-      ])
+      .getTable({ onlyColumns: Object.keys(expectedTableData[0]) })
+      .should('deep.equal', expectedTableData)
+
+    choosePractitionerPage
+      .practitionersTable()
+      .should('contain', 'Jim Jam')
+      .should('contain', 'Jane Doe')
+      .should('contain', 'Sam Smam')
   })
 
   it('All teams view link is correct', () => {
@@ -247,7 +247,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', '/pdu/PDU1/N03F02/OM2/officer-view')
+      .and('include', '/pdu/PDU1/N03F02/OM2/active-cases')
   })
 
   it('Individual team visible on page when selected', () => {
@@ -270,7 +270,7 @@ context('Choose Practitioner', () => {
     choosePractitionerPage
       .officerLink('OM2')
       .should('have.attr', 'href')
-      .and('include', '/pdu/PDU1/N03F02/OM2/officer-view')
+      .and('include', '/pdu/PDU1/N03F02/OM2/active-cases')
   })
 
   it('Individual team select radio button contains the correct team', () => {
@@ -418,15 +418,15 @@ context('Choose Practitioner', () => {
             otherReportsInNext14Days: 3,
             licenseCases: 4,
             tierCaseTotals: {
-              untiered: 2,
+              notSupervised: 2,
               a: 3,
               b: 1,
               c: 3,
               d: 0,
-              as: 0,
-              bs: 1,
-              cs: 0,
-              ds: 1,
+              e: 0,
+              f: 1,
+              g: 0,
+              missing: 1,
             },
           },
         ],
@@ -453,15 +453,15 @@ context('Choose Practitioner', () => {
             otherReportsInNext14Days: 1,
             licenseCases: 4,
             tierCaseTotals: {
-              untiered: 1,
+              notSupervised: 1,
               a: 6,
               b: 0,
               c: 4,
               d: 0,
-              as: 0,
-              bs: 0,
-              cs: 1,
-              ds: 0,
+              e: 0,
+              f: 0,
+              g: 1,
+              missing: 0,
             },
           },
         ],
@@ -494,20 +494,20 @@ context('Choose Practitioner', () => {
         orderedData: ['SPO', 'PQiP', 'PO'],
       },
       {
-        columnHeaderName: 'Workload %',
-        orderedData: ['19%', '32%', '32%'],
+        columnHeaderName: 'Total caseload',
+        orderedData: ['6', '7', '9'],
       },
       {
-        columnHeaderName: 'Cases in past 7 days',
-        orderedData: ['2', '5', '5'],
+        columnHeaderName: 'Allocations in APoP last 7 days',
+        orderedData: ['2', '7', '7'],
       },
       {
-        columnHeaderName: 'Community cases',
-        orderedData: ['0', '0', '3'],
+        columnHeaderName: 'Reallocations in APoP last 7 days',
+        orderedData: ['2', '4', '4'],
       },
       {
-        columnHeaderName: 'Custody cases',
-        orderedData: ['5', '5', '5'],
+        columnHeaderName: 'ISPs due next 14 days',
+        orderedData: ['0', '1', '1'],
       },
     ]
     sortDataAndAssertSortExpectations(2, sortExpectations, true)
@@ -529,5 +529,25 @@ context('Choose Practitioner', () => {
     cy.get('table')
       .eq(0)
       .within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
+  })
+
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubChoosePractitioners', { tier: 'MISSING' })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.redMissingTag().should('contain', 'Missing')
+    choosePractitionerPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubChoosePractitioners', { provisionalTier: true })
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.orangeProvisionalTag().should('contain', 'Provisional')
+    choosePractitionerPage
+      .tagCaption()
+      .should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
   })
 })

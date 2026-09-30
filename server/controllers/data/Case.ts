@@ -1,4 +1,5 @@
 import tierOrder from './TierOrder'
+import tierName from './TierName'
 
 export default class Case {
   name: string
@@ -28,7 +29,7 @@ export default class Case {
   ) {
     this.name = name
     this.crn = crn
-    this.tier = tier
+    this.tier = tierName(tier)
     this.tierOrder = tierOrder(tier)
     this.type = type
     this.excluded = isExcluded

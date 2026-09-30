@@ -1,6 +1,7 @@
 {% extends "partials/layout.njk" %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "../components/tierBanner/macro.njk" import tierBanner %}
 
 {% set tableRows = [] %}
 {% for team in teams %}
@@ -9,9 +10,6 @@
           [
           {
             text: team.teamName
-          },
-          {
-            text: team.workload
           },
           {
             text: team.caseCount
@@ -25,9 +23,6 @@
         html: '<a href="/pdu/' + pduCode + '/' + team.teamCode + '/team-workload" class="govuk-link">' + team.teamName + '</a>'
       },
       {
-        text: team.workload
-      },
-      {
         text: team.caseCount
       }
     ])
@@ -36,6 +31,8 @@
 {% endfor %}
 
 {% block content %}
+
+  {{ tierBanner({ action: 'allocate' }) }}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -61,9 +58,6 @@
   head: [
     {
       text: "Name"
-    },
-    {
-      text: "Workload"
     },
     {
       text: "Cases"

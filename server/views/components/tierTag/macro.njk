@@ -1,0 +1,10 @@
+{% macro tierTag(tier, provisionalTier) %}
+  {%- if tier !== 'MISSING' %}
+    {{ tier }}
+  {% else %}
+    <span class="govuk-body govuk-tag--red govuk-!-padding-1">Missing</span>
+  {% endif %}
+  {% if provisionalTier === true %}
+    <span class="govuk-body govuk-tag--orange govuk-!-padding-1 govuk-!-margin-left-3">Provisional</span>
+  {% endif %}
+{% endmacro %}

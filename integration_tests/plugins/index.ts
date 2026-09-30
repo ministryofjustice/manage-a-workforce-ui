@@ -10,6 +10,7 @@ import {
   resetLaoStubs,
   resetLaoStubs403,
   resetStaffLaoStatusByCrns,
+  resetStaffLaoStatusByCrnsNewTiers,
   resetStaffLaoStatusByCrnsRestricted,
 } from '../mockApis/wiremock'
 
@@ -53,6 +54,7 @@ export default (on: (string, Record) => void): void => {
         resetLaoStubs403(),
         redisService.deleteAll(),
         resetStaffLaoStatusByCrns(),
+        resetStaffLaoStatusByCrnsNewTiers(),
         resetStaffLaoStatusByCrnsRestricted(),
       ])
       return Promise.all([

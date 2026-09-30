@@ -39,6 +39,8 @@ export default abstract class Page {
 
   captionText = (): PageElement => cy.get('.govuk-caption-xl')
 
+  captionTextL = (): PageElement => cy.get('.govuk-caption-l')
+
   headingText = (): PageElement => cy.get('.govuk-heading-xl')
 
   outOfAreaBanner = (): PageElement => cy.get('.govuk-notification-banner__heading')
@@ -72,6 +74,12 @@ export default abstract class Page {
   feedbackPrompt = (): PageElement => cy.get('.feedback-prompt')
 
   feedbackLink = (): PageElement => cy.get('.feedback-prompt-text > a')
+
+  redMissingTag = (): PageElement => cy.get('.govuk-body.govuk-tag--red')
+
+  orangeProvisionalTag = (): PageElement => cy.get('.govuk-body.govuk-tag--orange')
+
+  tagCaption = (): PageElement => cy.get('.govuk-caption-m')
 
   downloadDocumentLink = (crn, documentId, fileName): PageElement =>
     cy.get(`a[href*="/${crn}/documents/${documentId}/${fileName}"]`)

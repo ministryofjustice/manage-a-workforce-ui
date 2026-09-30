@@ -20,4 +20,6 @@ export default class ReviewReallocationsPage extends Page {
   instructionsTextArea = (): PageElement => cy.get(`#reallocationNotes`)
 
   subHeading = (): PageElement => cy.get('.govuk-heading-l')
+
+  summaryList = (): PageElement => cy.get('.govuk-summary-list')
 }

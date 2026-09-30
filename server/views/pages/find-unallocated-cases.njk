@@ -70,7 +70,13 @@
           text: unallocatedCaseLink(item, pduCode),
           attributes: { "data-sort-value": item.crn }
       },
-      { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+      {
+          text: item.tier,
+          attributes: {
+            "data-sort-value": item.tierOrder,
+            "aria-label": "cannot be calculated because assessment data is missing" if item.tier == '-'
+          }
+      },
       { text: (item.sentenceDate | dateFormat), attributes: {
           "data-sort-value": item.sentenceDate
       } },
@@ -86,7 +92,13 @@
                 text: unallocatedCaseLink(item, pduCode),
                 attributes: { "data-sort-value": item.crn }
             },
-            { text: item.tier, attributes: { "data-sort-value": item.tierOrder } },
+            {
+                text: item.tier,
+                attributes: {
+                    "data-sort-value": item.tierOrder,
+                    "aria-label": "cannot be calculated because assessment data is missing" if item.tier == '-'
+                }
+            },
             { text: (item.sentenceDate | dateFormat), attributes: {
                 "data-sort-value": item.sentenceDate
             } },

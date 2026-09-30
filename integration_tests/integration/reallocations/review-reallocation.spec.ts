@@ -91,4 +91,30 @@ context('Review reallocation', () => {
       'You cannot include links in the allocation notes',
     )
   })
+
+  it('should display orange tag for provisional tier', () => {
+    cy.task('stubGetAllocatedCase', { provisionalTier: true })
+    cy.reload()
+
+    const reviewReallocationPage = Page.verifyOnPage(ReviewReallocationsPage)
+    reviewReallocationPage
+      .summaryList()
+      .eq(1)
+      .get('.govuk-summary-list__row')
+      .eq(5)
+      .within(() => cy.get('.govuk-body.govuk-tag--orange').should('be.visible').and('contain.text', 'Provisional'))
+  })
+
+  it('should display red tag for missing tier', () => {
+    cy.task('stubGetAllocatedCase', { tier: 'MISSING' })
+    cy.reload()
+
+    const reviewReallocationPage = Page.verifyOnPage(ReviewReallocationsPage)
+    reviewReallocationPage
+      .summaryList()
+      .eq(1)
+      .get('.govuk-summary-list__row')
+      .eq(5)
+      .within(() => cy.get('.govuk-body.govuk-tag--red').should('be.visible').and('contain.text', 'Missing'))
+  })
 })

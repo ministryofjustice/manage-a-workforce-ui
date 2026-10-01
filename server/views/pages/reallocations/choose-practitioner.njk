@@ -11,6 +11,7 @@
 {% from "../../components/pop/macro.njk" import pop %}
 {% from "../../components/pop/macro.njk" import pop %}
 {% from '../../components/practitioner-list/macro.njk' import practitionerList %}
+{%- from "govuk/components/warning-text/macro.njk" import govukWarningText -%}
 
 {% block beforeContent %}
     {{ govukBackLink({
@@ -31,11 +32,9 @@
     {% if missingEmail%}
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-                {{ govukNotificationBanner({
-                         html: '
-                     <p class="govuk-notification-banner__heading">If you cannot allocate to a probation practitioner, it’s because their email address is not linked to their staff code in NDelius.</p>
-                     <p class="govuk-notification-banner__heading">Report the issue via Service Desk as an \'unlinked officer code\'.</p>'
-             }) }}
+              {% call govukNotificationBanner() %}
+                If you cannot allocate to a probation practitioner, it’s because their email address isn't linked to their staff code in NDelius. Report the issue via Service Desk as an 'unlinked officer code'.
+              {% endcall %}
             </div>
         </div>
     {% endif %}
@@ -44,6 +43,11 @@
     <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{ pduCode }}/select-teams">Edit my teams list</a>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     {{ pop({name: name, crn: crn, tier: tier, provisionalTier: provisionalTier, popSize: 'lg', laoCase: laoCase }) }}
+
+    {{ govukWarningText({
+      text: "Workload percentage last updated Friday 25 September.",
+      classes: "govuk-!-margin-top-2"
+    }) }}
     <form data-validate-form="choose-practitioner" method="post">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         {{

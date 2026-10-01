@@ -51,15 +51,15 @@ context('Reallocation Choose Practitioner', () => {
     choosePractitionerPage.workloadWrapper().should('be.visible')
 
     choosePractitionerPage.rows().eq(1).should('contain', 'Jim Jam')
-    choosePractitionerPage.visuallyHidden().eq(1).should('contain', 'Select Jim Jam to allocate to')
-    choosePractitionerPage.visuallyHidden().eq(2).should('contain', 'Jim Jam’s workload')
+    choosePractitionerPage.visuallyHidden().eq(0).should('contain', 'Select Jim Jam to allocate to')
+    choosePractitionerPage.visuallyHidden().eq(1).should('contain', 'Jim Jam’s workload')
 
     choosePractitionerPage.rows().eq(2).should('contain', 'Jane Doe')
-    choosePractitionerPage.visuallyHidden().eq(3).should('contain', 'Select Jane Doe to allocate to')
-    choosePractitionerPage.visuallyHidden().eq(4).should('contain', 'Jane Doe’s workload')
+    choosePractitionerPage.visuallyHidden().eq(2).should('contain', 'Select Jane Doe to allocate to')
+    choosePractitionerPage.visuallyHidden().eq(3).should('contain', 'Jane Doe’s workload')
 
     choosePractitionerPage.rows().eq(3).should('contain', 'Sam Smam')
-    choosePractitionerPage.visuallyHidden().eq(5).should('contain', 'Sam Smam’s workload')
+    choosePractitionerPage.visuallyHidden().eq(4).should('contain', 'Sam Smam’s workload')
   })
 
   it('should display all practitioners when selecting all teams after selecting another team', () => {

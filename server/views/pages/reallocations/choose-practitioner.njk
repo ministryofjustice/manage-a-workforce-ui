@@ -11,7 +11,6 @@
 {% from "../../components/pop/macro.njk" import pop %}
 {% from "../../components/pop/macro.njk" import pop %}
 {% from '../../components/practitioner-list/macro.njk' import practitionerList %}
-{%- from "govuk/components/warning-text/macro.njk" import govukWarningText -%}
 
 {% block beforeContent %}
     {{ govukBackLink({
@@ -29,6 +28,21 @@
 {% endblock %}
 
 {% block content %}
+
+    {% set wmtNotification %}
+        <p class="govuk-body">
+            We've removed the Workload Management Tool (WMT) and have changed how we're displaying practitioner capacity.
+            <a class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank" href={{ "https://justiceuk.sharepoint.com/:w:/r/sites/HMPPSIntranet-Probation/_layouts/15/Doc.aspx?sourcedoc=%7B2A7B32DE-ABFC-4D01-9EEC-9C904E90BEDC%7D&file=New%20workload%20management%20arrangements%20and%20WMT%20switch%20off%20-%20FAQs%20-%20Sep%202026.docx&action=default&mobileredirect=true" }}> Read more about this update</a> (opens in a new tab).
+        </p>
+    {% endset %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {{ govukNotificationBanner({
+                html: wmtNotification
+            }) }}
+        </div>
+    </div>
+
     {% if missingEmail%}
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
@@ -44,10 +58,6 @@
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
     {{ pop({name: name, crn: crn, tier: tier, provisionalTier: provisionalTier, popSize: 'lg', laoCase: laoCase }) }}
 
-    {{ govukWarningText({
-      text: "Workload percentage last updated Friday 25 September.",
-      classes: "govuk-!-margin-top-2"
-    }) }}
     <form data-validate-form="choose-practitioner" method="post">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         {{

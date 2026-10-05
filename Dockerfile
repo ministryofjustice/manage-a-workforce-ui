@@ -10,9 +10,8 @@ FROM base AS build
 ARG BUILD_NUMBER=1_0_0
 ARG GIT_REF=not-available
 
-RUN apt-get update
-RUN apt-get install -y python-is-python3
-RUN apt-get install -y make python3 g++
+RUN apk update
+RUN apk add --update --no-cache python3 py3-pip
 
 COPY package*.json ./
 RUN CYPRESS_INSTALL_BINARY=0 npm run setup

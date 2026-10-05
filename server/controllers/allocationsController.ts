@@ -763,7 +763,19 @@ export default class AllocationsController {
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
   }
 
-  async submitAllocation(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, form, pduCode) {
+  async submitAllocation(
+    req: Request,
+    res: Response,
+    crn,
+    staffTeamCode,
+    staffCode,
+    convictionNumber,
+    form,
+    pduCode,
+    optIn = false,
+  ) {
+    const { emailCopyOptIn } = req.body
+
     const { instructions, person, isSensitive, emailCopyOptOut } = await this.allocationsService.getNotesCache(
       crn,
       `${convictionNumber}`,
@@ -774,7 +786,7 @@ export default class AllocationsController {
       throw Error('Allocation instructions not set')
     }
 
-    const sendEmailCopyToAllocatingOfficer = !emailCopyOptOut
+    const sendEmailCopyToAllocatingOfficer = optIn ? emailCopyOptIn !== undefined : !emailCopyOptOut
     const otherEmails = person?.map(p => p.email).filter(email => email)
     const spoOversightContact = instructions
     const spoOversightSensitive = isSensitive
@@ -814,68 +826,68 @@ export default class AllocationsController {
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
   }
 
-  async submitAllocationV2(
-    req: Request,
-    res: Response,
-    crn,
-    staffTeamCode,
-    staffCode,
-    convictionNumber,
-    form,
-    pduCode,
-  ) {
-    const { instructions, isSensitive } = await this.allocationsService.getNotesCache(
-      crn,
-      `${convictionNumber}`,
-      res.locals.user.username,
-    )
+  // async submitAllocationV2(
+  //   req: Request,
+  //   res: Response,
+  //   crn,
+  //   staffTeamCode,
+  //   staffCode,
+  //   convictionNumber,
+  //   form,
+  //   pduCode,
+  // ) {
+  //   const { instructions, isSensitive } = await this.allocationsService.getNotesCache(
+  //     crn,
+  //     `${convictionNumber}`,
+  //     res.locals.user.username,
+  //   )
 
-    const { person, emailCopyOptIn } = req.body
+  //   const { person, emailCopyOptIn } = req.body
 
-    if (!instructions) {
-      throw Error('Allocation instructions not set')
-    }
+  //   if (!instructions) {
+  //     throw Error('Allocation instructions not set')
+  //   }
 
-    const sendEmailCopyToAllocatingOfficer = emailCopyOptIn === 'yes'
-    const otherEmails = person ?? []
-    const spoOversightContact = instructions
-    const spoOversightSensitive = isSensitive
-    const allocationNotes = instructions
-    const allocationNotesSensitive = isSensitive
-    const isSPOOversightAccessed = 'false'
-    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
-    await this.allocationsService.getUserRegionAccessForCrn(
-      res.locals.user.token,
-      res.locals.user.username,
-      crn,
-      convictionNumber,
-    )
+  //   const sendEmailCopyToAllocatingOfficer = emailCopyOptIn === 'yes'
+  //   const otherEmails = person ?? []
+  //   const spoOversightContact = instructions
+  //   const spoOversightSensitive = isSensitive
+  //   const allocationNotes = instructions
+  //   const allocationNotesSensitive = isSensitive
+  //   const isSPOOversightAccessed = 'false'
+  //   const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
+  //   await this.allocationsService.getUserRegionAccessForCrn(
+  //     res.locals.user.token,
+  //     res.locals.user.username,
+  //     crn,
+  //     convictionNumber,
+  //   )
 
-    await this.workloadService.allocateCaseToOffenderManager(
-      res.locals.user.token,
-      crn,
-      staffCode,
-      staffTeamCode,
-      otherEmails,
-      sendEmailCopyToAllocatingOfficer,
-      convictionNumber,
-      spoOversightContact,
-      spoOversightSensitive,
-      allocationNotes,
-      allocationNotesSensitive,
-      isSPOOversightAccessed,
-      laoCase,
-    )
+  //   await this.workloadService.allocateCaseToOffenderManager(
+  //     res.locals.user.token,
+  //     crn,
+  //     staffCode,
+  //     staffTeamCode,
+  //     otherEmails,
+  //     sendEmailCopyToAllocatingOfficer,
+  //     convictionNumber,
+  //     spoOversightContact,
+  //     spoOversightSensitive,
+  //     allocationNotes,
+  //     allocationNotesSensitive,
+  //     isSPOOversightAccessed,
+  //     laoCase,
+  //   )
 
-    await this.allocationsService.setNotesCache(crn, `${convictionNumber}`, res.locals.user.username, {
-      sendEmailCopyToAllocatingOfficer,
-      spoOversightContact,
-      spoOversightSensitive,
-      person: (person ?? []).map((p: string) => ({ email: p })),
-    })
+  //   await this.allocationsService.setNotesCache(crn, `${convictionNumber}`, res.locals.user.username, {
+  //     sendEmailCopyToAllocatingOfficer,
+  //     spoOversightContact,
+  //     spoOversightSensitive,
+  //     person: (person ?? []).map((p: string) => ({ email: p })),
+  //   })
 
-    return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
-  }
+  //   return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
+  // }
 
   async getSpoOversight(
     req: Request,

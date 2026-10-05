@@ -116,6 +116,24 @@ export default function allocationsControllerRoutes(
     },
   )
 
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/save-allocation-v2',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.submitAllocation(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        convictionNumber,
+        req.body,
+        pduCode,
+        true,
+      )
+    },
+  )
+
   get('/pdu/:pduCode/:teamCode/reallocations/cases/:offenderManagerCode', async (req, res) => {
     const { teamCode, offenderManagerCode, pduCode } = req.params
     await allocationsController.getCasesForReallocation(req, res, teamCode, offenderManagerCode, pduCode)

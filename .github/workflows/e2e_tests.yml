@@ -59,7 +59,7 @@ jobs:
         with:
           name: playwright tests results
           path: |
-            test_results/
+            **/test_results/**
             
       - name: Stop Docker Compose
         if: always()

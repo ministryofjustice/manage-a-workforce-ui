@@ -295,8 +295,8 @@ export default {
     tier = 'C',
     provisionalTier = false,
   }: {
-    tier: string
-    provisionalTier: boolean
+    tier?: string
+    provisionalTier?: boolean
   }): SuperAgentRequest => {
     return stubForAllocation({
       request: {

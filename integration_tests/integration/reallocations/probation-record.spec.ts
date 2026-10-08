@@ -17,7 +17,7 @@ context('Probation record', () => {
   })
 
   it('Caption text visible on page', () => {
-    cy.task('stubGetAllocatedProbationRecord')
+    cy.task('stubGetAllocatedProbationRecord', {})
     cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.captionText().should('contain', 'CRN: J678910').and('contain', 'Tier:').and('contain', 'C')
@@ -49,7 +49,7 @@ context('Probation record', () => {
   })
 
   it('Probation record header visible on page', () => {
-    cy.task('stubGetAllocatedProbationRecord')
+    cy.task('stubGetAllocatedProbationRecord', {})
     cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
@@ -58,7 +58,7 @@ context('Probation record', () => {
 
   it('Out of area transfer banner is visible on page and continue button is disabled when case is out of area transfer case', () => {
     cy.task('stubGetAllocatedOutOfAreaCase')
-    cy.task('stubGetAllocatedProbationRecord')
+    cy.task('stubGetAllocatedProbationRecord', {})
     cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.probationRecordHeading().should('contain', 'Probation record')
@@ -68,7 +68,7 @@ context('Probation record', () => {
   })
 
   it('Sub nav visible on page', () => {
-    cy.task('stubGetAllocatedProbationRecord')
+    cy.task('stubGetAllocatedProbationRecord', {})
     cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage
@@ -81,14 +81,14 @@ context('Probation record', () => {
   })
 
   it('Probation record tab is highlighted', () => {
-    cy.task('stubGetAllocatedProbationRecord')
+    cy.task('stubGetAllocatedProbationRecord', {})
     cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.highlightedTab().should('contain.text', 'Probation record')
   })
 
   it('Continue button enabled and visible on page', () => {
-    cy.task('stubGetAllocatedProbationRecord')
+    cy.task('stubGetAllocatedProbationRecord', {})
     cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage.button().should('contain', 'Continue')
@@ -112,7 +112,7 @@ context('Probation record', () => {
   })
 
   it('Current sentences table displayed on page when active convictions exist', () => {
-    cy.task('stubGetAllocatedProbationRecord')
+    cy.task('stubGetAllocatedProbationRecord', {})
     cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage
@@ -152,7 +152,7 @@ context('Probation record', () => {
   })
 
   it('Previous sentences table displays when inactive convictions exist', () => {
-    cy.task('stubGetAllocatedProbationRecord')
+    cy.task('stubGetAllocatedProbationRecord', {})
     cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')
     const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
     probationRecordPage

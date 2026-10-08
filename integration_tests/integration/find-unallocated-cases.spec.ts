@@ -123,7 +123,7 @@ context('Find Unallocated cases', () => {
     const outOfAreaTransferCase = {
       name: 'John Doe',
       crn: 'X678911',
-      tier: 'C1',
+      tier: 'C',
       sentenceDate: '2023-12-01',
       handoverDate: null,
       initialAppointment: {
@@ -246,8 +246,7 @@ context('Find Unallocated cases', () => {
       },
       {
         columnHeaderName: 'Tier',
-        // tier sorts by tierOrder which is different to the alpha chars below (which is wy D1 comes before C1)
-        orderedData: ['D1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C1', 'C2', 'C2', 'C3'],
+        orderedData: ['A', 'B', 'C', 'C', 'D', 'E', 'E', 'F', 'G', '-'],
       },
       {
         columnHeaderName: 'Sentence date',
@@ -329,7 +328,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -357,7 +356,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -399,7 +398,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -426,7 +425,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678911',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -454,7 +453,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678912',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -482,7 +481,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678913',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -510,7 +509,7 @@ context('Find Unallocated cases', () => {
       {
         name: 'John Doe',
         crn: 'X678914',
-        tier: 'C1',
+        tier: 'C',
         sentenceDate: '2023-12-01',
         handoverDate: null,
         initialAppointment: {
@@ -550,5 +549,22 @@ context('Find Unallocated cases', () => {
     cy.get('table').find('tr').last().should('not.contain.text', ['C1', 'C2', 'C3'])
     cy.get('table').find('tr').last().should('not.contain.text', 'John Doe')
     cy.get('table').find('tr').last().find('td').should('have.length', 2)
+  })
+
+  it('should display the label for missing tiers', () => {
+    cy.task('stubUserPreferenceAllocationDemand', { pduCode: 'PDU1', lduCode: 'LDU1', teamCode: 'TM1' })
+    cy.task('stubGetAllocationsByTeam', { teamCode: 'TM1' })
+    cy.reload()
+
+    cy.get('table').within(() => cy.contains('button', 'Tier').click())
+    cy.get('table').within(() => cy.contains('button', 'Tier').should('have.attr', { 'aria-sort': 'ascending' }))
+    cy.get('table').within(() => cy.contains('button', 'Tier').click())
+    cy.get('table').within(() => cy.contains('button', 'Tier').should('have.attr', { 'aria-sort': 'descending' }))
+
+    cy.get('table')
+      .find('tr td:nth-child(2)') // gets the tier column
+      .eq(0) // grabs the first row of that column
+      .contains('-') // asserts dash for missing tier
+      .should('have.attr', 'aria-label', 'cannot be calculated because assessment data is missing') // asserts expectedColumnValue
   })
 })

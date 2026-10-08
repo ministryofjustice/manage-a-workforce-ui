@@ -7,4 +7,5 @@ export default interface OffenderManagerPotentialWorkload {
   tier: string
   name: Name
   staff: StaffMember
+  provisionalTier: boolean
 }

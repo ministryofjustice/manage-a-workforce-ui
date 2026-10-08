@@ -57,6 +57,7 @@ export default class AllocationsController {
       address,
       crn: unallocatedCase.crn,
       tier: unallocatedCase.tier,
+      provisionalTier: unallocatedCase.provisionalTier,
       name: unallocatedCase.name,
       risk,
       convictionNumber: unallocatedCase.convictionNumber,
@@ -136,6 +137,7 @@ export default class AllocationsController {
       name: probationRecord.name,
       crn: probationRecord.crn,
       tier: probationRecord.tier,
+      provisionalTier: probationRecord.provisionalTier,
       currentSentences,
       previousSentences,
       viewAll,
@@ -176,6 +178,7 @@ export default class AllocationsController {
       crn: risk.crn,
       tier: risk.tier,
       name: risk.name,
+      provisionalTier: risk.provisionalTier,
       convictionNumber: risk.convictionNumber,
       pduCode,
       outOfAreaTransfer: unallocatedCase.outOfAreaTransfer,
@@ -211,6 +214,7 @@ export default class AllocationsController {
       tier: caseOverview.tier,
       name: caseOverview.name,
       convictionNumber: caseOverview.convictionNumber,
+      provisionalTier: caseOverview.provisionalTier,
       pduCode,
       documents: documentRows,
       documentsCount: documentRows.length,
@@ -279,6 +283,7 @@ export default class AllocationsController {
       name,
       crn: allocationInformationByTeam.crn,
       tier: allocationInformationByTeam.tier,
+      provisionalTier: allocationInformationByTeam.provisionalTier,
       convictionNumber,
       probationStatus: allocationInformationByTeam.probationStatus.description,
       offenderManager,
@@ -342,6 +347,7 @@ export default class AllocationsController {
       name: response.name.combinedName,
       crn,
       tier: response.tier,
+      provisionalTier: response.provisionalTier,
       convictionNumber,
       staffCode,
       staffTeamCode,
@@ -391,6 +397,7 @@ export default class AllocationsController {
       name: response.name.combinedName,
       crn: response.crn,
       tier: response.tier,
+      provisionalTier: response.provisionalTier,
       emailListFlag,
       staffCode,
       staffTeamCode,
@@ -453,7 +460,7 @@ export default class AllocationsController {
       res.redirect(`/pdu/${pduCode}/teams`)
       return
     }
-    const { name, tier, laoCase, instructions, staff, ...response } = await this.getAllocationPageData(
+    const { name, tier, provisionalTier, laoCase, instructions, staff, ...response } = await this.getAllocationPageData(
       res,
       crn,
       convictionNumber,
@@ -477,6 +484,7 @@ export default class AllocationsController {
       addedEmails: (person ?? []).map(p => p.email),
       title: 'Choose email recipients | Manage a Workforce',
       tier,
+      provisionalTier,
       name: name.combinedName,
       data: response,
       scrollToBottom,
@@ -509,42 +517,6 @@ export default class AllocationsController {
       laoCase,
       instructions,
     }
-  }
-
-  async getOverview(
-    _,
-    res: Response,
-    offenderManagerTeamCode,
-    offenderManagerCode,
-    convictionNumber,
-    pduCode,
-    history,
-    reallocations = false,
-  ) {
-    const [response, teamDetails] = await Promise.all([
-      this.workloadService.getOffenderManagerOverview(
-        res.locals.user.token,
-        offenderManagerCode,
-        offenderManagerTeamCode,
-      ),
-      this.probationEstateService.getTeamDetails(res.locals.user.token, offenderManagerTeamCode),
-    ])
-    const data: OfficerView = new OfficerView(response)
-    let nextPage = 'pages/officer-overview'
-    if (history) {
-      nextPage = 'pages/history-officer-overview'
-    }
-
-    res.render(nextPage, {
-      title: 'Practitioner workload | Manage a Workforce',
-      data,
-      officerTeamCode: offenderManagerTeamCode,
-      convictionNumber,
-      isOverview: true,
-      pduCode,
-      teamName: teamDetails.name,
-      journey: reallocations ? 'reallocations' : undefined,
-    })
   }
 
   async getActiveCases(
@@ -791,7 +763,19 @@ export default class AllocationsController {
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
   }
 
-  async submitAllocation(req: Request, res: Response, crn, staffTeamCode, staffCode, convictionNumber, form, pduCode) {
+  async submitAllocation(
+    req: Request,
+    res: Response,
+    crn,
+    staffTeamCode,
+    staffCode,
+    convictionNumber,
+    form,
+    pduCode,
+    optIn = false,
+  ) {
+    const { emailCopyOptIn } = req.body
+
     const { instructions, person, isSensitive, emailCopyOptOut } = await this.allocationsService.getNotesCache(
       crn,
       `${convictionNumber}`,
@@ -802,7 +786,7 @@ export default class AllocationsController {
       throw Error('Allocation instructions not set')
     }
 
-    const sendEmailCopyToAllocatingOfficer = !emailCopyOptOut
+    const sendEmailCopyToAllocatingOfficer = optIn ? emailCopyOptIn !== undefined : !emailCopyOptOut
     const otherEmails = person?.map(p => p.email).filter(email => email)
     const spoOversightContact = instructions
     const spoOversightSensitive = isSensitive
@@ -837,69 +821,6 @@ export default class AllocationsController {
       sendEmailCopyToAllocatingOfficer,
       spoOversightContact,
       spoOversightSensitive,
-    })
-
-    return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
-  }
-
-  async submitAllocationV2(
-    req: Request,
-    res: Response,
-    crn,
-    staffTeamCode,
-    staffCode,
-    convictionNumber,
-    form,
-    pduCode,
-  ) {
-    const { instructions, isSensitive } = await this.allocationsService.getNotesCache(
-      crn,
-      `${convictionNumber}`,
-      res.locals.user.username,
-    )
-
-    const { person, emailCopyOptIn } = req.body
-
-    if (!instructions) {
-      throw Error('Allocation instructions not set')
-    }
-
-    const sendEmailCopyToAllocatingOfficer = emailCopyOptIn === 'yes'
-    const otherEmails = person ?? []
-    const spoOversightContact = instructions
-    const spoOversightSensitive = isSensitive
-    const allocationNotes = instructions
-    const allocationNotesSensitive = isSensitive
-    const isSPOOversightAccessed = 'false'
-    const laoCase: boolean = await this.allocationsService.getLaoStatus(crn, res.locals.user.token)
-    await this.allocationsService.getUserRegionAccessForCrn(
-      res.locals.user.token,
-      res.locals.user.username,
-      crn,
-      convictionNumber,
-    )
-
-    await this.workloadService.allocateCaseToOffenderManager(
-      res.locals.user.token,
-      crn,
-      staffCode,
-      staffTeamCode,
-      otherEmails,
-      sendEmailCopyToAllocatingOfficer,
-      convictionNumber,
-      spoOversightContact,
-      spoOversightSensitive,
-      allocationNotes,
-      allocationNotesSensitive,
-      isSPOOversightAccessed,
-      laoCase,
-    )
-
-    await this.allocationsService.setNotesCache(crn, `${convictionNumber}`, res.locals.user.username, {
-      sendEmailCopyToAllocatingOfficer,
-      spoOversightContact,
-      spoOversightSensitive,
-      person: (person ?? []).map((p: string) => ({ email: p })),
     })
 
     return res.redirect(`/pdu/${pduCode}/${crn}/convictions/${convictionNumber}/allocation-complete`)
@@ -942,6 +863,7 @@ export default class AllocationsController {
       crn: response.crn,
       staffCode: response.staff.code,
       tier: response.tier,
+      provisionalTier: response.provisionalTier,
       staffTeamCode,
       convictionNumber,
       errors: req.flash('errors') || [],
@@ -951,6 +873,13 @@ export default class AllocationsController {
       person,
       isSensitive,
       emailCopyOptOut,
+    })
+  }
+
+  async getCaseAllocationGuidance(req: Request, res: Response) {
+    res.render('pages/case-allocation-guidance', {
+      title: 'Case allocation guidance | Manage a Workforce',
+      referrer: req.get('Referrer'),
     })
   }
 }

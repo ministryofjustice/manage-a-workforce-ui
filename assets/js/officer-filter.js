@@ -8,7 +8,7 @@ $(function () {
       var $row = $(this)
       if (teamCode && $row.has(`td[data-team-code="${teamCode}"]`).length) {
         $row.toggleClass('govuk-visually-hidden', false)
-      } else if (teamCode) {
+      } else if (teamCode && teamCode !== 'ALL-TEAMS') {
         $row.toggleClass('govuk-visually-hidden', true)
       } else {
         $row.toggleClass('govuk-visually-hidden', false)

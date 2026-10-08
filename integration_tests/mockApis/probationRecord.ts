@@ -2,7 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { stubForAllocation } from './wiremock'
 
 export default {
-  stubGetProbationRecord: (): SuperAgentRequest => {
+  stubGetProbationRecord: (overrides): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',
@@ -14,7 +14,8 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
+          provisionalTier: false,
           convictionNumber: 1,
           active: [
             {
@@ -72,6 +73,7 @@ export default {
               ],
             },
           ],
+          ...overrides,
         },
       },
     })
@@ -88,7 +90,7 @@ export default {
         jsonBody: {
           name: 'John O&#39;Reilly',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           convictionNumber: 1,
           active: [
             {
@@ -162,7 +164,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           convictionNumber: 1,
           active: [],
           previous: [],
@@ -182,7 +184,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           convictionNumber: 1,
           active: [
             {
@@ -261,7 +263,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           convictionNumber: 1,
           active: [
             {
@@ -301,7 +303,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           convictionNumber: 1,
           active: [
             {
@@ -375,7 +377,7 @@ export default {
         jsonBody: {
           name: 'John O&#39;Reilly',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           convictionNumber: 1,
           active: [
             {
@@ -449,7 +451,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           convictionNumber: 1,
           active: [],
           previous: [],
@@ -469,7 +471,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           convictionNumber: 1,
           active: [
             {
@@ -548,7 +550,7 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C1',
+          tier: 'C',
           convictionNumber: 1,
           active: [
             {

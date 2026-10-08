@@ -259,4 +259,77 @@ export default {
       },
     })
   },
+  stubForStaffLaoStatusByCrnsNewTiers: (crns?: LaoStatus[]): SuperAgentRequest => {
+    const crnStrings = (
+      crns ?? [
+        { crn: 'CRN1111' },
+        { crn: 'CRN2222' },
+        { crn: 'L786545' },
+        { crn: 'E124321' },
+        { crn: 'P567654' },
+        { crn: 'C567654' },
+        { crn: 'F5635632' },
+        { crn: 'X768522' },
+      ]
+    ).map(c => c.crn)
+    return stubForLaoStatus({
+      request: {
+        method: 'POST',
+        urlPattern: `/cases/restrictions/crn/list`,
+        bodyPatterns: [
+          {
+            equalToJson: `{  "crns": ${JSON.stringify(crnStrings)} }`,
+          },
+        ],
+      },
+      response: {
+        status: 200,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        jsonBody: {
+          access: crns ?? [
+            {
+              crn: 'CRN1111',
+              userRestricted: false,
+              userExcluded: false,
+            },
+            {
+              crn: 'CRN2222',
+              userRestricted: false,
+              userExcluded: false,
+            },
+            {
+              crn: 'L786545',
+              userRestricted: false,
+              userExcluded: false,
+            },
+            {
+              crn: 'E124321',
+              userRestricted: false,
+              userExcluded: false,
+            },
+            {
+              crn: 'P567654',
+              userRestricted: false,
+              userExcluded: false,
+            },
+            {
+              crn: 'C567654',
+              userRestricted: false,
+              userExcluded: false,
+            },
+            {
+              crn: 'F5635632',
+              userRestricted: false,
+              userExcluded: false,
+            },
+            {
+              crn: 'X768522',
+              userRestricted: false,
+              userExcluded: false,
+            },
+          ],
+        },
+      },
+    })
+  },
 }

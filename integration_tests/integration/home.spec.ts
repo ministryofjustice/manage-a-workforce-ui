@@ -36,7 +36,7 @@ context('Unallocated', () => {
   it('Feedback link goes to Smart Survey survey', () => {
     cy.signIn()
     const allocateCasesByTeamPage = Page.verifyOnPage(AllocateCasesByTeamPage)
-    allocateCasesByTeamPage.surveyLink().should('have.attr', 'href').and('contain', 'www.smartsurvey.co.uk/s/AWQG5Z')
+    allocateCasesByTeamPage.surveyLink().should('have.attr', 'href').and('contain', 'www.smartsurvey.co.uk/t/AAGPPN')
   })
 
   it('Fallback footer visible on page', () => {

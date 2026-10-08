@@ -44,14 +44,27 @@
 {% endblock %}
 
 {% block content %}
+
+    {% set wmtNotification %}
+        <p class="govuk-body">
+            We've removed the Workload Management Tool (WMT) and have changed how we're displaying practitioner capacity.
+            <a class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank" href={{ "https://justiceuk.sharepoint.com/:w:/r/sites/HMPPSIntranet-Probation/_layouts/15/Doc.aspx?sourcedoc=%7B2A7B32DE-ABFC-4D01-9EEC-9C904E90BEDC%7D&file=New%20workload%20management%20arrangements%20and%20WMT%20switch%20off%20-%20FAQs%20-%20Sep%202026.docx&action=default&mobileredirect=true" }}> Read more about this update</a> (opens in a new tab).
+        </p>
+    {% endset %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {{ govukNotificationBanner({
+              html: wmtNotification
+            }) }}
+        </div>
+    </div>
+
     {% if missingEmail%}
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-                {{ govukNotificationBanner({
-                         html: '
-                     <p class="govuk-notification-banner__heading">If you cannot allocate to a probation practitioner, it’s because their email address is not linked to their staff code in NDelius.</p>
-                     <p class="govuk-notification-banner__heading">Report the issue via Service Desk as an \'unlinked officer code\'.</p>'
-             }) }}
+                {% call govukNotificationBanner() %}
+                  If you cannot allocate to a probation practitioner, it’s because their email address isn't linked to their staff code in NDelius. Report the issue via Service Desk as an 'unlinked officer code'.
+                {% endcall %}
             </div>
         </div>
     {% endif %}
@@ -59,7 +72,7 @@
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Allocate to a probation practitioner</h1>
     <a class="govuk-body-s govuk-link--no-visited-state" data-qa-link="select-teams" href="/pdu/{{pduCode}}/select-teams">Edit my teams list</a>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-    {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
+    {{ pop({name: name, crn: crn, tier: tier, provisionalTier: provisionalTier, popSize: 'lg', laoCase: laoCase }) }}
 
     {% if (probationStatus == 'Currently managed' and offenderManagerDetails)
         or probationStatus == 'Previously managed' %}

@@ -94,6 +94,10 @@ export { stubForLaoStatus403, resetLaoStubs403 }
 const { stubFor: stubForStaffLaoStatusByCrns, resetStubs: resetStaffLaoStatusByCrns } = wiremock(allocationUrl)
 export { stubForStaffLaoStatusByCrns, resetStaffLaoStatusByCrns }
 
+const { stubFor: stubForStaffLaoStatusByCrnsNewTiers, resetStubs: resetStaffLaoStatusByCrnsNewTiers } =
+  wiremock(allocationUrl)
+export { stubForStaffLaoStatusByCrnsNewTiers, resetStaffLaoStatusByCrnsNewTiers }
+
 const { stubFor: stubForStaffLaoStatusByCrnsRestricted, resetStubs: resetStaffLaoStatusByCrnsRestricted } =
   wiremock(allocationUrl)
 export { stubForStaffLaoStatusByCrnsRestricted, resetStaffLaoStatusByCrnsRestricted }

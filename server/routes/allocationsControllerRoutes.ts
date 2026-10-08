@@ -116,35 +116,27 @@ export default function allocationsControllerRoutes(
     },
   )
 
-  get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/officer-view', async (req, res) => {
-    const { convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
-    await allocationsController.getOverview(
-      req,
-      res,
-      offenderManagerTeamCode,
-      offenderManagerCode,
-      convictionNumber,
-      pduCode,
-      false,
-    )
-  })
+  post(
+    '/pdu/:pduCode/:crn/convictions/:convictionNumber/allocate/:staffTeamCode/:staffCode/save-allocation-v2',
+    async (req, res) => {
+      const { crn, convictionNumber, staffTeamCode, staffCode, pduCode } = req.params
+      await allocationsController.submitAllocation(
+        req,
+        res,
+        crn,
+        staffTeamCode,
+        staffCode,
+        convictionNumber,
+        req.body,
+        pduCode,
+        true,
+      )
+    },
+  )
 
   get('/pdu/:pduCode/:teamCode/reallocations/cases/:offenderManagerCode', async (req, res) => {
     const { teamCode, offenderManagerCode, pduCode } = req.params
     await allocationsController.getCasesForReallocation(req, res, teamCode, offenderManagerCode, pduCode)
-  })
-
-  get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/history-officer-view', async (req, res) => {
-    const { convictionNumber, offenderManagerTeamCode, offenderManagerCode, pduCode } = req.params
-    await allocationsController.getOverview(
-      req,
-      res,
-      offenderManagerTeamCode,
-      offenderManagerCode,
-      convictionNumber,
-      pduCode,
-      true,
-    )
   })
 
   get('/pdu/:pduCode/:offenderManagerTeamCode/:offenderManagerCode/active-cases', async (req, res) => {
@@ -192,4 +184,8 @@ export default function allocationsControllerRoutes(
       )
     },
   )
+
+  get('/case-allocation-guidance', async (req, res) => {
+    await allocationsController.getCaseAllocationGuidance(req, res)
+  })
 }

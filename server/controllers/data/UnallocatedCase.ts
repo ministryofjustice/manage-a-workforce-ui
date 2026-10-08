@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import config from '../../config'
 import OffenderManager from '../../models/OffenderManager'
 import tierOrder from './TierOrder'
+import tierName from './TierName'
 import InitialAppointment from '../../models/InitialAppointment'
 
 export default class UnallocatedCase {
@@ -60,7 +61,7 @@ export default class UnallocatedCase {
     this.crn = crn
 
     if (!apopExcluded) {
-      this.tier = tier
+      this.tier = tierName(tier)
       this.tierOrder = tierOrder(tier)
       this.sentenceDate = sentenceDate
       this.setHandoverDate(handoverDate)

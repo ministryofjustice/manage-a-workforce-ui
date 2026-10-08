@@ -42,7 +42,7 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
 
-            {{ pop({name: name, crn: crn, tier: tier, popSize: 'lg', laoCase: laoCase }) }}
+            {{ pop({name: name, crn: crn, tier: tier, provisionalTier: provisionalTier, laoCase: laoCase }) }}
 
         </div>
     </div>
@@ -84,7 +84,7 @@
 
                 </form>
 
-                <form data-validate-form method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation' }}" method="post">
+                <form data-validate-form method="post" action="{{ '/pdu/' + pduCode + '/' + crn + '/convictions/' + convictionNumber + '/allocate/' + staffTeamCode + '/' + staffCode + '/save-allocation' }}">
                     <div class="govuk-form-group govuk-!-margin-top-2">
 
                         <div class="govuk-button-group">

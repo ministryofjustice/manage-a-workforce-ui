@@ -8,6 +8,7 @@ export default interface Allocation {
   name: string
   crn: string
   tier: string
+  provisionalTier: boolean
   gender?: string
   dateOfBirth: string
   age: number

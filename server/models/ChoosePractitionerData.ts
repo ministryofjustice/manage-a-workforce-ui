@@ -18,15 +18,15 @@ interface CommunityPersonManager {
 }
 
 interface TierCaseTotals {
-  untiered: number
+  notSupervised: number
   a: number
   b: number
   c: number
   d: number
-  as: number
-  bs: number
-  cs: number
-  ds: number
+  e: number
+  f: number
+  g: number
+  missing: number
 }
 
 export interface Practitioner {
@@ -42,6 +42,7 @@ export interface Practitioner {
   laoCase?: boolean
   allocatedCasesPastWeek: number
   reallocatedCasesPastWeek: number
+  totalCases: number
   ispsDueInNext14Days: number
   activeCases: number
   contactSuspendedCases: number
@@ -55,6 +56,7 @@ export default interface ChoosePractitionerData {
   crn: string
   name: PersonName
   tier: string
+  provisionalTier: boolean
   probationStatus: ProbationStatus
   communityPersonManager?: CommunityPersonManager
   teams: Record<string, Practitioner[]>

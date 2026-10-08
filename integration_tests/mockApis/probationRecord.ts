@@ -291,7 +291,13 @@ export default {
       },
     })
   },
-  stubGetAllocatedProbationRecord: (): SuperAgentRequest => {
+  stubGetAllocatedProbationRecord: ({
+    tier = 'C',
+    provisionalTier = false,
+  }: {
+    tier: string
+    provisionalTier: boolean
+  }): SuperAgentRequest => {
     return stubForAllocation({
       request: {
         method: 'GET',
@@ -303,7 +309,8 @@ export default {
         jsonBody: {
           name: 'Dylan Adam Armstrong',
           crn: 'J678910',
-          tier: 'C',
+          tier,
+          provisionalTier,
           convictionNumber: 1,
           active: [
             {

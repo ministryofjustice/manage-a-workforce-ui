@@ -30,6 +30,24 @@ context('Probation record', () => {
     probationRecordPage.headingText().should('contain', "John O'Reilly")
   })
 
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubGetAllocatedProbationRecord', { tier: 'MISSING' })
+    cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.redMissingTag().should('contain', 'Missing')
+    probationRecordPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubGetAllocatedProbationRecord', { provisionalTier: true })
+    cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')
+    const probationRecordPage = Page.verifyOnPage(ProbationRecordPage)
+    probationRecordPage.orangeProvisionalTag().should('contain', 'Provisional')
+    probationRecordPage
+      .tagCaption()
+      .should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
+  })
+
   it('Probation record header visible on page', () => {
     cy.task('stubGetAllocatedProbationRecord')
     cy.visit('/pdu/PDU1/J678910/reallocation-probation-record')

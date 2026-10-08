@@ -47,10 +47,20 @@ jobs:
         run: docker compose up -d
         working-directory: e2e-tests
 
-        # uncomment when you have tests to run
-        # - name: Run e2e tests
-        # run: npm run test:all
-        # working-directory: e2e-tests
+      - name: Run e2e tests
+        run: npm run test:all
+        working-directory: e2e-tests
+        env:
+          HEADLESS: true
+          
+      - name: upload results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: playwright tests results
+          path: |
+            **/test_results/**
+            
       - name: Stop Docker Compose
         if: always()
         run: docker compose down

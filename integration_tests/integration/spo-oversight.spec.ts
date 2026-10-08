@@ -33,6 +33,24 @@ context('Instructions Confirmation', () => {
 
   it('Missing tier in header should display red tag', () => {
     cy.task('stubGetConfirmInstructions', { tier: 'MISSING' })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/spo-oversight-contact-option')
+    oversightOptionPage = Page.verifyOnPage(SpoOversightOptionPage)
+    oversightOptionPage.redMissingTag().should('contain', 'Missing')
+    oversightOptionPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubGetConfirmInstructions', { provisionalTier: true })
+    cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/spo-oversight-contact-option')
+    oversightOptionPage = Page.verifyOnPage(SpoOversightOptionPage)
+    oversightOptionPage.orangeProvisionalTag().should('contain', 'Provisional')
+    oversightOptionPage
+      .tagCaption()
+      .should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
+  })
+
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubGetConfirmInstructions', { tier: 'MISSING' })
     cy.visit('/pdu/PDU1/J678910/convictions/1/allocate/TM2/OM1/allocation-notes')
     spoOversightPage.redMissingTag().should('contain', 'Missing')
     spoOversightPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')

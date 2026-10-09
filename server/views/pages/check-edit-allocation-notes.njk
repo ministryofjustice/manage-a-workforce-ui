@@ -39,13 +39,7 @@
 
 {% block content %}
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-
-            {{ pop({name: name, crn: crn, tier: tier, provisionalTier: provisionalTier, laoCase: laoCase }) }}
-
-        </div>
-    </div>
+    {{ pop({name: name, crn: crn, tier: tier, provisionalTier: provisionalTier, laoCase: laoCase }) }}
 
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 

@@ -31,6 +31,22 @@ context('Documents', () => {
     cy.contains(outOfAreasBannerBlurb).should('not.exist')
   })
 
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubGetAllocatedCase', { tier: 'MISSING' })
+    cy.visit('/pdu/PDU1/J678910/reallocation-documents')
+    const documentsPage = Page.verifyOnPage(DocumentsPage)
+    documentsPage.redMissingTag().should('contain', 'Missing')
+    documentsPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubGetAllocatedCase', { provisionalTier: true })
+    cy.visit('/pdu/PDU1/J678910/reallocation-documents')
+    const documentsPage = Page.verifyOnPage(DocumentsPage)
+    documentsPage.orangeProvisionalTag().should('contain', 'Provisional')
+    documentsPage.tagCaption().should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
+  })
+
   it('Out of area transfer banner is visible on page and continue button is disabled when case is out of area transfer case', () => {
     cy.task('stubGetAllocatedOutOfAreaCase')
     cy.reload()

@@ -49,7 +49,7 @@ export default class UserPreferenceService {
     const result = (await this.restClient(token).get({
       path: `/users/${username}/preferences/allocation-demand`,
     })) as UserPreference
-    return result.items.at(0) ? JSON.parse(result.items.at(0)) : { pdu: '', ldu: '', team: '' }
+    return result.items[0] ? JSON.parse(result.items[0]) : { pdu: '', ldu: '', team: '' }
   }
 
   async saveAllocationDemandPreference(

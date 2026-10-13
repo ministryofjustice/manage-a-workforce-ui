@@ -32,6 +32,26 @@ context('Risk', () => {
     cy.contains(outOfAreasBannerBlurb).should('not.exist')
   })
 
+  it('Missing tier in header should display red tag', () => {
+    cy.task('stubGetAllocatedCase')
+    cy.task('stubGetAllocatedRiskV1', { tier: 'MISSING' })
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
+    cy.visit('/pdu/PDU1/J678910/reallocation-risk')
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.redMissingTag().should('contain', 'Missing')
+    riskPage.tagCaption().should('contain', 'Tier cannot be calculated as key assessment data missing')
+  })
+
+  it('Provisional tier in header should display orange tag', () => {
+    cy.task('stubGetAllocatedCase')
+    cy.task('stubGetAllocatedRiskV1', { provisionalTier: true })
+    cy.task('stubForLaoStatus', { crn: 'J678910', response: false })
+    cy.visit('/pdu/PDU1/J678910/reallocation-risk')
+    const riskPage = Page.verifyOnPage(RiskPage)
+    riskPage.orangeProvisionalTag().should('contain', 'Provisional')
+    riskPage.tagCaption().should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
+  })
+
   it('Sub nav visible on page', () => {
     cy.task('stubGetAllocatedCase')
     cy.task('stubGetAllocatedRiskV1')

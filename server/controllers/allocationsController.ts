@@ -19,7 +19,7 @@ import UserPreferenceService from '../services/userPreferenceService'
 import { TeamAndStaffCode } from '../utils/teamAndStaffCode'
 import PersonOnProbationStaffDetails from '../models/PersonOnProbationStaffDetails'
 import EstateTeam from '../models/EstateTeam'
-import { unescapeApostrophe, filterEmptyEmails, fixupArrayNotation } from '../utils/utils'
+import { filterEmptyEmails, fixupArrayNotation, unescapeApostrophe } from '../utils/utils'
 import CrnStaffRestrictions from '../models/CrnStaffRestrictions'
 import CrnDetails from '../models/ReallocationCrnDetails'
 
@@ -423,7 +423,7 @@ export default class AllocationsController {
     pduCode,
     scrollToBottom = false,
   ) {
-    const { laoCase, instructions, name, tier, ...response } = await this.getAllocationPageData(
+    const { laoCase, instructions, name, tier, provisionalTier, ...response } = await this.getAllocationPageData(
       res,
       crn,
       convictionNumber,
@@ -438,6 +438,7 @@ export default class AllocationsController {
       pduCode,
       title: 'Edit or save allocation notes | Manage a Workforce',
       tier,
+      provisionalTier,
       name: name.combinedName,
       data: response,
       scrollToBottom,
@@ -967,11 +968,9 @@ export function getStaffCodes(practitionerData: Record<string, Practitioner[]>):
   /*
    iterate through practitioner data creating a list of staffCodes
    */
-  const staffCodes = Object.values(practitionerData)
+  return Object.values(practitionerData)
     .reduce((aggr, practitioners) => [...aggr, ...practitioners], [])
     .map(practitioner => practitioner.code)
-
-  return staffCodes
 }
 
 function sortPractitionersByGrade(a, b) {

@@ -13,7 +13,7 @@ ARG GIT_REF=not-available
 RUN apk update
 RUN apk add --update --no-cache python3 py3-pip
 
-COPY package*.json ./
+COPY package*.json .allowed-scripts.mjs .npmrc ./
 RUN CYPRESS_INSTALL_BINARY=0 npm run setup
 
 COPY . .

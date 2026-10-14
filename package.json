@@ -96,7 +96,7 @@
     ]
   },
   "dependencies": {
-    "@babel/traverse": "7.29.10",
+    "@babel/traverse": "8.0.7",
     "@flipt-io/flipt-client-js": "^0.6.0",
     "@ministryofjustice/frontend": "^9.0.0",
     "@ministryofjustice/hmpps-probation-frontend-components": "1.1.1",

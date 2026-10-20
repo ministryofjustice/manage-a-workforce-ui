@@ -75,7 +75,11 @@
       </div>
 
       <div class="govuk-grid-column-one-half">
-        <h4 class="govuk-heading-m">Reductions</h4>
+        <h4 class="govuk-heading-m">Active reductions</h4>
+
+        {% if params.reductions == undefined %}
+          <span>No active reductions</span>
+        {% endif %}
       </div>
     </div>
   </div>

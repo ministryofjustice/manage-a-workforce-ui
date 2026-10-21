@@ -93,7 +93,7 @@
             {% set paddingTopDropdown = "govuk-!-padding-top-0" %}
             <div class="govuk-radios govuk-radios--small">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="allocated-officer-{{ offenderManager.code }}" name="allocatedOfficer" type="radio" value="{{offenderManager.selectionCode }} {% if params.teamAndStaffCode == offenderManager.selectionCode %} checked {% endif %}">
+                <input class="govuk-radios__input" id="allocated-officer-{{ offenderManager.code }}" name="allocatedOfficer" type="radio" value="{{offenderManager.selectionCode }}{% if params.teamAndStaffCode == offenderManager.selectionCode %} checked {% endif %}">
                 <label class="govuk-label govuk-radios__label" for="allocated-officer-{{ offenderManager.code }}">
                   <span tabindex="-1" class="govuk-visually-hidden">Select {{ offenderManager.name.combinedName }} to allocate to</span>
                 </label>

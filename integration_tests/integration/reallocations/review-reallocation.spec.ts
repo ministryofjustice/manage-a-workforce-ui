@@ -3,6 +3,7 @@ import Page from '../../pages/page'
 import ChoosePractitionerPage from '../../pages/choosePractitioner'
 
 context('Review reallocation', () => {
+  let reviewReallocationPage
   beforeEach(() => {
     cy.task('stubSetup')
     cy.task('stubGetPotentialOffenderManagerWorkload', {})
@@ -63,7 +64,7 @@ context('Review reallocation', () => {
     cy.get('#reason').select('OFFICER_LEFT')
     choosePractitionerPage.allocateCaseButton().click()
 
-    Page.verifyOnPage(ReviewReallocationsPage)
+    reviewReallocationPage = Page.verifyOnPage(ReviewReallocationsPage)
   })
 
   it('reallocating details visible on page', () => {
@@ -96,7 +97,7 @@ context('Review reallocation', () => {
     cy.task('stubGetAllocatedCase', { provisionalTier: true })
     cy.reload()
 
-    const reviewReallocationPage = Page.verifyOnPage(ReviewReallocationsPage)
+    reviewReallocationPage = Page.verifyOnPage(ReviewReallocationsPage)
     reviewReallocationPage
       .summaryList()
       .eq(1)
@@ -109,7 +110,7 @@ context('Review reallocation', () => {
     cy.task('stubGetAllocatedCase', { tier: 'MISSING' })
     cy.reload()
 
-    const reviewReallocationPage = Page.verifyOnPage(ReviewReallocationsPage)
+    reviewReallocationPage = Page.verifyOnPage(ReviewReallocationsPage)
     reviewReallocationPage
       .summaryList()
       .eq(1)

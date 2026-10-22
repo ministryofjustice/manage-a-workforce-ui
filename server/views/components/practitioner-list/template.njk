@@ -88,14 +88,31 @@
         }}
         {%- endset -%}
 
+        {% set radioCellHtml %}
+          {% if offenderManager.email and true != offenderManager.laoCase %}
+            {% set paddingTopDropdown = "govuk-!-padding-top-0" %}
+            <div class="govuk-radios govuk-radios--small">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="allocated-officer-{{ offenderManager.code }}" name="allocatedOfficer" type="radio" value="{{offenderManager.selectionCode }}{% if params.teamAndStaffCode == offenderManager.selectionCode %} checked {% endif %}">
+                <label class="govuk-label govuk-radios__label" for="allocated-officer-{{ offenderManager.code }}">
+                  <span tabindex="-1" class="govuk-visually-hidden">Select {{ offenderManager.name.combinedName }} to allocate to</span>
+                </label>
+              </div>
+            </div>
+          {% else %}
+            {% set paddingTopDropdown = "govuk-!-padding-top-7" %}
+          {% endif %}
+            <div class="practitioners-list-workload-wrapper {{paddingTopDropdown}}">
+              {{ workloadDetailsHtml | safe }}
+            </div>
+        {% endset %}
+
         {%- set tableRow = [
             {
-                html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"' + (' checked' if params.teamAndStaffCode == offenderManager.selectionCode) + '><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name.combinedName + ' to allocate to</span></label></div></div>')
-                if offenderManager.email and true != offenderManager.laoCase
+                html: radioCellHtml
             },
             {
-                html: ('<a href="/pdu/'+ params.pduCode +'/' + offenderManager.team.code + '/' + offenderManager.code + '/active-cases" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.combinedName + '</a>'
-                     + '<div class="practitioners-list-workload-wrapper">' + workloadDetailsHtml + '</div') | safe,
+                html: ('<a href="/pdu/'+ params.pduCode +'/' + offenderManager.team.code + '/' + offenderManager.code + '/active-cases" class="govuk-link--no-visited-state" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.combinedName + '</a>' ) | safe,
                 attributes: {
                     "data-sort-value": offenderManager.name.combinedName
                 }

@@ -183,6 +183,6 @@
     "fsevents@2.3.2": true,
     "unrs-resolver@1.11.1": false,
     "cypress@15.1.0": true,
-    "node@22.16.0": false
+    "node@24.22.1": true
   }
 }

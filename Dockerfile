@@ -1,11 +1,8 @@
 # Stage: base image
-FROM ghcr.io/ministryofjustice/hmpps-node:24-alpine AS base
+FROM ghcr.io/ministryofjustice/hmpps-node:24-alpine AS build
 
 ARG BUILD_NUMBER=1_0_0
 ARG GIT_REF=not-available
-
-# Stage: build assets
-FROM base AS build
 
 ARG BUILD_NUMBER=1_0_0
 ARG GIT_REF=not-available
@@ -26,7 +23,7 @@ RUN export BUILD_NUMBER=${BUILD_NUMBER} && \
 RUN npm prune --no-audit --production
 
 # Stage: copy production assets and dependencies
-FROM base
+FROM ghcr.io/ministryofjustice/hmpps-node:24-alpine-runtime
 
 COPY --from=build --chown=appuser:appgroup \
         /app/package.json \

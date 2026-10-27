@@ -1,8 +1,10 @@
-ARG BUILD_NUMBER=1_0_0
-ARG GIT_REF=not-available
+
 
 # Stage: base image
 FROM ghcr.io/ministryofjustice/hmpps-node:24-alpine AS build
+
+ARG BUILD_NUMBER=1_0_0
+ARG GIT_REF=not-available
 
 RUN apk update
 RUN apk add --update --no-cache python3 py3-pip

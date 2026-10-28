@@ -98,11 +98,15 @@ context('Active Cases', () => {
   it('persists the sort order when refreshing the page', () => {
     cy.get('table').within(() => cy.contains('button', 'Name / CRN').click())
 
-    cy.get('table').within(() => cy.contains('button', 'Name / CRN').should('have.attr', { 'aria-sort': 'ascending' }))
+    cy.get('table').within(() =>
+      cy.contains('button', 'Name / CRN').parent().should('have.attr', 'aria-sort', 'ascending'),
+    )
 
     cy.reload()
 
-    cy.get('table').within(() => cy.contains('button', 'Name / CRN').should('have.attr', { 'aria-sort': 'ascending' }))
+    cy.get('table').within(() =>
+      cy.contains('button', 'Name / CRN').parent().should('have.attr', 'aria-sort', 'ascending'),
+    )
   })
 })
 
@@ -119,9 +123,9 @@ context('New tier system', () => {
 
   it('should display the label for missing tiers', () => {
     cy.get('table').within(() => cy.contains('button', 'Tier').click())
-    cy.get('table').within(() => cy.contains('button', 'Tier').should('have.attr', { 'aria-sort': 'ascending' }))
+    cy.get('table').within(() => cy.contains('button', 'Tier').parent().should('have.attr', 'aria-sort', 'ascending'))
     cy.get('table').within(() => cy.contains('button', 'Tier').click())
-    cy.get('table').within(() => cy.contains('button', 'Tier').should('have.attr', { 'aria-sort': 'descending' }))
+    cy.get('table').within(() => cy.contains('button', 'Tier').parent().should('have.attr', 'aria-sort', 'descending'))
 
     cy.get('table')
       .find('tr td:nth-child(2)') // gets the tier column
@@ -132,7 +136,7 @@ context('New tier system', () => {
 
   it('should correctly sort the new tiers', () => {
     cy.get('table').within(() => cy.contains('button', 'Tier').click())
-    cy.get('table').within(() => cy.contains('button', 'Tier').should('have.attr', { 'aria-sort': 'ascending' }))
+    cy.get('table').within(() => cy.contains('button', 'Tier').parent().should('have.attr', 'aria-sort', 'ascending'))
 
     const sortExpectations = generateSortExpectations()
     sortDataAndAssertSortExpectations(1, sortExpectations, false)

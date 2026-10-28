@@ -7,6 +7,11 @@ on:
         required: false
         type: string
         default: '.nvmrc'
+      npm_version:
+        description: "Passed to npm install so it knows which version of npm to install"
+        required: false
+        type: string
+        default: "^12"
 permissions:
   contents: read
 jobs:
@@ -27,6 +32,12 @@ jobs:
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version-file: ${{ inputs.node_version_file }}
+      - name: Update npm
+        shell: bash
+        env:
+          NPM_VERSION: ${{ inputs.npm_version }}
+        run: |
+          npm install -g "npm@$NPM_VERSION"
       - name: Install e2e dependencies
         run: npm install
         working-directory: e2e-tests
@@ -47,10 +58,20 @@ jobs:
         run: docker compose up -d
         working-directory: e2e-tests
 
-        # uncomment when you have tests to run
-        # - name: Run e2e tests
-        # run: npm run test:all
-        # working-directory: e2e-tests
+      - name: Run e2e tests
+        run: npm run test:all
+        working-directory: e2e-tests
+        env:
+          HEADLESS: true
+
+      - name: upload results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: playwright tests results
+          path: |
+            **/test_results/**
+
       - name: Stop Docker Compose
         if: always()
         run: docker compose down

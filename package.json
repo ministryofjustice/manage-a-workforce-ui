@@ -30,11 +30,11 @@
     "int-test": "cypress run --config video=false --config-file=integration_tests/cypress.config.ts",
     "int-test-ui": "cypress open --config-file=integration_tests/cypress.config.ts",
     "clean": "rm -rf dist build stylesheets",
-    "setup": "npm ci && hmpps-npm-script-run-allowlist"
+    "setup": "npm ci"
   },
   "engines": {
     "node": "^24",
-    "npm": "^11"
+    "npm": "^12"
   },
   "jest": {
     "transform": {
@@ -105,7 +105,7 @@
     "applicationinsights": "2.9.8",
     "axios": "1.20.0",
     "axios-retry": "4.5.0",
-    "body-parser": "2.3.0",
+    "body-parser": "2.4.0",
     "bunyan": "1.8.15",
     "bunyan-format": "0.2.1",
     "compression": "1.8.2",
@@ -123,7 +123,7 @@
     "jquery-ui": "1.14.2",
     "jwt-decode": "4.0.0",
     "nocache": "4.0.0",
-    "node": "^22.0.0",
+    "node": "24.22.1",
     "nunjucks": "3.2.4",
     "passport": "0.7.0",
     "passport-oauth2": "1.8.0",
@@ -133,7 +133,6 @@
   },
   "devDependencies": {
     "@ministryofjustice/eslint-config-hmpps": "^1.0.0",
-    "@ministryofjustice/hmpps-npm-script-allowlist": "0.0.6",
     "@types/bunyan": "1.8.11",
     "@types/bunyan-format": "0.2.9",
     "@types/compression": "1.8.1",
@@ -175,9 +174,18 @@
   "overrides": {
     "@opentelemetry/core": "2.12.0",
     "brace-expansion": "5.0.12",
-    "undici": "6.29.1",
     "path-to-regexp": "8.4.0",
     "moment": "2.31.0",
     "qs": "6.16.1"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.5.1": true,
+    "dtrace-provider@0.8.8": true,
+    "esbuild@0.28.1": true,
+    "fsevents@2.3.3": false,
+    "fsevents@2.3.2": true,
+    "unrs-resolver@1.11.1": false,
+    "cypress@15.1.0": true,
+    "node@24.22.1": true
   }
 }

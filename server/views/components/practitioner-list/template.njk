@@ -36,18 +36,11 @@
                 'data-persistent-id': 'choose-practitioner-total-caseload'
             }
         },
-        { text: 'Allocations in APoP last 7 days',
+        { text: 'Allocations and reallocations in APoP last 7 days',
           classes: "practitioners-list-small-column",
             attributes: {
                 "aria-sort": "none",
-                'data-persistent-id': 'choose-practitioner-allocations-last-7-days'
-            }
-        },
-        { text: 'Reallocations in APoP last 7 days',
-          classes: "practitioners-list-small-column",
-            attributes: {
-                "aria-sort": "none",
-                'data-persistent-id': 'choose-practitioner-reallocations-last-7-days'
+                'data-persistent-id': 'choose-practitioner-alloc-realloc-last-7-days'
             }
         },
         { text: 'ISPs due next 14 days',
@@ -55,6 +48,20 @@
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': 'choose-practitioner-isps-due-next-14-days'
+            }
+        },
+        { text: 'Contracted hours',
+          classes: "practitioners-list-small-column",
+            attributes: {
+                "aria-sort": "none",
+                "data-persistent-id": 'choose-practitioner-contracted-hours'
+            }
+        },
+        { text: "Active reductions",
+          classes: "practitioners-list-small-column",
+            attributes: {
+                "aria-sort": "none",
+                "data-persistent-id": 'choose=practitioner-active-reductions'
             }
         }
     ],
@@ -120,21 +127,27 @@
                 }
             },
             {
-                text: offenderManager.allocatedCasesPastWeek,
+                text: offenderManager.casesPastWeek,
                 attributes: {
-                    "data-sort-value": offenderManager.allocatedCasesPastWeek
-                }
-            },
-            {
-                text: offenderManager.reallocatedCasesPastWeek,
-                attributes: {
-                    "data-sort-value": offenderManager.reallocatedCasesPastWeek
+                    "data-sort-value": offenderManager.casesPastWeek
                 }
             },
             {
                 text: offenderManager.ispsDueInNext14Days,
                 attributes: {
                     "data-sort-value": offenderManager.ispsDueInNext14Days
+                }
+            },
+            {
+                text: offenderManager.casesPastWeek,
+                attributes: {
+                    "data-sort-value": offenderManager.casesPastWeek
+                }
+            },
+            {
+                text: offenderManager.casesPastWeek,
+                attributes: {
+                    "data-sort-value": offenderManager.casesPastWeek
                 }
             }
         ] -%}

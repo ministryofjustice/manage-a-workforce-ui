@@ -206,23 +206,26 @@ context('Choose Practitioner', () => {
       {
         Team: 'Team 2',
         Grade: 'POProbation Officer',
-        'Allocations in APoP last 7 days': '7',
-        'Reallocations in APoP last 7 days': '4',
+        'Allocations and reallocations in APoP last 7 days': '11',
         'ISPs due next 14 days': '1',
+        'Contracted hours': '11',
+        'Active reductions': '11',
       },
       {
         Team: 'Team 1',
         Grade: 'PQiPTrainee Probation Officer',
-        'Allocations in APoP last 7 days': '7',
-        'Reallocations in APoP last 7 days': '4',
+        'Allocations and reallocations in APoP last 7 days': '11',
         'ISPs due next 14 days': '1',
+        'Contracted hours': '11',
+        'Active reductions': '11',
       },
       {
         Team: 'Team 2',
         Grade: 'SPOSenior Probation Officer',
-        'Allocations in APoP last 7 days': '2',
-        'Reallocations in APoP last 7 days': '2',
+        'Allocations and reallocations in APoP last 7 days': '4',
         'ISPs due next 14 days': '0',
+        'Contracted hours': '4',
+        'Active reductions': '4',
       },
     ]
 
@@ -498,16 +501,20 @@ context('Choose Practitioner', () => {
         orderedData: ['6', '7', '9'],
       },
       {
-        columnHeaderName: 'Allocations in APoP last 7 days',
-        orderedData: ['2', '7', '7'],
-      },
-      {
-        columnHeaderName: 'Reallocations in APoP last 7 days',
-        orderedData: ['2', '4', '4'],
+        columnHeaderName: 'Allocations and reallocations in APoP last 7 days',
+        orderedData: ['4', '11', '11'],
       },
       {
         columnHeaderName: 'ISPs due next 14 days',
         orderedData: ['0', '1', '1'],
+      },
+      {
+        columnHeaderName: 'Contracted hours',
+        orderedData: ['4', '11', '11'],
+      },
+      {
+        columnHeaderName: 'Active reductions',
+        orderedData: ['4', '11', '11'],
       },
     ]
     sortDataAndAssertSortExpectations(2, sortExpectations, true)

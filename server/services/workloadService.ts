@@ -203,7 +203,7 @@ export default class WorkloadService {
 
   async getTeamWorkload(token: string, teamCode: string): Promise<TeamWorkloadData> {
     return (await this.restClient(token).get({
-      path: `/team/practitioner-workloadcases?teamCode=${teamCode}`,
+      path: `/team/practitioner-workloadcases?grades=PSO,PQiP,PO&teamCode=${teamCode}`,
     })) as TeamWorkloadData
   }
 }

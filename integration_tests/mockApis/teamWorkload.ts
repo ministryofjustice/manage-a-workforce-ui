@@ -503,7 +503,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: '/team/practitioner-workloadcases\\?teamCode=.*',
+        urlPattern: '/team/practitioner-workloadcases\\?grades=PSO,PQiP,PO&teamCode=.*',
       },
       response: {
         status: 200,
@@ -520,7 +520,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: '/team/practitioner-workloadcases\\?teamCode=.*',
+        urlPattern: '/team/practitioner-workloadcases\\?grades=PSO,PQiP,PO&teamCode=.*',
       },
       response: {
         status: 200,
@@ -540,7 +540,7 @@ export default {
     return stubForWorkload({
       request: {
         method: 'GET',
-        urlPattern: '/team/practitioner-workloadcases\\?teamCode=.*',
+        urlPattern: '/team/practitioner-workloadcases\\?grades=PSO,PQiP,PO&teamCode=.*',
       },
       response: {
         status: 200,

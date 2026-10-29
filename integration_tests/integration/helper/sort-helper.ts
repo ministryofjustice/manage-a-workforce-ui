@@ -21,7 +21,7 @@ export const sortDataAndAssertSortExpectations = (
       .find('th')
       .each($el => {
         const sort = normaliseHeaderText($el.text()) === columnSortExpectation.columnHeaderName ? 'ascending' : 'none'
-        cy.wrap($el).should('have.attr', { 'aria-sort': sort })
+        cy.wrap($el).should('have.attr', 'aria-sort', sort)
       })
 
     // checks data for column is sorted ascending
@@ -42,7 +42,7 @@ export const sortDataAndAssertSortExpectations = (
       cy
         .contains('th[aria-sort] button', columnSortExpectation.columnHeaderName)
         .parent('th')
-        .should('have.attr', { 'aria-sort': 'descending' }),
+        .should('have.attr', 'aria-sort', 'descending'),
     )
 
     // checks data for column is sorted descending

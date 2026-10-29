@@ -152,7 +152,7 @@
     "@types/supertest": "7.2.1",
     "audit-ci": "7.1.0",
     "concurrently": "9.2.5",
-    "cypress": "^15.0.0",
+    "cypress": "^16.0.0",
     "cypress-multi-reporters": "2.0.5",
     "dotenv": "17.4.2",
     "husky": "9.1.7",
@@ -185,7 +185,7 @@
     "fsevents@2.3.3": false,
     "fsevents@2.3.2": true,
     "unrs-resolver@1.11.1": false,
-    "cypress@15.1.0": true,
+    "cypress": true,
     "node@24.22.1": true
   }
 }

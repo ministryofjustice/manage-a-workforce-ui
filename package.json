@@ -154,7 +154,7 @@
     "concurrently": "9.2.5",
     "cypress": "^16.0.0",
     "cypress-multi-reporters": "2.0.5",
-    "dotenv": "17.4.2",
+    "dotenv": "18.0.9",
     "husky": "9.1.7",
     "jest": "^30.0.0",
     "jest-html-reporter": "4.4.2",

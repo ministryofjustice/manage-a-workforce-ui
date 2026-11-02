@@ -184,10 +184,10 @@ context('Documents', () => {
   it('persists sort order when refreshing the page', () => {
     cy.get('table').within(() => cy.contains('button', 'Name').click())
 
-    cy.get('table').within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
+    cy.get('table').within(() => cy.contains('button', 'Name').parent().should('have.attr', 'aria-sort', 'ascending'))
 
     cy.reload()
 
-    cy.get('table').within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
+    cy.get('table').within(() => cy.contains('button', 'Name').parent().should('have.attr', 'aria-sort', 'ascending'))
   })
 })

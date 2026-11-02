@@ -522,13 +522,13 @@ context('Choose Practitioner', () => {
 
     cy.get('table')
       .eq(0)
-      .within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
+      .within(() => cy.contains('button', 'Name').parent().should('have.attr', 'aria-sort', 'ascending'))
 
     cy.reload()
 
     cy.get('table')
       .eq(0)
-      .within(() => cy.contains('button', 'Name').should('have.attr', { 'aria-sort': 'ascending' }))
+      .within(() => cy.contains('button', 'Name').parent().should('have.attr', 'aria-sort', 'ascending'))
   })
 
   it('Missing tier in header should display red tag', () => {

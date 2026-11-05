@@ -179,13 +179,13 @@
     "qs": "6.17.1"
   },
   "allowScripts": {
-    "@parcel/watcher@2.5.1": true,
+    "@parcel/watcher@2.6.0": true,
     "dtrace-provider@0.8.8": true,
     "esbuild@0.28.1": true,
     "fsevents@2.3.3": false,
     "fsevents@2.3.2": true,
-    "unrs-resolver@1.11.1": false,
+    "unrs-resolver@1.12.2": false,
     "cypress": true,
-    "node@24.22.1": true
+    "node@24.22.2": true
   }
 }

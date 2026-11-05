@@ -95,6 +95,13 @@
         }}
         {%- endset -%}
 
+      {%- set reductionsTotal = 0 -%}
+      {% for reduction in offenderManager.reductions %}
+        {% if reduction.reductionStatus === 'ACTIVE' %}
+          {% set reductionsTotal = reductionsTotal + reduction.reductionHours %}
+        {% endif %}
+      {% endfor %}
+
         {%- set tableRow = [
             {
                 html: ('<div class="govuk-radios govuk-radios--small"><div class="govuk-radios__item"><input class="govuk-radios__input" id="allocated-officer-' + offenderManager.code + '" name="allocatedOfficer" type="radio" value="' + offenderManager.selectionCode + '"' + (' checked' if params.teamAndStaffCode == offenderManager.selectionCode) + '><label class="govuk-label govuk-radios__label" for="allocated-officer-' + offenderManager.code + '"><span tabindex="-1" class="govuk-visually-hidden">Select ' + offenderManager.name.combinedName + ' to allocate to</span></label></div></div>')
@@ -139,15 +146,15 @@
                 }
             },
             {
-                text: offenderManager.casesPastWeek,
+                text: offenderManager.reductions[0].contractedHours + ' hours',
                 attributes: {
-                    "data-sort-value": offenderManager.casesPastWeek
+                    "data-sort-value": offenderManager.reductions[0].contractedHours
                 }
             },
             {
-                text: offenderManager.casesPastWeek,
+                text: reductionsTotal + ' hours',
                 attributes: {
-                    "data-sort-value": offenderManager.casesPastWeek
+                    "data-sort-value": reductionsTotal
                 }
             }
         ] -%}

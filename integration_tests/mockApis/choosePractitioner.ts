@@ -375,6 +375,16 @@ export default {
             g: 1,
             missing: 1,
           },
+          reductions: [
+            {
+              reductionHours: 9,
+              startDate: '2027-05-01',
+              endDate: '2027-05-02',
+              contractedHours: 37,
+              reductionType: 'PQIP 30M PT 3 or 4 RKMs 28-30 Months',
+              reductionStatus: 'SCHEDULED',
+            },
+          ],
         },
       ],
       N03F02: [
@@ -411,6 +421,16 @@ export default {
             g: 1,
             missing: 1,
           },
+          reductions: [
+            {
+              reductionHours: 8.9,
+              startDate: '2028-05-06',
+              endDate: '2028-05-09',
+              contractedHours: 22,
+              reductionType: 'PQIP 30M PT New 2 RKMs 28-30 Months',
+              reductionStatus: 'SCHEDULED',
+            },
+          ],
         },
         {
           code: 'OM3',
@@ -446,6 +466,16 @@ export default {
             g: 1,
             missing: 1,
           },
+          reductions: [
+            {
+              reductionHours: 1.9,
+              startDate: '2026-10-26',
+              endDate: '2027-04-26',
+              contractedHours: 37,
+              reductionType: 'Mentoring',
+              reductionStatus: 'ACTIVE',
+            },
+          ],
         },
       ],
     },

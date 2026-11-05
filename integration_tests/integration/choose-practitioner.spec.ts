@@ -208,24 +208,24 @@ context('Choose Practitioner', () => {
         Grade: 'POProbation Officer',
         'Allocations and reallocations in APoP last 7 days': '11',
         'ISPs due next 14 days': '1',
-        'Contracted hours': '11',
-        'Active reductions': '11',
+        'Contracted hours': '37 hours',
+        'Active reductions': '1.9 hours',
       },
       {
         Team: 'Team 1',
         Grade: 'PQiPTrainee Probation Officer',
         'Allocations and reallocations in APoP last 7 days': '11',
         'ISPs due next 14 days': '1',
-        'Contracted hours': '11',
-        'Active reductions': '11',
+        'Contracted hours': '37 hours',
+        'Active reductions': '0 hours',
       },
       {
         Team: 'Team 2',
         Grade: 'SPOSenior Probation Officer',
         'Allocations and reallocations in APoP last 7 days': '4',
         'ISPs due next 14 days': '0',
-        'Contracted hours': '4',
-        'Active reductions': '4',
+        'Contracted hours': '22 hours',
+        'Active reductions': '0 hours',
       },
     ]
 
@@ -510,11 +510,11 @@ context('Choose Practitioner', () => {
       },
       {
         columnHeaderName: 'Contracted hours',
-        orderedData: ['4', '11', '11'],
+        orderedData: ['22', '37', '37'],
       },
       {
         columnHeaderName: 'Active reductions',
-        orderedData: ['4', '11', '11'],
+        orderedData: ['0', '0', '1.9'],
       },
     ]
     sortDataAndAssertSortExpectations(2, sortExpectations, true)

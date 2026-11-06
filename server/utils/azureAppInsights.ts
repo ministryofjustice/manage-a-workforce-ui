@@ -1,4 +1,4 @@
-import { setup, defaultClient, TelemetryClient, DistributedTracingModes } from 'applicationinsights'
+import { initialiseTelemetry, flushTelemetry, telemetry } from '@ministryofjustice/hmpps-azure-telemetry'
 import applicationVersion from '../applicationVersion'
 
 function defaultName(): string {
@@ -13,20 +13,17 @@ function version(): string {
   return buildNumber
 }
 
-export function initialiseAppInsights(): void {
-  if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
-    // eslint-disable-next-line no-console
-    console.log('Enabling azure application insights')
+initialiseTelemetry({
+  serviceName: defaultName(),
+  serviceVersion: version(),
+  connectionString: process.env.APPINSIGHTS_INSTRUMENTATIONKEY,
+})
+  .addFilter(telemetry.processors.filterSpanWherePath(['/health', '/ping', '/assets/*']))
+  .addModifier(telemetry.processors.enrichSpanNameWithHttpRoute())
+  .startRecording()
 
-    setup().setDistributedTracingMode(DistributedTracingModes.AI_AND_W3C).start()
-  }
-}
-
-export function buildAppInsightsClient(name = defaultName()): TelemetryClient {
-  if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
-    defaultClient.context.tags['ai.cloud.role'] = name
-    defaultClient.context.tags['ai.application.ver'] = version()
-    return defaultClient
-  }
-  return null
-}
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+  await flushTelemetry()
+  process.exit(0)
+})

@@ -95,12 +95,14 @@
         }}
         {%- endset -%}
 
-      {%- set reductionsTotal = 0 -%}
-      {% for reduction in offenderManager.reductions %}
-        {% if reduction.reductionStatus === 'ACTIVE' %}
-          {% set reductionsTotal = reductionsTotal + reduction.reductionHours %}
-        {% endif %}
-      {% endfor %}
+        {%- set reductionsTotal = 0 -%}
+        {% for reduction in offenderManager.reductions %}
+            {% if reduction.reductionStatus === 'ACTIVE' %}
+                {% set reductionsTotal = reductionsTotal + reduction.reductionHours %}
+            {% endif %}
+        {% endfor %}
+
+        {% set contractedHours = offenderManager.reductions[0].contractedHours | default(0) %}
 
         {%- set tableRow = [
             {
@@ -146,9 +148,9 @@
                 }
             },
             {
-                text: offenderManager.reductions[0].contractedHours + ' hours',
+                text: contractedHours + ' hours',
                 attributes: {
-                    "data-sort-value": offenderManager.reductions[0].contractedHours
+                    "data-sort-value": contractedHours
                 }
             },
             {

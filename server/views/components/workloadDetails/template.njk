@@ -76,12 +76,27 @@
 
       <div class="govuk-grid-column-one-half">
         <h4 class="govuk-heading-m">Active reductions</h4>
-
-        {% if params.reductions == undefined %}
-          <span>No active reductions</span>
-        {% endif %}
+        <div class="reductions-section">
+          {% set totalActiveReductions = 0 %}
+          {% set hasActiveReductions = false %}
+          {% for reduction in params.reductions %}
+            {% if reduction.reductionStatus === 'ACTIVE' %}
+              <div class="reductions-item">
+                  <h4 class="govuk-heading-s">{{ reduction.reductionType }}</h4>
+                  <span>{{ reduction.reductionHours }} {{ reduction.reductionHours | pluralise('hour') }} a week until {{ reduction.endDate | dateFormat }}</span>
+              </div>
+              {% set hasActiveReductions = true %}
+              {% set totalActiveReductions = totalActiveReductions + reduction.reductionHours %}
+            {% endif %}
+          {% endfor %}
+          {% if hasActiveReductions === true %}
+            <h4 class="govuk-heading-s total-active-reductions">Total</h4>
+            <span class="total-active-reductions-value">{{ totalActiveReductions }} {{ totalActiveReductions | pluralise('hour') }} a week</span>
+          {% else %}
+            <span>No active reductions</span>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
-
 </details>

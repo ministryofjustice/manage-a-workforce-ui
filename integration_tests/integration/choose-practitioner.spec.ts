@@ -550,4 +550,15 @@ context('Choose Practitioner', () => {
       .tagCaption()
       .should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
   })
+
+  it('should correctly calculate the total active reductions', () => {
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.rows().eq(1).should('contain', 'Jim Jam')
+    choosePractitionerPage.workloadSummary().eq(0).click()
+    choosePractitionerPage.workloadDetails().eq(0).should('have.attr', 'open')
+    choosePractitionerPage.totalActiveReductions().should('be.visible')
+    choosePractitionerPage.totalActiveReductionsValue().eq(0).should('contain.text', '15.4 hours a week')
+  })
 })

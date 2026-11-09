@@ -13,17 +13,19 @@ function version(): string {
   return buildNumber
 }
 
-initialiseTelemetry({
-  serviceName: defaultName(),
-  serviceVersion: version(),
-  connectionString: process.env.APPINSIGHTS_INSTRUMENTATIONKEY,
-})
-  .addFilter(telemetry.processors.filterSpanWherePath(['/health', '/ping', '/assets/*']))
-  .addModifier(telemetry.processors.enrichSpanNameWithHttpRoute())
-  .startRecording()
+if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
+  initialiseTelemetry({
+    serviceName: defaultName(),
+    serviceVersion: version(),
+    connectionString: process.env.APPINSIGHTS_INSTRUMENTATIONKEY,
+  })
+    .addFilter(telemetry.processors.filterSpanWherePath(['/health', '/ping', '/assets/*']))
+    .addModifier(telemetry.processors.enrichSpanNameWithHttpRoute())
+    .startRecording()
 
-// Graceful shutdown
-process.on('SIGTERM', async () => {
-  await flushTelemetry()
-  process.exit(0)
-})
+  // Graceful shutdown
+  process.on('SIGTERM', async () => {
+    await flushTelemetry()
+    process.exit(0)
+  })
+}

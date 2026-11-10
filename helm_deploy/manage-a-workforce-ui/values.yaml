@@ -80,7 +80,6 @@ generic-service:
       API_CLIENT_SECRET: 'AUTH_API_CLIENT_SECRET'
       SESSION_SECRET: 'SESSION_SECRET'
       TAG_MANAGER_CONTAINER_ID: 'TAG_MANAGER_CONTAINER_ID'
-    manage-a-workforce-ui-application-insights:
       APPINSIGHTS_INSTRUMENTATIONKEY: 'APPINSIGHTS_INSTRUMENTATIONKEY'
     elasticache-redis:
       REDIS_HOST: 'primary_endpoint_address'

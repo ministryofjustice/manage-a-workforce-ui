@@ -86,7 +86,6 @@ generic-service:
       REDIS_AUTH_TOKEN: 'auth_token'
     flipt:
       FLIPT_API_KEY: 'API_KEY'
-      FLIPT_URL: 'URL'
 
   allowlist:
     groups:

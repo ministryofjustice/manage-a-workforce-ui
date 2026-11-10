@@ -13,10 +13,6 @@ function version(): string {
   return buildNumber
 }
 
-function connectionString(): string {
-  return Buffer.from(`${process.env.APPLICATIONINSIGHTS_CONNECTION_STRING}`, 'base64').toString('utf8')
-}
-
 if (process.env.APPLICATIONINSIGHTS_CONNECTION_STRING) {
   // eslint-disable-next-line no-console
   console.log('Enabling azure application insights')
@@ -24,7 +20,7 @@ if (process.env.APPLICATIONINSIGHTS_CONNECTION_STRING) {
   initialiseTelemetry({
     serviceName: defaultName(),
     serviceVersion: version(),
-    connectionString: connectionString(),
+    connectionString: process.env.APPLICATIONINSIGHTS_CONNECTION_STRING,
   })
     .addFilter(telemetry.processors.filterSpanWherePath(['/health', '/ping', '/assets/*']))
     .addModifier(telemetry.processors.enrichSpanNameWithHttpRoute())

@@ -209,7 +209,7 @@ context('Choose Practitioner', () => {
         'Allocations and reallocations in APoP last 7 days': '11',
         'ISPs due next 14 days': '1',
         'Contracted hours': '37 hours',
-        'Active reductions': '1.9 hours',
+        'Active reductions': '15.4 hours',
       },
       {
         Team: 'Team 1',
@@ -514,7 +514,7 @@ context('Choose Practitioner', () => {
       },
       {
         columnHeaderName: 'Active reductions',
-        orderedData: ['0', '0', '1.9'],
+        orderedData: ['0', '0', '15.4'],
       },
     ]
     sortDataAndAssertSortExpectations(2, sortExpectations, true)

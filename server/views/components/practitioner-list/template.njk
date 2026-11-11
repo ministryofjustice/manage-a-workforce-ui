@@ -17,7 +17,7 @@
             }
         },
         { text: 'Team',
-            classes: 'practitioners-list-small-column '+ ('govuk-visually-hidden' if params.teamData.isPerTeam),
+            classes: 'practitioners-list-team-column '+ ('govuk-visually-hidden' if params.teamData.isPerTeam),
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': 'choose-practitioner-team'
@@ -37,7 +37,7 @@
             }
         },
         { text: 'Allocations and reallocations in APoP last 7 days',
-          classes: "practitioners-list-small-column",
+          classes: "practitioners-list-alloc-realloc-column practitioners-list-small-column",
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': 'choose-practitioner-alloc-realloc-last-7-days'

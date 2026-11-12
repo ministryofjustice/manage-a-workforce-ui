@@ -67,6 +67,7 @@ generic-service:
     REDIS_TLS_ENABLED: 'true'
     TOKEN_VERIFICATION_ENABLED: 'true'
     SHOW_NOTIFICATION: 'false'
+    APPLICATIONINSIGHTS_CONNECTION_STRING: 'InstrumentationKey=$(APPINSIGHTS_INSTRUMENTATIONKEY);IngestionEndpoint=https://northeurope-0.in.applicationinsights.azure.com/;LiveEndpoint=https://northeurope.livediagnostics.monitor.azure.com/;'
 
   # Pre-existing kubernetes secrets to load as environment variables in the deployment.
   # namespace_secrets:
@@ -75,17 +76,16 @@ generic-service:
 
   namespace_secrets:
     manage-a-workforce-ui:
-      APPINSIGHTS_INSTRUMENTATIONKEY: 'APPINSIGHTS_INSTRUMENTATIONKEY'
       API_CLIENT_ID: 'AUTH_API_CLIENT_ID'
       API_CLIENT_SECRET: 'AUTH_API_CLIENT_SECRET'
       SESSION_SECRET: 'SESSION_SECRET'
       TAG_MANAGER_CONTAINER_ID: 'TAG_MANAGER_CONTAINER_ID'
+      APPINSIGHTS_INSTRUMENTATIONKEY: 'APPINSIGHTS_INSTRUMENTATIONKEY'
     elasticache-redis:
       REDIS_HOST: 'primary_endpoint_address'
       REDIS_AUTH_TOKEN: 'auth_token'
     flipt:
       FLIPT_API_KEY: 'API_KEY'
-      FLIPT_URL: 'URL'
 
   allowlist:
     groups:

@@ -4,6 +4,7 @@ import path from 'path'
 import createError from 'http-errors'
 
 import pdsComponents from '@ministryofjustice/hmpps-probation-frontend-components/dist/src'
+import { telemetryMiddleware } from '@ministryofjustice/hmpps-azure-telemetry'
 
 import nunjucksSetup from './utils/nunjucksSetup'
 import errorHandler from './errorHandler'
@@ -56,6 +57,7 @@ export default function createApp(services: Services): express.Application {
   app.use(authorisationMiddleware(['ROLE_MANAGE_A_WORKFORCE_ALLOCATE']))
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
+  app.use(telemetryMiddleware.addUserMetadataToTelemetry())
   app.use(featureFlagMiddleware(services))
   app.use(
     pdsComponents.getPageComponents({

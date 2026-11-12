@@ -1,8 +1,11 @@
+import { UUID } from 'crypto'
+
 import { convertToTitleCase } from '../utils/utils'
 import type ManageUsersClient from '../data/manageUsersClient'
 
 interface UserDetails {
   name: string
+  uuid?: UUID
   displayName: string
 }
 

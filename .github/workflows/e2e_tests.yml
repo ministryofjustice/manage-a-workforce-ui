@@ -28,6 +28,10 @@ jobs:
           path: e2e-tests
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
+      - name: Check for corresponding e2e test branch
+        run: git fetch origin ${GITHUB_REF##*/} && git checkout ${GITHUB_REF##*/}
+        working-directory: e2e-tests
+        continue-on-error: true
       - name: Set up Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:

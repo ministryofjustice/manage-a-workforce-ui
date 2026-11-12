@@ -1,6 +1,6 @@
+import flushTelemetry from './server/utils/azureAppInsights'
 import app from './server/index'
 import logger from './logger'
-import flushTelemetry from './server/utils/azureAppInsights'
 
 const shutdown = async () => {
   await flushTelemetry()

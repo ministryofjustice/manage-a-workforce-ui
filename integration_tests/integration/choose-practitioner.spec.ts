@@ -209,7 +209,7 @@ context('Choose Practitioner', () => {
         'Allocations and reallocations in APoP last 7 days': '11',
         'ISPs due next 14 days': '1',
         'Contracted hours': '37 hours',
-        'Active reductions': '1.9 hours',
+        'Active reductions': '15.4 hours',
       },
       {
         Team: 'Team 1',
@@ -514,7 +514,7 @@ context('Choose Practitioner', () => {
       },
       {
         columnHeaderName: 'Active reductions',
-        orderedData: ['0', '0', '1.9'],
+        orderedData: ['0', '0', '15.4'],
       },
     ]
     sortDataAndAssertSortExpectations(2, sortExpectations, true)
@@ -556,5 +556,16 @@ context('Choose Practitioner', () => {
     choosePractitionerPage
       .tagCaption()
       .should('contain', 'Tier is provisional until dynamic CSRP completed and ROSH confirmed')
+  })
+
+  it('should correctly calculate the total active reductions', () => {
+    cy.signIn()
+    cy.visit('/pdu/PDU1/J678910/convictions/1/choose-practitioner')
+    const choosePractitionerPage = Page.verifyOnPage(ChoosePractitionerPage)
+    choosePractitionerPage.rows().eq(1).should('contain', 'Jim Jam')
+    choosePractitionerPage.workloadSummary().eq(0).click()
+    choosePractitionerPage.workloadDetails().eq(0).should('have.attr', 'open')
+    choosePractitionerPage.totalActiveReductions().should('be.visible')
+    choosePractitionerPage.totalActiveReductionsValue().eq(0).should('contain.text', '15.4 hours a week')
   })
 })

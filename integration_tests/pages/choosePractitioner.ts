@@ -23,6 +23,14 @@ export default class ChoosePractitionerPage extends Page {
 
   workloadWrapper = (): PageElement => cy.get('.practitioners-list-workload-wrapper')
 
+  workloadSummary = (): PageElement => cy.get('.govuk-details__summary')
+
+  workloadDetails = (): PageElement => cy.get('.govuk-details')
+
+  totalActiveReductions = (): PageElement => cy.get('.total-active-reductions')
+
+  totalActiveReductionsValue = (): PageElement => cy.get('.total-active-reductions-value')
+
   rows = (): PageElement => cy.get(`.govuk-table__row`)
 
   visuallyHidden = (): PageElement => cy.get(`.govuk-visually-hidden`)

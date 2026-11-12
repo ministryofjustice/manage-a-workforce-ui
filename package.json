@@ -103,7 +103,7 @@
     "@ministryofjustice/hmpps-probation-frontend-components": "1.2.2",
     "accessible-autocomplete": "3.0.2",
     "agentkeepalive": "4.6.0",
-    "axios": "1.21.0",
+    "axios": "1.21.1",
     "axios-retry": "4.5.0",
     "body-parser": "2.4.0",
     "bunyan": "1.8.15",

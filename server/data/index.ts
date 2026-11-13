@@ -1,9 +1,3 @@
-/*
- * Do appinsights first as it does some magic instrumentation work, i.e. it affects other 'require's
- * In particular, applicationinsights automatically collects bunyan logs
- */
-import '../utils/azureAppInsights'
-
 import ManageUsersClient from './manageUsersClient'
 
 type RestClientBuilder<T> = (token: string) => T

@@ -61,7 +61,7 @@
           classes: "practitioners-list-small-column",
             attributes: {
                 "aria-sort": "none",
-                "data-persistent-id": 'choose=practitioner-active-reductions'
+                "data-persistent-id": 'choose-practitioner-active-reductions'
             }
         }
     ],
@@ -104,8 +104,6 @@
       {% endfor %}
 
       {% set contractedHours = offenderManager.reductions[0].contractedHours | default(0) %}
-
-
 
       {% set radioCellHtml %}
           {% if offenderManager.email and true != offenderManager.laoCase %}
@@ -168,13 +166,13 @@
                 }
             },
             {
-                text: contractedHours + ' hours',
+                text: contractedHours + contractedHours | pluralise(" hour"),
                 attributes: {
                     "data-sort-value": contractedHours
                 }
             },
             {
-                text: reductionsTotal + ' hours',
+                text: reductionsTotal + reductionsTotal | pluralise(" hour"),
                 attributes: {
                     "data-sort-value": reductionsTotal
                 }

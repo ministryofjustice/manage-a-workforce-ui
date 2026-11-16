@@ -338,15 +338,27 @@ p.capacity-notes-screen
     width: 95%
 
 .team-workload-name-wrapper
+  position: relative
   display: flex
   flex-direction: column
   gap: 10px
   padding-top: 15px
   padding-bottom: 10px
 
+  .govuk-details__summary
+    white-space: nowrap
+
   &:has(.workload-details[open])
     position: absolute
     width: 100%
+
+.team-workload-name-column
+  width: 15em
+
+.team-workload-alloc-realloc-last-7-days
+  max-width: 160px
+  word-wrap: break-word
+  white-space: unset
 
 #team-workload-table tbody
   position: relative

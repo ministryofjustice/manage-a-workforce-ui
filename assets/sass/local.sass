@@ -262,6 +262,12 @@ p.capacity-notes-screen
 .workload-section
   margin-bottom: 15px
 
+.reductions-section
+  .govuk-heading-s
+    margin-bottom: 10px
+  .reductions-item
+    margin-bottom: 20px
+
 .workload-inline
   display: flex
   flex-wrap: wrap
@@ -275,8 +281,8 @@ p.capacity-notes-screen
   display: flex
   flex-direction: column
   gap: 10px
-  padding-top: 15px
-  padding-bottom: 10px
+  padding-top: 10px
+  padding-bottom: 50px
 
   .govuk-details__summary
     white-space: nowrap
@@ -292,10 +298,16 @@ p.capacity-notes-screen
   .practitioners-list-name-column
     width: 10em
 
+  .practitioners-list-team-column
+    width: 7em
+
   .practitioners-list-small-column
     max-width: 200px
     word-wrap: break-word
     white-space: unset
+
+  .practitioners-list-alloc-realloc-column
+    min-width: 160px
 
   .practitioners-list-isps-column
     min-width: 100px
@@ -312,18 +324,18 @@ p.capacity-notes-screen
 
   > tr:has(.workload-details[open])
     > td
-      padding-bottom: 450px
+      padding-bottom: 500px
 
   .workload-section .govuk-list
     margin-bottom: 5px
 
   .workload-details
-    position: relative
+    position: absolute
     top: auto
-    padding: 0
-    margin: 0
+    padding-top: 10px
+    margin-left: 25px
     display: inline-block
-    width: 100%
+    width: 95%
 
 .team-workload-name-wrapper
   display: flex
@@ -345,7 +357,7 @@ p.capacity-notes-screen
 
   > tr:has(.workload-details[open])
     > td
-      padding-bottom: 450px
+      padding-bottom: 500px
 
   .workload-section .govuk-list
     margin-bottom: 5px

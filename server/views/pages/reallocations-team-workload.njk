@@ -35,24 +35,31 @@
             }
         },
         {
-            text: "Allocations in APoP last 7 days",
+            text: "Allocations and reallocations in APoP last 7 days",
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': teamCode + '-team-workload-allocations-in-apop-last-7-days'
         }
         },
         {
-            text: "Reallocations in APoP last 7 days",
-            attributes: {
-                "aria-sort": "none",
-                'data-persistent-id': teamCode + '-team-workload-reallocations-in-apop-last-7-days'
-            }
-        },
-        {
             text: "ISPs due next 14 days",
             attributes: {
                 "aria-sort": "none",
                 'data-persistent-id': teamCode + '-team-workload-isps-due-next-14-days'
+            }
+        },
+        {
+            text: 'Contracted hours',
+            attributes: {
+                "aria-sort": "none",
+                "data-persistent-id": teamCode + '-team-workload-contracted-hours'
+            }
+        },
+        {
+            text: "Active reductions",
+            attributes: {
+                "aria-sort": "none",
+                "data-persistent-id": teamCode + '-team-workload-active-reductions'
             }
         }
     ],
@@ -79,15 +86,26 @@
             contactSuspendedCases: offenderManager.contactSuspendedCases,
             custodyReleasesInNext7Days: offenderManager.custodyReleasesInNext7Days,
             paroleReportsInNext28Days: offenderManager.paroleReportsInNext28Days,
-            otherReportsInNext14Days: offenderManager.otherReportsInNext14Days
+            otherReportsInNext14Days: offenderManager.otherReportsInNext14Days,
+            reductions: offenderManager.reductions
         })
     }}
     {%- endset -%}
+
+    {%- set reductionsTotal = 0 -%}
+    {% for reduction in offenderManager.reductions %}
+        {% if reduction.reductionStatus === 'ACTIVE' %}
+            {% set reductionsTotal = reductionsTotal + reduction.reductionHours %}
+        {% endif %}
+    {% endfor %}
+
+    {% set contractedHours = offenderManager.reductions[0].contractedHours | default(0) %}
 
     {%- set tableRow = [
             {
                 html: '<a class="govuk-link--no-visited-state" href="/pdu/' + pduCode + '/' + teamCode + '/reallocations/cases/' + offenderManager.code + '" data-qa-link="' + offenderManager.code + '">' + offenderManager.name.forename + ' ' + offenderManager.name.surname + '</a>'
                     + '<div class="team-workload-name-wrapper">' + workloadDetailsHtml + '</div' | safe,
+                classes: "team-workload-name-column",
                 attributes: {
                     "data-sort-value": offenderManager.name.forename + ' ' + offenderManager.name.surname
                 }
@@ -105,21 +123,28 @@
                 }
             },
             {
-                text: offenderManager.allocatedCasesPastWeek,
+                text: offenderManager.casesPastWeek,
+                classes: "team-workload-alloc-realloc-last-7-days",
                 attributes: {
-                    "data-sort-value": offenderManager.allocatedCasesPastWeek
-                }
-            },
-            {
-                text: offenderManager.reallocatedCasesPastWeek,
-                attributes: {
-                    "data-sort-value": offenderManager.reallocatedCasesPastWeek
+                    "data-sort-value": offenderManager.casesPastWeek
                 }
             },
             {
                 text: offenderManager.ispsDueInNext14Days,
                 attributes: {
                     "data-sort-value": offenderManager.ispsDueInNext14Days
+                }
+            },
+            {
+                text: contractedHours + contractedHours | pluralise(" hour"),
+                attributes: {
+                    "data-sort-value": contractedHours
+                }
+            },
+            {
+                text: reductionsTotal + reductionsTotal | pluralise(" hour"),
+                attributes: {
+                    "data-sort-value": reductionsTotal
                 }
             }
         ] -%}

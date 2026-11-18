@@ -25,10 +25,6 @@ if (process.env.APPLICATIONINSIGHTS_CONNECTION_STRING) {
     .addFilter(telemetry.processors.filterSpanWherePath(['/health', '/ping', '/assets/*']))
     .addModifier(telemetry.processors.enrichSpanNameWithHttpRoute())
     .startRecording()
-
-  // Graceful shutdown
-  process.on('SIGTERM', async () => {
-    await flushTelemetry()
-    process.exit(0)
-  })
 }
+
+export default flushTelemetry

@@ -5,21 +5,22 @@ generic-service:
 
   ingress:
     className: modsec-non-prod
-    host: workforce-management-dev.hmpps.service.justice.gov.uk
-
+    host:
+      - workforce-management-dev.hmpps.service.justice.gov.uk
+      - workload-measurement-dev.hmpps.service.justice.gov.uk
   env:
-    INGRESS_URL: "https://workforce-management-dev.hmpps.service.justice.gov.uk"
-    HMPPS_AUTH_URL: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth"
-    TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
-    MANAGE_USERS_SERVICE_URL: "https://manage-users-api-dev.hmpps.service.justice.gov.uk"
-    ALLOCATIONS_SERVICE_URL: "https://hmpps-allocations-dev.hmpps.service.justice.gov.uk"
-    WORKLOAD_MEASUREMENT_URL: "https://workload-measurement-dev.hmpps.service.justice.gov.uk"
-    WORKLOAD_SERVICE_URL: "https://hmpps-workload-dev.hmpps.service.justice.gov.uk"
-    PROBATION_ESTATE_SERVICE_URL: "https://hmpps-probation-estate-api-dev.hmpps.service.justice.gov.uk"
-    USER_PREFERENCE_SERVICE_URL: "https://hmpps-user-preferences-dev.hmpps.service.justice.gov.uk"
-    STAFF_LOOKUP_SERVICE_URL: "https://hmpps-staff-lookup-service-dev.hmpps.service.justice.gov.uk"
-    FLIPT_URL: "https://feature-toggles-dev.hmpps.service.justice.gov.uk"
-    COMPONENT_API_URL: "https://probation-frontend-components-dev.hmpps.service.justice.gov.uk"
+    INGRESS_URL: 'https://workforce-management-dev.hmpps.service.justice.gov.uk'
+    HMPPS_AUTH_URL: 'https://sign-in-dev.hmpps.service.justice.gov.uk/auth'
+    TOKEN_VERIFICATION_API_URL: 'https://token-verification-api-dev.prison.service.justice.gov.uk'
+    MANAGE_USERS_SERVICE_URL: 'https://manage-users-api-dev.hmpps.service.justice.gov.uk'
+    ALLOCATIONS_SERVICE_URL: 'https://hmpps-allocations-dev.hmpps.service.justice.gov.uk'
+    WORKLOAD_MEASUREMENT_URL: 'https://workload-measurement-dev.hmpps.service.justice.gov.uk'
+    WORKLOAD_SERVICE_URL: 'https://hmpps-workload-dev.hmpps.service.justice.gov.uk'
+    PROBATION_ESTATE_SERVICE_URL: 'https://hmpps-probation-estate-api-dev.hmpps.service.justice.gov.uk'
+    USER_PREFERENCE_SERVICE_URL: 'https://hmpps-user-preferences-dev.hmpps.service.justice.gov.uk'
+    STAFF_LOOKUP_SERVICE_URL: 'https://hmpps-staff-lookup-service-dev.hmpps.service.justice.gov.uk'
+    FLIPT_URL: 'https://feature-toggles-dev.hmpps.service.justice.gov.uk'
+    COMPONENT_API_URL: 'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk'
 
   scheduledDowntime:
     enabled: true

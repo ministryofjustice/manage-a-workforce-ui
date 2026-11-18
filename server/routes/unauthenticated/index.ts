@@ -8,5 +8,9 @@ export default function UnauthenticatedRoutes(): Router {
 
   router.get('/accessibility-statement', asyncMiddleware(Accessibility()))
 
+  router.get('/wmt-error', async (req, res) => {
+    return res.render('pages/wmt-placeholder')
+  })
+
   return router
 }

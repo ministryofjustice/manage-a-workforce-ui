@@ -42,6 +42,13 @@ export default function createApp(services: Services): express.Application {
   }
 
   app.use((req, res, next) => {
+    if (req.hostname === config.nav.workloadMeasurement.url) {
+      return res.redirect('/wmt-error')
+    }
+    return next()
+  })
+
+  app.use((req, res, next) => {
     res.locals.pageUrl = encodeURI(`${req.protocol}://${req.headers.host}${req.url}`)
     next()
   })

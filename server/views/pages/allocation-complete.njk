@@ -50,4 +50,16 @@
 <script nonce="{{ cspNonce }}">
   localStorage.removeItem('instructions-save-{{ crn }}-{{ convictionNumber }}')
 </script>
+
+<script nonce="{{ cspNonce }}" id="ss-popup-4056003">
+  var _ssq = {'cid': 4056003};
+  window.addEventListener('load', function () {
+    var ss = document.createElement('script');
+    ss.type = 'text/javascript';
+    ss.async = true;
+    ss.src = (document.location.protocol === 'https:' ? 'https://' : 'http://') + 'www.smartsurvey.co.uk/s/popup/' + _ssq.cid + '/js/';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ss, s);
+  });
+</script>
 {% endblock %}

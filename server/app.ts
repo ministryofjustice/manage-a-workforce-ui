@@ -43,7 +43,7 @@ export default function createApp(services: Services): express.Application {
 
   app.use((req, res, next) => {
     if (`${req.protocol}://${req.hostname}` === config.nav.workloadMeasurement.url) {
-      return res.redirect('/wmt-error')
+      return res.redirect(`${config.domain}/wmt-error`)
     }
     return next()
   })

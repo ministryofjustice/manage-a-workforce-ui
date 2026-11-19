@@ -6,7 +6,9 @@ generic-service:
 
   ingress:
     className: modsec
-    host: workforce-management.hmpps.service.justice.gov.uk
+    hosts:
+      - workforce-management.hmpps.service.justice.gov.uk
+      - workload-measurement.hmpps.service.justice.gov.uk
 
   env:
     INGRESS_URL: 'https://workforce-management.hmpps.service.justice.gov.uk'

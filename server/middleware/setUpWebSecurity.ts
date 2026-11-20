@@ -40,6 +40,7 @@ export default function setUpWebSecurity(): Router {
             "'sha256-guH/S8dbM7pl7LdFpjKvhBzxwiA3zwMQT7j5rhbB+F8='",
             "'sha256-v8KFlISNcGasWwP60Bh+VAIh3O99AjiY1G195S+CK3Q='",
             "'sha256-fPBTCSndKQxWSUpU6A4z70gy4rG8mdMa52QT9ig6z5g='",
+            "'sha256-s4TrzZz+6imxEcc9YrvjXhpYpPK8h3fwLo/snNa51Io='",
             '*.google-analytics.com',
             '*.analytics.google.com',
             '*.googletagmanager.com',

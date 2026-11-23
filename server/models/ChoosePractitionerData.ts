@@ -29,6 +29,15 @@ interface TierCaseTotals {
   missing: number
 }
 
+interface Reductions {
+  reductionHours: number
+  startDate: string
+  endDate: string
+  reductionType: string
+  reductionStatus: string
+  contractedHours: number
+}
+
 export interface Practitioner {
   code: string
   name: PersonName
@@ -50,6 +59,7 @@ export interface Practitioner {
   paroleReportsInNext28Days: number
   otherReportsInNext14Days: number
   tierCaseTotals: TierCaseTotals
+  reductions: Reductions[]
 }
 
 export default interface ChoosePractitionerData {

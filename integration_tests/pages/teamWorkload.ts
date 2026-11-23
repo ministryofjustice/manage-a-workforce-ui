@@ -16,4 +16,14 @@ export default class TeamWorkloadPage extends Page {
   averageWorkload = (): PageElement => cy.get('.card.card-total-subset')
 
   teamTableRows = (): PageElement => cy.get('.govuk-table tbody tr')
+
+  workloadSummary = (): PageElement => cy.get('.govuk-details__summary')
+
+  workloadDetails = (): PageElement => cy.get('.govuk-details')
+
+  reductionsItem = (): PageElement => cy.get('.reductions-item')
+
+  totalActiveReductions = (): PageElement => cy.get('.total-active-reductions')
+
+  totalActiveReductionsValue = (): PageElement => cy.get('.total-active-reductions-value')
 }

@@ -209,7 +209,7 @@ context('Choose Practitioner', () => {
         'Allocations and reallocations in APoP last 7 days': '11',
         'ISPs due next 14 days': '1',
         'Contracted hours': '37 hours',
-        'Active reductions': '15.4 hours',
+        'Active reductions': '14.8 hours',
       },
       {
         Team: 'Team 1',
@@ -514,7 +514,7 @@ context('Choose Practitioner', () => {
       },
       {
         columnHeaderName: 'Active reductions',
-        orderedData: ['0', '0', '15.4'],
+        orderedData: ['0', '0', '14.8'],
       },
     ]
     sortDataAndAssertSortExpectations(2, sortExpectations, true)
@@ -565,7 +565,17 @@ context('Choose Practitioner', () => {
     choosePractitionerPage.rows().eq(1).should('contain', 'Jim Jam')
     choosePractitionerPage.workloadSummary().eq(0).click()
     choosePractitionerPage.workloadDetails().eq(0).should('have.attr', 'open')
+    choosePractitionerPage
+      .reductionsItem()
+      .eq(0)
+      .should('contain.text', 'Mentoring')
+      .should('contain.text', '1.3 hours a week until 26 April 2027')
+    choosePractitionerPage
+      .reductionsItem()
+      .eq(1)
+      .should('contain.text', 'PQIP 30M PT 3 or 4 RKMs 28-30 Months')
+      .should('contain.text', '13.5 hours a week until 1 March 2027')
     choosePractitionerPage.totalActiveReductions().should('be.visible')
-    choosePractitionerPage.totalActiveReductionsValue().eq(0).should('contain.text', '15.4 hours a week')
+    choosePractitionerPage.totalActiveReductionsValue().eq(0).should('contain.text', '14.8 hours a week')
   })
 })

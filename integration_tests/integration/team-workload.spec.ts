@@ -71,4 +71,36 @@ context('Team Workload', () => {
     teamWorkloadPage.teamTableRows().first().should('contain.text', '0')
     teamWorkloadPage.teamTableRows().first().should('contain.text', '3')
   })
+
+  it('should correctly calculate the total active reductions', () => {
+    cy.task('stubWorkloadCases', {
+      teamCodes: 'N03F01',
+      response: [
+        {
+          teamCode: 'N03F01',
+          totalCases: 3,
+          workload: 77,
+        },
+      ],
+    })
+    cy.task('stubForTeamWorkload')
+    cy.visit('/pdu/PDU1/N03F01/team-workload')
+    teamWorkloadPage = Page.verifyOnPage(TeamWorkloadPage)
+    teamWorkloadPage.teamTableRows().first().should('contain', 'Coco Pint')
+    teamWorkloadPage.teamTableRows().first().get('.govuk-table__cell').eq(5).should('contain', '14.8 hours')
+    teamWorkloadPage.workloadSummary().eq(0).click()
+    teamWorkloadPage.workloadDetails().eq(0).should('have.attr', 'open')
+    teamWorkloadPage
+      .reductionsItem()
+      .eq(0)
+      .should('contain.text', 'Mentoring')
+      .should('contain.text', '1.3 hours a week until 26 April 2027')
+    teamWorkloadPage
+      .reductionsItem()
+      .eq(1)
+      .should('contain.text', 'PQIP 30M PT 3 or 4 RKMs 28-30 Months')
+      .should('contain.text', '13.5 hours a week until 1 March 2027')
+    teamWorkloadPage.totalActiveReductions().should('be.visible')
+    teamWorkloadPage.totalActiveReductionsValue().eq(0).should('contain.text', '14.8 hours a week')
+  })
 })

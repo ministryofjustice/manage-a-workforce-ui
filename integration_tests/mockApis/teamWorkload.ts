@@ -39,6 +39,24 @@ const teamWorkload: TeamWorkloadData = {
           g: 2,
           missing: 1,
         },
+        reductions: [
+          {
+            reductionHours: 1.33333333333333,
+            startDate: '2026-10-26',
+            endDate: '2027-04-26',
+            contractedHours: 37,
+            reductionType: 'Mentoring',
+            reductionStatus: 'ACTIVE',
+          },
+          {
+            reductionHours: 13.5,
+            startDate: '2027-02-01',
+            endDate: '2027-03-01',
+            reductionType: 'PQIP 30M PT 3 or 4 RKMs 28-30 Months\n',
+            reductionStatus: 'ACTIVE',
+            contractedHours: 37,
+          },
+        ],
       },
       {
         code: 'N03A016',
@@ -74,6 +92,7 @@ const teamWorkload: TeamWorkloadData = {
           g: 1,
           missing: 2,
         },
+        reductions: [],
       },
       {
         code: 'N01A022',
@@ -109,6 +128,16 @@ const teamWorkload: TeamWorkloadData = {
           g: 0,
           missing: 1,
         },
+        reductions: [
+          {
+            reductionHours: 9,
+            startDate: '2027-05-01',
+            endDate: '2027-05-02',
+            contractedHours: 37,
+            reductionType: 'PQIP 30M PT 3 or 4 RKMs 28-30 Months',
+            reductionStatus: 'SCHEDULED',
+          },
+        ],
       },
       {
         code: 'N04A135',
@@ -143,6 +172,7 @@ const teamWorkload: TeamWorkloadData = {
           g: 2,
           missing: 0,
         },
+        reductions: [],
       },
       {
         code: 'N54A022',
@@ -178,6 +208,7 @@ const teamWorkload: TeamWorkloadData = {
           g: 1,
           missing: 0,
         },
+        reductions: [],
       },
       {
         code: 'N07B656',
@@ -213,6 +244,7 @@ const teamWorkload: TeamWorkloadData = {
           g: 3,
           missing: 1,
         },
+        reductions: [],
       },
       {
         code: 'N07B743',
@@ -248,6 +280,7 @@ const teamWorkload: TeamWorkloadData = {
           g: 1,
           missing: 1,
         },
+        reductions: [],
       },
       {
         code: 'N03F030',
@@ -283,6 +316,7 @@ const teamWorkload: TeamWorkloadData = {
           g: 2,
           missing: 1,
         },
+        reductions: [],
       },
       {
         code: 'N57A029',
@@ -318,6 +352,7 @@ const teamWorkload: TeamWorkloadData = {
           g: 2,
           missing: 2,
         },
+        reductions: [],
       },
       {
         code: 'N03A019',
@@ -353,6 +388,7 @@ const teamWorkload: TeamWorkloadData = {
           g: 1,
           missing: 1,
         },
+        reductions: [],
       },
       {
         code: 'N57A046',
@@ -388,6 +424,7 @@ const teamWorkload: TeamWorkloadData = {
           g: 0,
           missing: 1,
         },
+        reductions: [],
       },
       {
         code: 'N57A042',
@@ -423,6 +460,7 @@ const teamWorkload: TeamWorkloadData = {
           g: 1,
           missing: 2,
         },
+        reductions: [],
       },
       {
         code: 'N57A024',
@@ -458,6 +496,7 @@ const teamWorkload: TeamWorkloadData = {
           g: 2,
           missing: 1,
         },
+        reductions: [],
       },
       {
         code: 'N07B290',
@@ -493,6 +532,16 @@ const teamWorkload: TeamWorkloadData = {
           g: 3,
           missing: 1,
         },
+        reductions: [
+          {
+            reductionHours: 9,
+            startDate: '2027-05-01',
+            endDate: '2027-05-02',
+            contractedHours: 37,
+            reductionType: 'PQIP 30M PT 3 or 4 RKMs 28-30 Months',
+            reductionStatus: 'ACTIVE',
+          },
+        ],
       },
     ],
   },

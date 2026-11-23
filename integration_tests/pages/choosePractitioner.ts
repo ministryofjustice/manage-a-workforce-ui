@@ -27,6 +27,8 @@ export default class ChoosePractitionerPage extends Page {
 
   workloadDetails = (): PageElement => cy.get('.govuk-details')
 
+  reductionsItem = (): PageElement => cy.get('.reductions-item')
+
   totalActiveReductions = (): PageElement => cy.get('.total-active-reductions')
 
   totalActiveReductionsValue = (): PageElement => cy.get('.total-active-reductions-value')

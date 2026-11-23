@@ -99,6 +99,7 @@
             {% set reductionsTotal = reductionsTotal + reduction.reductionHours %}
         {% endif %}
     {% endfor %}
+    {% set reductionsTotal = reductionsTotal | decimalPlaces %}
 
     {% set contractedHours = offenderManager.reductions[0].contractedHours | default(0) %}
 

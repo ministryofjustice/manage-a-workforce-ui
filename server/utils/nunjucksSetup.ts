@@ -77,6 +77,10 @@ export default async function nunjucksSetup(
     return count === 1 ? singular : plural || `${singular}s`
   })
 
+  njkEnv.addFilter('decimalPlaces', (num: number, length = 1) => {
+    return Number(num.toFixed(length))
+  })
+
   njkEnv.addGlobal('workloadMeasurementUrl', config.nav.workloadMeasurement.url)
   njkEnv.addGlobal('tagManagerContainerId', config.analytics.tagManagerContainerId.trim())
   njkEnv.addGlobal('lastTechnicalUpdate', services.technicalUpdatesService.getLatestTechnicalUpdateHeading())

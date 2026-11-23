@@ -468,7 +468,7 @@ export default {
           },
           reductions: [
             {
-              reductionHours: 1.9,
+              reductionHours: 1.33333333333333,
               startDate: '2026-10-26',
               endDate: '2027-04-26',
               contractedHours: 37,

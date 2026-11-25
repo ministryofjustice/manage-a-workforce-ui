@@ -9,7 +9,7 @@
                 <ul class="moj-primary-navigation__list">
 
                     <li class="moj-primary-navigation__item">
-                        <a class="moj-primary-navigation__link" {{ 'aria-current="page"' if params.journey !== 'reallocations' }}
+                        <a class="moj-primary-navigation__link" {{ 'aria-current="page"' if params.journey not in ['reallocations', 'wmt'] }}
                            href="/">Allocations {% if params.unallocatedCaseCount %}
                                 <span id="notifications" class="moj-notification-badge">{{ params.unallocatedCaseCount | getCaseCount }}</span>
                             {% endif %}
@@ -23,7 +23,7 @@
                     {% endif %}
 
                     <li class="moj-primary-navigation__item">
-                        <a class="moj-primary-navigation__link" href="{{ workloadMeasurementUrl }}/probation/hmpps/0" id="offender-management-link">Offender Management</a>
+                        <a class="moj-primary-navigation__link" href="{{ workloadMeasurementUrl }}/probation/hmpps/0" id="offender-management-link" {{ 'aria-current="page"' if params.journey === 'wmt' }}>Offender Management</a>
                     </li>
 
                     <li class="moj-primary-navigation__item">

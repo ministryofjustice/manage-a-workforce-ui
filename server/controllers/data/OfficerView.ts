@@ -36,8 +36,6 @@ export default class OfficerView {
 
   releasesDue: number
 
-  reductions: string
-
   lastCaseAllocated: string
 
   email: string

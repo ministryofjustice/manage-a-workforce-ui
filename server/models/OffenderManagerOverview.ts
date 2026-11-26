@@ -10,12 +10,10 @@ export default interface OffenderManagerOverview {
   code: string
   totalCases: number
   weeklyHours: number
-  totalReductionHours: number
   pointsAvailable: number
   pointsUsed: number
   pointsRemaining: number
   lastUpdatedOn: string
-  nextReductionChange: string
   caseTotals: CaseTotals
   paroleReportsDue: number
   caseEndDue: number

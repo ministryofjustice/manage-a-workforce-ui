@@ -62,10 +62,6 @@ export default class OfficerView {
     this.caseEndDue = offenderManagerOverview.caseEndDue
     this.releasesDue = offenderManagerOverview.releasesDue
     this.lastCaseAllocated = this.getLastCaseAllocated(offenderManagerOverview.lastAllocatedEvent)
-    this.reductions = this.getReductions(
-      offenderManagerOverview.totalReductionHours,
-      offenderManagerOverview.nextReductionChange,
-    )
   }
 
   getLastCaseAllocated(lastAllocatedEvent: LastAllocatedEvent): string {
@@ -82,16 +78,5 @@ export default class OfficerView {
       return 'community'
     }
     return 'custody'
-  }
-
-  getReductions(totalReductionHours: number, nextReductionChange: string): string {
-    return `${totalReductionHours}${this.getReductionUntil(nextReductionChange)} `
-  }
-
-  getReductionUntil(nextReductionChange: string): string {
-    if (nextReductionChange) {
-      return ` hours until ${dayjs(nextReductionChange).format(config.dateFormat)}`
-    }
-    return ''
   }
 }

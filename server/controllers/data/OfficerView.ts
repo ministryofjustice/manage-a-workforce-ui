@@ -12,21 +12,9 @@ export default class OfficerView {
 
   grade: string
 
-  capacity: number
-
   code: string
 
   totalCases: number
-
-  weeklyHours: number
-
-  pointsAvailable: number
-
-  pointsUsed: number
-
-  pointsRemaining: number
-
-  lastUpdatedOn: string
 
   caseTotals: CaseTotals
 
@@ -47,15 +35,8 @@ export default class OfficerView {
     this.surname = offenderManagerOverview.surname
     this.email = offenderManagerOverview.email
     this.grade = offenderManagerOverview.grade
-    this.capacity = offenderManagerOverview.capacity
     this.code = offenderManagerOverview.code
     this.totalCases = offenderManagerOverview.totalCases
-    this.weeklyHours = offenderManagerOverview.weeklyHours
-
-    this.pointsAvailable = offenderManagerOverview.pointsAvailable
-    this.pointsUsed = offenderManagerOverview.pointsUsed
-    this.pointsRemaining = offenderManagerOverview.pointsRemaining
-    this.lastUpdatedOn = offenderManagerOverview.lastUpdatedOn
 
     this.caseTotals = offenderManagerOverview.caseTotals
     this.paroleReportsDue = offenderManagerOverview.paroleReportsDue

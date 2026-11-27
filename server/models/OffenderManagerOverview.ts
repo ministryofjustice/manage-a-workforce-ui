@@ -6,15 +6,9 @@ export default interface OffenderManagerOverview {
   surname: string
   email: string
   grade: string
-  capacity: number
   code: string
   totalCases: number
-  weeklyHours: number
   totalReductionHours: number
-  pointsAvailable: number
-  pointsUsed: number
-  pointsRemaining: number
-  lastUpdatedOn: string
   nextReductionChange: string
   caseTotals: CaseTotals
   paroleReportsDue: number
